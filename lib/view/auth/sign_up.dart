@@ -3,9 +3,8 @@ import 'package:part_app/view/auth/components/phone_number.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 
-class Login extends StatelessWidget {
-  static const route = '/login';
-  const Login({Key? key}) : super(key: key);
+class SignUp extends StatelessWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +17,7 @@ class Login extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                Strings.welcome,
-                style: Theme.of(context).textTheme.headline1,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Center(
-              child: Text(
-                Strings.loginWelcomeMessage,
+                Strings.signUpWelcomeMessage,
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
                       fontSize: 16,
                     ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
+  static const route = '/';
+
   const Home({Key? key}) : super(key: key);
 
   @override
