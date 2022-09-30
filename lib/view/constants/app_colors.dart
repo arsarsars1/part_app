@@ -36,4 +36,6 @@ class AppColors {
   static Color secondaryColor = Colors.black;
 
   static Color textColor = const Color(0xFFF8F8F8);
+  static Color textFieldColor = const Color(0xFF2A2A2A);
+  static Color hintColor = const Color(0xFF6C6C6C);
 }

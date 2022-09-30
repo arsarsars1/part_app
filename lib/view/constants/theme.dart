@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'constant.dart';
@@ -22,30 +21,36 @@ class AppTheme {
     return ThemeData(
       scaffoldBackgroundColor: Colors.black,
       inputDecorationTheme: InputDecorationTheme(
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 12.w,
-          vertical: 8.h,
+        hintStyle: GoogleFonts.nunitoSans().copyWith(
+          color: AppColors.hintColor,
+          fontSize: 14,
+        ),
+        filled: true,
+        fillColor: AppColors.textFieldColor,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 28,
+          vertical: 0,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.grey86,
+            color: AppColors.textFieldColor,
           ),
         ),
         errorStyle: const TextStyle(fontSize: 0),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.grey86,
+            color: AppColors.textFieldColor,
           ),
         ),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.grey86,
+            color: AppColors.textFieldColor,
           ),
         ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(),
         ),
-        focusedErrorBorder: OutlineInputBorder(
+        focusedErrorBorder: const OutlineInputBorder(
           borderSide: BorderSide(),
         ),
       ),
@@ -63,23 +68,28 @@ class AppTheme {
       textTheme: TextTheme(
         bodyText1: GoogleFonts.nunitoSans().copyWith(
           color: primaryText,
-          fontSize: 32.sm,
+          fontSize: 14,
         ),
         bodyText2: GoogleFonts.nunitoSans().copyWith(
           color: secondaryText,
         ),
+        headline1: GoogleFonts.nunitoSans().copyWith(
+          color: primaryText,
+          fontWeight: FontWeight.bold,
+          fontSize: 32,
+        ),
         headline3: GoogleFonts.nunitoSans().copyWith(
           color: primaryText,
-          fontSize: 20.sm,
+          fontSize: 20,
         ),
         headline4: GoogleFonts.nunitoSans().copyWith(
           color: AppColors.grey900,
-          fontSize: 20.sm,
+          fontSize: 20,
         ),
         headline5: GoogleFonts.nunitoSans().copyWith(
           color: AppColors.grey900,
           fontWeight: FontWeight.w700,
-          fontSize: 16.sm,
+          fontSize: 16,
         ),
       ),
     );
