@@ -17,6 +17,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  String? phoneNo;
+  Country? country;
+
   @override
   void initState() {
     super.initState();
@@ -55,8 +58,12 @@ class _LoginState extends State<Login> {
               height: 36,
             ),
             PhoneNumber(
-              onCountryChange: (Country value) {},
-              onNumberChange: (String value) {},
+              onCountryChange: (Country value) {
+                country = value;
+              },
+              onNumberChange: (String value) {
+                phoneNo = value;
+              },
             ),
             const SizedBox(
               height: 32,

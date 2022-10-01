@@ -19,6 +19,10 @@ class PhoneNumber extends StatelessWidget {
     return BlocBuilder<CountryCubit, CountryState>(
       buildWhen: (prv, crr) => crr is CountriesLoaded,
       builder: (context, state) {
+        if (cubit.defaultCountry != null) {
+          onCountryChange(cubit.defaultCountry?.item);
+        }
+
         return Column(
           children: [
             CommonField(
@@ -27,7 +31,7 @@ class PhoneNumber extends StatelessWidget {
               dropDownItems: cubit.countriesForDropDown,
               defaultItem: cubit.defaultCountry,
               onChange: (value) {
-                onCountryChange(value);
+                onCountryChange(value.item);
               },
             ),
             const SizedBox(
