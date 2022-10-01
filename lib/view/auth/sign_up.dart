@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/view/auth/components/phone_number.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 
 class SignUp extends StatelessWidget {
+  static const route = '/auth/signUp';
+
   const SignUp({Key? key}) : super(key: key);
 
   @override
@@ -16,17 +19,24 @@ class SignUp extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
-              child: Text(
-                Strings.signUpWelcomeMessage,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      fontSize: 16,
-                    ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Text(
+                  Strings.signUpWelcomeMessage,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 16,
+                      ),
+                ),
               ),
             ),
             const SizedBox(
               height: 36,
             ),
-            const PhoneNumber(),
+            PhoneNumber(
+              onCountryChange: (Country value) {},
+              onNumberChange: (String value) {},
+            ),
             const SizedBox(
               height: 32,
             ),
@@ -34,13 +44,13 @@ class SignUp extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  Strings.notAMember,
+                  Strings.alreadyMember,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         fontSize: 16,
                       ),
                 ),
                 Text(
-                  Strings.joinNow,
+                  Strings.login,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.primaryColor,
@@ -54,7 +64,7 @@ class SignUp extends StatelessWidget {
             ),
             Button(
               onTap: () {},
-              title: Strings.login,
+              title: Strings.continueLabel,
             ),
           ],
         ),

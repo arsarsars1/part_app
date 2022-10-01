@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/auth/login.dart';
+import 'package:part_app/view/auth/sign_up.dart';
 import 'package:part_app/view/home/home.dart';
 
 class RouteGenerator {
@@ -8,15 +9,21 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
+      case Home.route:
+        return MaterialPageRoute(
+          // todo change to home
+          builder: (_) => const Login(),
+          settings: settings,
+        );
       case Login.route:
         return MaterialPageRoute(
           builder: (_) => const Login(),
           settings: settings,
         );
-      case Home.route:
+
+      case SignUp.route:
         return MaterialPageRoute(
-          // todo change to home
-          builder: (_) => const Login(),
+          builder: (_) => const SignUp(),
           settings: settings,
         );
       default:
