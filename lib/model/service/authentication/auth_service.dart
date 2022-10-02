@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:part_app/model/data_model/otp.dart';
+import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api_client.dart';
 
 class AuthService {
   final _apiClient = ApiClient();
 
   /// Method to ge the OTP for login
-  /// required params [ countryCode] [ phoneNo ]
-  Future loginOtp(
+  /// required params [ countryCode ] & [ phoneNo ]
+  Future<Otp?> loginOtp(
       {required String countryCode, required String phoneNo}) async {
     try {
       var response = await _apiClient.post(
@@ -16,7 +20,29 @@ class AuthService {
           'mobile_no': phoneNo,
         },
       );
+      return otpFromJson(json.encode(response));
     } on DioError catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future login({
+    required String phoneNo,
+    required String countryCode,
+    required String password,
+  }) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/login',
+        data: {
+          'country_code': countryCode,
+          'mobile_no': phoneNo,
+          'password': password,
+        },
+      );
+
+      return userResponseFromJson(json.encode(response));
+    } on Exception catch (e) {
       throw Exception(e);
     }
   }

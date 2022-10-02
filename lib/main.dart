@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/route_generator.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -31,6 +32,7 @@ class App extends StatelessWidget {
             return MaterialApp(
               title: 'Part App',
               theme: AppTheme.lightTheme,
+              home: const Login(),
               onGenerateRoute: RouteGenerator.generateRoute,
             );
           },

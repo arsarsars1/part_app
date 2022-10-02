@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -54,12 +56,14 @@ class ApiClient {
     );
     if (kDebugMode) {
       print('********** API END ***********');
-      print(response.data);
+      print(json.encode(response.data));
       print(
         'STATUS -> Code : ${response.statusCode}, Status : ${response.statusMessage}',
       );
       print('**********         ***********');
     }
+
+    return _handleResponse(response);
   }
 
   dynamic _handleResponse(Response response) {
