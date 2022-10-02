@@ -21,7 +21,8 @@ class CountryCubit extends Cubit<CountryState> {
 
   DropDownItem? get defaultCountry => _countries.isEmpty
       ? null
-      : buildMenuItem(_countries.firstWhere((country) => country.id == 356));
+      : buildMenuItem(
+          _countries.firstWhere((country) => country.callingCode == '91'));
 
   /// GET COUNTRIES
   /// Method to get the list of countries from the service

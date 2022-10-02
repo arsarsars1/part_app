@@ -12,7 +12,8 @@ String countriesToJson(List<Country> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 @freezed
-abstract class Country with _$Country {
+class Country with _$Country {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Country({
     required int id,
     String? capital,

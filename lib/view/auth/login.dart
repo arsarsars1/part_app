@@ -6,6 +6,7 @@ import 'package:part_app/view/auth/sign_up.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/country/country_cubit.dart';
+import 'package:part_app/view_model/cubits.dart';
 
 class Login extends StatefulWidget {
   static const route = '/auth/login';
@@ -96,7 +97,15 @@ class _LoginState extends State<Login> {
               height: 64,
             ),
             Button(
-              onTap: () {},
+              onTap: () {
+                /// inform the cubit to validate the data
+                /// once the data is valid the cubit will call the api to
+                /// generate the OTP
+                context.read<LoginCubit>().getLoginOTP(
+                      countryCode: country?.countryCode,
+                      phoneNo: phoneNo,
+                    );
+              },
               title: Strings.login,
             ),
           ],

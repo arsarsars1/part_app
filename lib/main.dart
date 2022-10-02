@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/route_generator.dart';
-import 'package:part_app/view_model/country/country_cubit.dart';
+import 'package:part_app/view_model/cubits.dart';
 
 void main() {
   runApp(const App());
@@ -18,6 +18,9 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider<CountryCubit>(
           create: (context) => CountryCubit(),
+        ),
+        BlocProvider<LoginCubit>(
+          create: (context) => LoginCubit(),
         ),
       ],
       child: MediaQuery(
