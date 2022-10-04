@@ -8,6 +8,10 @@ class CommonField extends StatelessWidget {
   final List<DropDownItem>? dropDownItems;
   final DropDownItem? defaultItem;
   final ValueChanged<dynamic> onChange;
+  final bool disabled;
+  final String? initialValue;
+  final Color? fillColor;
+  final Color? textColor;
 
   const CommonField(
       {Key? key,
@@ -16,7 +20,11 @@ class CommonField extends StatelessWidget {
       this.dropDown = false,
       this.dropDownItems,
       this.defaultItem,
-      required this.onChange})
+      this.initialValue,
+      this.fillColor,
+      this.textColor,
+      required this.onChange,
+      this.disabled = false})
       : super(key: key);
 
   @override
@@ -36,6 +44,13 @@ class CommonField extends StatelessWidget {
           ),
           dropDown
               ? DropdownButtonFormField<DropDownItem>(
+                  hint: hint != null
+                      ? Text(
+                          hint!,
+                          style:
+                              Theme.of(context).inputDecorationTheme.hintStyle,
+                        )
+                      : null,
                   dropdownColor: Colors.black,
                   value: selectedItem ?? defaultItem,
                   items: dropDownItems?.map((e) {
@@ -55,13 +70,19 @@ class CommonField extends StatelessWidget {
                   },
                 )
               : TextFormField(
+                  readOnly: disabled,
+                  initialValue: initialValue,
                   onChanged: (value) {
                     onChange(value);
                   },
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.copyWith(color: textColor),
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
                     hintText: hint,
+                    fillColor: fillColor,
                   ),
                 ),
         ],

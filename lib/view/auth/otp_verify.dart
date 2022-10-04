@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/view/auth/components/resend_otp.dart';
+import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -8,7 +9,9 @@ import 'package:part_app/view_model/cubits.dart';
 class OTPVerify extends StatefulWidget {
   static const route = '/auth/otp';
 
-  const OTPVerify({Key? key}) : super(key: key);
+  final bool login;
+
+  const OTPVerify({Key? key, required this.login}) : super(key: key);
 
   @override
   State<OTPVerify> createState() => _OTPVerifyState();
@@ -21,7 +24,7 @@ class _OTPVerifyState extends State<OTPVerify> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: BlocListener<LoginCubit, LoginState>(
+      body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is LoginSuccess) {
             Navigator.pushNamedAndRemoveUntil(
@@ -29,6 +32,9 @@ class _OTPVerifyState extends State<OTPVerify> {
               Home.route,
               (route) => false,
             );
+          }
+          if (state is RegisterOTPValidated) {
+            Navigator.pushNamed(context, WAValidation.route);
           }
         },
         child: SafeArea(
@@ -45,7 +51,7 @@ class _OTPVerifyState extends State<OTPVerify> {
               ),
               Center(
                 child: Text(
-                  context.read<LoginCubit>().phoneNumber,
+                  context.read<AuthCubit>().phoneNumber,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         fontSize: 16,
                       ),
@@ -87,7 +93,10 @@ class _OTPVerifyState extends State<OTPVerify> {
               ),
               ResendOtp(
                 onResend: () {
-                  context.read<LoginCubit>().getLoginOTP(resend: true);
+                  context.read<AuthCubit>().generateOTP(
+                        resend: true,
+                        login: widget.login,
+                      );
                 },
               ),
               const SizedBox(
@@ -95,7 +104,13 @@ class _OTPVerifyState extends State<OTPVerify> {
               ),
               Button(
                 onTap: () {
-                  context.read<LoginCubit>().login(password: password);
+                  if (widget.login) {
+                    context.read<AuthCubit>().login(password: password);
+                  } else {
+                    context
+                        .read<AuthCubit>()
+                        .validateRegisterOTP(otp: password);
+                  }
                 },
                 title: 'Verify',
               ),

@@ -20,8 +20,8 @@ class App extends StatelessWidget {
         BlocProvider<CountryCubit>(
           create: (context) => CountryCubit(),
         ),
-        BlocProvider<LoginCubit>(
-          create: (context) => LoginCubit(),
+        BlocProvider<AuthCubit>(
+          create: (context) => AuthCubit(),
         ),
       ],
       child: MediaQuery(

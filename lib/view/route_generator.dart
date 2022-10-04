@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/auth/login/login.dart';
-import 'package:part_app/view/auth/login/otp_verify.dart';
-import 'package:part_app/view/auth/sign_up.dart';
+import 'package:part_app/view/auth/otp_verify.dart';
+import 'package:part_app/view/auth/register/admin_details.dart';
+import 'package:part_app/view/auth/register/sign_up.dart';
+import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/home/home.dart';
 
 class RouteGenerator {
@@ -22,14 +24,26 @@ class RouteGenerator {
           settings: settings,
         );
       case OTPVerify.route:
-        return MaterialPageRoute(
-          builder: (_) => const OTPVerify(),
-          settings: settings,
-        );
+        {
+          return MaterialPageRoute(
+            builder: (_) => OTPVerify(login: settings.arguments as bool),
+            settings: settings,
+          );
+        }
 
       case SignUp.route:
         return MaterialPageRoute(
           builder: (_) => const SignUp(),
+          settings: settings,
+        );
+      case WAValidation.route:
+        return MaterialPageRoute(
+          builder: (_) => const WAValidation(),
+          settings: settings,
+        );
+      case AdminDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const AdminDetails(),
           settings: settings,
         );
       default:

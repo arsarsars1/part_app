@@ -3,31 +3,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/view/auth/components/phone_number.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
-import 'package:part_app/view/auth/register/sign_up.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class Login extends StatefulWidget {
-  static const route = '/auth/login';
+class SignUp extends StatefulWidget {
+  static const route = '/auth/signUp';
 
-  const Login({Key? key}) : super(key: key);
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   String? phoneNo;
   Country? country;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<CountryCubit>().getCountries();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +27,12 @@ class _LoginState extends State<Login> {
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           // if the otp fails notifies the UI with an alert
-          if (state is SendingOtpFailed) {
+          if (state is SendingOtpFailed && state.login) {
             Alert(context).show(message: state.message);
           }
           // if the OTP is sent show the User with the verification UI
-          else if (state is OTPSent && !state.resend && state.login) {
-            Navigator.pushNamed(context, OTPVerify.route, arguments: true);
+          else if (state is OTPSent && !state.resend && !state.login) {
+            Navigator.pushNamed(context, OTPVerify.route, arguments: false);
           }
         },
         child: SafeArea(
@@ -50,20 +41,15 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
-                child: Text(
-                  Strings.welcome,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: Text(
-                  Strings.loginWelcomeMessage,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 16,
-                      ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Text(
+                    Strings.signUpWelcomeMessage,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 16,
+                        ),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -80,29 +66,24 @@ class _LoginState extends State<Login> {
               const SizedBox(
                 height: 32,
               ),
-              InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, SignUp.route);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      Strings.notAMember,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 16,
-                          ),
-                    ),
-                    Text(
-                      Strings.joinNow,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primaryColor,
-                            fontSize: 16,
-                          ),
-                    )
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    Strings.alreadyMember,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 16,
+                        ),
+                  ),
+                  Text(
+                    Strings.login,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                          fontSize: 16,
+                        ),
+                  )
+                ],
               ),
               const SizedBox(
                 height: 64,
@@ -115,10 +96,10 @@ class _LoginState extends State<Login> {
                   context.read<AuthCubit>().generateOTP(
                         countryCode: country?.callingCode,
                         phoneNo: phoneNo,
-                        login: true,
+                        login: false,
                       );
                 },
-                title: Strings.login,
+                title: Strings.continueLabel,
               ),
             ],
           ),

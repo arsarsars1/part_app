@@ -38,4 +38,5 @@ class AppColors {
   static Color textColor = const Color(0xFFF8F8F8);
   static Color textFieldColor = const Color(0xFF2A2A2A);
   static Color hintColor = const Color(0xFF6C6C6C);
+  static Color disabledColor = const Color(0xFFBABABA);
 }

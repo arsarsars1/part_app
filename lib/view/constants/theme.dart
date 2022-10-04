@@ -55,14 +55,15 @@ class AppTheme {
         ),
       ),
       appBarTheme: AppBarTheme(
-        elevation: 1,
-        centerTitle: false,
+        elevation: 0,
+        centerTitle: true,
         color: Colors.black,
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
         titleTextStyle: GoogleFonts.nunitoSans().copyWith(
           color: primaryText,
+          fontSize: 16,
         ),
       ),
       textTheme: TextTheme(
@@ -71,7 +72,8 @@ class AppTheme {
           fontSize: 14,
         ),
         bodyText2: GoogleFonts.nunitoSans().copyWith(
-          color: secondaryText,
+          color: primaryText,
+          fontSize: 16,
         ),
         headline1: GoogleFonts.nunitoSans().copyWith(
           color: primaryText,

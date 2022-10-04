@@ -10,11 +10,13 @@ class AuthService {
 
   /// Method to ge the OTP for login
   /// required params [ countryCode ] & [ phoneNo ]
-  Future<Otp?> loginOtp(
-      {required String countryCode, required String phoneNo}) async {
+  Future<Otp?> generateOTP(
+      {required String countryCode,
+      required String phoneNo,
+      required bool login}) async {
     try {
       var response = await _apiClient.post(
-        postPath: '/login-otp',
+        postPath: login ? '/login-otp' : '/register-otp',
         data: {
           'country_code': countryCode,
           'mobile_no': phoneNo,
@@ -42,6 +44,27 @@ class AuthService {
       );
 
       return userResponseFromJson(json.encode(response));
+    } on Exception catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future validateOTP({
+    required String phoneNo,
+    required String countryCode,
+    required String otp,
+  }) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/register-otp-validate',
+        data: {
+          'country_code': countryCode,
+          'mobile_no': phoneNo,
+          'otp': otp,
+        },
+      );
+
+      return otpFromJson(json.encode(response));
     } on Exception catch (e) {
       throw Exception(e);
     }
