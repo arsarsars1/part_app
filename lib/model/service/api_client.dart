@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -40,7 +41,9 @@ class ApiClient {
     if (kDebugMode) {
       print('POST METHOD | URL -> $path\n');
       print('********** POST DATA ***********');
-      print(data);
+
+      log(json.encode(data));
+
       print('********** API CALL ***********');
     }
 
@@ -56,13 +59,12 @@ class ApiClient {
     );
     if (kDebugMode) {
       print('********** API END ***********');
-      print(json.encode(response.data));
       print(
         'STATUS -> Code : ${response.statusCode}, Status : ${response.statusMessage}',
       );
+      log(json.encode(response.data));
       print('**********         ***********');
     }
-
     return _handleResponse(response);
   }
 

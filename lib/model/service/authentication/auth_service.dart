@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:part_app/model/data_model/otp.dart';
+import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api_client.dart';
 
@@ -65,6 +66,21 @@ class AuthService {
       );
 
       return otpFromJson(json.encode(response));
+    } on Exception catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<UserResponse> register({
+    required RegisterRequest registerRequest,
+  }) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/register',
+        data: registerRequest.toJson(),
+      );
+
+      return userResponseFromJson(json.encode(response));
     } on Exception catch (e) {
       throw Exception(e);
     }

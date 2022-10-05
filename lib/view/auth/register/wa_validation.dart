@@ -17,6 +17,7 @@ class WAValidation extends StatefulWidget {
 
 class _WAValidationState extends State<WAValidation> {
   bool selected = false;
+  String? waNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +78,9 @@ class _WAValidationState extends State<WAValidation> {
                 if (!selected)
                   CommonField(
                     title: 'Whatsapp Phone Number *',
-                    onChange: (value) {},
+                    onChange: (value) {
+                      waNumber = value;
+                    },
                     hint: 'Eg: 9876543210',
                   ),
               ],
@@ -87,7 +90,14 @@ class _WAValidationState extends State<WAValidation> {
             child: Center(
               child: Button(
                 onTap: () {
-                  Navigator.pushNamed(context, AdminDetails.route);
+                  if (!selected &&
+                      (waNumber != null && waNumber!.length == 10)) {
+                    Navigator.pushNamed(context, AdminDetails.route);
+                    context.read<AuthCubit>().updateWANumber(waNumber);
+                  } else if (selected) {
+                    Navigator.pushNamed(context, AdminDetails.route);
+                    context.read<AuthCubit>().updateWANumber(null);
+                  }
                 },
                 title: 'Continue',
               ),

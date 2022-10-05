@@ -66,24 +66,27 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(
                 height: 32,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    Strings.alreadyMember,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          fontSize: 16,
-                        ),
-                  ),
-                  Text(
-                    Strings.login,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryColor,
-                          fontSize: 16,
-                        ),
-                  )
-                ],
+              InkWell(
+                onTap: () => Navigator.pop(context),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      Strings.alreadyMember,
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontSize: 16,
+                          ),
+                    ),
+                    Text(
+                      Strings.login,
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primaryColor,
+                            fontSize: 16,
+                          ),
+                    )
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 64,

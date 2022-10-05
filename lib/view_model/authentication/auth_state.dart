@@ -28,3 +28,17 @@ class LoginFailed extends AuthState {}
 class RegisterOTPValidated extends AuthState {}
 
 class RegisterOTPFailed extends AuthState {}
+
+class RegisterSuccess extends AuthState {}
+
+class RegisterFailed extends AuthState {
+  final String message;
+
+  RegisterFailed(this.message);
+}
+
+class ErrorFields extends AuthState {
+  final String message;
+
+  ErrorFields(this.message);
+}

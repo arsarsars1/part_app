@@ -8,6 +8,5 @@ class DropDownItem extends Equatable {
   const DropDownItem({this.title, required this.id, this.item});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [id, title, item];
 }

@@ -29,7 +29,7 @@ class AppTheme {
         fillColor: AppColors.textFieldColor,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 28,
-          vertical: 0,
+          vertical: 16,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(

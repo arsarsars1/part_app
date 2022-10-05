@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/view/constants/app_colors.dart';
 
 class Alert {
   final BuildContext context;
@@ -8,6 +9,7 @@ class Alert {
   void show({required String message}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        backgroundColor: AppColors.primaryColor,
         content: _Snack(
           message: message,
         ),
