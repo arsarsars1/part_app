@@ -7,4 +7,12 @@ class CountryInitial extends CountryState {}
 
 class CountriesLoaded extends CountryState {}
 
+class StateLoading extends CountryState {}
+
+class StateLoaded extends CountryState {}
+
+class DistrictLoaded extends CountryState {}
+
+class DistrictLoading extends CountryState {}
+
 class CountriesLoading extends CountryState {}

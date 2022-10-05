@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
+import 'package:part_app/view/auth/register/acadmey_details.dart';
 import 'package:part_app/view/auth/register/admin_details.dart';
+import 'package:part_app/view/auth/register/branch_details.dart';
 import 'package:part_app/view/auth/register/sign_up.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/home/home.dart';
@@ -44,6 +46,16 @@ class RouteGenerator {
       case AdminDetails.route:
         return MaterialPageRoute(
           builder: (_) => const AdminDetails(),
+          settings: settings,
+        );
+      case AcademyDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const AcademyDetails(),
+          settings: settings,
+        );
+      case BranchDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const BranchDetails(),
           settings: settings,
         );
       default:
