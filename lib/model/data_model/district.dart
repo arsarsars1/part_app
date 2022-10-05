@@ -15,7 +15,7 @@ String districtToJson(List<District> data) =>
 abstract class District with _$District {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory District({
-    required String message,
+    String? message,
     required int id,
     String? districtName,
     String? stateName,

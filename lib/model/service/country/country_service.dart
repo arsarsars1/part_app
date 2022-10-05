@@ -20,10 +20,10 @@ class CountryService {
     }
   }
 
-  Future<List<District>> states({required String countryId}) async {
+  Future<List<District>> states({required int countryId}) async {
     try {
       var response = await _apiClient.get(
-        queryPath: '/countries/$countryId/states',
+        queryPath: '/country/$countryId/states',
       );
       var data = json.encode(response);
       return districtFromJson(json.encode(response));
@@ -32,7 +32,7 @@ class CountryService {
     }
   }
 
-  Future<List<District>> districts({required String stateId}) async {
+  Future<List<District>> districts({required int stateId}) async {
     try {
       var response = await _apiClient.get(
         queryPath: '/state/$stateId/districts',

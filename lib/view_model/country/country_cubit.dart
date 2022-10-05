@@ -48,12 +48,12 @@ class CountryCubit extends Cubit<CountryState> {
     _countries = countriesList;
 
     List<District> states = await _countryService.states(
-      countryId: defaultCountry?.id as String,
+      countryId: defaultCountry?.id as int,
     );
     _states = states;
 
     List<District> districts = await _countryService.districts(
-      stateId: _states.first.id as String,
+      stateId: _states.first.id,
     );
     _districts = districts;
 
@@ -61,14 +61,14 @@ class CountryCubit extends Cubit<CountryState> {
     emit(CountriesLoaded());
   }
 
-  Future getStates({required String countryId}) async {
+  Future getStates({required int countryId}) async {
     List<District> states = await _countryService.states(
       countryId: countryId,
     );
     _states = states;
   }
 
-  Future getDistricts({required String stateId}) async {
+  Future getDistricts({required int stateId}) async {
     List<District> districts = await _countryService.districts(
       stateId: stateId,
     );
