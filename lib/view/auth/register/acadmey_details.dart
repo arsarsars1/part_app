@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/view/auth/register/branch_details.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AcademyDetails extends StatefulWidget {
@@ -48,7 +47,7 @@ class _WAValidationState extends State<AcademyDetails> {
                   },
                   hint: 'Select Academy Type',
                   dropDown: true,
-                  dropDownItems: DefaultValues().academyType,
+                  dropDownItems: context.read<CountryCubit>().academyTypes,
                 ),
                 const SizedBox(
                   height: 8,

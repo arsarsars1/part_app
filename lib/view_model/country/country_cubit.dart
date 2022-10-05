@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/model/data_model/academy_type.dart';
 import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/model/data_model/district.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
@@ -15,6 +16,7 @@ class CountryCubit extends Cubit<CountryState> {
   List<Country> _countries = [];
   List<District> _districts = [];
   List<District> _states = [];
+  List<AcademyType> _academyTypes = [];
 
   DropDownItem? _district;
   DropDownItem? _state;
@@ -24,6 +26,10 @@ class CountryCubit extends Cubit<CountryState> {
   List<District> get states => _states;
 
   List<District> get districts => _districts;
+
+  List<DropDownItem> get academyTypes => _academyTypes
+      .map((e) => DropDownItem(id: e.id, title: e.academyType, item: e))
+      .toList();
 
   List<DropDownItem> get countriesForDropDown => _countries
       .map((e) => DropDownItem(id: e.id, title: e.name, item: e))
@@ -69,6 +75,7 @@ class CountryCubit extends Cubit<CountryState> {
     await getDistricts(
       stateId: _states.first.id,
     );
+    await getAcademyTypes();
 
     // notifies the UI
     emit(CountriesLoaded());
@@ -107,6 +114,11 @@ class CountryCubit extends Cubit<CountryState> {
     );
     // notifies the UI
     emit(DistrictLoaded());
+  }
+
+  Future getAcademyTypes() async {
+    List<AcademyType> types = await _countryService.academyTypes();
+    _academyTypes = types;
   }
 
   DropDownItem buildMenuItem(Country country) {
