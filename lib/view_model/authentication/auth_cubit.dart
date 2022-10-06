@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/otp.dart';
+import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/authentication/auth_service.dart';
 
@@ -16,6 +19,8 @@ class AuthCubit extends Cubit<AuthState> {
   User? _user;
 
   String get phoneNumber => '+$_countryCode $_phoneNo';
+
+  RegisterRequest _registerRequest = const RegisterRequest();
 
   /// METHOD TO GENERATE THE OTP FOR LOGIN
   ///
@@ -36,6 +41,11 @@ class AuthCubit extends Cubit<AuthState> {
     }
     // calls the api
     if (_phoneNo != null && _countryCode != null) {
+      _registerRequest = _registerRequest.copyWith(
+        countryCode: _countryCode,
+        mobileNo: _phoneNo,
+      );
+
       emit(SendingOtp());
       Otp? response = await _authService.generateOTP(
         countryCode: _countryCode!,
@@ -82,5 +92,61 @@ class AuthCubit extends Cubit<AuthState> {
         emit(RegisterOTPFailed());
       }
     }
+  }
+
+  void updateWANumber(String? number) {
+    _registerRequest =
+        _registerRequest.copyWith(whatsappNo: number ?? _phoneNo);
+  }
+
+  void adminDetails(String? name, String? email, String? dob, String? gender) {
+    _registerRequest = _registerRequest.copyWith(
+      name: name,
+      email: email,
+      dob: dob,
+      gender: gender,
+      mobileNo: _phoneNo,
+      countryCode: _countryCode,
+      isTrainer: '0',
+    );
+    print(_registerRequest.toString());
+  }
+
+  void academyDetails(String? name, String? typeId) {
+    _registerRequest = _registerRequest.copyWith(
+      academyName: name,
+      academyTypeId: 1, // todo
+    );
+  }
+
+  void branchDetails(
+      {required String branchName,
+      required String address,
+      required int countryId,
+      required int districtId,
+      required int stateId}) {
+    _registerRequest = _registerRequest.copyWith(
+        // academyName: branchName,
+        // address: email,
+        countryId: countryId,
+        stateId: stateId,
+        districtId: districtId);
+    register();
+  }
+
+  Future register() async {
+    UserResponse value =
+        await _authService.register(registerRequest: _registerRequest);
+    if (value.status == 1) {
+      Hive.box(Database.userBox).put(Database.userKey, value.user?.toJson());
+      emit(RegisterSuccess());
+    } else {
+      emit(RegisterFailed(value.message ?? ' Failed to register the user!'));
+    }
+  }
+
+  Future validateLocalUser() async {
+    String userStr = Hive.box(Database.userBox).get(Database.userKey);
+    User? user = userResponseFromJson(userStr).user;
   }
 }

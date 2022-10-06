@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:part_app/model/data_model/academy_type.dart';
 import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/model/data_model/district.dart';
 import 'package:part_app/model/service/api_client.dart';
@@ -39,6 +40,18 @@ class CountryService {
       );
       var data = json.encode(response);
       return districtFromJson(json.encode(response));
+    } on DioError catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<List<AcademyType>> academyTypes() async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/academy-types',
+      );
+      var data = json.encode(response);
+      return academyTypeFromJson(json.encode(response));
     } on DioError catch (e) {
       throw Exception(e);
     }

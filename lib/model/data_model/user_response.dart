@@ -20,6 +20,7 @@ abstract class UserResponse with _$UserResponse {
   const factory UserResponse({
     User? user,
     String? token,
+    String? message,
     int? status,
   }) = _UserResponse;
 

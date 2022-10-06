@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/model/data_model/academy_type.dart';
 import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/model/data_model/district.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
@@ -15,6 +16,10 @@ class CountryCubit extends Cubit<CountryState> {
   List<Country> _countries = [];
   List<District> _districts = [];
   List<District> _states = [];
+  List<AcademyType> _academyTypes = [];
+
+  DropDownItem? _district;
+  DropDownItem? _state;
 
   List<Country> get counties => _countries;
 
@@ -22,14 +27,30 @@ class CountryCubit extends Cubit<CountryState> {
 
   List<District> get districts => _districts;
 
+  List<DropDownItem> get academyTypes => _academyTypes
+      .map((e) => DropDownItem(id: e.id, title: e.academyType, item: e))
+      .toList();
+
   List<DropDownItem> get countriesForDropDown => _countries
       .map((e) => DropDownItem(id: e.id, title: e.name, item: e))
+      .toList();
+
+  List<DropDownItem> get statesForDropDown => _states
+      .map((e) => DropDownItem(id: e.id, title: e.stateName, item: e))
+      .toList();
+
+  List<DropDownItem> get districtsForDropDown => _districts
+      .map((e) => DropDownItem(id: e.id, title: e.districtName, item: e))
       .toList();
 
   DropDownItem? get defaultCountry => _countries.isEmpty
       ? null
       : buildMenuItem(
           _countries.firstWhere((country) => country.callingCode == '91'));
+
+  DropDownItem? get defaultState => _state;
+
+  DropDownItem? get defaultDistrict => _district;
 
   /// GET COUNTRIES
   /// Method to get the list of countries from the service
@@ -47,15 +68,14 @@ class CountryCubit extends Cubit<CountryState> {
     // add it to local state for future reference
     _countries = countriesList;
 
-    List<District> states = await _countryService.states(
+    await getStates(
       countryId: defaultCountry?.id as int,
     );
-    _states = states;
 
-    List<District> districts = await _countryService.districts(
+    await getDistricts(
       stateId: _states.first.id,
     );
-    _districts = districts;
+    await getAcademyTypes();
 
     // notifies the UI
     emit(CountriesLoaded());
@@ -65,7 +85,18 @@ class CountryCubit extends Cubit<CountryState> {
     List<District> states = await _countryService.states(
       countryId: countryId,
     );
+
     _states = states;
+
+    // creates a default menu item for state
+    District tempState = _states.first;
+    _state = DropDownItem(
+      id: tempState.id,
+      title: tempState.stateName,
+      item: tempState,
+    );
+    // notifies the UI
+    emit(StateLoaded());
   }
 
   Future getDistricts({required int stateId}) async {
@@ -73,6 +104,21 @@ class CountryCubit extends Cubit<CountryState> {
       stateId: stateId,
     );
     _districts = districts;
+
+    // creates a default menu item for state
+    District tempDistrict = _districts.first;
+    _district = DropDownItem(
+      id: tempDistrict.id,
+      title: tempDistrict.districtName,
+      item: tempDistrict,
+    );
+    // notifies the UI
+    emit(DistrictLoaded());
+  }
+
+  Future getAcademyTypes() async {
+    List<AcademyType> types = await _countryService.academyTypes();
+    _academyTypes = types;
   }
 
   DropDownItem buildMenuItem(Country country) {

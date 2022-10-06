@@ -39,4 +39,5 @@ class AppColors {
   static Color textFieldColor = const Color(0xFF2A2A2A);
   static Color hintColor = const Color(0xFF6C6C6C);
   static Color disabledColor = const Color(0xFFBABABA);
+  static Color liteDark = const Color(0xFF242424);
 }
