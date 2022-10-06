@@ -7,6 +7,7 @@ import 'package:part_app/view/auth/register/branch_details.dart';
 import 'package:part_app/view/auth/register/sign_up.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/home/home.dart';
+import 'package:part_app/view/membership/membership.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -56,6 +57,11 @@ class RouteGenerator {
       case BranchDetails.route:
         return MaterialPageRoute(
           builder: (_) => const BranchDetails(),
+          settings: settings,
+        );
+      case Membership.route:
+        return MaterialPageRoute(
+          builder: (_) => const Membership(),
           settings: settings,
         );
       default:

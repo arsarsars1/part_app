@@ -22,6 +22,10 @@ class AuthCubit extends Cubit<AuthState> {
 
   RegisterRequest _registerRequest = const RegisterRequest();
 
+  String? _token;
+
+  String? get token => _token;
+
   /// METHOD TO GENERATE THE OTP FOR LOGIN
   ///
   /// [login] is a required field and it determines the API path to call
@@ -71,7 +75,9 @@ class AuthCubit extends Cubit<AuthState> {
 
       if (userResponse.status == 1) {
         _user = userResponse.user;
-        emit(LoginSuccess());
+        _token = userResponse.token;
+        emit(LoginSuccess(
+            userResponse.user?.adminDetail?.academy?.membershipId != null));
       } else {
         emit(LoginFailed());
       }
@@ -126,19 +132,22 @@ class AuthCubit extends Cubit<AuthState> {
       required int districtId,
       required int stateId}) {
     _registerRequest = _registerRequest.copyWith(
-        // academyName: branchName,
-        // address: email,
-        countryId: countryId,
-        stateId: stateId,
-        districtId: districtId);
+      // academyName: branchName,
+      // address: email,
+      countryId: countryId,
+      stateId: stateId,
+      districtId: districtId,
+    );
     register();
   }
 
   Future register() async {
-    UserResponse value =
-        await _authService.register(registerRequest: _registerRequest);
+    UserResponse value = await _authService.register(
+      registerRequest: _registerRequest,
+    );
     if (value.status == 1) {
-      Hive.box(Database.userBox).put(Database.userKey, value.user?.toJson());
+      _token = value.token;
+      Hive.box(Database.userBox).put(Database.token, value.token);
       emit(RegisterSuccess());
     } else {
       emit(RegisterFailed(value.message ?? ' Failed to register the user!'));
@@ -146,7 +155,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future validateLocalUser() async {
-    String userStr = Hive.box(Database.userBox).get(Database.userKey);
-    User? user = userResponseFromJson(userStr).user;
+    String userStr = Hive.box(Database.userBox).get(Database.token);
   }
 }

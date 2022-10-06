@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/membership/components/membership_list.dart';
+import 'package:part_app/view/membership/components/pay_checkbox.dart';
 import 'package:part_app/view/membership/components/switch.dart';
 import 'package:part_app/view_model/membership/membership_cubit.dart';
 
@@ -16,6 +17,7 @@ class Membership extends StatefulWidget {
 
 class _MembershipState extends State<Membership> {
   bool free = true;
+
   @override
   void initState() {
     super.initState();
@@ -35,7 +37,7 @@ class _MembershipState extends State<Membership> {
       body: Column(
         children: [
           Expanded(
-            flex: 3,
+            flex: 5,
             child: Column(
               children: [
                 Text(
@@ -97,20 +99,31 @@ class _MembershipState extends State<Membership> {
                   height: 20,
                 ),
                 const MembershipList(),
-                const SizedBox(
-                  height: 20,
-                ),
+                if (!free)
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: PayCheckBox(
+                      onChange: (bool value) {
+                        setState(() {
+                          free = value;
+                        });
+                      },
+                    ),
+                  )
               ],
             ),
           ),
           Expanded(
             child: BlocBuilder<MembershipCubit, MembershipState>(
               builder: (context, state) {
-                print(free);
-                return Center(
-                  child: Button(
-                    onTap: cubit.selectedMembership == null ? null : () {},
-                    title: free ? 'Submit' : 'Pay Now',
+                return SafeArea(
+                  child: Center(
+                    child: Button(
+                      onTap: cubit.selectedMembership == null ? null : () {},
+                      title: cubit.selectedMembership?.paymentType == 'free'
+                          ? 'Try for free'
+                          : 'Pay Now',
+                    ),
                   ),
                 );
               },

@@ -128,7 +128,6 @@ class _BranchDetailsState extends State<BranchDetails> {
               child: Center(
                 child: Button(
                   onTap: () {
-                    print(countryId);
                     if (branchName.isEmpty ||
                         address.isEmpty ||
                         countryId == null ||
@@ -138,11 +137,12 @@ class _BranchDetailsState extends State<BranchDetails> {
                       return;
                     }
                     context.read<AuthCubit>().branchDetails(
-                        branchName: branchName,
-                        address: address,
-                        countryId: countryId!,
-                        districtId: districtId!,
-                        stateId: stateId!);
+                          branchName: branchName,
+                          address: address,
+                          countryId: countryId!,
+                          districtId: districtId!,
+                          stateId: stateId!,
+                        );
                   },
                   title: 'Sign Up',
                 ),

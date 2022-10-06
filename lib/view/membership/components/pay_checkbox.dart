@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/view/components/checkbox_text.dart';
 
 class PayCheckBox extends StatefulWidget {
-  const PayCheckBox({Key? key}) : super(key: key);
+  final ValueChanged<bool> onChange;
+  const PayCheckBox({Key? key, required this.onChange}) : super(key: key);
 
   @override
   State<PayCheckBox> createState() => _PayCheckBoxState();
@@ -9,14 +11,31 @@ class PayCheckBox extends StatefulWidget {
 
 class _PayCheckBoxState extends State<PayCheckBox> {
   bool online = true;
+
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Checkbox(
-          value: online,
-          onChanged: (value) {},
-        )
+        CheckBoxText(
+          checked: online,
+          title: 'Pay Online',
+          onTap: () {
+            setState(() {
+              online = true;
+            });
+          },
+        ),
+        CheckBoxText(
+          checked: !online,
+          title: 'Pay Offline',
+          onTap: () {
+            setState(() {
+              online = false;
+            });
+          },
+        ),
       ],
     );
   }

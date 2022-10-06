@@ -4,6 +4,7 @@ import 'package:part_app/view/auth/components/resend_otp.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/home/home.dart';
+import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class OTPVerify extends StatefulWidget {
@@ -27,11 +28,19 @@ class _OTPVerifyState extends State<OTPVerify> {
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is LoginSuccess) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Home.route,
-              (route) => false,
-            );
+            if (state.membershipActive) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Home.route,
+                (route) => false,
+              );
+            } else {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Membership.route,
+                (route) => false,
+              );
+            }
           }
           if (state is RegisterOTPValidated) {
             Navigator.pushNamed(context, WAValidation.route);
