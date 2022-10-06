@@ -5,6 +5,7 @@ import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/route_generator.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/view_model/membership/membership_cubit.dart';
 
 void main() {
   runApp(const App());
@@ -22,6 +23,9 @@ class App extends StatelessWidget {
         ),
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(),
+        ),
+        BlocProvider<MembershipCubit>(
+          create: (context) => MembershipCubit(),
         ),
       ],
       child: MediaQuery(

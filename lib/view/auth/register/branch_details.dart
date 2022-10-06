@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/home/home.dart';
+import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/country/country_cubit.dart';
 
@@ -46,7 +46,10 @@ class _BranchDetailsState extends State<BranchDetails> {
             Alert(context).show(message: state.message);
           } else if (state is RegisterSuccess) {
             Navigator.pushNamedAndRemoveUntil(
-                context, Home.route, (route) => false);
+              context,
+              Membership.route,
+              (route) => false,
+            );
           }
         },
         child: Column(

@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/otp.dart';
 import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
@@ -136,9 +138,15 @@ class AuthCubit extends Cubit<AuthState> {
     UserResponse value =
         await _authService.register(registerRequest: _registerRequest);
     if (value.status == 1) {
+      Hive.box(Database.userBox).put(Database.userKey, value.user?.toJson());
       emit(RegisterSuccess());
     } else {
       emit(RegisterFailed(value.message ?? ' Failed to register the user!'));
     }
+  }
+
+  Future validateLocalUser() async {
+    String userStr = Hive.box(Database.userBox).get(Database.userKey);
+    User? user = userResponseFromJson(userStr).user;
   }
 }

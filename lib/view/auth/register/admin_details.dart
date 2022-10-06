@@ -118,11 +118,15 @@ class _WAValidationState extends State<AdminDetails> {
   void datePicker() {
     showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: DateTime(
+        DateTime.now().year - 18,
+      ),
       firstDate: DateTime(
         DateTime.now().year - 100,
       ),
-      lastDate: DateTime.now(),
+      lastDate: DateTime(
+        DateTime.now().year - 18,
+      ),
     ).then((value) {
       if (value != null) {
         dob = value.toDateString();

@@ -7,4 +7,5 @@ class Database {
   }
 
   static const userBox = 'userBox';
+  static const userKey = 'userKey';
 }

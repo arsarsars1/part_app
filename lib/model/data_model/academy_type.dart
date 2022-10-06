@@ -17,6 +17,7 @@ String academyTypeToJson(List<AcademyType> data) =>
 
 @freezed
 abstract class AcademyType with _$AcademyType {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory AcademyType({
     required int id,
     required String academyType,

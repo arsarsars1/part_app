@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 
 class Button extends StatelessWidget {
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String title;
   final double? width;
   final double? height;
@@ -21,7 +21,11 @@ class Button extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.primaryColor,
+          color: onTap != null
+              ? AppColors.primaryColor
+              : AppColors.primaryColor.withOpacity(
+                  0.35,
+                ),
           borderRadius: BorderRadius.circular(100),
         ),
         height: height ?? 48,
