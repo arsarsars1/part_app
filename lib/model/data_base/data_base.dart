@@ -8,4 +8,10 @@ class Database {
 
   static const userBox = 'userBox';
   static const token = 'token';
+  static const userData = 'userData';
+
+  String? getToken() {
+    String tempToken = Hive.box(userBox).get(token);
+    return tempToken;
+  }
 }

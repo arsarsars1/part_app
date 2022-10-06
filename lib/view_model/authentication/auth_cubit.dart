@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -17,14 +19,15 @@ class AuthCubit extends Cubit<AuthState> {
   String? _phoneNo;
   String? _countryCode;
   User? _user;
+  String? _token;
 
   String get phoneNumber => '+$_countryCode $_phoneNo';
 
   RegisterRequest _registerRequest = const RegisterRequest();
 
-  String? _token;
-
   String? get token => _token;
+
+  User? get user => _user;
 
   /// METHOD TO GENERATE THE OTP FOR LOGIN
   ///
@@ -76,6 +79,11 @@ class AuthCubit extends Cubit<AuthState> {
       if (userResponse.status == 1) {
         _user = userResponse.user;
         _token = userResponse.token;
+        Hive.box(Database.userBox).put(Database.token, userResponse.token);
+        Hive.box(Database.userBox).put(
+          Database.userData,
+          jsonEncode(userResponse),
+        );
         emit(LoginSuccess(
             userResponse.user?.adminDetail?.academy?.membershipId != null));
       } else {
@@ -148,6 +156,7 @@ class AuthCubit extends Cubit<AuthState> {
     if (value.status == 1) {
       _token = value.token;
       Hive.box(Database.userBox).put(Database.token, value.token);
+      Hive.box(Database.userBox).put(Database.userData, jsonEncode(value));
       emit(RegisterSuccess());
     } else {
       emit(RegisterFailed(value.message ?? ' Failed to register the user!'));
@@ -155,6 +164,9 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future validateLocalUser() async {
-    String userStr = Hive.box(Database.userBox).get(Database.token);
+    String userToken = Hive.box(Database.userBox).get(Database.token);
+    String userStr = Hive.box(Database.userBox).get(Database.userData);
+    _token = userToken;
+    _user = userResponseFromJson(userStr).user;
   }
 }

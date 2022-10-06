@@ -4,6 +4,7 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/membership/components/membership_list.dart';
 import 'package:part_app/view/membership/components/pay_checkbox.dart';
 import 'package:part_app/view/membership/components/switch.dart';
+import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view_model/membership/membership_cubit.dart';
 
 class Membership extends StatefulWidget {
@@ -17,6 +18,7 @@ class Membership extends StatefulWidget {
 
 class _MembershipState extends State<Membership> {
   bool free = true;
+  bool onlinePay = true;
 
   @override
   void initState() {
@@ -105,7 +107,7 @@ class _MembershipState extends State<Membership> {
                     child: PayCheckBox(
                       onChange: (bool value) {
                         setState(() {
-                          free = value;
+                          onlinePay = value;
                         });
                       },
                     ),
@@ -119,7 +121,16 @@ class _MembershipState extends State<Membership> {
                 return SafeArea(
                   child: Center(
                     child: Button(
-                      onTap: cubit.selectedMembership == null ? null : () {},
+                      onTap: cubit.selectedMembership == null
+                          ? null
+                          : () {
+                              if (!onlinePay) {
+                                Navigator.pushNamed(
+                                  context,
+                                  SalesManPhone.route,
+                                );
+                              }
+                            },
                       title: cubit.selectedMembership?.paymentType == 'free'
                           ? 'Try for free'
                           : 'Pay Now',

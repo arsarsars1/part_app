@@ -25,7 +25,9 @@ class App extends StatelessWidget {
           create: (context) => AuthCubit(),
         ),
         BlocProvider<MembershipCubit>(
-          create: (context) => MembershipCubit(),
+          create: (context) => MembershipCubit(
+            authCubit: context.read<AuthCubit>(),
+          ),
         ),
       ],
       child: MediaQuery(

@@ -25,6 +25,7 @@ class _PayCheckBoxState extends State<PayCheckBox> {
             setState(() {
               online = true;
             });
+            widget.onChange(online);
           },
         ),
         CheckBoxText(
@@ -34,6 +35,7 @@ class _PayCheckBoxState extends State<PayCheckBox> {
             setState(() {
               online = false;
             });
+            widget.onChange(online);
           },
         ),
       ],

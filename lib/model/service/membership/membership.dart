@@ -14,4 +14,48 @@ class MembershipService {
       throw Exception(e);
     }
   }
+
+  Future getOTPForSales({
+    required int? academyId,
+    required int? membershipID,
+    required String phoneNo,
+  }) async {
+    try {
+      var data = {
+        'academy_id': academyId?.toString(),
+        'membership_id': membershipID?.toString(),
+        'salesman_mobile_no': phoneNo,
+      };
+      var str = await _apiClient.post(
+        postPath: '/offline-otp-generate',
+        data: data,
+      );
+      return jsonEncode(str);
+    } on Exception catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future addMembership({
+    required int? academyId,
+    required int? membershipID,
+    required String paymentMethod,
+    required String salesManOtp,
+  }) async {
+    try {
+      var data = {
+        'academy_id': academyId?.toString(),
+        'membership_id': membershipID?.toString(),
+        'payment_method': paymentMethod,
+        'salesman_otp': salesManOtp,
+      };
+      var str = await _apiClient.post(
+        postPath: '/add-membership',
+        data: data,
+      );
+      return jsonEncode(str);
+    } on Exception catch (e) {
+      throw Exception(e);
+    }
+  }
 }

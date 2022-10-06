@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:part_app/model/data_base/data_base.dart';
 
 class ApiClient {
   final _baseUrl = 'https://dev.partapp.in/api';
@@ -46,14 +47,21 @@ class ApiClient {
 
       print('********** API CALL ***********');
     }
-
+    String? bearerToken = Database().getToken();
+    print(bearerToken);
     // posts the data to service with headers
     var response = await _dio.post(
       path,
       data: formData ? FormData.fromMap(data) : data,
       options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status != null && status < 500;
+        },
         headers: {
           'MOBILE-APP-TOKEN': _token,
+          'Authorization': 'Bearer $bearerToken',
+          "Accept": "application/json"
         },
       ),
     );

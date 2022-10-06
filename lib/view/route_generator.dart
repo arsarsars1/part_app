@@ -8,6 +8,8 @@ import 'package:part_app/view/auth/register/sign_up.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/membership/membership.dart';
+import 'package:part_app/view/membership/salesman_otp.dart';
+import 'package:part_app/view/membership/salesman_phone.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -62,6 +64,16 @@ class RouteGenerator {
       case Membership.route:
         return MaterialPageRoute(
           builder: (_) => const Membership(),
+          settings: settings,
+        );
+      case SalesManPhone.route:
+        return MaterialPageRoute(
+          builder: (_) => const SalesManPhone(),
+          settings: settings,
+        );
+      case SalesManOTP.route:
+        return MaterialPageRoute(
+          builder: (_) => const SalesManOTP(),
           settings: settings,
         );
       default:
