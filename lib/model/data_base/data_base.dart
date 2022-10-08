@@ -14,4 +14,9 @@ class Database {
     String tempToken = Hive.box(userBox).get(token);
     return tempToken;
   }
+
+  Future<String?> getUser() async {
+    String user = await Hive.box(userBox).get(userData);
+    return user;
+  }
 }

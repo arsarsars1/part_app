@@ -11,6 +11,8 @@ import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 
+import 'membership/membership_success.dart';
+
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
@@ -74,6 +76,11 @@ class RouteGenerator {
       case SalesManOTP.route:
         return MaterialPageRoute(
           builder: (_) => const SalesManOTP(),
+          settings: settings,
+        );
+      case SubscriptionSuccess.route:
+        return MaterialPageRoute(
+          builder: (_) => const SubscriptionSuccess(),
           settings: settings,
         );
       default:

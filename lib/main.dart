@@ -33,7 +33,7 @@ class App extends StatelessWidget {
       child: MediaQuery(
         data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
         child: ScreenUtilInit(
-          designSize: const Size(800, 360),
+          designSize: const Size(360, 800),
           builder: (_, child) {
             return MaterialApp(
               title: 'Part App',

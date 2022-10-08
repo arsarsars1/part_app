@@ -56,21 +56,44 @@ class _MembershipListState extends State<MembershipList> {
                       const SizedBox(
                         height: 4,
                       ),
-                      Text(
-                        'Register upto ${membership.noOfBranches} Branch(s)',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              fontSize: 14,
-                            ),
-                      ),
-                      const SizedBox(
-                        height: 2,
-                      ),
-                      Text(
-                        'Register upto ${membership.noOfStudents} students',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              fontSize: 14,
-                            ),
-                      ),
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Register upto ${membership.noOfBranches} Branch(s)',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
+                                      fontSize: 14,
+                                    ),
+                              ),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              Text(
+                                'Register upto ${membership.noOfStudents} students',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
+                                      fontSize: 14,
+                                    ),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          Text(
+                            '₹ ${membership.amount}/-',
+                            style:
+                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      fontSize: 16,
+                                    ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

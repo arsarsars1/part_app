@@ -123,7 +123,6 @@ class AuthCubit extends Cubit<AuthState> {
       countryCode: _countryCode,
       isTrainer: '0',
     );
-    print(_registerRequest.toString());
   }
 
   void academyDetails(String? name, String? typeId) {

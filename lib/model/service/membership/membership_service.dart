@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/membership.dart';
 import 'package:part_app/model/service/api_client.dart';
 
@@ -36,7 +37,7 @@ class MembershipService {
     }
   }
 
-  Future addMembership({
+  Future<Common> addMembership({
     required int? academyId,
     required int? membershipID,
     required String paymentMethod,
@@ -53,7 +54,7 @@ class MembershipService {
         postPath: '/add-membership',
         data: data,
       );
-      return jsonEncode(str);
+      return commonFromJson(jsonEncode(str));
     } on Exception catch (e) {
       throw Exception(e);
     }
