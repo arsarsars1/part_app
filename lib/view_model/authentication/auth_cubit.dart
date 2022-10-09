@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/otp.dart';
 import 'package:part_app/model/data_model/register_request.dart';
@@ -167,5 +167,10 @@ class AuthCubit extends Cubit<AuthState> {
     String userStr = Hive.box(Database.userBox).get(Database.userData);
     _token = userToken;
     _user = userResponseFromJson(userStr).user;
+    if (_user != null && _user != null) {
+      emit(UserAvailable());
+    } else {
+      emit(UserNotAvailable());
+    }
   }
 }

@@ -29,6 +29,10 @@ class LoginSuccess extends AuthState {
 
 class LoginFailed extends AuthState {}
 
+class UserAvailable extends AuthState {}
+
+class UserNotAvailable extends AuthState {}
+
 class RegisterOTPValidated extends AuthState {}
 
 class RegisterOTPFailed extends AuthState {}

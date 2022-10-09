@@ -13,11 +13,17 @@ class ApiClient {
   Future get({required String queryPath}) async {
     var path = _baseUrl + queryPath;
 
+    String? bearerToken = Database().getToken();
+    if (kDebugMode) {
+      print(bearerToken);
+    }
+
     var response = await _dio.get(
       path,
       options: Options(
         headers: {
           'MOBILE-APP-TOKEN': _token,
+          'Authorization': 'Bearer $bearerToken',
         },
       ),
     );
@@ -48,7 +54,9 @@ class ApiClient {
       print('********** API CALL ***********');
     }
     String? bearerToken = Database().getToken();
-    print(bearerToken);
+    if (kDebugMode) {
+      print(bearerToken);
+    }
     // posts the data to service with headers
     var response = await _dio.post(
       path,
