@@ -2,4 +2,12 @@ class Assets {
   Assets._();
   static const successLottie = 'assets/lottie/success.json';
   static const notification = 'assets/icons/notifications_icon.svg';
+  static const students = 'assets/icons/students_icon.svg';
+  static const attendance = 'assets/icons/attendance_icon.svg';
+  static const fee = 'assets/icons/fee_icon.svg';
+  static const todays = 'assets/icons/todays_icon.svg';
+  static const trainers = 'assets/icons/trainers_icon.svg';
+  static const batches = 'assets/icons/batches_icon.svg';
+  static const branchManager = 'assets/icons/branch_manager.svg';
+  static const branches = 'assets/icons/branches_icon.svg';
 }
