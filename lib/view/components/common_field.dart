@@ -15,6 +15,7 @@ class CommonField extends StatelessWidget {
   final int? maxLines;
   final VoidCallback? onTap;
   final TextEditingController? controller;
+  final TextInputType? inputType;
 
   const CommonField(
       {Key? key,
@@ -29,6 +30,7 @@ class CommonField extends StatelessWidget {
       this.maxLines,
       this.onTap,
       this.controller,
+      this.inputType,
       required this.onChange,
       this.disabled = false})
       : super(key: key);
@@ -83,6 +85,7 @@ class CommonField extends StatelessWidget {
                   minLines: maxLines,
                   readOnly: disabled,
                   initialValue: initialValue,
+                  keyboardType: inputType,
                   onChanged: (value) {
                     onChange(value);
                   },

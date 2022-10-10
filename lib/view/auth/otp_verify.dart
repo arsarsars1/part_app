@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/auth/components/resend_otp.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/components/components.dart';
@@ -111,19 +112,25 @@ class _OTPVerifyState extends State<OTPVerify> {
               const SizedBox(
                 height: 64,
               ),
-              Button(
-                onTap: () {
-                  if (widget.login) {
-                    context.read<AuthCubit>().login(password: password);
-                  } else {
-                    context
-                        .read<AuthCubit>()
-                        .validateRegisterOTP(otp: password);
-                  }
-                },
-                title: 'Verify',
-              ),
             ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 100.h,
+        child: BottomAppBar(
+          color: Colors.black,
+          child: Center(
+            child: Button(
+              onTap: () {
+                if (widget.login) {
+                  context.read<AuthCubit>().login(password: password);
+                } else {
+                  context.read<AuthCubit>().validateRegisterOTP(otp: password);
+                }
+              },
+              title: 'Verify',
+            ),
           ),
         ),
       ),

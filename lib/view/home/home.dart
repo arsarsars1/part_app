@@ -6,6 +6,7 @@ import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/home/components/dashboard_icons.dart';
 import 'package:part_app/view/home/components/home_banner.dart';
 import 'package:part_app/view/home/components/home_bar.dart';
+import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class Home extends StatefulWidget {
@@ -34,29 +35,40 @@ class _HomeState extends State<Home> {
     Color selectedColor = AppColors.primaryColor;
     Color unselectedColor = const Color(0xFF8A8A8A);
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: HomeBar(),
-            ),
-            Expanded(
-              child: ListView(
-                children: const [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  HomeBanner(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  DashboardIcons()
-                ],
+      body: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is UserNotAvailable) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              SplashScreen.route,
+              (route) => false,
+            );
+          }
+        },
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: HomeBar(),
               ),
-            ),
-          ],
+              Expanded(
+                child: ListView(
+                  children: const [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    HomeBanner(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    DashboardIcons()
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

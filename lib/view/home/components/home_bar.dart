@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/home/components/profile_button.dart';
 
 class HomeBar extends StatelessWidget {
   const HomeBar({Key? key}) : super(key: key);
@@ -33,20 +34,7 @@ class HomeBar extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Container(
-              height: 36.h,
-              width: 36.w,
-              padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primaryColor,
-              ),
-              child: const CircleAvatar(
-                backgroundImage: NetworkImage(
-                  'https://avatars.githubusercontent.com/u/13048367?v=4',
-                ),
-              ),
-            ),
+            const ProfileButton(),
             SizedBox(
               width: 16.w,
             ),
@@ -61,7 +49,7 @@ class HomeBar extends StatelessWidget {
                     color: AppColors.primaryColor,
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
+                    borderRadius: BorderRadius.circular(100.r),
                     child: Container(
                       color: const Color(0xFFECECEC),
                       child: Column(
@@ -82,8 +70,8 @@ class HomeBar extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.topRight,
                     child: Container(
-                      height: 12.h,
-                      width: 12.w,
+                      height: 12.r,
+                      width: 12.r,
                       padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
