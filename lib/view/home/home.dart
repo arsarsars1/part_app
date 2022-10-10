@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/home/components/dashboard_icons.dart';
 import 'package:part_app/view/home/components/home_banner.dart';
 import 'package:part_app/view/home/components/home_bar.dart';
@@ -15,6 +18,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int currentIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +31,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    Color selectedColor = AppColors.primaryColor;
+    Color unselectedColor = const Color(0xFF8A8A8A);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -51,6 +58,63 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: AppColors.liteDark,
+        currentIndex: currentIndex,
+        selectedItemColor: selectedColor,
+        unselectedItemColor: unselectedColor,
+        onTap: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            backgroundColor: AppColors.liteDark,
+            label: 'Dashboard',
+            icon: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: SvgPicture.asset(
+                Assets.dashboard,
+                color: currentIndex == 0 ? selectedColor : unselectedColor,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: AppColors.liteDark,
+            label: 'Calender',
+            icon: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: SvgPicture.asset(
+                Assets.calendar,
+                color: currentIndex == 1 ? selectedColor : unselectedColor,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: AppColors.liteDark,
+            label: 'Support',
+            icon: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: SvgPicture.asset(
+                Assets.support,
+                color: currentIndex == 2 ? selectedColor : unselectedColor,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: AppColors.liteDark,
+            label: 'Leads',
+            icon: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: SvgPicture.asset(
+                Assets.leads,
+                color: currentIndex == 3 ? selectedColor : unselectedColor,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

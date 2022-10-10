@@ -10,4 +10,8 @@ class Assets {
   static const batches = 'assets/icons/batches_icon.svg';
   static const branchManager = 'assets/icons/branch_manager.svg';
   static const branches = 'assets/icons/branches_icon.svg';
+  static const dashboard = 'assets/icons/dashboard_icon.svg';
+  static const leads = 'assets/icons/leads_icon.svg';
+  static const calendar = 'assets/icons/calendar_icon.svg';
+  static const support = 'assets/icons/support_icon.svg';
 }
