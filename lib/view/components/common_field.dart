@@ -57,7 +57,8 @@ class CommonField extends StatelessWidget {
                               Theme.of(context).inputDecorationTheme.hintStyle,
                         )
                       : null,
-                  dropdownColor: Colors.black,
+                  dropdownColor:
+                      Theme.of(context).inputDecorationTheme.fillColor,
                   value: selectedItem ?? defaultItem,
                   items: dropDownItems?.map((e) {
                     return DropdownMenuItem(
