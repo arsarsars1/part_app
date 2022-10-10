@@ -41,9 +41,8 @@ class HomeBar extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: AppColors.primaryColor,
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: Image.network(
+              child: const CircleAvatar(
+                backgroundImage: NetworkImage(
                   'https://avatars.githubusercontent.com/u/13048367?v=4',
                 ),
               ),
@@ -54,8 +53,8 @@ class HomeBar extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  height: 36.h,
-                  width: 36.w,
+                  height: 36.r,
+                  width: 36.r,
                   padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,

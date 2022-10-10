@@ -162,12 +162,19 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future initialize() async {
+    await Hive.initFlutter();
+    await Database().init();
+  }
+
   Future validateLocalUser() async {
-    String userToken = Hive.box(Database.userBox).get(Database.token);
-    String userStr = Hive.box(Database.userBox).get(Database.userData);
-    _token = userToken;
-    _user = userResponseFromJson(userStr).user;
-    if (_user != null && _user != null) {
+    await initialize();
+    String? userToken = Hive.box(Database.userBox).get(Database.token);
+    String? userStr = Hive.box(Database.userBox).get(Database.userData);
+
+    if (userToken != null && userStr != null) {
+      _token = userToken;
+      _user = userResponseFromJson(userStr!).user;
       emit(UserAvailable());
     } else {
       emit(UserNotAvailable());
