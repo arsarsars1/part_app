@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class Database {
   Future init() async {
@@ -7,5 +7,16 @@ class Database {
   }
 
   static const userBox = 'userBox';
-  static const userKey = 'userKey';
+  static const token = 'token';
+  static const userData = 'userData';
+
+  String? getToken() {
+    String tempToken = Hive.box(userBox).get(token);
+    return tempToken;
+  }
+
+  Future<String?> getUser() async {
+    String user = await Hive.box(userBox).get(userData);
+    return user;
+  }
 }

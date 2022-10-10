@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -17,10 +19,15 @@ class AuthCubit extends Cubit<AuthState> {
   String? _phoneNo;
   String? _countryCode;
   User? _user;
+  String? _token;
 
   String get phoneNumber => '+$_countryCode $_phoneNo';
 
   RegisterRequest _registerRequest = const RegisterRequest();
+
+  String? get token => _token;
+
+  User? get user => _user;
 
   /// METHOD TO GENERATE THE OTP FOR LOGIN
   ///
@@ -71,7 +78,14 @@ class AuthCubit extends Cubit<AuthState> {
 
       if (userResponse.status == 1) {
         _user = userResponse.user;
-        emit(LoginSuccess());
+        _token = userResponse.token;
+        Hive.box(Database.userBox).put(Database.token, userResponse.token);
+        Hive.box(Database.userBox).put(
+          Database.userData,
+          jsonEncode(userResponse),
+        );
+        emit(LoginSuccess(
+            userResponse.user?.adminDetail?.academy?.membershipId != null));
       } else {
         emit(LoginFailed());
       }
@@ -109,7 +123,6 @@ class AuthCubit extends Cubit<AuthState> {
       countryCode: _countryCode,
       isTrainer: '0',
     );
-    print(_registerRequest.toString());
   }
 
   void academyDetails(String? name, String? typeId) {
@@ -126,19 +139,23 @@ class AuthCubit extends Cubit<AuthState> {
       required int districtId,
       required int stateId}) {
     _registerRequest = _registerRequest.copyWith(
-        // academyName: branchName,
-        // address: email,
-        countryId: countryId,
-        stateId: stateId,
-        districtId: districtId);
+      // academyName: branchName,
+      // address: email,
+      countryId: countryId,
+      stateId: stateId,
+      districtId: districtId,
+    );
     register();
   }
 
   Future register() async {
-    UserResponse value =
-        await _authService.register(registerRequest: _registerRequest);
+    UserResponse value = await _authService.register(
+      registerRequest: _registerRequest,
+    );
     if (value.status == 1) {
-      Hive.box(Database.userBox).put(Database.userKey, value.user?.toJson());
+      _token = value.token;
+      Hive.box(Database.userBox).put(Database.token, value.token);
+      Hive.box(Database.userBox).put(Database.userData, jsonEncode(value));
       emit(RegisterSuccess());
     } else {
       emit(RegisterFailed(value.message ?? ' Failed to register the user!'));
@@ -146,7 +163,9 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future validateLocalUser() async {
-    String userStr = Hive.box(Database.userBox).get(Database.userKey);
-    User? user = userResponseFromJson(userStr).user;
+    String userToken = Hive.box(Database.userBox).get(Database.token);
+    String userStr = Hive.box(Database.userBox).get(Database.userData);
+    _token = userToken;
+    _user = userResponseFromJson(userStr).user;
   }
 }

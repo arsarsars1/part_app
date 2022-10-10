@@ -90,7 +90,7 @@ abstract class Academy with _$Academy {
     int? maxNoOfStudents,
     int? maxNoOfBranches,
     int? createdBy,
-    dynamic? updatedBy,
+    dynamic updatedBy,
     String? createdFrom,
     int? isActive,
     DateTime? createdAt,

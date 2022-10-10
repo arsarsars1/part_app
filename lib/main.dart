@@ -25,13 +25,15 @@ class App extends StatelessWidget {
           create: (context) => AuthCubit(),
         ),
         BlocProvider<MembershipCubit>(
-          create: (context) => MembershipCubit(),
+          create: (context) => MembershipCubit(
+            authCubit: context.read<AuthCubit>(),
+          ),
         ),
       ],
       child: MediaQuery(
         data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
         child: ScreenUtilInit(
-          designSize: const Size(800, 360),
+          designSize: const Size(360, 800),
           builder: (_, child) {
             return MaterialApp(
               title: 'Part App',

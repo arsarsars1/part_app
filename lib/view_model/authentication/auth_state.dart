@@ -21,7 +21,11 @@ class SendingOtpFailed extends AuthState {
   SendingOtpFailed(this.message, this.login);
 }
 
-class LoginSuccess extends AuthState {}
+class LoginSuccess extends AuthState {
+  final bool membershipActive;
+
+  LoginSuccess(this.membershipActive);
+}
 
 class LoginFailed extends AuthState {}
 
