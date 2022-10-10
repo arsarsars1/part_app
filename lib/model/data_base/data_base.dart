@@ -11,12 +11,12 @@ class Database {
   static const userData = 'userData';
 
   String? getToken() {
-    String tempToken = Hive.box(userBox).get(token);
+    String? tempToken = Hive.box(userBox).get(token);
     return tempToken;
   }
 
   Future<String?> getUser() async {
-    String user = await Hive.box(userBox).get(userData);
+    String? user = await Hive.box(userBox).get(userData);
     return user;
   }
 }

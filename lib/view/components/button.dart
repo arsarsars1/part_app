@@ -6,14 +6,18 @@ class Button extends StatelessWidget {
   final String title;
   final double? width;
   final double? height;
+  final double? fontSize;
+  final Color? backgroundColor;
 
-  const Button(
-      {Key? key,
-      required this.onTap,
-      required this.title,
-      this.width,
-      this.height})
-      : super(key: key);
+  const Button({
+    Key? key,
+    required this.onTap,
+    required this.title,
+    this.width,
+    this.fontSize,
+    this.backgroundColor,
+    this.height,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,7 @@ class Button extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: onTap != null
-              ? AppColors.primaryColor
+              ? backgroundColor ?? AppColors.primaryColor
               : AppColors.primaryColor.withOpacity(
                   0.35,
                 ),
@@ -35,6 +39,7 @@ class Button extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.bodyText1?.copyWith(
                   color: Colors.white,
+                  fontSize: fontSize,
                 ),
           ),
         ),

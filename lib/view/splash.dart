@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,16 +18,29 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    initialize();
     Future.delayed(const Duration(seconds: 2)).then((value) {
-      Navigator.pushNamedAndRemoveUntil(context, Login.route, (route) => false);
+      context.read<AuthCubit>().validateLocalUser();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is UserAvailable) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            Home.route,
+            (route) => false,
+          );
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            Login.route,
+            (route) => false,
+          );
+        }
+      },
       child: Scaffold(
         body: Center(
           child: RichText(
@@ -64,10 +76,5 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
-  }
-
-  Future initialize() async {
-    await Hive.initFlutter();
-    await Database().init();
   }
 }

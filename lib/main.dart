@@ -29,6 +29,9 @@ class App extends StatelessWidget {
             authCubit: context.read<AuthCubit>(),
           ),
         ),
+        BlocProvider<HomeCubit>(
+          create: (context) => HomeCubit(),
+        ),
       ],
       child: MediaQuery(
         data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/view/auth/components/phone_number.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
@@ -107,20 +108,29 @@ class _LoginState extends State<Login> {
               const SizedBox(
                 height: 64,
               ),
-              Button(
-                onTap: () {
-                  /// inform the cubit to validate the data
-                  /// once the data is valid the cubit will call the api to
-                  /// generate the OTP
-                  context.read<AuthCubit>().generateOTP(
-                        countryCode: country?.callingCode,
-                        phoneNo: phoneNo,
-                        login: true,
-                      );
-                },
-                title: Strings.login,
-              ),
             ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 100.h,
+        child: BottomAppBar(
+          color: Colors.black,
+          child: Center(
+            child: Button(
+              width: 142.w,
+              onTap: () {
+                /// inform the cubit to validate the data
+                /// once the data is valid the cubit will call the api to
+                /// generate the OTP
+                context.read<AuthCubit>().generateOTP(
+                      countryCode: country?.callingCode,
+                      phoneNo: phoneNo,
+                      login: true,
+                    );
+              },
+              title: Strings.login,
+            ),
           ),
         ),
       ),

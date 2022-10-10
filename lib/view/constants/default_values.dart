@@ -1,4 +1,8 @@
+import 'dart:ui';
+
+import 'package:part_app/model/data_model/dashboard_item.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
+import 'package:part_app/view/constants/assets.dart';
 
 class DefaultValues {
   List<DropDownItem> genders = [
@@ -18,21 +22,61 @@ class DefaultValues {
       item: 'other',
     ),
   ];
-  List<DropDownItem> academyType = [
-    const DropDownItem(
-      id: 'art',
-      title: 'Art',
-      item: 'Art',
+
+  static const dashboardItems = [
+    DashboardItem(
+      title: 'Students',
+      route: '/students',
+      asset: Assets.students,
+      color: Color(0xFFFC6767),
     ),
-    const DropDownItem(
-      id: 'martialArt',
-      title: 'Martial Art',
-      item: 'Martial Art',
+    DashboardItem(
+      title: 'Attendance',
+      route: '/attendance',
+      asset: Assets.attendance,
+      color: Color(0xFF2B32B2),
     ),
-    const DropDownItem(
-      id: 'other',
-      title: 'other',
-      item: 'other',
+    DashboardItem(
+      title: 'Fees',
+      route: '/fees',
+      asset: Assets.fee,
+      color: Color(0xFF1D976C),
+    ),
+    DashboardItem(
+      title: 'Trainers',
+      route: '/trainers',
+      asset: Assets.trainers,
+      color: Color(0xFF8F94FB),
+    ),
+    DashboardItem(
+      title: 'Today\'s Classes',
+      route: '/students',
+      asset: Assets.todays,
+      color: Color(0xFFE100FF),
+    ),
+    DashboardItem(
+      title: 'Today\'s Classes',
+      route: '/students',
+      asset: Assets.todays,
+      color: Color(0xFFE100FF),
+    ),
+    DashboardItem(
+      title: 'Branch Manager',
+      route: '/branch-manager',
+      asset: Assets.branchManager,
+      color: Color(0xFF6100FF),
+    ),
+    DashboardItem(
+      title: 'Branches',
+      route: '/branches',
+      asset: Assets.branches,
+      color: Color(0xFFFF8F00),
+    ),
+    DashboardItem(
+      title: 'Batches',
+      route: '/batches',
+      asset: Assets.batches,
+      color: Color(0xFFF7B733),
     ),
   ];
 }
