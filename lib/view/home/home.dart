@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/home/components/dashboard_icons.dart';
+import 'package:part_app/view/home/components/dashboard_summary.dart';
+import 'package:part_app/view/home/components/finance_dashboard.dart';
 import 'package:part_app/view/home/components/home_banner.dart';
 import 'package:part_app/view/home/components/home_bar.dart';
 import 'package:part_app/view/splash.dart';
@@ -63,7 +65,9 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       height: 10,
                     ),
-                    DashboardIcons()
+                    DashboardIcons(),
+                    SummaryDashboard(),
+                    FinanceDashboard(),
                   ],
                 ),
               ),

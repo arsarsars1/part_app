@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/home/components/profile_button.dart';
+import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 class HomeBar extends StatelessWidget {
   const HomeBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var cubit = context.read<AuthCubit>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -95,7 +98,7 @@ class HomeBar extends StatelessWidget {
           height: 16,
         ),
         Text(
-          'Rock Academy of Dance',
+          cubit.user?.adminDetail?.academy?.academyName ?? 'N/A',
           style: Theme.of(context).textTheme.bodyText1?.copyWith(
                 color: AppColors.primaryColor,
                 fontSize: 18.sm,

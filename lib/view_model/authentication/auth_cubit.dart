@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:part_app/model/data_base/data_base.dart';
+import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/otp.dart';
 import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
@@ -28,6 +29,12 @@ class AuthCubit extends Cubit<AuthState> {
   String? get token => _token;
 
   User? get user => _user;
+
+  AccountType? _accountType;
+
+  AccountType? get accountType => _accountType;
+
+  set accountType(AccountType? type) => _accountType;
 
   /// METHOD TO GENERATE THE OTP FOR LOGIN
   ///

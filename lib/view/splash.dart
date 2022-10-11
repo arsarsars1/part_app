@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
           if (state.member) {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              Home.route,
+              SwitchAccount.route,
               (route) => false,
             );
           } else {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/auth/register/acadmey_details.dart';
@@ -10,6 +11,7 @@ import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
+import 'package:part_app/view/splash.dart';
 
 import 'membership/membership_success.dart';
 
@@ -21,8 +23,12 @@ class RouteGenerator {
     switch (settings.name) {
       case Home.route:
         return MaterialPageRoute(
-          // todo change to home
           builder: (_) => const Home(),
+          settings: settings,
+        );
+      case SplashScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => const SplashScreen(),
           settings: settings,
         );
       case Login.route:
@@ -81,6 +87,11 @@ class RouteGenerator {
       case SubscriptionSuccess.route:
         return MaterialPageRoute(
           builder: (_) => const SubscriptionSuccess(),
+          settings: settings,
+        );
+      case SwitchAccount.route:
+        return MaterialPageRoute(
+          builder: (_) => const SwitchAccount(),
           settings: settings,
         );
       default:

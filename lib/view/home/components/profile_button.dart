@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
@@ -24,7 +25,7 @@ class ProfileButton extends StatelessWidget {
             // TODO: Handle this case.
             break;
           case MenuItems.switchAccount:
-            // TODO: Handle this case.
+            Navigator.pushNamed(context, SwitchAccount.route);
             break;
         }
       },
