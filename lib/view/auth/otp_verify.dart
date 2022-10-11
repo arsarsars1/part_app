@@ -28,6 +28,9 @@ class _OTPVerifyState extends State<OTPVerify> {
       appBar: AppBar(),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
+          if (state is RegisterOTPFailed) {
+            Alert(context).show(message: state.message);
+          }
           if (state is LoginSuccess) {
             if (state.membershipActive) {
               Navigator.pushNamedAndRemoveUntil(

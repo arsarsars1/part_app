@@ -38,6 +38,7 @@ class PhoneNumber extends StatelessWidget {
               height: 20,
             ),
             CommonField(
+              phoneField: true,
               inputType: TextInputType.phone,
               title: Strings.enterPhoneNo,
               hint: 'Eg: 9876543210',

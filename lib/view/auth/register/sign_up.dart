@@ -62,6 +62,9 @@ class _SignUpState extends State<SignUp> {
                 },
                 onNumberChange: (String value) {
                   phoneNo = value;
+                  if (value.length >= 10) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  }
                 },
               ),
               const SizedBox(

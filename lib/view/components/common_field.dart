@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 
 class CommonField extends StatelessWidget {
@@ -16,6 +17,7 @@ class CommonField extends StatelessWidget {
   final VoidCallback? onTap;
   final TextEditingController? controller;
   final TextInputType? inputType;
+  final bool phoneField;
 
   const CommonField(
       {Key? key,
@@ -31,6 +33,7 @@ class CommonField extends StatelessWidget {
       this.onTap,
       this.controller,
       this.inputType,
+      this.phoneField = false,
       required this.onChange,
       this.disabled = false})
       : super(key: key);
@@ -93,6 +96,11 @@ class CommonField extends StatelessWidget {
                       .textTheme
                       .bodyText1
                       ?.copyWith(color: textColor),
+                  inputFormatters: phoneField
+                      ? [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ]
+                      : null,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
                     hintText: hint,

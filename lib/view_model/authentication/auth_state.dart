@@ -39,7 +39,11 @@ class UserNotAvailable extends AuthState {}
 
 class RegisterOTPValidated extends AuthState {}
 
-class RegisterOTPFailed extends AuthState {}
+class RegisterOTPFailed extends AuthState {
+  final String message;
+
+  RegisterOTPFailed({required this.message});
+}
 
 class RegisterSuccess extends AuthState {}
 
