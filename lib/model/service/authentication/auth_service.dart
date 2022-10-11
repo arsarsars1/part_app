@@ -82,6 +82,7 @@ class AuthService {
 
       return userResponseFromJson(json.encode(response));
     } on Exception catch (e) {
+      print(e);
       throw Exception(e);
     }
   }

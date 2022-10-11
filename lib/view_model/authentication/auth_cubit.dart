@@ -110,7 +110,7 @@ class AuthCubit extends Cubit<AuthState> {
       if (otpResponse.status == 1) {
         emit(RegisterOTPValidated());
       } else {
-        emit(RegisterOTPFailed());
+        emit(RegisterOTPFailed(message: otpResponse.message));
       }
     }
   }

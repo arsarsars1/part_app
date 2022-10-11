@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/auth/register/acadmey_details.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
@@ -61,7 +62,7 @@ class _WAValidationState extends State<AdminDetails> {
               onTap: datePicker,
               disabled: true,
               controller: dobController,
-              hint: 'yyyy/mm/dd',
+              hint: 'dd/mm/yyyy',
               title: 'Date of Birth *',
               onChange: (value) {},
             ),
@@ -115,6 +116,32 @@ class _WAValidationState extends State<AdminDetails> {
   // method to get the date for [ dob ]
   void datePicker() {
     showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              onPrimary: Colors.white,
+              onSurface: Colors.white, // default text color
+              primary: AppColors.primaryColor, // circle color
+            ),
+            dialogBackgroundColor: AppColors.liteDark,
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                textStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 12,
+                ),
+                primary: AppColors.primaryColor, // color of button's letters
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
       context: context,
       initialDate: DateTime(
         DateTime.now().year - 18,

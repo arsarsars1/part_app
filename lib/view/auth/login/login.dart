@@ -33,6 +33,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
@@ -76,6 +77,10 @@ class _LoginState extends State<Login> {
                 },
                 onNumberChange: (String value) {
                   phoneNo = value;
+
+                  if (value.length >= 10) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  }
                 },
               ),
               const SizedBox(
