@@ -6,6 +6,7 @@ import 'package:part_app/view/auth/register/acadmey_details.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';
+import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 class AdminDetails extends StatefulWidget {
@@ -93,6 +94,10 @@ class _WAValidationState extends State<AdminDetails> {
                     dob == null ||
                     gender == null) {
                   Alert(context).show(message: 'Error invalid input!');
+                  return;
+                }
+                if (!RegExp(emailRegex).hasMatch(email!)) {
+                  Alert(context).show(message: 'Error enter a valid email!');
                   return;
                 }
                 // update the data to the state
