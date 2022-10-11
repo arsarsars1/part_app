@@ -29,7 +29,11 @@ class LoginSuccess extends AuthState {
 
 class LoginFailed extends AuthState {}
 
-class UserAvailable extends AuthState {}
+class UserAvailable extends AuthState {
+  final bool member;
+
+  UserAvailable({required this.member});
+}
 
 class UserNotAvailable extends AuthState {}
 

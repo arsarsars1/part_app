@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
@@ -37,6 +38,7 @@ class _BranchDetailsState extends State<BranchDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Branch Details'),
       ),
@@ -53,102 +55,95 @@ class _BranchDetailsState extends State<BranchDetails> {
           }
         },
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              flex: 3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CommonField(
-                    title: 'Enter Branch Name *',
-                    hint: 'Eg: Main Branch',
-                    onChange: (value) {
-                      branchName = value;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CommonField(
-                    title: 'Address *',
-                    hint:
-                        'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum, 695010',
-                    maxLines: 3,
-                    onChange: (value) {
-                      address = value;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CommonField(
-                    title: 'Country *',
-                    onChange: (value) {
-                      countryId = value.id;
-                      context.read<CountryCubit>().getStates(countryId: 1);
-                    },
-                    defaultItem: context.read<CountryCubit>().defaultCountry,
-                    dropDown: true,
-                    dropDownItems:
-                        context.read<CountryCubit>().countriesForDropDown,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CommonField(
-                    title: 'State *',
-                    onChange: (value) {
-                      stateId = value.id;
-                    },
-                    hint: 'Select State',
-                    dropDown: true,
-                    defaultItem: context.read<CountryCubit>().defaultState,
-                    dropDownItems:
-                        context.read<CountryCubit>().statesForDropDown,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CommonField(
-                    title: 'District *',
-                    onChange: (value) {
-                      districtId = value.id;
-                    },
-                    hint: 'Select District',
-                    dropDown: true,
-                    defaultItem: context.read<CountryCubit>().defaultDistrict,
-                    dropDownItems:
-                        context.read<CountryCubit>().districtsForDropDown,
-                  ),
-                ],
-              ),
+            CommonField(
+              title: 'Enter Branch Name *',
+              hint: 'Eg: Main Branch',
+              onChange: (value) {
+                branchName = value;
+              },
             ),
-            Expanded(
-              child: Center(
-                child: Button(
-                  onTap: () {
-                    if (branchName.isEmpty ||
-                        address.isEmpty ||
-                        countryId == null ||
-                        stateId == null ||
-                        districtId == null) {
-                      Alert(context).show(message: 'Error invalid input!');
-                      return;
-                    }
-                    context.read<AuthCubit>().branchDetails(
-                          branchName: branchName,
-                          address: address,
-                          countryId: countryId!,
-                          districtId: districtId!,
-                          stateId: stateId!,
-                        );
-                  },
-                  title: 'Sign Up',
-                ),
-              ),
+            const SizedBox(
+              height: 20,
+            ),
+            CommonField(
+              title: 'Address *',
+              hint: 'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum, 695010',
+              maxLines: 3,
+              onChange: (value) {
+                address = value;
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            CommonField(
+              title: 'Country *',
+              onChange: (value) {
+                countryId = value.id;
+                context.read<CountryCubit>().getStates(countryId: 1);
+              },
+              defaultItem: context.read<CountryCubit>().defaultCountry,
+              dropDown: true,
+              dropDownItems: context.read<CountryCubit>().countriesForDropDown,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            CommonField(
+              title: 'State *',
+              onChange: (value) {
+                stateId = value.id;
+              },
+              hint: 'Select State',
+              dropDown: true,
+              defaultItem: context.read<CountryCubit>().defaultState,
+              dropDownItems: context.read<CountryCubit>().statesForDropDown,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            CommonField(
+              title: 'District *',
+              onChange: (value) {
+                districtId = value.id;
+              },
+              hint: 'Select District',
+              dropDown: true,
+              defaultItem: context.read<CountryCubit>().defaultDistrict,
+              dropDownItems: context.read<CountryCubit>().districtsForDropDown,
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 100.h,
+        child: BottomAppBar(
+          color: Colors.black,
+          child: Center(
+            child: Button(
+              onTap: () {
+                if (branchName.isEmpty ||
+                    address.isEmpty ||
+                    countryId == null ||
+                    stateId == null ||
+                    districtId == null) {
+                  Alert(context).show(message: 'Error invalid input!');
+                  return;
+                }
+                context.read<AuthCubit>().branchDetails(
+                      branchName: branchName,
+                      address: address,
+                      countryId: countryId!,
+                      districtId: districtId!,
+                      stateId: stateId!,
+                    );
+              },
+              title: 'Sign Up',
+            ),
+          ),
         ),
       ),
     );

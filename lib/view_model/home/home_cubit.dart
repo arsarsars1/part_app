@@ -16,7 +16,7 @@ class HomeCubit extends Cubit<HomeState> {
   Future getDashboard() async {
     emit(DashboardLoading());
     var tempDash = await _service.getDashboard();
-    _banner = tempDash.banners;
+    _banner = tempDash?.banners;
 
     emit(DashboardLoaded());
   }

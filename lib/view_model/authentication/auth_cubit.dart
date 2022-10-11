@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:part_app/model/data_base/data_base.dart';
+import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/otp.dart';
 import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
@@ -28,6 +29,12 @@ class AuthCubit extends Cubit<AuthState> {
   String? get token => _token;
 
   User? get user => _user;
+
+  AccountType? _accountType;
+
+  AccountType? get accountType => _accountType;
+
+  set accountType(AccountType? type) => _accountType;
 
   /// METHOD TO GENERATE THE OTP FOR LOGIN
   ///
@@ -169,15 +176,25 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future validateLocalUser() async {
     await initialize();
-    String? userToken = Hive.box(Database.userBox).get(Database.token);
-    String? userStr = Hive.box(Database.userBox).get(Database.userData);
+    String? userToken = Database().getToken();
+    String? userStr = await Database().getUser();
 
     if (userToken != null && userStr != null) {
       _token = userToken;
-      _user = userResponseFromJson(userStr!).user;
-      emit(UserAvailable());
+      _user = userResponseFromJson(userStr).user;
+      emit(
+        UserAvailable(
+          member: _user?.adminDetail?.academy?.membershipId != null,
+        ),
+      );
     } else {
       emit(UserNotAvailable());
     }
+  }
+
+  Future logout() async {
+    await _authService.logout();
+    await Database().clearForLogout();
+    emit(UserNotAvailable());
   }
 }

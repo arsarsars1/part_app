@@ -19,4 +19,8 @@ class Database {
     String? user = await Hive.box(userBox).get(userData);
     return user;
   }
+
+  Future clearForLogout() async {
+    await Hive.box(userBox).clear();
+  }
 }

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/home/home.dart';
 
 class ContinueButton extends StatefulWidget {
   const ContinueButton({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _ContinueButtonState extends State<ContinueButton> {
     timer = Timer(const Duration(seconds: 1), () {
       if (current == 0) {
         timer?.cancel();
-        Navigator.pushNamed(context, Home.route);
+        Navigator.pushNamed(context, SwitchAccount.route);
       }
       setState(() {
         current--;
@@ -40,7 +40,7 @@ class _ContinueButtonState extends State<ContinueButton> {
     return Button(
       onTap: () {
         timer?.cancel();
-        Navigator.pushNamed(context, Home.route);
+        Navigator.pushNamed(context, SwitchAccount.route);
       },
       title: 'Continue (${current}s)',
     );

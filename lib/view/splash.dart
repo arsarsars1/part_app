@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/home/home.dart';
+import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -28,11 +29,19 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is UserAvailable) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            Home.route,
-            (route) => false,
-          );
+          if (state.member) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              SwitchAccount.route,
+              (route) => false,
+            );
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              Membership.route,
+              (route) => false,
+            );
+          }
         } else {
           Navigator.pushNamedAndRemoveUntil(
             context,

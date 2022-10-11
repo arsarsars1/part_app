@@ -85,4 +85,14 @@ class AuthService {
       throw Exception(e);
     }
   }
+
+  Future<dynamic> logout() async {
+    try {
+      var response = await _apiClient.post(postPath: '/logout', data: {});
+
+      return json.encode(response);
+    } on Exception catch (e) {
+      throw Exception(e);
+    }
+  }
 }

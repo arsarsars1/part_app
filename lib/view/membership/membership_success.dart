@@ -16,7 +16,7 @@ class SubscriptionSuccess extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Spacer(),
+          const Spacer(),
           Center(
             child: SizedBox(
               width: 97.w,

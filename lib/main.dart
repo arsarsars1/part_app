@@ -39,6 +39,7 @@ class App extends StatelessWidget {
           designSize: const Size(360, 800),
           builder: (_, child) {
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: 'Part App',
               theme: AppTheme.lightTheme,
               home: const SplashScreen(),
