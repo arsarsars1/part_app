@@ -18,6 +18,10 @@ class CommonField extends StatelessWidget {
   final TextEditingController? controller;
   final TextInputType? inputType;
   final bool phoneField;
+  final bool singleLine;
+  final TextAlign? textAlign;
+  final TextInputAction? textInputAction;
+  final double? letterSpacing;
 
   const CommonField(
       {Key? key,
@@ -33,7 +37,11 @@ class CommonField extends StatelessWidget {
       this.onTap,
       this.controller,
       this.inputType,
+      this.textAlign,
+      this.textInputAction,
+      this.letterSpacing,
       this.phoneField = false,
+      this.singleLine = false,
       required this.onChange,
       this.disabled = false})
       : super(key: key);
@@ -92,15 +100,16 @@ class CommonField extends StatelessWidget {
                   onChanged: (value) {
                     onChange(value);
                   },
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(color: textColor),
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: textColor,
+                        letterSpacing: letterSpacing,
+                      ),
                   inputFormatters: phoneField
                       ? [
                           FilteringTextInputFormatter.digitsOnly,
                         ]
                       : null,
+                  textAlign: textAlign ?? TextAlign.start,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
                     hintText: hint,

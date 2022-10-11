@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/auth/components/resend_otp.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -35,7 +35,7 @@ class _OTPVerifyState extends State<OTPVerify> {
             if (state.membershipActive) {
               Navigator.pushNamedAndRemoveUntil(
                 context,
-                Home.route,
+                SwitchAccount.route,
                 (route) => false,
               );
             } else {
@@ -89,6 +89,9 @@ class _OTPVerifyState extends State<OTPVerify> {
                 child: TextField(
                   onChanged: (value) {
                     password = value;
+                    if (value.length >= 6) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    }
                   },
                   maxLength: 6,
                   textAlign: TextAlign.center,

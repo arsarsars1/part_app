@@ -72,10 +72,17 @@ class _SalesManOTPState extends State<SalesManOTP> {
                     height: 64,
                   ),
                   CommonField(
+                    textAlign: TextAlign.center,
+                    letterSpacing: 4,
+                    phoneField: true,
+                    inputType: TextInputType.phone,
                     title: 'Enter Salesman Payment Code *',
-                    hint: 'Eg: +91 **********',
+                    hint: '- - - - - - ',
                     onChange: (value) {
                       paymentCode = value;
+                      if (value.length >= 6) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      }
                     },
                   ),
                   const SizedBox(

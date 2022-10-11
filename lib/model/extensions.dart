@@ -5,6 +5,10 @@ extension DateExtension on DateTime {
     return DateFormat('dd/MM/yyyy').format(this);
   }
 
+  String toServerString() {
+    return DateFormat('yyyy/MM/dd').format(this);
+  }
+
   String toEEMMDD() {
     return DateFormat('EEEE, MMMM dd').format(this);
   }

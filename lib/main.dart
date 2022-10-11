@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/route_generator.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
-import 'package:part_app/view_model/membership/membership_cubit.dart';
 
-void main() {
+void main() async {
+  await initialize();
   runApp(const App());
+}
+
+Future initialize() async {
+  await Hive.initFlutter();
+  await Database().init();
 }
 
 class App extends StatelessWidget {
