@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/auth/register/admin_details.dart';
+import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
@@ -23,8 +24,8 @@ class _WAValidationState extends State<WAValidation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Academy Admin Details'),
+      appBar: const CommonBar(
+        title: 'Academy Admin Details',
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,8 +36,13 @@ class _WAValidationState extends State<WAValidation> {
             disabled: true,
             textColor: Colors.black,
             title: 'Your Phone Number *',
+            length: 10,
             onChange: (value) {},
             initialValue: context.read<AuthCubit>().phoneNumber,
+            suffixIcon: const Icon(
+              Icons.check_circle_outline_outlined,
+              color: Colors.greenAccent,
+            ),
           ),
           const SizedBox(
             height: 20,
@@ -48,7 +54,8 @@ class _WAValidationState extends State<WAValidation> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    'Is the above number your whatsapp number ?',
+                    'Is The Above Number Your Whatsapp Number ?',
+                    maxLines: 2,
                     style: Theme.of(context).textTheme.bodyText1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -80,21 +87,29 @@ class _WAValidationState extends State<WAValidation> {
           ),
           if (!selected)
             CommonField(
+              inputType: TextInputType.phone,
               title: 'Whatsapp Phone Number *',
               onChange: (value) {
                 waNumber = value;
               },
+              length: 10,
               hint: 'Eg: 9876543210',
             ),
         ],
       ),
       bottomNavigationBar: SizedBox(
-        height: 100.h,
+        height: 136.h,
         child: BottomAppBar(
           color: Colors.black,
           child: Center(
             child: Button(
               onTap: () {
+                if (!selected && (waNumber == null || waNumber!.length < 10)) {
+                  Alert(context).show(
+                    message: 'Please Enter Your Whatsapp Number!',
+                  );
+                  return;
+                }
                 if (!selected && (waNumber != null && waNumber!.length == 10)) {
                   Navigator.pushNamed(context, AdminDetails.route);
                   context.read<AuthCubit>().updateWANumber(waNumber);

@@ -11,6 +11,7 @@ import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
+import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
 
 import 'membership/membership_success.dart';
@@ -92,6 +93,11 @@ class RouteGenerator {
       case SwitchAccount.route:
         return MaterialPageRoute(
           builder: (_) => const SwitchAccount(),
+          settings: settings,
+        );
+      case Profile.route:
+        return MaterialPageRoute(
+          builder: (_) => const Profile(),
           settings: settings,
         );
       default:

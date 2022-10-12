@@ -45,6 +45,7 @@ class _SalesManPhoneState extends State<SalesManPhone> {
                 ),
                 CommonField(
                   phoneField: true,
+                  length: 10,
                   inputType: TextInputType.phone,
                   textInputAction: TextInputAction.done,
                   title: 'Enter Salesman Phone Number *',

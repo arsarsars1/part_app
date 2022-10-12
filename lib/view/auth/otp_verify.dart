@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/auth/components/resend_otp.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
+import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -25,9 +26,16 @@ class _OTPVerifyState extends State<OTPVerify> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: const CommonBar(title: 'Phone Number Verification'),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
+          if (state is SendingRegisterOtp && state.resend) {
+            return;
+          }
+          if (state is OTPSent) {
+            Alert(context).show(message: 'OTP sent!');
+          }
+
           if (state is RegisterOTPFailed) {
             Alert(context).show(message: state.message);
           }
@@ -47,6 +55,7 @@ class _OTPVerifyState extends State<OTPVerify> {
             }
           }
           if (state is RegisterOTPValidated) {
+            Navigator.pop(context);
             Navigator.pushNamed(context, WAValidation.route);
           }
         },
@@ -81,12 +90,19 @@ class _OTPVerifyState extends State<OTPVerify> {
                       ),
                 ),
               ),
-              const SizedBox(
-                height: 8,
+              SizedBox(
+                height: 8.h,
               ),
               SizedBox(
-                width: 150,
+                width: 150.w,
                 child: TextField(
+                  buildCounter: (
+                    BuildContext context, {
+                    required int currentLength,
+                    int? maxLength,
+                    required bool isFocused,
+                  }) =>
+                      const SizedBox(),
                   onChanged: (value) {
                     password = value;
                     if (value.length >= 6) {
@@ -94,13 +110,16 @@ class _OTPVerifyState extends State<OTPVerify> {
                     }
                   },
                   maxLength: 6,
+                  decoration: const InputDecoration(
+                    hintText: '-----',
+                  ),
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.white,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         fontSize: 16,
                         color: Colors.white,
-                        letterSpacing: 4,
+                        letterSpacing: 8,
                       ),
                 ),
               ),
@@ -122,20 +141,24 @@ class _OTPVerifyState extends State<OTPVerify> {
           ),
         ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 100.h,
-        child: BottomAppBar(
-          color: Colors.black,
-          child: Center(
-            child: Button(
-              onTap: () {
-                if (widget.login) {
-                  context.read<AuthCubit>().login(password: password);
-                } else {
-                  context.read<AuthCubit>().validateRegisterOTP(otp: password);
-                }
-              },
-              title: 'Verify',
+      bottomNavigationBar: SafeArea(
+        child: SizedBox(
+          height: 132.h,
+          child: BottomAppBar(
+            color: Colors.black,
+            child: Center(
+              child: Button(
+                onTap: () {
+                  if (widget.login) {
+                    context.read<AuthCubit>().login(password: password);
+                  } else {
+                    context
+                        .read<AuthCubit>()
+                        .validateRegisterOTP(otp: password);
+                  }
+                },
+                title: 'Verify',
+              ),
             ),
           ),
         ),

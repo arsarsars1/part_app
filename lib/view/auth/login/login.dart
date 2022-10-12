@@ -6,6 +6,8 @@ import 'package:part_app/view/auth/components/phone_number.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/auth/register/sign_up.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/loader.dart';
+import 'package:part_app/view/components/logo.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -34,15 +36,24 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Logo(),
+        centerTitle: false,
+      ),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
+          if (state is SendingOtp) {
+            Loader(context, message: 'Please wait!').show();
+          }
+
           // if the otp fails notifies the UI with an alert
           if (state is SendingOtpFailed) {
+            Navigator.pop(context);
             Alert(context).show(message: state.message);
           }
           // if the OTP is sent show the User with the verification UI
           else if (state is OTPSent && !state.resend && state.login) {
+            Navigator.pop(context);
             Navigator.pushNamed(context, OTPVerify.route, arguments: true);
           }
         },
@@ -83,8 +94,8 @@ class _LoginState extends State<Login> {
                   }
                 },
               ),
-              const SizedBox(
-                height: 32,
+              SizedBox(
+                height: 90.h,
               ),
               InkWell(
                 onTap: () {
@@ -117,24 +128,33 @@ class _LoginState extends State<Login> {
           ),
         ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 100.h,
-        child: BottomAppBar(
-          color: Colors.black,
-          child: Center(
-            child: Button(
-              width: 142.w,
-              onTap: () {
-                /// inform the cubit to validate the data
-                /// once the data is valid the cubit will call the api to
-                /// generate the OTP
-                context.read<AuthCubit>().generateOTP(
-                      countryCode: country?.callingCode,
-                      phoneNo: phoneNo,
-                      login: true,
+      bottomNavigationBar: SafeArea(
+        child: SizedBox(
+          height: 136.h,
+          child: BottomAppBar(
+            color: Colors.black,
+            child: Center(
+              child: Button(
+                width: 142.w,
+                onTap: () {
+                  if (phoneNo == null || phoneNo!.length < 10) {
+                    Alert(context).show(
+                      message: 'Please enter a valid phone number!',
                     );
-              },
-              title: Strings.login,
+                    return;
+                  }
+
+                  /// inform the cubit to validate the data
+                  /// once the data is valid the cubit will call the api to
+                  /// generate the OTP
+                  context.read<AuthCubit>().generateOTP(
+                        countryCode: country?.callingCode,
+                        phoneNo: phoneNo,
+                        login: true,
+                      );
+                },
+                title: Strings.login,
+              ),
             ),
           ),
         ),

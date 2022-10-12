@@ -1,5 +1,6 @@
 class Assets {
   Assets._();
+
   static const successLottie = 'assets/lottie/success.json';
   static const notification = 'assets/icons/notifications_icon.svg';
   static const students = 'assets/icons/students_icon.svg';
@@ -14,4 +15,5 @@ class Assets {
   static const leads = 'assets/icons/leads_icon.svg';
   static const calendar = 'assets/icons/calendar_icon.svg';
   static const support = 'assets/icons/support_icon.svg';
+  static const back = 'assets/icons/back_icon.svg';
 }

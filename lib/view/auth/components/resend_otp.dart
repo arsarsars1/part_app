@@ -68,8 +68,10 @@ class _ResendOtpState extends State<ResendOtp> {
         ),
         InkWell(
           onTap: () {
-            widget.onResend();
-            startTimer();
+            if (enableResend) {
+              widget.onResend();
+              startTimer();
+            }
           },
           child: Center(
             child: Text(
