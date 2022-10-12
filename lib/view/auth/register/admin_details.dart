@@ -40,6 +40,9 @@ class _WAValidationState extends State<AdminDetails> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CommonField(
+              textInputAction: TextInputAction.next,
+              maxLines: 1,
+              length: 50,
               title: 'Enter you name *',
               hint: 'Name',
               onChange: (value) {
@@ -50,6 +53,8 @@ class _WAValidationState extends State<AdminDetails> {
               height: 20,
             ),
             CommonField(
+              inputType: TextInputType.emailAddress,
+              length: 50,
               title: 'Enter Email *',
               hint: 'Eg: contact@polestar.com',
               onChange: (value) {
@@ -82,35 +87,37 @@ class _WAValidationState extends State<AdminDetails> {
           ],
         ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 100.h,
-        child: BottomAppBar(
-          color: Colors.black,
-          child: Center(
-            child: Button(
-              onTap: () {
-                if (name == null ||
-                    email == null ||
-                    dob == null ||
-                    gender == null) {
-                  Alert(context).show(message: 'Error invalid input!');
-                  return;
-                }
-                if (!RegExp(emailRegex).hasMatch(email!)) {
-                  Alert(context).show(message: 'Error enter a valid email!');
-                  return;
-                }
-                // update the data to the state
-                context.read<AuthCubit>().adminDetails(
-                      name,
-                      email,
-                      dob,
-                      gender,
-                    );
-                // pushes the UI to enter academy details
-                Navigator.pushNamed(context, AcademyDetails.route);
-              },
-              title: 'Continue',
+      bottomNavigationBar: SafeArea(
+        child: SizedBox(
+          height: 132.h,
+          child: BottomAppBar(
+            color: Colors.black,
+            child: Center(
+              child: Button(
+                onTap: () {
+                  if (name == null ||
+                      email == null ||
+                      dob == null ||
+                      gender == null) {
+                    Alert(context).show(message: 'Error invalid input!');
+                    return;
+                  }
+                  if (!RegExp(emailRegex).hasMatch(email!)) {
+                    Alert(context).show(message: 'Error enter a valid email!');
+                    return;
+                  }
+                  // update the data to the state
+                  context.read<AuthCubit>().adminDetails(
+                        name,
+                        email,
+                        dob,
+                        gender,
+                      );
+                  // pushes the UI to enter academy details
+                  Navigator.pushNamed(context, AcademyDetails.route);
+                },
+                title: 'Continue',
+              ),
             ),
           ),
         ),
@@ -137,7 +144,6 @@ class _WAValidationState extends State<AdminDetails> {
                   fontWeight: FontWeight.normal,
                   fontSize: 12,
                 ),
-                primary: AppColors.primaryColor, // color of button's letters
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),

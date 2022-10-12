@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/country/country_cubit.dart';
@@ -44,9 +45,15 @@ class _BranchDetailsState extends State<BranchDetails> {
       ),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
+          if (state is RegisteringUser) {
+            Loader(context,
+                message: 'Please wait while we create your account!');
+          }
           if (state is RegisterFailed) {
+            Navigator.pop(context);
             Alert(context).show(message: state.message);
           } else if (state is RegisterSuccess) {
+            Navigator.pop(context);
             Navigator.pushNamedAndRemoveUntil(
               context,
               Membership.route,
@@ -59,6 +66,9 @@ class _BranchDetailsState extends State<BranchDetails> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CommonField(
+              length: 100,
+              maxLines: 1,
+              textInputAction: TextInputAction.next,
               title: 'Enter Branch Name *',
               hint: 'Eg: Main Branch',
               onChange: (value) {
@@ -83,7 +93,7 @@ class _BranchDetailsState extends State<BranchDetails> {
               title: 'Country *',
               onChange: (value) {
                 countryId = value.id;
-                context.read<CountryCubit>().getStates(countryId: 1);
+                context.read<CountryCubit>().getStates(countryId: countryId!);
               },
               defaultItem: context.read<CountryCubit>().defaultCountry,
               dropDown: true,

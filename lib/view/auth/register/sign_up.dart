@@ -3,8 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/view/auth/components/phone_number.dart';
+import 'package:part_app/view/auth/components/terms_checkbox.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
+import 'package:part_app/view/components/alert_bar.dart';
+import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -20,19 +24,29 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   String? phoneNo;
   Country? country;
+  bool checked = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: const CommonBar(
+        showLogo: true,
+        title: '',
+        hideBack: true,
+      ),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
+          if (state is SendingRegisterOtp && !state.resend) {
+            Loader(context, message: 'Please wait!').show();
+          }
           // if the otp fails notifies the UI with an alert
-          if (state is SendingOtpFailed && state.login) {
-            Alert(context).show(message: state.message);
+          if (state is SendingOtpFailed && !state.login) {
+            Navigator.pop(context);
+            AlertBar.showFailureToast(context, state.message);
           }
           // if the OTP is sent show the User with the verification UI
           else if (state is OTPSent && !state.resend && !state.login) {
+            Navigator.pop(context);
             Navigator.pushNamed(context, OTPVerify.route, arguments: false);
           }
         },
@@ -70,6 +84,14 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(
                 height: 32,
               ),
+              TermsCheckBox(
+                onChange: (bool value) {
+                  checked = value;
+                },
+              ),
+              const SizedBox(
+                height: 32,
+              ),
               InkWell(
                 onTap: () => Navigator.pop(context),
                 child: Row(
@@ -82,7 +104,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                     ),
                     Text(
-                      Strings.login,
+                      Strings.loginNow,
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: AppColors.primaryColor,
@@ -92,30 +114,46 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 64,
-              ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 100.h,
-        child: BottomAppBar(
-          color: Colors.black,
-          child: Center(
-            child: Button(
-              onTap: () {
-                /// inform the cubit to validate the data
-                /// once the data is valid the cubit will call the api to
-                /// generate the OTP
-                context.read<AuthCubit>().generateOTP(
-                      countryCode: country?.callingCode,
-                      phoneNo: phoneNo,
-                      login: false,
+      bottomNavigationBar: SafeArea(
+        child: SizedBox(
+          height: 136.h,
+          child: BottomAppBar(
+            color: Colors.black,
+            child: Center(
+              child: Button(
+                onTap: () {
+                  /// inform the cubit to validate the data
+                  /// once the data is valid the cubit will call the api to
+                  /// generate the OTP
+                  if (phoneNo == null || phoneNo!.isEmpty) {
+                    AlertBar.showFailureToast(
+                      context,
+                      'Please enter a valid phone number!',
                     );
-              },
-              title: Strings.continueLabel,
+                    return;
+                  }
+                  if (!checked) {
+                    AlertBar.showFailureToast(
+                      context,
+                      'Please accept the Terms & Conditions!',
+                    );
+                    return;
+                  }
+
+                  if (phoneNo != null) {
+                    context.read<AuthCubit>().generateOTP(
+                          countryCode: country?.callingCode,
+                          phoneNo: phoneNo,
+                          login: false,
+                        );
+                  }
+                },
+                title: Strings.continueLabel,
+              ),
             ),
           ),
         ),

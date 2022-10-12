@@ -14,6 +14,7 @@ class CommonField extends StatelessWidget {
   final Color? fillColor;
   final Color? textColor;
   final int? maxLines;
+  final int? length;
   final VoidCallback? onTap;
   final TextEditingController? controller;
   final TextInputType? inputType;
@@ -22,6 +23,7 @@ class CommonField extends StatelessWidget {
   final TextAlign? textAlign;
   final TextInputAction? textInputAction;
   final double? letterSpacing;
+  final Widget? suffixIcon;
 
   const CommonField(
       {Key? key,
@@ -40,6 +42,8 @@ class CommonField extends StatelessWidget {
       this.textAlign,
       this.textInputAction,
       this.letterSpacing,
+      this.suffixIcon,
+      this.length,
       this.phoneField = false,
       this.singleLine = false,
       required this.onChange,
@@ -90,6 +94,7 @@ class CommonField extends StatelessWidget {
                   },
                 )
               : TextFormField(
+                  maxLength: length,
                   controller: controller,
                   onTap: onTap,
                   maxLines: maxLines,
@@ -100,6 +105,14 @@ class CommonField extends StatelessWidget {
                   onChanged: (value) {
                     onChange(value);
                   },
+                  textInputAction: textInputAction,
+                  buildCounter: (
+                    BuildContext context, {
+                    required int currentLength,
+                    int? maxLength,
+                    required bool isFocused,
+                  }) =>
+                      const SizedBox(),
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         color: textColor,
                         letterSpacing: letterSpacing,
@@ -112,6 +125,7 @@ class CommonField extends StatelessWidget {
                   textAlign: textAlign ?? TextAlign.start,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
+                    suffixIcon: suffixIcon,
                     hintText: hint,
                     fillColor: fillColor,
                   ),

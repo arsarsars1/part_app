@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 enum MenuItems { profile, logout, membership, switchAccount }
@@ -16,7 +17,7 @@ class ProfileButton extends StatelessWidget {
       onSelected: (MenuItems item) {
         switch (item) {
           case MenuItems.profile:
-            // TODO: Handle this case.
+            Navigator.pushNamed(context, Profile.route);
             break;
           case MenuItems.logout:
             context.read<AuthCubit>().logout();

@@ -7,6 +7,12 @@ class LoginInitial extends AuthState {}
 
 class SendingOtp extends AuthState {}
 
+class SendingRegisterOtp extends AuthState {
+  final bool resend;
+
+  SendingRegisterOtp(this.resend);
+}
+
 class OTPSent extends AuthState {
   final bool resend;
   final bool login;
@@ -46,6 +52,8 @@ class RegisterOTPFailed extends AuthState {
 }
 
 class RegisterSuccess extends AuthState {}
+
+class RegisteringUser extends AuthState {}
 
 class RegisterFailed extends AuthState {
   final String message;

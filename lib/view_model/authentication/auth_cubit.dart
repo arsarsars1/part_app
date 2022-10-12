@@ -60,14 +60,18 @@ class AuthCubit extends Cubit<AuthState> {
         mobileNo: _phoneNo,
       );
 
-      emit(SendingOtp());
+      if (login) {
+        emit(SendingOtp());
+      } else {
+        emit(SendingRegisterOtp(resend));
+      }
       Otp? response = await _authService.generateOTP(
         countryCode: _countryCode!,
         phoneNo: _phoneNo!,
         login: login,
       );
 
-      if (response != null && response.message != 'OTP sent') {
+      if (response != null && response.status != 1) {
         emit(SendingOtpFailed(response.message, login));
       } else {
         emit(OTPSent(resend, login: login));
@@ -156,6 +160,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future register() async {
+    emit(RegisteringUser());
     UserResponse value = await _authService.register(
       registerRequest: _registerRequest,
     );

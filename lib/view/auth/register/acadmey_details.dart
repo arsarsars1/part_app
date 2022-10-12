@@ -29,6 +29,9 @@ class _WAValidationState extends State<AcademyDetails> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CommonField(
+            length: 200,
+            textInputAction: TextInputAction.done,
+            maxLines: 1,
             title: 'Enter Academy Name *',
             onChange: (value) {
               academyName = value;
@@ -63,26 +66,28 @@ class _WAValidationState extends State<AcademyDetails> {
           ),
         ],
       ),
-      bottomNavigationBar: SizedBox(
-        height: 100.h,
-        child: BottomAppBar(
-          color: Colors.black,
-          child: Center(
-            child: Button(
-              onTap: () {
-                if (academyType == null ||
-                    academyName == null ||
-                    academyName!.isEmpty) {
-                  Alert(context).show(message: 'Error invalid input');
-                  return;
-                }
-                // update the data to the state
-                context
-                    .read<AuthCubit>()
-                    .academyDetails(academyName, academyType);
-                Navigator.pushNamed(context, BranchDetails.route);
-              },
-              title: 'Continue',
+      bottomNavigationBar: SafeArea(
+        child: SizedBox(
+          height: 132.h,
+          child: BottomAppBar(
+            color: Colors.black,
+            child: Center(
+              child: Button(
+                onTap: () {
+                  if (academyType == null ||
+                      academyName == null ||
+                      academyName!.isEmpty) {
+                    Alert(context).show(message: 'Error invalid input');
+                    return;
+                  }
+                  // update the data to the state
+                  context
+                      .read<AuthCubit>()
+                      .academyDetails(academyName, academyType);
+                  Navigator.pushNamed(context, BranchDetails.route);
+                },
+                title: 'Continue',
+              ),
             ),
           ),
         ),

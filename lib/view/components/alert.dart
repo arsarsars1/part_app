@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/components/alert_bar.dart';
 
 class Alert {
   final BuildContext context;
@@ -7,13 +7,9 @@ class Alert {
   Alert(this.context);
 
   void show({required String message}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: AppColors.primaryColor,
-        content: _Snack(
-          message: message,
-        ),
-      ),
+    AlertBar.showFailureToast(
+      context,
+      message,
     );
   }
 }
