@@ -159,8 +159,8 @@ class _WAValidationState extends State<AdminDetails> {
       ),
     ).then((value) {
       if (value != null) {
-        dob = value.toDateString();
-        dobController.text = dob!;
+        dob = value.toServerString();
+        dobController.text = value.toDateString();
       }
     });
   }

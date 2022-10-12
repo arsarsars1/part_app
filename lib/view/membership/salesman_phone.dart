@@ -44,6 +44,9 @@ class _SalesManPhoneState extends State<SalesManPhone> {
                   height: 64,
                 ),
                 CommonField(
+                  phoneField: true,
+                  inputType: TextInputType.phone,
+                  textInputAction: TextInputAction.done,
                   title: 'Enter Salesman Phone Number *',
                   hint: 'Eg: +91 **********',
                   onChange: (value) {

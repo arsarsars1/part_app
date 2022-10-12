@@ -161,6 +161,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
     if (value.status == 1) {
       _token = value.token;
+      _user = value.user;
       Hive.box(Database.userBox).put(Database.token, value.token);
       Hive.box(Database.userBox).put(Database.userData, jsonEncode(value));
       emit(RegisterSuccess());
@@ -169,13 +170,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future initialize() async {
-    await Hive.initFlutter();
-    await Database().init();
-  }
-
   Future validateLocalUser() async {
-    await initialize();
     String? userToken = Database().getToken();
     String? userStr = await Database().getUser();
 
