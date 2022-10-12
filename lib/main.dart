@@ -10,6 +10,7 @@ import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await initialize();
 
