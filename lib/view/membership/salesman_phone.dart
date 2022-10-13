@@ -72,6 +72,8 @@ class _SalesManPhoneState extends State<SalesManPhone> {
                     if (phoneNo.isNotEmpty) {
                       context.read<MembershipCubit>().sendOTP(phoneNo: phoneNo);
                       Navigator.pushNamed(context, SalesManOTP.route);
+                    } else {
+                      Alert(context).show(message: 'Please enter a valid phone number!');
                     }
                   },
                   title: 'Submit',

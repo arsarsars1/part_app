@@ -95,4 +95,15 @@ class AuthService {
       throw Exception(e);
     }
   }
+
+  Future<UserResponse?> getProfile() async {
+    try {
+      Map<String, dynamic> str = await _apiClient.get(
+        queryPath: '/profile-list',
+      );
+      return userResponseFromJson(json.encode(str));
+    } catch (e) {
+      return null;
+    }
+  }
 }

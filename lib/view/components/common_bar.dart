@@ -23,21 +23,24 @@ class CommonBar extends StatelessWidget implements PreferredSizeWidget {
         height: kToolbarHeight,
         child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: SvgPicture.asset(Assets.back),
+            if (Navigator.canPop(context))
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: SvgPicture.asset(Assets.back),
+                ),
               ),
-            ),
             if (!showLogo) const Spacer(),
             if (!showLogo)
               Text(
                 title,
-                style: Theme.of(context)
-                    .appBarTheme
-                    .titleTextStyle
-                    ?.copyWith(color: Colors.white),
+                style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
               ),
             if (showLogo)
               const Padding(

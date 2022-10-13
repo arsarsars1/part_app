@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
           }
 
           // if the otp fails notifies the UI with an alert
-          if (state is SendingOtpFailed) {
+          if (state is SendingOtpFailed && state.login) {
             Navigator.pop(context);
             Alert(context).show(message: state.message);
           }

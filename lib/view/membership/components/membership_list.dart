@@ -62,7 +62,7 @@ class _MembershipListState extends State<MembershipList> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Register upto ${membership.noOfBranches} Branch(s)',
+                                'Register Upto ${membership.noOfBranches} Branch(s)',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -74,7 +74,7 @@ class _MembershipListState extends State<MembershipList> {
                                 height: 2,
                               ),
                               Text(
-                                'Register upto ${membership.noOfStudents} students',
+                                'Register Upto ${membership.noOfStudents} students',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -86,7 +86,9 @@ class _MembershipListState extends State<MembershipList> {
                           ),
                           const Spacer(),
                           Text(
-                            '₹ ${membership.amount}/-',
+                            membership.paymentType == 'free'
+                                ? 'Free'
+                                : '₹ ${membership.amount}/-',
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
                                       fontSize: 16,

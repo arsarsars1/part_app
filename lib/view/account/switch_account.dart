@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/enums.dart';
+import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
@@ -15,8 +16,8 @@ class SwitchAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     var cubit = context.read<AuthCubit>();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Select Your Academy'),
+      appBar: const CommonBar(
+        title: 'Select Your Academy',
       ),
       body: SafeArea(
         child: Column(

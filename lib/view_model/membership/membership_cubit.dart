@@ -93,6 +93,7 @@ class MembershipCubit extends Cubit<MembershipState> {
       );
 
       if (value.status == 1) {
+        await authCubit.getUser();
         emit(MembershipSuccess());
       } else {
         emit(MembershipFailed(value.message));

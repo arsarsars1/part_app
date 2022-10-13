@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/membership/components/membership_list.dart';
 import 'package:part_app/view/membership/components/pay_checkbox.dart';
@@ -33,8 +35,8 @@ class _MembershipState extends State<Membership> {
     var cubit = context.read<MembershipCubit>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('PartApp-membership'),
+      appBar: const CommonBar(
+        title: 'PartApp-membership',
       ),
       body: Column(
         children: [
@@ -42,8 +44,11 @@ class _MembershipState extends State<Membership> {
             flex: 5,
             child: Column(
               children: [
+                SizedBox(
+                  height: 26.h,
+                ),
                 Text(
-                  'Select your membership plan',
+                  'Select Your Membership Plan',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         fontSize: 16,
@@ -134,9 +139,7 @@ class _MembershipState extends State<Membership> {
                                 );
                               }
                             },
-                      title: cubit.selectedMembership?.paymentType == 'free'
-                          ? 'Try for free'
-                          : 'Pay Now',
+                      title: free ? 'Try for free' : 'Pay Now',
                     ),
                   ),
                 );

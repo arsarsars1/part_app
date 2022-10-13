@@ -81,6 +81,7 @@ class _BranchDetailsState extends State<BranchDetails> {
               height: 20,
             ),
             CommonField(
+              length: 300,
               title: 'Address *',
               hint: 'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum, 695010',
               maxLines: 3,

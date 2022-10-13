@@ -34,6 +34,7 @@ class _WAValidationState extends State<AcademyDetails> {
             textInputAction: TextInputAction.done,
             maxLines: 1,
             title: 'Enter Academy Name *',
+            hint: 'Eg: Polestar',
             onChange: (value) {
               academyName = value;
             },

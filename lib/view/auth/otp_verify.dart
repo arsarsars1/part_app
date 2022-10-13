@@ -6,6 +6,7 @@ import 'package:part_app/view/auth/components/resend_otp.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -22,17 +23,22 @@ class OTPVerify extends StatefulWidget {
 
 class _OTPVerifyState extends State<OTPVerify> {
   String? password;
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CommonBar(title: 'Phone Number Verification'),
+      appBar: CommonBar(
+        title: widget.login ? 'Login' : 'Academy Registration',
+      ),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is SendingRegisterOtp && state.resend) {
+            Loader(context).show();
             return;
           }
           if (state is OTPSent) {
+            Navigator.pop(context);
             Alert(context).show(message: 'OTP sent!');
           }
 
@@ -96,6 +102,7 @@ class _OTPVerifyState extends State<OTPVerify> {
               SizedBox(
                 width: 150.w,
                 child: TextField(
+                  controller: controller,
                   buildCounter: (
                     BuildContext context, {
                     required int currentLength,
@@ -128,6 +135,7 @@ class _OTPVerifyState extends State<OTPVerify> {
               ),
               ResendOtp(
                 onResend: () {
+                  controller.clear();
                   context.read<AuthCubit>().generateOTP(
                         resend: true,
                         login: widget.login,
@@ -149,6 +157,10 @@ class _OTPVerifyState extends State<OTPVerify> {
             child: Center(
               child: Button(
                 onTap: () {
+                  if (password == null || password!.isEmpty) {
+                    Alert(context).show(message: 'Please enter a valid OTP');
+                    return;
+                  }
                   if (widget.login) {
                     context.read<AuthCubit>().login(password: password);
                   } else {

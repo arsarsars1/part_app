@@ -182,6 +182,15 @@ class AuthCubit extends Cubit<AuthState> {
     if (userToken != null && userStr != null) {
       _token = userToken;
       _user = userResponseFromJson(userStr).user;
+
+      try {
+        await getUser();
+      } catch (e) {
+        if (kDebugMode) {
+          print(e);
+        }
+      }
+
       emit(
         UserAvailable(
           member: _user?.adminDetail?.academy?.membershipId != null,
@@ -189,6 +198,19 @@ class AuthCubit extends Cubit<AuthState> {
       );
     } else {
       emit(UserNotAvailable());
+    }
+  }
+
+  Future getUser() async {
+    // gets the latest profile data from api
+    UserResponse? response = await _authService.getProfile();
+    if (response != null) {
+      // save the user data to local
+      await Database().setUser(response);
+      // save the token to local
+      await Database().setToken(response);
+      _token = response.token;
+      _user = response.user;
     }
   }
 
