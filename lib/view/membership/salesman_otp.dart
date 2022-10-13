@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/auth/components/resend_otp.dart';
+import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/membership/membership_success.dart';
@@ -22,7 +24,9 @@ class _SalesManOTPState extends State<SalesManOTP> {
   Widget build(BuildContext context) {
     var cubit = context.read<MembershipCubit>();
     return Scaffold(
-      appBar: AppBar(),
+      appBar: const CommonBar(
+        title: 'PartApp-Membership',
+      ),
       body: BlocListener<MembershipCubit, MembershipState>(
         listener: (context, state) {
           if (state is MembershipSuccess) {
@@ -48,8 +52,9 @@ class _SalesManOTPState extends State<SalesManOTP> {
                         text: TextSpan(
                           children: [
                             const TextSpan(
-                                text:
-                                    'Enter Salesman Payment code received on phone number'),
+                              text:
+                                  'Enter Salesman Payment Code received On Phone Number',
+                            ),
                             TextSpan(
                               text: ' ${cubit.salesManNumber}',
                               style: Theme.of(context)
@@ -68,22 +73,25 @@ class _SalesManOTPState extends State<SalesManOTP> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 64,
+                  SizedBox(
+                    height: 64.h,
                   ),
-                  CommonField(
-                    textAlign: TextAlign.center,
-                    letterSpacing: 4,
-                    phoneField: true,
-                    inputType: TextInputType.phone,
-                    title: 'Enter Salesman Payment Code *',
-                    hint: '- - - - - - ',
-                    onChange: (value) {
-                      paymentCode = value;
-                      if (value.length >= 6) {
-                        FocusManager.instance.primaryFocus?.unfocus();
-                      }
-                    },
+                  SizedBox(
+                    width: 200.w,
+                    child: CommonField(
+                      textAlign: TextAlign.center,
+                      letterSpacing: 4,
+                      phoneField: true,
+                      inputType: TextInputType.phone,
+                      title: 'Enter Salesman Payment Code *',
+                      hint: '- - - - - - ',
+                      onChange: (value) {
+                        paymentCode = value;
+                        if (value.length >= 6) {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        }
+                      },
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -97,14 +105,16 @@ class _SalesManOTPState extends State<SalesManOTP> {
               ),
             ),
             Expanded(
-              child: Center(
-                child: Button(
-                  onTap: () {
-                    context.read<MembershipCubit>().addMemberShip(
-                          paymentCode: paymentCode,
-                        );
-                  },
-                  title: 'Submit',
+              child: SafeArea(
+                child: Center(
+                  child: Button(
+                    onTap: () {
+                      context.read<MembershipCubit>().addMemberShip(
+                            paymentCode: paymentCode,
+                          );
+                    },
+                    title: 'Submit',
+                  ),
                 ),
               ),
             ),

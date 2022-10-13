@@ -56,7 +56,7 @@ class _ResendOtpState extends State<ResendOtp> {
         if (!enableResend)
           Center(
             child: Text(
-              'Didn’t get the otp? Retry in $secondsRemaining sec',
+              'Didn’t Get The Otp? Retry In $secondsRemaining Sec',
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

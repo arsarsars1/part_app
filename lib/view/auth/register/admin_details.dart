@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/auth/register/acadmey_details.dart';
+import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';
@@ -28,8 +29,8 @@ class _WAValidationState extends State<AdminDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Academy Admin Details'),
+      appBar: const CommonBar(
+        title: 'Academy Admin Details',
       ),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/auth/register/branch_details.dart';
+import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -21,8 +22,8 @@ class _WAValidationState extends State<AcademyDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Academy Details'),
+      appBar: const CommonBar(
+        title: 'Academy Details',
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

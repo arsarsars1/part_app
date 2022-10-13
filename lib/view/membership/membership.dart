@@ -124,6 +124,9 @@ class _MembershipState extends State<Membership> {
                       onTap: cubit.selectedMembership == null
                           ? null
                           : () {
+                              if (cubit.selectedMembership?.paymentType ==
+                                  'free') {}
+
                               if (!onlinePay) {
                                 Navigator.pushNamed(
                                   context,
