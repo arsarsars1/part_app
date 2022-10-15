@@ -24,6 +24,8 @@ class CommonField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final double? letterSpacing;
   final Widget? suffixIcon;
+  final FormFieldValidator? validator;
+  final CrossAxisAlignment crossAxisAlignment;
 
   const CommonField(
       {Key? key,
@@ -44,6 +46,8 @@ class CommonField extends StatelessWidget {
       this.letterSpacing,
       this.suffixIcon,
       this.length,
+      this.validator,
+      this.crossAxisAlignment = CrossAxisAlignment.start,
       this.phoneField = false,
       this.singleLine = false,
       required this.onChange,
@@ -56,7 +60,7 @@ class CommonField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: crossAxisAlignment,
         children: [
           Text(
             title,
@@ -67,6 +71,7 @@ class CommonField extends StatelessWidget {
           ),
           dropDown
               ? DropdownButtonFormField<DropDownItem>(
+                  validator: validator,
                   hint: hint != null
                       ? Text(
                           hint!,
@@ -102,6 +107,7 @@ class CommonField extends StatelessWidget {
                   readOnly: disabled,
                   initialValue: initialValue,
                   keyboardType: inputType,
+                  validator: validator,
                   onChanged: (value) {
                     onChange(value);
                   },

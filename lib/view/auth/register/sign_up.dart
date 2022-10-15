@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/view/auth/components/phone_number.dart';
 import 'package:part_app/view/auth/components/terms_checkbox.dart';
+import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/components/alert_bar.dart';
 import 'package:part_app/view/components/common_bar.dart';
@@ -25,6 +26,7 @@ class _SignUpState extends State<SignUp> {
   String? phoneNo;
   Country? country;
   bool checked = false;
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,70 +53,76 @@ class _SignUpState extends State<SignUp> {
           }
         },
         child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32),
-                  child: Text(
-                    Strings.signUpWelcomeMessage,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          fontSize: 16,
-                        ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 36,
-              ),
-              PhoneNumber(
-                onCountryChange: (Country value) {
-                  country = value;
-                },
-                onNumberChange: (String value) {
-                  phoneNo = value;
-                  if (value.length >= 10) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-              TermsCheckBox(
-                onChange: (bool value) {
-                  checked = value;
-                },
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-              InkWell(
-                onTap: () => Navigator.pop(context),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      Strings.alreadyMember,
+          child: Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Text(
+                      Strings.signUpWelcomeMessage,
+                      textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                             fontSize: 16,
                           ),
                     ),
-                    Text(
-                      Strings.loginNow,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primaryColor,
-                            fontSize: 16,
-                          ),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(
+                  height: 36,
+                ),
+                PhoneNumber(
+                  onCountryChange: (Country value) {
+                    country = value;
+                  },
+                  onNumberChange: (String value) {
+                    phoneNo = value;
+                    if (value.length >= 10) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                TermsCheckBox(
+                  onChange: (bool value) {
+                    checked = value;
+                  },
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                InkWell(
+                  onTap: () => Navigator.pushReplacementNamed(
+                    context,
+                    Login.route,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        Strings.alreadyMember,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontSize: 16,
+                            ),
+                      ),
+                      Text(
+                        Strings.loginNow,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryColor,
+                              fontSize: 16,
+                            ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -129,27 +137,22 @@ class _SignUpState extends State<SignUp> {
                   /// inform the cubit to validate the data
                   /// once the data is valid the cubit will call the api to
                   /// generate the OTP
-                  if (phoneNo == null || phoneNo!.isEmpty) {
-                    AlertBar.showFailureToast(
-                      context,
-                      'Please enter a valid phone number!',
-                    );
-                    return;
-                  }
-                  if (!checked) {
-                    AlertBar.showFailureToast(
-                      context,
-                      'Please accept the Terms & Conditions!',
-                    );
-                    return;
-                  }
+                  if (formKey.currentState!.validate()) {
+                    if (!checked) {
+                      AlertBar.showFailureToast(
+                        context,
+                        'Please accept the Terms & Conditions!',
+                      );
+                      return;
+                    }
 
-                  if (phoneNo != null) {
-                    context.read<AuthCubit>().generateOTP(
-                          countryCode: country?.callingCode,
-                          phoneNo: phoneNo,
-                          login: false,
-                        );
+                    if (phoneNo != null) {
+                      context.read<AuthCubit>().generateOTP(
+                            countryCode: country?.callingCode,
+                            phoneNo: phoneNo,
+                            login: false,
+                          );
+                    }
                   }
                 },
                 title: Strings.continueLabel,

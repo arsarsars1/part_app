@@ -36,7 +36,9 @@ class AppTheme {
             color: AppColors.textFieldColor,
           ),
         ),
-        errorStyle: const TextStyle(fontSize: 0),
+        errorStyle: const TextStyle(
+          fontSize: 13,
+        ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: AppColors.textFieldColor,
@@ -47,8 +49,12 @@ class AppTheme {
             color: AppColors.textFieldColor,
           ),
         ),
+        errorMaxLines: 1,
         errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(),
+          borderSide: BorderSide(
+            color: Colors.red,
+            width: 1,
+          ),
         ),
         focusedErrorBorder: const OutlineInputBorder(
           borderSide: BorderSide(),

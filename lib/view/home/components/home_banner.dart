@@ -33,7 +33,7 @@ class _HomeBannerState extends State<HomeBanner> {
     var cubit = context.read<HomeCubit>();
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        return cubit.banner != null
+        return cubit.banner != null && cubit.banner!.isNotEmpty
             ? Column(
                 children: [
                   Padding(

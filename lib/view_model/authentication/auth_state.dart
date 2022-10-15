@@ -27,13 +27,19 @@ class SendingOtpFailed extends AuthState {
   SendingOtpFailed(this.message, this.login);
 }
 
+class Authenticating extends AuthState {}
+
 class LoginSuccess extends AuthState {
   final bool membershipActive;
 
   LoginSuccess(this.membershipActive);
 }
 
-class LoginFailed extends AuthState {}
+class LoginFailed extends AuthState {
+  final String message;
+
+  LoginFailed(this.message);
+}
 
 class UserAvailable extends AuthState {
   final bool member;

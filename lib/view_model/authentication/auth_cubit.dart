@@ -81,6 +81,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future login({String? password}) async {
     if (password != null) {
+      emit(Authenticating());
       UserResponse userResponse = await _authService.login(
         phoneNo: _phoneNo!,
         countryCode: _countryCode!,
@@ -98,7 +99,8 @@ class AuthCubit extends Cubit<AuthState> {
         emit(LoginSuccess(
             userResponse.user?.adminDetail?.academy?.membershipId != null));
       } else {
-        emit(LoginFailed());
+        emit(LoginFailed(
+            userResponse.message ?? 'Login failed, Please try again!'));
       }
     }
   }
@@ -136,22 +138,24 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  void academyDetails(String? name, String? typeId) {
+  void academyDetails(String? name, int? typeId) {
     _registerRequest = _registerRequest.copyWith(
       academyName: name,
-      academyTypeId: 1, // todo
+      academyTypeId: typeId,
     );
   }
 
   void branchDetails(
       {required String branchName,
       required String address,
+      required String pinCode,
       required int countryId,
       required int districtId,
       required int stateId}) {
     _registerRequest = _registerRequest.copyWith(
-      // academyName: branchName,
-      // address: email,
+      branchAddress: address,
+      branchPincode: pinCode,
+      branchName: branchName,
       countryId: countryId,
       stateId: stateId,
       districtId: districtId,
@@ -179,17 +183,10 @@ class AuthCubit extends Cubit<AuthState> {
     String? userToken = Database().getToken();
     String? userStr = await Database().getUser();
 
-    if (userToken != null && userStr != null) {
+    if (userToken != null) {
       _token = userToken;
-      _user = userResponseFromJson(userStr).user;
 
-      try {
-        await getUser();
-      } catch (e) {
-        if (kDebugMode) {
-          print(e);
-        }
-      }
+      await getUser();
 
       emit(
         UserAvailable(

@@ -74,10 +74,6 @@ class AlertBar {
                   ),
             ),
           ),
-          const Icon(
-            Icons.close,
-            color: Colors.white,
-          ),
         ],
       ),
     );

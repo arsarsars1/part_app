@@ -40,7 +40,11 @@ class _ContinueButtonState extends State<ContinueButton> {
     return Button(
       onTap: () {
         timer?.cancel();
-        Navigator.pushNamed(context, SwitchAccount.route);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          SwitchAccount.route,
+          (value) => false,
+        );
       },
       title: 'Continue (${current}s)',
     );
