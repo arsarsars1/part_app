@@ -34,7 +34,7 @@ class PhoneNumber extends StatelessWidget {
                 onCountryChange(value.item);
               },
               validator: (value) {
-                return value == null ? 'Country is mandatory!' : null;
+                return value == null ? 'Please select the Country!' : null;
               },
             ),
             const SizedBox(
@@ -50,9 +50,13 @@ class PhoneNumber extends StatelessWidget {
                 onNumberChange(value);
               },
               validator: (value) {
-                return value == null || value.toString().length < 10
-                    ? 'Please enter a valid phone number!'
-                    : null;
+                if (value == null || value.toString().isEmpty) {
+                  return 'Please enter number!';
+                } else if (value.toString().length < 10) {
+                  return 'Invalid phone number!';
+                }
+
+                return null;
               },
             ),
           ],

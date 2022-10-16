@@ -101,12 +101,15 @@ class _OTPVerifyState extends State<OTPVerify> {
                   height: 72,
                 ),
                 SizedBox(
-                  width: 165.w,
+                  width: 175.w,
                   child: CommonField(
                     validator: (value) {
-                      return value == null || value.toString().length < 6
-                          ? 'OTP is required!'
-                          : null;
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter OTP!';
+                      } else if (value.toString().length < 6) {
+                        return 'Invalid OTP!';
+                      }
+                      return null;
                     },
                     crossAxisAlignment: CrossAxisAlignment.center,
                     title: 'OTP',
@@ -119,7 +122,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                     },
                     letterSpacing: 8,
                     length: 6,
-                    hint: '- - - - - -',
+                    hint: '- - - - -',
                     textAlign: TextAlign.center,
                     inputType: TextInputType.number,
                   ),

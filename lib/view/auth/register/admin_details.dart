@@ -55,7 +55,7 @@ class _WAValidationState extends State<AdminDetails> {
                 },
                 validator: (value) {
                   return value == null || value.toString().isEmpty
-                      ? 'Name is mandatory!'
+                      ? 'Please enter name!'
                       : null;
                 },
               ),
@@ -69,9 +69,9 @@ class _WAValidationState extends State<AdminDetails> {
                 hint: 'Eg: contact@polestar.com',
                 validator: (value) {
                   if (value == null || value.toString().isEmpty) {
-                    return 'Email is mandatory!';
+                    return 'Please enter email!';
                   } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                    return 'Email is not valid!';
+                    return 'Invalid email address!';
                   } else {
                     return null;
                   }
@@ -91,7 +91,7 @@ class _WAValidationState extends State<AdminDetails> {
                 title: 'Date of Birth *',
                 validator: (value) {
                   return value == null || value.toString().isEmpty
-                      ? 'DOB is mandatory!'
+                      ? 'Please enter dob!'
                       : null;
                 },
                 onChange: (value) {},
@@ -106,7 +106,7 @@ class _WAValidationState extends State<AdminDetails> {
                 },
                 hint: 'Select Gender',
                 validator: (value) {
-                  return value == null ? 'Gender is mandatory!' : null;
+                  return value == null ? 'Please select gender!' : null;
                 },
                 dropDown: true,
                 dropDownItems: DefaultValues().genders,

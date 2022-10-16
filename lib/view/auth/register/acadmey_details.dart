@@ -43,9 +43,10 @@ class _WAValidationState extends State<AcademyDetails> {
                 academyName = value;
               },
               validator: (value) {
-                return value == null || value.toString().isEmpty
-                    ? 'Academy Name is mandatory!'
-                    : null;
+                if (value == null || value.toString().isEmpty) {
+                  return 'Please enter academy name!';
+                }
+                return null;
               },
             ),
             const SizedBox(
@@ -61,7 +62,10 @@ class _WAValidationState extends State<AcademyDetails> {
               dropDown: true,
               dropDownItems: context.read<CountryCubit>().academyTypes,
               validator: (value) {
-                return value == null ? 'Academy Type is mandatory!' : null;
+                if (value == null || value.toString().isEmpty) {
+                  return 'Please select academy type!';
+                }
+                return null;
               },
             ),
           ],

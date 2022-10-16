@@ -93,9 +93,12 @@ class _WAValidationState extends State<WAValidation> {
                 ? const Offstage()
                 : CommonField(
                     validator: (value) {
-                      return value == null || value.toString().length < 10
-                          ? 'Whatsapp number is required!'
-                          : null;
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter Whatsapp number!';
+                      } else if (value.toString().length < 10) {
+                        return 'Invalid Whatsapp number!';
+                      }
+                      return null;
                     },
                     inputType: TextInputType.phone,
                     title: 'Whatsapp Phone Number *',

@@ -82,7 +82,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                 hint: 'Eg: Main Branch',
                 validator: (value) {
                   return value == null || value.isEmpty
-                      ? 'Branch Name is mandatory!'
+                      ? 'Please enter branch name!'
                       : null;
                 },
                 onChange: (value) {
@@ -99,7 +99,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                 maxLines: 3,
                 validator: (value) {
                   return value == null || value.isEmpty
-                      ? 'Address is mandatory!'
+                      ? 'Please enter address!'
                       : null;
                 },
                 onChange: (value) {
@@ -112,7 +112,7 @@ class _BranchDetailsState extends State<BranchDetails> {
               CommonField(
                 title: 'Country *',
                 validator: (value) {
-                  return value == null ? 'Country is mandatory!' : null;
+                  return value == null ? 'Please select country!' : null;
                 },
                 onChange: (value) {
                   countryId = value.id;
@@ -132,7 +132,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                   stateId = value.id;
                 },
                 validator: (value) {
-                  return value == null ? 'State is mandatory!' : null;
+                  return value == null ? 'Please select state!' : null;
                 },
                 hint: 'Select State',
                 dropDown: true,
@@ -149,7 +149,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                 },
                 hint: 'Select District',
                 validator: (value) {
-                  return value == null ? 'District is mandatory!' : null;
+                  return value == null ? 'Please select district!' : null;
                 },
                 dropDown: true,
                 defaultItem: context.read<CountryCubit>().defaultDistrict,
@@ -164,7 +164,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                   return value == null ||
                           value.isEmpty ||
                           value.toString().length < 6
-                      ? 'Pin Code is mandatory!'
+                      ? 'Please enter pincode!'
                       : null;
                 },
                 length: 6,

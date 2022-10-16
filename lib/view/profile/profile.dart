@@ -29,6 +29,7 @@ class _ProfileState extends State<Profile> {
   String? academyType;
   bool selected = true;
   TextEditingController dobController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController academyController = TextEditingController();
@@ -40,8 +41,10 @@ class _ProfileState extends State<Profile> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       User? user = context.read<AuthCubit>().user;
+
       dobController.text = user?.adminDetail?.dob?.toDateString() ?? '';
       nameController.text = user?.adminDetail?.name ?? '';
+      phoneController.text = '+${user?.countryCode} ${user?.mobileNo}';
       emailController.text = user?.adminDetail?.email ?? '';
       academyController.text = user?.adminDetail?.academy?.academyName ?? '';
     });
@@ -110,6 +113,7 @@ class _ProfileState extends State<Profile> {
               height: 16.h,
             ),
             CommonField(
+              controller: phoneController,
               suffixIcon: const Icon(
                 Icons.check_circle_outline_outlined,
                 color: Colors.greenAccent,
@@ -119,7 +123,6 @@ class _ProfileState extends State<Profile> {
               textColor: Colors.black,
               title: 'Your Phone Number *',
               onChange: (value) {},
-              initialValue: context.read<AuthCubit>().phoneNumber,
             ),
             SizedBox(
               height: 16.h,
