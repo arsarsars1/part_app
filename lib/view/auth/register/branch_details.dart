@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/membership/membership.dart';
@@ -22,6 +23,9 @@ class _BranchDetailsState extends State<BranchDetails> {
   int? countryId;
   int? stateId;
   int? districtId;
+  String pinCode = '';
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -40,118 +44,164 @@ class _BranchDetailsState extends State<BranchDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text('Branch Details'),
+      appBar: const CommonBar(
+        title: 'Branch Details',
       ),
-      body: BlocListener<AuthCubit, AuthState>(
-        listener: (context, state) {
-          if (state is RegisteringUser) {
-            Loader(context,
-                message: 'Please wait while we create your account!');
-          }
-          if (state is RegisterFailed) {
-            Navigator.pop(context);
-            Alert(context).show(message: state.message);
-          } else if (state is RegisterSuccess) {
-            Navigator.pop(context);
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Membership.route,
-              (route) => false,
-            );
-          }
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CommonField(
-              length: 100,
-              maxLines: 1,
-              textInputAction: TextInputAction.next,
-              title: 'Enter Branch Name *',
-              hint: 'Eg: Main Branch',
-              onChange: (value) {
-                branchName = value;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Address *',
-              hint: 'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum, 695010',
-              maxLines: 3,
-              onChange: (value) {
-                address = value;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Country *',
-              onChange: (value) {
-                countryId = value.id;
-                context.read<CountryCubit>().getStates(countryId: countryId!);
-              },
-              defaultItem: context.read<CountryCubit>().defaultCountry,
-              dropDown: true,
-              dropDownItems: context.read<CountryCubit>().countriesForDropDown,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'State *',
-              onChange: (value) {
-                stateId = value.id;
-              },
-              hint: 'Select State',
-              dropDown: true,
-              defaultItem: context.read<CountryCubit>().defaultState,
-              dropDownItems: context.read<CountryCubit>().statesForDropDown,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'District *',
-              onChange: (value) {
-                districtId = value.id;
-              },
-              hint: 'Select District',
-              dropDown: true,
-              defaultItem: context.read<CountryCubit>().defaultDistrict,
-              dropDownItems: context.read<CountryCubit>().districtsForDropDown,
-            ),
-          ],
+      body: Form(
+        key: formKey,
+        child: BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is RegisteringUser) {
+              Loader(
+                context,
+                message: 'Please wait while we create your account!',
+              ).show();
+            }
+            if (state is RegisterFailed) {
+              Navigator.pop(context);
+              Alert(context).show(message: state.message);
+            } else if (state is RegisterSuccess) {
+              Navigator.pop(context);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Membership.route,
+                (route) => false,
+              );
+            }
+          },
+          child: ListView(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                length: 100,
+                maxLines: 1,
+                textInputAction: TextInputAction.next,
+                title: 'Enter Branch Name *',
+                hint: 'Eg: Main Branch',
+                validator: (value) {
+                  return value == null || value.isEmpty
+                      ? 'Please enter branch name!'
+                      : null;
+                },
+                onChange: (value) {
+                  branchName = value;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                length: 300,
+                title: 'Address *',
+                hint: 'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum, 695010',
+                maxLines: 3,
+                validator: (value) {
+                  return value == null || value.isEmpty
+                      ? 'Please enter address!'
+                      : null;
+                },
+                onChange: (value) {
+                  address = value;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'Country *',
+                validator: (value) {
+                  return value == null ? 'Please select country!' : null;
+                },
+                onChange: (value) {
+                  countryId = value.id;
+                  context.read<CountryCubit>().getStates(countryId: countryId!);
+                },
+                defaultItem: context.read<CountryCubit>().defaultCountry,
+                dropDown: true,
+                dropDownItems:
+                    context.read<CountryCubit>().countriesForDropDown,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'State *',
+                onChange: (value) {
+                  stateId = value.id;
+                },
+                validator: (value) {
+                  return value == null ? 'Please select state!' : null;
+                },
+                hint: 'Select State',
+                dropDown: true,
+                defaultItem: context.read<CountryCubit>().defaultState,
+                dropDownItems: context.read<CountryCubit>().statesForDropDown,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'District *',
+                onChange: (value) {
+                  districtId = value.id;
+                },
+                hint: 'Select District',
+                validator: (value) {
+                  return value == null ? 'Please select district!' : null;
+                },
+                dropDown: true,
+                defaultItem: context.read<CountryCubit>().defaultDistrict,
+                dropDownItems:
+                    context.read<CountryCubit>().districtsForDropDown,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                validator: (value) {
+                  return value == null ||
+                          value.isEmpty ||
+                          value.toString().length < 6
+                      ? 'Please enter pincode!'
+                      : null;
+                },
+                length: 6,
+                textInputAction: TextInputAction.done,
+                inputType: TextInputType.number,
+                title: 'PIN *',
+                hint: 'Eg: 695014',
+                maxLines: 1,
+                onChange: (value) {
+                  pinCode = value;
+                },
+              ),
+            ],
+          ),
         ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 100.h,
-        child: BottomAppBar(
-          color: Colors.black,
-          child: Center(
-            child: Button(
-              onTap: () {
-                if (branchName.isEmpty ||
-                    address.isEmpty ||
-                    countryId == null ||
-                    stateId == null ||
-                    districtId == null) {
-                  Alert(context).show(message: 'Error invalid input!');
-                  return;
-                }
-                context.read<AuthCubit>().branchDetails(
-                      branchName: branchName,
-                      address: address,
-                      countryId: countryId!,
-                      districtId: districtId!,
-                      stateId: stateId!,
-                    );
-              },
-              title: 'Sign Up',
+      bottomNavigationBar: SafeArea(
+        child: SizedBox(
+          height: 132.h,
+          child: BottomAppBar(
+            color: Colors.black,
+            child: Center(
+              child: Button(
+                onTap: () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<AuthCubit>().branchDetails(
+                          pinCode: pinCode,
+                          branchName: branchName,
+                          address: address,
+                          countryId: countryId!,
+                          districtId: districtId!,
+                          stateId: stateId!,
+                        );
+                  }
+                },
+                title: 'Sign Up',
+              ),
             ),
           ),
         ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view_model/membership/membership_cubit.dart';
@@ -15,65 +17,83 @@ class SalesManPhone extends StatefulWidget {
 
 class _SalesManPhoneState extends State<SalesManPhone> {
   String phoneNo = '';
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
-                    child: Text(
-                      'Enter Salesman Phone number to get payment code for in-hand payments ',
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 16,
-                          ),
+      appBar: const CommonBar(
+        title: 'PartApp-Membership',
+      ),
+      body: Form(
+        key: formKey,
+        child: Column(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 32.w),
+                      child: Text(
+                        'Enter Salesman Phone number to get payment code for in-hand payments ',
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontSize: 16,
+                            ),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 64,
-                ),
-                CommonField(
-                  phoneField: true,
-                  length: 10,
-                  inputType: TextInputType.phone,
-                  textInputAction: TextInputAction.done,
-                  title: 'Enter Salesman Phone Number *',
-                  hint: 'Eg: +91 **********',
-                  onChange: (value) {
-                    phoneNo = value;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Button(
-                onTap: () {
-                  if (phoneNo.isNotEmpty) {
-                    context.read<MembershipCubit>().sendOTP(phoneNo: phoneNo);
-                    Navigator.pushNamed(context, SalesManOTP.route);
-                  }
-                },
-                title: 'Submit',
+                  SizedBox(
+                    height: 64.h,
+                  ),
+                  CommonField(
+                    phoneField: true,
+                    length: 10,
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter phone number!';
+                      } else if (value.toString().length < 10) {
+                        return 'Invalid phone number!';
+                      }
+                      return null;
+                    },
+                    inputType: TextInputType.number,
+                    textInputAction: TextInputAction.done,
+                    title: 'Enter Salesman Phone Number *',
+                    hint: 'Eg: +91 **********',
+                    onChange: (value) {
+                      phoneNo = value;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: SafeArea(
+                child: Center(
+                  child: Button(
+                    onTap: () {
+                      if (formKey.currentState!.validate()) {
+                        context
+                            .read<MembershipCubit>()
+                            .sendOTP(phoneNo: phoneNo);
+                        Navigator.pushNamed(context, SalesManOTP.route);
+                      }
+                    },
+                    title: 'Submit',
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

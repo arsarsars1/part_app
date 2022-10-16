@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/auth/register/acadmey_details.dart';
+import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';
@@ -25,66 +26,93 @@ class _WAValidationState extends State<AdminDetails> {
   String? gender;
   TextEditingController dobController = TextEditingController();
 
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Academy Admin Details'),
+      appBar: const CommonBar(
+        title: 'Academy Admin Details',
       ),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is ErrorFields) {}
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CommonField(
-              textInputAction: TextInputAction.next,
-              maxLines: 1,
-              length: 50,
-              title: 'Enter you name *',
-              hint: 'Name',
-              onChange: (value) {
-                name = value;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              inputType: TextInputType.emailAddress,
-              length: 50,
-              title: 'Enter Email *',
-              hint: 'Eg: contact@polestar.com',
-              onChange: (value) {
-                email = value;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              onTap: datePicker,
-              disabled: true,
-              controller: dobController,
-              hint: 'dd/mm/yyyy',
-              title: 'Date of Birth *',
-              onChange: (value) {},
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Gender *',
-              onChange: (value) {
-                gender = value?.title;
-              },
-              hint: 'Select Gender',
-              dropDown: true,
-              dropDownItems: DefaultValues().genders,
-            ),
-          ],
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CommonField(
+                textInputAction: TextInputAction.next,
+                maxLines: 1,
+                length: 50,
+                title: 'Enter you name *',
+                hint: 'Name',
+                onChange: (value) {
+                  name = value;
+                },
+                validator: (value) {
+                  return value == null || value.toString().isEmpty
+                      ? 'Please enter name!'
+                      : null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                inputType: TextInputType.emailAddress,
+                length: 50,
+                title: 'Enter Email *',
+                hint: 'Eg: contact@polestar.com',
+                validator: (value) {
+                  if (value == null || value.toString().isEmpty) {
+                    return 'Please enter email!';
+                  } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                    return 'Invalid email address!';
+                  } else {
+                    return null;
+                  }
+                },
+                onChange: (value) {
+                  email = value;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                onTap: datePicker,
+                disabled: true,
+                controller: dobController,
+                hint: 'dd/mm/yyyy',
+                title: 'Date of Birth *',
+                validator: (value) {
+                  return value == null || value.toString().isEmpty
+                      ? 'Please enter dob!'
+                      : null;
+                },
+                onChange: (value) {},
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'Gender *',
+                onChange: (value) {
+                  gender = value?.title;
+                },
+                hint: 'Select Gender',
+                validator: (value) {
+                  return value == null ? 'Please select gender!' : null;
+                },
+                dropDown: true,
+                dropDownItems: DefaultValues().genders,
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: SafeArea(
@@ -95,26 +123,17 @@ class _WAValidationState extends State<AdminDetails> {
             child: Center(
               child: Button(
                 onTap: () {
-                  if (name == null ||
-                      email == null ||
-                      dob == null ||
-                      gender == null) {
-                    Alert(context).show(message: 'Error invalid input!');
-                    return;
+                  if (formKey.currentState!.validate()) {
+                    // update the data to the state
+                    context.read<AuthCubit>().adminDetails(
+                          name,
+                          email,
+                          dob,
+                          gender,
+                        );
+                    // pushes the UI to enter academy details
+                    Navigator.pushNamed(context, AcademyDetails.route);
                   }
-                  if (!RegExp(emailRegex).hasMatch(email!)) {
-                    Alert(context).show(message: 'Error enter a valid email!');
-                    return;
-                  }
-                  // update the data to the state
-                  context.read<AuthCubit>().adminDetails(
-                        name,
-                        email,
-                        dob,
-                        gender,
-                      );
-                  // pushes the UI to enter academy details
-                  Navigator.pushNamed(context, AcademyDetails.route);
                 },
                 title: 'Continue',
               ),

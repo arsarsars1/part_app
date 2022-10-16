@@ -8,6 +8,7 @@ class Button extends StatelessWidget {
   final double? height;
   final double? fontSize;
   final Color? backgroundColor;
+  final bool border;
 
   const Button({
     Key? key,
@@ -15,6 +16,7 @@ class Button extends StatelessWidget {
     required this.title,
     this.width,
     this.fontSize,
+    this.border = false,
     this.backgroundColor,
     this.height,
   }) : super(key: key);
@@ -25,11 +27,19 @@ class Button extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: onTap != null
-              ? backgroundColor ?? AppColors.primaryColor
-              : AppColors.primaryColor.withOpacity(
-                  0.35,
-                ),
+          color: border
+              ? null
+              : onTap != null
+                  ? backgroundColor ?? AppColors.primaryColor
+                  : AppColors.primaryColor.withOpacity(
+                      0.35,
+                    ),
+          border: border
+              ? Border.all(
+                  color: AppColors.primaryColor,
+                  width: 2,
+                )
+              : null,
           borderRadius: BorderRadius.circular(100),
         ),
         height: height ?? 48,

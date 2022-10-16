@@ -23,6 +23,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   String? phoneNo;
   Country? country;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -47,7 +48,7 @@ class _LoginState extends State<Login> {
           }
 
           // if the otp fails notifies the UI with an alert
-          if (state is SendingOtpFailed) {
+          if (state is SendingOtpFailed && state.login) {
             Navigator.pop(context);
             Alert(context).show(message: state.message);
           }
@@ -58,73 +59,76 @@ class _LoginState extends State<Login> {
           }
         },
         child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: Text(
-                  Strings.welcome,
-                  style: Theme.of(context).textTheme.headline1,
+          child: Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text(
+                    Strings.welcome,
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: Text(
-                  Strings.loginWelcomeMessage,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 16,
-                      ),
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              const SizedBox(
-                height: 36,
-              ),
-              PhoneNumber(
-                onCountryChange: (Country value) {
-                  country = value;
-                },
-                onNumberChange: (String value) {
-                  phoneNo = value;
+                Center(
+                  child: Text(
+                    Strings.loginWelcomeMessage,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 16,
+                        ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 36,
+                ),
+                PhoneNumber(
+                  onCountryChange: (Country value) {
+                    country = value;
+                  },
+                  onNumberChange: (String value) {
+                    phoneNo = value;
 
-                  if (value.length >= 10) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  }
-                },
-              ),
-              SizedBox(
-                height: 90.h,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, SignUp.route);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      Strings.notAMember,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 16,
-                          ),
-                    ),
-                    Text(
-                      Strings.joinNow,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primaryColor,
-                            fontSize: 16,
-                          ),
-                    )
-                  ],
+                    if (value.length >= 10) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    }
+                  },
                 ),
-              ),
-              const SizedBox(
-                height: 64,
-              ),
-            ],
+                SizedBox(
+                  height: 90.h,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, SignUp.route);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        Strings.notAMember,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontSize: 16,
+                            ),
+                      ),
+                      Text(
+                        Strings.joinNow,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryColor,
+                              fontSize: 16,
+                            ),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 64,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -137,21 +141,16 @@ class _LoginState extends State<Login> {
               child: Button(
                 width: 142.w,
                 onTap: () {
-                  if (phoneNo == null || phoneNo!.length < 10) {
-                    Alert(context).show(
-                      message: 'Please enter a valid phone number!',
-                    );
-                    return;
-                  }
-
                   /// inform the cubit to validate the data
                   /// once the data is valid the cubit will call the api to
                   /// generate the OTP
-                  context.read<AuthCubit>().generateOTP(
-                        countryCode: country?.callingCode,
-                        phoneNo: phoneNo,
-                        login: true,
-                      );
+                  if (formKey.currentState!.validate()) {
+                    context.read<AuthCubit>().generateOTP(
+                          countryCode: country?.callingCode,
+                          phoneNo: phoneNo,
+                          login: true,
+                        );
+                  }
                 },
                 title: Strings.login,
               ),

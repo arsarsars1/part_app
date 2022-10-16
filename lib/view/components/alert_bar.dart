@@ -45,18 +45,6 @@ class AlertBar {
       gravity: ToastGravity.BOTTOM,
       toastDuration: const Duration(seconds: 2),
     );
-
-    // Custom Toast Position
-    // fToast.showToast(
-    //     child: toast,
-    //     toastDuration: Duration(seconds: 2),
-    //     positionedToastBuilder: (context, child) {
-    //       return Positioned(
-    //         child: child,
-    //         top: 16.0,
-    //         left: 16.0,
-    //       );
-    //     });
   }
 
   static void showFailureToast(
@@ -66,7 +54,7 @@ class AlertBar {
     FToast fToast = FToast();
     fToast.init(context);
     Widget toast = Container(
-      margin: const EdgeInsets.only(top: 24),
+      margin: const EdgeInsets.only(top: kToolbarHeight + kToolbarHeight),
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
       decoration: BoxDecoration(
@@ -85,10 +73,6 @@ class AlertBar {
                     fontSize: 16,
                   ),
             ),
-          ),
-          const Icon(
-            Icons.close,
-            color: Colors.white,
           ),
         ],
       ),

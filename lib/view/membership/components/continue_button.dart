@@ -24,14 +24,14 @@ class _ContinueButtonState extends State<ContinueButton> {
   @override
   void initState() {
     super.initState();
-    timer = Timer(const Duration(seconds: 1), () {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      setState(() {
+        current--;
+      });
       if (current == 0) {
         timer?.cancel();
         Navigator.pushNamed(context, SwitchAccount.route);
       }
-      setState(() {
-        current--;
-      });
     });
   }
 
@@ -40,7 +40,11 @@ class _ContinueButtonState extends State<ContinueButton> {
     return Button(
       onTap: () {
         timer?.cancel();
-        Navigator.pushNamed(context, SwitchAccount.route);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          SwitchAccount.route,
+          (value) => false,
+        );
       },
       title: 'Continue (${current}s)',
     );

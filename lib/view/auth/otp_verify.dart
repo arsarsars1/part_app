@@ -6,6 +6,7 @@ import 'package:part_app/view/auth/components/resend_otp.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -22,17 +23,32 @@ class OTPVerify extends StatefulWidget {
 
 class _OTPVerifyState extends State<OTPVerify> {
   String? password;
+  TextEditingController controller = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CommonBar(title: 'Phone Number Verification'),
+      appBar: CommonBar(
+        title: widget.login ? 'Login' : 'Academy Registration',
+      ),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
+          if (state is Authenticating) {
+            Loader(context).show();
+            return;
+          }
+
+          if (state is LoginFailed) {
+            Navigator.pop(context);
+            Alert(context).show(message: state.message);
+          }
           if (state is SendingRegisterOtp && state.resend) {
+            Loader(context).show();
             return;
           }
           if (state is OTPSent) {
+            Navigator.pop(context);
             Alert(context).show(message: 'OTP sent!');
           }
 
@@ -60,84 +76,74 @@ class _OTPVerifyState extends State<OTPVerify> {
           }
         },
         child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: Text(
-                  'Enter 6 digit OTP sent to your phone',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 16,
-                      ),
-                ),
-              ),
-              Center(
-                child: Text(
-                  context.read<AuthCubit>().phoneNumber,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 16,
-                      ),
-                ),
-              ),
-              const SizedBox(
-                height: 72,
-              ),
-              Center(
-                child: Text(
-                  'OTP',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 16,
-                      ),
-                ),
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              SizedBox(
-                width: 150.w,
-                child: TextField(
-                  buildCounter: (
-                    BuildContext context, {
-                    required int currentLength,
-                    int? maxLength,
-                    required bool isFocused,
-                  }) =>
-                      const SizedBox(),
-                  onChanged: (value) {
-                    password = value;
-                    if (value.length >= 6) {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    }
-                  },
-                  maxLength: 6,
-                  decoration: const InputDecoration(
-                    hintText: '-----',
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text(
+                    'Enter 6 Digit OTP Sent To Your Phone',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 16,
+                        ),
                   ),
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.number,
-                  cursorColor: Colors.white,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 16,
-                        color: Colors.white,
-                        letterSpacing: 8,
-                      ),
                 ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              ResendOtp(
-                onResend: () {
-                  context.read<AuthCubit>().generateOTP(
-                        resend: true,
-                        login: widget.login,
-                      );
-                },
-              ),
-              const SizedBox(
-                height: 64,
-              ),
-            ],
+                Center(
+                  child: Text(
+                    context.read<AuthCubit>().phoneNumber,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 16,
+                        ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 72,
+                ),
+                SizedBox(
+                  width: 175.w,
+                  child: CommonField(
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter OTP!';
+                      } else if (value.toString().length < 6) {
+                        return 'Invalid OTP!';
+                      }
+                      return null;
+                    },
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    title: 'OTP',
+                    controller: controller,
+                    onChange: (value) {
+                      password = value;
+                      if (value.length >= 6) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      }
+                    },
+                    letterSpacing: 8,
+                    length: 6,
+                    hint: '- - - - -',
+                    textAlign: TextAlign.center,
+                    inputType: TextInputType.number,
+                  ),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                ResendOtp(
+                  onResend: () {
+                    controller.clear();
+                    context.read<AuthCubit>().generateOTP(
+                          resend: true,
+                          login: widget.login,
+                        );
+                  },
+                ),
+                const SizedBox(
+                  height: 64,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -149,12 +155,14 @@ class _OTPVerifyState extends State<OTPVerify> {
             child: Center(
               child: Button(
                 onTap: () {
-                  if (widget.login) {
-                    context.read<AuthCubit>().login(password: password);
-                  } else {
-                    context
-                        .read<AuthCubit>()
-                        .validateRegisterOTP(otp: password);
+                  if (formKey.currentState!.validate()) {
+                    if (widget.login) {
+                      context.read<AuthCubit>().login(password: password);
+                    } else {
+                      context
+                          .read<AuthCubit>()
+                          .validateRegisterOTP(otp: password);
+                    }
                   }
                 },
                 title: 'Verify',

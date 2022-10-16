@@ -53,16 +53,16 @@ class _ResendOtpState extends State<ResendOtp> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (!enableResend)
-          Center(
-            child: Text(
-              'Didn’t get the otp? Retry in $secondsRemaining sec',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
+        Center(
+          child: Text(
+            enableResend
+                ? 'Didn\'t get the OTP? Please resend OTP and Try again.'
+                : 'Didn\'t Get The Otp? Retry In $secondsRemaining Sec',
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  fontSize: 16,
+                ),
           ),
+        ),
         const SizedBox(
           height: 8,
         ),

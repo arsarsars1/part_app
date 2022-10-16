@@ -13,14 +13,12 @@ import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
+import 'package:part_app/view/trainer/trainer.dart';
 
-import 'membership/membership_success.dart';
+import 'membership/subscription_success.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // Getting arguments passed in while calling Navigator.pushNamed
-    final args = settings.arguments;
-
     switch (settings.name) {
       case Home.route:
         return MaterialPageRoute(
@@ -40,7 +38,9 @@ class RouteGenerator {
       case OTPVerify.route:
         {
           return MaterialPageRoute(
-            builder: (_) => OTPVerify(login: settings.arguments as bool),
+            builder: (_) => OTPVerify(
+              login: settings.arguments as bool,
+            ),
             settings: settings,
           );
         }
@@ -98,6 +98,11 @@ class RouteGenerator {
       case Profile.route:
         return MaterialPageRoute(
           builder: (_) => const Profile(),
+          settings: settings,
+        );
+      case Trainer.route:
+        return MaterialPageRoute(
+          builder: (_) => const Trainer(),
           settings: settings,
         );
       default:
