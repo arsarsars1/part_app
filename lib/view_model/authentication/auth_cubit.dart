@@ -100,7 +100,7 @@ class AuthCubit extends Cubit<AuthState> {
             userResponse.user?.adminDetail?.academy?.membershipId != null));
       } else {
         emit(LoginFailed(
-            userResponse.message ?? 'Login failed, Please try again!'));
+            userResponse.message ?? 'Login failed, Please try again'));
       }
     }
   }
@@ -175,7 +175,7 @@ class AuthCubit extends Cubit<AuthState> {
       Hive.box(Database.userBox).put(Database.userData, jsonEncode(value));
       emit(RegisterSuccess());
     } else {
-      emit(RegisterFailed(value.message ?? ' Failed to register the user!'));
+      emit(RegisterFailed(value.message ?? ' Failed to register the user'));
     }
   }
 

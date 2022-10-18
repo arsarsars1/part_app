@@ -94,9 +94,9 @@ class _WAValidationState extends State<WAValidation> {
                 : CommonField(
                     validator: (value) {
                       if (value == null || value.toString().isEmpty) {
-                        return 'Please enter Whatsapp number!';
+                        return 'Please enter Whatsapp number.';
                       } else if (value.toString().length < 10) {
-                        return 'Invalid Whatsapp number!';
+                        return 'Invalid Whatsapp number.';
                       }
                       return null;
                     },

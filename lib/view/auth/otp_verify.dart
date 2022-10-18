@@ -49,7 +49,7 @@ class _OTPVerifyState extends State<OTPVerify> {
           }
           if (state is OTPSent) {
             Navigator.pop(context);
-            Alert(context).show(message: 'OTP sent!');
+            Alert(context).show(message: 'OTP sent.');
           }
 
           if (state is RegisterOTPFailed) {
@@ -101,13 +101,14 @@ class _OTPVerifyState extends State<OTPVerify> {
                   height: 72,
                 ),
                 SizedBox(
-                  width: 175.w,
+                  width: 185.w,
                   child: CommonField(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     validator: (value) {
                       if (value == null || value.toString().isEmpty) {
-                        return 'Please enter OTP!';
+                        return 'Please enter OTP.';
                       } else if (value.toString().length < 6) {
-                        return 'Invalid OTP!';
+                        return 'Invalid OTP.';
                       }
                       return null;
                     },
@@ -122,7 +123,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                     },
                     letterSpacing: 8,
                     length: 6,
-                    hint: '- - - - -',
+                    hint: '------',
                     textAlign: TextAlign.center,
                     inputType: TextInputType.number,
                   ),

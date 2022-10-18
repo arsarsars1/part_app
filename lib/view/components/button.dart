@@ -9,6 +9,7 @@ class Button extends StatelessWidget {
   final double? fontSize;
   final Color? backgroundColor;
   final bool border;
+  final bool disable;
 
   const Button({
     Key? key,
@@ -18,6 +19,7 @@ class Button extends StatelessWidget {
     this.fontSize,
     this.border = false,
     this.backgroundColor,
+    this.disable = false,
     this.height,
   }) : super(key: key);
 
@@ -29,7 +31,7 @@ class Button extends StatelessWidget {
         decoration: BoxDecoration(
           color: border
               ? null
-              : onTap != null
+              : !disable
                   ? backgroundColor ?? AppColors.primaryColor
                   : AppColors.primaryColor.withOpacity(
                       0.35,

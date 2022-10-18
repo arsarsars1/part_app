@@ -71,14 +71,20 @@ class MembershipCubit extends Cubit<MembershipState> {
     var userStr = await Database().getUser();
     if (userStr != null) {
       var userResp = userResponseFromJson(userStr);
-      var value = await _membershipService.getOTPForSales(
+      Common value = await _membershipService.getOTPForSales(
         academyId: userResp.user?.adminDetail?.academy?.id,
         membershipID: _selectedMembership?.id,
         phoneNo: _salesManPhoneNo!,
       );
-    }
 
-    emit(SalesOTPSent());
+      if (value.status != 0) {
+        emit(SalesOTPSent());
+      } else {
+        emit(SalesOTPFailed(value.message ?? 'Failed to send OTP.'));
+      }
+    } else {
+      emit(SalesOTPFailed('Failed to send OTP.'));
+    }
   }
 
   Future addMemberShip({required String paymentCode}) async {
@@ -99,7 +105,7 @@ class MembershipCubit extends Cubit<MembershipState> {
         emit(MembershipFailed(value.message));
       }
     } else {
-      emit(MembershipFailed('Failed to process the request!!'));
+      emit(MembershipFailed('Failed to process the request!'));
     }
   }
 }

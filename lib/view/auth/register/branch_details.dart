@@ -54,7 +54,7 @@ class _BranchDetailsState extends State<BranchDetails> {
             if (state is RegisteringUser) {
               Loader(
                 context,
-                message: 'Please wait while we create your account!',
+                message: 'Please wait while we create your account.',
               ).show();
             }
             if (state is RegisterFailed) {
@@ -82,7 +82,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                 hint: 'Eg: Main Branch',
                 validator: (value) {
                   return value == null || value.isEmpty
-                      ? 'Please enter branch name!'
+                      ? 'Please enter branch name.'
                       : null;
                 },
                 onChange: (value) {
@@ -95,11 +95,11 @@ class _BranchDetailsState extends State<BranchDetails> {
               CommonField(
                 length: 300,
                 title: 'Address *',
-                hint: 'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum, 695010',
+                hint: 'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum',
                 maxLines: 3,
                 validator: (value) {
                   return value == null || value.isEmpty
-                      ? 'Please enter address!'
+                      ? 'Please enter address.'
                       : null;
                 },
                 onChange: (value) {
@@ -112,7 +112,7 @@ class _BranchDetailsState extends State<BranchDetails> {
               CommonField(
                 title: 'Country *',
                 validator: (value) {
-                  return value == null ? 'Please select country!' : null;
+                  return value == null ? 'Please select country.' : null;
                 },
                 onChange: (value) {
                   countryId = value.id;
@@ -132,7 +132,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                   stateId = value.id;
                 },
                 validator: (value) {
-                  return value == null ? 'Please select state!' : null;
+                  return value == null ? 'Please select state.' : null;
                 },
                 hint: 'Select State',
                 dropDown: true,
@@ -149,7 +149,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                 },
                 hint: 'Select District',
                 validator: (value) {
-                  return value == null ? 'Please select district!' : null;
+                  return value == null ? 'Please select district.' : null;
                 },
                 dropDown: true,
                 defaultItem: context.read<CountryCubit>().defaultDistrict,
@@ -164,7 +164,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                   return value == null ||
                           value.isEmpty ||
                           value.toString().length < 6
-                      ? 'Please enter pincode!'
+                      ? 'Please enter pin code.'
                       : null;
                 },
                 length: 6,

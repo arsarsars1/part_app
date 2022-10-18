@@ -26,6 +26,7 @@ class CommonField extends StatelessWidget {
   final Widget? suffixIcon;
   final FormFieldValidator? validator;
   final CrossAxisAlignment crossAxisAlignment;
+  final EdgeInsets? padding;
 
   const CommonField(
       {Key? key,
@@ -47,6 +48,7 @@ class CommonField extends StatelessWidget {
       this.suffixIcon,
       this.length,
       this.validator,
+      this.padding,
       this.crossAxisAlignment = CrossAxisAlignment.start,
       this.phoneField = false,
       this.singleLine = false,
@@ -131,6 +133,7 @@ class CommonField extends StatelessWidget {
                   textAlign: textAlign ?? TextAlign.start,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
+                    contentPadding: padding,
                     suffixIcon: suffixIcon,
                     hintText: hint,
                     fillColor: fillColor,

@@ -266,7 +266,7 @@ class _ProfileState extends State<Profile> {
             child: Button(
               onTap: () {
                 if (!RegExp(emailRegex).hasMatch(email!)) {
-                  Alert(context).show(message: 'Error enter a valid email!');
+                  Alert(context).show(message: 'Error enter a valid email');
                   return;
                 }
               },
