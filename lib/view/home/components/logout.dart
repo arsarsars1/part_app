@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -23,25 +24,31 @@ class _Logout extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Are you sure you want to logout?'),
-            const SizedBox(
-              height: 32,
+            Text(
+              'Are you sure you want to logout?',
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+            SizedBox(
+              height: 32.h,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Button(
-                  height: 36,
+                  width: 95.w,
+                  height: 36.h,
                   onTap: () {
                     Navigator.pop(context);
                   },
                   title: 'Cancel',
                   border: true,
                 ),
-                const SizedBox(
-                  width: 32,
+                SizedBox(
+                  width: 32.w,
                 ),
                 Button(
-                  height: 36,
+                  width: 95.w,
+                  height: 36.h,
                   onTap: () {
                     Navigator.pop(context);
                     context.read<AuthCubit>().logout();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 
 class Button extends StatelessWidget {
@@ -44,8 +45,8 @@ class Button extends StatelessWidget {
               : null,
           borderRadius: BorderRadius.circular(100),
         ),
-        height: height ?? 48,
-        width: width ?? 142,
+        height: height ?? 48.h,
+        width: width ?? 142.w,
         child: Center(
           child: Text(
             title,

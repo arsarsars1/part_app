@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'constant.dart';
@@ -27,9 +28,9 @@ class AppTheme {
         ),
         filled: true,
         fillColor: AppColors.textFieldColor,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 28,
-          vertical: 16,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 28.w,
+          vertical: 16.h,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
@@ -75,29 +76,29 @@ class AppTheme {
       textTheme: TextTheme(
         bodyText1: GoogleFonts.nunitoSans().copyWith(
           color: primaryText,
-          fontSize: 14,
+          fontSize: 14.sm,
         ),
         bodyText2: GoogleFonts.nunitoSans().copyWith(
           color: primaryText,
-          fontSize: 16,
+          fontSize: 14.sm,
         ),
         headline1: GoogleFonts.nunitoSans().copyWith(
           color: primaryText,
           fontWeight: FontWeight.bold,
-          fontSize: 32,
+          fontSize: 32.sm,
         ),
         headline3: GoogleFonts.nunitoSans().copyWith(
           color: primaryText,
-          fontSize: 20,
+          fontSize: 20.sm,
         ),
         headline4: GoogleFonts.nunitoSans().copyWith(
           color: AppColors.grey900,
-          fontSize: 20,
+          fontSize: 20.sm,
         ),
         headline5: GoogleFonts.nunitoSans().copyWith(
           color: AppColors.grey900,
           fontWeight: FontWeight.w700,
-          fontSize: 16,
+          fontSize: 16.sm,
         ),
       ),
     );
