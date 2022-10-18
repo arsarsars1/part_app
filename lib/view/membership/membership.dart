@@ -143,7 +143,7 @@ class _MembershipState extends State<Membership> {
                           );
                         }
                       },
-                      title: free ? 'Try for free' : 'Pay Now',
+                      title: free ? 'Try For Free' : 'Pay Now',
                     ),
                   ),
                 );
