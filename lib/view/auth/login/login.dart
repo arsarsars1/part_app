@@ -44,7 +44,7 @@ class _LoginState extends State<Login> {
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is SendingOtp) {
-            Loader(context, message: 'Please wait!').show();
+            Loader(context, message: 'Please wait').show();
           }
 
           // if the otp fails notifies the UI with an alert

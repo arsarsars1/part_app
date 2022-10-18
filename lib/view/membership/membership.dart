@@ -51,14 +51,14 @@ class _MembershipState extends State<Membership> {
                   'Select Your Membership Plan',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 16,
+                        fontSize: 16.sm,
                       ),
                 ),
                 const SizedBox(
                   height: 28,
                 ),
                 SizedBox(
-                  width: 200,
+                  width: 200.w,
                   child: MembershipSwitch(
                     onSelect: (bool value) {
                       context.read<MembershipCubit>().filterMembership(value);
@@ -85,8 +85,8 @@ class _MembershipState extends State<Membership> {
                     Text('Personal Assistance')
                   ],
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: 20.h,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -126,19 +126,23 @@ class _MembershipState extends State<Membership> {
                 return SafeArea(
                   child: Center(
                     child: Button(
-                      onTap: cubit.selectedMembership == null
-                          ? null
-                          : () {
-                              if (cubit.selectedMembership?.paymentType ==
-                                  'free') {}
+                      disable: cubit.selectedMembership == null,
+                      onTap: () {
+                        if (cubit.selectedMembership == null) {
+                          Alert(context).show(
+                            message:
+                                'Please select a membership plan to continue.',
+                          );
+                        }
+                        if (cubit.selectedMembership?.paymentType == 'free') {}
 
-                              if (!onlinePay) {
-                                Navigator.pushNamed(
-                                  context,
-                                  SalesManPhone.route,
-                                );
-                              }
-                            },
+                        if (!onlinePay) {
+                          Navigator.pushNamed(
+                            context,
+                            SalesManPhone.route,
+                          );
+                        }
+                      },
                       title: free ? 'Try for free' : 'Pay Now',
                     ),
                   ),

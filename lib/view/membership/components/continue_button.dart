@@ -30,7 +30,11 @@ class _ContinueButtonState extends State<ContinueButton> {
       });
       if (current == 0) {
         timer?.cancel();
-        Navigator.pushNamed(context, SwitchAccount.route);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          SwitchAccount.route,
+          (value) => false,
+        );
       }
     });
   }

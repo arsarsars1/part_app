@@ -34,7 +34,7 @@ class _WAValidationState extends State<AcademyDetails> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CommonField(
-              length: 200,
+              length: 100,
               textInputAction: TextInputAction.done,
               maxLines: 1,
               title: 'Enter Academy Name *',
@@ -44,7 +44,7 @@ class _WAValidationState extends State<AcademyDetails> {
               },
               validator: (value) {
                 if (value == null || value.toString().isEmpty) {
-                  return 'Please enter academy name!';
+                  return 'Please enter academy name.';
                 }
                 return null;
               },
@@ -63,7 +63,7 @@ class _WAValidationState extends State<AcademyDetails> {
               dropDownItems: context.read<CountryCubit>().academyTypes,
               validator: (value) {
                 if (value == null || value.toString().isEmpty) {
-                  return 'Please select academy type!';
+                  return 'Please select academy type.';
                 }
                 return null;
               },

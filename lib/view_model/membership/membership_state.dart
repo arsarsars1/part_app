@@ -11,6 +11,12 @@ class MembershipLoading extends MembershipState {}
 
 class SalesOTPSent extends MembershipState {}
 
+class SalesOTPFailed extends MembershipState {
+  final String message;
+
+  SalesOTPFailed(this.message);
+}
+
 class SalesOTPSending extends MembershipState {}
 
 class MembershipSuccess extends MembershipState {}

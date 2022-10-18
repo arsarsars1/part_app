@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 
 class MembershipSwitch extends StatefulWidget {
@@ -19,7 +20,8 @@ class _MembershipSwitchState extends State<MembershipSwitch> {
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: Colors.white, width: 1),
+        border: Border.all(
+            color: free ? Colors.white : AppColors.primaryColor, width: 1),
       ),
       child: Row(
         children: [
@@ -35,8 +37,8 @@ class _MembershipSwitchState extends State<MembershipSwitch> {
                 color: free ? Colors.white : null,
                 borderRadius: BorderRadius.circular(5),
               ),
-              width: 100,
-              height: 36,
+              width: 100.w,
+              height: 36.h,
               child: Center(
                 child: Text(
                   'Free',
@@ -59,8 +61,8 @@ class _MembershipSwitchState extends State<MembershipSwitch> {
                 color: free ? null : AppColors.primaryColor,
                 borderRadius: BorderRadius.circular(5),
               ),
-              width: 100,
-              height: 36,
+              width: 100.w,
+              height: 36.h,
               child: Center(
                 child: Text(
                   'Paid',

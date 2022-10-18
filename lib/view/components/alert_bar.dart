@@ -59,7 +59,7 @@ class AlertBar {
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
       decoration: BoxDecoration(
         color: AppColors.primaryColor,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(0),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -70,7 +70,7 @@ class AlertBar {
               message!,
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
             ),
           ),

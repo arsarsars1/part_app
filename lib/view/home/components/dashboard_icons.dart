@@ -41,8 +41,8 @@ class DashboardIcons extends StatelessWidget {
                       color: item.color,
                       shape: BoxShape.circle,
                     ),
-                    width: 35.w,
-                    height: 35.h,
+                    width: 32.w,
+                    height: 32.h,
                     child: Center(
                       child: SvgPicture.asset(
                         item.asset,
@@ -52,11 +52,12 @@ class DashboardIcons extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 8.h,
+                    height: 4.h,
                   ),
                   Text(
                     item.title,
                     textAlign: TextAlign.center,
+                    maxLines: 2,
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
                           fontSize: 12.sm,
                         ),

@@ -16,7 +16,7 @@ class MembershipService {
     }
   }
 
-  Future getOTPForSales({
+  Future<Common> getOTPForSales({
     required int? academyId,
     required int? membershipID,
     required String phoneNo,
@@ -31,7 +31,7 @@ class MembershipService {
         postPath: '/offline-otp-generate',
         data: data,
       );
-      return jsonEncode(str);
+      return commonFromJson(jsonEncode(str));
     } on Exception catch (e) {
       throw Exception(e);
     }

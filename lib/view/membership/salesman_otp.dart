@@ -34,7 +34,7 @@ class _SalesManOTPState extends State<SalesManOTP> {
             Navigator.pushNamed(context, SubscriptionSuccess.route);
           } else if (state is MembershipFailed) {
             Alert(context).show(
-              message: state.error ?? 'Membership creation failed!',
+              message: state.error ?? 'Membership creation failed',
             );
           }
         },
@@ -50,7 +50,7 @@ class _SalesManOTPState extends State<SalesManOTP> {
                   children: [
                     Center(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 43.w),
+                        padding: EdgeInsets.symmetric(horizontal: 42.w),
                         child: RichText(
                           textAlign: TextAlign.start,
                           text: TextSpan(
@@ -84,16 +84,16 @@ class _SalesManOTPState extends State<SalesManOTP> {
                       width: 200.w,
                       child: CommonField(
                         textAlign: TextAlign.center,
-                        letterSpacing: 4,
+                        letterSpacing: 8,
                         phoneField: true,
                         inputType: TextInputType.phone,
                         title: 'Enter Salesman Payment Code *',
-                        hint: '- - - - - - ',
+                        hint: '------',
                         validator: (value) {
                           if (value == null || value.toString().isEmpty) {
-                            return 'Please enter code!';
+                            return 'Please enter code';
                           } else if (value.toString().length < 6) {
-                            return 'Invalid code!';
+                            return 'Invalid code';
                           }
                           return null;
                         },

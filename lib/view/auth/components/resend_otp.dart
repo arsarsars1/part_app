@@ -54,13 +54,17 @@ class _ResendOtpState extends State<ResendOtp> {
     return Column(
       children: [
         Center(
-          child: Text(
-            enableResend
-                ? 'Didn\'t get the OTP? Please resend OTP and Try again.'
-                : 'Didn\'t Get The Otp? Retry In $secondsRemaining Sec',
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontSize: 16,
-                ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              enableResend
+                  ? 'Didn\'t get the OTP? Please resend OTP and Try again'
+                  : 'Didn\'t Get The Otp? Retry In $secondsRemaining Sec',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 16,
+                  ),
+            ),
           ),
         ),
         const SizedBox(

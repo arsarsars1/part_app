@@ -39,7 +39,7 @@ class _SignUpState extends State<SignUp> {
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is SendingRegisterOtp && !state.resend) {
-            Loader(context, message: 'Please wait!').show();
+            Loader(context, message: 'Please wait.').show();
           }
           // if the otp fails notifies the UI with an alert
           if (state is SendingOtpFailed && !state.login) {
@@ -141,7 +141,7 @@ class _SignUpState extends State<SignUp> {
                     if (!checked) {
                       AlertBar.showFailureToast(
                         context,
-                        'Please accept the Terms & Conditions!',
+                        'Please accept the Terms & Conditions',
                       );
                       return;
                     }
