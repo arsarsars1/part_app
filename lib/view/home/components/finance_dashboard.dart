@@ -47,7 +47,7 @@ class FinanceDashboard extends StatelessWidget {
                       ),
                       Text(
                         'View All Financial Affairs',
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                               fontSize: 12.sm,
                             ),
@@ -84,7 +84,7 @@ class FinanceDashboard extends StatelessWidget {
                       ),
                       Text(
                         'Pay Salary To Trainers',
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                               fontSize: 12.sm,
                             ),
