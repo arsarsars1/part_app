@@ -13,14 +13,3 @@ class Alert {
     );
   }
 }
-
-class _Snack extends StatelessWidget {
-  final String message;
-
-  const _Snack({Key? key, required this.message}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(child: Text(message));
-  }
-}

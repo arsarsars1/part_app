@@ -6,7 +6,6 @@ import 'package:part_app/view/auth/components/phone_number.dart';
 import 'package:part_app/view/auth/components/terms_checkbox.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
-import 'package:part_app/view/components/alert_bar.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
@@ -44,7 +43,7 @@ class _SignUpState extends State<SignUp> {
           // if the otp fails notifies the UI with an alert
           if (state is SendingOtpFailed && !state.login) {
             Navigator.pop(context);
-            AlertBar.showFailureToast(context, state.message);
+            Alert(context).show(message: state.message);
           }
           // if the OTP is sent show the User with the verification UI
           else if (state is OTPSent && !state.resend && !state.login) {
@@ -139,10 +138,10 @@ class _SignUpState extends State<SignUp> {
                   /// generate the OTP
                   if (formKey.currentState!.validate()) {
                     if (!checked) {
-                      AlertBar.showFailureToast(
-                        context,
-                        'Please accept the Terms & Conditions',
+                      Alert(context).show(
+                        message: 'Please accept the Terms & Conditions',
                       );
+
                       return;
                     }
 

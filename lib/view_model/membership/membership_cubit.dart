@@ -108,4 +108,6 @@ class MembershipCubit extends Cubit<MembershipState> {
       emit(MembershipFailed('Failed to process the request!'));
     }
   }
+
+  // Future generateOrderId() {}
 }

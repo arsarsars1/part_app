@@ -133,6 +133,8 @@ class _MembershipState extends State<Membership> {
                             message:
                                 'Please select a membership plan to continue.',
                           );
+
+                          return;
                         }
                         if (cubit.selectedMembership?.paymentType == 'free') {}
 
@@ -143,7 +145,7 @@ class _MembershipState extends State<Membership> {
                           );
                         }
                       },
-                      title: free ? 'Try For Free' : 'Pay Now',
+                      title: free ? 'Try For Free' : 'Continue',
                     ),
                   ),
                 );
