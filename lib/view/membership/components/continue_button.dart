@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/components/components.dart';
 
 class ContinueButton extends StatefulWidget {
-  const ContinueButton({Key? key}) : super(key: key);
+  final VoidCallback onTap;
+  const ContinueButton({Key? key, required this.onTap}) : super(key: key);
 
   @override
   State<ContinueButton> createState() => _ContinueButtonState();
@@ -30,11 +30,7 @@ class _ContinueButtonState extends State<ContinueButton> {
       });
       if (current == 0) {
         timer?.cancel();
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          SwitchAccount.route,
-          (value) => false,
-        );
+        widget.onTap();
       }
     });
   }
@@ -44,11 +40,7 @@ class _ContinueButtonState extends State<ContinueButton> {
     return Button(
       onTap: () {
         timer?.cancel();
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          SwitchAccount.route,
-          (value) => false,
-        );
+        widget.onTap();
       },
       title: 'Continue (${current}s)',
     );

@@ -33,7 +33,6 @@ class _SignUpState extends State<SignUp> {
       appBar: const CommonBar(
         showLogo: true,
         title: '',
-        hideBack: true,
       ),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {

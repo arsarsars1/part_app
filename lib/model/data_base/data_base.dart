@@ -35,6 +35,6 @@ class Database {
   }
 
   Future setToken(UserResponse user) async {
-    await Hive.box(Database.userBox).put(Database.userData, user.token);
+    await Hive.box(Database.userBox).put(token, user.token);
   }
 }

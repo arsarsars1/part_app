@@ -78,7 +78,7 @@ class MembershipCubit extends Cubit<MembershipState> {
       );
 
       if (value.status != 0) {
-        emit(SalesOTPSent());
+        emit(SalesOTPSent(resend));
       } else {
         emit(SalesOTPFailed(value.message ?? 'Failed to send OTP.'));
       }
@@ -87,27 +87,36 @@ class MembershipCubit extends Cubit<MembershipState> {
     }
   }
 
-  Future addMemberShip({required String paymentCode}) async {
+  Future addMemberShip({
+    String? paymentCode,
+    String paymentMethod = 'offline',
+  }) async {
     var userStr = await Database().getUser();
+    emit(CreatingMembership());
     if (userStr != null) {
-      var userResp = userResponseFromJson(userStr);
-      Common value = await _membershipService.addMembership(
-        academyId: userResp.user?.adminDetail?.academy?.id,
-        membershipID: _selectedMembership?.id,
-        paymentMethod: 'offline', // todo
-        salesManOtp: paymentCode,
-      );
+      try {
+        var userResp = userResponseFromJson(userStr);
+        Common value = await _membershipService.addMembership(
+          academyId: userResp.user?.adminDetail?.academy?.id,
+          membershipID: _selectedMembership?.id,
+          paymentMethod: paymentMethod,
+          salesManOtp: paymentCode,
+        );
 
-      if (value.status == 1) {
-        await authCubit.getUser();
-        emit(MembershipSuccess());
-      } else {
-        emit(MembershipFailed(value.message));
+        if (value.status == 1) {
+          await authCubit.getUser();
+          emit(MembershipSuccess());
+        } else {
+          emit(MembershipFailed(value.message));
+        }
+      } catch (e) {
+        debugPrint(e.toString());
+        emit(MembershipFailed(e.toString()));
       }
     } else {
       emit(MembershipFailed('Failed to process the request!'));
     }
   }
 
-  // Future generateOrderId() {}
+// Future generateOrderId() {}
 }

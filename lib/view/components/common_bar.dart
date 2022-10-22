@@ -5,16 +5,18 @@ import 'package:part_app/view/components/logo.dart';
 import 'package:part_app/view/constants/assets.dart';
 
 class CommonBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool hideBack;
   final String title;
   final bool showLogo;
+  final bool enableBack;
+  final VoidCallback? onPressed;
 
-  const CommonBar(
-      {Key? key,
-      this.showLogo = false,
-      this.hideBack = false,
-      required this.title})
-      : super(key: key);
+  const CommonBar({
+    Key? key,
+    this.showLogo = false,
+    required this.title,
+    this.enableBack = false,
+    this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +25,14 @@ class CommonBar extends StatelessWidget implements PreferredSizeWidget {
         height: kToolbarHeight,
         child: Row(
           children: [
-            if (Navigator.canPop(context))
+            if (enableBack || Navigator.canPop(context))
               Padding(
                 padding: const EdgeInsets.only(left: 16),
                 child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  onPressed: onPressed ??
+                      () {
+                        Navigator.pop(context);
+                      },
                   icon: SvgPicture.asset(Assets.back),
                 ),
               ),

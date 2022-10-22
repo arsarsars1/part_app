@@ -97,12 +97,16 @@ class HomeBar extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        Text(
-          cubit.user?.adminDetail?.academy?.academyName ?? 'N/A',
-          style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                color: AppColors.primaryColor,
-                fontSize: 18.sm,
-              ),
+        Padding(
+          padding: EdgeInsets.only(right: 32.w),
+          child: Text(
+            cubit.user?.adminDetail?.academy?.academyName ?? 'N/A',
+            maxLines: 2,
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  color: AppColors.primaryColor,
+                  fontSize: 16.sm,
+                ),
+          ),
         ),
         const SizedBox(
           height: 4,

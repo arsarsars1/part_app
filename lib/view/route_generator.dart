@@ -87,7 +87,9 @@ class RouteGenerator {
         );
       case SubscriptionSuccess.route:
         return MaterialPageRoute(
-          builder: (_) => const SubscriptionSuccess(),
+          builder: (_) => SubscriptionSuccess(
+            academySuccess: settings.arguments as bool,
+          ),
           settings: settings,
         );
       case SwitchAccount.route:

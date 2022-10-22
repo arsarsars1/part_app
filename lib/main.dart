@@ -43,17 +43,23 @@ class App extends StatelessWidget {
         BlocProvider<HomeCubit>(
           create: (context) => HomeCubit(),
         ),
+        BlocProvider<PaymentCubit>(
+          create: (context) => PaymentCubit(
+            membershipCubit: context.read<MembershipCubit>(),
+          ),
+        ),
       ],
       child: MediaQuery(
         data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
         child: ScreenUtilInit(
           designSize: const Size(360, 800),
+          child: const SplashScreen(),
           builder: (_, child) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Part App',
               theme: AppTheme.lightTheme,
-              home: const SplashScreen(),
+              home: child,
               onGenerateRoute: RouteGenerator.generateRoute,
             );
           },

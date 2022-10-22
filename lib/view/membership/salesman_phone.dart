@@ -38,7 +38,9 @@ class _SalesManPhoneState extends State<SalesManPhone> {
 
           if (state is SalesOTPSent) {
             Navigator.pop(context);
-            Navigator.pushNamed(context, SalesManOTP.route);
+            if (!state.resend) {
+              Navigator.pushNamed(context, SalesManOTP.route);
+            }
             Alert(context).show(message: 'Salesman OTP sent.');
           }
         },
