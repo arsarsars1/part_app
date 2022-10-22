@@ -41,7 +41,7 @@ class MembershipService {
     required int? academyId,
     required int? membershipID,
     required String paymentMethod,
-    required String salesManOtp,
+    required String? salesManOtp,
   }) async {
     try {
       var data = {

@@ -42,6 +42,8 @@ class ApiClient {
     required String postPath,
     required Map<String, dynamic> data,
     bool formData = false,
+    String? basePath,
+    Map<String, dynamic>? header,
   }) async {
     // build the base path for the post request
     String path = _baseUrl + postPath;
@@ -59,18 +61,19 @@ class ApiClient {
     }
     // posts the data to service with headers
     var response = await _dio.post(
-      path,
+      basePath ?? path,
       data: formData ? FormData.fromMap(data) : data,
       options: Options(
         followRedirects: false,
         validateStatus: (status) {
           return status != null && status < 500;
         },
-        headers: {
-          'MOBILE-APP-TOKEN': _token,
-          'Authorization': 'Bearer $bearerToken',
-          "Accept": "application/json"
-        },
+        headers: header ??
+            {
+              'MOBILE-APP-TOKEN': _token,
+              'Authorization': 'Bearer $bearerToken',
+              "Accept": "application/json",
+            },
       ),
     );
     if (kDebugMode) {

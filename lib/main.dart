@@ -43,6 +43,11 @@ class App extends StatelessWidget {
         BlocProvider<HomeCubit>(
           create: (context) => HomeCubit(),
         ),
+        BlocProvider<PaymentCubit>(
+          create: (context) => PaymentCubit(
+            membershipCubit: context.read<MembershipCubit>(),
+          ),
+        ),
       ],
       child: MediaQuery(
         data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
