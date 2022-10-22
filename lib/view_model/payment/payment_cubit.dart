@@ -21,10 +21,6 @@ class PaymentCubit extends Cubit<PaymentState> {
   final _razorpay = Razorpay();
   final _apiClient = ApiClient();
 
-  final _membershipService = MembershipService();
-
-  Membership? _membership;
-
   final _auth =
       'Basic cnpwX3Rlc3RfRVdQUjZ4VmhYRlc4a1A6eW5qNjhRQ3RORVZES3VSVHNLbllwNzNh';
 
@@ -39,7 +35,7 @@ class PaymentCubit extends Cubit<PaymentState> {
         },
         basePath: 'https://api.razorpay.com/v1/orders',
         data: {
-          "amount": 50000,
+          "amount": amount * 100,
           "currency": "INR",
           "receipt": receiptId,
         },
@@ -56,8 +52,6 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
   Future payment({required Membership membership, required}) async {
-    _membership = membership;
-
     String? userResp = await Database().getUser();
 
     UserResponse? userResponse = userResponseFromJson(userResp!);
@@ -81,10 +75,12 @@ class PaymentCubit extends Cubit<PaymentState> {
 
       emit(OrderIdGenerated());
 
+      int amount = membership.amount ?? 0 * 0;
+
       /// options to pass to the razorpay SDK to init the payment process
       var options = {
         'key': 'rzp_test_EWPR6xVhXFW8kP',
-        'amount': membership.amount,
+        'amount': amount,
         'name': 'partApp.in',
         'order_id': orderId,
         'description': '${membership.duration} months membership plan',

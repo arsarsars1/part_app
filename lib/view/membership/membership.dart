@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/components/common_bar.dart';
@@ -182,6 +181,11 @@ class _MembershipState extends State<Membership> {
                               message:
                                   'Please select a membership plan to continue.',
                             );
+                            return;
+                          }
+
+                          if (cubit.selectedMembership?.paymentType == 'free') {
+                            cubit.addMemberShip(paymentMethod: 'free');
                             return;
                           }
 

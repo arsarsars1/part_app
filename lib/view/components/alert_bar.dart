@@ -8,6 +8,7 @@ class AlertBar {
   static void showFailureToast(BuildContext context, String? message) {
     FToast fToast = FToast();
     fToast.init(context);
+    fToast.removeQueuedCustomToasts();
     Widget toast = Container(
       margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
       width: double.infinity,
