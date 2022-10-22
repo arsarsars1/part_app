@@ -91,11 +91,9 @@ class AuthCubit extends Cubit<AuthState> {
       if (userResponse.status == 1) {
         _user = userResponse.user;
         _token = userResponse.token;
-        Hive.box(Database.userBox).put(Database.token, userResponse.token);
-        Hive.box(Database.userBox).put(
-          Database.userData,
-          jsonEncode(userResponse),
-        );
+        await Database().setToken(userResponse);
+        await Database().setUser(userResponse);
+
         emit(LoginSuccess(
             userResponse.user?.adminDetail?.academy?.membershipId != null));
       } else {
@@ -181,7 +179,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future validateLocalUser() async {
     String? userToken = Database().getToken();
-    String? userStr = await Database().getUser();
 
     if (userToken != null) {
       _token = userToken;
@@ -204,15 +201,17 @@ class AuthCubit extends Cubit<AuthState> {
     if (response != null) {
       // save the user data to local
       await Database().setUser(response);
-      // save the token to local
-      await Database().setToken(response);
-      _token = response.token;
+
       _user = response.user;
     }
   }
 
   Future logout() async {
-    await _authService.logout();
+    try {
+      await _authService.logout();
+    } catch (e) {
+      // TODO
+    }
     await Database().clearForLogout();
     emit(UserNotAvailable());
   }

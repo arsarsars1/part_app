@@ -58,7 +58,7 @@ class _WAValidationState extends State<WAValidation> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      'Is The Above Number Your Whatsapp Number ?',
+                      'Is The Above Number Your Whatsapp Number?',
                       maxLines: 2,
                       style: Theme.of(context).textTheme.bodyText1,
                       overflow: TextOverflow.ellipsis,

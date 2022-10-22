@@ -31,7 +31,11 @@ class _SalesManOTPState extends State<SalesManOTP> {
       body: BlocListener<MembershipCubit, MembershipState>(
         listener: (context, state) {
           if (state is MembershipSuccess) {
-            Navigator.pushNamed(context, SubscriptionSuccess.route);
+            Navigator.pushNamed(
+              context,
+              SubscriptionSuccess.route,
+              arguments: false,
+            );
           } else if (state is MembershipFailed) {
             Alert(context).show(
               message: state.error ?? 'Membership creation failed',

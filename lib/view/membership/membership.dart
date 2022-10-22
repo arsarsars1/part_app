@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/components/common_bar.dart';
@@ -40,7 +40,11 @@ class _MembershipState extends State<Membership> {
 
     return Scaffold(
       appBar: const CommonBar(
+        // enableBack: true,
         title: 'PartApp-membership',
+        // onPressed: () {
+        //   Cancel(context).show();
+        // },
       ),
       body: MultiBlocListener(
         listeners: [
@@ -58,7 +62,7 @@ class _MembershipState extends State<Membership> {
                 return;
               }
               if (state is PaymentSuccess) {
-                Alert(context).show(message: 'Payment success');
+                // Alert(context).show(message: 'Payment success');
               }
             },
           ),
@@ -72,6 +76,7 @@ class _MembershipState extends State<Membership> {
                 Navigator.pushReplacementNamed(
                   context,
                   SubscriptionSuccess.route,
+                  arguments: false,
                 );
               } else if (state is MembershipFailed) {
                 Navigator.pop(context);

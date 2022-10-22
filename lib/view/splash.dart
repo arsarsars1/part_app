@@ -36,10 +36,10 @@ class _SplashScreenState extends State<SplashScreen> {
               (route) => false,
             );
           } else {
-            Navigator.pushNamedAndRemoveUntil(
+            Navigator.pushReplacementNamed(
               context,
               Membership.route,
-              (route) => false,
+              // (route) => false,
             );
           }
         } else {
