@@ -85,14 +85,29 @@ class _MembershipListState extends State<MembershipList> {
                             ],
                           ),
                           const Spacer(),
-                          Text(
-                            membership.paymentType == 'free'
-                                ? 'Free'
-                                : '₹ ${membership.amount}/-',
-                            style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
-                                      fontSize: 16,
-                                    ),
+                          Column(
+                            children: [
+                              if (membership.paymentType != 'free')
+                                Text(
+                                  '₹ ${membership.amount}/-',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                        fontSize: 15,
+                                        decoration: TextDecoration.lineThrough,
+                                      ),
+                                ),
+                              Text(
+                                membership.paymentType == 'free'
+                                    ? 'Free'
+                                    : '₹ ${membership.finalAmount}/-',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(fontSize: 16),
+                              ),
+                            ],
                           ),
                         ],
                       )

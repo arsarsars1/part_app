@@ -21,6 +21,7 @@ abstract class Membership with _$Membership {
     String? paymentType,
     int? duration,
     int? amount,
+    int? finalAmount,
     int? noOfStudents,
     int? noOfBranches,
     int? isActive,

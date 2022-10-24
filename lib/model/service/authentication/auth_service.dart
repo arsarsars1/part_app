@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/otp.dart';
 import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
@@ -16,12 +17,17 @@ class AuthService {
       required String phoneNo,
       required bool login}) async {
     try {
+      var data = {
+        'country_code': countryCode,
+        'mobile_no': phoneNo,
+      };
+
+      if (F.defaultOTP) {
+        data.putIfAbsent('bypass_otp', () => '123456');
+      }
       var response = await _apiClient.post(
         postPath: login ? '/login-otp' : '/register-otp',
-        data: {
-          'country_code': countryCode,
-          'mobile_no': phoneNo,
-        },
+        data: data,
       );
       return otpFromJson(json.encode(response));
     } on DioError catch (e) {
@@ -35,13 +41,15 @@ class AuthService {
     required String password,
   }) async {
     try {
+      var data = {
+        'country_code': countryCode,
+        'mobile_no': phoneNo,
+        'password': password,
+      };
+
       var response = await _apiClient.post(
         postPath: '/login',
-        data: {
-          'country_code': countryCode,
-          'mobile_no': phoneNo,
-          'password': password,
-        },
+        data: data,
       );
 
       return userResponseFromJson(json.encode(response));
@@ -56,13 +64,15 @@ class AuthService {
     required String otp,
   }) async {
     try {
+      var data = {
+        'country_code': countryCode,
+        'mobile_no': phoneNo,
+        'otp': otp,
+      };
+
       var response = await _apiClient.post(
         postPath: '/register-otp-validate',
-        data: {
-          'country_code': countryCode,
-          'mobile_no': phoneNo,
-          'otp': otp,
-        },
+        data: data,
       );
 
       return otpFromJson(json.encode(response));

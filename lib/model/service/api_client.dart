@@ -3,10 +3,11 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 
 class ApiClient {
-  final _baseUrl = 'https://dev.partapp.in/api';
+  final _baseUrl = F.baseUrl;
   final _token = 'h5uA9WokuxSNDJGYK0UevodqEWJjYzlB';
   final _dio = Dio();
 
