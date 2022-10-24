@@ -21,12 +21,10 @@ class PaymentCubit extends Cubit<PaymentState> {
   final _razorpay = Razorpay();
   final _apiClient = ApiClient();
 
-  final _membershipService = MembershipService();
-
-  Membership? _membership;
-
   final _auth =
-      'Basic cnpwX3Rlc3RfRVdQUjZ4VmhYRlc4a1A6eW5qNjhRQ3RORVZES3VSVHNLbllwNzNh';
+      'Basic cnpwX3Rlc3RfaGxxcHREV2I0VzRad1Q6TnVmR21yOGxCSE1HOVVMYktFMzBlazhV';
+
+  final _rPayKey = 'rzp_test_hlqptDWb4W4ZwT';
 
   Future<String?> _getOrderId(
       {required String receiptId, required int amount}) async {
@@ -39,7 +37,7 @@ class PaymentCubit extends Cubit<PaymentState> {
         },
         basePath: 'https://api.razorpay.com/v1/orders',
         data: {
-          "amount": 50000,
+          "amount": amount * 100,
           "currency": "INR",
           "receipt": receiptId,
         },
@@ -56,8 +54,6 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
   Future payment({required Membership membership, required}) async {
-    _membership = membership;
-
     String? userResp = await Database().getUser();
 
     UserResponse? userResponse = userResponseFromJson(userResp!);
@@ -67,13 +63,15 @@ class PaymentCubit extends Cubit<PaymentState> {
           'receipt_${userResponse.user?.adminDetail?.id}_${membership.id}';
 
       emit(GeneratingOrderId());
+      int amount = membership.finalAmount ?? 0 * 0;
 
       /// get the order id from the razorpay order id api
       String? orderId = await _getOrderId(
         receiptId: receiptId,
-        amount: membership.amount ?? 0,
+        amount: amount,
       );
 
+      /// if order id generation failed
       if (orderId == null) {
         emit(GeneratingOrderIdFailed());
         return;
@@ -83,12 +81,12 @@ class PaymentCubit extends Cubit<PaymentState> {
 
       /// options to pass to the razorpay SDK to init the payment process
       var options = {
-        'key': 'rzp_test_EWPR6xVhXFW8kP',
-        'amount': membership.amount,
+        'key': _rPayKey,
+        'amount': amount,
         'name': 'partApp.in',
         'order_id': orderId,
         'description': '${membership.duration} months membership plan',
-        'timeout': 60,
+        'timeout': 15,
         'prefill': {
           'contact': userResponse.user?.mobileNo,
           'email': userResponse.user?.adminDetail?.email,
@@ -118,6 +116,19 @@ class PaymentCubit extends Cubit<PaymentState> {
 
   void _handlePaymentError(PaymentFailureResponse response) {
     _razorpay.clear();
+
+    if (response.message?.toLowerCase() == 'timeout') {
+      emit(
+        PaymentFailed('Sorry Your session Has Expired, Please Try Again '),
+      );
+      return;
+    }
+    if (response.code == 2) {
+      emit(
+        PaymentFailed('Payment failed, please try again.'),
+      );
+      return;
+    }
     emit(
       PaymentFailed(
         response.message ?? 'Payment failed, please try again.',
