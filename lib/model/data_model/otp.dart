@@ -14,7 +14,7 @@ abstract class Otp with _$Otp {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Otp({
     required String message,
-    int? otp,
+    dynamic otp,
     int? status,
   }) = _Otp;
 
