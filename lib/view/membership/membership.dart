@@ -185,7 +185,7 @@ class _MembershipState extends State<Membership> {
                           }
 
                           if (cubit.selectedMembership?.paymentType == 'free') {
-                            cubit.addMemberShip(paymentMethod: 'free');
+                            cubit.addMemberShip(paymentMethod: 'online');
                             return;
                           }
 
