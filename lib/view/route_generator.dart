@@ -7,6 +7,8 @@ import 'package:part_app/view/auth/register/admin_details.dart';
 import 'package:part_app/view/auth/register/branch_details.dart';
 import 'package:part_app/view/auth/register/sign_up.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
+import 'package:part_app/view/branch/add_branch.dart';
+import 'package:part_app/view/branch/branch_list.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
@@ -105,6 +107,18 @@ class RouteGenerator {
       case Trainer.route:
         return MaterialPageRoute(
           builder: (_) => const Trainer(),
+          settings: settings,
+        );
+      case BranchList.route:
+        return MaterialPageRoute(
+          builder: (_) => const BranchList(),
+          settings: settings,
+        );
+      case AddBranch.route:
+        return MaterialPageRoute(
+          builder: (_) => AddBranch(
+            addBranch: settings.arguments as bool,
+          ),
           settings: settings,
         );
       default:

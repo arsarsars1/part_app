@@ -183,19 +183,23 @@ class AuthCubit extends Cubit<AuthState> {
     if (userToken != null) {
       _token = userToken;
 
-      await getUser();
+      var user = await getUser();
 
-      emit(
-        UserAvailable(
-          member: _user?.adminDetail?.academy?.membershipId != null,
-        ),
-      );
+      if (user != null) {
+        emit(
+          UserAvailable(
+            member: _user?.adminDetail?.academy?.membershipId != null,
+          ),
+        );
+      } else {
+        emit(UserNotAvailable());
+      }
     } else {
       emit(UserNotAvailable());
     }
   }
 
-  Future getUser() async {
+  Future<User?> getUser() async {
     // gets the latest profile data from api
     UserResponse? response = await _authService.getProfile();
     if (response != null) {
@@ -204,6 +208,8 @@ class AuthCubit extends Cubit<AuthState> {
 
       _user = response.user;
     }
+
+    return response?.user;
   }
 
   Future logout() async {

@@ -35,6 +35,8 @@ class DashboardIcons extends StatelessWidget {
               height: 98.h,
               width: 98.w,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     decoration: BoxDecoration(

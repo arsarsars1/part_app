@@ -4,7 +4,7 @@ import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/membership/membership.dart';
-import 'package:part_app/view_model/authentication/auth_cubit.dart';
+import 'package:part_app/view_model/cubits.dart';
 
 class SplashScreen extends StatefulWidget {
   static const route = '/splash';
@@ -19,8 +19,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     Future.delayed(const Duration(seconds: 2)).then((value) {
       context.read<AuthCubit>().validateLocalUser();
+      context.read<CountryCubit>().getCountries();
     });
   }
 
