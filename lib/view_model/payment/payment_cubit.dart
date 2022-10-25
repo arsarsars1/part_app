@@ -26,6 +26,9 @@ class PaymentCubit extends Cubit<PaymentState> {
 
   final _rPayKey = 'rzp_test_hlqptDWb4W4ZwT';
 
+  final _timeOut = 300;
+  final _currency = 'INR';
+
   Future<String?> _getOrderId(
       {required String receiptId, required int amount}) async {
     try {
@@ -38,7 +41,7 @@ class PaymentCubit extends Cubit<PaymentState> {
         basePath: 'https://api.razorpay.com/v1/orders',
         data: {
           "amount": amount * 100,
-          "currency": "INR",
+          "currency": _currency,
           "receipt": receiptId,
         },
       );
@@ -86,7 +89,7 @@ class PaymentCubit extends Cubit<PaymentState> {
         'name': 'partApp.in',
         'order_id': orderId,
         'description': '${membership.duration} months membership plan',
-        'timeout': 15,
+        'timeout': _timeOut,
         'prefill': {
           'contact': userResponse.user?.mobileNo,
           'email': userResponse.user?.adminDetail?.email,
