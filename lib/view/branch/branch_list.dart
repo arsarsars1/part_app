@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/view/branch/add_branch.dart';
+import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/components/button.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/list_card.dart';
@@ -55,7 +56,15 @@ class _BranchListState extends State<BranchList> {
                   itemBuilder: (context, index) {
                     Branch branch = cubit.branches[index];
                     return ListCard(
-                      onTap: () {},
+                      onTap: () {
+                        // opens the branch details page
+                        // id is a required arguments
+                        Navigator.pushNamed(
+                          context,
+                          BranchDetails.route,
+                          arguments: branch.id,
+                        );
+                      },
                       title: branch.branchName ?? 'N/A',
                       subTitle: branch.address ?? 'N/A',
                     );

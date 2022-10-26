@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
+import 'package:part_app/view/branch/components/enable_switch.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
@@ -30,27 +33,37 @@ class _AddBranchState extends State<AddBranch> {
   FocusNode pinFocus = FocusNode();
   FocusNode nameFocus = FocusNode();
   FocusNode addressFocus = FocusNode();
+  bool selected = false;
+
+  final nameController = TextEditingController();
+  final addressController = TextEditingController();
+  final pinController = TextEditingController();
+
+  late DropDownItem? defaultState;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var cubit = context.read<CountryCubit>();
       if (widget.addBranch) {
-        var cubit = context.read<CountryCubit>();
-
         countryId = cubit.defaultCountry?.id;
         districtId = cubit.defaultDistrict?.id;
         stateId = cubit.defaultState?.id;
-      }
+        defaultState = cubit.defaultState;
+      } else {}
     });
   }
 
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BranchCubit>();
+    var countryCubit = context.read<CountryCubit>();
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: const CommonBar(title: 'Add Branch'),
+      appBar: CommonBar(
+        title: widget.addBranch ? 'Add Branch' : 'Edit Branch',
+      ),
       body: BlocListener<BranchCubit, BranchState>(
         listener: (context, state) {
           if (state is AddingBranch) {
@@ -67,10 +80,25 @@ class _AddBranchState extends State<AddBranch> {
           key: formKey,
           child: ListView(
             children: [
+              if (!widget.addBranch)
+                const SizedBox(
+                  height: 20,
+                ),
+              if (!widget.addBranch)
+                EnableSwitch(
+                  enable: cubit.branch?.isActive != 0,
+                  onChange: (bool value) {
+                    selected = value;
+                    cubit.changeBranchStatus(
+                      status: value ? 1 : 0,
+                    );
+                  },
+                ),
               const SizedBox(
                 height: 20,
               ),
               CommonField(
+                initialValue: cubit.branch?.branchName,
                 node: nameFocus,
                 length: 100,
                 maxLines: 1,
@@ -90,6 +118,7 @@ class _AddBranchState extends State<AddBranch> {
                 height: 20,
               ),
               CommonField(
+                initialValue: cubit.branch?.address,
                 node: addressFocus,
                 length: 300,
                 title: 'Address *',
@@ -114,12 +143,13 @@ class _AddBranchState extends State<AddBranch> {
                 },
                 onChange: (value) {
                   countryId = value.id;
-                  context.read<CountryCubit>().getStates(countryId: countryId!);
+                  countryCubit.getStates(countryId: countryId!);
                 },
-                defaultItem: context.read<CountryCubit>().defaultCountry,
+                defaultItem: widget.addBranch
+                    ? countryCubit.defaultCountry
+                    : countryCubit.getCountry(cubit.branch?.countryId),
                 dropDown: true,
-                dropDownItems:
-                    context.read<CountryCubit>().countriesForDropDown,
+                dropDownItems: countryCubit.countriesForDropDown,
               ),
               const SizedBox(
                 height: 20,
@@ -134,8 +164,10 @@ class _AddBranchState extends State<AddBranch> {
                 },
                 hint: 'Select State',
                 dropDown: true,
-                defaultItem: context.read<CountryCubit>().defaultState,
-                dropDownItems: context.read<CountryCubit>().statesForDropDown,
+                defaultItem: widget.addBranch
+                    ? defaultState
+                    : countryCubit.getState(cubit.branch?.stateId),
+                dropDownItems: countryCubit.statesForDropDown,
               ),
               const SizedBox(
                 height: 20,
@@ -150,14 +182,16 @@ class _AddBranchState extends State<AddBranch> {
                   return value == null ? 'Please select district.' : null;
                 },
                 dropDown: true,
-                defaultItem: context.read<CountryCubit>().defaultDistrict,
-                dropDownItems:
-                    context.read<CountryCubit>().districtsForDropDown,
+                defaultItem: widget.addBranch
+                    ? countryCubit.defaultDistrict
+                    : countryCubit.getDistrict(cubit.branch?.districtId),
+                dropDownItems: countryCubit.districtsForDropDown,
               ),
               const SizedBox(
                 height: 20,
               ),
               CommonField(
+                initialValue: '${cubit.branch?.pincode}',
                 validator: (value) {
                   return value == null ||
                           value.isEmpty ||
@@ -193,6 +227,7 @@ class _AddBranchState extends State<AddBranch> {
               child: Button(
                 onTap: () {
                   formKey.currentState?.validate();
+                  formKey.currentState?.save();
                   if (branchName.trim().isEmpty) {
                     nameFocus.requestFocus();
                     return;
@@ -206,15 +241,28 @@ class _AddBranchState extends State<AddBranch> {
                     return;
                   }
                   if (formKey.currentState!.validate()) {
-                    cubit.addBranch(
-                      stateId: '$stateId',
-                      branchName: branchName,
-                      countryId: '$countryId',
-                      districtId: '$districtId',
-                      location: '',
-                      address: address,
-                      pinCode: pinCode,
-                    );
+                    if (widget.addBranch) {
+                      cubit.addBranch(
+                        stateId: '$stateId',
+                        branchName: branchName,
+                        countryId: '$countryId',
+                        districtId: '$districtId',
+                        location: '',
+                        address: address,
+                        pinCode: pinCode,
+                      );
+                    } else {
+                      cubit.updateBranch(
+                        stateId: '$stateId',
+                        branchName: branchName,
+                        countryId: '$countryId',
+                        districtId: '$districtId',
+                        location: '',
+                        address: address,
+                        pinCode: pinCode,
+                        isActive: selected ? 1 : 0,
+                      );
+                    }
                   }
                 },
                 title: 'Save',

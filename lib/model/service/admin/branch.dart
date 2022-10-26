@@ -18,15 +18,50 @@ class BranchService {
     required String pinCode,
   }) async {
     try {
-      var response = await _apiClient.post(postPath: '/admin/branches', data: {
-        'state_id': stateId,
-        'branch_name': branchName,
-        'country_id': countryId,
-        'district_id': districtId,
-        'location': location,
-        'address': address,
-        'pincode': pinCode,
-      });
+      var response = await _apiClient.post(
+        postPath: '/admin/branches',
+        data: {
+          'state_id': stateId,
+          'branch_name': branchName,
+          'country_id': countryId,
+          'district_id': districtId,
+          'location': location,
+          'address': address,
+          'pincode': pinCode,
+        },
+      );
+      Common common = commonFromJson(jsonEncode(response));
+      return common;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> update({
+    required String stateId,
+    required String branchName,
+    required String countryId,
+    required String districtId,
+    required String location,
+    required String address,
+    required String pinCode,
+    required int? branchId,
+    required int? isActive,
+  }) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/branches/$branchId',
+        data: {
+          'state_id': stateId,
+          'branch_name': branchName,
+          'country_id': countryId,
+          'district_id': districtId,
+          'location': location,
+          'address': address,
+          'pincode': pinCode,
+          'is_active': isActive,
+        },
+      );
       Common common = commonFromJson(jsonEncode(response));
       return common;
     } catch (e) {
@@ -47,5 +82,28 @@ class BranchService {
       debugPrint(e.toString());
     }
     return null;
+  }
+
+  Future<Branch?> getBranchById({required String id}) async {
+    try {
+      var response = await _apiClient.get(queryPath: '/admin/branches/$id');
+      BranchResponse branchResponse =
+          branchResponseFromJson(jsonEncode(response));
+      if (branchResponse.status == 1 && branchResponse.branch != null) {
+        return branchResponse.branch;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return null;
+  }
+
+  Future changeBranchStatus(
+      {required int status, required int branchId}) async {
+    var response = await _apiClient.get(
+      queryPath: '/admin/branches/$branchId/activation/$status',
+    );
+
+    print(response);
   }
 }

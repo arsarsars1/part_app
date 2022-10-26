@@ -3,11 +3,12 @@ import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/auth/register/acadmey_details.dart';
+import 'package:part_app/view/auth/register/add_branch_register.dart';
 import 'package:part_app/view/auth/register/admin_details.dart';
-import 'package:part_app/view/auth/register/branch_details.dart';
 import 'package:part_app/view/auth/register/sign_up.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/branch/add_branch.dart';
+import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/membership/membership.dart';
@@ -67,9 +68,9 @@ class RouteGenerator {
           builder: (_) => const AcademyDetails(),
           settings: settings,
         );
-      case BranchDetails.route:
+      case AddBranchRegister.route:
         return MaterialPageRoute(
-          builder: (_) => const BranchDetails(),
+          builder: (_) => const AddBranchRegister(),
           settings: settings,
         );
       case Membership.route:
@@ -112,6 +113,13 @@ class RouteGenerator {
       case BranchList.route:
         return MaterialPageRoute(
           builder: (_) => const BranchList(),
+          settings: settings,
+        );
+      case BranchDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => BranchDetails(
+            id: settings.arguments as int,
+          ),
           settings: settings,
         );
       case AddBranch.route:

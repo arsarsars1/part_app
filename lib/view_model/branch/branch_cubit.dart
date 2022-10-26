@@ -12,7 +12,16 @@ class BranchCubit extends Cubit<BranchState> {
 
   List<Branch> _branches = [];
 
+  Branch? _branch;
+
   List<Branch> get branches => _branches;
+
+  Branch? get branch => _branch;
+
+  set branch(Branch? tempBranch) {
+    _branch = tempBranch;
+    emit(BranchLoaded());
+  }
 
   set branches(List<Branch> tempBranches) {
     _branches = tempBranches;
@@ -23,6 +32,14 @@ class BranchCubit extends Cubit<BranchState> {
     emit(BranchesLoading());
     List<Branch>? list = await _branchService.getBranches();
     branches = list ?? [];
+  }
+
+  Future getBranchById({required String id}) async {
+    emit(BranchLoading());
+    Branch? temp = await _branchService.getBranchById(id: id);
+    if (temp != null) {
+      branch = temp;
+    }
   }
 
   Future addBranch({
@@ -60,5 +77,58 @@ class BranchCubit extends Cubit<BranchState> {
         ),
       );
     }
+  }
+
+  Future updateBranch({
+    required String stateId,
+    required String branchName,
+    required String countryId,
+    required String districtId,
+    required String location,
+    required String address,
+    required String pinCode,
+    required int isActive,
+  }) async {
+    // informs the UI to show the Loader
+    emit(UpdatingBranch());
+
+    // requests the API to create a new Branch
+    Common? common = await _branchService.update(
+      stateId: stateId,
+      branchName: branchName,
+      countryId: countryId,
+      districtId: districtId,
+      location: location,
+      address: address,
+      pinCode: pinCode,
+      branchId: branch?.id,
+      isActive: isActive,
+    );
+
+    if (common != null && common.status == 1) {
+      // if success ca get the branches from API & update the UI
+      getBranchById(id: '${branch?.id}');
+      emit(UpdatedBranch());
+    } else {
+      // update the UI when the branch adding API failed
+      emit(
+        UpdateBranchFailed(
+          common?.message ?? 'Failed to add branch, please try gain.',
+        ),
+      );
+    }
+  }
+
+  Future changeBranchStatus({
+    required int status,
+  }) async {
+    var response = await _branchService.changeBranchStatus(
+      status: status,
+      branchId: branch!.id,
+    );
+
+    await getBranchById(id: '${branch?.id}');
+
+    print(response);
   }
 }

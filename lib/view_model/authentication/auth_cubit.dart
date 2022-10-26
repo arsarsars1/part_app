@@ -216,7 +216,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await _authService.logout();
     } catch (e) {
-      // TODO
+      // TODO should we force logout the user ???
     }
     await Database().clearForLogout();
     emit(UserNotAvailable());

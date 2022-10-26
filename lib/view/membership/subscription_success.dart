@@ -38,7 +38,7 @@ class SubscriptionSuccess extends StatelessWidget {
             child: Text(
               academySuccess
                   ? 'Congratulations Your Academy Is Successfully Registered With PartApp.\n\n'
-                      'Please Select A Membership Plan To Continue'
+                      'Please continue to select a membership plan'
                   : 'Subscription Successful',
               textAlign: TextAlign.center,
             ),

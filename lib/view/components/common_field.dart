@@ -97,6 +97,10 @@ class CommonField extends StatelessWidget {
                       ),
                     );
                   }).toList(),
+                  onSaved: (value) {
+                    selectedItem = value;
+                    onChange(value);
+                  },
                   onChanged: (value) {
                     selectedItem = value;
                     onChange(value);
@@ -114,6 +118,9 @@ class CommonField extends StatelessWidget {
                   keyboardType: inputType,
                   validator: validator,
                   onChanged: (value) {
+                    onChange(value);
+                  },
+                  onSaved: (value) {
                     onChange(value);
                   },
                   textInputAction: textInputAction,

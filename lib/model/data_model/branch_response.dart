@@ -16,6 +16,7 @@ abstract class BranchResponse with _$BranchResponse {
   const factory BranchResponse({
     required int status,
     List<Branch>? branches,
+    Branch? branch,
   }) = _BranchResponse;
 
   factory BranchResponse.fromJson(Map<String, dynamic> json) =>
