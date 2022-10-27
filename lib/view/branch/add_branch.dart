@@ -66,14 +66,20 @@ class _AddBranchState extends State<AddBranch> {
       ),
       body: BlocListener<BranchCubit, BranchState>(
         listener: (context, state) {
-          if (state is AddingBranch) {
+          if (state is AddingBranch || state is UpdatingBranch) {
             Loader(context, message: 'Adding Branch ...').show();
           } else if (state is AddingBranchFailed) {
             Navigator.pop(context);
             Alert(context).show(message: state.message);
-          } else if (state is BranchAdded) {
+          } else if (state is UpdateBranchFailed) {
             Navigator.pop(context);
-            Alert(context).show(message: 'Branch added.');
+            Alert(context).show(message: state.message);
+          } else if (state is BranchAdded || state is UpdatedBranch) {
+            Navigator.pop(context);
+            Alert(context).show(
+              message:
+                  state is UpdatedBranch ? 'Branch Updated.' : 'Branch added.',
+            );
           }
         },
         child: Form(
@@ -89,9 +95,6 @@ class _AddBranchState extends State<AddBranch> {
                   enable: cubit.branch?.isActive != 0,
                   onChange: (bool value) {
                     selected = value;
-                    cubit.changeBranchStatus(
-                      status: value ? 1 : 0,
-                    );
                   },
                 ),
               const SizedBox(

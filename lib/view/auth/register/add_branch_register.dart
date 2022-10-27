@@ -43,7 +43,7 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: const CommonBar(
         title: 'Branch Details',
       ),
@@ -176,6 +176,9 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
                 maxLines: 1,
                 onChange: (value) {
                   pinCode = value;
+                  if (value.length == 6) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  }
                 },
               ),
             ],

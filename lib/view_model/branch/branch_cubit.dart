@@ -119,6 +119,7 @@ class BranchCubit extends Cubit<BranchState> {
     }
   }
 
+  @Deprecated('This feature is removed and the same is moved to update API')
   Future changeBranchStatus({
     required int status,
   }) async {
@@ -128,7 +129,5 @@ class BranchCubit extends Cubit<BranchState> {
     );
 
     await getBranchById(id: '${branch?.id}');
-
-    print(response);
   }
 }

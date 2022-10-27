@@ -104,6 +104,9 @@ class _WAValidationState extends State<WAValidation> {
                     title: 'Whatsapp Phone Number *',
                     onChange: (value) {
                       waNumber = value;
+                      if (value.length >= 10) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      }
                     },
                     length: 10,
                     hint: 'Eg: 9876543210',

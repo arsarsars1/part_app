@@ -157,6 +157,7 @@ class AuthCubit extends Cubit<AuthState> {
       countryId: countryId,
       stateId: stateId,
       districtId: districtId,
+      firebaseToken: 'tesstingg', // todo add token
     );
     register();
   }

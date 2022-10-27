@@ -32,6 +32,7 @@ class RegisterRequest with _$RegisterRequest {
     String? branchName,
     String? branchAddress,
     String? branchPincode,
+    String? firebaseToken,
     int? academyTypeId,
     String? name,
     int? countryId,

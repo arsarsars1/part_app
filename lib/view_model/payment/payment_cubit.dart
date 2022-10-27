@@ -40,7 +40,7 @@ class PaymentCubit extends Cubit<PaymentState> {
         },
         basePath: 'https://api.razorpay.com/v1/orders',
         data: {
-          "amount": amount * 100,
+          "amount": amount,
           "currency": _currency,
           "receipt": receiptId,
         },
@@ -66,7 +66,7 @@ class PaymentCubit extends Cubit<PaymentState> {
           'receipt_${userResponse.user?.adminDetail?.id}_${membership.id}';
 
       emit(GeneratingOrderId());
-      int amount = membership.finalAmount ?? 0 * 0;
+      int amount = membership.finalAmount ?? 0;
 
       /// get the order id from the razorpay order id api
       String? orderId = await _getOrderId(

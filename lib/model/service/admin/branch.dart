@@ -98,6 +98,7 @@ class BranchService {
     return null;
   }
 
+  @Deprecated('This feature is removed and the same is moved to update API')
   Future changeBranchStatus(
       {required int status, required int branchId}) async {
     var response = await _apiClient.get(
