@@ -44,6 +44,7 @@ class AuthService {
       var data = {
         'country_code': countryCode,
         'mobile_no': phoneNo,
+        'firebase_token': 'dummy token',
         'password': password,
       };
 

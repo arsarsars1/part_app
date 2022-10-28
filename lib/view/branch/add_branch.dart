@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,7 +38,7 @@ class _AddBranchState extends State<AddBranch> {
   final addressController = TextEditingController();
   final pinController = TextEditingController();
 
-  late DropDownItem? defaultState;
+  DropDownItem? defaultState;
 
   @override
   void initState() {
@@ -101,7 +100,8 @@ class _AddBranchState extends State<AddBranch> {
                 height: 20,
               ),
               CommonField(
-                initialValue: cubit.branch?.branchName,
+                initialValue:
+                    widget.addBranch ? null : cubit.branch?.branchName,
                 node: nameFocus,
                 length: 100,
                 maxLines: 1,
@@ -121,7 +121,7 @@ class _AddBranchState extends State<AddBranch> {
                 height: 20,
               ),
               CommonField(
-                initialValue: cubit.branch?.address,
+                initialValue: widget.addBranch ? null : cubit.branch?.address,
                 node: addressFocus,
                 length: 300,
                 title: 'Address *',
@@ -168,7 +168,7 @@ class _AddBranchState extends State<AddBranch> {
                 hint: 'Select State',
                 dropDown: true,
                 defaultItem: widget.addBranch
-                    ? defaultState
+                    ? countryCubit.defaultState
                     : countryCubit.getState(cubit.branch?.stateId),
                 dropDownItems: countryCubit.statesForDropDown,
               ),
@@ -194,7 +194,8 @@ class _AddBranchState extends State<AddBranch> {
                 height: 20,
               ),
               CommonField(
-                initialValue: '${cubit.branch?.pincode}',
+                initialValue:
+                    widget.addBranch ? null : '${cubit.branch?.pincode}',
                 validator: (value) {
                   return value == null ||
                           value.isEmpty ||

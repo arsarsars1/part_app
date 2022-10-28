@@ -7,6 +7,7 @@ import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/components/button.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/list_card.dart';
+import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/branch/branch_cubit.dart';
 
 class BranchList extends StatefulWidget {
@@ -41,7 +42,11 @@ class _BranchListState extends State<BranchList> {
               child: Button(
                 height: 30.h,
                 onTap: () {
-                  Navigator.pushNamed(context, AddBranch.route);
+                  Navigator.pushNamed(
+                    context,
+                    AddBranch.route,
+                    arguments: true,
+                  );
                 },
                 title: 'Add New Branch',
               ),
@@ -55,6 +60,7 @@ class _BranchListState extends State<BranchList> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     Branch branch = cubit.branches[index];
+                    bool active = branch.isActive != 0;
                     return ListCard(
                       onTap: () {
                         // opens the branch details page
@@ -66,7 +72,16 @@ class _BranchListState extends State<BranchList> {
                         );
                       },
                       title: branch.branchName ?? 'N/A',
-                      subTitle: branch.address ?? 'N/A',
+                      subTitle: branch.district?.districtName ?? 'N/A',
+                      suffix: Text(
+                        active ? 'Active' : 'Deactivated',
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontSize: 12.sm,
+                              color: active
+                                  ? Colors.white
+                                  : AppColors.primaryColor,
+                            ),
+                      ),
                     );
                   },
                 ),

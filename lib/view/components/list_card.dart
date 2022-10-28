@@ -6,13 +6,17 @@ class ListCard extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
   final String subTitle;
+  final String? suffixText;
+  final Widget? suffix;
 
-  const ListCard(
-      {Key? key,
-      required this.onTap,
-      required this.title,
-      required this.subTitle})
-      : super(key: key);
+  const ListCard({
+    Key? key,
+    required this.onTap,
+    required this.title,
+    required this.subTitle,
+    this.suffixText,
+    this.suffix,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,23 +33,29 @@ class ListCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           color: AppColors.liteDark,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.bodyText2,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  subTitle,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 12.sm,
+                        color: AppColors.primaryColor,
+                      ),
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              subTitle,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 12.sm,
-                    color: AppColors.primaryColor,
-                  ),
-            ),
+            if (suffix != null) suffix!
           ],
         ),
       ),

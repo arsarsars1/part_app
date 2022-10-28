@@ -95,6 +95,43 @@ class _BranchDetailsState extends State<BranchDetails> {
                     Text(
                       '${branch?.address}, ${branch?.pincode}',
                     ),
+                    SizedBox(
+                      height: 16.h,
+                    ),
+                    Text(
+                      '${branch?.country?.name}, '
+                      '${branch?.state?.stateName}, '
+                      '${branch?.district?.districtName}',
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 16.h,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.liteDark,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                margin: EdgeInsets.all(16.r),
+                padding: EdgeInsets.all(16.r),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Assigned Branch Manager',
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: AppColors.primaryColor,
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 4,
+                      width: double.infinity,
+                    ),
+                    const Text(
+                      'N/A',
+                    ),
                   ],
                 ),
               )

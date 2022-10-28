@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:part_app/model/data_model/country.dart';
+import 'package:part_app/model/data_model/district.dart';
 
 part 'branch_response.freezed.dart';
 part 'branch_response.g.dart';
@@ -39,6 +41,9 @@ abstract class Branch with _$Branch {
     int? isActive,
     DateTime? createdAt,
     DateTime? updatedAt,
+    Country? country,
+    District? state,
+    District? district,
   }) = _Branch;
 
   factory Branch.fromJson(Map<String, dynamic> json) => _$BranchFromJson(json);
