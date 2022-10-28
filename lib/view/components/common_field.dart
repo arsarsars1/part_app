@@ -27,11 +27,13 @@ class CommonField extends StatelessWidget {
   final FormFieldValidator? validator;
   final CrossAxisAlignment crossAxisAlignment;
   final EdgeInsets? padding;
+  final FocusNode? node;
 
   const CommonField(
       {Key? key,
       required this.title,
       this.hint,
+      this.node,
       this.dropDown = false,
       this.dropDownItems,
       this.defaultItem,
@@ -95,12 +97,17 @@ class CommonField extends StatelessWidget {
                       ),
                     );
                   }).toList(),
+                  onSaved: (value) {
+                    selectedItem = value;
+                    onChange(value);
+                  },
                   onChanged: (value) {
                     selectedItem = value;
                     onChange(value);
                   },
                 )
               : TextFormField(
+                  focusNode: node,
                   maxLength: length,
                   controller: controller,
                   onTap: onTap,
@@ -111,6 +118,9 @@ class CommonField extends StatelessWidget {
                   keyboardType: inputType,
                   validator: validator,
                   onChanged: (value) {
+                    onChange(value);
+                  },
+                  onSaved: (value) {
                     onChange(value);
                   },
                   textInputAction: textInputAction,

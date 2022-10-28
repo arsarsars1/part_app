@@ -8,16 +8,16 @@ import 'package:part_app/view/membership/subscription_success.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/country/country_cubit.dart';
 
-class BranchDetails extends StatefulWidget {
+class AddBranchRegister extends StatefulWidget {
   static const route = '/auth/branch-details';
 
-  const BranchDetails({Key? key}) : super(key: key);
+  const AddBranchRegister({Key? key}) : super(key: key);
 
   @override
-  State<BranchDetails> createState() => _BranchDetailsState();
+  State<AddBranchRegister> createState() => _AddBranchRegisterState();
 }
 
-class _BranchDetailsState extends State<BranchDetails> {
+class _AddBranchRegisterState extends State<AddBranchRegister> {
   String branchName = '';
   String address = '';
   int? countryId;
@@ -43,7 +43,7 @@ class _BranchDetailsState extends State<BranchDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: const CommonBar(
         title: 'Branch Details',
       ),
@@ -176,6 +176,9 @@ class _BranchDetailsState extends State<BranchDetails> {
                 maxLines: 1,
                 onChange: (value) {
                   pinCode = value;
+                  if (value.length == 6) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  }
                 },
               ),
             ],

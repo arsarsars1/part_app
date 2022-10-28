@@ -8,7 +8,7 @@ import 'package:part_app/model/service/api_client.dart';
 class MembershipService {
   final _apiClient = ApiClient();
 
-  Future getMembershipTypes() async {
+  Future<List<Membership>> getMembershipTypes() async {
     try {
       var str = await _apiClient.get(queryPath: '/memberships');
       return membershipFromJson(jsonEncode(str));

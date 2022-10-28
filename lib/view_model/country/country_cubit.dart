@@ -124,4 +124,31 @@ class CountryCubit extends Cubit<CountryState> {
   DropDownItem buildMenuItem(Country country) {
     return DropDownItem(id: country.id, title: country.name, item: country);
   }
+
+  DropDownItem getState(int? stateId) {
+    var item = _states.firstWhere((element) => element.id == stateId);
+    return DropDownItem(
+      id: item.id,
+      title: item.stateName,
+      item: item,
+    );
+  }
+
+  DropDownItem getCountry(int? countryId) {
+    var item = _countries.firstWhere((element) => element.id == countryId);
+    return DropDownItem(
+      id: item.id,
+      title: item.name,
+      item: item,
+    );
+  }
+
+  DropDownItem getDistrict(int? districtId) {
+    var item = _districts.firstWhere((element) => element.id == districtId);
+    return DropDownItem(
+      id: item.id,
+      title: item.districtName,
+      item: item,
+    );
+  }
 }

@@ -28,9 +28,6 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<CountryCubit>().getCountries();
-    });
   }
 
   @override

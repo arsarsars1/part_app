@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 
-class _LoadingView extends StatelessWidget {
+class LoadingView extends StatelessWidget {
   final String? message;
 
-  const _LoadingView({Key? key, this.message}) : super(key: key);
+  const LoadingView({Key? key, this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class Loader {
       barrierDismissible: false,
       context: context,
       builder: (context) {
-        return _LoadingView(
+        return LoadingView(
           message: message,
         );
       },

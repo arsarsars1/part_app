@@ -5,6 +5,7 @@ import 'package:part_app/flavors.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/route_generator.dart';
 import 'package:part_app/view/splash.dart';
+import 'package:part_app/view_model/branch/branch_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class App extends StatelessWidget {
@@ -32,6 +33,9 @@ class App extends StatelessWidget {
           create: (context) => PaymentCubit(
             membershipCubit: context.read<MembershipCubit>(),
           ),
+        ),
+        BlocProvider<BranchCubit>(
+          create: (context) => BranchCubit(),
         ),
       ],
       child: MediaQuery(
