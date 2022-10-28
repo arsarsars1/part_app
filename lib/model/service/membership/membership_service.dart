@@ -64,4 +64,25 @@ class MembershipService {
       throw Exception(e);
     }
   }
+
+  Future<String?> getOrderId({
+    required int? academyId,
+    required int? membershipID,
+  }) async {
+    try {
+      Map<String, dynamic> str = await _apiClient.post(
+        postPath: '/create-membership-order',
+        data: {
+          'membership_id': '$membershipID',
+          'academy_id': '$academyId',
+        },
+      );
+      if (str.containsKey('order_id')) {
+        return str['order_id'] as String;
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
 }

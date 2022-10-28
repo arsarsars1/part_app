@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
+import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TrainerList extends StatelessWidget {
   final List<Trainer> trainers;
@@ -61,29 +63,51 @@ class TrainerList extends StatelessWidget {
                 flex: 1,
                 child: Row(
                   children: [
-                    Container(
-                      width: 25,
-                      height: 25,
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFF00F260),
-                      ),
-                      child: SvgPicture.asset(
-                        Assets.whatsApp,
+                    InkWell(
+                      onTap: () {
+                        _whatsApp(
+                          '9585948942',
+                          context,
+                        ); // todo remove this
+                        if (trainer.whatsappNo != null) {
+                          _whatsApp(trainer.whatsappNo!, context);
+                        }
+                      },
+                      child: Container(
+                        width: 25,
+                        height: 25,
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xFF00F260),
+                        ),
+                        child: SvgPicture.asset(
+                          Assets.whatsApp,
+                        ),
                       ),
                     ),
                     SizedBox(width: 8.w),
-                    Container(
-                      width: 25,
-                      height: 25,
-                      padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFF0072FF),
-                      ),
-                      child: SvgPicture.asset(
-                        Assets.phone,
+                    InkWell(
+                      onTap: () {
+                        _makePhoneCall(
+                          '9585948942',
+                          context,
+                        ); // todo remove this
+                        if (trainer.user?.mobileNo != null) {
+                          _makePhoneCall(trainer.user!.mobileNo!, context);
+                        }
+                      },
+                      child: Container(
+                        width: 25,
+                        height: 25,
+                        padding: const EdgeInsets.all(6),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xFF0072FF),
+                        ),
+                        child: SvgPicture.asset(
+                          Assets.phone,
+                        ),
                       ),
                     ),
                   ],
@@ -94,5 +118,25 @@ class TrainerList extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<void> _makePhoneCall(String phoneNumber, BuildContext context) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    if (!await launchUrl(launchUri)) {
+      Alert(context).show(message: 'Phone not available');
+    }
+  }
+
+  Future<void> _whatsApp(String phoneNumber, BuildContext context) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    if (!await launchUrl(launchUri)) {
+      Alert(context).show(message: 'Whatsapp not available');
+    }
   }
 }

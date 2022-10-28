@@ -5,7 +5,9 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 
 class _Cancel extends StatelessWidget {
-  const _Cancel({Key? key}) : super(key: key);
+  final VoidCallback onFree;
+
+  const _Cancel({Key? key, required this.onFree}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,24 +51,13 @@ class _Cancel extends StatelessWidget {
                 Button(
                   width: 95.w,
                   height: 36.h,
-                  onTap: () {
-                    SystemNavigator.pop();
-                  },
-                  title: 'Exit',
+                  onTap: onFree,
+                  title: 'Try For Free',
                 ),
               ],
             ),
             SizedBox(
               height: 20.h,
-            ),
-            Button(
-              backgroundColor: const Color(0xFF41A0F8),
-              width: double.infinity,
-              height: 36.h,
-              onTap: () {
-                // todo
-              },
-              title: 'Try For Free',
             ),
           ],
         ),
@@ -77,8 +68,9 @@ class _Cancel extends StatelessWidget {
 
 class Cancel {
   final BuildContext context;
+  final VoidCallback onFree;
 
-  Cancel(this.context);
+  Cancel(this.context, {required this.onFree});
 
   void show() {
     showDialog(
@@ -88,7 +80,9 @@ class Cancel {
         return AlertDialog(
           backgroundColor: AppColors.liteDark,
           contentPadding: EdgeInsets.zero,
-          content: const _Cancel(),
+          content: _Cancel(
+            onFree: onFree,
+          ),
         );
       },
     );

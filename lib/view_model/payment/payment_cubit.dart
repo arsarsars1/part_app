@@ -15,6 +15,7 @@ part 'payment_state.dart';
 
 class PaymentCubit extends Cubit<PaymentState> {
   final MembershipCubit membershipCubit;
+  final _membershipService = MembershipService();
 
   PaymentCubit({required this.membershipCubit}) : super(PaymentInitial());
 
@@ -29,6 +30,10 @@ class PaymentCubit extends Cubit<PaymentState> {
   final _timeOut = 300;
   final _currency = 'INR';
 
+  @Deprecated('Method is replaced with /create-membership-order')
+
+  /// method is is used to get the order id from the razorpay
+  /// and the same is deprecated
   Future<String?> _getOrderId(
       {required String receiptId, required int amount}) async {
     try {
@@ -61,17 +66,14 @@ class PaymentCubit extends Cubit<PaymentState> {
 
     UserResponse? userResponse = userResponseFromJson(userResp!);
     if (userResponse.user != null) {
-      /// builds the receipt id with user & membership data
-      String receiptId =
-          'receipt_${userResponse.user?.adminDetail?.id}_${membership.id}';
-
       emit(GeneratingOrderId());
-      int amount = membership.finalAmount ?? 0;
+      int amount = membership.finalAmount! * 100;
 
-      /// get the order id from the razorpay order id api
-      String? orderId = await _getOrderId(
-        receiptId: receiptId,
-        amount: amount,
+      /// get the order id from
+
+      String? orderId = await _membershipService.getOrderId(
+        academyId: userResponse.user?.adminDetail?.academy?.id,
+        membershipID: membership.id,
       );
 
       /// if order id generation failed
@@ -95,9 +97,18 @@ class PaymentCubit extends Cubit<PaymentState> {
           'email': userResponse.user?.adminDetail?.email,
         },
         'theme': {
-          'hide_topbar': false,
+          'hide_topbar': true,
           'backdrop_color': '#000000',
           'color': '#000000',
+        },
+        'hidden': {
+          'contact': true,
+          'email': true,
+        },
+        'readonly': {
+          'contact': true,
+          'email': true,
+          'name': true,
         }
       };
 
@@ -122,7 +133,7 @@ class PaymentCubit extends Cubit<PaymentState> {
 
     if (response.message?.toLowerCase() == 'timeout') {
       emit(
-        PaymentFailed('Sorry Your session Has Expired, Please Try Again '),
+        PaymentFailed('Session Timed Out, Please Retry The Payment.'),
       );
       return;
     }

@@ -82,7 +82,7 @@ class AuthService {
     }
   }
 
-  Future<UserResponse> register({
+  Future<UserResponse?> register({
     required RegisterRequest registerRequest,
   }) async {
     try {
@@ -92,8 +92,8 @@ class AuthService {
       );
 
       return userResponseFromJson(json.encode(response));
-    } on Exception catch (e) {
-      throw Exception(e);
+    } catch (e) {
+      return null;
     }
   }
 

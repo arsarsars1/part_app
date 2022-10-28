@@ -133,7 +133,8 @@ class BranchCubit extends Cubit<BranchState> {
 
     if (common != null && common.status == 1) {
       // if success ca get the branches from API & update the UI
-      getBranchById(id: '${branch?.id}');
+      await getBranchById(id: '${branch?.id}');
+      await getBranches();
       emit(UpdatedBranch());
     } else {
       // update the UI when the branch adding API failed

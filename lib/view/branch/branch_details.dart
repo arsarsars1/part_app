@@ -136,8 +136,8 @@ class _BranchDetailsState extends State<BranchDetails> {
                       height: 4,
                       width: double.infinity,
                     ),
-                    const Text(
-                      'N/A',
+                    Text(
+                      branch?.managerDetail?.user?.name ?? 'NA',
                     ),
                   ],
                 ),
