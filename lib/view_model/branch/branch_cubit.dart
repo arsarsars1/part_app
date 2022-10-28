@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
+import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/admin/branch.dart';
 
 part 'branch_state.dart';
@@ -11,10 +12,13 @@ class BranchCubit extends Cubit<BranchState> {
   final _branchService = BranchService();
 
   List<Branch> _branches = [];
+  List<Trainer>? _trainers = [];
 
   Branch? _branch;
 
   List<Branch> get branches => _branches;
+
+  List<Trainer>? get trainers => _trainers;
 
   Branch? get branch => _branch;
 
@@ -28,17 +32,39 @@ class BranchCubit extends Cubit<BranchState> {
     emit(BranchesLoaded());
   }
 
+  set trainers(List<Trainer>? tempTrainers) {
+    _trainers = tempTrainers;
+    emit(TrainersLoaded());
+  }
+
+  /// METHOD TO GET THE LIST OF BRANCHES
+  /// for the logged in admin user
+
   Future getBranches() async {
     emit(BranchesLoading());
     List<Branch>? list = await _branchService.getBranches();
     branches = list ?? [];
   }
 
+  /// Method to get thr details for the specific branch
+  /// [ id ] is the branch Id and is required
   Future getBranchById({required String id}) async {
     emit(BranchLoading());
     Branch? temp = await _branchService.getBranchById(id: id);
     if (temp != null) {
       branch = temp;
+    }
+  }
+
+  /// Method to get thr trainers list for the specific branch
+  /// [ branchId ] is the branch Id and is required
+  Future getTrainers({required String branchId}) async {
+    emit(BranchLoading());
+    TrainerResponse? temp = await _branchService.getTrainers(
+      branchId: branchId,
+    );
+    if (temp != null) {
+      trainers = temp.trainers;
     }
   }
 
@@ -123,7 +149,7 @@ class BranchCubit extends Cubit<BranchState> {
   Future changeBranchStatus({
     required int status,
   }) async {
-    var response = await _branchService.changeBranchStatus(
+    await _branchService.changeBranchStatus(
       status: status,
       branchId: branch!.id,
     );

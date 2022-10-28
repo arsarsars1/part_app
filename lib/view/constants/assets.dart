@@ -16,4 +16,7 @@ class Assets {
   static const calendar = 'assets/icons/calendar_icon.svg';
   static const support = 'assets/icons/support_icon.svg';
   static const back = 'assets/icons/back_icon.svg';
+  static const trainerListIcon = 'assets/icons/trainer_list_icon.svg';
+  static const whatsApp = 'assets/icons/whatsapp.svg';
+  static const phone = 'assets/icons/phone.svg';
 }

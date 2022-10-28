@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
+import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/api_client.dart';
 
 class BranchService {
@@ -101,10 +102,19 @@ class BranchService {
   @Deprecated('This feature is removed and the same is moved to update API')
   Future changeBranchStatus(
       {required int status, required int branchId}) async {
-    var response = await _apiClient.get(
+    await _apiClient.get(
       queryPath: '/admin/branches/$branchId/activation/$status',
     );
+  }
 
-    print(response);
+  Future<TrainerResponse?> getTrainers({required String branchId}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/branches/$branchId/trainers',
+      );
+      return trainerResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
   }
 }

@@ -105,9 +105,9 @@ class RouteGenerator {
           builder: (_) => const Profile(),
           settings: settings,
         );
-      case Trainer.route:
+      case TrainerPage.route:
         return MaterialPageRoute(
-          builder: (_) => const Trainer(),
+          builder: (_) => const TrainerPage(),
           settings: settings,
         );
       case BranchList.route:

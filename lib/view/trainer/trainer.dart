@@ -4,10 +4,10 @@ import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/tab_button.dart';
 
-class Trainer extends StatelessWidget {
+class TrainerPage extends StatelessWidget {
   static const route = '/trainer';
 
-  const Trainer({Key? key}) : super(key: key);
+  const TrainerPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

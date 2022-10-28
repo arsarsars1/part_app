@@ -75,6 +75,7 @@ class _AddBranchState extends State<AddBranch> {
             Alert(context).show(message: state.message);
           } else if (state is BranchAdded || state is UpdatedBranch) {
             Navigator.pop(context);
+            Navigator.pop(context);
             Alert(context).show(
               message:
                   state is UpdatedBranch ? 'Branch Updated.' : 'Branch added.',

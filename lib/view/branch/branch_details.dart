@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
+import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/trainer/components/trainer_list.dart';
 import 'package:part_app/view_model/branch/branch_cubit.dart';
 
 class BranchDetails extends StatefulWidget {
@@ -19,22 +21,30 @@ class BranchDetails extends StatefulWidget {
 }
 
 class _BranchDetailsState extends State<BranchDetails> {
+  late BranchCubit cubit;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<BranchCubit>().getBranchById(id: '${widget.id}');
+      cubit.getBranchById(id: '${widget.id}');
+      cubit.getTrainers(branchId: '${widget.id}');
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    cubit = context.read<BranchCubit>();
     return Scaffold(
       appBar: const CommonBar(title: 'Branch Details'),
       body: BlocBuilder<BranchCubit, BranchState>(
-        buildWhen: (prv, crr) => crr is BranchLoaded || crr is BranchLoading,
+        buildWhen: (prv, crr) =>
+            crr is BranchLoaded ||
+            crr is BranchLoading ||
+            crr is TrainersLoaded,
         builder: (context, state) {
-          Branch? branch = context.read<BranchCubit>().branch;
+          Branch? branch = cubit.branch;
+          List<Trainer>? trainers = cubit.trainers;
           if (state is BranchLoading) {
             return const LoadingView();
           }
@@ -106,15 +116,12 @@ class _BranchDetailsState extends State<BranchDetails> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 16.h,
-              ),
               Container(
                 decoration: BoxDecoration(
                   color: AppColors.liteDark,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                margin: EdgeInsets.all(16.r),
+                margin: EdgeInsets.symmetric(horizontal: 16.h),
                 padding: EdgeInsets.all(16.r),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +141,20 @@ class _BranchDetailsState extends State<BranchDetails> {
                     ),
                   ],
                 ),
-              )
+              ),
+              SizedBox(
+                height: 16.h,
+              ),
+              const Text(
+                'Assigned Trainers List',
+              ),
+              SizedBox(
+                height: 16.h,
+              ),
+              if (trainers != null)
+                TrainerList(
+                  trainers: trainers,
+                ),
             ],
           );
         },
