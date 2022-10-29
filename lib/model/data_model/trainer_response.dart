@@ -22,6 +22,7 @@ abstract class TrainerResponse with _$TrainerResponse {
   const factory TrainerResponse({
     required int status,
     List<Trainer>? trainers,
+    Trainer? trainer,
   }) = _TrainerResponse;
 
   factory TrainerResponse.fromJson(Map<String, dynamic> json) =>

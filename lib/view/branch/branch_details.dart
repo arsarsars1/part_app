@@ -8,7 +8,9 @@ import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/trainer/components/trainer_list.dart';
+import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view_model/branch/branch_cubit.dart';
+import 'package:part_app/view_model/trainer/trainer_cubit.dart';
 
 class BranchDetails extends StatefulWidget {
   static const route = '/branch/details';
@@ -28,7 +30,7 @@ class _BranchDetailsState extends State<BranchDetails> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       cubit.getBranchById(id: '${widget.id}');
-      cubit.getTrainers(branchId: '${widget.id}');
+      cubit.getBranchTrainers(branchId: '${widget.id}');
     });
   }
 
@@ -41,12 +43,17 @@ class _BranchDetailsState extends State<BranchDetails> {
         buildWhen: (prv, crr) =>
             crr is BranchLoaded ||
             crr is BranchLoading ||
-            crr is TrainersLoaded,
+            crr is TrainersLoaded ||
+            crr is BranchLoadingFailed,
         builder: (context, state) {
           Branch? branch = cubit.branch;
           List<Trainer>? trainers = cubit.trainers;
           if (state is BranchLoading) {
             return const LoadingView();
+          }
+
+          if (state is BranchLoadingFailed) {
+            return const Offstage();
           }
           return Column(
             children: [
@@ -63,7 +70,16 @@ class _BranchDetailsState extends State<BranchDetails> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(branch?.branchName ?? ''),
+                        Expanded(
+                          child: Text(
+                            branch?.branchName ?? '',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
                         InkWell(
                           onTap: () {
                             Navigator.pushNamed(
@@ -127,7 +143,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Assigned Branch Manager',
+                      'Assigned Branch Manager:',
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                             color: AppColors.primaryColor,
                           ),
@@ -137,7 +153,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                       width: double.infinity,
                     ),
                     Text(
-                      branch?.managerDetail?.user?.name ?? 'NA',
+                      branch?.managerDetail?.user?.name ?? 'Not Assigned',
                     ),
                   ],
                 ),
@@ -151,10 +167,23 @@ class _BranchDetailsState extends State<BranchDetails> {
               SizedBox(
                 height: 16.h,
               ),
-              if (trainers != null)
-                TrainerList(
-                  trainers: trainers,
-                ),
+              trainers != null && trainers.isNotEmpty
+                  ? TrainerList(
+                      trainers: trainers,
+                      onSelect: (Trainer value) {
+                        context.read<TrainerCubit>().getTrainerDetails(
+                              trainerId: value.id,
+                            );
+                        Navigator.pushNamed(context, TrainerDetails.route);
+                      },
+                    )
+                  : const Expanded(
+                      child: SafeArea(
+                        child: Center(
+                          child: Text('Trainer Not Yet Assigned'),
+                        ),
+                      ),
+                    ),
             ],
           );
         },

@@ -3,3 +3,4 @@ export 'country/country_cubit.dart';
 export 'home/home_cubit.dart';
 export 'membership/membership_cubit.dart';
 export 'payment/payment_cubit.dart';
+export 'trainer/trainer_cubit.dart';

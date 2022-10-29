@@ -37,6 +37,9 @@ class App extends StatelessWidget {
         BlocProvider<BranchCubit>(
           create: (context) => BranchCubit(),
         ),
+        BlocProvider<TrainerCubit>(
+          create: (context) => TrainerCubit(),
+        ),
       ],
       child: MediaQuery(
         data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
@@ -49,6 +52,13 @@ class App extends StatelessWidget {
               title: F.title,
               theme: AppTheme.lightTheme,
               home: child,
+              builder: (context, widget) {
+                return MediaQuery(
+                  ///Setting font does not change with system font size
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  child: widget!,
+                );
+              },
               onGenerateRoute: RouteGenerator.generateRoute,
             );
           },

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
@@ -89,7 +88,6 @@ class BranchService {
   Future<Branch?> getBranchById({required String id}) async {
     try {
       var response = await _apiClient.get(queryPath: '/admin/branches/$id');
-      log(jsonEncode(response));
       BranchResponse branchResponse =
           branchResponseFromJson(jsonEncode(response));
       if (branchResponse.status == 1 && branchResponse.branch != null) {

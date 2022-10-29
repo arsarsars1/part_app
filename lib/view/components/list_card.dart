@@ -36,24 +36,29 @@ class ListCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  subTitle,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 12.sm,
-                        color: AppColors.primaryColor,
-                      ),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      maxLines: 3,
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            color: AppColors.primaryColor,
+                          )),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    subTitle,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 12.sm,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 16,
             ),
             if (suffix != null) suffix!
           ],

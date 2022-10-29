@@ -53,12 +53,14 @@ class BranchCubit extends Cubit<BranchState> {
     Branch? temp = await _branchService.getBranchById(id: id);
     if (temp != null) {
       branch = temp;
+    } else {
+      emit(BranchLoadingFailed());
     }
   }
 
   /// Method to get thr trainers list for the specific branch
   /// [ branchId ] is the branch Id and is required
-  Future getTrainers({required String branchId}) async {
+  Future getBranchTrainers({required String branchId}) async {
     emit(BranchLoading());
     TrainerResponse? temp = await _branchService.getTrainers(
       branchId: branchId,

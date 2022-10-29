@@ -12,6 +12,8 @@ class BranchesLoading extends BranchState {}
 // Branch details  **************
 class BranchLoading extends BranchState {}
 
+class BranchLoadingFailed extends BranchState {}
+
 class AddingBranch extends BranchState {}
 
 class BranchAdded extends BranchState {}
