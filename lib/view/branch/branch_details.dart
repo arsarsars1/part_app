@@ -55,7 +55,7 @@ class _BranchDetailsState extends State<BranchDetails> {
           if (state is BranchLoadingFailed) {
             return const Offstage();
           }
-          return Column(
+          return ListView(
             children: [
               Container(
                 decoration: BoxDecoration(
@@ -153,7 +153,8 @@ class _BranchDetailsState extends State<BranchDetails> {
                       width: double.infinity,
                     ),
                     Text(
-                      branch?.managerDetail?.user?.name ?? 'Not Assigned',
+                      branch?.managerDetail?.user?.name ??
+                          'No Branch Manager Allocated',
                     ),
                   ],
                 ),
@@ -161,11 +162,13 @@ class _BranchDetailsState extends State<BranchDetails> {
               SizedBox(
                 height: 16.h,
               ),
-              const Text(
-                'Assigned Trainers List',
+              const Center(
+                child: Text(
+                  'Assigned Trainers List',
+                ),
               ),
               SizedBox(
-                height: 16.h,
+                height: 8.h,
               ),
               trainers != null && trainers.isNotEmpty
                   ? TrainerList(
@@ -177,11 +180,9 @@ class _BranchDetailsState extends State<BranchDetails> {
                         Navigator.pushNamed(context, TrainerDetails.route);
                       },
                     )
-                  : const Expanded(
-                      child: SafeArea(
-                        child: Center(
-                          child: Text('Trainer Not Yet Assigned'),
-                        ),
+                  : const SafeArea(
+                      child: Center(
+                        child: Text('No Trainers Allocated'),
                       ),
                     ),
             ],

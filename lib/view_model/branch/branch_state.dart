@@ -42,3 +42,9 @@ class UpdateBranchFailed extends BranchState {
 class TrainersLoading extends BranchState {}
 
 class TrainersLoaded extends BranchState {}
+
+class TrainersFailed extends BranchState {
+  final String message;
+
+  TrainersFailed(this.message);
+}

@@ -20,6 +20,7 @@ class TrainerList extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       itemCount: trainers.length,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         Trainer trainer = trainers[index];
         return InkWell(
@@ -65,7 +66,8 @@ class TrainerList extends StatelessWidget {
                       Expanded(
                         child: Text(
                           '${trainer.user?.name}',
-                          maxLines: 2,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],

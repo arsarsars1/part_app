@@ -45,12 +45,15 @@ class _AddBranchState extends State<AddBranch> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var cubit = context.read<CountryCubit>();
+      var branchCubit = context.read<BranchCubit>();
       if (widget.addBranch) {
         countryId = cubit.defaultCountry?.id;
         districtId = cubit.defaultDistrict?.id;
         stateId = cubit.defaultState?.id;
         defaultState = cubit.defaultState;
-      } else {}
+      } else {
+        selected = branchCubit.branch?.isActive == 1;
+      }
     });
   }
 
@@ -65,6 +68,7 @@ class _AddBranchState extends State<AddBranch> {
       ),
       body: BlocListener<BranchCubit, BranchState>(
         listener: (context, state) {
+          if (state is BranchLoaded) {}
           if (state is AddingBranch || state is UpdatingBranch) {
             Loader(context, message: 'Adding Branch ...').show();
           } else if (state is AddingBranchFailed) {

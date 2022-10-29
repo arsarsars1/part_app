@@ -40,11 +40,14 @@ class ListCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title,
-                      maxLines: 3,
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                            color: AppColors.primaryColor,
-                          )),
+                  Text(
+                    title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                          color: AppColors.primaryColor,
+                        ),
+                  ),
                   const SizedBox(
                     height: 8,
                   ),

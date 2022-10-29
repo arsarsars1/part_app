@@ -89,6 +89,7 @@ class ApiClient {
   }
 
   dynamic _handleResponse(Response response) {
+    log(jsonEncode(response.data));
     return response.data;
   }
 }
