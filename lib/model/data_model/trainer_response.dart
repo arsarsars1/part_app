@@ -50,6 +50,7 @@ abstract class Trainer with _$Trainer {
     int? isActive,
     Pivot? pivot,
     User? user,
+    Academy? academy,
   }) = _Trainer;
 
   factory Trainer.fromJson(Map<String, dynamic> json) =>

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/otp.dart';
 import 'package:part_app/model/data_model/register_request.dart';
@@ -40,11 +41,12 @@ class AuthService {
     required String countryCode,
     required String password,
   }) async {
+    final fcmToken = await FirebaseMessaging.instance.getToken();
     try {
       var data = {
         'country_code': countryCode,
         'mobile_no': phoneNo,
-        'firebase_token': 'dummy token',
+        'firebase_token': fcmToken,
         'password': password,
       };
 
@@ -85,10 +87,11 @@ class AuthService {
   Future<UserResponse?> register({
     required RegisterRequest registerRequest,
   }) async {
+    final fcmToken = await FirebaseMessaging.instance.getToken();
     try {
       var response = await _apiClient.post(
         postPath: '/register',
-        data: registerRequest.toJson(),
+        data: registerRequest.copyWith(firebaseToken: fcmToken).toJson(),
       );
 
       return userResponseFromJson(json.encode(response));
