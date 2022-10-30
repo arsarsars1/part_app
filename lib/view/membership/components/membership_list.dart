@@ -21,9 +21,9 @@ class _MembershipListState extends State<MembershipList> {
         return Expanded(
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: cubit.filteredMemberships.length,
+            itemCount: cubit.memberships.length,
             itemBuilder: (context, index) {
-              Membership membership = cubit.filteredMemberships[index];
+              Membership membership = cubit.memberships[index];
               return InkWell(
                 onTap: () {
                   cubit.selectedMembership = membership;
@@ -62,7 +62,7 @@ class _MembershipListState extends State<MembershipList> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Register Upto ${membership.noOfBranches} Branch(s)',
+                                'Register Upto ${membership.maxNoOfBranches} Branch(s)',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -74,7 +74,7 @@ class _MembershipListState extends State<MembershipList> {
                                 height: 2,
                               ),
                               Text(
-                                'Register Upto ${membership.noOfStudents} students',
+                                'Register Upto ${membership.maxNoOfBranches} students',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1

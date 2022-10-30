@@ -45,7 +45,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Trainers',
-      route: Trainer.route,
+      route: TrainerPage.route,
       asset: Assets.trainers,
       color: Color(0xFF8F94FB),
     ),

@@ -156,25 +156,24 @@ class AuthCubit extends Cubit<AuthState> {
       branchName: branchName,
       countryId: countryId,
       stateId: stateId,
-      districtId: districtId,
-      firebaseToken: 'tesstingg', // todo add token
+      districtId: districtId, // todo add token
     );
     register();
   }
 
   Future register() async {
     emit(RegisteringUser());
-    UserResponse value = await _authService.register(
+    UserResponse? value = await _authService.register(
       registerRequest: _registerRequest,
     );
-    if (value.status == 1) {
-      _token = value.token;
-      _user = value.user;
-      Hive.box(Database.userBox).put(Database.token, value.token);
+    if (value?.status == 1) {
+      _token = value?.token;
+      _user = value?.user;
+      Hive.box(Database.userBox).put(Database.token, value?.token);
       Hive.box(Database.userBox).put(Database.userData, jsonEncode(value));
       emit(RegisterSuccess());
     } else {
-      emit(RegisterFailed(value.message ?? ' Failed to register the user'));
+      emit(RegisterFailed(value?.message ?? ' Failed to register the user'));
     }
   }
 

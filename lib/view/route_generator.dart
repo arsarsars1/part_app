@@ -17,6 +17,7 @@ import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/trainer/trainer.dart';
+import 'package:part_app/view/trainer/trainer_details.dart';
 
 import 'membership/subscription_success.dart';
 
@@ -105,9 +106,9 @@ class RouteGenerator {
           builder: (_) => const Profile(),
           settings: settings,
         );
-      case Trainer.route:
+      case TrainerPage.route:
         return MaterialPageRoute(
-          builder: (_) => const Trainer(),
+          builder: (_) => const TrainerPage(),
           settings: settings,
         );
       case BranchList.route:
@@ -127,6 +128,11 @@ class RouteGenerator {
           builder: (_) => AddBranch(
             addBranch: settings.arguments as bool,
           ),
+          settings: settings,
+        );
+      case TrainerDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => TrainerDetails(),
           settings: settings,
         );
       default:

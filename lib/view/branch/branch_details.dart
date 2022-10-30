@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
+import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/trainer/components/trainer_list.dart';
+import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view_model/branch/branch_cubit.dart';
+import 'package:part_app/view_model/trainer/trainer_cubit.dart';
 
 class BranchDetails extends StatefulWidget {
   static const route = '/branch/details';
@@ -19,26 +23,39 @@ class BranchDetails extends StatefulWidget {
 }
 
 class _BranchDetailsState extends State<BranchDetails> {
+  late BranchCubit cubit;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<BranchCubit>().getBranchById(id: '${widget.id}');
+      cubit.getBranchById(id: '${widget.id}');
+      cubit.getBranchTrainers(branchId: '${widget.id}');
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    cubit = context.read<BranchCubit>();
     return Scaffold(
       appBar: const CommonBar(title: 'Branch Details'),
       body: BlocBuilder<BranchCubit, BranchState>(
-        buildWhen: (prv, crr) => crr is BranchLoaded || crr is BranchLoading,
+        buildWhen: (prv, crr) =>
+            crr is BranchLoaded ||
+            crr is BranchLoading ||
+            crr is TrainersLoaded ||
+            crr is BranchLoadingFailed,
         builder: (context, state) {
-          Branch? branch = context.read<BranchCubit>().branch;
+          Branch? branch = cubit.branch;
+          List<Trainer>? trainers = cubit.trainers;
           if (state is BranchLoading) {
             return const LoadingView();
           }
-          return Column(
+
+          if (state is BranchLoadingFailed) {
+            return const Offstage();
+          }
+          return ListView(
             children: [
               Container(
                 decoration: BoxDecoration(
@@ -53,7 +70,16 @@ class _BranchDetailsState extends State<BranchDetails> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(branch?.branchName ?? ''),
+                        Expanded(
+                          child: Text(
+                            branch?.branchName ?? '',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
                         InkWell(
                           onTap: () {
                             Navigator.pushNamed(
@@ -106,21 +132,18 @@ class _BranchDetailsState extends State<BranchDetails> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 16.h,
-              ),
               Container(
                 decoration: BoxDecoration(
                   color: AppColors.liteDark,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                margin: EdgeInsets.all(16.r),
+                margin: EdgeInsets.symmetric(horizontal: 16.h),
                 padding: EdgeInsets.all(16.r),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Assigned Branch Manager',
+                      'Assigned Branch Manager:',
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                             color: AppColors.primaryColor,
                           ),
@@ -129,12 +152,39 @@ class _BranchDetailsState extends State<BranchDetails> {
                       height: 4,
                       width: double.infinity,
                     ),
-                    const Text(
-                      'N/A',
+                    Text(
+                      branch?.managerDetail?.user?.name ??
+                          'No Branch Manager Allocated',
                     ),
                   ],
                 ),
-              )
+              ),
+              SizedBox(
+                height: 16.h,
+              ),
+              const Center(
+                child: Text(
+                  'Assigned Trainers List',
+                ),
+              ),
+              SizedBox(
+                height: 8.h,
+              ),
+              trainers != null && trainers.isNotEmpty
+                  ? TrainerList(
+                      trainers: trainers,
+                      onSelect: (Trainer value) {
+                        context.read<TrainerCubit>().getTrainerDetails(
+                              trainerId: value.id,
+                            );
+                        Navigator.pushNamed(context, TrainerDetails.route);
+                      },
+                    )
+                  : const SafeArea(
+                      child: Center(
+                        child: Text('No Trainers Allocated'),
+                      ),
+                    ),
             ],
           );
         },

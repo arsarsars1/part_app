@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
+import 'package:part_app/view/membership/components/cancel_confirmation.dart';
 import 'package:part_app/view/membership/components/membership_list.dart';
 import 'package:part_app/view/membership/components/pay_checkbox.dart';
-import 'package:part_app/view/membership/components/switch.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/membership/subscription_success.dart';
 import 'package:part_app/view_model/membership/membership_cubit.dart';
@@ -38,12 +38,20 @@ class _MembershipState extends State<Membership> {
     var cubit = context.read<MembershipCubit>();
 
     return Scaffold(
-      appBar: const CommonBar(
-        // enableBack: true,
+      appBar: CommonBar(
+        enableBack: true,
         title: 'PartApp-membership',
-        // onPressed: () {
-        //   Cancel(context).show();
-        // },
+        onPressed: () {
+          Cancel(
+            context,
+            onFree: () {
+              // free membership
+              Navigator.pop(context);
+              cubit.selectedMembership = cubit.memberships.first;
+              cubit.addMemberShip(paymentMethod: 'online');
+            },
+          ).show();
+        },
       ),
       body: MultiBlocListener(
         listeners: [
@@ -105,20 +113,6 @@ class _MembershipState extends State<Membership> {
                   const SizedBox(
                     height: 28,
                   ),
-                  SizedBox(
-                    width: 200.w,
-                    child: MembershipSwitch(
-                      onSelect: (bool value) {
-                        context.read<MembershipCubit>().filterMembership(value);
-                        setState(() {
-                          free = value;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -154,58 +148,71 @@ class _MembershipState extends State<Membership> {
                     height: 20,
                   ),
                   const MembershipList(),
-                  if (!free)
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: PayCheckBox(
-                        onChange: (bool value) {
-                          setState(() {
-                            onlinePay = value;
-                          });
-                        },
-                      ),
-                    )
+                  BlocBuilder<MembershipCubit, MembershipState>(
+                    builder: (context, state) {
+                      if (cubit.selectedMembership?.paymentType != 'free') {
+                        return Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: PayCheckBox(
+                            onChange: (bool value) {
+                              setState(() {
+                                onlinePay = value;
+                              });
+                            },
+                          ),
+                        );
+                      } else {
+                        return const Offstage();
+                      }
+                    },
+                  )
                 ],
               ),
             ),
-            Expanded(
+          ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: SizedBox(
+          height: 126.h,
+          child: BottomAppBar(
+            color: Colors.black,
+            child: Center(
               child: BlocBuilder<MembershipCubit, MembershipState>(
                 builder: (context, state) {
-                  return SafeArea(
-                    child: Center(
-                      child: Button(
-                        disable: cubit.selectedMembership == null,
-                        onTap: () {
-                          if (cubit.selectedMembership == null) {
-                            Alert(context).show(
-                              message:
-                                  'Please select a membership plan to continue.',
-                            );
-                            return;
-                          }
+                  return Button(
+                    disable: cubit.selectedMembership == null,
+                    onTap: () {
+                      if (cubit.selectedMembership == null) {
+                        Alert(context).show(
+                          message:
+                              'Please select a membership plan to continue.',
+                        );
+                        return;
+                      }
 
-                          if (cubit.selectedMembership?.paymentType == 'free') {
-                            cubit.addMemberShip(paymentMethod: 'online');
-                            return;
-                          }
+                      if (cubit.selectedMembership?.paymentType == 'free') {
+                        cubit.addMemberShip(paymentMethod: 'online');
+                        return;
+                      }
 
-                          if (!onlinePay) {
-                            Navigator.pushNamed(context, SalesManPhone.route);
-                          }
-                          if (onlinePay) {
-                            context
-                                .read<PaymentCubit>()
-                                .payment(membership: cubit.selectedMembership!);
-                          }
-                        },
-                        title: free ? 'Try For Free' : 'Continue',
-                      ),
-                    ),
+                      if (!onlinePay) {
+                        Navigator.pushNamed(context, SalesManPhone.route);
+                      }
+                      if (onlinePay) {
+                        context
+                            .read<PaymentCubit>()
+                            .payment(membership: cubit.selectedMembership!);
+                      }
+                    },
+                    title: cubit.selectedMembership?.paymentType == 'free'
+                        ? 'Try For Free'
+                        : 'Continue',
                   );
                 },
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
