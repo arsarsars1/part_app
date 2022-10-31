@@ -16,8 +16,9 @@ import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
-import 'package:part_app/view/trainer/trainer.dart';
+import 'package:part_app/view/trainer/add_edit_trainer.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
+import 'package:part_app/view/trainer/trainer_view.dart';
 
 import 'membership/subscription_success.dart';
 
@@ -132,7 +133,12 @@ class RouteGenerator {
         );
       case TrainerDetails.route:
         return MaterialPageRoute(
-          builder: (_) => TrainerDetails(),
+          builder: (_) => const TrainerDetails(),
+          settings: settings,
+        );
+      case AddEditTrainer.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddEditTrainer(),
           settings: settings,
         );
       default:

@@ -14,3 +14,15 @@ class TrainerDetailsFailed extends TrainerState {
 
   TrainerDetailsFailed(this.message);
 }
+
+// trainers list
+
+class TrainersFetched extends TrainerState {}
+
+class FetchingTrainers extends TrainerState {}
+
+class FailedToFetchTrainers extends TrainerState {
+  final String message;
+
+  FailedToFetchTrainers(this.message);
+}

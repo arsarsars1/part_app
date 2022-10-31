@@ -1,0 +1,90 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/constants/constant.dart';
+
+class WhatsappCheckButton extends StatefulWidget {
+  final ValueChanged<bool> onChange;
+  final ValueChanged<String> onNumberChange;
+
+  const WhatsappCheckButton(
+      {Key? key, required this.onChange, required this.onNumberChange})
+      : super(key: key);
+
+  @override
+  State<WhatsappCheckButton> createState() => _WhatsappCheckButtonState();
+}
+
+class _WhatsappCheckButtonState extends State<WhatsappCheckButton> {
+  bool selected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              flex: 5,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'Is The Above Number Your Whatsapp Number?',
+                  maxLines: 2,
+                  style: Theme.of(context).textTheme.bodyText1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                height: 25.0,
+                padding: const EdgeInsets.only(right: 16),
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: CupertinoSwitch(
+                    trackColor: AppColors.grey500,
+                    value: selected,
+                    onChanged: (value) {
+                      setState(() {
+                        selected = !selected;
+                      });
+                      widget.onChange(selected);
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        if (!selected)
+          const SizedBox(
+            height: 20,
+          ),
+        selected
+            ? const Offstage()
+            : CommonField(
+                validator: (value) {
+                  if (value == null || value.toString().isEmpty) {
+                    return 'Please enter Whatsapp number.';
+                  } else if (value.toString().length < 10) {
+                    return 'Invalid Whatsapp number.';
+                  }
+                  return null;
+                },
+                inputType: TextInputType.phone,
+                title: 'Whatsapp Phone Number *',
+                onChange: (value) {
+                  widget.onNumberChange(value);
+                  if (value.length >= 10) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  }
+                },
+                length: 10,
+                hint: 'Eg: 9876543210',
+              ),
+      ],
+    );
+  }
+}

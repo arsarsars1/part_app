@@ -1,5 +1,6 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/admin/trainer.dart';
 
@@ -11,12 +12,26 @@ class TrainerCubit extends Cubit<TrainerState> {
   final _trainerService = TrainerService();
 
   Trainer? _trainer;
+  List<Trainer> _trainers = [];
+
+  List<Trainer> _filteredTrainers = [];
 
   Trainer? get trainer => _trainer;
+
+  List<Trainer> get trainers => _trainers;
+
+  List<Trainer> get filteredTrainers => _filteredTrainers;
+
+  bool _isActive = true;
 
   set trainer(Trainer? temp) {
     _trainer = temp;
     emit(TrainerDetailsLoaded());
+  }
+
+  set filteredTrainers(List<Trainer> temp) {
+    _filteredTrainers = temp;
+    emit(TrainersFetched());
   }
 
   Future getTrainerDetails({required int trainerId}) async {
@@ -28,5 +43,48 @@ class TrainerCubit extends Cubit<TrainerState> {
       return;
     }
     emit(TrainerDetailsFailed('Failed to load the trainer details'));
+  }
+
+  Future getTrainers() async {
+    emit(FetchingTrainers());
+    TrainerResponse? response = await _trainerService.getTrainers();
+
+    if (response?.trainers != null) {
+      _trainers = response!.trainers!;
+      filterTrainers(active: _isActive);
+    } else {
+      emit(FailedToFetchTrainers('Failed to fetch the trainers'));
+    }
+  }
+
+  List<Trainer> filterTrainers({required bool active}) {
+    _isActive = active;
+    List<Trainer> list = _trainers.where((element) {
+      if (active) {
+        return element.isActive == 1;
+      } else {
+        return element.isActive == 0;
+      }
+    }).toList();
+
+    filteredTrainers = list;
+
+    return list;
+  }
+
+  Future searchTrainers(Branch? branch, {required String query}) async {
+    _trainers = [];
+    emit(FetchingTrainers());
+    TrainerResponse? response = await _trainerService.searchTrainer(
+      branch?.id,
+      query: query,
+    );
+
+    if (response?.trainers != null) {
+      _trainers = response!.trainers!;
+      filterTrainers(active: _isActive);
+    } else {
+      emit(FailedToFetchTrainers('Failed to fetch the trainers'));
+    }
   }
 }

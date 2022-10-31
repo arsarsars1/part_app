@@ -55,6 +55,8 @@ dependencies:
   firebase_core: ^2.1.1
   # remote config
   firebase_remote_config: ^3.0.3
+  # plugin for picking & capturing the images
+  image_picker: ^0.8.6
 
 dev_dependencies:
   flutter_test:

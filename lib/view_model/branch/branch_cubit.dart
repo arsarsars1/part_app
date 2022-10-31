@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/admin/branch.dart';
 
@@ -161,5 +162,11 @@ class BranchCubit extends Cubit<BranchState> {
     );
 
     await getBranchById(id: '${branch?.id}');
+  }
+
+  List<DropDownItem> dropDownBranches() {
+    return _branches
+        .map((e) => DropDownItem(id: e.id, title: e.branchName, item: e))
+        .toList();
   }
 }

@@ -20,11 +20,15 @@ class AppTheme {
     Color? primaryColor,
   }) {
     return ThemeData(
+      splashColor: Colors.transparent,
+      splashFactory: NoSplash.splashFactory,
       scaffoldBackgroundColor: Colors.black,
       inputDecorationTheme: InputDecorationTheme(
+        suffixIconColor: Colors.white,
+        prefixIconColor: const Color(0xFF6C6C6C),
         hintStyle: GoogleFonts.nunitoSans().copyWith(
           color: AppColors.hintColor,
-          fontSize: 14,
+          fontSize: 13,
         ),
         filled: true,
         fillColor: AppColors.textFieldColor,

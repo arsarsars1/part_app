@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:part_app/model/data_model/dashboard_item.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/constants/assets.dart';
-import 'package:part_app/view/trainer/trainer.dart';
+import 'package:part_app/view/trainer/trainer_view.dart';
 
 class DefaultValues {
   List<DropDownItem> genders = [

@@ -29,6 +29,8 @@ class CommonField extends StatelessWidget {
   final EdgeInsets? padding;
   final FocusNode? node;
 
+  final Icon? prefixIcon;
+
   const CommonField(
       {Key? key,
       required this.title,
@@ -55,7 +57,8 @@ class CommonField extends StatelessWidget {
       this.phoneField = false,
       this.singleLine = false,
       required this.onChange,
-      this.disabled = false})
+      this.disabled = false,
+      this.prefixIcon})
       : super(key: key);
 
   @override
@@ -86,6 +89,9 @@ class CommonField extends StatelessWidget {
                   dropdownColor:
                       Theme.of(context).inputDecorationTheme.fillColor,
                   value: selectedItem ?? defaultItem,
+                  decoration: InputDecoration(
+                    contentPadding: padding,
+                  ),
                   items: dropDownItems?.map((e) {
                     return DropdownMenuItem(
                       value: e,
@@ -145,6 +151,7 @@ class CommonField extends StatelessWidget {
                   decoration: InputDecoration(
                     contentPadding: padding,
                     suffixIcon: suffixIcon,
+                    prefixIcon: prefixIcon,
                     hintText: hint,
                     fillColor: fillColor,
                   ),

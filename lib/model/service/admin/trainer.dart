@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -9,9 +8,38 @@ import 'package:part_app/model/service/api.dart';
 class TrainerService {
   final _client = ApiClient();
 
-  Future getTrainers() async {
+  Future<TrainerResponse?> getTrainers() async {
     var response = await _client.get(queryPath: '/admin/trainers/');
-    log(jsonEncode(response));
+
+    try {
+      TrainerResponse trainerResponse = trainerResponseFromJson(
+        jsonEncode(response),
+      );
+      return trainerResponse;
+    } on Exception catch (e) {
+      return null;
+    }
+  }
+
+  Future<TrainerResponse?> searchTrainer(int? branchId,
+      {required String query}) async {
+    Map<String, dynamic> response;
+    if (branchId == null) {
+      response = await _client.get(queryPath: '/admin/trainers/search/$query');
+    } else {
+      response = await _client.get(
+        queryPath: '/admin/trainers/$branchId/search/$query',
+      );
+    }
+
+    try {
+      TrainerResponse trainerResponse = trainerResponseFromJson(
+        jsonEncode(response),
+      );
+      return trainerResponse;
+    } on Exception catch (e) {
+      return null;
+    }
   }
 
   /// Method to get the trainer details by [ trainerId ]

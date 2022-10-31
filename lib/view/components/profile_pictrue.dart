@@ -4,6 +4,7 @@ import 'package:part_app/view/constants/constant.dart';
 
 class ProfilePicture extends StatelessWidget {
   final VoidCallback onEdit;
+
   const ProfilePicture({Key? key, required this.onEdit}) : super(key: key);
 
   @override
@@ -11,6 +12,7 @@ class ProfilePicture extends StatelessWidget {
     return Container(
       width: 70.w,
       height: 70.w,
+      constraints: BoxConstraints(maxWidth: 70.w),
       decoration: BoxDecoration(
         image: const DecorationImage(
           image: NetworkImage(
