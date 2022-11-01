@@ -10,6 +10,7 @@ import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/constants/regex.dart';
+import 'package:part_app/view/trainer/components/docs_upload.dart';
 
 class AddEditTrainer extends StatefulWidget {
   static const route = '/trainer/add-edit';
@@ -34,6 +35,17 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
 
   final formKey = GlobalKey<FormState>();
 
+  final scrollController = ScrollController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scrollController.addListener(() {
+      FocusManager.instance.primaryFocus?.unfocus();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +54,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
         key: formKey,
         child: SafeArea(
           child: ListView(
+            controller: scrollController,
             children: [
               Center(
                 child: ProfilePicture(
@@ -185,23 +198,27 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                   areaOfExpertise = value;
                 },
               ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: SizedBox(
-          height: 132.h,
-          child: BottomAppBar(
-            color: Colors.black,
-            child: Center(
-              child: Button(
-                onTap: () {
-                  if (formKey.currentState!.validate()) {}
-                },
-                title: 'Continue',
+              SizedBox(
+                height: 40.h,
               ),
-            ),
+              DocsUpload(
+                documents: (List<File> value) {},
+              ),
+              SizedBox(
+                height: 40.h,
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 62),
+                  child: Button(
+                    onTap: () {
+                      if (formKey.currentState!.validate()) {}
+                    },
+                    title: 'Continue',
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),

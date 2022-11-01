@@ -22,4 +22,5 @@ class Assets {
   static const message = 'assets/icons/message.svg';
   static const email = 'assets/icons/email.svg';
   static const avatar = 'assets/icons/avatar.svg';
+  static const fileUpload = 'assets/icons/file_upload.svg';
 }
