@@ -89,7 +89,8 @@ class MembershipCubit extends Cubit<MembershipState> {
 
   Future addMemberShip({
     String? paymentCode,
-    String paymentMethod = 'offline',
+    String? paymentMethod = 'offline',
+    String? orderId,
   }) async {
     var userStr = await Database().getUser();
     emit(CreatingMembership());
@@ -101,6 +102,7 @@ class MembershipCubit extends Cubit<MembershipState> {
           membershipID: _selectedMembership?.id,
           paymentMethod: paymentMethod,
           salesManOtp: paymentCode,
+          orderId: orderId,
         );
 
         if (value.status == 1) {

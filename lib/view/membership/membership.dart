@@ -48,7 +48,7 @@ class _MembershipState extends State<Membership> {
               // free membership
               Navigator.pop(context);
               cubit.selectedMembership = cubit.memberships.first;
-              cubit.addMemberShip(paymentMethod: 'online');
+              cubit.addMemberShip(paymentMethod: null);
             },
           ).show();
         },
@@ -192,7 +192,7 @@ class _MembershipState extends State<Membership> {
                       }
 
                       if (cubit.selectedMembership?.paymentType == 'free') {
-                        cubit.addMemberShip(paymentMethod: 'online');
+                        cubit.addMemberShip(paymentMethod: null);
                         return;
                       }
 

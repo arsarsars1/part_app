@@ -1,11 +1,7 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/membership.dart';
-import 'package:part_app/model/data_model/order_response.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -20,46 +16,12 @@ class PaymentCubit extends Cubit<PaymentState> {
   PaymentCubit({required this.membershipCubit}) : super(PaymentInitial());
 
   final _razorpay = Razorpay();
-  final _apiClient = ApiClient();
-
-  final _auth =
-      'Basic cnpwX3Rlc3RfaGxxcHREV2I0VzRad1Q6TnVmR21yOGxCSE1HOVVMYktFMzBlazhV';
 
   final _rPayKey = 'rzp_test_hlqptDWb4W4ZwT';
 
   final _timeOut = 300;
-  final _currency = 'INR';
 
-  @Deprecated('Method is replaced with /create-membership-order')
-
-  /// method is is used to get the order id from the razorpay
-  /// and the same is deprecated
-  Future<String?> _getOrderId(
-      {required String receiptId, required int amount}) async {
-    try {
-      var response = await _apiClient.post(
-        postPath: '',
-        header: {
-          'Authorization': _auth,
-          Headers.contentTypeHeader: Headers.jsonContentType,
-        },
-        basePath: 'https://api.razorpay.com/v1/orders',
-        data: {
-          "amount": amount,
-          "currency": _currency,
-          "receipt": receiptId,
-        },
-      );
-
-      var resp = jsonEncode(response);
-      debugPrint(resp.runtimeType.toString());
-      OrderResponse orderResponse = orderResponseFromJson(resp);
-
-      return orderResponse.id;
-    } catch (e) {
-      return null;
-    }
-  }
+  String? _orderId;
 
   Future payment({required Membership membership, required}) async {
     String? userResp = await Database().getUser();
@@ -81,6 +43,7 @@ class PaymentCubit extends Cubit<PaymentState> {
         emit(GeneratingOrderIdFailed());
         return;
       }
+      _orderId = orderId;
 
       emit(OrderIdGenerated());
 
@@ -125,28 +88,41 @@ class PaymentCubit extends Cubit<PaymentState> {
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     _razorpay.clear();
     emit(PaymentSuccess());
-    membershipCubit.addMemberShip(paymentMethod: 'online');
+    membershipCubit.addMemberShip(paymentMethod: 'online', orderId: _orderId);
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     _razorpay.clear();
-
+    String status = '';
     if (response.message?.toLowerCase() == 'timeout') {
+      status = 'timed-out';
+
       emit(
         PaymentFailed('Session Timed Out, Please Retry The Payment.'),
       );
       return;
     }
     if (response.code == 2) {
+      status = 'failed';
       emit(
         PaymentFailed('Payment failed, please try again.'),
       );
       return;
     }
+
+    if (response.code == 0) {
+      status = 'cancelled';
+    }
+
     emit(
       PaymentFailed(
         response.message ?? 'Payment failed, please try again.',
       ),
+    );
+
+    _membershipService.updateOrderStatus(
+      orderId: _orderId,
+      status: status,
     );
   }
 

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view/route_generator.dart';
-import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/branch/branch_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -45,7 +45,7 @@ class App extends StatelessWidget {
         data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
         child: ScreenUtilInit(
           designSize: const Size(360, 800),
-          child: const SplashScreen(),
+          child: const Membership(),
           builder: (_, child) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,

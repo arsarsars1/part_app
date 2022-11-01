@@ -183,8 +183,8 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                 height: 20,
               ),
               CommonField(
-                inputType: TextInputType.emailAddress,
-                length: 50,
+                length: 300,
+                maxLines: 3,
                 title: 'Address *',
                 hint: 'Enter Communication Address',
                 validator: (value) {

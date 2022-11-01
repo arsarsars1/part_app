@@ -45,16 +45,25 @@ class MembershipService {
   Future<Common> addMembership({
     required int? academyId,
     required int? membershipID,
-    required String paymentMethod,
+    required String? paymentMethod,
     required String? salesManOtp,
+    required String? orderId,
   }) async {
     try {
       var data = {
         'academy_id': academyId?.toString(),
         'membership_id': membershipID?.toString(),
-        'payment_method': paymentMethod,
-        'salesman_otp': salesManOtp,
       };
+
+      if (paymentMethod != null) {
+        data.putIfAbsent('payment_method', () => paymentMethod);
+      }
+      if (salesManOtp != null) {
+        data.putIfAbsent('salesman_otp', () => salesManOtp);
+      }
+      if (orderId != null) {
+        data.putIfAbsent('order_id', () => orderId);
+      }
       var str = await _apiClient.post(
         postPath: '/add-membership',
         data: data,
@@ -81,6 +90,25 @@ class MembershipService {
         return str['order_id'] as String;
       }
       return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future updateOrderStatus({
+    required String? orderId,
+    required String? status,
+  }) async {
+    try {
+      Map<String, dynamic> str = await _apiClient.post(
+        postPath: '/update-order-status',
+        data: {
+          'order_id': '$orderId',
+          'payment_status': '$status',
+        },
+      );
+
+      return str;
     } catch (e) {
       return null;
     }
