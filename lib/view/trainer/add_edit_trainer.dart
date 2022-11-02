@@ -11,6 +11,7 @@ import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view/trainer/components/docs_upload.dart';
+import 'package:part_app/view/trainer/trainer_salary_details.dart';
 
 class AddEditTrainer extends StatefulWidget {
   static const route = '/trainer/add-edit';
@@ -212,7 +213,11 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                   padding: const EdgeInsets.only(bottom: 62),
                   child: Button(
                     onTap: () {
-                      if (formKey.currentState!.validate()) {}
+                      if (formKey.currentState!.validate()) {
+
+                      }
+
+                      Navigator.pushNamed(context, TrainerSalaryDetails.route);
                     },
                     title: 'Continue',
                   ),

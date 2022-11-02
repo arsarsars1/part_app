@@ -18,6 +18,7 @@ import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/trainer/add_edit_trainer.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
+import 'package:part_app/view/trainer/trainer_salary_details.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
 import 'membership/subscription_success.dart';
@@ -139,6 +140,11 @@ class RouteGenerator {
       case AddEditTrainer.route:
         return MaterialPageRoute(
           builder: (_) => const AddEditTrainer(),
+          settings: settings,
+        );
+      case TrainerSalaryDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerSalaryDetails(),
           settings: settings,
         );
       default:
