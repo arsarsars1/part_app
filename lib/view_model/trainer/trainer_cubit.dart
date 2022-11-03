@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
+import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/admin/trainer.dart';
 
@@ -23,6 +26,10 @@ class TrainerCubit extends Cubit<TrainerState> {
   List<Trainer> get filteredTrainers => _filteredTrainers;
 
   bool _isActive = true;
+
+  TrainerRequest _request = const TrainerRequest();
+
+  TrainerRequest get request => _request;
 
   set trainer(Trainer? temp) {
     _trainer = temp;
@@ -85,6 +92,14 @@ class TrainerCubit extends Cubit<TrainerState> {
       filterTrainers(active: _isActive);
     } else {
       emit(FailedToFetchTrainers('Failed to fetch the trainers'));
+    }
+  }
+
+  void updateRequest(TrainerRequest trainerRequest,
+      {File? image, File? doc1, File? doc2}) {
+    _request = trainerRequest;
+    if (kDebugMode) {
+      print(_request.toJson());
     }
   }
 }
