@@ -95,8 +95,12 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
   }
 
-  void updateRequest(TrainerRequest trainerRequest,
-      {File? image, File? doc1, File? doc2}) {
+  void updateRequest(
+    TrainerRequest trainerRequest, {
+    File? image,
+    File? doc1,
+    File? doc2,
+  }) {
     _request = trainerRequest;
     if (kDebugMode) {
       print(_request.toJson());

@@ -42,6 +42,11 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
 
   final scrollController = ScrollController();
 
+  // Files
+  File? image;
+  File? doc1;
+  File? doc2;
+
   @override
   void initState() {
     super.initState();
@@ -65,7 +70,9 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                 Center(
                   child: ProfilePicture(
                     onEdit: () {},
-                    onChange: (File value) {},
+                    onChange: (File value) {
+                      image = value;
+                    },
                   ),
                 ),
                 const SizedBox(
@@ -90,7 +97,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                   dropDown: true,
                   dropDownItems: DefaultValues().genders,
                   onChange: (value) {
-                    gender = value;
+                    gender = value?.title;
                   },
                   validator: (value) {
                     return value == null ? 'Please select gender.' : null;
@@ -208,7 +215,12 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                   height: 40.h,
                 ),
                 DocsUpload(
-                  documents: (List<File> value) {},
+                  doc1: (File? value) {
+                    doc1 = value;
+                  },
+                  doc2: (File? value) {
+                    doc2 = value;
+                  },
                 ),
                 SizedBox(
                   height: 40.h,
@@ -233,6 +245,13 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                             // areaOfExpertise: areaOfExpertise, //todo
                           );
 
+                          // update the data in cubit
+                          trainerCubit.updateRequest(
+                            request,
+                            image: image,
+                            doc1: doc1,
+                            doc2: doc2,
+                          );
                           // open the salary details page
                           Navigator.pushNamed(
                             context,

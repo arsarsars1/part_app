@@ -7,9 +7,14 @@ import 'package:part_app/view/components/image_picker.dart';
 import 'package:part_app/view/constants/constant.dart';
 
 class DocsUpload extends StatefulWidget {
-  final ValueChanged<List<File>> documents;
+  final ValueChanged<File?> doc1;
+  final ValueChanged<File?> doc2;
 
-  const DocsUpload({Key? key, required this.documents}) : super(key: key);
+  const DocsUpload({
+    Key? key,
+    required this.doc1,
+    required this.doc2,
+  }) : super(key: key);
 
   @override
   State<DocsUpload> createState() => _DocsUploadState();
@@ -40,6 +45,8 @@ class _DocsUploadState extends State<DocsUpload> {
                   setState(() {
                     document1 = value;
                   });
+                  widget.doc1(document1);
+                  widget.doc2(document2);
                 });
               },
               child: Container(
@@ -70,6 +77,8 @@ class _DocsUploadState extends State<DocsUpload> {
                   setState(() {
                     document2 = value;
                   });
+                  widget.doc1(document1);
+                  widget.doc2(document2);
                 });
               },
               child: Container(
