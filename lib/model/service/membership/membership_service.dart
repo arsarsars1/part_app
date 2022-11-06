@@ -48,6 +48,7 @@ class MembershipService {
     required String? paymentMethod,
     required String? salesManOtp,
     required String? orderId,
+    required String? paymentId,
   }) async {
     try {
       var data = {
@@ -56,13 +57,16 @@ class MembershipService {
       };
 
       if (paymentMethod != null) {
-        data.putIfAbsent('payment_method', () => paymentMethod);
+        data.putIfAbsent('payment_type', () => paymentMethod);
       }
       if (salesManOtp != null) {
         data.putIfAbsent('salesman_otp', () => salesManOtp);
       }
       if (orderId != null) {
         data.putIfAbsent('order_id', () => orderId);
+      }
+      if (paymentId != null) {
+        data.putIfAbsent('payment_id', () => paymentId);
       }
       var str = await _apiClient.post(
         postPath: '/add-membership',

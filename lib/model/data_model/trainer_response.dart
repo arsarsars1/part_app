@@ -40,6 +40,7 @@ abstract class Trainer with _$Trainer {
     DateTime? dob,
     DateTime? doj,
     String? whatsappNo,
+    String? name,
     String? email,
     String? upiId,
     String? salaryType,
@@ -69,19 +70,3 @@ abstract class Pivot with _$Pivot {
 
   factory Pivot.fromJson(Map<String, dynamic> json) => _$PivotFromJson(json);
 }
-
-// @freezed
-// abstract class User with _$User {
-//   const factory User({
-//    required int id,
-//     String? name,
-//     String? countryCode,
-//     String? mobileNo,
-//     String? firebaseToken,
-//     int? isActive,
-//     DateTime? createdAt,
-//     DateTime? updatedAt,
-//   }) = _User;
-//
-//   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-// }

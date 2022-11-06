@@ -52,7 +52,9 @@ class ApiClient {
       print('POST METHOD | URL -> $path\n');
       print('********** POST DATA ***********');
 
-      log(json.encode(data));
+      if (!formData) {
+        log(json.encode(data));
+      }
 
       print('********** API CALL ***********');
     }
@@ -60,6 +62,8 @@ class ApiClient {
     if (kDebugMode) {
       print(bearerToken);
     }
+    var tempFrom = FormData.fromMap(data);
+    print(tempFrom);
     // posts the data to service with headers
     var response = await _dio.post(
       basePath ?? path,

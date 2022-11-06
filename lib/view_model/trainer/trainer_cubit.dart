@@ -1,11 +1,15 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
+import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/admin/trainer.dart';
+import 'package:path/path.dart';
 
 part 'trainer_state.dart';
 
@@ -30,6 +34,8 @@ class TrainerCubit extends Cubit<TrainerState> {
   TrainerRequest _request = const TrainerRequest();
 
   TrainerRequest get request => _request;
+
+  File? image, doc1, doc2;
 
   set trainer(Trainer? temp) {
     _trainer = temp;
@@ -100,10 +106,55 @@ class TrainerCubit extends Cubit<TrainerState> {
     File? image,
     File? doc1,
     File? doc2,
-  }) {
+  }) async {
+    if (image != null) {
+      this.image = image;
+    }
+    if (doc1 != null) {
+      this.doc1 = doc1;
+    }
+    if (doc2 != null) {
+      this.doc2 = doc2;
+    }
     _request = trainerRequest;
     if (kDebugMode) {
-      print(_request.toJson());
+      log(_request.toString());
+    }
+  }
+
+  Future createTrainer() async {
+    emit(CreatingTrainer());
+    Map<String, dynamic> map = _request.toJson();
+
+    /// prepare files for upload
+    if (image != null) {
+      MultipartFile imageFile = await MultipartFile.fromFile(image!.path,
+          filename: basename(image!.path));
+      map.putIfAbsent('image', () => imageFile);
+    }
+
+    if (doc1 != null) {
+      MultipartFile doc1File = await MultipartFile.fromFile(doc1!.path,
+          filename: basename(doc1!.path));
+      map.putIfAbsent('document1', () => doc1File);
+    }
+
+    if (doc2 != null) {
+      MultipartFile doc2File = await MultipartFile.fromFile(doc2!.path,
+          filename: basename(doc2!.path));
+
+      map.putIfAbsent('document2', () => doc2File);
+    }
+    Common? response = await _trainerService.createTrainer(map);
+
+    if (response != null && response.status == 1) {
+      emit(TrainerCreated());
+    } else {
+      emit(
+        CreatingTrainerFailed(
+          response?.message ?? 'Failed to create the trainer',
+        ),
+      );
     }
   }
 }

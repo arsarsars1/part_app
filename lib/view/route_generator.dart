@@ -17,6 +17,7 @@ import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/trainer/add_edit_trainer.dart';
+import 'package:part_app/view/trainer/add_trainer_branches.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view/trainer/trainer_salary_details.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
@@ -145,6 +146,11 @@ class RouteGenerator {
       case TrainerSalaryDetails.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerSalaryDetails(),
+          settings: settings,
+        );
+      case AddTrainerBranches.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddTrainerBranches(),
           settings: settings,
         );
       default:

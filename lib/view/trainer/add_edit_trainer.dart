@@ -35,6 +35,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
   String? phone;
   String? whatsappNo;
   String? areaOfExpertise;
+  String? address;
 
   bool selected = false;
 
@@ -81,7 +82,9 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                 CommonField(
                   title: 'Trainer Name *',
                   hint: 'Enter Trainer Name',
-                  onChange: (value) {},
+                  onChange: (value) {
+                    name = value;
+                  },
                   validator: (value) {
                     return value == null || value.toString().isEmpty
                         ? 'Please enter trainer name.'
@@ -158,7 +161,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                 CommonField(
                   inputType: TextInputType.emailAddress,
                   length: 50,
-                  title: 'Enter Email *',
+                  title: 'Email *',
                   hint: 'Eg: contact@polestar.com',
                   validator: (value) {
                     if (value == null || value.toString().isEmpty) {
@@ -179,7 +182,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                 CommonField(
                   inputType: TextInputType.emailAddress,
                   length: 50,
-                  title: 'Area Of Expertise *',
+                  title: 'Area Of Expertise',
                   hint: 'Eg: Hip Hop Dance',
                   validator: (value) {
                     if (value == null || value.toString().isEmpty) {
@@ -208,7 +211,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                     }
                   },
                   onChange: (value) {
-                    areaOfExpertise = value;
+                    address = value;
                   },
                 ),
                 SizedBox(
@@ -238,11 +241,11 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                             name: name,
                             email: email,
                             countryCode: 91,
-                            whatsappNo: whatsappNo,
+                            whatsappNo: whatsappNo ?? phone,
                             mobileNo: phone,
                             dob: dob,
                             gender: gender,
-                            // areaOfExpertise: areaOfExpertise, //todo
+                            address: address,
                           );
 
                           // update the data in cubit

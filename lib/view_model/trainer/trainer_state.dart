@@ -26,3 +26,13 @@ class FailedToFetchTrainers extends TrainerState {
 
   FailedToFetchTrainers(this.message);
 }
+
+class TrainerCreated extends TrainerState {}
+
+class CreatingTrainer extends TrainerState {}
+
+class CreatingTrainerFailed extends TrainerState {
+  final String message;
+
+  CreatingTrainerFailed(this.message);
+}

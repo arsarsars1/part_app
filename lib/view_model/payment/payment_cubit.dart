@@ -88,7 +88,11 @@ class PaymentCubit extends Cubit<PaymentState> {
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     _razorpay.clear();
     emit(PaymentSuccess());
-    membershipCubit.addMemberShip(paymentMethod: 'online', orderId: _orderId);
+    membershipCubit.addMemberShip(
+      paymentMethod: 'online',
+      orderId: _orderId,
+      paymentId: response.paymentId,
+    );
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {

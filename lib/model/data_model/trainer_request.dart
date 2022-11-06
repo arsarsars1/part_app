@@ -18,8 +18,9 @@ abstract class TrainerRequest with _$TrainerRequest {
     String? salaryType,
     int? salaryDate,
     String? salaryAmount,
-    List<int>? branchId,
+    @JsonKey(name: "branch_id[]") List<String>? branchId,
     String? upiId,
+    String? address,
   }) = _TrainerRequest;
 
   factory TrainerRequest.fromJson(Map<String, dynamic> json) =>

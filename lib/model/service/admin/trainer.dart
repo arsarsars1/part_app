@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/api.dart';
 
@@ -65,5 +66,18 @@ class TrainerService {
     }
 
     return null;
+  }
+
+  Future<Common?> createTrainer(Map<String, dynamic> data) async {
+    try {
+      var response = await _client.post(
+        postPath: '/admin/trainers',
+        data: data,
+        formData: true,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
   }
 }

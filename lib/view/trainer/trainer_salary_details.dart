@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/trainer/add_trainer_branches.dart';
+import 'package:part_app/view_model/cubits.dart';
 
 class TrainerSalaryDetails extends StatefulWidget {
   static const route = '/trainer/salary-details';
@@ -18,10 +22,12 @@ class _TrainerSalaryDetailsState extends State<TrainerSalaryDetails> {
   TextEditingController joiningDateController = TextEditingController();
   ScrollController scrollController = ScrollController();
   String? joiningDate;
+  String? upiId;
+  String? amount;
+  String? payDay;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     scrollController.addListener(() {
       FocusManager.instance.primaryFocus?.unfocus();
@@ -30,6 +36,7 @@ class _TrainerSalaryDetailsState extends State<TrainerSalaryDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var trainerCubit = context.read<TrainerCubit>();
     return Scaffold(
       appBar: const CommonBar(title: 'Add Trainer Salary Details'),
       body: GestureDetector(
@@ -45,7 +52,9 @@ class _TrainerSalaryDetailsState extends State<TrainerSalaryDetails> {
             CommonField(
               title: 'UPI ID',
               hint: 'Enter UPI Id',
-              onChange: (value) {},
+              onChange: (value) {
+                upiId = value;
+              },
               validator: (value) {
                 // return value == null || value.toString().isEmpty
                 //     ? 'Please enter trainer name.'
@@ -59,7 +68,9 @@ class _TrainerSalaryDetailsState extends State<TrainerSalaryDetails> {
               title: 'Salary Amount',
               hint: 'Enter Salary',
               inputType: const TextInputType.numberWithOptions(decimal: true),
-              onChange: (value) {},
+              onChange: (value) {
+                amount = value;
+              },
               validator: (value) {
                 // return value == null || value.toString().isEmpty
                 //     ? 'Please enter trainer name.'
@@ -92,6 +103,7 @@ class _TrainerSalaryDetailsState extends State<TrainerSalaryDetails> {
               phoneField: true,
               length: 2,
               onChange: (value) {
+                payDay = value;
                 if (value.toString().length == 2) {
                   FocusManager.instance.primaryFocus?.unfocus();
                 }
@@ -111,7 +123,22 @@ class _TrainerSalaryDetailsState extends State<TrainerSalaryDetails> {
           color: Colors.black,
           child: Center(
             child: Button(
-              onTap: () {},
+              onTap: () {
+                TrainerRequest request = trainerCubit.request.copyWith(
+                  upiId: upiId,
+                  salaryAmount: amount,
+                  salaryType: 'monthly ',
+                  doj: joiningDate,
+                  salaryDate: int.tryParse(payDay ?? '0'),
+                );
+
+                // update the data in cubit
+                trainerCubit.updateRequest(
+                  request,
+                );
+
+                Navigator.pushNamed(context, AddTrainerBranches.route);
+              },
               title: 'Continue',
             ),
           ),
