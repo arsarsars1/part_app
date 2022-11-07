@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
+import 'package:part_app/model/service/admin/branch.dart';
 import 'package:part_app/model/service/admin/trainer.dart';
 import 'package:path/path.dart';
 
@@ -17,6 +17,7 @@ class TrainerCubit extends Cubit<TrainerState> {
   TrainerCubit() : super(TrainerInitial());
 
   final _trainerService = TrainerService();
+  final _branchService = BranchService();
 
   Trainer? _trainer;
   List<Trainer> _trainers = [];
@@ -85,13 +86,23 @@ class TrainerCubit extends Cubit<TrainerState> {
     return list;
   }
 
-  Future searchTrainers(Branch? branch, {required String query}) async {
+  Future searchTrainers(int? branchID, {String? query}) async {
     _trainers = [];
     emit(FetchingTrainers());
-    TrainerResponse? response = await _trainerService.searchTrainer(
-      branch?.id,
-      query: query,
-    );
+    TrainerResponse? response;
+
+    if (branchID != null && query == null) {
+      response = await _branchService.getTrainers(
+        branchId: branchID.toString(),
+      );
+    }
+
+    if (query != null) {
+      response = await _trainerService.searchTrainer(
+        branchID,
+        query: query,
+      );
+    }
 
     if (response?.trainers != null) {
       _trainers = response!.trainers!;
@@ -148,6 +159,7 @@ class TrainerCubit extends Cubit<TrainerState> {
     Common? response = await _trainerService.createTrainer(map);
 
     if (response != null && response.status == 1) {
+      await getTrainers();
       emit(TrainerCreated());
     } else {
       emit(

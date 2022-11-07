@@ -56,11 +56,20 @@ class TrainerList extends StatelessWidget {
                               Color(0xFF640078),
                             ],
                           ),
+                          image: trainer.profilePic != null
+                              ? DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                      'https://dev.partapp.in/images/trainers/${trainer.profilePic}'),
+                                )
+                              : null,
                         ),
                         padding: EdgeInsets.all(12.r),
-                        child: SvgPicture.asset(
-                          Assets.trainerListIcon,
-                        ),
+                        child: trainer.profilePic == null
+                            ? SvgPicture.asset(
+                                Assets.trainerListIcon,
+                              )
+                            : null,
                       ),
                       SizedBox(width: 16.w),
                       Expanded(

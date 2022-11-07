@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
@@ -13,21 +12,18 @@ import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view/trainer/components/docs_upload.dart';
-import 'package:part_app/view/trainer/salary_details.dart';
-import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/view_model/branch/branch_cubit.dart';
 
-class AddEditTrainer extends StatefulWidget {
-  static const route = '/trainer/add-edit';
+class AddManager extends StatefulWidget {
+  static const route = '/manager/update';
 
-  const AddEditTrainer({Key? key}) : super(key: key);
+  const AddManager({Key? key}) : super(key: key);
 
   @override
-  State<AddEditTrainer> createState() => _AddEditTrainerState();
+  State<AddManager> createState() => _AddManagerState();
 }
 
-class _AddEditTrainerState extends State<AddEditTrainer> {
-  TextEditingController dobController = TextEditingController();
-
+class _AddManagerState extends State<AddManager> {
   String? name;
   String? email;
   String? dob;
@@ -36,12 +32,14 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
   String? whatsappNo;
   String? areaOfExpertise;
   String? address;
+  int? branchId;
 
   bool selected = false;
 
   final formKey = GlobalKey<FormState>();
 
   final scrollController = ScrollController();
+  TextEditingController dobController = TextEditingController();
 
   // Files
   File? image;
@@ -51,16 +49,17 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      FocusManager.instance.primaryFocus?.unfocus();
+    // get the trainers list
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<BranchCubit>().getBranches();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var trainerCubit = context.read<TrainerCubit>();
+    var branchCubit = context.read<BranchCubit>();
     return Scaffold(
-      appBar: const CommonBar(title: 'Add Trainer Detail'),
+      appBar: const CommonBar(title: 'Add Branch Manager'),
       body: Form(
         key: formKey,
         child: SafeArea(
@@ -76,18 +75,40 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                     },
                   ),
                 ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                BlocBuilder<BranchCubit, BranchState>(
+                  builder: (context, state) {
+                    return CommonField(
+                      title: 'Branch',
+                      hint: 'Select Branch',
+                      dropDown: true,
+                      dropDownItems: branchCubit.branchesWithoutManager(),
+                      onChange: (value) {
+                        branchId = value?.id;
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Please select branch.';
+                        }
+                        return null;
+                      },
+                    );
+                  },
+                ),
                 const SizedBox(
                   height: 20,
                 ),
                 CommonField(
-                  title: 'Trainer Name *',
-                  hint: 'Enter Trainer Name',
+                  title: 'Branch Manager Name *',
+                  hint: 'Enter Manager Name',
                   onChange: (value) {
                     name = value;
                   },
                   validator: (value) {
                     return value == null || value.toString().isEmpty
-                        ? 'Please enter trainer name.'
+                        ? 'Please enter branch manager name.'
                         : null;
                   },
                 ),
@@ -110,17 +131,22 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                   height: 20,
                 ),
                 CommonField(
-                  controller: dobController,
-                  onTap: datePicker,
-                  disabled: true,
-                  hint: 'dd/mm/yyyy',
-                  title: 'Date of Birth *',
+                  inputType: TextInputType.emailAddress,
+                  length: 50,
+                  title: 'Email *',
+                  hint: 'Eg: contact@polestar.com',
                   validator: (value) {
-                    return value == null || value.toString().isEmpty
-                        ? 'Please enter dob.'
-                        : null;
+                    if (value == null || value.toString().isEmpty) {
+                      return 'Please enter email.';
+                    } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                      return 'Invalid email address.';
+                    } else {
+                      return null;
+                    }
                   },
-                  onChange: (value) {},
+                  onChange: (value) {
+                    email = value;
+                  },
                 ),
                 const SizedBox(
                   height: 20,
@@ -129,7 +155,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                   length: 10,
                   phoneField: true,
                   inputType: TextInputType.phone,
-                  title: 'Mobile *',
+                  title: 'Mobile Number*',
                   hint: 'Eg: 9876543210',
                   onChange: (value) {
                     phone = value;
@@ -159,41 +185,17 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                   height: 20,
                 ),
                 CommonField(
-                  inputType: TextInputType.emailAddress,
-                  length: 50,
-                  title: 'Email *',
-                  hint: 'Eg: contact@polestar.com',
+                  controller: dobController,
+                  onTap: datePicker,
+                  disabled: true,
+                  hint: 'dd/mm/yyyy',
+                  title: 'Date of Birth *',
                   validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter email';
-                    } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                      return 'Invalid email address.';
-                    } else {
-                      return null;
-                    }
+                    return value == null || value.toString().isEmpty
+                        ? 'Please enter dob.'
+                        : null;
                   },
-                  onChange: (value) {
-                    email = value;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  inputType: TextInputType.emailAddress,
-                  length: 50,
-                  title: 'Area Of Expertise',
-                  hint: 'Eg: Hip Hop Dance',
-                  validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter expertise';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChange: (value) {
-                    areaOfExpertise = value;
-                  },
+                  onChange: (value) {},
                 ),
                 const SizedBox(
                   height: 20,
@@ -205,7 +207,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                   hint: 'Enter Communication Address',
                   validator: (value) {
                     if (value == null || value.toString().isEmpty) {
-                      return 'Please enter address';
+                      return 'Please enter address.';
                     } else {
                       return null;
                     }
@@ -235,32 +237,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                       onTap: () {
                         formKey.currentState?.save();
 
-                        if (formKey.currentState!.validate()) {
-                          TrainerRequest request =
-                              trainerCubit.request.copyWith(
-                            name: name,
-                            email: email,
-                            countryCode: 91,
-                            whatsappNo: whatsappNo ?? phone,
-                            mobileNo: phone,
-                            dob: dob,
-                            gender: gender,
-                            address: address,
-                          );
-
-                          // update the data in cubit
-                          trainerCubit.updateRequest(
-                            request,
-                            image: image,
-                            doc1: doc1,
-                            doc2: doc2,
-                          );
-                          // open the salary details page
-                          Navigator.pushNamed(
-                            context,
-                            SalaryDetails.route,
-                          );
-                        }
+                        if (formKey.currentState!.validate()) {}
                       },
                       title: 'Continue',
                     ),

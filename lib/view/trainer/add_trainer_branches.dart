@@ -45,6 +45,7 @@ class _AddTrainerBranchesState extends State<AddTrainerBranches> {
                 .show();
           } else if (state is TrainerCreated) {
             Navigator.popUntil(context, ModalRoute.withName(TrainerPage.route));
+            Alert(context).show(message: 'Trainer added successfully.');
           } else if (state is CreatingTrainerFailed) {
             Navigator.pop(context);
             Alert(context).show(message: state.message);

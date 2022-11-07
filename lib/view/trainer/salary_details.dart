@@ -9,16 +9,16 @@ import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class TrainerSalaryDetails extends StatefulWidget {
+class SalaryDetails extends StatefulWidget {
   static const route = '/trainer/salary-details';
 
-  const TrainerSalaryDetails({Key? key}) : super(key: key);
+  const SalaryDetails({Key? key}) : super(key: key);
 
   @override
-  State<TrainerSalaryDetails> createState() => _TrainerSalaryDetailsState();
+  State<SalaryDetails> createState() => _SalaryDetailsState();
 }
 
-class _TrainerSalaryDetailsState extends State<TrainerSalaryDetails> {
+class _SalaryDetailsState extends State<SalaryDetails> {
   TextEditingController joiningDateController = TextEditingController();
   ScrollController scrollController = ScrollController();
   String? joiningDate;

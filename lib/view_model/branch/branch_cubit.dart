@@ -169,4 +169,11 @@ class BranchCubit extends Cubit<BranchState> {
         .map((e) => DropDownItem(id: e.id, title: e.branchName, item: e))
         .toList();
   }
+
+  List<DropDownItem> branchesWithoutManager() {
+    return _branches
+        .where((element) => element.managerDetail == null)
+        .map((e) => DropDownItem(id: e.id, title: e.branchName, item: e))
+        .toList();
+  }
 }

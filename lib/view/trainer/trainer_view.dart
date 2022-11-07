@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
@@ -22,7 +21,7 @@ class TrainerPage extends StatefulWidget {
 }
 
 class _TrainerPageState extends State<TrainerPage> {
-  Branch? branch;
+  int? branchId;
 
   @override
   void initState() {
@@ -71,7 +70,8 @@ class _TrainerPageState extends State<TrainerPage> {
                 dropDown: true,
                 dropDownItems: branchCubit.dropDownBranches(),
                 onChange: (value) {
-                  branch = value;
+                  branchId = value.id;
+                  cubit.searchTrainers(branchId, query: null);
                 },
               );
             },
@@ -86,7 +86,7 @@ class _TrainerPageState extends State<TrainerPage> {
             dropDown: false,
             onChange: (value) {
               if (value.toString().isNotEmpty) {
-                cubit.searchTrainers(branch, query: value);
+                cubit.searchTrainers(branchId, query: value);
               } else {
                 cubit.getTrainers();
               }

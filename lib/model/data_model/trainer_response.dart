@@ -40,6 +40,8 @@ abstract class Trainer with _$Trainer {
     DateTime? dob,
     DateTime? doj,
     String? whatsappNo,
+    String? mobileNo,
+    String? countryCode,
     String? name,
     String? email,
     String? upiId,
@@ -52,6 +54,7 @@ abstract class Trainer with _$Trainer {
     Pivot? pivot,
     User? user,
     Academy? academy,
+    Trainer? trainer,
   }) = _Trainer;
 
   factory Trainer.fromJson(Map<String, dynamic> json) =>
