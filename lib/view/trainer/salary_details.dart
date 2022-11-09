@@ -179,7 +179,7 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                   managerCubit.createManager();
                 }
               },
-              title: 'Continue',
+              title: widget.trainer ? 'Continue' : 'Add',
             ),
           ),
         ),

@@ -4,9 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/model/data_model/trainer_response.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/action_icon.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/profile_pictrue.dart';
+import 'package:part_app/view/components/titled_text.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -27,73 +30,271 @@ class _TrainerDetailsState extends State<TrainerDetails> {
     var cubit = context.read<TrainerCubit>();
     return Scaffold(
       appBar: const CommonBar(title: 'Trainer Profile'),
-      body: ListView(
-        children: [
-          Center(
-            child: ProfilePicture(
-              onEdit: () {},
-              onChange: (File value) {},
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            '${cubit.trainer?.user?.name}',
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1
-                ?.copyWith(fontWeight: FontWeight.w700),
-          ),
-          SizedBox(
-            height: 16.h,
-          ),
-          Container(
-            height: 25.0.h,
-            alignment: Alignment.center,
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: CupertinoSwitch(
-                trackColor: AppColors.grey500,
-                value: active,
-                onChanged: (value) {
-                  setState(() {
-                    active = !active;
-                  });
-                },
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: BlocBuilder<TrainerCubit, TrainerState>(
+        builder: (context, state) {
+          Trainer? trainer = cubit.trainer?.trainerDetail![0];
+          return ListView(
             children: [
-              ActionIcon(
-                asset: Assets.phone,
-                color: const Color(0XFF0072FF),
-                onTap: () {},
+              Center(
+                child: ProfilePicture(
+                  imageUrl:
+                      'https://dev.partapp.in/images/trainers/${trainer?.profilePic}',
+                  onEdit: () {},
+                  onChange: (File value) {},
+                ),
               ),
-              ActionIcon(
-                asset: Assets.message,
-                color: const Color(0XFFFFAC04),
-                onTap: () {},
+              const SizedBox(
+                height: 8,
               ),
-              ActionIcon(
-                asset: Assets.whatsApp,
-                color: const Color(0XFF00F260),
-                onTap: () {},
+              Text(
+                '${cubit.trainer?.name}',
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(fontWeight: FontWeight.w700),
               ),
-              ActionIcon(
-                asset: Assets.email,
-                color: const Color(0XFFE56667),
-                onTap: () {},
+              SizedBox(
+                height: 16.h,
+              ),
+              Container(
+                height: 25.0.h,
+                alignment: Alignment.center,
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: CupertinoSwitch(
+                    trackColor: AppColors.grey500,
+                    value: active,
+                    onChanged: (value) {
+                      setState(() {
+                        active = !active;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ActionIcon(
+                    asset: Assets.phone,
+                    color: const Color(0XFF0072FF),
+                    onTap: () {},
+                  ),
+                  ActionIcon(
+                    asset: Assets.message,
+                    color: const Color(0XFFFFAC04),
+                    onTap: () {},
+                  ),
+                  ActionIcon(
+                    asset: Assets.whatsApp,
+                    color: const Color(0XFF00F260),
+                    onTap: () {},
+                  ),
+                  ActionIcon(
+                    asset: Assets.email,
+                    color: const Color(0XFFE56667),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.liteDark,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                padding: const EdgeInsets.all(16),
+                margin: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Allocated Branches',
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: AppColors.primaryColor,
+                            fontSize: 12,
+                          ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('data'),
+                        Container(
+                          width: 24.w,
+                          height: 24.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.black54,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.edit_outlined,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.circular(45),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Spacer(),
+                    Text(
+                      'Assigned Batches',
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontSize: 12,
+                          ),
+                    ),
+                    const Spacer(),
+                    const Icon(
+                      Icons.keyboard_arrow_right,
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.defaultBlue,
+                  borderRadius: BorderRadius.circular(45),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Spacer(),
+                    Text(
+                      'Salary Details',
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontSize: 12,
+                          ),
+                    ),
+                    const Spacer(),
+                    const Icon(
+                      Icons.keyboard_arrow_right,
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.liteDark,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                padding: const EdgeInsets.all(16),
+                margin: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TitledText(
+                          title: 'Gender',
+                          subText: '${trainer?.gender}',
+                        ),
+                        Container(
+                          width: 24.w,
+                          height: 24.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.black54,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.edit_outlined,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    TitledText(
+                      title: 'Mobile No',
+                      subText: '${cubit.trainer?.mobileNo}',
+                    ),
+                    TitledText(
+                      title: 'Date Of Birth',
+                      subText: '${trainer?.dob?.toDateString()}',
+                    ),
+                    TitledText(
+                      title: 'Email Id',
+                      subText: '${trainer?.email}',
+                    ),
+                    const TitledText(
+                      title: 'Address',
+                      subText: 'N/A',
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const Text('ID Proof Images Max Of 2 Nos.'),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          height: 77.h,
+                          width: 93.w,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFD9D9D9),
+                            borderRadius: BorderRadius.circular(5),
+                            // image: trainer?.documents != null
+                            //     ? DecorationImage(image: FileImage(document1!))
+                            //     : null,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Container(
+                          height: 77.h,
+                          width: 93.w,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFD9D9D9),
+                            borderRadius: BorderRadius.circular(5),
+                            // image: trainer?.documents != null
+                            //     ? DecorationImage(image: FileImage(document1!))
+                            //     : null,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ],
-          )
-        ],
+          );
+        },
       ),
     );
   }

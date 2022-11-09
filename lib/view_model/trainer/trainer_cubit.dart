@@ -51,7 +51,7 @@ class TrainerCubit extends Cubit<TrainerState> {
   Future getTrainerDetails({required int trainerId}) async {
     emit(TrainerDetailsLoading());
     Trainer? temp = await _trainerService.getTrainerById(trainerId: trainerId);
-    if (temp != null) {
+    if (temp != null && temp.trainerDetail != null) {
       trainer = temp;
       emit(TrainerDetailsLoaded());
       return;

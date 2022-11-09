@@ -27,104 +27,107 @@ class ManagerCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           color: AppColors.liteDark,
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              flex: 3,
-              child: Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Color(0xFF0575E6),
-                          Color(0xFF640078),
-                        ],
+            Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${manager.user?.name}',
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontSize: 16,
+                            ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      image: manager.profilePic != null
-                          ? DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  'https://dev.partapp.in/images/trainers/${manager.profilePic}'),
-                            )
-                          : null,
-                    ),
-                    padding: EdgeInsets.all(12.r),
-                    child: manager.profilePic == null
-                        ? SvgPicture.asset(
-                            Assets.trainerListIcon,
-                          )
-                        : null,
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        manager.branches?[0].branchName ?? 'N/A',
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: AppColors.primaryColor,
+                            ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: Text(
-                      '${manager.user?.name}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          if (manager.whatsappNo != null) {
+                            Launcher.openWhatsapp(
+                              context: context,
+                              text: '',
+                              number:
+                                  '+${manager.user?.countryCode}${manager.whatsappNo}',
+                            );
+                          }
+                        },
+                        child: Container(
+                          width: 25.w,
+                          height: 25.h,
+                          padding: const EdgeInsets.all(4),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFF00F260),
+                          ),
+                          child: SvgPicture.asset(
+                            Assets.whatsApp,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10.w),
+                      InkWell(
+                        onTap: () {
+                          if (manager.user?.mobileNo != null) {
+                            Launcher.makePhoneCall(
+                              '+${manager.user?.countryCode}${manager.user?.mobileNo}',
+                              context,
+                            );
+                          }
+                        },
+                        child: Container(
+                          width: 25.w,
+                          height: 25.h,
+                          padding: const EdgeInsets.all(6),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFF0072FF),
+                          ),
+                          child: SvgPicture.asset(
+                            Assets.phone,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                )
+              ],
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                manager.isActive == 0 ? 'Deactivated' : 'Active',
+                maxLines: 1,
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      color:
+                          manager.isActive == 0 ? AppColors.primaryColor : null,
+                    ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
-            Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      if (manager.whatsappNo != null) {
-                        Launcher.openWhatsapp(
-                          context: context,
-                          text: '',
-                          number:
-                              '+${manager.user?.countryCode}${manager.whatsappNo}',
-                        );
-                      }
-                    },
-                    child: Container(
-                      width: 25.w,
-                      height: 25.h,
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFF00F260),
-                      ),
-                      child: SvgPicture.asset(
-                        Assets.whatsApp,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10.w),
-                  InkWell(
-                    onTap: () {
-                      if (manager.user?.mobileNo != null) {
-                        Launcher.makePhoneCall(
-                          '+${manager.user?.countryCode}${manager.user?.mobileNo}',
-                          context,
-                        );
-                      }
-                    },
-                    child: Container(
-                      width: 25.w,
-                      height: 25.h,
-                      padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFF0072FF),
-                      ),
-                      child: SvgPicture.asset(
-                        Assets.phone,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
           ],
         ),
       ),

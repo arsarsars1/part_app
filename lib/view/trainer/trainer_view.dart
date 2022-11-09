@@ -109,10 +109,12 @@ class _TrainerPageState extends State<TrainerPage> {
               return TrainerList(
                 trainers: cubit.filteredTrainers,
                 onSelect: (Trainer trainer) {
-                  context.read<TrainerCubit>().getTrainerDetails(
-                        trainerId: trainer.id,
-                      );
-                  Navigator.pushNamed(context, TrainerDetails.route);
+                  if (trainer.trainerDetail != null) {
+                    context.read<TrainerCubit>().getTrainerDetails(
+                          trainerId: trainer.trainerDetail![0].id,
+                        );
+                    Navigator.pushNamed(context, TrainerDetails.route);
+                  }
                 },
               );
             },

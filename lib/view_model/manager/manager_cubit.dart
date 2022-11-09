@@ -31,6 +31,7 @@ class ManagerCubit extends Cubit<ManagerState> {
     );
 
     if (response != null && response.status == 1) {
+      await getManagers();
       emit(ManagerCreated());
     } else {
       emit(

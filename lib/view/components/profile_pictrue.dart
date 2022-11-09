@@ -8,11 +8,13 @@ import 'package:part_app/view/constants/constant.dart';
 class ProfilePicture extends StatefulWidget {
   final VoidCallback onEdit;
   final ValueChanged<File> onChange;
+  final String? imageUrl;
 
   const ProfilePicture({
     Key? key,
     required this.onEdit,
     required this.onChange,
+    this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -45,8 +47,16 @@ class _ProfilePictureState extends State<ProfilePicture> {
         children: [
           if (file == null)
             Image.network(
-              'https://cdn-icons-png.flaticon.com/512/552/552721.png',
+              widget.imageUrl == null
+                  ? 'https://cdn-icons-png.flaticon.com/512/552/552721.png'
+                  : widget.imageUrl!,
               color: Colors.white,
+              errorBuilder: (context, object, error) {
+                return Image.network(
+                  'https://cdn-icons-png.flaticon.com/512/552/552721.png',
+                  color: Colors.white,
+                );
+              },
             ),
           Align(
             alignment: Alignment.bottomRight,

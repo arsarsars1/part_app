@@ -55,6 +55,8 @@ abstract class Trainer with _$Trainer {
     User? user,
     Academy? academy,
     Trainer? trainer,
+    List<Document>? documents,
+    List<Trainer>? trainerDetail,
   }) = _Trainer;
 
   factory Trainer.fromJson(Map<String, dynamic> json) =>
@@ -72,4 +74,19 @@ abstract class Pivot with _$Pivot {
   }) = _Pivot;
 
   factory Pivot.fromJson(Map<String, dynamic> json) => _$PivotFromJson(json);
+}
+
+@freezed
+abstract class Document with _$Document {
+  const factory Document({
+    int? id,
+    int? documentIndex,
+    String? image,
+    String? ofType,
+    int? ofId,
+    int? isAvailable,
+  }) = _Document;
+
+  factory Document.fromJson(Map<String, dynamic> json) =>
+      _$DocumentFromJson(json);
 }

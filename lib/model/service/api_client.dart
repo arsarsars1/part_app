@@ -16,6 +16,7 @@ class ApiClient {
 
     String? bearerToken = Database().getToken();
     if (kDebugMode) {
+      print('GET Path => $path');
       print(bearerToken);
     }
 
