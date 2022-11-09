@@ -259,6 +259,7 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                           Navigator.pushNamed(
                             context,
                             SalaryDetails.route,
+                            arguments: true, // trainer
                           );
                         }
                       },

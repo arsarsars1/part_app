@@ -7,6 +7,7 @@ import 'package:part_app/view/route_generator.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/branch/branch_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/view_model/manager/manager_cubit.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -39,6 +40,9 @@ class App extends StatelessWidget {
         ),
         BlocProvider<TrainerCubit>(
           create: (context) => TrainerCubit(),
+        ),
+        BlocProvider<ManagerCubit>(
+          create: (context) => ManagerCubit(),
         ),
       ],
       child: MediaQuery(

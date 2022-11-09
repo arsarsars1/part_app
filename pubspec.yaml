@@ -57,6 +57,8 @@ dependencies:
   firebase_remote_config: ^3.0.3
   # plugin for picking & capturing the images
   image_picker: ^0.8.6
+  # to compress the images for upload
+  flutter_image_compress: ^1.1.3
 
 dev_dependencies:
   flutter_test:

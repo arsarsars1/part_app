@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/model/data_model/manager_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
@@ -12,7 +13,8 @@ import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view/trainer/components/docs_upload.dart';
-import 'package:part_app/view_model/branch/branch_cubit.dart';
+import 'package:part_app/view/trainer/salary_details.dart';
+import 'package:part_app/view_model/cubits.dart';
 
 class AddManager extends StatefulWidget {
   static const route = '/manager/update';
@@ -58,6 +60,7 @@ class _AddManagerState extends State<AddManager> {
   @override
   Widget build(BuildContext context) {
     var branchCubit = context.read<BranchCubit>();
+    var managerCubit = context.read<ManagerCubit>();
     return Scaffold(
       appBar: const CommonBar(title: 'Add Branch Manager'),
       body: Form(
@@ -237,7 +240,30 @@ class _AddManagerState extends State<AddManager> {
                       onTap: () {
                         formKey.currentState?.save();
 
-                        if (formKey.currentState!.validate()) {}
+                        if (formKey.currentState!.validate()) {
+                          /// build the [ ManagerRequest ]
+                          ManagerRequest request =
+                              managerCubit.managerRequest.copyWith(
+                            name: name,
+                            branchId: branchId,
+                            gender: gender,
+                            email: email,
+                            mobileNo: phone,
+                            countryCode: 91,
+                            whatsappNo: whatsappNo ?? phone,
+                            dob: dob,
+                            address: address,
+                          );
+
+                          /// update the [managerCubit] with updated request
+                          managerCubit.updateRequest(request);
+                          // open the salary details page
+                          Navigator.pushNamed(
+                            context,
+                            SalaryDetails.route,
+                            arguments: false, // manager
+                          );
+                        }
                       },
                       title: 'Continue',
                     ),

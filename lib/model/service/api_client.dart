@@ -62,8 +62,7 @@ class ApiClient {
     if (kDebugMode) {
       print(bearerToken);
     }
-    var tempFrom = FormData.fromMap(data);
-    print(tempFrom);
+
     // posts the data to service with headers
     var response = await _dio.post(
       basePath ?? path,

@@ -147,7 +147,9 @@ class RouteGenerator {
         );
       case SalaryDetails.route:
         return MaterialPageRoute(
-          builder: (_) => const SalaryDetails(),
+          builder: (_) => SalaryDetails(
+            trainer: settings.arguments as bool,
+          ),
           settings: settings,
         );
       case AddTrainerBranches.route:

@@ -43,15 +43,16 @@ class _ProfileState extends State<Profile> {
       User? user = context.read<AuthCubit>().user;
 
       dobController.text = user?.adminDetail?.dob?.toDateString() ?? '';
-      nameController.text = user?.adminDetail?.name ?? '';
+      name = user?.adminDetail?.name ?? '';
       phoneController.text = '+${user?.countryCode} ${user?.mobileNo}';
-      emailController.text = user?.adminDetail?.email ?? '';
-      academyController.text = user?.adminDetail?.academy?.academyName ?? '';
+      email = user?.adminDetail?.email ?? '';
+      academyName = user?.adminDetail?.academy?.academyName ?? '';
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    User? user = context.read<AuthCubit>().user;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin Profile Details'),
@@ -113,7 +114,7 @@ class _ProfileState extends State<Profile> {
               height: 16.h,
             ),
             CommonField(
-              controller: phoneController,
+              initialValue: user?.mobileNo,
               suffixIcon: const Icon(
                 Icons.check_circle_outline_outlined,
                 color: Colors.greenAccent,
@@ -191,7 +192,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             CommonField(
-              controller: nameController,
+              initialValue: user?.name,
               title: 'Enter you name *',
               hint: 'Name',
               onChange: (value) {
@@ -202,7 +203,7 @@ class _ProfileState extends State<Profile> {
               height: 20,
             ),
             CommonField(
-              controller: emailController,
+              initialValue: user?.adminDetail?.email,
               title: 'Enter Email *',
               hint: 'Eg: contact@polestar.com',
               onChange: (value) {
@@ -224,6 +225,8 @@ class _ProfileState extends State<Profile> {
               height: 20,
             ),
             CommonField(
+              defaultItem: DefaultValues().genders.firstWhere(
+                  (element) => element.title == user?.adminDetail?.gender),
               title: 'Gender *',
               onChange: (value) {
                 gender = value?.title;
