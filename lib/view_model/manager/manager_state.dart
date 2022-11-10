@@ -19,6 +19,16 @@ class FetchingManagers extends ManagerState {}
 
 class ManagersFetched extends ManagerState {}
 
+class FetchingManagersFailed extends ManagerState {
+  final String message;
+
+  FetchingManagersFailed(this.message);
+}
+
+class FetchingManager extends ManagerState {}
+
+class ManagerFetched extends ManagerState {}
+
 class FetchingManagerFailed extends ManagerState {
   final String message;
 

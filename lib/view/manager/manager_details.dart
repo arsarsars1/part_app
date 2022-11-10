@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:part_app/model/data_model/trainer_response.dart';
+import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/action_icon.dart';
 import 'package:part_app/view/components/common_bar.dart';
@@ -13,33 +13,33 @@ import 'package:part_app/view/components/titled_text.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class TrainerDetails extends StatefulWidget {
-  static const route = '/trainer/details';
+class ManagerDetails extends StatefulWidget {
+  static const route = '/manager/details';
 
-  const TrainerDetails({Key? key}) : super(key: key);
+  const ManagerDetails({Key? key}) : super(key: key);
 
   @override
-  State<TrainerDetails> createState() => _TrainerDetailsState();
+  State<ManagerDetails> createState() => _ManagerDetailsState();
 }
 
-class _TrainerDetailsState extends State<TrainerDetails> {
+class _ManagerDetailsState extends State<ManagerDetails> {
   bool active = true;
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<TrainerCubit>();
+    var cubit = context.read<ManagerCubit>();
     return Scaffold(
-      appBar: const CommonBar(title: 'Trainer Profile'),
-      body: BlocBuilder<TrainerCubit, TrainerState>(
+      appBar: const CommonBar(title: 'Branch Manager Details'),
+      body: BlocBuilder<ManagerCubit, ManagerState>(
         builder: (context, state) {
-          Trainer? trainer = cubit.trainer?.trainerDetail![0];
+          Manager? manager = cubit.manager;
           return SafeArea(
             child: ListView(
               children: [
                 Center(
                   child: ProfilePicture(
                     imageUrl:
-                        'https://dev.partapp.in/images/trainers/${trainer?.profilePic}',
+                        'https://dev.partapp.in/images/trainers/${manager?.profilePic}',
                     onEdit: () {},
                     onChange: (File value) {},
                   ),
@@ -48,7 +48,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                   height: 8,
                 ),
                 Text(
-                  '${cubit.trainer?.name}',
+                  '${manager?.user?.name}',
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
@@ -122,7 +122,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('data'),
+                          Text(manager?.branches?[0].branchName ?? ''),
                           Container(
                             width: 24.w,
                             height: 24.w,
@@ -144,36 +144,6 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       )
                     ],
                   ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(45),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Spacer(),
-                      Text(
-                        'Assigned Batches',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              fontSize: 12,
-                            ),
-                      ),
-                      const Spacer(),
-                      const Icon(
-                        Icons.keyboard_arrow_right,
-                        size: 24,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 8,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -217,7 +187,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                         children: [
                           TitledText(
                             title: 'Gender',
-                            subText: '${trainer?.gender}',
+                            subText: '${manager?.gender}',
                           ),
                           Container(
                             width: 24.w,
@@ -240,15 +210,15 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       ),
                       TitledText(
                         title: 'Mobile No',
-                        subText: '${cubit.trainer?.mobileNo}',
+                        subText: manager?.user?.mobileNo ?? 'N/A',
                       ),
                       TitledText(
                         title: 'Date Of Birth',
-                        subText: '${trainer?.dob?.toDateString()}',
+                        subText: '${manager?.dob?.toDateString()}',
                       ),
                       TitledText(
                         title: 'Email Id',
-                        subText: '${trainer?.email}',
+                        subText: '${manager?.email}',
                       ),
                       const TitledText(
                         title: 'Address',
@@ -313,10 +283,10 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TitledText(
+                          const TitledText(
                             title: 'UPI ID',
                             titleColor: Colors.white,
-                            subText: '${trainer?.upiId}',
+                            subText: 'N/A',
                           ),
                           Container(
                             width: 24.w,
@@ -343,7 +313,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       TitledText(
                         title: 'Pay Day',
                         titleColor: Colors.white,
-                        subText: '${trainer?.salaryDate}',
+                        subText: '${manager?.salaryDate}',
                       ),
                       const SizedBox(
                         height: 8,
@@ -352,7 +322,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                         title: 'Amount',
                         titleColor: Colors.white,
                         subText:
-                            'Rs. ${trainer?.salaryAmount?.currencyFormat()}/-',
+                            'Rs. ${manager?.salaryAmount?.currencyFormat()}/-',
                       ),
                       const SizedBox(
                         height: 8,
@@ -360,7 +330,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       TitledText(
                         title: 'Joining Date',
                         titleColor: Colors.white,
-                        subText: '${trainer?.doj?.toDateString()}',
+                        subText: '${manager?.doj?.toDateString()}',
                       ),
                     ],
                   ),

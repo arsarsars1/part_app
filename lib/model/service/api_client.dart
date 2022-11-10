@@ -20,18 +20,24 @@ class ApiClient {
       print(bearerToken);
     }
 
-    var response = await _dio.get(
-      path,
-      options: Options(
-        headers: {
-          'MOBILE-APP-TOKEN': _token,
-          'Authorization': 'Bearer $bearerToken',
-        },
-      ),
-    );
-    return _handleResponse(
-      response,
-    );
+    try {
+      var response = await _dio.get(
+        path,
+        options: Options(
+          headers: {
+            'MOBILE-APP-TOKEN': _token,
+            'Authorization': 'Bearer $bearerToken',
+          },
+        ),
+      );
+
+      log(json.encode(response.data));
+      return _handleResponse(
+        response,
+      );
+    } catch (e) {
+      return null;
+    }
   }
 
   /// POST REQUEST
@@ -62,6 +68,7 @@ class ApiClient {
     String? bearerToken = Database().getToken();
     if (kDebugMode) {
       print(bearerToken);
+      print('POST Path => $path');
     }
 
     // posts the data to service with headers
@@ -93,7 +100,6 @@ class ApiClient {
   }
 
   dynamic _handleResponse(Response response) {
-    log(jsonEncode(response.data));
     return response.data;
   }
 }

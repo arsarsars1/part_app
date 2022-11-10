@@ -16,9 +16,13 @@ class ManagerCubit extends Cubit<ManagerState> {
 
   List<Manager>? _managers;
 
+  Manager? _manager;
+
   List<Manager>? get managers => _managers;
 
   ManagerRequest get managerRequest => _managerRequest;
+
+  Manager? get manager => _manager;
 
   void updateRequest(ManagerRequest request) {
     _managerRequest = request;
@@ -49,8 +53,22 @@ class ManagerCubit extends Cubit<ManagerState> {
       emit(ManagersFetched());
     } else {
       emit(
-        FetchingManagerFailed('Failed to get managers'),
+        FetchingManagersFailed('Failed to get managers'),
       );
+    }
+  }
+
+  Future getManagerById({required int id}) async {
+    emit(FetchingManager());
+    ManagerResponse? response = await _managerService.getManagerById(
+      managerId: id,
+    );
+
+    if (response?.status == 1 && response?.manager != null) {
+      _manager = response?.manager;
+      emit(ManagerFetched());
+    } else {
+      emit(FetchingManagerFailed('Fetching manager details failed.'));
     }
   }
 }

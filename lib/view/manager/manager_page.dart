@@ -6,6 +6,7 @@ import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/manager/add_manager.dart';
 import 'package:part_app/view/manager/components/card_card.dart';
+import 'package:part_app/view/manager/manager_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class ManagerPage extends StatefulWidget {
@@ -48,7 +49,9 @@ class _ManagerPageState extends State<ManagerPage> {
               ),
             ),
           ),
-          SizedBox(height: 24.h,),
+          SizedBox(
+            height: 24.h,
+          ),
           BlocBuilder<ManagerCubit, ManagerState>(
             builder: (context, state) {
               var cubit = context.read<ManagerCubit>();
@@ -58,7 +61,15 @@ class _ManagerPageState extends State<ManagerPage> {
                 itemBuilder: (context, index) {
                   Manager manager = cubit.managers![index];
                   return ManagerCard(
-                    onSelect: () {},
+                    onSelect: () {
+                      if (manager.user?.id != null) {
+                        context.read<ManagerCubit>().getManagerById(
+                              id: manager.id,
+                            );
+
+                        Navigator.pushNamed(context, ManagerDetails.route);
+                      }
+                    },
                     manager: manager,
                   );
                 },

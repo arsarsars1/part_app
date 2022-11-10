@@ -18,6 +18,7 @@ abstract class ManagerResponse with _$ManagerResponse {
   const factory ManagerResponse({
     required int status,
     List<Manager>? managers,
+    Manager? manager,
   }) = _ManagerResponse;
 
   factory ManagerResponse.fromJson(Map<String, dynamic> json) =>

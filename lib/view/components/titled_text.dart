@@ -4,8 +4,10 @@ import 'package:part_app/view/constants/constant.dart';
 class TitledText extends StatelessWidget {
   final String title;
   final String subText;
+  final Color? titleColor;
 
-  const TitledText({Key? key, required this.title, required this.subText})
+  const TitledText(
+      {Key? key, required this.title, required this.subText, this.titleColor})
       : super(key: key);
 
   @override
@@ -18,7 +20,7 @@ class TitledText extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  color: AppColors.primaryColor,
+                  color: titleColor ?? AppColors.primaryColor,
                   fontSize: 12,
                 ),
           ),

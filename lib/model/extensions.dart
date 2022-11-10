@@ -31,3 +31,9 @@ extension DateExtension on DateTime {
     }
   }
 }
+
+extension StringExtension on String {
+  String currencyFormat() {
+    return NumberFormat("#,##,###", "en_US").format(double.parse(this));
+  }
+}

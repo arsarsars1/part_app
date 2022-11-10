@@ -32,4 +32,16 @@ class ManagerService {
       return null;
     }
   }
+
+  Future<ManagerResponse?> getManagerById({required int managerId}) async {
+    try {
+      var map = await _client.get(
+        queryPath: '/admin/managers/$managerId',
+      );
+
+      return managerResponseFromJson(jsonEncode(map));
+    } on Exception catch (e) {
+      return null;
+    }
+  }
 }

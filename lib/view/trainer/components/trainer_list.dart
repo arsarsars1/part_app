@@ -74,7 +74,7 @@ class TrainerList extends StatelessWidget {
                       SizedBox(width: 16.w),
                       Expanded(
                         child: Text(
-                          '${trainer.name}',
+                          '${trainer.name ?? trainer.user?.name}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
