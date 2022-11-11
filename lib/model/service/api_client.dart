@@ -72,31 +72,35 @@ class ApiClient {
     }
 
     // posts the data to service with headers
-    var response = await _dio.post(
-      basePath ?? path,
-      data: formData ? FormData.fromMap(data) : data,
-      options: Options(
-        followRedirects: false,
-        validateStatus: (status) {
-          return status != null && status < 500;
-        },
-        headers: header ??
-            {
-              'MOBILE-APP-TOKEN': _token,
-              'Authorization': 'Bearer $bearerToken',
-              "Accept": "application/json",
-            },
-      ),
-    );
-    if (kDebugMode) {
-      print('********** API END ***********');
-      print(
-        'STATUS -> Code : ${response.statusCode}, Status : ${response.statusMessage}',
+    try {
+      var response = await _dio.post(
+        basePath ?? path,
+        data: formData ? FormData.fromMap(data) : data,
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status != null && status < 500;
+          },
+          headers: header ??
+              {
+                'MOBILE-APP-TOKEN': _token,
+                'Authorization': 'Bearer $bearerToken',
+                "Accept": "application/json",
+              },
+        ),
       );
-      log(json.encode(response.data));
-      print('**********         ***********');
+      if (kDebugMode) {
+        print('********** API END ***********');
+        print(
+          'STATUS -> Code : ${response.statusCode}, Status : ${response.statusMessage}',
+        );
+        log(json.encode(response.data));
+        print('**********         ***********');
+      }
+      return _handleResponse(response);
+    } catch (e) {
+      print(e);
     }
-    return _handleResponse(response);
   }
 
   dynamic _handleResponse(Response response) {

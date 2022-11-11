@@ -12,6 +12,9 @@ import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/manager/add_manager.dart';
+import 'package:part_app/view/manager/edit_manager.dart';
+import 'package:part_app/view/manager/edit_salary.dart';
+import 'package:part_app/view/manager/manager_branches.dart';
 import 'package:part_app/view/manager/manager_details.dart';
 import 'package:part_app/view/manager/manager_page.dart';
 import 'package:part_app/view/membership/membership.dart';
@@ -166,6 +169,21 @@ class RouteGenerator {
       case ManagerPage.route:
         return MaterialPageRoute(
           builder: (_) => const ManagerPage(),
+          settings: settings,
+        );
+      case ManagerBranches.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerBranches(),
+          settings: settings,
+        );
+      case EditManager.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditManager(),
+          settings: settings,
+        );
+      case EditSalaryManager.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditSalaryManager(),
           settings: settings,
         );
       case ManagerDetails.route:

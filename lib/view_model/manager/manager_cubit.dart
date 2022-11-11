@@ -15,6 +15,7 @@ class ManagerCubit extends Cubit<ManagerState> {
   ManagerRequest _managerRequest = const ManagerRequest();
 
   List<Manager>? _managers;
+  Set<int> _selectedBranches = {};
 
   Manager? _manager;
 
@@ -23,6 +24,8 @@ class ManagerCubit extends Cubit<ManagerState> {
   ManagerRequest get managerRequest => _managerRequest;
 
   Manager? get manager => _manager;
+
+  Set<int> get selectedBranches => _selectedBranches;
 
   void updateRequest(ManagerRequest request) {
     _managerRequest = request;
@@ -66,6 +69,11 @@ class ManagerCubit extends Cubit<ManagerState> {
 
     if (response?.status == 1 && response?.manager != null) {
       _manager = response?.manager;
+
+      // creates a set of branches the managers are assigned
+      _selectedBranches = _manager?.branches?.map((e) => e.id).toSet() ?? {};
+
+      // emits to update the UI
       emit(ManagerFetched());
     } else {
       emit(FetchingManagerFailed('Fetching manager details failed.'));
@@ -86,5 +94,23 @@ class ManagerCubit extends Cubit<ManagerState> {
     } else {
       emit(FetchingManagerFailed('Fetching manager details failed.'));
     }
+  }
+
+  void updateBranchSelection(int branchId) {
+    if (_selectedBranches.contains(branchId)) {
+      _selectedBranches.remove(branchId);
+    } else {
+      _selectedBranches.add(branchId);
+    }
+    emit(BranchSelectionUpdated());
+  }
+
+  Future updateManager({required Map<String, dynamic> request}) async {
+
+    print(request);
+    await _managerService.updateManager(
+      data: request,
+      branchId: '${manager?.id}',
+    );
   }
 }

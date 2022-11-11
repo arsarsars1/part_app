@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/components/action_icon.dart';
 import 'package:part_app/view/components/common_bar.dart';
+import 'package:part_app/view/components/launchers.dart';
 import 'package:part_app/view/components/profile_pictrue.dart';
 import 'package:part_app/view/components/titled_text.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -77,30 +77,12 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                 const SizedBox(
                   height: 16,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ActionIcon(
-                      asset: Assets.phone,
-                      color: const Color(0XFF0072FF),
-                      onTap: () {},
-                    ),
-                    ActionIcon(
-                      asset: Assets.message,
-                      color: const Color(0XFFFFAC04),
-                      onTap: () {},
-                    ),
-                    ActionIcon(
-                      asset: Assets.whatsApp,
-                      color: const Color(0XFF00F260),
-                      onTap: () {},
-                    ),
-                    ActionIcon(
-                      asset: Assets.email,
-                      color: const Color(0XFFE56667),
-                      onTap: () {},
-                    ),
-                  ],
+                Launchers(
+                  phoneNo:
+                      '+${trainer?.user?.countryCode}${trainer?.user?.mobileNo}',
+                  whatsappNo:
+                      '+${trainer?.user?.countryCode}${trainer?.whatsappNo}',
+                  email: '${trainer?.email}',
                 ),
                 Container(
                   decoration: BoxDecoration(

@@ -36,4 +36,10 @@ extension StringExtension on String {
   String currencyFormat() {
     return NumberFormat("#,##,###", "en_US").format(double.parse(this));
   }
+
+  String capitalize() {
+    if (trim().isEmpty) return "";
+
+    return "${this[0].toUpperCase()}${substring(1)}";
+  }
 }

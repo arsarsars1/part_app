@@ -57,4 +57,16 @@ class ManagerService {
       return null;
     }
   }
+
+  Future<Common?> updateManager(
+      {required Map<String, dynamic> data, required String branchId}) async {
+    try {
+      var response = await _client.post(
+        postPath: '/admin/managers/$branchId',
+        data: data,
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
 }

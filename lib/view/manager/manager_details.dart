@@ -6,15 +6,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/components/action_icon.dart';
 import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/dialog.dart';
-import 'package:part_app/view/components/launcher.dart';
+import 'package:part_app/view/components/launchers.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/profile_pictrue.dart';
 import 'package:part_app/view/components/titled_text.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/manager/edit_manager.dart';
+import 'package:part_app/view/manager/edit_salary.dart';
+import 'package:part_app/view/manager/manager_branches.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class ManagerDetails extends StatefulWidget {
@@ -95,7 +97,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       trackColor: AppColors.grey500,
                       value: manager?.isActive == 1,
                       onChanged: (value) {
-                        active = !active;
+                        active = value;
                         CommonDialog(
                           context: context,
                           message:
@@ -116,53 +118,12 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                 const SizedBox(
                   height: 16,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ActionIcon(
-                      asset: Assets.phone,
-                      color: const Color(0XFF0072FF),
-                      onTap: () {
-                        Launcher.makePhoneCall(
-                          '+${manager?.user?.countryCode}${manager?.user?.mobileNo}',
-                          context,
-                        );
-                      },
-                    ),
-                    ActionIcon(
-                      asset: Assets.message,
-                      color: const Color(0XFFFFAC04),
-                      onTap: () {
-                        Launcher.openSMS(
-                          context: context,
-                          mobileNumber:
-                              '${manager?.user?.countryCode} ${manager?.user?.mobileNo} ',
-                        );
-                      },
-                    ),
-                    ActionIcon(
-                      asset: Assets.whatsApp,
-                      color: const Color(0XFF00F260),
-                      onTap: () {
-                        Launcher.openWhatsapp(
-                          context: context,
-                          text: '',
-                          number:
-                              '+${manager?.user?.countryCode}${manager?.whatsappNo}',
-                        );
-                      },
-                    ),
-                    ActionIcon(
-                      asset: Assets.email,
-                      color: const Color(0XFFE56667),
-                      onTap: () {
-                        Launcher.openEmail(
-                          context: context,
-                          emailAddress: '${manager?.email}',
-                        );
-                      },
-                    ),
-                  ],
+                Launchers(
+                  phoneNo:
+                      '+${manager?.user?.countryCode}${manager?.user?.mobileNo}',
+                  whatsappNo:
+                      '+${manager?.user?.countryCode}${manager?.whatsappNo}',
+                  email: '${manager?.email}',
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -185,21 +146,29 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(manager?.branches?[0].branchName ?? ''),
-                          Container(
-                            width: 24.w,
-                            height: 24.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black54,
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                ManagerBranches.route,
+                              );
+                            },
+                            child: Container(
+                              width: 24.w,
+                              height: 24.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black54,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
                               ),
-                            ),
-                            child: const Icon(
-                              Icons.edit_outlined,
-                              size: 16,
-                              color: Colors.white,
+                              child: const Icon(
+                                Icons.edit_outlined,
+                                size: 16,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ],
@@ -249,23 +218,28 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                         children: [
                           TitledText(
                             title: 'Gender',
-                            subText: '${manager?.gender}',
+                            subText: '${manager?.gender?.capitalize()}',
                           ),
-                          Container(
-                            width: 24.w,
-                            height: 24.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black54,
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, EditManager.route);
+                            },
+                            child: Container(
+                              width: 24.w,
+                              height: 24.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black54,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
                               ),
-                            ),
-                            child: const Icon(
-                              Icons.edit_outlined,
-                              size: 16,
-                              color: Colors.white,
+                              child: const Icon(
+                                Icons.edit_outlined,
+                                size: 16,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ],
@@ -350,21 +324,29 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                             titleColor: Colors.white,
                             subText: 'N/A',
                           ),
-                          Container(
-                            width: 24.w,
-                            height: 24.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black54,
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2,
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                EditSalaryManager.route,
+                              );
+                            },
+                            child: Container(
+                              width: 24.w,
+                              height: 24.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black54,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
                               ),
-                            ),
-                            child: const Icon(
-                              Icons.edit_outlined,
-                              size: 16,
-                              color: Colors.white,
+                              child: const Icon(
+                                Icons.edit_outlined,
+                                size: 16,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ],
