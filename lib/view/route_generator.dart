@@ -170,7 +170,9 @@ class RouteGenerator {
         );
       case ManagerDetails.route:
         return MaterialPageRoute(
-          builder: (_) => const ManagerDetails(),
+          builder: (_) => ManagerDetails(
+            managerId: settings.arguments as int,
+          ),
           settings: settings,
         );
       default:

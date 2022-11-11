@@ -7,7 +7,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/action_icon.dart';
+import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/components/common_bar.dart';
+import 'package:part_app/view/components/dialog.dart';
+import 'package:part_app/view/components/launcher.dart';
+import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/profile_pictrue.dart';
 import 'package:part_app/view/components/titled_text.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -15,8 +19,9 @@ import 'package:part_app/view_model/cubits.dart';
 
 class ManagerDetails extends StatefulWidget {
   static const route = '/manager/details';
+  final int managerId;
 
-  const ManagerDetails({Key? key}) : super(key: key);
+  const ManagerDetails({Key? key, required this.managerId}) : super(key: key);
 
   @override
   State<ManagerDetails> createState() => _ManagerDetailsState();
@@ -26,11 +31,34 @@ class _ManagerDetailsState extends State<ManagerDetails> {
   bool active = true;
 
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<ManagerCubit>().getManagerById(
+            id: widget.managerId,
+          );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var cubit = context.read<ManagerCubit>();
     return Scaffold(
       appBar: const CommonBar(title: 'Branch Manager Details'),
-      body: BlocBuilder<ManagerCubit, ManagerState>(
+      body: BlocConsumer<ManagerCubit, ManagerState>(
+        listener: (context, state) {
+          if (state is FetchingManager) {
+            Loader(context).show();
+          }
+          if (state is ManagerFetched) {
+            Navigator.pop(context);
+          }
+          if (state is FetchingManagerFailed) {
+            Navigator.pop(context);
+            Alert(context).show(message: state.message);
+          }
+        },
         builder: (context, state) {
           Manager? manager = cubit.manager;
           return SafeArea(
@@ -65,11 +93,22 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                     fit: BoxFit.contain,
                     child: CupertinoSwitch(
                       trackColor: AppColors.grey500,
-                      value: active,
+                      value: manager?.isActive == 1,
                       onChanged: (value) {
-                        setState(() {
-                          active = !active;
-                        });
+                        active = !active;
+                        CommonDialog(
+                          context: context,
+                          message:
+                              'Do You Want To ${manager?.isActive == 1 ? 'Deactivate' : 'Activate'} The Branch Manager?',
+                          subMessage: '${manager?.user?.name}',
+                          onTap: () {
+                            Navigator.pop(context);
+                            cubit.activateManager(
+                              id: manager!.id,
+                              status: active ? 1 : 0,
+                            );
+                          },
+                        ).show();
                       },
                     ),
                   ),
@@ -83,22 +122,45 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                     ActionIcon(
                       asset: Assets.phone,
                       color: const Color(0XFF0072FF),
-                      onTap: () {},
+                      onTap: () {
+                        Launcher.makePhoneCall(
+                          '+${manager?.user?.countryCode}${manager?.user?.mobileNo}',
+                          context,
+                        );
+                      },
                     ),
                     ActionIcon(
                       asset: Assets.message,
                       color: const Color(0XFFFFAC04),
-                      onTap: () {},
+                      onTap: () {
+                        Launcher.openSMS(
+                          context: context,
+                          mobileNumber:
+                              '${manager?.user?.countryCode} ${manager?.user?.mobileNo} ',
+                        );
+                      },
                     ),
                     ActionIcon(
                       asset: Assets.whatsApp,
                       color: const Color(0XFF00F260),
-                      onTap: () {},
+                      onTap: () {
+                        Launcher.openWhatsapp(
+                          context: context,
+                          text: '',
+                          number:
+                              '+${manager?.user?.countryCode}${manager?.whatsappNo}',
+                        );
+                      },
                     ),
                     ActionIcon(
                       asset: Assets.email,
                       color: const Color(0XFFE56667),
-                      onTap: () {},
+                      onTap: () {
+                        Launcher.openEmail(
+                          context: context,
+                          emailAddress: '${manager?.email}',
+                        );
+                      },
                     ),
                   ],
                 ),

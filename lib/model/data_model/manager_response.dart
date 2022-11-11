@@ -27,6 +27,7 @@ abstract class ManagerResponse with _$ManagerResponse {
 
 @freezed
 abstract class Manager with _$Manager {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Manager({
     required int id,
     int? userId,

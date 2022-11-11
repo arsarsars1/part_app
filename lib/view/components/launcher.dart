@@ -41,4 +41,40 @@ class Launcher {
       }
     }
   }
+
+  static void openEmail({
+    required BuildContext context,
+    required String emailAddress,
+  }) async {
+    final Uri params = Uri(
+      scheme: 'mailto',
+      path: emailAddress,
+    );
+    String url = params.toString();
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      Alert(context).show(message: "Email App not installed");
+    }
+  }
+
+  static void openSMS({
+    required BuildContext context,
+    required String mobileNumber,
+  }) async {
+    // Android
+    var uri = 'sms:$mobileNumber?body=';
+    if (await canLaunchUrl(Uri.parse(uri))) {
+      await canLaunchUrl(Uri.parse(uri));
+    } else {
+      Alert(context).show(message: "SMS app not available.");
+      // // iOS
+      // const uri = 'sms:0039-222-060-888?body=hello%20there';
+      // if (await canLaunchUrl(Uri.parse(uri))) {
+      //   await canLaunchUrl(Uri.parse(uri));
+      // } else {
+      //
+      // }
+    }
+  }
 }

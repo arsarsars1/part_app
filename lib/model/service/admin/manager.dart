@@ -44,4 +44,17 @@ class ManagerService {
       return null;
     }
   }
+
+  Future<Common?> activateManager(
+      {required int managerId, required int status}) async {
+    try {
+      var map = await _client.get(
+        queryPath: '/admin/managers/$managerId/activation/$status',
+      );
+
+      return commonFromJson(jsonEncode(map));
+    } on Exception catch (e) {
+      return null;
+    }
+  }
 }

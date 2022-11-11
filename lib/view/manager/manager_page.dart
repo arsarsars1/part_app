@@ -62,13 +62,11 @@ class _ManagerPageState extends State<ManagerPage> {
                   Manager manager = cubit.managers![index];
                   return ManagerCard(
                     onSelect: () {
-                      if (manager.user?.id != null) {
-                        context.read<ManagerCubit>().getManagerById(
-                              id: manager.id,
-                            );
-
-                        Navigator.pushNamed(context, ManagerDetails.route);
-                      }
+                      Navigator.pushNamed(
+                        context,
+                        ManagerDetails.route,
+                        arguments: manager.id,
+                      );
                     },
                     manager: manager,
                   );

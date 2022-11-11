@@ -71,4 +71,20 @@ class ManagerCubit extends Cubit<ManagerState> {
       emit(FetchingManagerFailed('Fetching manager details failed.'));
     }
   }
+
+  Future activateManager({required int id, required int status}) async {
+    emit(FetchingManager());
+    Common? response = await _managerService.activateManager(
+      managerId: id,
+      status: status,
+    );
+
+    if (response?.status == 1) {
+      emit(ManagerFetched());
+      await getManagers();
+      await getManagerById(id: id);
+    } else {
+      emit(FetchingManagerFailed('Fetching manager details failed.'));
+    }
+  }
 }
