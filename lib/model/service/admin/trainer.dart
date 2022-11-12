@@ -80,4 +80,20 @@ class TrainerService {
       return null;
     }
   }
+
+  Future<Common?> updateTrainer(
+    Map<String, dynamic> data,
+    int trainerId,
+  ) async {
+    try {
+      var response = await _client.post(
+        postPath: '/admin/trainers/$trainerId',
+        data: data,
+        formData: true,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
 }

@@ -11,6 +11,8 @@ import 'package:part_app/view/components/launchers.dart';
 import 'package:part_app/view/components/profile_pictrue.dart';
 import 'package:part_app/view/components/titled_text.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/trainer/edit_salary_trainer.dart';
+import 'package:part_app/view/trainer/edit_trainer.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerDetails extends StatefulWidget {
@@ -201,21 +203,26 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                             title: 'Gender',
                             subText: '${trainer?.gender}',
                           ),
-                          Container(
-                            width: 24.w,
-                            height: 24.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black54,
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, EditTrainer.route);
+                            },
+                            child: Container(
+                              width: 24.w,
+                              height: 24.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black54,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
                               ),
-                            ),
-                            child: const Icon(
-                              Icons.edit_outlined,
-                              size: 16,
-                              color: Colors.white,
+                              child: const Icon(
+                                Icons.edit_outlined,
+                                size: 16,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ],
@@ -300,21 +307,29 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                             titleColor: Colors.white,
                             subText: '${trainer?.upiId}',
                           ),
-                          Container(
-                            width: 24.w,
-                            height: 24.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black54,
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                EditSalaryTrainer.route,
+                              );
+                            },
+                            child: Container(
+                              width: 24.w,
+                              height: 24.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black54,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
                               ),
-                            ),
-                            child: const Icon(
-                              Icons.edit_outlined,
-                              size: 16,
-                              color: Colors.white,
+                              child: const Icon(
+                                Icons.edit_outlined,
+                                size: 16,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ],

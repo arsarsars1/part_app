@@ -4,30 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/trainer_request.dart';
+import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/profile_pictrue.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view/trainer/components/docs_upload.dart';
-import 'package:part_app/view/trainer/salary_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class AddEditTrainer extends StatefulWidget {
-  static const route = '/trainer/add-edit';
+class EditTrainer extends StatefulWidget {
+  static const route = '/trainer/edit';
 
-  const AddEditTrainer({Key? key}) : super(key: key);
+  const EditTrainer({Key? key}) : super(key: key);
 
   @override
-  State<AddEditTrainer> createState() => _AddEditTrainerState();
+  State<EditTrainer> createState() => _EditTrainerState();
 }
 
-class _AddEditTrainerState extends State<AddEditTrainer> {
-  TextEditingController dobController = TextEditingController();
-
+class _EditTrainerState extends State<EditTrainer> {
   String? name;
   String? email;
   String? dob;
@@ -36,12 +33,14 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
   String? whatsappNo;
   String? areaOfExpertise;
   String? address;
+  int? branchId;
 
   bool selected = false;
 
   final formKey = GlobalKey<FormState>();
 
   final scrollController = ScrollController();
+  TextEditingController dobController = TextEditingController();
 
   // Files
   File? image;
@@ -51,16 +50,19 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      FocusManager.instance.primaryFocus?.unfocus();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var trainerCubit = context.read<TrainerCubit>();
+      dobController.text =
+          trainerCubit.trainer?.trainerDetail?[0].dob?.toDateString() ?? '';
     });
   }
 
   @override
   Widget build(BuildContext context) {
     var trainerCubit = context.read<TrainerCubit>();
+    Trainer? trainer = trainerCubit.trainer?.trainerDetail?[0];
     return Scaffold(
-      appBar: const CommonBar(title: 'Add Trainer Detail'),
+      appBar: const CommonBar(title: 'Edit Trainer Details'),
       body: Form(
         key: formKey,
         child: SafeArea(
@@ -68,20 +70,13 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
             controller: scrollController,
             child: Column(
               children: [
-                Center(
-                  child: ProfilePicture(
-                    onEdit: () {},
-                    onChange: (File value) {
-                      image = value;
-                    },
-                  ),
-                ),
                 const SizedBox(
                   height: 20,
                 ),
                 CommonField(
                   title: 'Trainer Name *',
-                  hint: 'Enter Trainer Name',
+                  hint: 'Trainer Name',
+                  initialValue: trainerCubit.trainer?.name,
                   onChange: (value) {
                     name = value;
                   },
@@ -99,12 +94,76 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                   hint: 'Select Gender',
                   dropDown: true,
                   dropDownItems: DefaultValues().genders,
+                  defaultItem: DefaultValues().genders.firstWhere(
+                        (element) =>
+                            element.title?.toLowerCase() ==
+                            trainer?.gender?.toLowerCase(),
+                      ),
                   onChange: (value) {
                     gender = value?.title;
                   },
                   validator: (value) {
                     return value == null ? 'Please select gender.' : null;
                   },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonField(
+                  inputType: TextInputType.emailAddress,
+                  length: 50,
+                  initialValue: trainer?.email,
+                  title: 'Email *',
+                  hint: 'Eg: contact@polestar.com',
+                  validator: (value) {
+                    if (value == null || value.toString().isEmpty) {
+                      return 'Please enter email.';
+                    } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                      return 'Invalid email address.';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChange: (value) {
+                    email = value;
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonField(
+                  initialValue: trainerCubit.trainer?.mobileNo,
+                  length: 10,
+                  phoneField: true,
+                  inputType: TextInputType.phone,
+                  title: 'Mobile Number*',
+                  hint: 'Eg: 9876543210',
+                  onChange: (value) {
+                    phone = value;
+                  },
+                  validator: (value) {
+                    if (value == null || value.toString().isEmpty) {
+                      return 'Please enter number.';
+                    } else if (value.toString().length < 10) {
+                      return 'Invalid phone number.';
+                    }
+
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                WhatsappCheckButton(
+                  selected:
+                      trainer?.whatsappNo == trainerCubit.trainer?.mobileNo,
+                  initialValue: trainer?.whatsappNo,
+                  onChange: (bool value) {
+                    setState(() {
+                      selected = value;
+                    });
+                  },
+                  onNumberChange: (String value) {},
                 ),
                 const SizedBox(
                   height: 20,
@@ -126,86 +185,13 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                   height: 20,
                 ),
                 CommonField(
-                  length: 10,
-                  phoneField: true,
-                  inputType: TextInputType.phone,
-                  title: 'Mobile *',
-                  hint: 'Eg: 9876543210',
-                  onChange: (value) {
-                    phone = value;
-                  },
-                  validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter number.';
-                    } else if (value.toString().length < 10) {
-                      return 'Invalid phone number.';
-                    }
-
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                WhatsappCheckButton(
-                  onChange: (bool value) {
-                    setState(() {
-                      selected = value;
-                    });
-                  },
-                  onNumberChange: (String value) {},
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  inputType: TextInputType.emailAddress,
-                  length: 50,
-                  title: 'Email *',
-                  hint: 'Eg: contact@polestar.com',
-                  validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter email';
-                    } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                      return 'Invalid email address.';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChange: (value) {
-                    email = value;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  inputType: TextInputType.emailAddress,
-                  length: 50,
-                  title: 'Area Of Expertise',
-                  hint: 'Eg: Hip Hop Dance',
-                  validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter expertise';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChange: (value) {
-                    areaOfExpertise = value;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
                   length: 300,
                   maxLines: 3,
                   title: 'Address *',
                   hint: 'Enter Communication Address',
                   validator: (value) {
                     if (value == null || value.toString().isEmpty) {
-                      return 'Please enter address';
+                      return 'Please enter address.';
                     } else {
                       return null;
                     }
@@ -215,15 +201,20 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                   },
                 ),
                 SizedBox(
-                  height: 40.h,
+                  height: 16.h,
                 ),
-                DocsUpload(
-                  doc1: (File? value) {
-                    doc1 = value;
-                  },
-                  doc2: (File? value) {
-                    doc2 = value;
-                  },
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: DocsUpload(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    doc1: (File? value) {
+                      doc1 = value;
+                    },
+                    doc2: (File? value) {
+                      doc2 = value;
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: 40.h,
@@ -236,34 +227,27 @@ class _AddEditTrainerState extends State<AddEditTrainer> {
                         formKey.currentState?.save();
 
                         if (formKey.currentState!.validate()) {
-                          TrainerRequest request =
-                              trainerCubit.request.copyWith(
+                          /// build the [ TrainerRequest ]
+                          TrainerRequest request = TrainerRequest(
                             name: name,
+                            gender: gender,
                             email: email,
+                            mobileNo: phone,
                             countryCode: 91,
                             whatsappNo: whatsappNo ?? phone,
-                            mobileNo: phone,
                             dob: dob,
-                            gender: gender,
                             address: address,
+                            branchId: ['13'], // todo
                           );
 
-                          // update the data in cubit
-                          trainerCubit.updateRequest(
+                          trainerCubit.updateTrainer(
                             request,
-                            image: image,
-                            doc1: doc1,
                             doc2: doc2,
-                          );
-                          // open the salary details page
-                          Navigator.pushNamed(
-                            context,
-                            SalaryDetails.route,
-                            arguments: true, // trainer
+                            doc1: doc1,
                           );
                         }
                       },
-                      title: 'Continue',
+                      title: 'Save',
                     ),
                   ),
                 )

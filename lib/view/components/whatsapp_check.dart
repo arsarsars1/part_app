@@ -25,6 +25,12 @@ class _WhatsappCheckButtonState extends State<WhatsappCheckButton> {
   bool selected = false;
 
   @override
+  void initState() {
+    super.initState();
+    selected = widget.selected;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [

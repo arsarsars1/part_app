@@ -22,8 +22,10 @@ import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
-import 'package:part_app/view/trainer/add_edit_trainer.dart';
+import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
+import 'package:part_app/view/trainer/edit_salary_trainer.dart';
+import 'package:part_app/view/trainer/edit_trainer.dart';
 import 'package:part_app/view/trainer/salary_details.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
@@ -144,9 +146,9 @@ class RouteGenerator {
           builder: (_) => const TrainerDetails(),
           settings: settings,
         );
-      case AddEditTrainer.route:
+      case AddTrainer.route:
         return MaterialPageRoute(
-          builder: (_) => const AddEditTrainer(),
+          builder: (_) => const AddTrainer(),
           settings: settings,
         );
       case SalaryDetails.route:
@@ -181,9 +183,19 @@ class RouteGenerator {
           builder: (_) => const EditManager(),
           settings: settings,
         );
+      case EditTrainer.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditTrainer(),
+          settings: settings,
+        );
       case EditSalaryManager.route:
         return MaterialPageRoute(
           builder: (_) => const EditSalaryManager(),
+          settings: settings,
+        );
+      case EditSalaryTrainer.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditSalaryTrainer(),
           settings: settings,
         );
       case ManagerDetails.route:

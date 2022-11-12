@@ -169,4 +169,46 @@ class TrainerCubit extends Cubit<TrainerState> {
       );
     }
   }
+
+  Future updateTrainer(TrainerRequest request, {File? doc1, File? doc2}) async {
+    emit(UpdatingTrainer());
+    Map<String, dynamic> data = request.toJson();
+
+    data.removeWhere((key, value) => value == null);
+
+    if (doc1 != null) {
+      MultipartFile doc1File = await MultipartFile.fromFile(
+        doc1.path,
+        filename: basename(doc1.path),
+      );
+      data.putIfAbsent('document1', () => doc1File);
+    }
+
+    if (doc2 != null) {
+      MultipartFile doc2File = await MultipartFile.fromFile(
+        doc2.path,
+        filename: basename(doc2.path),
+      );
+
+      data.putIfAbsent('document2', () => doc2File);
+    }
+
+    print(data);
+
+    Common? common = await _trainerService.updateTrainer(
+      data,
+      trainer!.trainerDetail![0].id,
+    );
+
+    if (common?.status == 1) {
+      await getTrainerDetails(
+        trainerId: trainer!.trainerDetail![0].id,
+      );
+      emit(TrainerUpdated());
+    } else {
+      emit(
+        UpdatingTrainerFailed(common?.message ?? 'Failed to update trainer'),
+      );
+    }
+  }
 }

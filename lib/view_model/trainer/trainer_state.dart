@@ -36,3 +36,13 @@ class CreatingTrainerFailed extends TrainerState {
 
   CreatingTrainerFailed(this.message);
 }
+
+class TrainerUpdated extends TrainerState {}
+
+class UpdatingTrainer extends TrainerState {}
+
+class UpdatingTrainerFailed extends TrainerState {
+  final String message;
+
+  UpdatingTrainerFailed(this.message);
+}

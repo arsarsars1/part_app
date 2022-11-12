@@ -5,7 +5,7 @@ import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/tab_button.dart';
-import 'package:part_app/view/trainer/add_edit_trainer.dart';
+import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/components/trainer_list.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view_model/branch/branch_cubit.dart';
@@ -54,7 +54,7 @@ class _TrainerPageState extends State<TrainerPage> {
               ),
               child: Button(
                 height: 30.h,
-                onTap: () => Navigator.pushNamed(context, AddEditTrainer.route),
+                onTap: () => Navigator.pushNamed(context, AddTrainer.route),
                 title: 'Add New Trainer',
               ),
             ),
