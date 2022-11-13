@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
+import 'package:part_app/view_model/batch/batch_cubit.dart';
 
 class TrainingDays extends StatelessWidget {
   const TrainingDays({Key? key}) : super(key: key);
@@ -18,34 +21,53 @@ class TrainingDays extends StatelessWidget {
           ),
           SizedBox(
             height: 48,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: DefaultValues.defaultTrainingDays.length,
-              itemBuilder: (context, index) {
-                MapEntry<int, dynamic> data =
-                    DefaultValues.defaultTrainingDays.entries.elementAt(index);
-                return GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return const ClassTime();
+            child: BlocBuilder<BatchCubit, BatchState>(
+              builder: (context, state) {
+                var cubit = context.read<BatchCubit>();
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: DefaultValues.defaultTrainingDays.length,
+                  itemBuilder: (context, index) {
+                    MapEntry<int, dynamic> data =
+                        DefaultValues.defaultTrainingDays.entries.elementAt(
+                      index,
+                    );
+
+                    bool selected = cubit.days
+                        .where((element) => element.day == data.key)
+                        .isNotEmpty;
+                    return GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return ClassTime(
+                              day: data.key,
+                              startTime: (TimeOfDay value) {},
+                              endTime: (TimeOfDay value) {},
+                            );
+                          },
+                        );
                       },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: !selected ? AppColors.liteDark : Colors.white,
+                        ),
+                        height: 36,
+                        width: 36,
+                        margin: const EdgeInsets.symmetric(horizontal: 8),
+                        alignment: Alignment.center,
+                        child: Text(
+                          data.value.substring(0, 1),
+                          style:
+                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                                    color: selected ? Colors.black : null,
+                                  ),
+                        ),
+                      ),
                     );
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.liteDark,
-                    ),
-                    height: 36,
-                    width: 36,
-                    margin: const EdgeInsets.symmetric(horizontal: 8),
-                    alignment: Alignment.center,
-                    child: Text(
-                      data.value.substring(0, 1),
-                    ),
-                  ),
                 );
               },
             ),
@@ -57,7 +79,16 @@ class TrainingDays extends StatelessWidget {
 }
 
 class ClassTime extends StatefulWidget {
-  const ClassTime({Key? key}) : super(key: key);
+  final int day;
+  final ValueChanged<TimeOfDay> startTime;
+  final ValueChanged<TimeOfDay> endTime;
+
+  const ClassTime(
+      {Key? key,
+      required this.startTime,
+      required this.endTime,
+      required this.day})
+      : super(key: key);
 
   @override
   State<ClassTime> createState() => _ClassTimeState();
@@ -116,7 +147,9 @@ class _ClassTimeState extends State<ClassTime> {
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8),
+                        horizontal: 8,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 0.5,
@@ -157,7 +190,9 @@ class _ClassTimeState extends State<ClassTime> {
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8),
+                        horizontal: 8,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 0.5,
@@ -196,15 +231,20 @@ class _ClassTimeState extends State<ClassTime> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Center(
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    child: Text(
-                      'Cancel',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            color: Colors.white54,
-                          ),
+                child: GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 8,
+                      ),
+                      child: Text(
+                        'Cancel',
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: Colors.white54,
+                            ),
+                      ),
                     ),
                   ),
                 ),
@@ -215,15 +255,29 @@ class _ClassTimeState extends State<ClassTime> {
                 height: 34,
               ),
               Expanded(
-                child: Center(
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    child: Text(
-                      'Add',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            color: Colors.white54,
-                          ),
+                child: GestureDetector(
+                  onTap: () {
+                    if (startTime != null && endTime != null) {
+                      Navigator.pop(context);
+                      Days day = Days(
+                          day: widget.day,
+                          startTime: startTime,
+                          endTime: endTime);
+                      context.read<BatchCubit>().addDay(day);
+                    }
+                  },
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 8,
+                      ),
+                      child: Text(
+                        'Add',
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: Colors.white54,
+                            ),
+                      ),
                     ),
                   ),
                 ),
@@ -268,7 +322,9 @@ class _ClassTimeState extends State<ClassTime> {
 
     if (time != null) {
       final localizations = MaterialLocalizations.of(context);
-      final formattedTimeOfDay = localizations.formatTimeOfDay(time);
+      final formattedTimeOfDay = localizations.formatTimeOfDay(
+        time,
+      );
       return formattedTimeOfDay;
     }
     return null;
