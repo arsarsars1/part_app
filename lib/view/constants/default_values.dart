@@ -24,6 +24,23 @@ class DefaultValues {
       item: 'other',
     ),
   ];
+  List<DropDownItem> batchStatus = [
+    const DropDownItem(
+      id: 'ongoing',
+      title: 'Ongoing',
+      item: 'Ongoing',
+    ),
+    const DropDownItem(
+      id: 'new',
+      title: 'New',
+      item: 'New',
+    ),
+    const DropDownItem(
+      id: 'completed',
+      title: 'Completed',
+      item: 'Completed',
+    ),
+  ];
 
   static const dashboardItems = [
     DashboardItem(

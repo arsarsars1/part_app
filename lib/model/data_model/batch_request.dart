@@ -16,6 +16,7 @@ String batchRequestToJson(BatchRequest data) => json.encode(data.toJson());
 
 @freezed
 abstract class BatchRequest with _$BatchRequest {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory BatchRequest({
     String? batchName,
     int? courseId,
@@ -32,6 +33,7 @@ abstract class BatchRequest with _$BatchRequest {
 
 @freezed
 abstract class Days with _$Days {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Days({
     int? day,
     String? startTime,

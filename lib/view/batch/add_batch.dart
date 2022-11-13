@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
+import 'package:part_app/view/components/branch_field.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
@@ -19,14 +20,13 @@ class AddBatch extends StatefulWidget {
 class _AddBatchState extends State<AddBatch> {
   TextEditingController dobController = TextEditingController();
 
-  String? name;
-  String? email;
-  String? dob;
-  String? gender;
-  String? phone;
-  String? whatsappNo;
-  String? areaOfExpertise;
-  String? address;
+  String? batchName;
+  int? branchId;
+  int? courseId;
+  int? fee;
+  int? admissionFee;
+  String? subject;
+  String? batchStatus;
 
   bool selected = false;
 
@@ -42,6 +42,7 @@ class _AddBatchState extends State<AddBatch> {
   @override
   void initState() {
     super.initState();
+    // get the trainers list
   }
 
   @override
@@ -59,18 +60,7 @@ class _AddBatchState extends State<AddBatch> {
                 const SizedBox(
                   height: 20,
                 ),
-                CommonField(
-                  title: 'Branch *',
-                  hint: 'Select Branch',
-                  dropDown: true,
-                  dropDownItems: DefaultValues().genders,
-                  onChange: (value) {
-                    gender = value?.title;
-                  },
-                  validator: (value) {
-                    return value == null ? 'Please select branch.' : null;
-                  },
-                ),
+                BranchField(onSelect: (value) {}),
                 const SizedBox(
                   height: 20,
                 ),
@@ -78,7 +68,7 @@ class _AddBatchState extends State<AddBatch> {
                   title: 'Batch Name *',
                   hint: 'Enter Batch Name',
                   onChange: (value) {
-                    name = value;
+                    batchName = value;
                   },
                   validator: (value) {
                     return value == null || value.toString().isEmpty
@@ -95,7 +85,7 @@ class _AddBatchState extends State<AddBatch> {
                   dropDown: true,
                   dropDownItems: DefaultValues().genders,
                   onChange: (value) {
-                    gender = value?.title;
+                    courseId = value?.id;
                   },
                   validator: (value) {
                     return value == null ? 'Please select course.' : null;
@@ -110,7 +100,7 @@ class _AddBatchState extends State<AddBatch> {
                   dropDown: true,
                   dropDownItems: DefaultValues().genders,
                   onChange: (value) {
-                    gender = value?.title;
+                    subject = value?.id;
                   },
                   validator: (value) {
                     return value == null ? 'Please select subject.' : null;
@@ -124,7 +114,7 @@ class _AddBatchState extends State<AddBatch> {
                   title: 'Admission Fees *',
                   hint: 'Enter Admission Fees',
                   onChange: (value) {
-                    phone = value;
+                    admissionFee = value;
                   },
                   validator: (value) {
                     if (value == null || value.toString().isEmpty) {
@@ -148,13 +138,28 @@ class _AddBatchState extends State<AddBatch> {
                     return null;
                   },
                   onChange: (value) {
-                    email = value;
+                    fee = value;
                   },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                const TrainingDays()
+                const TrainingDays(),
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonField(
+                  title: 'Batch Status *',
+                  hint: 'Select Batch Status',
+                  dropDown: true,
+                  dropDownItems: DefaultValues().batchStatus,
+                  onChange: (value) {
+                    batchStatus = value?.title;
+                  },
+                  validator: (value) {
+                    return value == null ? 'Please select batch status.' : null;
+                  },
+                ),
               ],
             ),
           ),
