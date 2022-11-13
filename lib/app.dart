@@ -45,27 +45,32 @@ class App extends StatelessWidget {
           create: (context) => ManagerCubit(),
         ),
       ],
-      child: MediaQuery(
-        data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
-        child: ScreenUtilInit(
-          designSize: const Size(360, 800),
-          child: const SplashScreen(),
-          builder: (_, child) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: F.title,
-              theme: AppTheme.lightTheme,
-              home: child,
-              builder: (context, widget) {
-                return MediaQuery(
-                  ///Setting font does not change with system font size
-                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                  child: widget!,
-                );
-              },
-              onGenerateRoute: RouteGenerator.generateRoute,
-            );
-          },
+      child: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: MediaQuery(
+          data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
+          child: ScreenUtilInit(
+            designSize: const Size(360, 800),
+            child: const SplashScreen(),
+            builder: (_, child) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: F.title,
+                theme: AppTheme.lightTheme,
+                home: child,
+                builder: (context, widget) {
+                  return MediaQuery(
+                    ///Setting font does not change with system font size
+                    data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                    child: widget!,
+                  );
+                },
+                onGenerateRoute: RouteGenerator.generateRoute,
+              );
+            },
+          ),
         ),
       ),
     );

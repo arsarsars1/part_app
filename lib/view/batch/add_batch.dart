@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/view/batch/components/training_days.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
@@ -40,9 +42,6 @@ class _AddBatchState extends State<AddBatch> {
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      FocusManager.instance.primaryFocus?.unfocus();
-    });
   }
 
   @override
@@ -55,6 +54,7 @@ class _AddBatchState extends State<AddBatch> {
           child: SingleChildScrollView(
             controller: scrollController,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
                   height: 20,
@@ -151,7 +151,27 @@ class _AddBatchState extends State<AddBatch> {
                     email = value;
                   },
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const TrainingDays()
               ],
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: SizedBox(
+          height: 132.h,
+          child: BottomAppBar(
+            color: Colors.black,
+            child: Center(
+              child: Button(
+                onTap: () {
+                  if (formKey.currentState!.validate()) {}
+                },
+                title: 'Save Batch',
+              ),
             ),
           ),
         ),
