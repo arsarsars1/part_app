@@ -1,4 +1,7 @@
+export 'package:flutter_bloc/flutter_bloc.dart';
+
 export 'authentication/auth_cubit.dart';
+export 'batch/batch_cubit.dart';
 export 'branch/branch_cubit.dart';
 export 'country/country_cubit.dart';
 export 'home/home_cubit.dart';

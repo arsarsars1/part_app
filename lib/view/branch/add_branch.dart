@@ -6,7 +6,6 @@ import 'package:part_app/view/branch/components/enable_switch.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
-import 'package:part_app/view_model/branch/branch_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AddBranch extends StatefulWidget {

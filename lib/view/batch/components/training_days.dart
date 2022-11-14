@@ -52,7 +52,9 @@ class TrainingDays extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: !selected ? AppColors.liteDark : Colors.white,
+                          color: !selected
+                              ? AppColors.liteDark
+                              : AppColors.primaryColor,
                         ),
                         height: 36,
                         width: 36,
@@ -60,10 +62,6 @@ class TrainingDays extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Text(
                           data.value.substring(0, 1),
-                          style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
-                                    color: selected ? Colors.black : null,
-                                  ),
                         ),
                       ),
                     );
@@ -260,9 +258,10 @@ class _ClassTimeState extends State<ClassTime> {
                     if (startTime != null && endTime != null) {
                       Navigator.pop(context);
                       Days day = Days(
-                          day: widget.day,
-                          startTime: startTime,
-                          endTime: endTime);
+                        day: widget.day,
+                        startTime: startTime,
+                        endTime: endTime,
+                      );
                       context.read<BatchCubit>().addDay(day);
                     }
                   },
@@ -324,6 +323,7 @@ class _ClassTimeState extends State<ClassTime> {
       final localizations = MaterialLocalizations.of(context);
       final formattedTimeOfDay = localizations.formatTimeOfDay(
         time,
+        alwaysUse24HourFormat: true,
       );
       return formattedTimeOfDay;
     }

@@ -19,12 +19,14 @@ abstract class BatchRequest with _$BatchRequest {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory BatchRequest({
     String? batchName,
+    int? branchId,
     int? courseId,
     int? subjectId,
     String? batchStatus,
     int? feeAmount,
-    @JsonKey(name: "trainers[]") List<int>? trainers,
-    @JsonKey(name: "days[]") List<Days>? days,
+    int? admissionFees,
+    @JsonKey(name: 'trainers[]') List<int>? trainers,
+    @JsonKey(name: 'days[]') List<Days>? days,
   }) = _BatchRequest;
 
   factory BatchRequest.fromJson(Map<String, dynamic> json) =>
