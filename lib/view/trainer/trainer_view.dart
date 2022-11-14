@@ -82,6 +82,7 @@ class _TrainerPageState extends State<TrainerPage> {
           CommonField(
             prefixIcon: const Icon(Icons.search),
             title: 'Search',
+            maxLines: 1,
             hint: 'Search By Trainer Name Or Phone Number',
             dropDown: false,
             onChange: (value) {

@@ -34,9 +34,9 @@ class _SalaryDetailsState extends State<SalaryDetails> {
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      FocusManager.instance.primaryFocus?.unfocus();
-    });
+    // scrollController.addListener(() {
+    //   FocusManager.instance.primaryFocus?.unfocus();
+    // });
   }
 
   @override

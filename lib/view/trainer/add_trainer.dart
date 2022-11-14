@@ -51,9 +51,9 @@ class _AddTrainerState extends State<AddTrainer> {
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      FocusManager.instance.primaryFocus?.unfocus();
-    });
+    // scrollController.addListener(() {
+    //   FocusManager.instance.primaryFocus?.unfocus();
+    // });
   }
 
   @override

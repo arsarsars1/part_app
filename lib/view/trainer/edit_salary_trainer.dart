@@ -32,9 +32,9 @@ class _EditSalaryTrainerState extends State<EditSalaryTrainer> {
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      FocusManager.instance.primaryFocus?.unfocus();
-    });
+    // scrollController.addListener(() {
+    //   FocusManager.instance.primaryFocus?.unfocus();
+    // });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var trainerCubit = context.read<TrainerCubit>();
       Trainer? trainer = trainerCubit.trainer?.trainerDetail?[0];

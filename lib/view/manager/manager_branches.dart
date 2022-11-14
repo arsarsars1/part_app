@@ -57,7 +57,6 @@ class _ManagerBranchesState extends State<ManagerBranches> {
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: TextCheckBox(
                         onChange: (value) {
-                          print(branch.id);
                           managerCubit.updateBranchSelection(branch.id);
                         },
                         title: branch.branchName ?? 'N/A',
@@ -80,7 +79,9 @@ class _ManagerBranchesState extends State<ManagerBranches> {
           child: Center(
             child: Button(
               onTap: () {
-                managerCubit.updateManager(request: {});
+                managerCubit.updateManager(request: {
+                  'branch_id[]': managerCubit.selectedBranches.toList(),
+                });
               },
               title: 'Update',
             ),

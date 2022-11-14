@@ -11,7 +11,7 @@ class ApiClient {
   final _token = 'h5uA9WokuxSNDJGYK0UevodqEWJjYzlB';
   final _dio = Dio();
 
-  Future get({required String queryPath}) async {
+  Future get({required String queryPath, String? baseUrl}) async {
     var path = _baseUrl + queryPath;
 
     String? bearerToken = Database().getToken();
@@ -22,7 +22,7 @@ class ApiClient {
 
     try {
       var response = await _dio.get(
-        path,
+        baseUrl ?? path,
         options: Options(
           headers: {
             'MOBILE-APP-TOKEN': _token,

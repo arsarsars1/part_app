@@ -31,9 +31,9 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      FocusManager.instance.primaryFocus?.unfocus();
-    });
+    // scrollController.addListener(() {
+    //   // FocusManager.instance.primaryFocus?.unfocus();
+    // });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var managerCubit = context.read<ManagerCubit>();
       joiningDateController.text =
