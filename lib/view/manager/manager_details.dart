@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/alert.dart';
@@ -63,6 +63,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
         },
         builder: (context, state) {
           Manager? manager = cubit.manager;
+          Manager? managerDetails = manager?.managerDetail?[0];
           return SafeArea(
             child: ListView(
               children: [
@@ -78,7 +79,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                   height: 8,
                 ),
                 Text(
-                  '${manager?.user?.name}',
+                  '${manager?.name}',
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
@@ -102,7 +103,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                           context: context,
                           message:
                               'Do You Want To ${manager?.isActive == 1 ? 'Deactivate' : 'Activate'} The Branch Manager?',
-                          subMessage: '${manager?.user?.name}',
+                          subMessage: '${manager?.name}',
                           onTap: () {
                             Navigator.pop(context);
                             cubit.activateManager(
@@ -119,10 +120,8 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                   height: 16,
                 ),
                 Launchers(
-                  phoneNo:
-                      '+${manager?.user?.countryCode}${manager?.user?.mobileNo}',
-                  whatsappNo:
-                      '+${manager?.user?.countryCode}${manager?.whatsappNo}',
+                  phoneNo: '+${manager?.countryCode}${manager?.mobileNo}',
+                  whatsappNo: '+${manager?.countryCode}${manager?.whatsappNo}',
                   email: '${manager?.email}',
                 ),
                 Container(
@@ -145,7 +144,20 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(manager?.branches?[0].branchName ?? ''),
+                          Expanded(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: managerDetails?.branches?.length ?? 0,
+                              itemBuilder: (context, index) {
+                                Branch? branch =
+                                    managerDetails?.branches?[index];
+                                return Text(
+                                  branch?.branchName ?? '',
+                                );
+                              },
+                            ),
+                          ),
                           GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(
@@ -218,7 +230,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                         children: [
                           TitledText(
                             title: 'Gender',
-                            subText: '${manager?.gender?.capitalize()}',
+                            subText: '${managerDetails?.gender?.capitalize()}',
                           ),
                           GestureDetector(
                             onTap: () {
@@ -246,19 +258,19 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       ),
                       TitledText(
                         title: 'Mobile No',
-                        subText: manager?.user?.mobileNo ?? 'N/A',
+                        subText: manager?.mobileNo ?? 'N/A',
                       ),
                       TitledText(
                         title: 'Date Of Birth',
-                        subText: '${manager?.dob?.toDateString()}',
+                        subText: '${managerDetails?.dob?.toDateString()}',
                       ),
                       TitledText(
                         title: 'Email Id',
-                        subText: '${manager?.email}',
+                        subText: '${managerDetails?.email}',
                       ),
-                      const TitledText(
+                      TitledText(
                         title: 'Address',
-                        subText: 'N/A',
+                        subText: '${managerDetails?.address}',
                       ),
                       const SizedBox(
                         height: 24,
@@ -319,10 +331,10 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const TitledText(
+                          TitledText(
                             title: 'UPI ID',
                             titleColor: Colors.white,
-                            subText: 'N/A',
+                            subText: '${managerDetails?.upiId}',
                           ),
                           InkWell(
                             onTap: () {
@@ -357,7 +369,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       TitledText(
                         title: 'Pay Day',
                         titleColor: Colors.white,
-                        subText: '${manager?.salaryDate}',
+                        subText: '${managerDetails?.salaryDate}',
                       ),
                       const SizedBox(
                         height: 8,
@@ -366,7 +378,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                         title: 'Amount',
                         titleColor: Colors.white,
                         subText:
-                            'Rs. ${manager?.salaryAmount?.currencyFormat()}/-',
+                            'Rs. ${managerDetails?.salaryAmount?.currencyFormat()}/-',
                       ),
                       const SizedBox(
                         height: 8,
@@ -374,7 +386,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       TitledText(
                         title: 'Joining Date',
                         titleColor: Colors.white,
-                        subText: '${manager?.doj?.toDateString()}',
+                        subText: '${managerDetails?.doj?.toDateString()}',
                       ),
                     ],
                   ),

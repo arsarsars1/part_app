@@ -26,7 +26,7 @@ abstract class BatchRequest with _$BatchRequest {
     int? feeAmount,
     int? admissionFees,
     @JsonKey(name: 'trainers[]') List<int>? trainers,
-    @JsonKey(name: 'days[]') List<Days>? days,
+    @JsonKey(name: 'days[]') List<String>? days,
   }) = _BatchRequest;
 
   factory BatchRequest.fromJson(Map<String, dynamic> json) =>

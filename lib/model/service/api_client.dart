@@ -78,9 +78,9 @@ class ApiClient {
         data: formData ? FormData.fromMap(data) : data,
         options: Options(
           followRedirects: false,
-          validateStatus: (status) {
-            return status != null && status < 500;
-          },
+          // validateStatus: (status) {
+          //   return status != null && status < 500;
+          // },
           headers: header ??
               {
                 'MOBILE-APP-TOKEN': _token,

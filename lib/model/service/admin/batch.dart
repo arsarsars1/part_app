@@ -36,9 +36,15 @@ class BatchService {
 
   Future<Common?> createBatch(BatchRequest request) async {
     try {
+      var data = request.toJson();
+      // data.putIfAbsent('days[]',
+      //     () => ['{"day":1,"start_time":"10:00:00","end_time":"11:00:00"}"']);
+
+      print(jsonEncode(data));
+
       var response = await _apiClient.post(
         postPath: '/admin/batches',
-        data: request.toJson(),
+        data: data,
         formData: true,
       );
       return commonFromJson(jsonEncode(response));

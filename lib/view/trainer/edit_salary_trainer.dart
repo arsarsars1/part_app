@@ -92,7 +92,7 @@ class _EditSalaryTrainerState extends State<EditSalaryTrainer> {
                   height: 20,
                 ),
                 CommonField(
-                  initialValue: trainer?.salaryAmount,
+                  initialValue: '${trainer?.salaryAmount}',
                   title: 'Salary Amount',
                   hint: 'Enter Salary',
                   inputType:

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
-import 'package:part_app/model/data_model/user_response.dart';
 
 part 'manager_response.freezed.dart';
 part 'manager_response.g.dart';
@@ -33,6 +32,10 @@ abstract class Manager with _$Manager {
     int? userId,
     int? academyId,
     String? gender,
+    String? name,
+    String? mobileNo,
+    String? countryCode,
+    String? upiId,
     DateTime? dob,
     DateTime? doj,
     String? whatsappNo,
@@ -42,8 +45,9 @@ abstract class Manager with _$Manager {
     String? salaryAmount,
     String? profilePic,
     String? profilePicType,
+    String? address,
     int? isActive,
-    User? user,
+    List<Manager>? managerDetail,
     List<Branch>? branches,
   }) = _Manager;
 

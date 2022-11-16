@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
@@ -32,6 +34,12 @@ class BatchCubit extends Cubit<BatchState> {
     _days.add(day);
 
     emit(DaysUpdated());
+  }
+
+  List<String> buildDaysList() {
+    return _days.map((e) {
+      return json.encode(e);
+    }).toList();
   }
 
   List<DropDownItem>? getCoursesDropDown() {

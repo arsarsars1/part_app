@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/manager_request.dart';
+import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
@@ -36,18 +37,19 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
     // });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var managerCubit = context.read<ManagerCubit>();
-      joiningDateController.text =
-          managerCubit.manager?.doj?.toDateString() ?? '';
+      Manager? manager = managerCubit.manager?.managerDetail?[0];
+      joiningDateController.text = manager?.doj?.toDateString() ?? '';
 
-      amount = managerCubit.manager?.salaryAmount;
-      payDay = '${managerCubit.manager?.salaryDate}';
-      joiningDate = managerCubit.manager?.doj?.toServerString();
+      amount = manager?.salaryAmount;
+      payDay = '${manager?.salaryDate}';
+      joiningDate = manager?.doj?.toServerString();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     var managerCubit = context.read<ManagerCubit>();
+    Manager? manager = managerCubit.manager?.managerDetail?[0];
     return Scaffold(
       appBar: const CommonBar(title: 'Edit Branch Manager Salary Details'),
       body: Form(
@@ -78,6 +80,7 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
                   height: 20,
                 ),
                 CommonField(
+                  initialValue: manager?.upiId,
                   title: 'UPI ID',
                   hint: 'Enter UPI Id',
                   onChange: (value) {
@@ -93,8 +96,7 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
                   height: 20,
                 ),
                 CommonField(
-                  initialValue:
-                      managerCubit.manager?.salaryAmount?.currencyFormat(),
+                  initialValue: manager?.salaryAmount,
                   title: 'Salary Amount',
                   hint: 'Enter Salary',
                   inputType:
@@ -128,7 +130,7 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
                   height: 20,
                 ),
                 CommonField(
-                  initialValue: '${managerCubit.manager?.salaryDate}',
+                  initialValue: '${manager?.salaryDate}',
                   title: 'Pay Day',
                   hint: 'Eg: 30',
                   inputType:
@@ -159,6 +161,7 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
           child: Center(
             child: Button(
               onTap: () {
+                formKey.currentState?.save();
                 if (formKey.currentState!.validate()) {
                   ManagerRequest request = ManagerRequest(
                     upiId: upiId,
@@ -168,12 +171,7 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
                     salaryDate: payDay,
                   );
 
-                  managerCubit.updateManager(request: {
-                    'salary_date': payDay,
-                    'salary_amount': int.tryParse(amount!),
-                    'doj': joiningDate,
-                    'upi_id': upiId,
-                  });
+                  managerCubit.updateManager(request: request.toJson());
                 }
               },
               title: 'Save',

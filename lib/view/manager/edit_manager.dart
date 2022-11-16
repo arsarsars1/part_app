@@ -74,7 +74,7 @@ class _EditManagerState extends State<EditManager> {
                 CommonField(
                   title: 'Branch Manager Name *',
                   hint: 'Enter Manager Name',
-                  initialValue: managerCubit.manager?.user?.name,
+                  initialValue: managerCubit.manager?.name,
                   onChange: (value) {
                     name = value;
                   },

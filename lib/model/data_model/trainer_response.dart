@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 
 part 'trainer_response.freezed.dart';
@@ -47,7 +48,7 @@ abstract class Trainer with _$Trainer {
     String? upiId,
     String? salaryType,
     int? salaryDate,
-    String? salaryAmount,
+    int? salaryAmount,
     String? profilePic,
     String? profilePicType,
     int? isActive,
@@ -55,6 +56,7 @@ abstract class Trainer with _$Trainer {
     User? user,
     Academy? academy,
     Trainer? trainer,
+    List<Branch>? branches,
     List<Document>? documents,
     List<Trainer>? trainerDetail,
   }) = _Trainer;

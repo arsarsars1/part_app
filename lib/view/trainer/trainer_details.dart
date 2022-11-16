@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/common_bar.dart';
@@ -30,6 +31,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<TrainerCubit>();
+
     return Scaffold(
       appBar: const CommonBar(title: 'Trainer Profile'),
       body: BlocBuilder<TrainerCubit, TrainerState>(
@@ -106,22 +108,46 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('data'),
-                          Container(
-                            width: 24.w,
-                            height: 24.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black54,
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2,
-                              ),
+                          Expanded(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: trainer?.branches?.length ?? 0,
+                              itemBuilder: (context, index) {
+                                Branch? branch = trainer?.branches?[index];
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4),
+                                  child: Text(
+                                    branch?.branchName ?? '',
+                                  ),
+                                );
+                              },
                             ),
-                            child: const Icon(
-                              Icons.edit_outlined,
-                              size: 16,
-                              color: Colors.white,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              // Navigator.pushNamed(
+                              //   context,
+                              //   ManagerBranches.route,
+                              // );
+                            },
+                            child: Container(
+                              width: 24.w,
+                              height: 24.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black54,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                              ),
+                              child: const Icon(
+                                Icons.edit_outlined,
+                                size: 16,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ],
@@ -201,7 +227,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                         children: [
                           TitledText(
                             title: 'Gender',
-                            subText: '${trainer?.gender}',
+                            subText: '${trainer?.gender?.capitalize()}',
                           ),
                           GestureDetector(
                             onTap: () {
@@ -349,7 +375,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                         title: 'Amount',
                         titleColor: Colors.white,
                         subText:
-                            'Rs. ${trainer?.salaryAmount?.currencyFormat()}/-',
+                            'Rs. ${trainer?.salaryAmount?.toString().currencyFormat()}/-',
                       ),
                       const SizedBox(
                         height: 8,

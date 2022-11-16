@@ -38,7 +38,7 @@ class ManagerCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${manager.user?.name}',
+                        '${manager.name}',
                         maxLines: 1,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                               fontSize: 16,
@@ -71,7 +71,7 @@ class ManagerCard extends StatelessWidget {
                               context: context,
                               text: '',
                               number:
-                                  '+${manager.user?.countryCode}${manager.whatsappNo}',
+                                  '+${manager.countryCode}${manager.managerDetail?[0].whatsappNo}',
                             );
                           }
                         },
@@ -91,9 +91,9 @@ class ManagerCard extends StatelessWidget {
                       SizedBox(width: 10.w),
                       InkWell(
                         onTap: () {
-                          if (manager.user?.mobileNo != null) {
+                          if (manager.mobileNo != null) {
                             Launcher.makePhoneCall(
-                              '+${manager.user?.countryCode}${manager.user?.mobileNo}',
+                              '+${manager.countryCode}${manager.mobileNo}',
                               context,
                             );
                           }

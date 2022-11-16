@@ -65,7 +65,7 @@ class _ManagerPageState extends State<ManagerPage> {
                       Navigator.pushNamed(
                         context,
                         ManagerDetails.route,
-                        arguments: manager.id,
+                        arguments: manager.managerDetail?[0].id,
                       );
                     },
                     manager: manager,

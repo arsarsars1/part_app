@@ -35,7 +35,7 @@ class _ManagerBranchesState extends State<ManagerBranches> {
       body: Column(
         children: [
           Text(
-            managerCubit.manager?.user?.name ?? 'N/A',
+            managerCubit.manager?.name ?? 'N/A',
           ),
           BlocBuilder<BranchCubit, BranchState>(
             builder: (context, state) {

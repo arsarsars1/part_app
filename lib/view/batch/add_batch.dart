@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -176,7 +175,7 @@ class _AddBatchState extends State<AddBatch> {
                       dropDown: true,
                       dropDownItems: DefaultValues().batchStatus,
                       onChange: (value) {
-                        batchStatus = value?.title;
+                        batchStatus = value?.id;
                       },
                       validator: (value) {
                         return value == null
@@ -267,9 +266,15 @@ class _AddBatchState extends State<AddBatch> {
                       );
                       return;
                     } else {
+                      // List<String> days =
+                      //     cubit.days.map((e) => e.toString()).toList();
+                      //
+                      //
+                      //
+                      // print(day);
                       BatchRequest request = BatchRequest(
                         branchId: branchId,
-                        days: cubit.days,
+                        days: cubit.buildDaysList(),
                         batchName: batchName,
                         batchStatus: batchStatus,
                         subjectId: subjectId,
@@ -279,7 +284,6 @@ class _AddBatchState extends State<AddBatch> {
                         admissionFees: int.parse(admissionFee!),
                       );
 
-                      print(jsonEncode(request));
                       cubit.createBatch(request);
                     }
                   }

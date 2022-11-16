@@ -106,11 +106,10 @@ class ManagerCubit extends Cubit<ManagerState> {
   }
 
   Future updateManager({required Map<String, dynamic> request}) async {
-
     print(request);
     await _managerService.updateManager(
       data: request,
-      branchId: '${manager?.id}',
+      branchId: '${manager?.managerDetail?[0].id}',
     );
   }
 }
