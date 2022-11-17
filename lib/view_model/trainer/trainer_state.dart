@@ -39,6 +39,12 @@ class CreatingTrainerFailed extends TrainerState {
 
 class TrainerUpdated extends TrainerState {}
 
+class TrainerStatusUpdated extends TrainerState {
+  final bool activated;
+
+  TrainerStatusUpdated(this.activated);
+}
+
 class UpdatingTrainer extends TrainerState {}
 
 class UpdatingTrainerFailed extends TrainerState {

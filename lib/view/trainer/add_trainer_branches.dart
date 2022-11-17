@@ -9,7 +9,6 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
-import 'package:part_app/view_model/branch/branch_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AddTrainerBranches extends StatefulWidget {

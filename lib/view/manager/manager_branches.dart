@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/view/components/checkbox.dart';
@@ -79,9 +78,11 @@ class _ManagerBranchesState extends State<ManagerBranches> {
           child: Center(
             child: Button(
               onTap: () {
-                managerCubit.updateManager(request: {
-                  'branch_id[]': managerCubit.selectedBranches.toList(),
-                });
+                managerCubit.updateManager(
+                  request: {
+                    'branch_id[]': managerCubit.selectedBranches.toList(),
+                  },
+                );
               },
               title: 'Update',
             ),

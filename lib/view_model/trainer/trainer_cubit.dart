@@ -170,6 +170,22 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
   }
 
+  Future trainerStatus({required int id, required int status}) async {
+    emit(UpdatingTrainer());
+    Common? response = await _trainerService.updateTrainerStatus(
+      trainerId: id,
+      status: status,
+    );
+
+    if (response?.status == 1) {
+      emit(TrainerStatusUpdated(status == 1));
+      await getTrainers();
+      await getTrainerDetails(trainerId: id);
+    } else {
+      emit(UpdatingTrainerFailed('Fetching manager details failed.'));
+    }
+  }
+
   Future updateTrainer(TrainerRequest request, {File? doc1, File? doc2}) async {
     emit(UpdatingTrainer());
     Map<String, dynamic> data = request.toJson();
@@ -192,8 +208,6 @@ class TrainerCubit extends Cubit<TrainerState> {
 
       data.putIfAbsent('document2', () => doc2File);
     }
-
-    print(data);
 
     Common? common = await _trainerService.updateTrainer(
       data,

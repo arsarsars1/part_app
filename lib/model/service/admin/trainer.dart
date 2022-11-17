@@ -96,4 +96,17 @@ class TrainerService {
       return null;
     }
   }
+
+  Future<Common?> updateTrainerStatus(
+      {required int trainerId, required int status}) async {
+    try {
+      var map = await _client.get(
+        queryPath: '/admin/trainers/$trainerId/activation/$status',
+      );
+
+      return commonFromJson(jsonEncode(map));
+    } on Exception catch (e) {
+      return null;
+    }
+  }
 }

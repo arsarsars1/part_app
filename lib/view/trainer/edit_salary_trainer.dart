@@ -165,10 +165,9 @@ class _EditSalaryTrainerState extends State<EditSalaryTrainer> {
                     salaryType: 'monthly',
                     doj: joiningDate,
                     salaryDate: int.parse(payDay!),
-                    branchId: ['13'],
-                    mobileNo: trainerCubit.trainer?.mobileNo,
-                    countryCode: 91,
-                    name: trainerCubit.trainer?.name,
+                    // mobileNo: trainerCubit.trainer?.mobileNo,
+                    // countryCode: 91,
+                    // name: trainerCubit.trainer?.name,
                   );
 
                   trainerCubit.updateTrainer(request);

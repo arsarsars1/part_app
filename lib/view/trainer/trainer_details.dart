@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/components/common_bar.dart';
+import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/components/launchers.dart';
 import 'package:part_app/view/components/profile_pictrue.dart';
 import 'package:part_app/view/components/titled_text.dart';
@@ -34,7 +35,15 @@ class _TrainerDetailsState extends State<TrainerDetails> {
 
     return Scaffold(
       appBar: const CommonBar(title: 'Trainer Profile'),
-      body: BlocBuilder<TrainerCubit, TrainerState>(
+      body: BlocConsumer<TrainerCubit, TrainerState>(
+        listener: (context, state) {
+          if (state is TrainerStatusUpdated) {
+            Alert(context).show(
+              message:
+                  'Trainer ${state.activated ? 'Activated.' : 'Deactivated.'}',
+            );
+          }
+        },
         builder: (context, state) {
           Trainer? trainer = cubit.trainer?.trainerDetail![0];
           return SafeArea(
@@ -69,11 +78,23 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                     fit: BoxFit.contain,
                     child: CupertinoSwitch(
                       trackColor: AppColors.grey500,
-                      value: active,
+                      value: trainer?.isActive == 1,
                       onChanged: (value) {
-                        setState(() {
-                          active = !active;
-                        });
+                        active = !active;
+
+                        CommonDialog(
+                          context: context,
+                          message:
+                              'Do You Want To ${trainer?.isActive == 1 ? 'Deactivate' : 'Activate'} The Branch Manager?',
+                          subMessage: '${cubit.trainer?.name}',
+                          onTap: () {
+                            Navigator.pop(context);
+                            cubit.trainerStatus(
+                              id: trainer!.id,
+                              status: active ? 1 : 0,
+                            );
+                          },
+                        ).show();
                       },
                     ),
                   ),

@@ -8,11 +8,13 @@ import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view/trainer/components/docs_upload.dart';
+import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class EditTrainer extends StatefulWidget {
@@ -63,195 +65,210 @@ class _EditTrainerState extends State<EditTrainer> {
     Trainer? trainer = trainerCubit.trainer?.trainerDetail?[0];
     return Scaffold(
       appBar: const CommonBar(title: 'Edit Trainer Details'),
-      body: Form(
-        key: formKey,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  title: 'Trainer Name *',
-                  hint: 'Trainer Name',
-                  initialValue: trainerCubit.trainer?.name,
-                  onChange: (value) {
-                    name = value;
-                  },
-                  validator: (value) {
-                    return value == null || value.toString().isEmpty
-                        ? 'Please enter trainer name.'
-                        : null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  title: 'Gender *',
-                  hint: 'Select Gender',
-                  dropDown: true,
-                  dropDownItems: DefaultValues().genders,
-                  defaultItem: DefaultValues().genders.firstWhere(
-                        (element) =>
-                            element.title?.toLowerCase() ==
-                            trainer?.gender?.toLowerCase(),
-                      ),
-                  onChange: (value) {
-                    gender = value?.title;
-                  },
-                  validator: (value) {
-                    return value == null ? 'Please select gender.' : null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  inputType: TextInputType.emailAddress,
-                  length: 50,
-                  initialValue: trainer?.email,
-                  title: 'Email *',
-                  hint: 'Eg: contact@polestar.com',
-                  validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter email.';
-                    } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                      return 'Invalid email address.';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChange: (value) {
-                    email = value;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  initialValue: trainerCubit.trainer?.mobileNo,
-                  length: 10,
-                  phoneField: true,
-                  inputType: TextInputType.phone,
-                  title: 'Mobile Number*',
-                  hint: 'Eg: 9876543210',
-                  onChange: (value) {
-                    phone = value;
-                  },
-                  validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter number.';
-                    } else if (value.toString().length < 10) {
-                      return 'Invalid phone number.';
-                    }
-
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                WhatsappCheckButton(
-                  selected:
-                      trainer?.whatsappNo == trainerCubit.trainer?.mobileNo,
-                  initialValue: trainer?.whatsappNo,
-                  onChange: (bool value) {
-                    setState(() {
-                      selected = value;
-                    });
-                  },
-                  onNumberChange: (String value) {},
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  controller: dobController,
-                  onTap: datePicker,
-                  disabled: true,
-                  hint: 'dd/mm/yyyy',
-                  title: 'Date of Birth *',
-                  validator: (value) {
-                    return value == null || value.toString().isEmpty
-                        ? 'Please enter dob.'
-                        : null;
-                  },
-                  onChange: (value) {},
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  length: 300,
-                  maxLines: 3,
-                  title: 'Address *',
-                  hint: 'Enter Communication Address',
-                  validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter address.';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChange: (value) {
-                    address = value;
-                  },
-                ),
-                SizedBox(
-                  height: 16.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: DocsUpload(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    doc1: (File? value) {
-                      doc1 = value;
+      body: BlocListener<TrainerCubit, TrainerState>(
+        listener: (context, state) {
+          if (state is TrainerUpdated) {
+            Navigator.popUntil(
+              context,
+              ModalRoute.withName(TrainerDetails.route),
+            );
+            Alert(context).show(message: 'Trainer details updated');
+          } else if (state is UpdatingTrainer) {
+            Loader(context).show();
+          } else if (state is UpdatingTrainerFailed) {
+            Navigator.pop(context);
+            Alert(context).show(message: state.message);
+          }
+        },
+        child: Form(
+          key: formKey,
+          child: SafeArea(
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Trainer Name *',
+                    hint: 'Trainer Name',
+                    initialValue: trainerCubit.trainer?.name,
+                    onChange: (value) {
+                      name = value;
                     },
-                    doc2: (File? value) {
-                      doc2 = value;
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please enter trainer name.'
+                          : null;
                     },
                   ),
-                ),
-                SizedBox(
-                  height: 40.h,
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 62),
-                    child: Button(
-                      onTap: () {
-                        formKey.currentState?.save();
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Gender *',
+                    hint: 'Select Gender',
+                    dropDown: true,
+                    dropDownItems: DefaultValues().genders,
+                    defaultItem: DefaultValues().genders.firstWhere(
+                          (element) =>
+                              element.title?.toLowerCase() ==
+                              trainer?.gender?.toLowerCase(),
+                        ),
+                    onChange: (value) {
+                      gender = value?.title;
+                    },
+                    validator: (value) {
+                      return value == null ? 'Please select gender.' : null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    inputType: TextInputType.emailAddress,
+                    length: 50,
+                    initialValue: trainer?.email,
+                    title: 'Email *',
+                    hint: 'Eg: contact@polestar.com',
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter email.';
+                      } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                        return 'Invalid email address.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChange: (value) {
+                      email = value;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    initialValue: trainerCubit.trainer?.mobileNo,
+                    length: 10,
+                    phoneField: true,
+                    inputType: TextInputType.phone,
+                    title: 'Mobile Number*',
+                    hint: 'Eg: 9876543210',
+                    onChange: (value) {
+                      phone = value;
+                    },
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter number.';
+                      } else if (value.toString().length < 10) {
+                        return 'Invalid phone number.';
+                      }
 
-                        if (formKey.currentState!.validate()) {
-                          /// build the [ TrainerRequest ]
-                          TrainerRequest request = TrainerRequest(
-                            name: name,
-                            gender: gender,
-                            email: email,
-                            mobileNo: phone,
-                            countryCode: 91,
-                            whatsappNo: whatsappNo ?? phone,
-                            dob: dob,
-                            address: address,
-                            branchId: ['13'], // todo
-                          );
-
-                          trainerCubit.updateTrainer(
-                            request,
-                            doc2: doc2,
-                            doc1: doc1,
-                          );
-                        }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  WhatsappCheckButton(
+                    selected:
+                        trainer?.whatsappNo == trainerCubit.trainer?.mobileNo,
+                    initialValue: trainer?.whatsappNo,
+                    onChange: (bool value) {
+                      setState(() {
+                        selected = value;
+                      });
+                    },
+                    onNumberChange: (String value) {},
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    controller: dobController,
+                    onTap: datePicker,
+                    disabled: true,
+                    hint: 'dd/mm/yyyy',
+                    title: 'Date of Birth *',
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please enter dob.'
+                          : null;
+                    },
+                    onChange: (value) {},
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    length: 300,
+                    maxLines: 3,
+                    title: 'Address *',
+                    hint: 'Enter Communication Address',
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter address.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChange: (value) {
+                      address = value;
+                    },
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: DocsUpload(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      doc1: (File? value) {
+                        doc1 = value;
                       },
-                      title: 'Save',
+                      doc2: (File? value) {
+                        doc2 = value;
+                      },
                     ),
                   ),
-                )
-              ],
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 62),
+                      child: Button(
+                        onTap: () {
+                          formKey.currentState?.save();
+
+                          if (formKey.currentState!.validate()) {
+                            /// build the [ TrainerRequest ]
+                            TrainerRequest request = TrainerRequest(
+                              name: name,
+                              gender: gender,
+                              email: email,
+                              mobileNo: phone,
+                              countryCode: 91,
+                              whatsappNo: whatsappNo ?? phone,
+                              dob: dob,
+                              address: address,
+                            );
+
+                            trainerCubit.updateTrainer(
+                              request,
+                              doc2: doc2,
+                              doc1: doc1,
+                            );
+                          }
+                        },
+                        title: 'Save',
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
