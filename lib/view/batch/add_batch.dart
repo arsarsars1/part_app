@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/view/batch/add_trainers_dialog.dart';
+import 'package:part_app/view/batch/batch_list.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
 import 'package:part_app/view/components/branch_field.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -57,198 +59,214 @@ class _AddBatchState extends State<AddBatch> {
     var cubit = context.read<BatchCubit>();
     return Scaffold(
       appBar: const CommonBar(title: 'Add New Batch'),
-      body: Form(
-        key: formKey,
-        child: BlocBuilder<BatchCubit, BatchState>(
-          builder: (context, state) {
-            return SafeArea(
-              child: SingleChildScrollView(
-                controller: scrollController,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    BranchField(onSelect: (value) {
-                      branchId = value;
-                      context.read<BranchCubit>().getBranchTrainers(
-                            branchId: '$branchId',
-                          );
-                    }),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CommonField(
-                      title: 'Batch Name *',
-                      hint: 'Enter Batch Name',
-                      onChange: (value) {
-                        batchName = value;
-                      },
-                      validator: (value) {
-                        return value == null || value.toString().isEmpty
-                            ? 'Please enter batch name.'
-                            : null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CommonField(
-                      title: 'Course *',
-                      hint: 'Select Course',
-                      dropDown: true,
-                      dropDownItems: cubit.getCoursesDropDown(),
-                      onChange: (value) {
-                        courseId = value?.id;
-                        cubit.getSubjects(courseId: courseId);
-                      },
-                      validator: (value) {
-                        return value == null ? 'Please select course.' : null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    state is GettingCourses
-                        ? const Offstage()
-                        : CommonField(
-                            title: 'Subject *',
-                            hint: 'Select Subject',
-                            dropDown: true,
-                            defaultItem: null,
-                            dropDownItems: cubit.getSubjectsDropDown(),
-                            onChange: (value) {
-                              subjectId = value?.id;
-                            },
-                            validator: (value) {
-                              return value == null
-                                  ? 'Please select subject.'
-                                  : null;
-                            },
-                          ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CommonField(
-                      inputType: const TextInputType.numberWithOptions(),
-                      title: 'Admission Fees *',
-                      hint: 'Enter Admission Fees',
-                      onChange: (value) {
-                        admissionFee = value;
-                      },
-                      validator: (value) {
-                        if (value == null || value.toString().isEmpty) {
-                          return 'Please enter admission fees.';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CommonField(
-                      inputType: const TextInputType.numberWithOptions(),
-                      length: 50,
-                      title: 'Fees *',
-                      hint: 'Enter Fees',
-                      validator: (value) {
-                        if (value == null || value.toString().isEmpty) {
-                          return 'Please enter fees';
-                        }
-                        return null;
-                      },
-                      onChange: (value) {
-                        fee = value;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const TrainingDays(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CommonField(
-                      title: 'Batch Status *',
-                      hint: 'Select Batch Status',
-                      dropDown: true,
-                      dropDownItems: DefaultValues().batchStatus,
-                      onChange: (value) {
-                        batchStatus = value?.id;
-                      },
-                      validator: (value) {
-                        return value == null
-                            ? 'Please select batch status.'
-                            : null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: AppColors.liteDark,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('Batch Trainers'),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Wrap(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        backgroundColor: AppColors.liteDark,
-                                        content: AddTrainersDialog(
-                                          onSave: (List<int> value) {
-                                            selectedTrainers = value;
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                        contentPadding: EdgeInsets.zero,
-                                      );
-                                    },
-                                  );
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(
-                                    right: 16,
-                                    bottom: 8,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.grey400,
-                                    border: Border.all(
-                                      color: AppColors.grey700,
-                                      width: 2,
-                                    ),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  width: 70,
-                                  height: 70,
-                                  child: const Icon(Icons.add),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
+      body: BlocListener<BatchCubit, BatchState>(
+        listener: (context, state) {
+          if (state is CreatingBatch) {
+            Loader(context).show();
+          } else if (state is CreatedBatch) {
+            Navigator.popUntil(
+              context,
+              ModalRoute.withName(BatchesPage.route),
             );
-          },
+            Alert(context).show(message: 'Batch created successfully.');
+          } else if (state is CreateBatchFailed) {
+            Alert(context).show(message: 'Batch created successfully.');
+            Navigator.pop(context);
+          }
+        },
+        child: Form(
+          key: formKey,
+          child: BlocBuilder<BatchCubit, BatchState>(
+            builder: (context, state) {
+              return SafeArea(
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      BranchField(onSelect: (value) {
+                        branchId = value;
+                        context.read<BranchCubit>().getBranchTrainers(
+                              branchId: '$branchId',
+                            );
+                      }),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CommonField(
+                        title: 'Batch Name *',
+                        hint: 'Enter Batch Name',
+                        onChange: (value) {
+                          batchName = value;
+                        },
+                        validator: (value) {
+                          return value == null || value.toString().isEmpty
+                              ? 'Please enter batch name.'
+                              : null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CommonField(
+                        title: 'Course *',
+                        hint: 'Select Course',
+                        dropDown: true,
+                        dropDownItems: cubit.getCoursesDropDown(),
+                        onChange: (value) {
+                          courseId = value?.id;
+                          cubit.getSubjects(courseId: courseId);
+                        },
+                        validator: (value) {
+                          return value == null ? 'Please select course.' : null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      state is GettingCourses
+                          ? const Offstage()
+                          : CommonField(
+                              title: 'Subject *',
+                              hint: 'Select Subject',
+                              dropDown: true,
+                              defaultItem: null,
+                              dropDownItems: cubit.getSubjectsDropDown(),
+                              onChange: (value) {
+                                subjectId = value?.id;
+                              },
+                              validator: (value) {
+                                return value == null
+                                    ? 'Please select subject.'
+                                    : null;
+                              },
+                            ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CommonField(
+                        inputType: const TextInputType.numberWithOptions(),
+                        title: 'Admission Fees *',
+                        hint: 'Enter Admission Fees',
+                        onChange: (value) {
+                          admissionFee = value;
+                        },
+                        validator: (value) {
+                          if (value == null || value.toString().isEmpty) {
+                            return 'Please enter admission fees.';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CommonField(
+                        inputType: const TextInputType.numberWithOptions(),
+                        length: 50,
+                        title: 'Fees *',
+                        hint: 'Enter Fees',
+                        validator: (value) {
+                          if (value == null || value.toString().isEmpty) {
+                            return 'Please enter fees';
+                          }
+                          return null;
+                        },
+                        onChange: (value) {
+                          fee = value;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const TrainingDays(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CommonField(
+                        title: 'Batch Status *',
+                        hint: 'Select Batch Status',
+                        dropDown: true,
+                        dropDownItems: DefaultValues().batchStatus,
+                        onChange: (value) {
+                          batchStatus = value?.id;
+                        },
+                        validator: (value) {
+                          return value == null
+                              ? 'Please select batch status.'
+                              : null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: AppColors.liteDark,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Batch Trainers'),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Wrap(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          backgroundColor: AppColors.liteDark,
+                                          content: AddTrainersDialog(
+                                            onSave: (List<int> value) {
+                                              selectedTrainers = value;
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                          contentPadding: EdgeInsets.zero,
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                      right: 16,
+                                      bottom: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.grey400,
+                                      border: Border.all(
+                                        color: AppColors.grey700,
+                                        width: 2,
+                                      ),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    width: 70,
+                                    height: 70,
+                                    child: const Icon(Icons.add),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
       bottomNavigationBar: SafeArea(

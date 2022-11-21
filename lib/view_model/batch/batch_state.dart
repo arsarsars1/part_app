@@ -10,3 +10,15 @@ class DaysUpdated extends BatchState {}
 class GettingCourses extends BatchState {}
 
 class CoursesUpdated extends BatchState {}
+
+class BatchesFetched extends BatchState {}
+
+class CreatingBatch extends BatchState {}
+
+class CreatedBatch extends BatchState {}
+
+class CreateBatchFailed extends BatchState {
+  final String message;
+
+  CreateBatchFailed(this.message);
+}

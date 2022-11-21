@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/batch/add_batch.dart';
+import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/branch_field.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/tab_button.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class BatchesPage extends StatefulWidget {
@@ -19,12 +19,20 @@ class BatchesPage extends StatefulWidget {
 
 class _BatchesPageState extends State<BatchesPage> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<BatchCubit>().getBatches();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
 
     return Scaffold(
       appBar: const CommonBar(title: 'Batches'),
-      body: Column(
+      body: ListView(
         children: [
           Align(
             alignment: Alignment.centerRight,
@@ -70,75 +78,21 @@ class _BatchesPageState extends State<BatchesPage> {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.liteDark,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Batch 1',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    Text(
-                      'Active Students: 10',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            color: AppColors.primaryColor,
-                          ),
-                    ),
-                  ],
-                ),
-                Text(
-                  'Active Students: 10',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        color: AppColors.primaryColor,
-                      ),
-                ),
-                Text(
-                  'Course Subject',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                Text(
-                  'Trainer - Leo, Yami',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        color: AppColors.primaryColor,
-                      ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Text(
-                  'Mon',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                Text(
-                  'Tue',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                Text(
-                  'Mon',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ],
-            ),
-          )
+          BlocBuilder<BatchCubit, BatchState>(
+            buildWhen: (prv, crr) => crr is BatchesFetched,
+            builder: (context, state) {
+              return ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: cubit.batches.length,
+                itemBuilder: (context, index) {
+                  return BatchItem(
+                    batch: cubit.batches[index],
+                  );
+                },
+              );
+            },
+          ),
         ],
       ),
     );

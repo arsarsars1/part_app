@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
+import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
@@ -20,6 +22,7 @@ class BatchCubit extends Cubit<BatchState> {
   List<Course>? _subjects;
 
   final List<String> _selectedTrainers = [];
+  List<BatchModel> _batches = [];
 
   List<Days> get days => _days;
 
@@ -28,6 +31,8 @@ class BatchCubit extends Cubit<BatchState> {
   List<Course>? get subjects => _subjects;
 
   List<String> get selectedTrainers => _selectedTrainers;
+
+  List<BatchModel> get batches => _batches;
 
   void addDay(Days day) {
     _days.removeWhere((element) => element.day == day.day);
@@ -66,11 +71,27 @@ class BatchCubit extends Cubit<BatchState> {
   }
 
   Future createBatch(BatchRequest request) async {
+    emit(CreatingBatch());
     try {
       Common? response = await _batchService.createBatch(request);
-      print(response?.toJson());
+      if (response?.status == 1) {
+        await getBatches();
+        emit(CreatedBatch());
+      } else {
+        emit(CreateBatchFailed(response?.message ?? 'Failed to create batch.'));
+      }
     } catch (e) {
-      print(e);
+      emit(CreateBatchFailed('Failed to create batch.'));
+    }
+  }
+
+  Future getBatches() async {
+    BatchResponse? response = await _batchService.getBatches();
+    if (response?.status == 1) {
+      _batches =
+          response?.batches?.map((e) => BatchModel.fromEntity(e)).toList() ??
+              [];
+      emit(BatchesFetched());
     }
   }
 }

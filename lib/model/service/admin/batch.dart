@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
+import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
 import 'package:part_app/model/data_model/user_response.dart';
@@ -36,18 +37,24 @@ class BatchService {
 
   Future<Common?> createBatch(BatchRequest request) async {
     try {
-      var data = request.toJson();
-      // data.putIfAbsent('days[]',
-      //     () => ['{"day":1,"start_time":"10:00:00","end_time":"11:00:00"}"']);
-
-      print(jsonEncode(data));
-
       var response = await _apiClient.post(
         postPath: '/admin/batches',
-        data: data,
+        data: request.toJson(),
         formData: true,
       );
       return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<BatchResponse?> getBatches() async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/batches/',
+      );
+
+      return batchResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

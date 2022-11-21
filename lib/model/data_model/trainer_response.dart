@@ -52,7 +52,6 @@ abstract class Trainer with _$Trainer {
     String? profilePic,
     String? profilePicType,
     int? isActive,
-    Pivot? pivot,
     User? user,
     Academy? academy,
     Trainer? trainer,
@@ -65,18 +64,18 @@ abstract class Trainer with _$Trainer {
       _$TrainerFromJson(json);
 }
 
-@freezed
-abstract class Pivot with _$Pivot {
-  @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory Pivot({
-    required int branchId,
-    int? trainerDetailId,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) = _Pivot;
-
-  factory Pivot.fromJson(Map<String, dynamic> json) => _$PivotFromJson(json);
-}
+// @freezed
+// abstract class Pivot with _$Pivot {
+//   @JsonSerializable(fieldRename: FieldRename.snake)
+//   const factory Pivot({
+//     required int branchId,
+//     int? trainerDetailId,
+//     DateTime? createdAt,
+//     DateTime? updatedAt,
+//   }) = _Pivot;
+//
+//   factory Pivot.fromJson(Map<String, dynamic> json) => _$PivotFromJson(json);
+// }
 
 @freezed
 abstract class Document with _$Document {
