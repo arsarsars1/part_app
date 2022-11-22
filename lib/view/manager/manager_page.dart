@@ -52,27 +52,29 @@ class _ManagerPageState extends State<ManagerPage> {
           SizedBox(
             height: 24.h,
           ),
-          BlocBuilder<ManagerCubit, ManagerState>(
-            builder: (context, state) {
-              var cubit = context.read<ManagerCubit>();
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: cubit.managers?.length ?? 0,
-                itemBuilder: (context, index) {
-                  Manager manager = cubit.managers![index];
-                  return ManagerCard(
-                    onSelect: () {
-                      Navigator.pushNamed(
-                        context,
-                        ManagerDetails.route,
-                        arguments: manager.managerDetail?[0].id,
-                      );
-                    },
-                    manager: manager,
-                  );
-                },
-              );
-            },
+          Expanded(
+            child: BlocBuilder<ManagerCubit, ManagerState>(
+              builder: (context, state) {
+                var cubit = context.read<ManagerCubit>();
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: cubit.managers?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    Manager manager = cubit.managers![index];
+                    return ManagerCard(
+                      onSelect: () {
+                        Navigator.pushNamed(
+                          context,
+                          ManagerDetails.route,
+                          arguments: manager.managerDetail?[0].id,
+                        );
+                      },
+                      manager: manager,
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ],
       ),

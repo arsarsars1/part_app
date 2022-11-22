@@ -29,6 +29,7 @@ import 'package:part_app/view/trainer/add_trainer_branches.dart';
 import 'package:part_app/view/trainer/edit_salary_trainer.dart';
 import 'package:part_app/view/trainer/edit_trainer.dart';
 import 'package:part_app/view/trainer/salary_details.dart';
+import 'package:part_app/view/trainer/trainer_branches.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
@@ -208,6 +209,11 @@ class RouteGenerator {
       case AddBatch.route:
         return MaterialPageRoute(
           builder: (_) => const AddBatch(),
+          settings: settings,
+        );
+      case TrainerBranches.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerBranches(),
           settings: settings,
         );
       case ManagerDetails.route:

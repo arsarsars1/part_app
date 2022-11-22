@@ -4,7 +4,9 @@ import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/view/components/checkbox.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/manager/manager_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class ManagerBranches extends StatefulWidget {
@@ -17,6 +19,8 @@ class ManagerBranches extends StatefulWidget {
 }
 
 class _ManagerBranchesState extends State<ManagerBranches> {
+  List<String> selected = [];
+
   @override
   void initState() {
     super.initState();
@@ -31,45 +35,61 @@ class _ManagerBranchesState extends State<ManagerBranches> {
     var managerCubit = context.read<ManagerCubit>();
     return Scaffold(
       appBar: const CommonBar(title: 'Allocate Branches'),
-      body: Column(
-        children: [
-          Text(
-            managerCubit.manager?.name ?? 'N/A',
-          ),
-          BlocBuilder<BranchCubit, BranchState>(
-            builder: (context, state) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: AppColors.liteDark,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                margin: const EdgeInsets.all(16),
-                padding: const EdgeInsets.all(16),
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount: cubit.branches.length,
-                  itemBuilder: (context, index) {
-                    Branch branch = cubit.branches[index];
+      body: BlocListener<ManagerCubit, ManagerState>(
+        listener: (context, state) {
+          if (state is UpdatingManager) {
+            Loader(context).show();
+          } else if (state is UpdatedManager) {
+            Navigator.popUntil(
+              context,
+              ModalRoute.withName(ManagerDetails.route),
+            );
+            Alert(context).show(message: 'Updated manager branches.');
+          } else if (state is UpdatingManagerFailed) {
+            Navigator.pop(context);
+            Alert(context).show(message: state.message);
+          }
+        },
+        child: Column(
+          children: [
+            Text(
+              managerCubit.manager?.managerDetail?[0].name ?? 'N/A',
+            ),
+            BlocBuilder<BranchCubit, BranchState>(
+              builder: (context, state) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.liteDark,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  margin: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount: cubit.branches.length,
+                    itemBuilder: (context, index) {
+                      Branch branch = cubit.branches[index];
 
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: TextCheckBox(
-                        onChange: (value) {
-                          managerCubit.updateBranchSelection(branch.id);
-                        },
-                        title: branch.branchName ?? 'N/A',
-                        selected: managerCubit.selectedBranches.contains(
-                          branch.id,
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: TextCheckBox(
+                          onChange: (value) {
+                            managerCubit.updateBranchSelection(branch.id);
+                          },
+                          title: branch.branchName ?? 'N/A',
+                          selected: managerCubit.selectedBranches.contains(
+                            branch.id,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
-          ),
-        ],
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: SizedBox(
         height: 132.h,
@@ -80,7 +100,11 @@ class _ManagerBranchesState extends State<ManagerBranches> {
               onTap: () {
                 managerCubit.updateManager(
                   request: {
-                    'branch_id[]': managerCubit.selectedBranches.toList(),
+                    'branch_id[]': managerCubit.selectedBranches
+                        .map(
+                          (e) => '$e',
+                        )
+                        .toList(),
                   },
                 );
               },

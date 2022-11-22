@@ -1,18 +1,18 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/manager_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/constants/regex.dart';
+import 'package:part_app/view/manager/manager_details.dart';
 import 'package:part_app/view/trainer/components/docs_upload.dart';
-import 'package:part_app/view/trainer/salary_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class EditManager extends StatefulWidget {
@@ -52,200 +52,220 @@ class _EditManagerState extends State<EditManager> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var managerCubit = context.read<ManagerCubit>();
-      dobController.text = managerCubit.manager?.dob?.toDateString() ?? '';
+      dobController.text =
+          managerCubit.manager?.managerDetail?[0].dob?.toDateString() ?? '';
     });
   }
 
   @override
   Widget build(BuildContext context) {
     var managerCubit = context.read<ManagerCubit>();
+    var manager = managerCubit.manager?.managerDetail?[0];
     return Scaffold(
       appBar: const CommonBar(title: 'Edit Branch Manager Details'),
-      body: Form(
-        key: formKey,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  title: 'Branch Manager Name *',
-                  hint: 'Enter Manager Name',
-                  initialValue: managerCubit.manager?.name,
-                  onChange: (value) {
-                    name = value;
-                  },
-                  validator: (value) {
-                    return value == null || value.toString().isEmpty
-                        ? 'Please enter branch manager name.'
-                        : null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  title: 'Gender *',
-                  hint: 'Select Gender',
-                  dropDown: true,
-                  dropDownItems: DefaultValues().genders,
-                  onChange: (value) {
-                    gender = value?.title;
-                  },
-                  validator: (value) {
-                    return value == null ? 'Please select gender.' : null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  inputType: TextInputType.emailAddress,
-                  length: 50,
-                  initialValue: managerCubit.manager?.email,
-                  title: 'Email *',
-                  hint: 'Eg: contact@polestar.com',
-                  validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter email.';
-                    } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                      return 'Invalid email address.';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChange: (value) {
-                    email = value;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  length: 10,
-                  phoneField: true,
-                  inputType: TextInputType.phone,
-                  title: 'Mobile Number*',
-                  hint: 'Eg: 9876543210',
-                  onChange: (value) {
-                    phone = value;
-                  },
-                  validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter number.';
-                    } else if (value.toString().length < 10) {
-                      return 'Invalid phone number.';
-                    }
-
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                WhatsappCheckButton(
-                  initialValue: managerCubit.manager?.whatsappNo,
-                  onChange: (bool value) {
-                    setState(() {
-                      selected = value;
-                    });
-                  },
-                  onNumberChange: (String value) {},
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  controller: dobController,
-                  onTap: datePicker,
-                  disabled: true,
-                  hint: 'dd/mm/yyyy',
-                  title: 'Date of Birth *',
-                  validator: (value) {
-                    return value == null || value.toString().isEmpty
-                        ? 'Please enter dob.'
-                        : null;
-                  },
-                  onChange: (value) {},
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonField(
-                  length: 300,
-                  maxLines: 3,
-                  title: 'Address *',
-                  hint: 'Enter Communication Address',
-                  validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter address.';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChange: (value) {
-                    address = value;
-                  },
-                ),
-                SizedBox(
-                  height: 16.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: DocsUpload(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    doc1: (File? value) {
-                      doc1 = value;
+      body: BlocListener<ManagerCubit, ManagerState>(
+        listener: (context, state) {
+          if (state is UpdatingManager) {
+            Loader(context).show();
+          } else if (state is UpdatedManager) {
+            Navigator.popUntil(
+              context,
+              ModalRoute.withName(ManagerDetails.route),
+            );
+            Alert(context).show(message: 'Updated Manager.');
+          } else if (state is UpdatingManagerFailed) {
+            Navigator.pop(context);
+            Alert(context).show(message: state.message);
+          }
+        },
+        child: Form(
+          key: formKey,
+          child: SafeArea(
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Branch Manager Name *',
+                    hint: 'Enter Manager Name',
+                    initialValue: manager?.name,
+                    onChange: (value) {
+                      name = value;
                     },
-                    doc2: (File? value) {
-                      doc2 = value;
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please enter branch manager name.'
+                          : null;
                     },
                   ),
-                ),
-                SizedBox(
-                  height: 40.h,
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 62),
-                    child: Button(
-                      onTap: () {
-                        formKey.currentState?.save();
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Gender *',
+                    hint: 'Select Gender',
+                    dropDown: true,
+                    dropDownItems: DefaultValues().genders,
+                    defaultItem: DefaultValues().genders.firstWhere(
+                          (element) =>
+                              element.title?.toLowerCase() ==
+                              manager?.gender?.toLowerCase(),
+                        ),
+                    onChange: (value) {
+                      gender = value?.title;
+                    },
+                    validator: (value) {
+                      return value == null ? 'Please select gender.' : null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    inputType: TextInputType.emailAddress,
+                    length: 50,
+                    initialValue: manager?.email,
+                    title: 'Email *',
+                    hint: 'Eg: contact@polestar.com',
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter email.';
+                      } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                        return 'Invalid email address.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChange: (value) {
+                      email = value;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    length: 10,
+                    initialValue: managerCubit.manager?.mobileNo,
+                    phoneField: true,
+                    inputType: TextInputType.phone,
+                    title: 'Mobile Number*',
+                    hint: 'Eg: 9876543210',
+                    onChange: (value) {
+                      phone = value;
+                    },
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter number.';
+                      } else if (value.toString().length < 10) {
+                        return 'Invalid phone number.';
+                      }
 
-                        if (formKey.currentState!.validate()) {
-                          /// build the [ ManagerRequest ]
-                          ManagerRequest request =
-                              managerCubit.managerRequest.copyWith(
-                            name: name,
-                            branchId: branchId,
-                            gender: gender,
-                            email: email,
-                            mobileNo: phone,
-                            countryCode: 91,
-                            whatsappNo: whatsappNo ?? phone,
-                            dob: dob,
-                            address: address,
-                          );
-
-                          /// update the [managerCubit] with updated request
-                          managerCubit.updateRequest(request);
-                          // open the salary details page
-                          Navigator.pushNamed(
-                            context,
-                            SalaryDetails.route,
-                            arguments: false, // manager
-                          );
-                        }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  WhatsappCheckButton(
+                    initialValue: manager?.whatsappNo,
+                    onChange: (bool value) {
+                      setState(() {
+                        selected = value;
+                      });
+                    },
+                    onNumberChange: (String value) {},
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    controller: dobController,
+                    onTap: datePicker,
+                    disabled: true,
+                    hint: 'dd/mm/yyyy',
+                    title: 'Date of Birth *',
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please enter dob.'
+                          : null;
+                    },
+                    onChange: (value) {},
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    length: 300,
+                    maxLines: 3,
+                    initialValue: manager?.address,
+                    title: 'Address *',
+                    hint: 'Enter Communication Address',
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter address.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChange: (value) {
+                      address = value;
+                    },
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: DocsUpload(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      doc1: (File? value) {
+                        doc1 = value;
                       },
-                      title: 'Continue',
+                      doc2: (File? value) {
+                        doc2 = value;
+                      },
                     ),
                   ),
-                )
-              ],
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 62),
+                      child: Button(
+                        onTap: () {
+                          formKey.currentState?.save();
+
+                          if (formKey.currentState!.validate()) {
+                            /// build the [ ManagerRequest ]
+                            ManagerRequest request =
+                                managerCubit.managerRequest.copyWith(
+                              name: name,
+                              branchId: branchId,
+                              gender: gender,
+                              email: email,
+                              mobileNo: phone,
+                              countryCode: 91,
+                              whatsappNo: whatsappNo ?? phone,
+                              dob: dob,
+                              address: address,
+                            );
+
+                            // open the salary details page
+                            managerCubit.updateManager(
+                                request: request.toJson());
+                          }
+                        },
+                        title: 'Continue',
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

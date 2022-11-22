@@ -8,7 +8,7 @@ import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/constant.dart';
-import 'package:part_app/view/manager/manager_page.dart';
+import 'package:part_app/view/manager/manager_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class EditSalaryManager extends StatefulWidget {
@@ -32,15 +32,13 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
   @override
   void initState() {
     super.initState();
-    // scrollController.addListener(() {
-    //   // FocusManager.instance.primaryFocus?.unfocus();
-    // });
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var managerCubit = context.read<ManagerCubit>();
       Manager? manager = managerCubit.manager?.managerDetail?[0];
       joiningDateController.text = manager?.doj?.toDateString() ?? '';
 
-      amount = manager?.salaryAmount;
+      amount = manager?.salaryAmount?.toString();
       payDay = '${manager?.salaryDate}';
       joiningDate = manager?.doj?.toServerString();
     });
@@ -56,15 +54,15 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
         key: formKey,
         child: BlocListener<ManagerCubit, ManagerState>(
           listener: (context, state) {
-            if (state is ManagerCreated) {
+            if (state is UpdatingManager) {
+              Loader(context).show();
+            } else if (state is UpdatedManager) {
               Navigator.popUntil(
                 context,
-                ModalRoute.withName(ManagerPage.route),
+                ModalRoute.withName(ManagerDetails.route),
               );
-              Alert(context).show(message: 'Salary details updated');
-            } else if (state is CreatingManager) {
-              Loader(context).show();
-            } else if (state is ManagerCreationFailed) {
+              Alert(context).show(message: 'Updated Manager.');
+            } else if (state is UpdatingManagerFailed) {
               Navigator.pop(context);
               Alert(context).show(message: state.message);
             }
@@ -96,7 +94,7 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
                   height: 20,
                 ),
                 CommonField(
-                  initialValue: manager?.salaryAmount,
+                  initialValue: '${manager?.salaryAmount}',
                   title: 'Salary Amount',
                   hint: 'Enter Salary',
                   inputType:

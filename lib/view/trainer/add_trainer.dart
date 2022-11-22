@@ -133,6 +133,9 @@ class _AddTrainerState extends State<AddTrainer> {
                   hint: 'Eg: 9876543210',
                   onChange: (value) {
                     phone = value;
+                    if (value.length >= 10) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    }
                   },
                   validator: (value) {
                     if (value == null || value.toString().isEmpty) {
@@ -185,11 +188,11 @@ class _AddTrainerState extends State<AddTrainer> {
                   title: 'Area Of Expertise',
                   hint: 'Eg: Hip Hop Dance',
                   validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter expertise';
-                    } else {
-                      return null;
-                    }
+                    // if (value == null || value.toString().isEmpty) {
+                    //   return 'Please enter expertise';
+                    // } else {
+                    //   return null;
+                    // }
                   },
                   onChange: (value) {
                     areaOfExpertise = value;

@@ -162,6 +162,9 @@ class _AddManagerState extends State<AddManager> {
                   hint: 'Eg: 9876543210',
                   onChange: (value) {
                     phone = value;
+                    if (value.length >= 10) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    }
                   },
                   validator: (value) {
                     if (value == null || value.toString().isEmpty) {

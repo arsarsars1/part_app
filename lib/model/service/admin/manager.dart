@@ -9,10 +9,12 @@ class ManagerService {
   final _client = ApiClient();
 
   Future<Common?> createManager({required ManagerRequest request}) async {
+    var req = request.toJson();
+    req.removeWhere((key, value) => value == null);
     try {
       var map = await _client.post(
         postPath: '/admin/managers',
-        data: request.toJson(),
+        data: req,
       );
       return commonFromJson(jsonEncode(map));
     } catch (e) {
@@ -25,7 +27,6 @@ class ManagerService {
       var map = await _client.get(
         queryPath: '/admin/managers',
       );
-      print(jsonEncode(map));
 
       return managerResponseFromJson(jsonEncode(map));
     } on Exception catch (e) {
@@ -64,8 +65,11 @@ class ManagerService {
       var response = await _client.post(
         postPath: '/admin/managers/$branchId',
         data: data,
+        formData: true,
       );
+      return commonFromJson(jsonEncode(response));
     } catch (e) {
+      return null;
       print(e);
     }
   }

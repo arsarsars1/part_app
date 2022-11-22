@@ -79,7 +79,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                   height: 8,
                 ),
                 Text(
-                  '${manager?.name}',
+                  '${managerDetails?.name}',
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
@@ -96,18 +96,18 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                     fit: BoxFit.contain,
                     child: CupertinoSwitch(
                       trackColor: AppColors.grey500,
-                      value: manager?.isActive == 1,
+                      value: managerDetails?.isActive == 1,
                       onChanged: (value) {
                         active = value;
                         CommonDialog(
                           context: context,
                           message:
                               'Do You Want To ${manager?.isActive == 1 ? 'Deactivate' : 'Activate'} The Branch Manager?',
-                          subMessage: '${manager?.name}',
+                          subMessage: '${managerDetails?.name}',
                           onTap: () {
                             Navigator.pop(context);
                             cubit.activateManager(
-                              id: manager!.id,
+                              id: managerDetails!.id,
                               status: active ? 1 : 0,
                             );
                           },
@@ -201,7 +201,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                     children: [
                       const Spacer(),
                       Text(
-                        'Salary Details',
+                        'Salary History',
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                               fontSize: 12,
                             ),
@@ -378,7 +378,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                         title: 'Amount',
                         titleColor: Colors.white,
                         subText:
-                            'Rs. ${managerDetails?.salaryAmount?.currencyFormat()}/-',
+                            'Rs. ${managerDetails?.salaryAmount?.toString().currencyFormat()}/-',
                       ),
                       const SizedBox(
                         height: 8,

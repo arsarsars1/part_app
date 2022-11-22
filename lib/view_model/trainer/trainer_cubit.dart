@@ -38,6 +38,8 @@ class TrainerCubit extends Cubit<TrainerState> {
 
   File? image, doc1, doc2;
 
+  List<String> selectedBranches = [];
+
   set trainer(Trainer? temp) {
     _trainer = temp;
     emit(TrainerDetailsLoaded());

@@ -15,6 +15,7 @@ import 'package:part_app/view/components/titled_text.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/trainer/edit_salary_trainer.dart';
 import 'package:part_app/view/trainer/edit_trainer.dart';
+import 'package:part_app/view/trainer/trainer_branches.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerDetails extends StatefulWidget {
@@ -148,10 +149,10 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              // Navigator.pushNamed(
-                              //   context,
-                              //   ManagerBranches.route,
-                              // );
+                              Navigator.pushNamed(
+                                context,
+                                TrainerBranches.route,
+                              );
                             },
                             child: Container(
                               width: 24.w,
@@ -286,9 +287,9 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                         title: 'Email Id',
                         subText: '${trainer?.email}',
                       ),
-                      const TitledText(
+                      TitledText(
                         title: 'Address',
-                        subText: 'N/A',
+                        subText: '${trainer?.address}',
                       ),
                       const SizedBox(
                         height: 24,

@@ -36,3 +36,13 @@ class FetchingManagerFailed extends ManagerState {
 }
 
 class BranchSelectionUpdated extends ManagerState {}
+
+class UpdatingManager extends ManagerState {}
+
+class UpdatedManager extends ManagerState {}
+
+class UpdatingManagerFailed extends ManagerState {
+  final String message;
+
+  UpdatingManagerFailed(this.message);
+}

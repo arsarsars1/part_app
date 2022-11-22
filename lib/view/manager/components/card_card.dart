@@ -38,7 +38,7 @@ class ManagerCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${manager.name}',
+                        '${manager.managerDetail?[0].name}',
                         maxLines: 1,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                               fontSize: 16,
@@ -48,13 +48,24 @@ class ManagerCard extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                      Text(
-                        manager.branches?[0].branchName ?? 'N/A',
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: AppColors.primaryColor,
-                            ),
-                        overflow: TextOverflow.ellipsis,
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount:
+                            manager.managerDetail?[0].branches?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return Text(
+                            manager.managerDetail?[0].branches?[index]
+                                    .branchName ??
+                                'N/A',
+                            maxLines: 1,
+                            style:
+                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      color: AppColors.primaryColor,
+                                    ),
+                            overflow: TextOverflow.ellipsis,
+                          );
+                        },
                       ),
                     ],
                   ),

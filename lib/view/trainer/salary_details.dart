@@ -44,7 +44,10 @@ class _SalaryDetailsState extends State<SalaryDetails> {
     var trainerCubit = context.read<TrainerCubit>();
     var managerCubit = context.read<ManagerCubit>();
     return Scaffold(
-      appBar: const CommonBar(title: 'Add Trainer Salary Details'),
+      appBar: CommonBar(
+          title: widget.trainer
+              ? 'Add Trainer Salary Details'
+              : 'Add Branch Manager Salary Details'),
       body: BlocListener<ManagerCubit, ManagerState>(
         listener: (context, state) {
           if (state is ManagerCreated) {
@@ -86,16 +89,16 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                 height: 20,
               ),
               CommonField(
-                title: 'Salary Amount',
+                title: 'Salary Amount *',
                 hint: 'Enter Salary',
                 inputType: const TextInputType.numberWithOptions(decimal: true),
                 onChange: (value) {
                   amount = value;
                 },
                 validator: (value) {
-                  // return value == null || value.toString().isEmpty
-                  //     ? 'Please enter trainer name.'
-                  //     : null;
+                  return value == null || value.toString().isEmpty
+                      ? 'Please enter salary amount.'
+                      : null;
                 },
               ),
               const SizedBox(
@@ -106,11 +109,11 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                 onTap: datePicker,
                 disabled: true,
                 hint: 'dd/mm/yyyy',
-                title: 'Joining Date',
+                title: 'Joining Date *',
                 validator: (value) {
-                  // return value == null || value.toString().isEmpty
-                  //     ? 'Please enter dob.'
-                  //     : null;
+                  return value == null || value.toString().isEmpty
+                      ? 'Please enter joining date.'
+                      : null;
                 },
                 onChange: (value) {},
               ),
@@ -118,7 +121,7 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                 height: 20,
               ),
               CommonField(
-                title: 'Pay Day',
+                title: 'Pay Day *',
                 hint: 'Eg: 30',
                 inputType:
                     const TextInputType.numberWithOptions(decimal: false),
@@ -131,9 +134,9 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                   }
                 },
                 validator: (value) {
-                  // return value == null || value.toString().isEmpty
-                  //     ? 'Please enter trainer name.'
-                  //     : null;
+                  return value == null || value.toString().isEmpty
+                      ? 'Please enter pay day.'
+                      : null;
                 },
               ),
             ],

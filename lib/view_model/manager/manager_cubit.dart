@@ -27,6 +27,10 @@ class ManagerCubit extends Cubit<ManagerState> {
 
   Set<int> get selectedBranches => _selectedBranches;
 
+  set selectedBranches(Set<int> items) {
+    _selectedBranches = items;
+  }
+
   void updateRequest(ManagerRequest request) {
     _managerRequest = request;
   }
@@ -71,7 +75,8 @@ class ManagerCubit extends Cubit<ManagerState> {
       _manager = response?.manager;
 
       // creates a set of branches the managers are assigned
-      _selectedBranches = _manager?.branches?.map((e) => e.id).toSet() ?? {};
+      _selectedBranches =
+          _manager?.managerDetail?[0].branches?.map((e) => e.id).toSet() ?? {};
 
       // emits to update the UI
       emit(ManagerFetched());
@@ -106,10 +111,26 @@ class ManagerCubit extends Cubit<ManagerState> {
   }
 
   Future updateManager({required Map<String, dynamic> request}) async {
-    print(request);
-    await _managerService.updateManager(
-      data: request,
-      branchId: '${manager?.managerDetail?[0].id}',
-    );
+    emit(UpdatingManager());
+    request.removeWhere((key, value) => value == null);
+    try {
+      String id = '${manager?.managerDetail?[0].id}';
+      Common? response = await _managerService.updateManager(
+        data: request,
+        branchId: id,
+      );
+      if (response?.status == 1) {
+        await getManagerById(id: int.parse(id));
+        await getManagers();
+        emit(UpdatedManager());
+      } else {
+        emit(
+          UpdatingManagerFailed(
+              response?.message ?? 'Failed to update manager.'),
+        );
+      }
+    } catch (e) {
+      emit(UpdatingManagerFailed(e.toString()));
+    }
   }
 }

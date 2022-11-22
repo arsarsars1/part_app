@@ -5,12 +5,14 @@ import 'package:part_app/view/constants/constant.dart';
 class TextCheckBox extends StatefulWidget {
   final ValueChanged<bool> onChange;
   final String title;
+  final String? subTitle;
   final bool selected;
 
   const TextCheckBox(
       {Key? key,
       required this.onChange,
       required this.title,
+      this.subTitle,
       required this.selected})
       : super(key: key);
 
@@ -36,11 +38,30 @@ class _TextCheckBoxState extends State<TextCheckBox> {
           flex: 5,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              widget.title,
-              maxLines: 2,
-              style: Theme.of(context).textTheme.bodyText1,
-              overflow: TextOverflow.ellipsis,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.title,
+                  maxLines: 2,
+                  style: Theme.of(context).textTheme.bodyText1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (widget.subTitle != null)
+                  const SizedBox(
+                    height: 8,
+                  ),
+                if (widget.subTitle != null)
+                  Text(
+                    widget.subTitle ?? '',
+                    maxLines: 2,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: AppColors.primaryColor,
+                          fontSize: 12,
+                        ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+              ],
             ),
           ),
         ),

@@ -36,6 +36,7 @@ class BatchService {
   }
 
   Future<Common?> createBatch(BatchRequest request) async {
+    print(request.toJson());
     try {
       var response = await _apiClient.post(
         postPath: '/admin/batches',

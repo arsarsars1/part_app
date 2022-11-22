@@ -42,7 +42,7 @@ abstract class Manager with _$Manager {
     String? email,
     String? salaryType,
     int? salaryDate,
-    String? salaryAmount,
+    int? salaryAmount,
     String? profilePic,
     String? profilePicType,
     String? address,
