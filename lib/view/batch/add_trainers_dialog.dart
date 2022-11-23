@@ -5,7 +5,7 @@ import 'package:part_app/view/components/checkbox.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AddTrainersDialog extends StatefulWidget {
-  final ValueChanged<List<int>> onSave;
+  final ValueChanged<List<Trainer>> onSave;
 
   const AddTrainersDialog({Key? key, required this.onSave}) : super(key: key);
 
@@ -14,7 +14,13 @@ class AddTrainersDialog extends StatefulWidget {
 }
 
 class _AddTrainersDialogState extends State<AddTrainersDialog> {
-  List<int> selectedTrainers = [];
+  List<Trainer> selectedTrainers = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,16 +61,14 @@ class _AddTrainersDialogState extends State<AddTrainersDialog> {
                           onChange: (value) {
                             setState(() {
                               if (value) {
-                                selectedTrainers.add(trainer.id);
+                                selectedTrainers.add(trainer!);
                               } else {
-                                selectedTrainers.remove(trainer.id);
+                                selectedTrainers.remove(trainer);
                               }
                             });
                           },
-                          title: '${trainer?.user?.name}',
-                          selected: selectedTrainers.contains(
-                            trainer!.id,
-                          ),
+                          title: '${trainer?.name}',
+                          selected: selectedTrainers.contains(trainer),
                         ),
                       );
                     },

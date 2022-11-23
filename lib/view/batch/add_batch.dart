@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
-import 'package:part_app/view/batch/add_trainers_dialog.dart';
 import 'package:part_app/view/batch/batch_list.dart';
+import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
 import 'package:part_app/view/components/branch_field.dart';
 import 'package:part_app/view/components/common_bar.dart';
@@ -218,46 +218,11 @@ class _AddBatchState extends State<AddBatch> {
                             const SizedBox(
                               height: 16,
                             ),
-                            Wrap(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          backgroundColor: AppColors.liteDark,
-                                          content: AddTrainersDialog(
-                                            onSave: (List<int> value) {
-                                              selectedTrainers = value;
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          contentPadding: EdgeInsets.zero,
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    margin: const EdgeInsets.only(
-                                      right: 16,
-                                      bottom: 8,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.grey400,
-                                      border: Border.all(
-                                        color: AppColors.grey700,
-                                        width: 2,
-                                      ),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    width: 70,
-                                    height: 70,
-                                    child: const Icon(Icons.add),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            SelectedTrainers(
+                              selectedTrainers: (List<int> value) {
+                                selectedTrainers = value;
+                              },
+                            )
                           ],
                         ),
                       )
@@ -284,12 +249,6 @@ class _AddBatchState extends State<AddBatch> {
                       );
                       return;
                     } else {
-                      // List<String> days =
-                      //     cubit.days.map((e) => e.toString()).toList();
-                      //
-                      //
-                      //
-                      // print(day);
                       BatchRequest request = BatchRequest(
                         branchId: branchId,
                         days: cubit.buildDaysList(),

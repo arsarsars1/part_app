@@ -11,6 +11,8 @@ class ApiClient {
   final _token = 'h5uA9WokuxSNDJGYK0UevodqEWJjYzlB';
   final _dio = Dio();
 
+  String get token => _token;
+
   Future get({required String queryPath, String? baseUrl}) async {
     var path = _baseUrl + queryPath;
 

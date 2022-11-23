@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/extensions.dart';
@@ -93,7 +93,7 @@ class _EditTrainerState extends State<EditTrainer> {
                   CommonField(
                     title: 'Trainer Name *',
                     hint: 'Trainer Name',
-                    initialValue: trainerCubit.trainer?.name,
+                    initialValue: trainer?.name,
                     onChange: (value) {
                       name = value;
                     },
@@ -202,6 +202,7 @@ class _EditTrainerState extends State<EditTrainer> {
                     height: 20,
                   ),
                   CommonField(
+                    initialValue: trainer?.address,
                     length: 300,
                     maxLines: 3,
                     title: 'Address *',
@@ -225,6 +226,10 @@ class _EditTrainerState extends State<EditTrainer> {
                     child: DocsUpload(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      document1:
+                          '${F.baseUrl}/admin/documents/trainer/${trainer?.id}/${trainer?.document1}',
+                      document2:
+                          '${F.baseUrl}/admin/documents/trainer/${trainer?.id}/${trainer?.document2}',
                       doc1: (File? value) {
                         doc1 = value;
                       },

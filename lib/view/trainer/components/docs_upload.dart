@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/view/components/document_image.dart';
 import 'package:part_app/view/components/image_picker.dart';
 import 'package:part_app/view/constants/constant.dart';
 
@@ -11,6 +12,8 @@ class DocsUpload extends StatefulWidget {
   final ValueChanged<File?> doc2;
   final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisAlignment? mainAxisAlignment;
+  final String? document1;
+  final String? document2;
 
   const DocsUpload({
     Key? key,
@@ -18,6 +21,8 @@ class DocsUpload extends StatefulWidget {
     required this.doc2,
     this.crossAxisAlignment,
     this.mainAxisAlignment,
+    this.document1,
+    this.document2,
   }) : super(key: key);
 
   @override
@@ -59,24 +64,29 @@ class _DocsUploadState extends State<DocsUpload> {
               child: Stack(
                 alignment: Alignment.bottomRight,
                 children: [
-                  Container(
-                    height: 77.h,
-                    width: 93.w,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD9D9D9),
-                      borderRadius: BorderRadius.circular(5),
-                      image: document1 != null
-                          ? DecorationImage(image: FileImage(document1!))
-                          : null,
+                  if (widget.document1 == null)
+                    Container(
+                      height: 77.h,
+                      width: 93.w,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFD9D9D9),
+                        borderRadius: BorderRadius.circular(5),
+                        image: document1 != null
+                            ? DecorationImage(image: FileImage(document1!))
+                            : null,
+                      ),
+                      child: document1 != null
+                          ? null
+                          : Padding(
+                              padding: const EdgeInsets.all(22.0),
+                              child: SvgPicture.asset(Assets.fileUpload),
+                            ),
                     ),
-                    child: document1 != null
-                        ? null
-                        : Padding(
-                            padding: const EdgeInsets.all(22.0),
-                            child: SvgPicture.asset(Assets.fileUpload),
-                          ),
-                  ),
-                  if (document1 != null)
+                  if (document1 != null || widget.document1 != null)
+                    DocumentImage(
+                      imageUrl: widget.document1,
+                    ),
+                  if (document1 == null && widget.document1 != null)
                     Container(
                       height: 24,
                       width: 24,
@@ -129,7 +139,11 @@ class _DocsUploadState extends State<DocsUpload> {
                             child: SvgPicture.asset(Assets.fileUpload),
                           ),
                   ),
-                  if (document2 != null)
+                  if (document2 == null && widget.document2 != null)
+                    DocumentImage(
+                      imageUrl: widget.document2,
+                    ),
+                  if (document2 != null || widget.document2 != null)
                     Container(
                       height: 24,
                       width: 24,

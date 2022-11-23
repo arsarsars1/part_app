@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/model/data_base/data_base.dart';
+import 'package:part_app/model/service/api.dart';
 import 'package:part_app/view/components/image_picker.dart';
 import 'package:part_app/view/constants/constant.dart';
 
@@ -26,13 +29,24 @@ class _ProfilePictureState extends State<ProfilePicture> {
 
   @override
   Widget build(BuildContext context) {
+    var token = 'Bearer ${Database().getToken()}';
     return Container(
       width: 70.w,
       height: 70.w,
       constraints: BoxConstraints(maxWidth: 70.w),
       decoration: BoxDecoration(
         image: file == null
-            ? null
+            ? DecorationImage(
+                fit: BoxFit.cover,
+                image: CachedNetworkImageProvider(
+                  widget.imageUrl ??
+                      'https://png.pngitem.com/pimgs/s/508-5087236_tab-profile-f-user-icon-white-fill-hd.png',
+                  headers: {
+                    "Authorization": token,
+                    'MOBILE-APP-TOKEN': ApiClient().token,
+                  },
+                ),
+              )
             : DecorationImage(
                 image: FileImage(file!),
                 fit: BoxFit.cover,
@@ -45,19 +59,6 @@ class _ProfilePictureState extends State<ProfilePicture> {
       ),
       child: Stack(
         children: [
-          if (file == null)
-            Image.network(
-              widget.imageUrl == null
-                  ? 'https://cdn-icons-png.flaticon.com/512/552/552721.png'
-                  : widget.imageUrl!,
-              color: Colors.white,
-              errorBuilder: (context, object, error) {
-                return Image.network(
-                  'https://cdn-icons-png.flaticon.com/512/552/552721.png',
-                  color: Colors.white,
-                );
-              },
-            ),
           Align(
             alignment: Alignment.bottomRight,
             child: InkWell(

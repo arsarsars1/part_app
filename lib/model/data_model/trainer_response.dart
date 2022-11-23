@@ -70,26 +70,14 @@ abstract class Trainer with _$Trainer {
     User? user,
     Academy? academy,
     List<Branch>? branches,
-    List<Document>? documents,
+    @JsonKey(name: 'document_1') String? document1,
+    @JsonKey(name: 'document_2') String? document2,
     List<Trainer>? trainerDetail,
   }) = _Trainer;
 
   factory Trainer.fromJson(Map<String, dynamic> json) =>
       _$TrainerFromJson(json);
 }
-
-// @freezed
-// abstract class Pivot with _$Pivot {
-//   @JsonSerializable(fieldRename: FieldRename.snake)
-//   const factory Pivot({
-//     required int branchId,
-//     int? trainerDetailId,
-//     DateTime? createdAt,
-//     DateTime? updatedAt,
-//   }) = _Pivot;
-//
-//   factory Pivot.fromJson(Map<String, dynamic> json) => _$PivotFromJson(json);
-// }
 
 @freezed
 abstract class Document with _$Document {

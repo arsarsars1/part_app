@@ -20,13 +20,13 @@ class TrainerCubit extends Cubit<TrainerState> {
   final _branchService = BranchService();
 
   Trainer? _trainer;
-  List<Trainer> _trainers = [];
+  List<Trainer>? _trainers = [];
 
   List<Trainer> _filteredTrainers = [];
 
   Trainer? get trainer => _trainer;
 
-  List<Trainer> get trainers => _trainers;
+  List<Trainer>? get trainers => _trainers;
 
   List<Trainer> get filteredTrainers => _filteredTrainers;
 
@@ -73,9 +73,9 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
   }
 
-  List<Trainer> filterTrainers({required bool active}) {
+  List<Trainer>? filterTrainers({required bool active}) {
     _isActive = active;
-    List<Trainer> list = _trainers.where((element) {
+    List<Trainer>? list = _trainers?.where((element) {
       if (active) {
         return element.isActive == 1;
       } else {
@@ -83,7 +83,7 @@ class TrainerCubit extends Cubit<TrainerState> {
       }
     }).toList();
 
-    filteredTrainers = list;
+    filteredTrainers = list ?? [];
 
     return list;
   }
@@ -91,23 +91,21 @@ class TrainerCubit extends Cubit<TrainerState> {
   Future searchTrainers(int? branchID, {String? query}) async {
     _trainers = [];
     emit(FetchingTrainers());
-    TrainerResponse? response;
 
     if (branchID != null && query == null) {
-      response = await _branchService.getTrainers(
+      _trainers = await _branchService.getTrainers(
         branchId: branchID.toString(),
       );
     }
 
     if (query != null) {
-      response = await _trainerService.searchTrainer(
+      _trainers = await _trainerService.searchTrainer(
         branchID,
         query: query,
       );
     }
 
-    if (response?.trainers != null) {
-      _trainers = response?.trainers?.data ?? [];
+    if (_trainers != null) {
       filterTrainers(active: _isActive);
     } else {
       emit(FailedToFetchTrainers('Failed to fetch the trainers'));
@@ -199,7 +197,7 @@ class TrainerCubit extends Cubit<TrainerState> {
         doc1.path,
         filename: basename(doc1.path),
       );
-      data.putIfAbsent('document1', () => doc1File);
+      data.putIfAbsent('document_1', () => doc1File);
     }
 
     if (doc2 != null) {
@@ -208,7 +206,7 @@ class TrainerCubit extends Cubit<TrainerState> {
         filename: basename(doc2.path),
       );
 
-      data.putIfAbsent('document2', () => doc2File);
+      data.putIfAbsent('document_2', () => doc2File);
     }
 
     Common? common = await _trainerService.updateTrainer(
@@ -220,6 +218,33 @@ class TrainerCubit extends Cubit<TrainerState> {
       await getTrainerDetails(
         trainerId: trainer!.trainerDetail![0].id,
       );
+      await getTrainers();
+      emit(TrainerUpdated());
+    } else {
+      emit(
+        UpdatingTrainerFailed(common?.message ?? 'Failed to update trainer'),
+      );
+    }
+  }
+
+  Future updateProfilePic({required File profilePic}) async {
+    emit(UpdatingTrainer());
+    MultipartFile picFile = await MultipartFile.fromFile(
+      profilePic.path,
+      filename: basename(profilePic.path),
+    );
+    Map<String, dynamic> data = {
+      'profile_pic': picFile,
+    };
+    Common? common = await _trainerService.updateTrainer(
+      data,
+      trainer!.trainerDetail![0].id,
+    );
+    if (common?.status == 1) {
+      await getTrainerDetails(
+        trainerId: trainer!.trainerDetail![0].id,
+      );
+      await getTrainers();
       emit(TrainerUpdated());
     } else {
       emit(
