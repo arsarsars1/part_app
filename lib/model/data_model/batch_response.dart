@@ -5,6 +5,8 @@
 import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:part_app/model/data_model/branch_response.dart';
+import 'package:part_app/model/data_model/course.dart';
 
 import 'trainer_response.dart';
 
@@ -21,11 +23,25 @@ abstract class BatchResponse with _$BatchResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory BatchResponse({
     int? status,
-    List<Batch>? batches,
+    Datum? batches,
   }) = _BatchResponse;
 
   factory BatchResponse.fromJson(Map<String, dynamic> json) =>
       _$BatchResponseFromJson(json);
+}
+
+@freezed
+abstract class Datum with _$Datum {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory Datum({
+    int? currentPage,
+    required List<Batch> data,
+    int? from,
+    int? perPage,
+    int? to,
+  }) = _Datum;
+
+  factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
 }
 
 @freezed
@@ -44,6 +60,9 @@ abstract class Batch with _$Batch {
     int? isActive,
     List<BatchDetail>? batchDetail,
     List<Trainer>? trainers,
+    Course? course,
+    Course? subject,
+    Branch? branch,
   }) = _Batch;
 
   factory Batch.fromJson(Map<String, dynamic> json) => _$BatchFromJson(json);

@@ -62,7 +62,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                   height: 8,
                 ),
                 Text(
-                  '${cubit.trainer?.name}',
+                  '${trainer?.name}',
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme

@@ -42,4 +42,12 @@ extension StringExtension on String {
 
     return "${this[0].toUpperCase()}${substring(1)}";
   }
+
+  String removeLast() {
+    if (length > 0) {
+      return trim().substring(0, length - 1);
+    }
+
+    return '';
+  }
 }

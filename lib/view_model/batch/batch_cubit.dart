@@ -88,9 +88,10 @@ class BatchCubit extends Cubit<BatchState> {
   Future getBatches() async {
     BatchResponse? response = await _batchService.getBatches();
     if (response?.status == 1) {
-      _batches =
-          response?.batches?.map((e) => BatchModel.fromEntity(e)).toList() ??
-              [];
+      _batches = response?.batches?.data
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
       emit(BatchesFetched());
     }
   }

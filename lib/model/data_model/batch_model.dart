@@ -1,4 +1,5 @@
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/constants/default_values.dart';
 
 class BatchModel {
@@ -7,6 +8,8 @@ class BatchModel {
   final String branchName;
   final int id;
   final List<String> days;
+  final String courseName;
+  final String subjectName;
 
   BatchModel({
     required this.name,
@@ -14,13 +17,15 @@ class BatchModel {
     required this.branchName,
     required this.id,
     required this.days,
+    required this.courseName,
+    required this.subjectName,
   });
 
   factory BatchModel.fromEntity(Batch batch) {
     String trainer = '';
     List<String>? days = [];
     batch.trainers?.forEach((element) {
-      trainer += '${element.user?.name}, ';
+      trainer += '${element.name}, ';
     });
     days = batch.batchDetail?.map((e) {
       String day = DefaultValues.defaultTrainingDays[e.day];
@@ -28,10 +33,12 @@ class BatchModel {
     }).toList();
     return BatchModel(
       name: batch.batchName ?? '',
-      trainers: trainer,
-      branchName: '',
+      trainers: trainer.trimRight().removeLast(),
+      branchName: batch.branch?.branchName ?? 'NA',
       id: batch.id ?? 0,
       days: days ?? [],
+      courseName: batch.course?.courseName ?? 'NA',
+      subjectName: batch.subject?.subjectName ?? 'NA',
     );
   }
 }

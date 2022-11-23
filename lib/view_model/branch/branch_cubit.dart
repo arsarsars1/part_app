@@ -69,7 +69,7 @@ class BranchCubit extends Cubit<BranchState> {
       branchId: branchId,
     );
     if (temp != null && temp.status == 1) {
-      trainers = temp.trainers;
+      trainers = temp.trainers?.data;
       emit(TrainersLoaded());
     } else {
       emit(TrainersFailed('Failed to get the trainers list'));

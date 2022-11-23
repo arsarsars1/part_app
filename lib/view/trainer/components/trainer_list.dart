@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -17,12 +19,14 @@ class TrainerList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var token = 'Bearer ${Database().getToken()}';
+
     return ListView.builder(
       shrinkWrap: true,
       itemCount: trainers.length,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        Trainer trainer = trainers[index];
+        Trainer trainer = trainers[index].trainerDetail![0];
         return InkWell(
           onTap: () {
             // call back to parent widget
@@ -46,6 +50,8 @@ class TrainerList extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
+                        width: 40,
+                        height: 40,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           gradient: const LinearGradient(
@@ -56,16 +62,24 @@ class TrainerList extends StatelessWidget {
                               Color(0xFF640078),
                             ],
                           ),
-                          image: trainer.profilePic != null
+                          image: trainer.profilePic != null &&
+                                  trainer.profilePic!.isNotEmpty
                               ? DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      'https://dev.partapp.in/images/trainers/${trainer.profilePic}'),
+                                  image: CachedNetworkImageProvider(
+                                    'https://dev.partapp.in/api/admin/images/trainer/${trainer.id}/${trainer.profilePic}',
+                                    headers: {
+                                      "Authorization": token,
+                                      'MOBILE-APP-TOKEN':
+                                          'h5uA9WokuxSNDJGYK0UevodqEWJjYzlB'
+                                    },
+                                  ),
                                 )
                               : null,
                         ),
                         padding: EdgeInsets.all(12.r),
-                        child: trainer.profilePic == null
+                        child: trainer.profilePic == null ||
+                                trainer.profilePic!.isEmpty
                             ? SvgPicture.asset(
                                 Assets.trainerListIcon,
                               )
@@ -74,7 +88,7 @@ class TrainerList extends StatelessWidget {
                       SizedBox(width: 16.w),
                       Expanded(
                         child: Text(
-                          '${trainer.name ?? trainer.user?.name}',
+                          '${trainer.name}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),

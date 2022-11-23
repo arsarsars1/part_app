@@ -66,7 +66,7 @@ class TrainerCubit extends Cubit<TrainerState> {
     TrainerResponse? response = await _trainerService.getTrainers();
 
     if (response?.trainers != null) {
-      _trainers = response!.trainers!;
+      _trainers = response?.trainers?.data ?? [];
       filterTrainers(active: _isActive);
     } else {
       emit(FailedToFetchTrainers('Failed to fetch the trainers'));
@@ -107,7 +107,7 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
 
     if (response?.trainers != null) {
-      _trainers = response!.trainers!;
+      _trainers = response?.trainers?.data ?? [];
       filterTrainers(active: _isActive);
     } else {
       emit(FailedToFetchTrainers('Failed to fetch the trainers'));
@@ -143,20 +143,20 @@ class TrainerCubit extends Cubit<TrainerState> {
     if (image != null) {
       MultipartFile imageFile = await MultipartFile.fromFile(image!.path,
           filename: basename(image!.path));
-      map.putIfAbsent('image', () => imageFile);
+      map.putIfAbsent('profile_pic', () => imageFile);
     }
 
     if (doc1 != null) {
       MultipartFile doc1File = await MultipartFile.fromFile(doc1!.path,
           filename: basename(doc1!.path));
-      map.putIfAbsent('document1', () => doc1File);
+      map.putIfAbsent('document_1', () => doc1File);
     }
 
     if (doc2 != null) {
       MultipartFile doc2File = await MultipartFile.fromFile(doc2!.path,
           filename: basename(doc2!.path));
 
-      map.putIfAbsent('document2', () => doc2File);
+      map.putIfAbsent('document_2', () => doc2File);
     }
     Common? response = await _trainerService.createTrainer(map);
 

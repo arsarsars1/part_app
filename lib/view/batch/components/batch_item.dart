@@ -43,7 +43,7 @@ class BatchItem extends StatelessWidget {
             height: 4,
           ),
           Text(
-            'Batch Name',
+            batch.branchName,
             style: Theme.of(context).textTheme.bodyText1?.copyWith(
                   color: AppColors.primaryColor,
                 ),
@@ -52,10 +52,8 @@ class BatchItem extends StatelessWidget {
             height: 4,
           ),
           Text(
-            'Course Subject',
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            '${batch.courseName}, ${batch.subjectName}',
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(),
           ),
           const SizedBox(
             height: 4,

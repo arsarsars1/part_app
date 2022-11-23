@@ -8,7 +8,6 @@ import 'package:part_app/view/components/tab_button.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/components/trainer_list.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
-import 'package:part_app/view_model/branch/branch_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerPage extends StatefulWidget {
@@ -42,7 +41,7 @@ class _TrainerPageState extends State<TrainerPage> {
       appBar: const CommonBar(
         title: 'Trainers List',
       ),
-      body: Column(
+      body: ListView(
         children: [
           Align(
             alignment: Alignment.centerRight,
@@ -110,12 +109,10 @@ class _TrainerPageState extends State<TrainerPage> {
               return TrainerList(
                 trainers: cubit.filteredTrainers,
                 onSelect: (Trainer trainer) {
-                  if (trainer.trainerDetail != null) {
-                    context.read<TrainerCubit>().getTrainerDetails(
-                          trainerId: trainer.trainerDetail![0].id,
-                        );
-                    Navigator.pushNamed(context, TrainerDetails.route);
-                  }
+                  context.read<TrainerCubit>().getTrainerDetails(
+                        trainerId: trainer.id,
+                      );
+                  Navigator.pushNamed(context, TrainerDetails.route);
                 },
               );
             },

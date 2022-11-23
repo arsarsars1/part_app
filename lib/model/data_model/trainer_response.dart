@@ -22,12 +22,26 @@ abstract class TrainerResponse with _$TrainerResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory TrainerResponse({
     required int status,
-    List<Trainer>? trainers,
+    Datum? trainers,
     Trainer? trainer,
   }) = _TrainerResponse;
 
   factory TrainerResponse.fromJson(Map<String, dynamic> json) =>
       _$TrainerResponseFromJson(json);
+}
+
+@freezed
+abstract class Datum with _$Datum {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory Datum({
+    int? currentPage,
+    required List<Trainer> data,
+    int? from,
+    int? perPage,
+    int? to,
+  }) = _Datum;
+
+  factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
 }
 
 @freezed
@@ -55,7 +69,6 @@ abstract class Trainer with _$Trainer {
     int? isActive,
     User? user,
     Academy? academy,
-    Trainer? trainer,
     List<Branch>? branches,
     List<Document>? documents,
     List<Trainer>? trainerDetail,
