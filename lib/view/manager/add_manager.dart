@@ -259,7 +259,12 @@ class _AddManagerState extends State<AddManager> {
                           );
 
                           /// update the [managerCubit] with updated request
-                          managerCubit.updateRequest(request);
+                          managerCubit.updateRequest(
+                            request,
+                            image: image,
+                            doc1: doc1,
+                            doc2: doc2,
+                          );
                           // open the salary details page
                           Navigator.pushNamed(
                             context,

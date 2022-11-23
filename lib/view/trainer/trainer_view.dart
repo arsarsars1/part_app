@@ -106,6 +106,11 @@ class _TrainerPageState extends State<TrainerPage> {
           ),
           BlocBuilder<TrainerCubit, TrainerState>(
             builder: (context, state) {
+              if (cubit.trainers == null || cubit.trainers!.isEmpty) {
+                return const Center(
+                  child: Text('Add Trainer to Get Started'),
+                );
+              }
               return TrainerList(
                 trainers: cubit.filteredTrainers,
                 onSelect: (Trainer trainer) {

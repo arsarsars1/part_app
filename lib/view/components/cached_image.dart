@@ -8,9 +8,10 @@ class CachedImage {
 
   CachedImage(this.imageUrl);
 
-  DecorationImage getImage() {
+  DecorationImage getDecorationImage() {
     var token = 'Bearer ${Database().getToken()}';
     return DecorationImage(
+      fit: BoxFit.cover,
       image: CachedNetworkImageProvider(
         imageUrl,
         headers: {
@@ -18,6 +19,23 @@ class CachedImage {
           'MOBILE-APP-TOKEN': ApiClient().token,
         },
       ),
+    );
+  }
+
+  CachedNetworkImage image() {
+    var token = 'Bearer ${Database().getToken()}';
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      fit: BoxFit.cover,
+      errorWidget: (context, str, _) {
+        return CachedImage(
+          'https://png.pngitem.com/pimgs/s/508-5087236_tab-profile-f-user-icon-white-fill-hd.png',
+        ).image();
+      },
+      httpHeaders: {
+        "Authorization": token,
+        'MOBILE-APP-TOKEN': ApiClient().token,
+      },
     );
   }
 }

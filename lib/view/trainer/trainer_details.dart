@@ -84,14 +84,13 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       trackColor: AppColors.grey500,
                       value: trainer?.isActive == 1,
                       onChanged: (value) {
-                        active = !active;
-
                         CommonDialog(
                           context: context,
                           message:
                               'Do You Want To ${trainer?.isActive == 1 ? 'Deactivate' : 'Activate'} The Branch Manager?',
-                          subMessage: '${cubit.trainer?.name}',
+                          subMessage: '${trainer?.name}',
                           onTap: () {
+                            active = value;
                             Navigator.pop(context);
                             cubit.trainerStatus(
                               id: trainer!.id,

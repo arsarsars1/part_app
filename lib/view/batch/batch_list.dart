@@ -81,6 +81,11 @@ class _BatchesPageState extends State<BatchesPage> {
           BlocBuilder<BatchCubit, BatchState>(
             buildWhen: (prv, crr) => crr is BatchesFetched,
             builder: (context, state) {
+              if (cubit.batches.isEmpty) {
+                return const Center(
+                  child: Text('Add Batch to Get Started'),
+                );
+              }
               return ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

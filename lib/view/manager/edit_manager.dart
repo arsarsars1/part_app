@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/manager_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/common_bar.dart';
@@ -222,6 +223,10 @@ class _EditManagerState extends State<EditManager> {
                     child: DocsUpload(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      document1:
+                          '${F.baseUrl}/admin/documents/manager/${manager?.id}/${manager?.document_1}',
+                      document2:
+                          '${F.baseUrl}/admin/documents/manager/${manager?.id}/${manager?.document_2}',
                       doc1: (File? value) {
                         doc1 = value;
                       },
@@ -257,7 +262,10 @@ class _EditManagerState extends State<EditManager> {
 
                             // open the salary details page
                             managerCubit.updateManager(
-                                request: request.toJson());
+                              request: request.toJson(),
+                              doc2: doc2,
+                              doc1: doc1,
+                            );
                           }
                         },
                         title: 'Continue',

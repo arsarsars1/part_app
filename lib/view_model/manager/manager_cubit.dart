@@ -1,9 +1,13 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/manager_request.dart';
 import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/model/service/api.dart';
+import 'package:path/path.dart';
 
 part 'manager_state.dart';
 
@@ -16,6 +20,7 @@ class ManagerCubit extends Cubit<ManagerState> {
 
   List<Manager>? _managers;
   Set<int> _selectedBranches = {};
+  File? image, doc1, doc2;
 
   Manager? _manager;
 
@@ -31,14 +36,49 @@ class ManagerCubit extends Cubit<ManagerState> {
     _selectedBranches = items;
   }
 
-  void updateRequest(ManagerRequest request) {
+  void updateRequest(
+    ManagerRequest request, {
+    File? image,
+    File? doc1,
+    File? doc2,
+  }) {
+    if (image != null) {
+      this.image = image;
+    }
+    if (doc1 != null) {
+      this.doc1 = doc1;
+    }
+    if (doc2 != null) {
+      this.doc2 = doc2;
+    }
     _managerRequest = request;
   }
 
   Future createManager() async {
     emit(CreatingManager());
+    Map<String, dynamic> map = _managerRequest.toJson();
+
+    /// prepare files for upload
+    if (image != null) {
+      MultipartFile imageFile = await MultipartFile.fromFile(image!.path,
+          filename: basename(image!.path));
+      map.putIfAbsent('profile_pic', () => imageFile);
+    }
+
+    if (doc1 != null) {
+      MultipartFile doc1File = await MultipartFile.fromFile(doc1!.path,
+          filename: basename(doc1!.path));
+      map.putIfAbsent('document_1', () => doc1File);
+    }
+
+    if (doc2 != null) {
+      MultipartFile doc2File = await MultipartFile.fromFile(doc2!.path,
+          filename: basename(doc2!.path));
+
+      map.putIfAbsent('document_2', () => doc2File);
+    }
     Common? response = await _managerService.createManager(
-      request: _managerRequest,
+      request: map,
     );
 
     if (response != null && response.status == 1) {
@@ -56,7 +96,7 @@ class ManagerCubit extends Cubit<ManagerState> {
     ManagerResponse? response = await _managerService.getManagers();
 
     if (response != null && response.status == 1) {
-      _managers = response.managers;
+      _managers = response.managers?.data;
       emit(ManagersFetched());
     } else {
       emit(
@@ -110,9 +150,56 @@ class ManagerCubit extends Cubit<ManagerState> {
     emit(BranchSelectionUpdated());
   }
 
-  Future updateManager({required Map<String, dynamic> request}) async {
+  Future updateManager(
+      {required Map<String, dynamic> request, File? doc1, File? doc2}) async {
     emit(UpdatingManager());
     request.removeWhere((key, value) => value == null);
+    if (doc1 != null) {
+      MultipartFile doc1File = await MultipartFile.fromFile(
+        doc1.path,
+        filename: basename(doc1.path),
+      );
+      request.putIfAbsent('document_1', () => doc1File);
+    }
+
+    if (doc2 != null) {
+      MultipartFile doc2File = await MultipartFile.fromFile(
+        doc2.path,
+        filename: basename(doc2.path),
+      );
+
+      request.putIfAbsent('document_2', () => doc2File);
+    }
+    try {
+      String id = '${manager?.managerDetail?[0].id}';
+      Common? response = await _managerService.updateManager(
+        data: request,
+        branchId: id,
+      );
+      if (response?.status == 1) {
+        await getManagerById(id: int.parse(id));
+        await getManagers();
+        emit(UpdatedManager());
+      } else {
+        emit(
+          UpdatingManagerFailed(
+              response?.message ?? 'Failed to update manager.'),
+        );
+      }
+    } catch (e) {
+      emit(UpdatingManagerFailed(e.toString()));
+    }
+  }
+
+  Future updateProfile({required File profilePic}) async {
+    emit(UpdatingManager());
+    MultipartFile picFile = await MultipartFile.fromFile(
+      profilePic.path,
+      filename: basename(profilePic.path),
+    );
+    Map<String, dynamic> request = {
+      'profile_pic': picFile,
+    };
     try {
       String id = '${manager?.managerDetail?[0].id}';
       Common? response = await _managerService.updateManager(

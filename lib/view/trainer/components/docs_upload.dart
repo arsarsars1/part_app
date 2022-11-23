@@ -64,29 +64,28 @@ class _DocsUploadState extends State<DocsUpload> {
               child: Stack(
                 alignment: Alignment.bottomRight,
                 children: [
-                  if (widget.document1 == null)
-                    Container(
-                      height: 77.h,
-                      width: 93.w,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFD9D9D9),
-                        borderRadius: BorderRadius.circular(5),
-                        image: document1 != null
-                            ? DecorationImage(image: FileImage(document1!))
-                            : null,
-                      ),
-                      child: document1 != null
-                          ? null
-                          : Padding(
-                              padding: const EdgeInsets.all(22.0),
-                              child: SvgPicture.asset(Assets.fileUpload),
-                            ),
+                  Container(
+                    height: 77.h,
+                    width: 93.w,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFD9D9D9),
+                      borderRadius: BorderRadius.circular(5),
+                      image: document1 != null
+                          ? DecorationImage(image: FileImage(document1!))
+                          : null,
                     ),
-                  if (document1 != null || widget.document1 != null)
+                    child: document1 != null
+                        ? null
+                        : Padding(
+                            padding: const EdgeInsets.all(22.0),
+                            child: SvgPicture.asset(Assets.fileUpload),
+                          ),
+                  ),
+                  if (document1 == null && widget.document1 != null)
                     DocumentImage(
                       imageUrl: widget.document1,
                     ),
-                  if (document1 == null && widget.document1 != null)
+                  if (document1 != null || widget.document1 != null)
                     Container(
                       height: 24,
                       width: 24,

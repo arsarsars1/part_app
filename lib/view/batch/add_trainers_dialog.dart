@@ -6,8 +6,11 @@ import 'package:part_app/view_model/cubits.dart';
 
 class AddTrainersDialog extends StatefulWidget {
   final ValueChanged<List<Trainer>> onSave;
+  final List<Trainer> selectedItems;
 
-  const AddTrainersDialog({Key? key, required this.onSave}) : super(key: key);
+  const AddTrainersDialog(
+      {Key? key, required this.onSave, required this.selectedItems})
+      : super(key: key);
 
   @override
   State<AddTrainersDialog> createState() => _AddTrainersDialogState();
@@ -19,6 +22,7 @@ class _AddTrainersDialogState extends State<AddTrainersDialog> {
   @override
   void initState() {
     super.initState();
+    selectedTrainers.addAll(widget.selectedItems);
   }
 
   @override
@@ -67,7 +71,7 @@ class _AddTrainersDialogState extends State<AddTrainersDialog> {
                               }
                             });
                           },
-                          title: '${trainer?.name}',
+                          title: '${trainer?.trainerDetail?[0].name}',
                           selected: selectedTrainers.contains(trainer),
                         ),
                       );

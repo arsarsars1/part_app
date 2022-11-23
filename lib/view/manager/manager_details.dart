@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/dialog.dart';
+import 'package:part_app/view/components/document_image.dart';
 import 'package:part_app/view/components/launchers.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/profile_pictrue.dart';
@@ -70,9 +72,11 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                 Center(
                   child: ProfilePicture(
                     imageUrl:
-                        'https://dev.partapp.in/images/trainers/${manager?.profilePic}',
+                        '${F.baseUrl}/admin/images/manager/${managerDetails?.id}/${managerDetails?.profilePic}',
                     onEdit: () {},
-                    onChange: (File value) {},
+                    onChange: (File value) {
+                      cubit.updateProfile(profilePic: value);
+                    },
                   ),
                 ),
                 const SizedBox(
@@ -281,30 +285,16 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       ),
                       Row(
                         children: [
-                          Container(
-                            height: 77.h,
-                            width: 93.w,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFD9D9D9),
-                              borderRadius: BorderRadius.circular(5),
-                              // image: trainer?.documents != null
-                              //     ? DecorationImage(image: FileImage(document1!))
-                              //     : null,
-                            ),
+                          DocumentImage(
+                            imageUrl:
+                                '${F.baseUrl}/admin/documents/manager/${managerDetails?.id}/${managerDetails?.document_1}',
                           ),
                           const SizedBox(
                             width: 16,
                           ),
-                          Container(
-                            height: 77.h,
-                            width: 93.w,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFD9D9D9),
-                              borderRadius: BorderRadius.circular(5),
-                              // image: trainer?.documents != null
-                              //     ? DecorationImage(image: FileImage(document1!))
-                              //     : null,
-                            ),
+                          DocumentImage(
+                            imageUrl:
+                                '${F.baseUrl}/admin/documents/manager/${managerDetails?.id}/${managerDetails?.document_2}',
                           ),
                         ],
                       )

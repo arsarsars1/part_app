@@ -56,6 +56,11 @@ class _ManagerPageState extends State<ManagerPage> {
             child: BlocBuilder<ManagerCubit, ManagerState>(
               builder: (context, state) {
                 var cubit = context.read<ManagerCubit>();
+                if (cubit.managers == null || cubit.managers!.isEmpty) {
+                  return const Center(
+                    child: Text('Add Branch Manager to Get Started'),
+                  );
+                }
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: cubit.managers?.length ?? 0,

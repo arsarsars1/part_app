@@ -23,7 +23,7 @@ class _DocumentImageState extends State<DocumentImage> {
         image: widget.imageUrl != null
             ? CachedImage(
                 widget.imageUrl!,
-              ).getImage()
+              ).getDecorationImage()
             : null,
       ),
     );

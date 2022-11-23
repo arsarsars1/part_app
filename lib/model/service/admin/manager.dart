@@ -1,20 +1,19 @@
 import 'dart:convert';
 
 import 'package:part_app/model/data_model/common.dart';
-import 'package:part_app/model/data_model/manager_request.dart';
 import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/model/service/api_client.dart';
 
 class ManagerService {
   final _client = ApiClient();
 
-  Future<Common?> createManager({required ManagerRequest request}) async {
-    var req = request.toJson();
-    req.removeWhere((key, value) => value == null);
+  Future<Common?> createManager({required Map<String, dynamic> request}) async {
+    request.removeWhere((key, value) => value == null);
     try {
       var map = await _client.post(
         postPath: '/admin/managers',
-        data: req,
+        data: request,
+        formData: true,
       );
       return commonFromJson(jsonEncode(map));
     } catch (e) {

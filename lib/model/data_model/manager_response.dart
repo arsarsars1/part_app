@@ -16,12 +16,26 @@ String managerResponseToJson(ManagerResponse data) =>
 abstract class ManagerResponse with _$ManagerResponse {
   const factory ManagerResponse({
     required int status,
-    List<Manager>? managers,
+    Datum? managers,
     Manager? manager,
   }) = _ManagerResponse;
 
   factory ManagerResponse.fromJson(Map<String, dynamic> json) =>
       _$ManagerResponseFromJson(json);
+}
+
+@freezed
+abstract class Datum with _$Datum {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory Datum({
+    int? currentPage,
+    required List<Manager> data,
+    int? from,
+    int? perPage,
+    int? to,
+  }) = _Datum;
+
+  factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
 }
 
 @freezed
@@ -46,6 +60,8 @@ abstract class Manager with _$Manager {
     String? profilePic,
     String? profilePicType,
     String? address,
+    String? document_1,
+    String? document_2,
     int? isActive,
     List<Manager>? managerDetail,
     List<Branch>? branches,
