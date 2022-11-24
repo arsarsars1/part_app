@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/batch/add_batch.dart';
+import 'package:part_app/view/batch/batch_details.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/branch_field.dart';
 import 'package:part_app/view/components/common_bar.dart';
@@ -93,6 +94,12 @@ class _BatchesPageState extends State<BatchesPage> {
                 itemBuilder: (context, index) {
                   return BatchItem(
                     batch: cubit.batches[index],
+                    onTap: () {
+                      context
+                          .read<BatchCubit>()
+                          .getBatch(batchId: '${cubit.batches[index].id}');
+                      Navigator.pushNamed(context, BatchDetails.route);
+                    },
                   );
                 },
               );

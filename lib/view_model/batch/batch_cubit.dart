@@ -23,6 +23,7 @@ class BatchCubit extends Cubit<BatchState> {
 
   final List<String> _selectedTrainers = [];
   List<BatchModel> _batches = [];
+  BatchModel? _batch;
 
   List<Days> get days => _days;
 
@@ -33,6 +34,8 @@ class BatchCubit extends Cubit<BatchState> {
   List<String> get selectedTrainers => _selectedTrainers;
 
   List<BatchModel> get batches => _batches;
+
+  BatchModel? get batch => _batch;
 
   void addDay(Days day) {
     _days.removeWhere((element) => element.day == day.day);
@@ -93,6 +96,15 @@ class BatchCubit extends Cubit<BatchState> {
               .toList() ??
           [];
       emit(BatchesFetched());
+    }
+  }
+
+  Future getBatch({required String batchId}) async {
+    emit(FetchingBatch());
+    BatchResponse? response = await _batchService.getBatch(id: batchId);
+    if (response?.status == 1 && response?.batch != null) {
+      _batch = BatchModel.fromEntity(response!.batch!);
+      emit(FetchedBatch());
     }
   }
 }

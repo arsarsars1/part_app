@@ -8,6 +8,7 @@ import 'package:part_app/view/auth/register/admin_details.dart';
 import 'package:part_app/view/auth/register/sign_up.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/batch/add_batch.dart';
+import 'package:part_app/view/batch/batch_details.dart';
 import 'package:part_app/view/batch/batch_list.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
@@ -214,6 +215,11 @@ class RouteGenerator {
       case TrainerBranches.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerBranches(),
+          settings: settings,
+        );
+      case BatchDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const BatchDetails(),
           settings: settings,
         );
       case ManagerDetails.route:

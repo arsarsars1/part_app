@@ -268,7 +268,7 @@ class _EditManagerState extends State<EditManager> {
                             );
                           }
                         },
-                        title: 'Continue',
+                        title: 'Save',
                       ),
                     ),
                   )

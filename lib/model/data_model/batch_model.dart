@@ -10,6 +10,8 @@ class BatchModel {
   final List<String> days;
   final String courseName;
   final String subjectName;
+  final int? admissionFee;
+  final int? fee;
 
   BatchModel({
     required this.name,
@@ -19,6 +21,8 @@ class BatchModel {
     required this.days,
     required this.courseName,
     required this.subjectName,
+    this.admissionFee,
+    this.fee,
   });
 
   factory BatchModel.fromEntity(Batch batch) {
@@ -39,6 +43,7 @@ class BatchModel {
       days: days ?? [],
       courseName: batch.course?.courseName ?? 'NA',
       subjectName: batch.subject?.subjectName ?? 'NA',
+      admissionFee: batch.feeAmount,
     );
   }
 }

@@ -24,6 +24,7 @@ abstract class BatchResponse with _$BatchResponse {
   const factory BatchResponse({
     int? status,
     Datum? batches,
+    Batch? batch,
   }) = _BatchResponse;
 
   factory BatchResponse.fromJson(Map<String, dynamic> json) =>

@@ -60,4 +60,16 @@ class BatchService {
       return null;
     }
   }
+
+  Future<BatchResponse?> getBatch({required String id}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/batches/$id',
+      );
+
+      return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
 }
