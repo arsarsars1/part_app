@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class BatchDetails extends StatefulWidget {
   static const route = '/batch/details';
+
   const BatchDetails({Key? key}) : super(key: key);
 
   @override
@@ -82,7 +84,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        'Admission Fees: ${batch?.subjectName}',
+                        'Admission Fees: ${batch?.admissionFee}',
                         style:
                             Theme.of(context).textTheme.bodyText1?.copyWith(),
                       ),
@@ -93,7 +95,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        'Fees: ${batch?.subjectName}',
+                        'Fees: ${batch?.fee}',
                         style:
                             Theme.of(context).textTheme.bodyText1?.copyWith(),
                       ),
@@ -101,6 +103,29 @@ class _BatchDetailsState extends State<BatchDetails> {
                   ],
                 ),
               ),
+              Container(
+                width: double.maxFinite,
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.liteDark,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Batch Trainers'),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    SelectedTrainers(
+                      selectedTrainers: (List<int> value) {
+                        // selectedTrainers = value;
+                      },
+                    )
+                  ],
+                ),
+              )
             ],
           );
         },

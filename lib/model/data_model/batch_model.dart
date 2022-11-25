@@ -43,7 +43,8 @@ class BatchModel {
       days: days ?? [],
       courseName: batch.course?.courseName ?? 'NA',
       subjectName: batch.subject?.subjectName ?? 'NA',
-      admissionFee: batch.feeAmount,
+      admissionFee: batch.admissionFees,
+      fee: batch.feeAmount,
     );
   }
 }
