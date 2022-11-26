@@ -51,9 +51,6 @@ class _AddTrainerState extends State<AddTrainer> {
   @override
   void initState() {
     super.initState();
-    // scrollController.addListener(() {
-    //   FocusManager.instance.primaryFocus?.unfocus();
-    // });
   }
 
   @override
@@ -82,6 +79,9 @@ class _AddTrainerState extends State<AddTrainer> {
                 CommonField(
                   title: 'Trainer Name *',
                   hint: 'Enter Trainer Name',
+                  maxLines: 1,
+                  length: 50,
+                  textInputAction: TextInputAction.next,
                   onChange: (value) {
                     name = value;
                   },

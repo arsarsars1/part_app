@@ -81,6 +81,9 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
                   initialValue: manager?.upiId,
                   title: 'UPI ID',
                   hint: 'Enter UPI Id',
+                  maxLines: 1,
+                  length: 50,
+                  textInputAction: TextInputAction.next,
                   onChange: (value) {
                     upiId = value;
                   },

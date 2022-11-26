@@ -6,13 +6,13 @@ import 'package:part_app/view/constants/app_colors.dart';
 class CommonDialog {
   final BuildContext context;
   final String message;
-  final String subMessage;
+  final String? subMessage;
   final VoidCallback onTap;
 
   CommonDialog(
       {required this.context,
       required this.message,
-      required this.subMessage,
+      this.subMessage,
       required this.onTap});
 
   void show() {
@@ -36,14 +36,11 @@ class CommonDialog {
 
 class _Logout extends StatelessWidget {
   final String message;
-  final String subMessage;
+  final String? subMessage;
   final VoidCallback onTap;
 
   const _Logout(
-      {Key? key,
-      required this.message,
-      required this.subMessage,
-      required this.onTap})
+      {Key? key, required this.message, this.subMessage, required this.onTap})
       : super(key: key);
 
   @override
@@ -65,19 +62,22 @@ class _Logout extends StatelessWidget {
             Text(
               message,
               style: Theme.of(context).textTheme.bodyText2,
+              textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 20.h,
             ),
-            Text(
-              subMessage,
-              style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
+            if (subMessage != null)
+              Text(
+                subMessage!,
+                style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+            if (subMessage != null)
+              SizedBox(
+                height: 20.h,
+              ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

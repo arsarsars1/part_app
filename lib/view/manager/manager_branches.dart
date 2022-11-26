@@ -4,6 +4,7 @@ import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/view/components/checkbox.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/manager/manager_details.dart';
@@ -33,6 +34,7 @@ class _ManagerBranchesState extends State<ManagerBranches> {
   Widget build(BuildContext context) {
     var cubit = context.read<BranchCubit>();
     var managerCubit = context.read<ManagerCubit>();
+    String managerName = managerCubit.manager?.managerDetail?[0].name ?? '';
     return Scaffold(
       appBar: const CommonBar(title: 'Allocate Branches'),
       body: BlocListener<ManagerCubit, ManagerState>(
@@ -53,15 +55,11 @@ class _ManagerBranchesState extends State<ManagerBranches> {
         child: Column(
           children: [
             Text(
-              managerCubit.manager?.managerDetail?[0].name ?? 'N/A',
+              managerName,
             ),
             BlocBuilder<BranchCubit, BranchState>(
               builder: (context, state) {
                 return Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.liteDark,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
                   margin: const EdgeInsets.all(16),
                   padding: const EdgeInsets.all(16),
                   child: ListView.builder(
@@ -71,17 +69,42 @@ class _ManagerBranchesState extends State<ManagerBranches> {
                     itemBuilder: (context, index) {
                       Branch branch = cubit.branches[index];
 
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: TextCheckBox(
-                          onChange: (value) {
-                            managerCubit.updateBranchSelection(branch.id);
-                          },
-                          title: branch.branchName ?? 'N/A',
-                          selected: managerCubit.selectedBranches.contains(
-                            branch.id,
-                          ),
-                        ),
+                      return BlocBuilder<ManagerCubit, ManagerState>(
+                        buildWhen: (prv, crr) => crr is BranchSelectionUpdated,
+                        builder: (context, state) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.liteDark,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            child: TextCheckBox(
+                              onChange: (value) {
+                                if (!value) {
+                                  CommonDialog(
+                                    context: context,
+                                    message:
+                                        'Do you want to remove $managerName from ${branch.branchName}?',
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      managerCubit
+                                          .updateBranchSelection(branch.id);
+                                    },
+                                  ).show();
+                                } else {
+                                  managerCubit.updateBranchSelection(branch.id);
+                                }
+                              },
+                              title: branch.branchName ?? 'N/A',
+                              subTitle:
+                                  '${branch.district?.districtName}, ${branch.state?.stateName}',
+                              selected: managerCubit.selectedBranches.contains(
+                                branch.id,
+                              ),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),

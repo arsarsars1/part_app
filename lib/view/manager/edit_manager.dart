@@ -92,6 +92,9 @@ class _EditManagerState extends State<EditManager> {
                   CommonField(
                     title: 'Branch Manager Name *',
                     hint: 'Enter Manager Name',
+                    maxLines: 1,
+                    length: 50,
+                    textInputAction: TextInputAction.next,
                     initialValue: manager?.name,
                     onChange: (value) {
                       name = value;

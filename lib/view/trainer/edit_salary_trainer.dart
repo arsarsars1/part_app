@@ -80,6 +80,7 @@ class _EditSalaryTrainerState extends State<EditSalaryTrainer> {
                   title: 'UPI ID',
                   hint: 'Enter UPI Id',
                   maxLines: 1,
+                  length: 50,
                   textInputAction: TextInputAction.next,
                   onChange: (value) {
                     upiId = value;

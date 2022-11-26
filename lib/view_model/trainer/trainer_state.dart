@@ -47,6 +47,8 @@ class TrainerStatusUpdated extends TrainerState {
 
 class UpdatingTrainer extends TrainerState {}
 
+class BranchesUpdated extends TrainerState {}
+
 class UpdatingTrainerFailed extends TrainerState {
   final String message;
 

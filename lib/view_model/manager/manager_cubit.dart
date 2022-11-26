@@ -7,7 +7,7 @@ import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/manager_request.dart';
 import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/model/service/api.dart';
-import 'package:path/path.dart';
+import 'package:part_app/view_model/utils.dart';
 
 part 'manager_state.dart';
 
@@ -60,20 +60,17 @@ class ManagerCubit extends Cubit<ManagerState> {
 
     /// prepare files for upload
     if (image != null) {
-      MultipartFile imageFile = await MultipartFile.fromFile(image!.path,
-          filename: basename(image!.path));
+      MultipartFile? imageFile = await Utils().generateMultiPartFile(image!);
       map.putIfAbsent('profile_pic', () => imageFile);
     }
 
     if (doc1 != null) {
-      MultipartFile doc1File = await MultipartFile.fromFile(doc1!.path,
-          filename: basename(doc1!.path));
+      MultipartFile? doc1File = await Utils().generateMultiPartFile(doc1!);
       map.putIfAbsent('document_1', () => doc1File);
     }
 
     if (doc2 != null) {
-      MultipartFile doc2File = await MultipartFile.fromFile(doc2!.path,
-          filename: basename(doc2!.path));
+      MultipartFile? doc2File = await Utils().generateMultiPartFile(doc2!);
 
       map.putIfAbsent('document_2', () => doc2File);
     }
@@ -155,18 +152,12 @@ class ManagerCubit extends Cubit<ManagerState> {
     emit(UpdatingManager());
     request.removeWhere((key, value) => value == null);
     if (doc1 != null) {
-      MultipartFile doc1File = await MultipartFile.fromFile(
-        doc1.path,
-        filename: basename(doc1.path),
-      );
+      MultipartFile? doc1File = await Utils().generateMultiPartFile(doc1);
       request.putIfAbsent('document_1', () => doc1File);
     }
 
     if (doc2 != null) {
-      MultipartFile doc2File = await MultipartFile.fromFile(
-        doc2.path,
-        filename: basename(doc2.path),
-      );
+      MultipartFile? doc2File = await Utils().generateMultiPartFile(doc2!);
 
       request.putIfAbsent('document_2', () => doc2File);
     }
@@ -193,10 +184,7 @@ class ManagerCubit extends Cubit<ManagerState> {
 
   Future updateProfile({required File profilePic}) async {
     emit(UpdatingManager());
-    MultipartFile picFile = await MultipartFile.fromFile(
-      profilePic.path,
-      filename: basename(profilePic.path),
-    );
+    MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
     Map<String, dynamic> request = {
       'profile_pic': picFile,
     };

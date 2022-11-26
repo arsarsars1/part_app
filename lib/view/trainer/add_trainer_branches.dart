@@ -50,10 +50,6 @@ class _AddTrainerBranchesState extends State<AddTrainerBranches> {
           }
         },
         child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.liteDark,
-            borderRadius: BorderRadius.circular(4),
-          ),
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
           child: ListView.builder(
             padding: EdgeInsets.zero,
@@ -62,18 +58,26 @@ class _AddTrainerBranchesState extends State<AddTrainerBranches> {
             itemBuilder: (context, index) {
               Branch branch = cubit.branches[index];
               return Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                decoration: BoxDecoration(
+                  color: AppColors.liteDark,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                margin: const EdgeInsets.symmetric(vertical: 8),
                 child: TextCheckBox(
                   onChange: (value) {
-                    if (selected.contains(branch.id.toString())) {
-                      selected.remove(branch.id.toString());
+                    if (value) {
+                      trainerCubit.selectedBranches.add(branch.id);
                     } else {
-                      selected.add(branch.id.toString());
+                      trainerCubit.selectedBranches.remove(branch.id);
                     }
                   },
-                  title: '${branch.branchName}',
-                  selected: false,
+                  title: branch.branchName ?? 'N/A',
+                  subTitle:
+                      '${branch.district?.districtName}, ${branch.state?.stateName}',
+                  selected: trainerCubit.selectedBranches.contains(
+                    branch.id,
+                  ),
                 ),
               );
             },

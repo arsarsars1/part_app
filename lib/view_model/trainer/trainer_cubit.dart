@@ -9,7 +9,7 @@ import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/admin/branch.dart';
 import 'package:part_app/model/service/admin/trainer.dart';
-import 'package:path/path.dart';
+import 'package:part_app/view_model/utils.dart';
 
 part 'trainer_state.dart';
 
@@ -23,6 +23,7 @@ class TrainerCubit extends Cubit<TrainerState> {
   List<Trainer>? _trainers = [];
 
   List<Trainer> _filteredTrainers = [];
+  List<int> _selectedBranches = [];
 
   Trainer? get trainer => _trainer;
 
@@ -38,7 +39,7 @@ class TrainerCubit extends Cubit<TrainerState> {
 
   File? image, doc1, doc2;
 
-  List<int> selectedBranches = [];
+  List<int> get selectedBranches => _selectedBranches;
 
   set trainer(Trainer? temp) {
     _trainer = temp;
@@ -55,12 +56,21 @@ class TrainerCubit extends Cubit<TrainerState> {
     Trainer? temp = await _trainerService.getTrainerById(trainerId: trainerId);
     if (temp != null && temp.trainerDetail != null) {
       trainer = temp;
-      selectedBranches =
+      _selectedBranches =
           trainer!.trainerDetail![0].branches?.map((e) => e.id).toList() ?? [];
       emit(TrainerDetailsLoaded());
       return;
     }
     emit(TrainerDetailsFailed('Failed to load the trainer details'));
+  }
+
+  void updateBranchSelection(int branchId) {
+    if (_selectedBranches.contains(branchId)) {
+      _selectedBranches.remove(branchId);
+    } else {
+      _selectedBranches.add(branchId);
+    }
+    emit(BranchesUpdated());
   }
 
   Future getTrainers() async {
@@ -141,20 +151,17 @@ class TrainerCubit extends Cubit<TrainerState> {
 
     /// prepare files for upload
     if (image != null) {
-      MultipartFile imageFile = await MultipartFile.fromFile(image!.path,
-          filename: basename(image!.path));
+      MultipartFile? imageFile = await Utils().generateMultiPartFile(image!);
       map.putIfAbsent('profile_pic', () => imageFile);
     }
 
     if (doc1 != null) {
-      MultipartFile doc1File = await MultipartFile.fromFile(doc1!.path,
-          filename: basename(doc1!.path));
+      MultipartFile? doc1File = await Utils().generateMultiPartFile(doc1!);
       map.putIfAbsent('document_1', () => doc1File);
     }
 
     if (doc2 != null) {
-      MultipartFile doc2File = await MultipartFile.fromFile(doc2!.path,
-          filename: basename(doc2!.path));
+      MultipartFile? doc2File = await Utils().generateMultiPartFile(doc2!);
 
       map.putIfAbsent('document_2', () => doc2File);
     }
@@ -195,18 +202,12 @@ class TrainerCubit extends Cubit<TrainerState> {
     data.removeWhere((key, value) => value == null);
 
     if (doc1 != null) {
-      MultipartFile doc1File = await MultipartFile.fromFile(
-        doc1.path,
-        filename: basename(doc1.path),
-      );
+      MultipartFile? doc1File = await Utils().generateMultiPartFile(doc1);
       data.putIfAbsent('document_1', () => doc1File);
     }
 
     if (doc2 != null) {
-      MultipartFile doc2File = await MultipartFile.fromFile(
-        doc2.path,
-        filename: basename(doc2.path),
-      );
+      MultipartFile? doc2File = await Utils().generateMultiPartFile(doc2);
 
       data.putIfAbsent('document_2', () => doc2File);
     }
@@ -231,10 +232,7 @@ class TrainerCubit extends Cubit<TrainerState> {
 
   Future updateProfilePic({required File profilePic}) async {
     emit(UpdatingTrainer());
-    MultipartFile picFile = await MultipartFile.fromFile(
-      profilePic.path,
-      filename: basename(profilePic.path),
-    );
+    MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
     Map<String, dynamic> data = {
       'profile_pic': picFile,
     };

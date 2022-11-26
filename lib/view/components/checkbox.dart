@@ -74,12 +74,9 @@ class _TextCheckBoxState extends State<TextCheckBox> {
               fit: BoxFit.contain,
               child: CupertinoSwitch(
                 trackColor: AppColors.grey500,
-                value: selected,
+                value: widget.selected,
                 onChanged: (value) {
-                  setState(() {
-                    selected = !selected;
-                  });
-                  widget.onChange(selected);
+                  widget.onChange(value);
                 },
               ),
             ),

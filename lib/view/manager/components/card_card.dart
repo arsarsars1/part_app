@@ -127,14 +127,20 @@ class ManagerCard extends StatelessWidget {
                 )
               ],
             ),
+            const SizedBox(
+              height: 4,
+            ),
             Align(
               alignment: Alignment.centerRight,
               child: Text(
-                manager.isActive == 0 ? 'Deactivated' : 'Active',
+                manager.managerDetail?[0].isActive == 0
+                    ? 'Deactivated'
+                    : 'Active',
                 maxLines: 1,
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      color:
-                          manager.isActive == 0 ? AppColors.primaryColor : null,
+                      color: manager.managerDetail?[0].isActive == 0
+                          ? AppColors.primaryColor
+                          : null,
                     ),
                 overflow: TextOverflow.ellipsis,
               ),

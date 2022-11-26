@@ -106,6 +106,9 @@ class _AddManagerState extends State<AddManager> {
                 CommonField(
                   title: 'Branch Manager Name *',
                   hint: 'Enter Manager Name',
+                  maxLines: 1,
+                  length: 50,
+                  textInputAction: TextInputAction.next,
                   onChange: (value) {
                     name = value;
                   },

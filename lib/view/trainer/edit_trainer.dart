@@ -94,6 +94,9 @@ class _EditTrainerState extends State<EditTrainer> {
                     title: 'Trainer Name *',
                     hint: 'Trainer Name',
                     initialValue: trainer?.name,
+                    maxLines: 1,
+                    length: 50,
+                    textInputAction: TextInputAction.next,
                     onChange: (value) {
                       name = value;
                     },
