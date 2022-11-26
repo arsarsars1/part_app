@@ -77,7 +77,7 @@ class ManagerCard extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          if (manager.whatsappNo != null) {
+                          if (manager.managerDetail?[0].whatsappNo != null) {
                             Launcher.openWhatsapp(
                               context: context,
                               text: '',

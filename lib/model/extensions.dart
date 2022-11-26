@@ -13,6 +13,10 @@ extension DateExtension on DateTime {
     return DateFormat('EEEE, MMMM dd').format(this);
   }
 
+  String toDDMMYYY() {
+    return DateFormat('dd MMM, yyyy').format(this);
+  }
+
   String toTime() {
     return DateFormat.jm().format(this);
   }

@@ -108,7 +108,7 @@ class TrainerList extends StatelessWidget {
                               context: context,
                               text: '',
                               number:
-                                  '+${trainer.user?.countryCode}${trainer.whatsappNo}',
+                                  '+${trainers[index].countryCode}${trainer.whatsappNo}',
                             );
                           }
                         },
@@ -128,9 +128,9 @@ class TrainerList extends StatelessWidget {
                       SizedBox(width: 10.w),
                       InkWell(
                         onTap: () {
-                          if (trainer.user?.mobileNo != null) {
+                          if (trainers[index].mobileNo != null) {
                             _makePhoneCall(
-                              '+${trainer.user?.countryCode}${trainer.user?.mobileNo}',
+                              '+${trainers[index].countryCode}${trainers[index].mobileNo}',
                               context,
                             );
                           }

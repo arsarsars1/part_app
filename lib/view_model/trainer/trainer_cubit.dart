@@ -38,7 +38,7 @@ class TrainerCubit extends Cubit<TrainerState> {
 
   File? image, doc1, doc2;
 
-  List<String> selectedBranches = [];
+  List<int> selectedBranches = [];
 
   set trainer(Trainer? temp) {
     _trainer = temp;
@@ -55,6 +55,8 @@ class TrainerCubit extends Cubit<TrainerState> {
     Trainer? temp = await _trainerService.getTrainerById(trainerId: trainerId);
     if (temp != null && temp.trainerDetail != null) {
       trainer = temp;
+      selectedBranches =
+          trainer!.trainerDetail![0].branches?.map((e) => e.id).toList() ?? [];
       emit(TrainerDetailsLoaded());
       return;
     }
@@ -77,9 +79,9 @@ class TrainerCubit extends Cubit<TrainerState> {
     _isActive = active;
     List<Trainer>? list = _trainers?.where((element) {
       if (active) {
-        return element.isActive == 1;
+        return element.trainerDetail?[0].isActive == 1;
       } else {
-        return element.isActive == 0;
+        return element.trainerDetail?[0].isActive == 0;
       }
     }).toList();
 

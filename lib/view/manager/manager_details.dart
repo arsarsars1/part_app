@@ -324,7 +324,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                           TitledText(
                             title: 'UPI ID',
                             titleColor: Colors.white,
-                            subText: '${managerDetails?.upiId}',
+                            subText: managerDetails?.upiId ?? 'UPI Not Added',
                           ),
                           InkWell(
                             onTap: () {
@@ -376,7 +376,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       TitledText(
                         title: 'Joining Date',
                         titleColor: Colors.white,
-                        subText: '${managerDetails?.doj?.toDateString()}',
+                        subText: '${managerDetails?.doj?.toDDMMYYY()}',
                       ),
                     ],
                   ),

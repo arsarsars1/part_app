@@ -167,7 +167,7 @@ class BranchCubit extends Cubit<BranchState> {
   }
 
   List<DropDownItem> dropDownBranches() {
-    return _branches
+    return _branches.where((element) => element.isActive ==1)
         .map((e) => DropDownItem(id: e.id, title: e.branchName, item: e))
         .toList();
   }

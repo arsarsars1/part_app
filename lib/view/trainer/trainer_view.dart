@@ -84,6 +84,14 @@ class _TrainerPageState extends State<TrainerPage> {
             maxLines: 1,
             hint: 'Search By Trainer Name Or Phone Number',
             dropDown: false,
+            textInputAction: TextInputAction.search,
+            onSubmit: (value) {
+              if (value.toString().isNotEmpty) {
+                cubit.searchTrainers(branchId, query: value);
+              } else {
+                cubit.getTrainers();
+              }
+            },
             onChange: (value) {
               if (value.toString().isNotEmpty) {
                 cubit.searchTrainers(branchId, query: value);

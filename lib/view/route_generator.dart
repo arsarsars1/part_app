@@ -27,6 +27,7 @@ import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
+import 'package:part_app/view/trainer/assigned_batches.dart';
 import 'package:part_app/view/trainer/edit_salary_trainer.dart';
 import 'package:part_app/view/trainer/edit_trainer.dart';
 import 'package:part_app/view/trainer/salary_details.dart';
@@ -220,6 +221,11 @@ class RouteGenerator {
       case BatchDetails.route:
         return MaterialPageRoute(
           builder: (_) => const BatchDetails(),
+          settings: settings,
+        );
+      case AssignedBatches.route:
+        return MaterialPageRoute(
+          builder: (_) => const AssignedBatches(),
           settings: settings,
         );
       case ManagerDetails.route:

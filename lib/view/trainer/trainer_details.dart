@@ -15,6 +15,7 @@ import 'package:part_app/view/components/launchers.dart';
 import 'package:part_app/view/components/profile_pictrue.dart';
 import 'package:part_app/view/components/titled_text.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/trainer/assigned_batches.dart';
 import 'package:part_app/view/trainer/edit_salary_trainer.dart';
 import 'package:part_app/view/trainer/edit_trainer.dart';
 import 'package:part_app/view/trainer/trainer_branches.dart';
@@ -87,7 +88,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                         CommonDialog(
                           context: context,
                           message:
-                              'Do You Want To ${trainer?.isActive == 1 ? 'Deactivate' : 'Activate'} The Branch Manager?',
+                              'Do You Want To ${trainer?.isActive == 1 ? 'Deactivate' : 'Activate'} The Trainer?',
                           subMessage: '${trainer?.name}',
                           onTap: () {
                             active = value;
@@ -107,7 +108,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                 ),
                 Launchers(
                   phoneNo:
-                      '+${trainer?.user?.countryCode}${trainer?.user?.mobileNo}',
+                      '+${cubit.trainer?.countryCode}${cubit.trainer?.mobileNo}',
                   whatsappNo:
                       '+${trainer?.user?.countryCode}${trainer?.whatsappNo}',
                   email: '${trainer?.email}',
@@ -179,31 +180,38 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                     ],
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(45),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    AssignedBatches.route,
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Spacer(),
-                      Text(
-                        'Assigned Batches',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              fontSize: 12,
-                            ),
-                      ),
-                      const Spacer(),
-                      const Icon(
-                        Icons.keyboard_arrow_right,
-                        size: 24,
-                        color: Colors.white,
-                      ),
-                    ],
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(45),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Spacer(),
+                        Text(
+                          'Assigned Batches',
+                          style:
+                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                                    fontSize: 12,
+                                  ),
+                        ),
+                        const Spacer(),
+                        const Icon(
+                          Icons.keyboard_arrow_right,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -290,13 +298,22 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                         subText: '${trainer?.email}',
                       ),
                       TitledText(
+                        title: 'Area Of Expertise',
+                        subText: trainer?.expertise ?? 'NA',
+                      ),
+                      TitledText(
                         title: 'Address',
                         subText: '${trainer?.address}',
                       ),
                       const SizedBox(
-                        height: 24,
+                        height: 16,
                       ),
-                      const Text('ID Proof Images Max Of 2 Nos.'),
+                      Text(
+                        'ID Proof Images Max Of 2 Nos.',
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: AppColors.primaryColor,
+                            ),
+                      ),
                       const SizedBox(
                         height: 16,
                       ),
@@ -341,7 +358,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                           TitledText(
                             title: 'UPI ID',
                             titleColor: Colors.white,
-                            subText: '${trainer?.upiId}',
+                            subText: trainer?.upiId ?? 'UPI Not Added',
                           ),
                           GestureDetector(
                             onTap: () {
@@ -393,7 +410,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       TitledText(
                         title: 'Joining Date',
                         titleColor: Colors.white,
-                        subText: '${trainer?.doj?.toDateString()}',
+                        subText: '${trainer?.doj?.toDDMMYYY()}',
                       ),
                     ],
                   ),

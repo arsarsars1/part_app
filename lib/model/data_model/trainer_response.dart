@@ -62,6 +62,7 @@ abstract class Trainer with _$Trainer {
     String? upiId,
     String? salaryType,
     String? address,
+    String? expertise,
     int? salaryDate,
     int? salaryAmount,
     String? profilePic,

@@ -246,6 +246,7 @@ class _AddTrainerState extends State<AddTrainer> {
                             countryCode: 91,
                             whatsappNo: whatsappNo ?? phone,
                             mobileNo: phone,
+                            expertise: areaOfExpertise,
                             dob: dob,
                             gender: gender,
                             address: address,

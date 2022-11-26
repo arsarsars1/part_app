@@ -79,21 +79,23 @@ class _EditSalaryTrainerState extends State<EditSalaryTrainer> {
                   initialValue: trainer?.upiId,
                   title: 'UPI ID',
                   hint: 'Enter UPI Id',
+                  maxLines: 1,
+                  textInputAction: TextInputAction.next,
                   onChange: (value) {
                     upiId = value;
                   },
-                  validator: (value) {
-                    return value == null || value.toString().isEmpty
-                        ? 'Please enter your upi id.'
-                        : null;
-                  },
+                  // validator: (value) {
+                  //   return value == null || value.toString().isEmpty
+                  //       ? 'Please enter your upi id.'
+                  //       : null;
+                  // },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 CommonField(
                   initialValue: '${trainer?.salaryAmount}',
-                  title: 'Salary Amount',
+                  title: 'Salary Amount *',
                   hint: 'Enter Salary',
                   inputType:
                       const TextInputType.numberWithOptions(decimal: true),
@@ -114,7 +116,7 @@ class _EditSalaryTrainerState extends State<EditSalaryTrainer> {
                   onTap: datePicker,
                   disabled: true,
                   hint: 'dd/mm/yyyy',
-                  title: 'Joining Date',
+                  title: 'Joining Date *',
                   validator: (value) {
                     return value == null || value.toString().isEmpty
                         ? 'Please select joining date.'
@@ -127,7 +129,7 @@ class _EditSalaryTrainerState extends State<EditSalaryTrainer> {
                 ),
                 CommonField(
                   initialValue: '${trainer?.salaryDate}',
-                  title: 'Pay Day',
+                  title: 'Pay Day *',
                   hint: 'Eg: 30',
                   inputType:
                       const TextInputType.numberWithOptions(decimal: false),
@@ -159,15 +161,15 @@ class _EditSalaryTrainerState extends State<EditSalaryTrainer> {
               onTap: () {
                 formKey.currentState?.save();
                 if (formKey.currentState!.validate()) {
+                  if (upiId == '') {
+                    upiId = null;
+                  }
                   TrainerRequest request = TrainerRequest(
                     upiId: upiId,
                     salaryAmount: amount,
                     salaryType: 'monthly',
                     doj: joiningDate,
                     salaryDate: int.parse(payDay!),
-                    // mobileNo: trainerCubit.trainer?.mobileNo,
-                    // countryCode: 91,
-                    // name: trainerCubit.trainer?.name,
                   );
 
                   trainerCubit.updateTrainer(request);

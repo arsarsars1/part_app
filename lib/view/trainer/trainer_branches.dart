@@ -19,8 +19,6 @@ class TrainerBranches extends StatefulWidget {
 }
 
 class _TrainerBranchesState extends State<TrainerBranches> {
-  List<int> selected = [];
-
   @override
   void initState() {
     super.initState();
@@ -69,15 +67,15 @@ class _TrainerBranchesState extends State<TrainerBranches> {
                     child: TextCheckBox(
                       onChange: (value) {
                         if (value) {
-                          selected.add(branch.id);
+                          trainerCubit.selectedBranches.add(branch.id);
                         } else {
-                          selected.remove(branch.id);
+                          trainerCubit.selectedBranches.remove(branch.id);
                         }
                       },
                       title: branch.branchName ?? 'N/A',
                       subTitle:
                           '${branch.district?.districtName}, ${branch.state?.stateName}',
-                      selected: selected.contains(
+                      selected: trainerCubit.selectedBranches.contains(
                         branch.id,
                       ),
                     ),
@@ -97,7 +95,8 @@ class _TrainerBranchesState extends State<TrainerBranches> {
               onTap: () {
                 trainerCubit.updateTrainer(
                   TrainerRequest(
-                    branchId: selected.map((e) => '$e').toList(),
+                    branchId:
+                        trainerCubit.selectedBranches.map((e) => '$e').toList(),
                   ),
                 );
               },

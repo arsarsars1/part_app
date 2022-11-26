@@ -1,10 +1,12 @@
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/branch_response.dart';
+import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/constants/default_values.dart';
 
 class BatchModel {
   final String name;
-  final String trainers;
+  final String trainersString;
   final String branchName;
   final int id;
   final List<String> days;
@@ -12,10 +14,11 @@ class BatchModel {
   final String subjectName;
   final int? admissionFee;
   final int? fee;
+  final List<Trainer>? trainers;
 
   BatchModel({
     required this.name,
-    required this.trainers,
+    required this.trainersString,
     required this.branchName,
     required this.id,
     required this.days,
@@ -23,6 +26,7 @@ class BatchModel {
     required this.subjectName,
     this.admissionFee,
     this.fee,
+    this.trainers,
   });
 
   factory BatchModel.fromEntity(Batch batch) {
@@ -37,7 +41,7 @@ class BatchModel {
     }).toList();
     return BatchModel(
       name: batch.batchName ?? '',
-      trainers: trainer.trimRight().removeLast(),
+      trainersString: trainer.trimRight().removeLast(),
       branchName: batch.branch?.branchName ?? 'NA',
       id: batch.id ?? 0,
       days: days ?? [],
@@ -45,6 +49,7 @@ class BatchModel {
       subjectName: batch.subject?.subjectName ?? 'NA',
       admissionFee: batch.admissionFees,
       fee: batch.feeAmount,
+      trainers: batch.trainers,
     );
   }
 }

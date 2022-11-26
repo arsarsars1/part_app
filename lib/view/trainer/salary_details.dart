@@ -30,13 +30,11 @@ class _SalaryDetailsState extends State<SalaryDetails> {
   String? upiId;
   String? amount;
   String? payDay;
+  var formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    // scrollController.addListener(() {
-    //   FocusManager.instance.primaryFocus?.unfocus();
-    // });
   }
 
   @override
@@ -48,98 +46,102 @@ class _SalaryDetailsState extends State<SalaryDetails> {
           title: widget.trainer
               ? 'Add Trainer Salary Details'
               : 'Add Branch Manager Salary Details'),
-      body: BlocListener<ManagerCubit, ManagerState>(
-        listener: (context, state) {
-          if (state is ManagerCreated) {
-            Navigator.popUntil(
-              context,
-              ModalRoute.withName(ManagerPage.route),
-            );
-            Alert(context).show(message: 'New manager created.');
-          } else if (state is CreatingManager) {
-            Loader(context).show();
-          } else if (state is ManagerCreationFailed) {
-            Navigator.pop(context);
-            Alert(context).show(message: state.message);
-          }
-        },
-        child: GestureDetector(
-          onTap: () {
-            FocusManager.instance.primaryFocus?.unfocus();
+      body: Form(
+        key: formKey,
+        child: BlocListener<ManagerCubit, ManagerState>(
+          listener: (context, state) {
+            if (state is ManagerCreated) {
+              Navigator.popUntil(
+                context,
+                ModalRoute.withName(ManagerPage.route),
+              );
+              Alert(context).show(message: 'New manager created.');
+            } else if (state is CreatingManager) {
+              Loader(context).show();
+            } else if (state is ManagerCreationFailed) {
+              Navigator.pop(context);
+              Alert(context).show(message: state.message);
+            }
           },
-          child: ListView(
-            controller: scrollController,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'UPI ID',
-                hint: 'Enter UPI Id',
-                onChange: (value) {
-                  upiId = value;
-                },
-                validator: (value) {
-                  // return value == null || value.toString().isEmpty
-                  //     ? 'Please enter trainer name.'
-                  //     : null;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'Salary Amount *',
-                hint: 'Enter Salary',
-                inputType: const TextInputType.numberWithOptions(decimal: true),
-                onChange: (value) {
-                  amount = value;
-                },
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please enter salary amount.'
-                      : null;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                controller: joiningDateController,
-                onTap: datePicker,
-                disabled: true,
-                hint: 'dd/mm/yyyy',
-                title: 'Joining Date *',
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please enter joining date.'
-                      : null;
-                },
-                onChange: (value) {},
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'Pay Day *',
-                hint: 'Eg: 30',
-                inputType:
-                    const TextInputType.numberWithOptions(decimal: false),
-                phoneField: true,
-                length: 2,
-                onChange: (value) {
-                  payDay = value;
-                  if (value.toString().length == 2) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  }
-                },
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please enter pay day.'
-                      : null;
-                },
-              ),
-            ],
+          child: GestureDetector(
+            onTap: () {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: ListView(
+              controller: scrollController,
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonField(
+                  title: 'UPI ID',
+                  hint: 'Enter UPI Id',
+                  onChange: (value) {
+                    upiId = value;
+                  },
+                  validator: (value) {
+                    // return value == null || value.toString().isEmpty
+                    //     ? 'Please enter trainer name.'
+                    //     : null;
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonField(
+                  title: 'Salary Amount *',
+                  hint: 'Enter Salary',
+                  inputType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  onChange: (value) {
+                    amount = value;
+                  },
+                  validator: (value) {
+                    return value == null || value.toString().isEmpty
+                        ? 'Please enter salary amount.'
+                        : null;
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonField(
+                  controller: joiningDateController,
+                  onTap: datePicker,
+                  disabled: true,
+                  hint: 'dd/mm/yyyy',
+                  title: 'Joining Date *',
+                  validator: (value) {
+                    return value == null || value.toString().isEmpty
+                        ? 'Please enter joining date.'
+                        : null;
+                  },
+                  onChange: (value) {},
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonField(
+                  title: 'Pay Day *',
+                  hint: 'Eg: 30',
+                  inputType:
+                      const TextInputType.numberWithOptions(decimal: false),
+                  phoneField: true,
+                  length: 2,
+                  onChange: (value) {
+                    payDay = value;
+                    if (value.toString().length == 2) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    }
+                  },
+                  validator: (value) {
+                    return value == null || value.toString().isEmpty
+                        ? 'Please enter pay day.'
+                        : null;
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -150,6 +152,10 @@ class _SalaryDetailsState extends State<SalaryDetails> {
           child: Center(
             child: Button(
               onTap: () {
+                formKey.currentState?.save();
+                if (!formKey.currentState!.validate()) {
+                  return;
+                }
                 if (widget.trainer) {
                   TrainerRequest request = trainerCubit.request.copyWith(
                     upiId: upiId,

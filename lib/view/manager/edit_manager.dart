@@ -156,6 +156,9 @@ class _EditManagerState extends State<EditManager> {
                     hint: 'Eg: 9876543210',
                     onChange: (value) {
                       phone = value;
+                      if (value.toString().length >= 10) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      }
                     },
                     validator: (value) {
                       if (value == null || value.toString().isEmpty) {

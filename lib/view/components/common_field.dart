@@ -28,38 +28,40 @@ class CommonField extends StatelessWidget {
   final CrossAxisAlignment crossAxisAlignment;
   final EdgeInsets? padding;
   final FocusNode? node;
+  final ValueChanged<String>? onSubmit;
 
   final Icon? prefixIcon;
 
-  const CommonField(
-      {Key? key,
-      required this.title,
-      this.hint,
-      this.node,
-      this.dropDown = false,
-      this.dropDownItems,
-      this.defaultItem,
-      this.initialValue,
-      this.fillColor,
-      this.textColor,
-      this.maxLines,
-      this.onTap,
-      this.controller,
-      this.inputType,
-      this.textAlign,
-      this.textInputAction,
-      this.letterSpacing,
-      this.suffixIcon,
-      this.length,
-      this.validator,
-      this.padding,
-      this.crossAxisAlignment = CrossAxisAlignment.start,
-      this.phoneField = false,
-      this.singleLine = false,
-      required this.onChange,
-      this.disabled = false,
-      this.prefixIcon})
-      : super(key: key);
+  const CommonField({
+    Key? key,
+    required this.title,
+    this.hint,
+    this.node,
+    this.dropDown = false,
+    this.dropDownItems,
+    this.defaultItem,
+    this.initialValue,
+    this.fillColor,
+    this.textColor,
+    this.maxLines,
+    this.onTap,
+    this.controller,
+    this.inputType,
+    this.textAlign,
+    this.textInputAction,
+    this.letterSpacing,
+    this.suffixIcon,
+    this.length,
+    this.validator,
+    this.padding,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+    this.phoneField = false,
+    this.singleLine = false,
+    required this.onChange,
+    this.disabled = false,
+    this.onSubmit,
+    this.prefixIcon,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +131,7 @@ class CommonField extends StatelessWidget {
                   onSaved: (value) {
                     onChange(value);
                   },
+                  onFieldSubmitted: onSubmit,
                   textInputAction: textInputAction,
                   buildCounter: (
                     BuildContext context, {

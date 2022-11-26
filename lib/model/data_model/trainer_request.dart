@@ -16,6 +16,7 @@ abstract class TrainerRequest with _$TrainerRequest {
     String? whatsappNo,
     String? email,
     String? salaryType,
+    String? expertise,
     int? salaryDate,
     String? salaryAmount,
     @JsonKey(name: "branch_id[]") List<String>? branchId,

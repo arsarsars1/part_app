@@ -65,7 +65,7 @@ class Launcher {
     // Android
     var uri = 'sms:$mobileNumber?body=';
     if (await canLaunchUrl(Uri.parse(uri))) {
-      await canLaunchUrl(Uri.parse(uri));
+      await launchUrl(Uri.parse(uri));
     } else {
       Alert(context).show(message: "SMS app not available.");
       // // iOS

@@ -7,8 +7,9 @@ import 'package:part_app/view/constants/constant.dart';
 
 class SelectedTrainers extends StatefulWidget {
   final ValueChanged<List<int>> selectedTrainers;
+  final List<Trainer>? trainers;
 
-  const SelectedTrainers({Key? key, required this.selectedTrainers})
+  const SelectedTrainers({Key? key, required this.selectedTrainers, this.trainers})
       : super(key: key);
 
   @override
@@ -19,32 +20,48 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
   List<Trainer> selectedTrainers = [];
 
   @override
+  void initState() {
+    super.initState();
+    if(widget.trainers != null) {
+      selectedTrainers.addAll(widget.trainers!);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width / 6.5;
     return Wrap(
+      alignment: WrapAlignment.start,
       children: [
         ...selectedTrainers.map(
           (e) {
-            var element = e.trainerDetail?[0];
-            return Container(
-              margin: const EdgeInsets.only(
-                right: 16,
-                bottom: 8,
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: AppColors.grey700,
-                  width: 2,
+            var detail = e.trainerDetail?[0] ?? e;
+            return Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(
+                    right: 16,
+                    bottom: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: AppColors.grey700,
+                      width: 2,
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  width: width,
+                  height: width,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(45),
+                    child: CachedImage(
+                      '${F.baseUrl}/admin/images/trainer/${detail.id}/${detail.profilePic}',
+                    ).image(),
+                  ),
                 ),
-                shape: BoxShape.circle,
-              ),
-              width: 68,
-              height: 68,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(45),
-                child: CachedImage(
-                  '${F.baseUrl}/admin/images/trainer/${element?.id}/${element?.profilePic}',
-                ).image(),
-              ),
+                const SizedBox(height: 4,),
+                Text('${detail.name}'),
+              ],
             );
           },
         ),
@@ -76,6 +93,7 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
             margin: const EdgeInsets.only(
               right: 16,
               bottom: 8,
+              top: 8,
             ),
             decoration: BoxDecoration(
               color: AppColors.grey400,
@@ -85,8 +103,8 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
               ),
               shape: BoxShape.circle,
             ),
-            width: 68,
-            height: 68,
+            width: width,
+            height: width,
             child: const Icon(Icons.add),
           ),
         ),

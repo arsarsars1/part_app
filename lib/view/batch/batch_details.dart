@@ -119,6 +119,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                       height: 16,
                     ),
                     SelectedTrainers(
+                      trainers: batch?.trainers,
                       selectedTrainers: (List<int> value) {
                         // selectedTrainers = value;
                       },

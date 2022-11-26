@@ -63,7 +63,7 @@ class BatchItem extends StatelessWidget {
               height: 4,
             ),
             Text(
-              'Trainer - ${batch.trainers}',
+              'Trainer - ${batch.trainersString}',
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     color: AppColors.primaryColor,
                   ),
