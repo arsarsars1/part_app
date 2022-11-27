@@ -20,8 +20,6 @@ class AddTrainerBranches extends StatefulWidget {
 }
 
 class _AddTrainerBranchesState extends State<AddTrainerBranches> {
-  Set<String> selected = {};
-
   @override
   void initState() {
     super.initState();
@@ -57,28 +55,29 @@ class _AddTrainerBranchesState extends State<AddTrainerBranches> {
             itemCount: cubit.branches.length,
             itemBuilder: (context, index) {
               Branch branch = cubit.branches[index];
-              return Container(
-                decoration: BoxDecoration(
-                  color: AppColors.liteDark,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: TextCheckBox(
-                  onChange: (value) {
-                    if (value) {
-                      trainerCubit.selectedBranches.add(branch.id);
-                    } else {
-                      trainerCubit.selectedBranches.remove(branch.id);
-                    }
-                  },
-                  title: branch.branchName ?? 'N/A',
-                  subTitle:
-                      '${branch.district?.districtName}, ${branch.state?.stateName}',
-                  selected: trainerCubit.selectedBranches.contains(
-                    branch.id,
-                  ),
-                ),
+              return BlocBuilder<TrainerCubit, TrainerState>(
+                buildWhen: (prv, crr) => crr is BranchesUpdated,
+                builder: (context, state) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.liteDark,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: TextCheckBox(
+                      onChange: (value) {
+                        trainerCubit.updateBranchSelection(branch.id);
+                      },
+                      title: branch.branchName ?? 'N/A',
+                      subTitle:
+                          '${branch.district?.districtName}, ${branch.state?.stateName}',
+                      selected: trainerCubit.selectedBranches.contains(
+                        branch.id,
+                      ),
+                    ),
+                  );
+                },
               );
             },
           ),
@@ -92,7 +91,8 @@ class _AddTrainerBranchesState extends State<AddTrainerBranches> {
             child: Button(
               onTap: () {
                 TrainerRequest request = trainerCubit.request.copyWith(
-                  branchId: selected.toList(),
+                  branchId:
+                      trainerCubit.selectedBranches.map((e) => '$e').toList(),
                 );
 
                 // update the data in cubit

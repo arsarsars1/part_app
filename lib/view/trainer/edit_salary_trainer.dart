@@ -162,9 +162,9 @@ class _EditSalaryTrainerState extends State<EditSalaryTrainer> {
               onTap: () {
                 formKey.currentState?.save();
                 if (formKey.currentState!.validate()) {
-                  if (upiId == '') {
-                    upiId = null;
-                  }
+                  // if (upiId == '') {
+                  //   upiId = null;
+                  // }
                   TrainerRequest request = TrainerRequest(
                     upiId: upiId,
                     salaryAmount: amount,

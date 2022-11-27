@@ -105,6 +105,8 @@ class BatchCubit extends Cubit<BatchState> {
     if (response?.status == 1 && response?.batch != null) {
       _batch = BatchModel.fromEntity(response!.batch!);
       emit(FetchedBatch());
+    } else {
+      emit(FetchBatchFailed('Failed to fetch details.'));
     }
   }
 }

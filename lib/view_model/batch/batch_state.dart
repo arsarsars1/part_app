@@ -26,3 +26,9 @@ class CreateBatchFailed extends BatchState {
 class FetchingBatch extends BatchState {}
 
 class FetchedBatch extends BatchState {}
+
+class FetchBatchFailed extends BatchState {
+  final String message;
+
+  FetchBatchFailed(this.message);
+}

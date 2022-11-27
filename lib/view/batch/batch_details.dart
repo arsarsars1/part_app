@@ -29,6 +29,11 @@ class _BatchDetailsState extends State<BatchDetails> {
       body: BlocBuilder<BatchCubit, BatchState>(
         builder: (context, state) {
           BatchModel? batch = context.read<BatchCubit>().batch;
+          if (state is FetchingBatch) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Column(
             children: [
               Container(
