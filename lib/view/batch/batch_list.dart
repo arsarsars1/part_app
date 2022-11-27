@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/batch/add_batch.dart';
 import 'package:part_app/view/batch/batch_details.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
@@ -46,6 +47,7 @@ class _BatchesPageState extends State<BatchesPage> {
               child: Button(
                 height: 30.h,
                 onTap: () {
+                  cubit.days.clear();
                   Navigator.pushNamed(context, AddBatch.route);
                 },
                 title: 'Add New Batch',
@@ -92,12 +94,16 @@ class _BatchesPageState extends State<BatchesPage> {
                 shrinkWrap: true,
                 itemCount: cubit.batches.length,
                 itemBuilder: (context, index) {
+                  BatchModel batch = cubit.batches[index];
                   return BatchItem(
-                    batch: cubit.batches[index],
+                    batch: batch,
                     onTap: () {
                       context
                           .read<BatchCubit>()
-                          .getBatch(batchId: '${cubit.batches[index].id}');
+                          .getBatch(batchId: '${batch.id}');
+                      context
+                          .read<BranchCubit>()
+                          .getBranchTrainers(branchId: '${batch.branchId}');
                       Navigator.pushNamed(context, BatchDetails.route);
                     },
                   );

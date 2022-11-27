@@ -5,9 +5,14 @@ import 'package:part_app/view/constants/constant.dart';
 class BatchItem extends StatelessWidget {
   final BatchModel batch;
   final VoidCallback onTap;
+  final bool hideTrainer;
 
-  const BatchItem({Key? key, required this.batch, required this.onTap})
-      : super(key: key);
+  const BatchItem({
+    Key? key,
+    required this.batch,
+    required this.onTap,
+    this.hideTrainer = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,30 +51,60 @@ class BatchItem extends StatelessWidget {
             const SizedBox(
               height: 4,
             ),
-            Text(
-              batch.branchName,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    color: AppColors.primaryColor,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  batch.branchName,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: AppColors.primaryColor,
+                      ),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${batch.courseName}, ${batch.subjectName}',
+                        style:
+                            Theme.of(context).textTheme.bodyText1?.copyWith(),
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      if (!hideTrainer)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Trainer - ${batch.trainersString}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(
+                                    color: AppColors.primaryColor,
+                                  ),
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                          ],
+                        ),
+                    ],
                   ),
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Text(
-              '${batch.courseName}, ${batch.subjectName}',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(),
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Text(
-              'Trainer - ${batch.trainersString}',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    color: AppColors.primaryColor,
-                  ),
-            ),
-            const SizedBox(
-              height: 16,
+                ),
+                const Icon(
+                  Icons.keyboard_arrow_right,
+                  color: Colors.white,
+                ),
+              ],
             ),
             ListView.builder(
               shrinkWrap: true,

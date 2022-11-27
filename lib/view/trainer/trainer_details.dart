@@ -339,9 +339,6 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                   height: 8,
                 ),
                 const Center(child: Text('Salary Details')),
-                const SizedBox(
-                  height: 16,
-                ),
                 Container(
                   decoration: BoxDecoration(
                     color: AppColors.liteDark,

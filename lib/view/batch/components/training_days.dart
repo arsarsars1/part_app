@@ -36,12 +36,22 @@ class TrainingDays extends StatelessWidget {
                     bool selected = cubit.days
                         .where((element) => element.day == data.key)
                         .isNotEmpty;
+
                     return GestureDetector(
                       onTap: () {
+                        Days? days;
+                        var items = cubit.days
+                            .where((element) => element.day == data.key)
+                            .toList();
+                        if (items.isNotEmpty) {
+                          days = items[0];
+                        }
                         showDialog(
                           context: context,
                           builder: (context) {
                             return ClassTime(
+                              start: days?.startTime,
+                              end: days?.endTime,
                               day: data.key,
                               startTime: (TimeOfDay value) {},
                               endTime: (TimeOfDay value) {},
@@ -78,6 +88,8 @@ class TrainingDays extends StatelessWidget {
 
 class ClassTime extends StatefulWidget {
   final int day;
+  final String? start;
+  final String? end;
   final ValueChanged<TimeOfDay> startTime;
   final ValueChanged<TimeOfDay> endTime;
 
@@ -85,7 +97,9 @@ class ClassTime extends StatefulWidget {
       {Key? key,
       required this.startTime,
       required this.endTime,
-      required this.day})
+      required this.day,
+      this.start,
+      this.end})
       : super(key: key);
 
   @override
@@ -95,6 +109,13 @@ class ClassTime extends StatefulWidget {
 class _ClassTimeState extends State<ClassTime> {
   String? startTime;
   String? endTime;
+
+  @override
+  void initState() {
+    startTime = widget.start;
+    endTime = widget.end;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

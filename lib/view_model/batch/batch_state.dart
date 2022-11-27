@@ -23,6 +23,16 @@ class CreateBatchFailed extends BatchState {
   CreateBatchFailed(this.message);
 }
 
+class UpdatingBatch extends BatchState {}
+
+class UpdatedBatch extends BatchState {}
+
+class UpdateBatchFailed extends BatchState {
+  final String message;
+
+  UpdateBatchFailed(this.message);
+}
+
 class FetchingBatch extends BatchState {}
 
 class FetchedBatch extends BatchState {}

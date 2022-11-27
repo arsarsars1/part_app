@@ -1,5 +1,4 @@
 import 'package:part_app/model/data_model/batch_response.dart';
-import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/constants/default_values.dart';
@@ -9,6 +8,7 @@ class BatchModel {
   final String trainersString;
   final String branchName;
   final int id;
+  final int? branchId;
   final List<String> days;
   final String courseName;
   final String subjectName;
@@ -24,6 +24,7 @@ class BatchModel {
     required this.days,
     required this.courseName,
     required this.subjectName,
+    this.branchId,
     this.admissionFee,
     this.fee,
     this.trainers,
@@ -40,6 +41,7 @@ class BatchModel {
       return '${day.substring(0, 3)} ${e.startTime} - ${e.endTime}';
     }).toList();
     return BatchModel(
+      branchId: batch.branch?.id,
       name: batch.batchName ?? '',
       trainersString: trainer.trimRight().removeLast(),
       branchName: batch.branch?.branchName ?? 'NA',

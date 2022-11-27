@@ -36,11 +36,25 @@ class BatchService {
   }
 
   Future<Common?> createBatch(BatchRequest request) async {
-    print(request.toJson());
     try {
       var response = await _apiClient.post(
         postPath: '/admin/batches',
         data: request.toJson(),
+        formData: true,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> updateBatch(BatchRequest request, int? batchId) async {
+    var data = request.toJson();
+    data.removeWhere((key, value) => value == null);
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/batches/$batchId',
+        data: data,
         formData: true,
       );
       return commonFromJson(jsonEncode(response));
@@ -68,6 +82,21 @@ class BatchService {
       );
 
       return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<List<Batch>?> getTrainerBatches(int? trainerId) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/trainers/$trainerId/batches',
+      );
+
+      var map = response['batches'] as List;
+
+      var items = map.map((e) => Batch.fromJson(e));
+      return items.toList();
     } catch (e) {
       return null;
     }

@@ -21,6 +21,10 @@ class BranchCubit extends Cubit<BranchState> {
 
   List<Trainer>? get trainers => _trainers;
 
+  List<Trainer>? get activeTrainers => _trainers
+      ?.where((element) => element.trainerDetail?[0].isActive == 1)
+      .toList();
+
   Branch? get branch => _branch;
 
   set branch(Branch? tempBranch) {
@@ -179,5 +183,12 @@ class BranchCubit extends Cubit<BranchState> {
             (element) => element.managerDetail == null && element.isActive == 1)
         .map((e) => DropDownItem(id: e.id, title: e.branchName, item: e))
         .toList();
+  }
+
+  DropDownItem? initialBranch(int? branchId) {
+    if (branchId == null) return null;
+    Branch? item = _branches.firstWhere((element) => element.id == branchId);
+
+    return DropDownItem(id: item.id, title: item.branchName, item: item);
   }
 }

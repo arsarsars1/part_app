@@ -6,10 +6,11 @@ import 'package:part_app/view/components/cached_image.dart';
 import 'package:part_app/view/constants/constant.dart';
 
 class SelectedTrainers extends StatefulWidget {
-  final ValueChanged<List<int>> selectedTrainers;
+  final ValueChanged<List<int?>> selectedTrainers;
   final List<Trainer>? trainers;
 
-  const SelectedTrainers({Key? key, required this.selectedTrainers, this.trainers})
+  const SelectedTrainers(
+      {Key? key, required this.selectedTrainers, this.trainers})
       : super(key: key);
 
   @override
@@ -22,7 +23,7 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
   @override
   void initState() {
     super.initState();
-    if(widget.trainers != null) {
+    if (widget.trainers != null) {
       selectedTrainers.addAll(widget.trainers!);
     }
   }
@@ -59,7 +60,9 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                     ).image(),
                   ),
                 ),
-                const SizedBox(height: 4,),
+                const SizedBox(
+                  height: 4,
+                ),
                 Text('${detail.name}'),
               ],
             );
@@ -73,11 +76,12 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                 return AlertDialog(
                   backgroundColor: AppColors.liteDark,
                   content: AddTrainersDialog(
-                    selectedItems: selectedTrainers,
+                    selectedItems: widget.trainers ?? [],
                     onSave: (List<Trainer> value) {
                       widget.selectedTrainers(
-                        value.map((e) => e.trainerDetail![0].id).toList(),
+                        value.map((e) => e.trainerDetail?[0].id).toList(),
                       );
+
                       setState(() {
                         selectedTrainers = value;
                       });

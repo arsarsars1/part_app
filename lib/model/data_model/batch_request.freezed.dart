@@ -28,7 +28,7 @@ mixin _$BatchRequest {
   int? get feeAmount => throw _privateConstructorUsedError;
   int? get admissionFees => throw _privateConstructorUsedError;
   @JsonKey(name: 'trainers[]')
-  List<int>? get trainers => throw _privateConstructorUsedError;
+  List<int?>? get trainers => throw _privateConstructorUsedError;
   @JsonKey(name: 'days[]')
   List<String>? get days => throw _privateConstructorUsedError;
 
@@ -52,7 +52,7 @@ abstract class $BatchRequestCopyWith<$Res> {
       String? batchStatus,
       int? feeAmount,
       int? admissionFees,
-      @JsonKey(name: 'trainers[]') List<int>? trainers,
+      @JsonKey(name: 'trainers[]') List<int?>? trainers,
       @JsonKey(name: 'days[]') List<String>? days});
 }
 
@@ -111,7 +111,7 @@ class _$BatchRequestCopyWithImpl<$Res, $Val extends BatchRequest>
       trainers: freezed == trainers
           ? _value.trainers
           : trainers // ignore: cast_nullable_to_non_nullable
-              as List<int>?,
+              as List<int?>?,
       days: freezed == days
           ? _value.days
           : days // ignore: cast_nullable_to_non_nullable
@@ -136,7 +136,7 @@ abstract class _$$_BatchRequestCopyWith<$Res>
       String? batchStatus,
       int? feeAmount,
       int? admissionFees,
-      @JsonKey(name: 'trainers[]') List<int>? trainers,
+      @JsonKey(name: 'trainers[]') List<int?>? trainers,
       @JsonKey(name: 'days[]') List<String>? days});
 }
 
@@ -193,7 +193,7 @@ class __$$_BatchRequestCopyWithImpl<$Res>
       trainers: freezed == trainers
           ? _value._trainers
           : trainers // ignore: cast_nullable_to_non_nullable
-              as List<int>?,
+              as List<int?>?,
       days: freezed == days
           ? _value._days
           : days // ignore: cast_nullable_to_non_nullable
@@ -214,7 +214,7 @@ class _$_BatchRequest implements _BatchRequest {
       this.batchStatus,
       this.feeAmount,
       this.admissionFees,
-      @JsonKey(name: 'trainers[]') final List<int>? trainers,
+      @JsonKey(name: 'trainers[]') final List<int?>? trainers,
       @JsonKey(name: 'days[]') final List<String>? days})
       : _trainers = trainers,
         _days = days;
@@ -236,10 +236,10 @@ class _$_BatchRequest implements _BatchRequest {
   final int? feeAmount;
   @override
   final int? admissionFees;
-  final List<int>? _trainers;
+  final List<int?>? _trainers;
   @override
   @JsonKey(name: 'trainers[]')
-  List<int>? get trainers {
+  List<int?>? get trainers {
     final value = _trainers;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
@@ -321,7 +321,7 @@ abstract class _BatchRequest implements BatchRequest {
       final String? batchStatus,
       final int? feeAmount,
       final int? admissionFees,
-      @JsonKey(name: 'trainers[]') final List<int>? trainers,
+      @JsonKey(name: 'trainers[]') final List<int?>? trainers,
       @JsonKey(name: 'days[]') final List<String>? days}) = _$_BatchRequest;
 
   factory _BatchRequest.fromJson(Map<String, dynamic> json) =
@@ -343,7 +343,7 @@ abstract class _BatchRequest implements BatchRequest {
   int? get admissionFees;
   @override
   @JsonKey(name: 'trainers[]')
-  List<int>? get trainers;
+  List<int?>? get trainers;
   @override
   @JsonKey(name: 'days[]')
   List<String>? get days;

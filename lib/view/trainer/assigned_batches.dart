@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
+import 'package:part_app/view/batch/batch_details.dart';
+import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -13,6 +16,16 @@ class AssignedBatches extends StatefulWidget {
 }
 
 class _AssignedBatchesState extends State<AssignedBatches> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var cubit = context.read<TrainerCubit>();
+      Trainer? trainer = cubit.trainer?.trainerDetail![0];
+      context.read<BatchCubit>().getBatchesForTrainer(trainer?.id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<TrainerCubit>();
@@ -28,9 +41,40 @@ class _AssignedBatchesState extends State<AssignedBatches> {
               trainer?.name ?? 'NA',
               textAlign: TextAlign.center,
             ),
-            // ListView.builder(
-            //   itemBuilder: (context, index) {},
-            // ),
+            BlocBuilder<BatchCubit, BatchState>(
+              buildWhen: (prv, crr) => crr is BatchesFetched,
+              builder: (context, state) {
+                var batchCubit = context.read<BatchCubit>();
+                if (batchCubit.batches.isEmpty) {
+                  return const Expanded(
+                    child: Center(
+                      child: Text('No batches assigned.'),
+                    ),
+                  );
+                }
+                return ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: batchCubit.batches.length,
+                  itemBuilder: (context, index) {
+                    BatchModel batch = batchCubit.batches[index];
+                    return BatchItem(
+                      hideTrainer: true,
+                      batch: batch,
+                      onTap: () {
+                        context
+                            .read<BatchCubit>()
+                            .getBatch(batchId: '${batch.id}');
+                        context
+                            .read<BranchCubit>()
+                            .getBranchTrainers(branchId: '${batch.branchId}');
+                        Navigator.pushNamed(context, BatchDetails.route);
+                      },
+                    );
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),

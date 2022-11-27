@@ -17,12 +17,13 @@ class AddTrainersDialog extends StatefulWidget {
 }
 
 class _AddTrainersDialogState extends State<AddTrainersDialog> {
-  List<Trainer> selectedTrainers = [];
+  List<int> selectedTrainers = [];
 
   @override
   void initState() {
     super.initState();
-    selectedTrainers.addAll(widget.selectedItems);
+    var items = widget.selectedItems.map((e) => e.id).toList();
+    selectedTrainers.addAll(items);
   }
 
   @override
@@ -56,23 +57,27 @@ class _AddTrainersDialogState extends State<AddTrainersDialog> {
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: cubit.trainers?.length ?? 0,
+                    itemCount: cubit.activeTrainers?.length ?? 0,
                     itemBuilder: (context, index) {
-                      Trainer? trainer = cubit.trainers?[index];
+                      Trainer? trainer = cubit.activeTrainers?[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: TextCheckBox(
                           onChange: (value) {
                             setState(() {
                               if (value) {
-                                selectedTrainers.add(trainer!);
+                                selectedTrainers
+                                    .add(trainer.trainerDetail![0].id);
                               } else {
-                                selectedTrainers.remove(trainer);
+                                selectedTrainers
+                                    .remove(trainer.trainerDetail![0].id);
                               }
                             });
                           },
                           title: '${trainer?.trainerDetail?[0].name}',
-                          selected: selectedTrainers.contains(trainer),
+                          selected: selectedTrainers.contains(
+                            trainer!.trainerDetail![0].id,
+                          ),
                         ),
                       );
                     },
@@ -86,7 +91,12 @@ class _AddTrainersDialogState extends State<AddTrainersDialog> {
               padding: const EdgeInsets.all(16.0),
               child: Button(
                 onTap: () {
-                  widget.onSave(selectedTrainers);
+                  var cubit = context.read<BranchCubit>();
+                  var trainers = cubit.trainers
+                      ?.where((element) => selectedTrainers
+                          .contains(element.trainerDetail?[0].id))
+                      .toList();
+                  widget.onSave(trainers ?? []);
                 },
                 title: 'Save',
               ),

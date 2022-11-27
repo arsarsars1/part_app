@@ -15,8 +15,9 @@ _$_BatchRequest _$$_BatchRequestFromJson(Map<String, dynamic> json) =>
       batchStatus: json['batch_status'] as String?,
       feeAmount: json['fee_amount'] as int?,
       admissionFees: json['admission_fees'] as int?,
-      trainers:
-          (json['trainers[]'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      trainers: (json['trainers[]'] as List<dynamic>?)
+          ?.map((e) => e as int?)
+          .toList(),
       days:
           (json['days[]'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );

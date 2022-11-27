@@ -2,28 +2,28 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
+import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/view/batch/batch_list.dart';
-import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
 import 'package:part_app/view/components/branch_field.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class AddBatch extends StatefulWidget {
-  static const route = '/batch/add';
+class EditBatchDetails extends StatefulWidget {
+  static const route = '/batch/details/edit';
 
-  const AddBatch({Key? key}) : super(key: key);
+  const EditBatchDetails({Key? key}) : super(key: key);
 
   @override
-  State<AddBatch> createState() => _AddBatchState();
+  State<EditBatchDetails> createState() => _EditBatchDetailsState();
 }
 
-class _AddBatchState extends State<AddBatch> {
+class _EditBatchDetailsState extends State<EditBatchDetails> {
   TextEditingController dobController = TextEditingController();
 
   String? batchName;
@@ -33,7 +33,7 @@ class _AddBatchState extends State<AddBatch> {
   String? admissionFee;
   String? batchStatus;
   int? subjectId;
-  List<int?> selectedTrainers = [];
+  List<int> selectedTrainers = [];
 
   bool selected = false;
 
@@ -49,16 +49,16 @@ class _AddBatchState extends State<AddBatch> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<BatchCubit>().getCourses();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
+    BatchModel? batchModel = cubit.batchModel;
+    Batch? batch = cubit.batch;
+
     return Scaffold(
-      appBar: const CommonBar(title: 'Add New Batch'),
+      appBar: const CommonBar(title: 'Edit Batch'),
       body: BlocListener<BatchCubit, BatchState>(
         listener: (context, state) {
           if (state is CreatingBatch) {
@@ -70,7 +70,7 @@ class _AddBatchState extends State<AddBatch> {
             );
             Alert(context).show(message: 'Batch created successfully.');
           } else if (state is CreateBatchFailed) {
-            Alert(context).show(message: state.message);
+            Alert(context).show(message: 'Batch created successfully.');
             Navigator.pop(context);
           }
         },
@@ -87,18 +87,22 @@ class _AddBatchState extends State<AddBatch> {
                       const SizedBox(
                         height: 20,
                       ),
-                      BranchField(onSelect: (value) {
-                        branchId = value;
-                        context.read<BranchCubit>().getBranchTrainers(
-                              branchId: '$branchId',
-                            );
-                      }),
+                      BranchField(
+                        initialBranch: batchModel?.branchId,
+                        onSelect: (value) {
+                          branchId = value;
+                          context.read<BranchCubit>().getBranchTrainers(
+                                branchId: '$branchId',
+                              );
+                        },
+                      ),
                       const SizedBox(
                         height: 20,
                       ),
                       CommonField(
                         title: 'Batch Name *',
                         hint: 'Enter Batch Name',
+                        initialValue: batchModel?.name,
                         onChange: (value) {
                           batchName = value;
                         },
@@ -115,6 +119,7 @@ class _AddBatchState extends State<AddBatch> {
                         title: 'Course *',
                         hint: 'Select Course',
                         dropDown: true,
+                        defaultItem: cubit.defaultCourse,
                         dropDownItems: cubit.getCoursesDropDown(),
                         onChange: (value) {
                           courseId = value?.id;
@@ -133,7 +138,7 @@ class _AddBatchState extends State<AddBatch> {
                               title: 'Subject *',
                               hint: 'Select Subject',
                               dropDown: true,
-                              defaultItem: null,
+                              defaultItem: cubit.defaultSubject,
                               dropDownItems: cubit.getSubjectsDropDown(),
                               onChange: (value) {
                                 subjectId = value?.id;
@@ -149,6 +154,7 @@ class _AddBatchState extends State<AddBatch> {
                       ),
                       CommonField(
                         inputType: const TextInputType.numberWithOptions(),
+                        initialValue: '${batchModel?.admissionFee}',
                         title: 'Admission Fees *',
                         hint: 'Enter Admission Fees',
                         onChange: (value) {
@@ -168,6 +174,7 @@ class _AddBatchState extends State<AddBatch> {
                         inputType: const TextInputType.numberWithOptions(),
                         length: 50,
                         title: 'Fees *',
+                        initialValue: '${batchModel?.fee}',
                         hint: 'Enter Fees',
                         validator: (value) {
                           if (value == null || value.toString().isEmpty) {
@@ -190,6 +197,9 @@ class _AddBatchState extends State<AddBatch> {
                         title: 'Batch Status *',
                         hint: 'Select Batch Status',
                         dropDown: true,
+                        defaultItem: cubit.getBatchStatusItem(
+                          batch?.batchStatus,
+                        ),
                         dropDownItems: DefaultValues().batchStatus,
                         onChange: (value) {
                           batchStatus = value?.id;
@@ -200,32 +210,6 @@ class _AddBatchState extends State<AddBatch> {
                               : null;
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: AppColors.liteDark,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Batch Trainers'),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            SelectedTrainers(
-                              selectedTrainers: (List<int?> value) {
-                                selectedTrainers = value;
-                              },
-                            )
-                          ],
-                        ),
-                      )
                     ],
                   ),
                 ),
@@ -242,6 +226,7 @@ class _AddBatchState extends State<AddBatch> {
             child: Center(
               child: Button(
                 onTap: () {
+                  formKey.currentState!.save();
                   if (formKey.currentState!.validate()) {
                     if (cubit.days.isEmpty) {
                       Alert(context).show(
@@ -257,15 +242,14 @@ class _AddBatchState extends State<AddBatch> {
                         subjectId: subjectId,
                         courseId: courseId,
                         feeAmount: int.parse(fee!),
-                        trainers: selectedTrainers,
                         admissionFees: int.parse(admissionFee!),
                       );
 
-                      cubit.createBatch(request);
+                      cubit.updateBatch(request);
                     }
                   }
                 },
-                title: 'Save Batch',
+                title: 'Update Batch',
               ),
             ),
           ),
