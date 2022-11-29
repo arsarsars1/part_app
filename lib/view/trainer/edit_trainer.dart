@@ -205,6 +205,20 @@ class _EditTrainerState extends State<EditTrainer> {
                     height: 20,
                   ),
                   CommonField(
+                    length: 100,
+                    maxLines: 1,
+                    textInputAction: TextInputAction.next,
+                    initialValue: trainer?.expertise,
+                    title: 'Area Of Expertise *',
+                    hint: 'Eg: Hip Hop Dance',
+                    onChange: (value) {
+                      areaOfExpertise = value;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
                     initialValue: trainer?.address,
                     length: 300,
                     maxLines: 3,

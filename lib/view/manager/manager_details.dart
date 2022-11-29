@@ -266,6 +266,10 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                         subText: manager?.mobileNo ?? 'N/A',
                       ),
                       TitledText(
+                        title: 'Whatsapp No',
+                        subText: '${managerDetails?.whatsappNo}',
+                      ),
+                      TitledText(
                         title: 'Date Of Birth',
                         subText: '${managerDetails?.dob?.toDateString()}',
                       ),

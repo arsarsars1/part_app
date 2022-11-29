@@ -183,17 +183,11 @@ class _AddTrainerState extends State<AddTrainer> {
                   height: 20,
                 ),
                 CommonField(
-                  inputType: TextInputType.emailAddress,
-                  length: 50,
+                  length: 100,
+                  maxLines: 1,
+                  textInputAction: TextInputAction.next,
                   title: 'Area Of Expertise',
                   hint: 'Eg: Hip Hop Dance',
-                  validator: (value) {
-                    // if (value == null || value.toString().isEmpty) {
-                    //   return 'Please enter expertise';
-                    // } else {
-                    //   return null;
-                    // }
-                  },
                   onChange: (value) {
                     areaOfExpertise = value;
                   },

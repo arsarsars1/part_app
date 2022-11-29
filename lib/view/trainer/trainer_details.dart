@@ -290,6 +290,10 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                         subText: '${cubit.trainer?.mobileNo}',
                       ),
                       TitledText(
+                        title: 'Whatsapp No',
+                        subText: '${trainer?.whatsappNo}',
+                      ),
+                      TitledText(
                         title: 'Date Of Birth',
                         subText: '${trainer?.dob?.toDateString()}',
                       ),
