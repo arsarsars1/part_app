@@ -77,12 +77,14 @@ class ManagerCard extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          if (manager.managerDetail?[0].whatsappNo != null) {
+                          String? number =
+                              manager.managerDetail?[0].whatsappNo ??
+                                  manager.mobileNo;
+                          if (number != null) {
                             Launcher.openWhatsapp(
                               context: context,
                               text: '',
-                              number:
-                                  '+${manager.countryCode}${manager.managerDetail?[0].whatsappNo}',
+                              number: '+${manager.countryCode}$number',
                             );
                           }
                         },

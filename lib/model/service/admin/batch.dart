@@ -5,6 +5,7 @@ import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
+import 'package:part_app/model/data_model/reschedule_response.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api_client.dart';
 
@@ -97,6 +98,32 @@ class BatchService {
 
       var items = map.map((e) => Batch.fromJson(e));
       return items.toList();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> rescheduleClass(Map<String, dynamic> request,
+      [int? batchId]) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/batches/$batchId/reschedule-class',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<RescheduleResponse?> rescheduledClasses(int? batchId) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/batches/$batchId/rescheduled-classes',
+      );
+
+      return rescheduleResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

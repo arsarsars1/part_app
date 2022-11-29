@@ -110,7 +110,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                   phoneNo:
                       '+${cubit.trainer?.countryCode}${cubit.trainer?.mobileNo}',
                   whatsappNo:
-                      '+${trainer?.user?.countryCode}${trainer?.whatsappNo}',
+                      '+${cubit.trainer?.countryCode}${trainer?.whatsappNo}',
                   email: '${trainer?.email}',
                 ),
                 Container(

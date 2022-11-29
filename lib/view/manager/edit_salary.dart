@@ -87,18 +87,13 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
                   onChange: (value) {
                     upiId = value;
                   },
-                  validator: (value) {
-                    return value == null || value.toString().isEmpty
-                        ? 'Please enter your upi id.'
-                        : null;
-                  },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 CommonField(
                   initialValue: '${manager?.salaryAmount}',
-                  title: 'Salary Amount',
+                  title: 'Salary Amount *',
                   hint: 'Enter Salary',
                   inputType:
                       const TextInputType.numberWithOptions(decimal: true),
@@ -119,7 +114,7 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
                   onTap: datePicker,
                   disabled: true,
                   hint: 'dd/mm/yyyy',
-                  title: 'Joining Date',
+                  title: 'Joining Date *',
                   validator: (value) {
                     return value == null || value.toString().isEmpty
                         ? 'Please select joining date.'
@@ -132,7 +127,7 @@ class _EditSalaryManagerState extends State<EditSalaryManager> {
                 ),
                 CommonField(
                   initialValue: '${manager?.salaryDate}',
-                  title: 'Pay Day',
+                  title: 'Pay Day *',
                   hint: 'Eg: 30',
                   inputType:
                       const TextInputType.numberWithOptions(decimal: false),

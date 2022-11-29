@@ -5,6 +5,7 @@ import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
+import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -163,7 +164,10 @@ class _BatchDetailsState extends State<BatchDetails> {
                 ),
               ),
               GestureDetector(
-                onTap: null,
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  RescheduledClasses.route,
+                ),
                 child: Container(
                   height: 34,
                   decoration: BoxDecoration(

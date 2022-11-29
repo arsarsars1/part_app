@@ -93,6 +93,12 @@ _$_BatchDetail _$$_BatchDetailFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int?,
       batchId: json['batch_id'] as int?,
       day: json['day'] as int?,
+      previousDate: json['previous_date'] == null
+          ? null
+          : DateTime.parse(json['previous_date'] as String),
+      newDate: json['new_date'] == null
+          ? null
+          : DateTime.parse(json['new_date'] as String),
       startTime: json['start_time'] as String?,
       endTime: json['end_time'] as String?,
       isActive: json['is_active'] as int?,
@@ -103,6 +109,8 @@ Map<String, dynamic> _$$_BatchDetailToJson(_$_BatchDetail instance) =>
       'id': instance.id,
       'batch_id': instance.batchId,
       'day': instance.day,
+      'previous_date': instance.previousDate?.toIso8601String(),
+      'new_date': instance.newDate?.toIso8601String(),
       'start_time': instance.startTime,
       'end_time': instance.endTime,
       'is_active': instance.isActive,

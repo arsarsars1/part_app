@@ -37,6 +37,8 @@ class FetchingBatch extends BatchState {}
 
 class FetchedBatch extends BatchState {}
 
+class RescheduledListFetched extends BatchState {}
+
 class FetchBatchFailed extends BatchState {
   final String message;
 

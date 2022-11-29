@@ -9,8 +9,17 @@ extension DateExtension on DateTime {
     return DateFormat('yyyy/MM/dd').format(this);
   }
 
+  /// format y-m-d
+  String toServerYMD() {
+    return DateFormat('yyyy-MM-dd').format(this);
+  }
+
   String toEEMMDD() {
     return DateFormat('EEEE, MMMM dd').format(this);
+  }
+
+  String toMMMMYYYY() {
+    return DateFormat('MMMM, yyyy').format(this);
   }
 
   String toDDMMYYY() {
@@ -34,6 +43,20 @@ extension DateExtension on DateTime {
       return '';
     }
   }
+
+  /// Formats the [ DateTime ] to 12th Aug
+  String formattedDay() {
+    try {
+      var suffix = "th";
+      var digit = day % 10;
+      if ((digit > 0 && digit < 4) && (day < 11 || day > 13)) {
+        suffix = ["st", "nd", "rd"][digit - 1];
+      }
+      return DateFormat("d'$suffix' EEE").format(this);
+    } catch (e) {
+      return '';
+    }
+  }
 }
 
 extension StringExtension on String {
@@ -53,5 +76,9 @@ extension StringExtension on String {
     }
 
     return '';
+  }
+
+  String toAmPM() {
+    return DateFormat('hh:mm a').format(DateFormat('hh:mm:ss').parse(this));
   }
 }

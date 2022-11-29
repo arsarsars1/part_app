@@ -114,9 +114,22 @@ class _TrainerPageState extends State<TrainerPage> {
           ),
           BlocBuilder<TrainerCubit, TrainerState>(
             builder: (context, state) {
-              if (cubit.trainers == null || cubit.trainers!.isEmpty) {
-                return const Center(
-                  child: Text('Add Trainer to Get Started'),
+              if ((cubit.trainers == null || cubit.trainers!.isEmpty) &&
+                  state is! SearchedTrainers) {
+                return const Padding(
+                  padding: EdgeInsets.all(64.0),
+                  child: Center(
+                    child: Text('Add Trainer to Get Started'),
+                  ),
+                );
+              }
+
+              if (cubit.filteredTrainers.isEmpty) {
+                return const Padding(
+                  padding: EdgeInsets.all(64.0),
+                  child: Center(
+                    child: Text('Sorry, No Matching Results Found.'),
+                  ),
                 );
               }
               return TrainerList(

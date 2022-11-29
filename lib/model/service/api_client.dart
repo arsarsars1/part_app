@@ -61,9 +61,9 @@ class ApiClient {
       print('POST METHOD | URL -> $path\n');
       print('********** POST DATA ***********');
 
-      // if (!formData) {
-      //   log(json.encode(data));
-      // }
+      if (!formData) {
+        log(json.encode(data));
+      }
 
       print('********** API CALL ***********');
     }

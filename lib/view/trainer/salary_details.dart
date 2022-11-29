@@ -43,9 +43,10 @@ class _SalaryDetailsState extends State<SalaryDetails> {
     var managerCubit = context.read<ManagerCubit>();
     return Scaffold(
       appBar: CommonBar(
-          title: widget.trainer
-              ? 'Add Trainer Salary Details'
-              : 'Add Branch Manager Salary Details'),
+        title: widget.trainer
+            ? 'Add Trainer Salary Details'
+            : 'Add Branch Manager Salary Details',
+      ),
       body: Form(
         key: formKey,
         child: BlocListener<ManagerCubit, ManagerState>(

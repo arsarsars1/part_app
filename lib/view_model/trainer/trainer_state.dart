@@ -21,6 +21,8 @@ class TrainersFetched extends TrainerState {}
 
 class FetchingTrainers extends TrainerState {}
 
+class SearchedTrainers extends TrainerState {}
+
 class FailedToFetchTrainers extends TrainerState {
   final String message;
 

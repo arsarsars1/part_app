@@ -119,6 +119,7 @@ class TrainerCubit extends Cubit<TrainerState> {
 
     if (_trainers != null) {
       filterTrainers(active: _isActive);
+      emit(SearchedTrainers());
     } else {
       emit(FailedToFetchTrainers('Failed to fetch the trainers'));
     }

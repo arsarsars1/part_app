@@ -8,6 +8,7 @@ import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
+import 'package:part_app/model/data_model/reschedule_response.dart';
 import 'package:part_app/model/service/admin/batch.dart';
 import 'package:part_app/view/constants/default_values.dart';
 
@@ -24,6 +25,7 @@ class BatchCubit extends Cubit<BatchState> {
 
   final List<String> _selectedTrainers = [];
   List<BatchModel> _batches = [];
+  List<BatchDetail> _rescheduledList = [];
   BatchModel? _batchModel;
   Batch? _batch;
 
@@ -39,6 +41,8 @@ class BatchCubit extends Cubit<BatchState> {
   List<String> get selectedTrainers => _selectedTrainers;
 
   List<BatchModel> get batches => _batches;
+
+  List<BatchDetail> get rescheduledList => _rescheduledList;
 
   BatchModel? get batchModel => _batchModel;
 
@@ -189,6 +193,20 @@ class BatchCubit extends Cubit<BatchState> {
       emit(FetchedBatch());
     } else {
       emit(FetchBatchFailed('Failed to fetch details.'));
+    }
+  }
+
+  Future reschedule(Map<String, dynamic> request) async {
+    _batchService.rescheduleClass(request, batchModel?.id);
+  }
+
+  Future getRescheduledBatches() async {
+    RescheduleResponse? response =
+        await _batchService.rescheduledClasses(batchModel?.id);
+
+    if (response?.status == 1) {
+      _rescheduledList = response?.rescheduledClasses?.batchDetails ?? [];
+      emit(RescheduledListFetched());
     }
   }
 }

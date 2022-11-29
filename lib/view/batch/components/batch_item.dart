@@ -6,12 +6,14 @@ class BatchItem extends StatelessWidget {
   final BatchModel batch;
   final VoidCallback onTap;
   final bool hideTrainer;
+  final bool reschedule;
 
   const BatchItem({
     Key? key,
     required this.batch,
     required this.onTap,
     this.hideTrainer = false,
+    this.reschedule = false,
   }) : super(key: key);
 
   @override
@@ -40,12 +42,13 @@ class BatchItem extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                 ),
-                Text(
-                  'Active Students: 10',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        color: AppColors.primaryColor,
-                      ),
-                ),
+                if (!reschedule)
+                  Text(
+                    'Active Students: 10',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: AppColors.primaryColor,
+                        ),
+                  ),
               ],
             ),
             const SizedBox(
@@ -100,10 +103,11 @@ class BatchItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Icon(
-                  Icons.keyboard_arrow_right,
-                  color: Colors.white,
-                ),
+                if (!reschedule)
+                  const Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.white,
+                  ),
               ],
             ),
             ListView.builder(

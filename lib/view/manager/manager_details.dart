@@ -125,7 +125,8 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                 ),
                 Launchers(
                   phoneNo: '+${manager?.countryCode}${manager?.mobileNo}',
-                  whatsappNo: '+${manager?.countryCode}${manager?.whatsappNo}',
+                  whatsappNo:
+                      '+${manager?.countryCode}${manager?.managerDetail?[0].whatsappNo}',
                   email: '${manager?.email}',
                 ),
                 Container(
@@ -305,9 +306,6 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                   height: 8,
                 ),
                 const Center(child: Text('Salary Details')),
-                const SizedBox(
-                  height: 16,
-                ),
                 Container(
                   decoration: BoxDecoration(
                     color: AppColors.liteDark,

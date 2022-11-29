@@ -76,6 +76,8 @@ abstract class BatchDetail with _$BatchDetail {
     int? id,
     int? batchId,
     int? day,
+    DateTime? previousDate,
+    DateTime? newDate,
     String? startTime,
     String? endTime,
     int? isActive,

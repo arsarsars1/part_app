@@ -944,6 +944,8 @@ mixin _$BatchDetail {
   int? get id => throw _privateConstructorUsedError;
   int? get batchId => throw _privateConstructorUsedError;
   int? get day => throw _privateConstructorUsedError;
+  DateTime? get previousDate => throw _privateConstructorUsedError;
+  DateTime? get newDate => throw _privateConstructorUsedError;
   String? get startTime => throw _privateConstructorUsedError;
   String? get endTime => throw _privateConstructorUsedError;
   int? get isActive => throw _privateConstructorUsedError;
@@ -964,6 +966,8 @@ abstract class $BatchDetailCopyWith<$Res> {
       {int? id,
       int? batchId,
       int? day,
+      DateTime? previousDate,
+      DateTime? newDate,
       String? startTime,
       String? endTime,
       int? isActive});
@@ -985,6 +989,8 @@ class _$BatchDetailCopyWithImpl<$Res, $Val extends BatchDetail>
     Object? id = freezed,
     Object? batchId = freezed,
     Object? day = freezed,
+    Object? previousDate = freezed,
+    Object? newDate = freezed,
     Object? startTime = freezed,
     Object? endTime = freezed,
     Object? isActive = freezed,
@@ -1002,6 +1008,14 @@ class _$BatchDetailCopyWithImpl<$Res, $Val extends BatchDetail>
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
               as int?,
+      previousDate: freezed == previousDate
+          ? _value.previousDate
+          : previousDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      newDate: freezed == newDate
+          ? _value.newDate
+          : newDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
@@ -1030,6 +1044,8 @@ abstract class _$$_BatchDetailCopyWith<$Res>
       {int? id,
       int? batchId,
       int? day,
+      DateTime? previousDate,
+      DateTime? newDate,
       String? startTime,
       String? endTime,
       int? isActive});
@@ -1049,6 +1065,8 @@ class __$$_BatchDetailCopyWithImpl<$Res>
     Object? id = freezed,
     Object? batchId = freezed,
     Object? day = freezed,
+    Object? previousDate = freezed,
+    Object? newDate = freezed,
     Object? startTime = freezed,
     Object? endTime = freezed,
     Object? isActive = freezed,
@@ -1066,6 +1084,14 @@ class __$$_BatchDetailCopyWithImpl<$Res>
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
               as int?,
+      previousDate: freezed == previousDate
+          ? _value.previousDate
+          : previousDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      newDate: freezed == newDate
+          ? _value.newDate
+          : newDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
@@ -1090,6 +1116,8 @@ class _$_BatchDetail implements _BatchDetail {
       {this.id,
       this.batchId,
       this.day,
+      this.previousDate,
+      this.newDate,
       this.startTime,
       this.endTime,
       this.isActive});
@@ -1104,6 +1132,10 @@ class _$_BatchDetail implements _BatchDetail {
   @override
   final int? day;
   @override
+  final DateTime? previousDate;
+  @override
+  final DateTime? newDate;
+  @override
   final String? startTime;
   @override
   final String? endTime;
@@ -1112,7 +1144,7 @@ class _$_BatchDetail implements _BatchDetail {
 
   @override
   String toString() {
-    return 'BatchDetail(id: $id, batchId: $batchId, day: $day, startTime: $startTime, endTime: $endTime, isActive: $isActive)';
+    return 'BatchDetail(id: $id, batchId: $batchId, day: $day, previousDate: $previousDate, newDate: $newDate, startTime: $startTime, endTime: $endTime, isActive: $isActive)';
   }
 
   @override
@@ -1123,6 +1155,9 @@ class _$_BatchDetail implements _BatchDetail {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.batchId, batchId) || other.batchId == batchId) &&
             (identical(other.day, day) || other.day == day) &&
+            (identical(other.previousDate, previousDate) ||
+                other.previousDate == previousDate) &&
+            (identical(other.newDate, newDate) || other.newDate == newDate) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
@@ -1132,8 +1167,8 @@ class _$_BatchDetail implements _BatchDetail {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, batchId, day, startTime, endTime, isActive);
+  int get hashCode => Object.hash(runtimeType, id, batchId, day, previousDate,
+      newDate, startTime, endTime, isActive);
 
   @JsonKey(ignore: true)
   @override
@@ -1154,6 +1189,8 @@ abstract class _BatchDetail implements BatchDetail {
       {final int? id,
       final int? batchId,
       final int? day,
+      final DateTime? previousDate,
+      final DateTime? newDate,
       final String? startTime,
       final String? endTime,
       final int? isActive}) = _$_BatchDetail;
@@ -1167,6 +1204,10 @@ abstract class _BatchDetail implements BatchDetail {
   int? get batchId;
   @override
   int? get day;
+  @override
+  DateTime? get previousDate;
+  @override
+  DateTime? get newDate;
   @override
   String? get startTime;
   @override

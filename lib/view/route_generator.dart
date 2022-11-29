@@ -11,6 +11,8 @@ import 'package:part_app/view/batch/add_batch.dart';
 import 'package:part_app/view/batch/batch_details.dart';
 import 'package:part_app/view/batch/batch_list.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
+import 'package:part_app/view/batch/reschedule_class.dart';
+import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
@@ -232,6 +234,16 @@ class RouteGenerator {
       case EditBatchDetails.route:
         return MaterialPageRoute(
           builder: (_) => const EditBatchDetails(),
+          settings: settings,
+        );
+      case RescheduledClasses.route:
+        return MaterialPageRoute(
+          builder: (_) => const RescheduledClasses(),
+          settings: settings,
+        );
+      case RescheduleClass.route:
+        return MaterialPageRoute(
+          builder: (_) => const RescheduleClass(),
           settings: settings,
         );
       case ManagerDetails.route:
