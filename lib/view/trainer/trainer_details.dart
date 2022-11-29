@@ -34,6 +34,14 @@ class _TrainerDetailsState extends State<TrainerDetails> {
   bool active = true;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<TrainerCubit>().cleanup();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var cubit = context.read<TrainerCubit>();
     return Scaffold(

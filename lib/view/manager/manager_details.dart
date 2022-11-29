@@ -42,6 +42,8 @@ class _ManagerDetailsState extends State<ManagerDetails> {
       context.read<ManagerCubit>().getManagerById(
             id: widget.managerId,
           );
+
+      context.read<ManagerCubit>().cleanup();
     });
   }
 

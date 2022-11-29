@@ -208,4 +208,11 @@ class ManagerCubit extends Cubit<ManagerState> {
       emit(UpdatingManagerFailed(e.toString()));
     }
   }
+
+  void cleanup() {
+    doc1 = null;
+    doc2 = null;
+    image = null;
+    _managerRequest = const ManagerRequest();
+  }
 }

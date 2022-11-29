@@ -51,6 +51,9 @@ class _AddTrainerState extends State<AddTrainer> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<TrainerCubit>().cleanup();
+    });
   }
 
   @override
@@ -156,7 +159,9 @@ class _AddTrainerState extends State<AddTrainer> {
                       selected = value;
                     });
                   },
-                  onNumberChange: (String value) {},
+                  onNumberChange: (String value) {
+                    whatsappNo = value;
+                  },
                 ),
                 const SizedBox(
                   height: 20,

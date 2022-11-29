@@ -179,11 +179,13 @@ class _EditTrainerState extends State<EditTrainer> {
                         trainer?.whatsappNo == trainerCubit.trainer?.mobileNo,
                     initialValue: trainer?.whatsappNo,
                     onChange: (bool value) {
-                      setState(() {
-                        selected = value;
-                      });
+                      whatsappNo = null;
+
+                      selected = value;
                     },
-                    onNumberChange: (String value) {},
+                    onNumberChange: (String value) {
+                      whatsappNo = value;
+                    },
                   ),
                   const SizedBox(
                     height: 20,

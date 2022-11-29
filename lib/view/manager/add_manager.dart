@@ -54,6 +54,7 @@ class _AddManagerState extends State<AddManager> {
     // get the trainers list
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<BranchCubit>().getBranches();
+      context.read<ManagerCubit>().cleanup();
     });
   }
 
@@ -188,7 +189,9 @@ class _AddManagerState extends State<AddManager> {
                       selected = value;
                     });
                   },
-                  onNumberChange: (String value) {},
+                  onNumberChange: (String value) {
+                    whatsappNo = value;
+                  },
                 ),
                 const SizedBox(
                   height: 20,

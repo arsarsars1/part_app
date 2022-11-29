@@ -183,7 +183,9 @@ class _EditManagerState extends State<EditManager> {
                         selected = value;
                       });
                     },
-                    onNumberChange: (String value) {},
+                    onNumberChange: (String value) {
+                      whatsappNo = value;
+                    },
                   ),
                   const SizedBox(
                     height: 20,

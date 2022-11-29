@@ -19,6 +19,9 @@ class BranchCubit extends Cubit<BranchState> {
 
   List<Branch> get branches => _branches;
 
+  List<Branch> get activeBranches =>
+      _branches.where((element) => element.isActive == 1).toList() ?? [];
+
   List<Trainer>? get trainers => _trainers;
 
   List<Trainer>? get activeTrainers => _trainers

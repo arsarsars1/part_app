@@ -253,4 +253,11 @@ class TrainerCubit extends Cubit<TrainerState> {
       );
     }
   }
+
+  void cleanup() {
+    doc1 = null;
+    doc2 = null;
+    image = null;
+    _request = const TrainerRequest();
+  }
 }
