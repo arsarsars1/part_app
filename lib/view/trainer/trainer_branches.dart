@@ -56,9 +56,9 @@ class _TrainerBranchesState extends State<TrainerBranches> {
               child: ListView.builder(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
-                itemCount: cubit.branches.length,
+                itemCount: cubit.activeBranches.length,
                 itemBuilder: (context, index) {
-                  Branch branch = cubit.branches[index];
+                  Branch branch = cubit.activeBranches[index];
 
                   return BlocBuilder<TrainerCubit, TrainerState>(
                     buildWhen: (prv, crr) => crr is BranchesUpdated,

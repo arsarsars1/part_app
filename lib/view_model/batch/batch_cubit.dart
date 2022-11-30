@@ -197,12 +197,22 @@ class BatchCubit extends Cubit<BatchState> {
   }
 
   Future reschedule(Map<String, dynamic> request) async {
-    _batchService.rescheduleClass(request, batchModel?.id);
+    emit(ReschedulingBatch());
+    Common? response = await _batchService.rescheduleClass(
+      request,
+      batchModel?.id,
+    );
+    if (response?.status == 1) {
+      emit(RescheduledBatch());
+    } else {
+      emit(RescheduleFailed(response?.message ?? 'Failed to reschedule'));
+    }
   }
 
   Future getRescheduledBatches() async {
-    RescheduleResponse? response =
-        await _batchService.rescheduledClasses(batchModel?.id);
+    RescheduleResponse? response = await _batchService.rescheduledClasses(
+      batchModel?.id,
+    );
 
     if (response?.status == 1) {
       _rescheduledList = response?.rescheduledClasses?.batchDetails ?? [];

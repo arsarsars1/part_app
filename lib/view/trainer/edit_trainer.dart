@@ -130,33 +130,11 @@ class _EditTrainerState extends State<EditTrainer> {
                     height: 20,
                   ),
                   CommonField(
-                    inputType: TextInputType.emailAddress,
-                    length: 50,
-                    initialValue: trainer?.email,
-                    title: 'Email *',
-                    hint: 'Eg: contact@polestar.com',
-                    validator: (value) {
-                      if (value == null || value.toString().isEmpty) {
-                        return 'Please enter email.';
-                      } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                        return 'Invalid email address.';
-                      } else {
-                        return null;
-                      }
-                    },
-                    onChange: (value) {
-                      email = value;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CommonField(
                     initialValue: trainerCubit.trainer?.mobileNo,
                     length: 10,
                     phoneField: true,
                     inputType: TextInputType.phone,
-                    title: 'Mobile Number*',
+                    title: 'Mobile *',
                     hint: 'Eg: 9876543210',
                     onChange: (value) {
                       phone = value;
@@ -202,6 +180,28 @@ class _EditTrainerState extends State<EditTrainer> {
                           : null;
                     },
                     onChange: (value) {},
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    inputType: TextInputType.emailAddress,
+                    length: 50,
+                    initialValue: trainer?.email,
+                    title: 'Email *',
+                    hint: 'Eg: contact@polestar.com',
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter email.';
+                      } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                        return 'Invalid email address.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChange: (value) {
+                      email = value;
+                    },
                   ),
                   const SizedBox(
                     height: 20,

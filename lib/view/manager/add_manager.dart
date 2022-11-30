@@ -85,7 +85,7 @@ class _AddManagerState extends State<AddManager> {
                 BlocBuilder<BranchCubit, BranchState>(
                   builder: (context, state) {
                     return CommonField(
-                      title: 'Branch',
+                      title: 'Branch *',
                       hint: 'Select Branch',
                       dropDown: true,
                       dropDownItems: branchCubit.branchesWithoutManager(),
@@ -229,7 +229,7 @@ class _AddManagerState extends State<AddManager> {
                   },
                 ),
                 SizedBox(
-                  height: 40.h,
+                  height: 20.h,
                 ),
                 DocsUpload(
                   doc1: (File? value) {

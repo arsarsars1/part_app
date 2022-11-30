@@ -29,6 +29,8 @@ class CommonField extends StatelessWidget {
   final EdgeInsets? padding;
   final FocusNode? node;
   final ValueChanged<String>? onSubmit;
+  final bool showInfo;
+  final String toolTipMessage;
 
   final Icon? prefixIcon;
 
@@ -61,6 +63,8 @@ class CommonField extends StatelessWidget {
     this.disabled = false,
     this.onSubmit,
     this.prefixIcon,
+    this.showInfo = false,
+    this.toolTipMessage = 'Info not available.',
   }) : super(key: key);
 
   @override
@@ -159,6 +163,18 @@ class CommonField extends StatelessWidget {
                     fillColor: fillColor,
                   ),
                 ),
+          if (showInfo)
+            Align(
+              alignment: Alignment.centerRight,
+              child: Tooltip(
+                message: toolTipMessage,
+                triggerMode: TooltipTriggerMode.tap,
+                child: const Icon(
+                  Icons.info_outline,
+                  color: Colors.white,
+                ),
+              ),
+            )
         ],
       ),
     );

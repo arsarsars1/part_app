@@ -11,10 +11,11 @@ import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';
-import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view/manager/manager_details.dart';
 import 'package:part_app/view/trainer/components/docs_upload.dart';
 import 'package:part_app/view_model/cubits.dart';
+
+import '../constants/regex.dart';
 
 class EditManager extends StatefulWidget {
   static const route = '/manager/edit';
@@ -129,28 +130,6 @@ class _EditManagerState extends State<EditManager> {
                     height: 20,
                   ),
                   CommonField(
-                    inputType: TextInputType.emailAddress,
-                    length: 50,
-                    initialValue: manager?.email,
-                    title: 'Email *',
-                    hint: 'Eg: contact@polestar.com',
-                    validator: (value) {
-                      if (value == null || value.toString().isEmpty) {
-                        return 'Please enter email.';
-                      } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                        return 'Invalid email address.';
-                      } else {
-                        return null;
-                      }
-                    },
-                    onChange: (value) {
-                      email = value;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CommonField(
                     length: 10,
                     initialValue: managerCubit.manager?.mobileNo,
                     phoneField: true,
@@ -202,6 +181,28 @@ class _EditManagerState extends State<EditManager> {
                           : null;
                     },
                     onChange: (value) {},
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    inputType: TextInputType.emailAddress,
+                    length: 50,
+                    initialValue: manager?.email,
+                    title: 'Email *',
+                    hint: 'Eg: contact@polestar.com',
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter email.';
+                      } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                        return 'Invalid email address.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChange: (value) {
+                      email = value;
+                    },
                   ),
                   const SizedBox(
                     height: 20,

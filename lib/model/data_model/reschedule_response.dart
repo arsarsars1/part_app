@@ -18,10 +18,10 @@ String rescheduleResponseToJson(RescheduleResponse data) =>
 
 @freezed
 abstract class RescheduleResponse with _$RescheduleResponse {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory RescheduleResponse({
     int? status,
-    @JsonKey(name: 'rescheduled-classes')
-        RescheduledClasses? rescheduledClasses,
+    RescheduledClasses? rescheduledClasses,
   }) = _RescheduleResponse;
 
   factory RescheduleResponse.fromJson(Map<String, dynamic> json) =>
@@ -30,6 +30,7 @@ abstract class RescheduleResponse with _$RescheduleResponse {
 
 @freezed
 abstract class RescheduledClasses with _$RescheduledClasses {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory RescheduledClasses({
     int? currentPage,
     @JsonKey(name: 'data') List<BatchDetail>? batchDetails,

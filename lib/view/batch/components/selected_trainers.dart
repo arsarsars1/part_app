@@ -43,6 +43,8 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                   margin: const EdgeInsets.only(
                     right: 16,
                     bottom: 8,
+                    left: 16,
+                    top: 8,
                   ),
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -97,6 +99,7 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
             margin: const EdgeInsets.only(
               right: 16,
               bottom: 8,
+              left: 16,
               top: 8,
             ),
             decoration: BoxDecoration(

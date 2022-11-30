@@ -44,3 +44,13 @@ class FetchBatchFailed extends BatchState {
 
   FetchBatchFailed(this.message);
 }
+
+class ReschedulingBatch extends BatchState {}
+
+class RescheduledBatch extends BatchState {}
+
+class RescheduleFailed extends BatchState {
+  final String message;
+
+  RescheduleFailed(this.message);
+}

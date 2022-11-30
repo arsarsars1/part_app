@@ -143,6 +143,9 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                         ? 'Please enter pay day.'
                         : null;
                   },
+                  showInfo: true,
+                  toolTipMessage:
+                      'Select the date in which you pay the monthly salary to this employee',
                 ),
               ],
             ),
