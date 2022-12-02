@@ -137,7 +137,8 @@ class BatchCubit extends Cubit<BatchState> {
           await _batchService.updateBatch(request, _batchModel?.id);
       if (response?.status == 1) {
         await getBatches();
-        emit(UpdatingBatch());
+        await getBatch(batchId: '${_batchModel?.id}');
+        emit(UpdatedBatch());
       } else {
         emit(UpdateBatchFailed(response?.message ?? 'Failed to create batch.'));
       }
@@ -147,6 +148,17 @@ class BatchCubit extends Cubit<BatchState> {
   }
 
   Future getBatches() async {
+    BatchResponse? response = await _batchService.getBatches();
+    if (response?.status == 1) {
+      _batches = response?.batches?.data
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
+      emit(BatchesFetched());
+    }
+  }
+
+  Future getBatchesByBranch(int? branchId) async {
     BatchResponse? response = await _batchService.getBatches();
     if (response?.status == 1) {
       _batches = response?.batches?.data

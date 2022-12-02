@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_base/data_base.dart';
@@ -82,6 +83,23 @@ class PaymentCubit extends Cubit<PaymentState> {
       _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
       _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
       _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    }
+  }
+
+  Future<String?> validateUPI({required String upiId}) async {
+    try {
+      var response = await ApiClient().post(
+        postPath: '',
+        header: {
+          'Authorization':
+              'Basic cnpwX3Rlc3RfaGxxcHREV2I0VzRad1Q6TnVmR21yOGxCSE1HOVVMYktFMzBlazhV',
+          Headers.contentTypeHeader: Headers.jsonContentType,
+        },
+        basePath: 'https://api.razorpay.com/v1/payments/validate/vpa',
+        data: {"vpa": "gauravkumar@exampleupi"},
+      );
+    } catch (e) {
+      return null;
     }
   }
 

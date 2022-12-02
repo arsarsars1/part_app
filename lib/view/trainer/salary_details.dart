@@ -32,9 +32,14 @@ class _SalaryDetailsState extends State<SalaryDetails> {
   String? payDay;
   var formKey = GlobalKey<FormState>();
 
+  final _focusNode = FocusNode();
+
   @override
   void initState() {
     super.initState();
+    _focusNode.addListener(() {
+      print("Has focus: ${_focusNode.hasFocus}");
+    });
   }
 
   @override
@@ -75,6 +80,7 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                   height: 20,
                 ),
                 CommonField(
+                  node: _focusNode,
                   title: 'UPI ID',
                   hint: 'Enter UPI Id',
                   maxLines: 1,
@@ -201,6 +207,12 @@ class _SalaryDetailsState extends State<SalaryDetails> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 
   // method to get the date for [ dob ]

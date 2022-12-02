@@ -5,8 +5,10 @@ import 'package:part_app/view_model/cubits.dart';
 class BranchField extends StatefulWidget {
   final ValueChanged<int?> onSelect;
   final int? initialBranch;
+  final String? title;
 
-  const BranchField({Key? key, required this.onSelect, this.initialBranch})
+  const BranchField(
+      {Key? key, required this.onSelect, this.initialBranch, this.title})
       : super(key: key);
 
   @override
@@ -28,7 +30,7 @@ class _BranchFieldState extends State<BranchField> {
       builder: (context, state) {
         var branchCubit = context.read<BranchCubit>();
         return CommonField(
-          title: 'Branch *',
+          title: widget.title ?? 'Branch *',
           hint: 'Select Branch',
           dropDown: true,
           defaultItem: branchCubit.initialBranch(
