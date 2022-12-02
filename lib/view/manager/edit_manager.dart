@@ -212,6 +212,7 @@ class _EditManagerState extends State<EditManager> {
                     maxLines: 3,
                     initialValue: manager?.address,
                     title: 'Address *',
+                    textInputAction: TextInputAction.newline,
                     hint: 'Enter Communication Address',
                     validator: (value) {
                       if (value == null || value.toString().isEmpty) {

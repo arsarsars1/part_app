@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/model/data_model/district.dart';
+import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 
 part 'branch_response.freezed.dart';
@@ -45,22 +46,22 @@ abstract class Branch with _$Branch {
     Country? country,
     District? state,
     District? district,
-    ManagerDetail? managerDetail,
+    Manager? managerDetail,
   }) = _Branch;
 
   factory Branch.fromJson(Map<String, dynamic> json) => _$BranchFromJson(json);
 }
-
-@freezed
-abstract class ManagerDetail with _$ManagerDetail {
-  @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory ManagerDetail({
-    int? id,
-    int? userId,
-    String? email,
-    User? user,
-  }) = _ManagerDetail;
-
-  factory ManagerDetail.fromJson(Map<String, dynamic> json) =>
-      _$ManagerDetailFromJson(json);
-}
+//
+// @freezed
+// abstract class ManagerDetail with _$ManagerDetail {
+//   @JsonSerializable(fieldRename: FieldRename.snake)
+//   const factory ManagerDetail({
+//     int? id,
+//     int? userId,
+//     String? email,
+//     User? user,
+//   }) = _ManagerDetail;
+//
+//   factory ManagerDetail.fromJson(Map<String, dynamic> json) =>
+//       _$ManagerDetailFromJson(json);
+// }

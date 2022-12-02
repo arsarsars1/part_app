@@ -5,14 +5,20 @@ import 'package:part_app/model/service/api.dart';
 
 class CachedImage {
   final String imageUrl;
+  final double? height;
+  final BoxFit fit;
 
-  CachedImage(this.imageUrl);
+  CachedImage(
+    this.imageUrl, {
+    this.height,
+    this.fit = BoxFit.cover,
+  });
 
   DecorationImage getDecorationImage() {
     var token = 'Bearer ${Database().getToken()}';
     return DecorationImage(
       fit: BoxFit.cover,
-      image: CachedNetworkImageProvider(
+      image: NetworkImage(
         imageUrl,
         headers: {
           "Authorization": token,
@@ -25,11 +31,12 @@ class CachedImage {
   CachedNetworkImage image() {
     var token = 'Bearer ${Database().getToken()}';
     return CachedNetworkImage(
+      height: height,
       imageUrl: imageUrl,
-      fit: BoxFit.cover,
+      fit: fit,
       errorWidget: (context, str, _) {
         return CachedImage(
-          'https://png.pngitem.com/pimgs/s/508-5087236_tab-profile-f-user-icon-white-fill-hd.png',
+          'https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg',
         ).image();
       },
       httpHeaders: {

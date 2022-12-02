@@ -68,6 +68,12 @@ class _ManagerDetailsState extends State<ManagerDetails> {
         builder: (context, state) {
           Manager? manager = cubit.manager;
           Manager? managerDetails = manager?.managerDetail?[0];
+
+          if (state is FetchingManager) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return SafeArea(
             child: ListView(
               children: [
@@ -148,6 +154,9 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                               fontSize: 12,
                             ),
                       ),
+                      const SizedBox(
+                        height: 4,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -159,8 +168,21 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                               itemBuilder: (context, index) {
                                 Branch? branch =
                                     managerDetails?.branches?[index];
-                                return Text(
-                                  branch?.branchName ?? '',
+                                bool active = branch?.isActive == 1;
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 2),
+                                  child: Text(
+                                    branch?.branchName ?? '',
+                                    style: !active
+                                        ? Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.copyWith(
+                                              color: AppColors.grey700,
+                                            )
+                                        : null,
+                                  ),
                                 );
                               },
                             ),

@@ -53,7 +53,10 @@ class _TrainerPageState extends State<TrainerPage> {
               ),
               child: Button(
                 height: 30.h,
-                onTap: () => Navigator.pushNamed(context, AddTrainer.route),
+                onTap: () {
+                  cubit.fromBranch = false;
+                  Navigator.pushNamed(context, AddTrainer.route);
+                },
                 title: 'Add New Trainer',
               ),
             ),
@@ -114,6 +117,14 @@ class _TrainerPageState extends State<TrainerPage> {
           ),
           BlocBuilder<TrainerCubit, TrainerState>(
             builder: (context, state) {
+              if (state is FetchingTrainers) {
+                return const Padding(
+                  padding: EdgeInsets.all(64.0),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
               if ((cubit.trainers == null || cubit.trainers!.isEmpty) &&
                   state is! SearchedTrainers) {
                 return const Padding(

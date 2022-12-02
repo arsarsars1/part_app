@@ -57,13 +57,18 @@ class _TrainerDetailsState extends State<TrainerDetails> {
         },
         builder: (context, state) {
           Trainer? trainer = cubit.trainer?.trainerDetail![0];
+          if (state is TrainerDetailsLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return SafeArea(
             child: ListView(
               children: [
                 Center(
                   child: ProfilePicture(
                     imageUrl:
-                        'https://dev.partapp.in/api/admin/images/trainer/${trainer?.id}/${trainer?.profilePic}',
+                        '${F.baseUrl}/admin/images/trainer/${trainer?.id}/${trainer?.profilePic}',
                     onEdit: () {},
                     onChange: (File value) {
                       cubit.updateProfilePic(profilePic: value);
@@ -148,11 +153,20 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                               itemCount: trainer?.branches?.length ?? 0,
                               itemBuilder: (context, index) {
                                 Branch? branch = trainer?.branches?[index];
+                                bool active = branch?.isActive == 1;
                                 return Padding(
                                   padding:
-                                      const EdgeInsets.symmetric(vertical: 4),
+                                      const EdgeInsets.symmetric(vertical: 2),
                                   child: Text(
                                     branch?.branchName ?? '',
+                                    style: !active
+                                        ? Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.copyWith(
+                                              color: AppColors.grey700,
+                                            )
+                                        : null,
                                   ),
                                 );
                               },

@@ -217,6 +217,7 @@ class _AddManagerState extends State<AddManager> {
                   maxLines: 3,
                   title: 'Address *',
                   hint: 'Enter Communication Address',
+                  textInputAction: TextInputAction.newline,
                   validator: (value) {
                     if (value == null || value.toString().isEmpty) {
                       return 'Please enter address.';

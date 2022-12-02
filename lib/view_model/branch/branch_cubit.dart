@@ -188,6 +188,18 @@ class BranchCubit extends Cubit<BranchState> {
         .toList();
   }
 
+  List<Branch> branchesForManager(int? managerId) {
+    return _branches.where((element) {
+      if (element.managerDetail?.id == managerId && element.isActive == 1) {
+        return true;
+      }
+      if (element.managerDetail == null && element.isActive == 1) {
+        return true;
+      }
+      return false;
+    }).toList();
+  }
+
   DropDownItem? initialBranch(int? branchId) {
     if (branchId == null) return null;
     Branch? item = _branches.firstWhere((element) => element.id == branchId);

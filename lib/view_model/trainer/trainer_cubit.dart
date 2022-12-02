@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
@@ -40,6 +42,8 @@ class TrainerCubit extends Cubit<TrainerState> {
   File? image, doc1, doc2;
 
   List<int> get selectedBranches => _selectedBranches;
+
+  bool fromBranch = false;
 
   set trainer(Trainer? temp) {
     _trainer = temp;
@@ -170,7 +174,7 @@ class TrainerCubit extends Cubit<TrainerState> {
 
     if (response != null && response.status == 1) {
       await getTrainers();
-      emit(TrainerCreated());
+      emit(TrainerCreated(fromBranch));
     } else {
       emit(
         CreatingTrainerFailed(
@@ -219,6 +223,7 @@ class TrainerCubit extends Cubit<TrainerState> {
     );
 
     if (common?.status == 1) {
+      await clearImageCache();
       await getTrainerDetails(
         trainerId: trainer!.trainerDetail![0].id,
       );
@@ -242,6 +247,7 @@ class TrainerCubit extends Cubit<TrainerState> {
       trainer!.trainerDetail![0].id,
     );
     if (common?.status == 1) {
+      await clearImageCache();
       await getTrainerDetails(
         trainerId: trainer!.trainerDetail![0].id,
       );
@@ -259,5 +265,23 @@ class TrainerCubit extends Cubit<TrainerState> {
     doc2 = null;
     image = null;
     _request = const TrainerRequest();
+  }
+
+  Future clearImageCache() async {
+    var tempTrainer = trainer!.trainerDetail![0];
+    var docUrl1 =
+        '${F.baseUrl}/admin/documents/trainer/${tempTrainer.id}/${tempTrainer.document1}';
+    var docUrl2 =
+        '${F.baseUrl}/admin/documents/trainer/${tempTrainer.id}/${tempTrainer.document2}';
+
+    var profileUrl =
+        '${F.baseUrl}/admin/images/trainer/${tempTrainer.id}/${tempTrainer.profilePic}';
+
+    // clear doc 1
+    await CachedNetworkImage.evictFromCache(docUrl1);
+    // clear doc 2
+    await CachedNetworkImage.evictFromCache(docUrl2);
+    // clear profile pic
+    await CachedNetworkImage.evictFromCache(profileUrl);
   }
 }

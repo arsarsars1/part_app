@@ -33,6 +33,7 @@ class CommonField extends StatelessWidget {
   final String toolTipMessage;
 
   final Icon? prefixIcon;
+  final TextCapitalization capitalization;
 
   const CommonField({
     Key? key,
@@ -50,7 +51,7 @@ class CommonField extends StatelessWidget {
     this.controller,
     this.inputType,
     this.textAlign,
-    this.textInputAction,
+    this.textInputAction = TextInputAction.next,
     this.letterSpacing,
     this.suffixIcon,
     this.length,
@@ -64,6 +65,7 @@ class CommonField extends StatelessWidget {
     this.onSubmit,
     this.prefixIcon,
     this.showInfo = false,
+    this.capitalization = TextCapitalization.sentences,
     this.toolTipMessage = 'Info not available.',
   }) : super(key: key);
 
@@ -155,6 +157,7 @@ class CommonField extends StatelessWidget {
                       : null,
                   textAlign: textAlign ?? TextAlign.start,
                   cursorColor: Colors.white,
+                  textCapitalization: capitalization,
                   decoration: InputDecoration(
                     contentPadding: padding,
                     suffixIcon: suffixIcon,

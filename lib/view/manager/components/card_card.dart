@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/view/components/launcher.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -54,14 +55,18 @@ class ManagerCard extends StatelessWidget {
                         itemCount:
                             manager.managerDetail?[0].branches?.length ?? 0,
                         itemBuilder: (context, index) {
+                          Branch? branch =
+                              manager.managerDetail?[0].branches?[index];
+                          bool active = branch?.isActive == 1;
+
                           return Text(
-                            manager.managerDetail?[0].branches?[index]
-                                    .branchName ??
-                                'N/A',
+                            branch?.branchName ?? 'Branch Not Allocated',
                             maxLines: 1,
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
-                                      color: AppColors.primaryColor,
+                                      color: active
+                                          ? AppColors.primaryColor
+                                          : AppColors.grey700,
                                     ),
                             overflow: TextOverflow.ellipsis,
                           );

@@ -14,17 +14,35 @@ class DocumentImage extends StatefulWidget {
 class _DocumentImageState extends State<DocumentImage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 77.h,
-      width: 93.w,
-      decoration: BoxDecoration(
-        color: const Color(0xFFD9D9D9),
-        borderRadius: BorderRadius.circular(5),
-        image: widget.imageUrl != null
-            ? CachedImage(
-                widget.imageUrl!,
-              ).getDecorationImage()
-            : null,
+    return GestureDetector(
+      onTap: () {
+        if (widget.imageUrl == null) {
+          return;
+        }
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: CachedImage(
+                  widget.imageUrl!,
+                  height: MediaQuery.of(context).size.width * 0.75,
+                  fit: BoxFit.contain,
+                ).image(),
+              );
+            });
+      },
+      child: Container(
+        height: 77.h,
+        width: 93.w,
+        decoration: BoxDecoration(
+          color: const Color(0xFFD9D9D9),
+          borderRadius: BorderRadius.circular(5),
+          image: widget.imageUrl != null
+              ? CachedImage(
+                  widget.imageUrl!,
+                ).getDecorationImage()
+              : null,
+        ),
       ),
     );
   }

@@ -29,7 +29,10 @@ class FailedToFetchTrainers extends TrainerState {
   FailedToFetchTrainers(this.message);
 }
 
-class TrainerCreated extends TrainerState {}
+class TrainerCreated extends TrainerState {
+  final bool fromBranch;
+  TrainerCreated(this.fromBranch);
+}
 
 class CreatingTrainer extends TrainerState {}
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/trainer_request.dart';
+import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/components/checkbox.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
@@ -40,7 +41,17 @@ class _AddTrainerBranchesState extends State<AddTrainerBranches> {
             Loader(context, message: 'Please wait while we create the trainer.')
                 .show();
           } else if (state is TrainerCreated) {
-            Navigator.popUntil(context, ModalRoute.withName(TrainerPage.route));
+            if (!state.fromBranch) {
+              Navigator.popUntil(
+                context,
+                ModalRoute.withName(TrainerPage.route),
+              );
+            } else {
+              Navigator.popUntil(
+                context,
+                ModalRoute.withName(BranchDetails.route),
+              );
+            }
             Alert(context).show(message: 'Trainer added successfully.');
           } else if (state is CreatingTrainerFailed) {
             Navigator.pop(context);

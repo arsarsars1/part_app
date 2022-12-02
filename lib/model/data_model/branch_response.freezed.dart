@@ -234,7 +234,7 @@ mixin _$Branch {
   Country? get country => throw _privateConstructorUsedError;
   District? get state => throw _privateConstructorUsedError;
   District? get district => throw _privateConstructorUsedError;
-  ManagerDetail? get managerDetail => throw _privateConstructorUsedError;
+  Manager? get managerDetail => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -262,12 +262,12 @@ abstract class $BranchCopyWith<$Res> {
       Country? country,
       District? state,
       District? district,
-      ManagerDetail? managerDetail});
+      Manager? managerDetail});
 
   $CountryCopyWith<$Res>? get country;
   $DistrictCopyWith<$Res>? get state;
   $DistrictCopyWith<$Res>? get district;
-  $ManagerDetailCopyWith<$Res>? get managerDetail;
+  $ManagerCopyWith<$Res>? get managerDetail;
 }
 
 /// @nodoc
@@ -364,7 +364,7 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
       managerDetail: freezed == managerDetail
           ? _value.managerDetail
           : managerDetail // ignore: cast_nullable_to_non_nullable
-              as ManagerDetail?,
+              as Manager?,
     ) as $Val);
   }
 
@@ -406,12 +406,12 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
 
   @override
   @pragma('vm:prefer-inline')
-  $ManagerDetailCopyWith<$Res>? get managerDetail {
+  $ManagerCopyWith<$Res>? get managerDetail {
     if (_value.managerDetail == null) {
       return null;
     }
 
-    return $ManagerDetailCopyWith<$Res>(_value.managerDetail!, (value) {
+    return $ManagerCopyWith<$Res>(_value.managerDetail!, (value) {
       return _then(_value.copyWith(managerDetail: value) as $Val);
     });
   }
@@ -439,7 +439,7 @@ abstract class _$$_BranchCopyWith<$Res> implements $BranchCopyWith<$Res> {
       Country? country,
       District? state,
       District? district,
-      ManagerDetail? managerDetail});
+      Manager? managerDetail});
 
   @override
   $CountryCopyWith<$Res>? get country;
@@ -448,7 +448,7 @@ abstract class _$$_BranchCopyWith<$Res> implements $BranchCopyWith<$Res> {
   @override
   $DistrictCopyWith<$Res>? get district;
   @override
-  $ManagerDetailCopyWith<$Res>? get managerDetail;
+  $ManagerCopyWith<$Res>? get managerDetail;
 }
 
 /// @nodoc
@@ -542,7 +542,7 @@ class __$$_BranchCopyWithImpl<$Res>
       managerDetail: freezed == managerDetail
           ? _value.managerDetail
           : managerDetail // ignore: cast_nullable_to_non_nullable
-              as ManagerDetail?,
+              as Manager?,
     ));
   }
 }
@@ -603,7 +603,7 @@ class _$_Branch implements _Branch {
   @override
   final District? district;
   @override
-  final ManagerDetail? managerDetail;
+  final Manager? managerDetail;
 
   @override
   String toString() {
@@ -695,7 +695,7 @@ abstract class _Branch implements Branch {
       final Country? country,
       final District? state,
       final District? district,
-      final ManagerDetail? managerDetail}) = _$_Branch;
+      final Manager? managerDetail}) = _$_Branch;
 
   factory _Branch.fromJson(Map<String, dynamic> json) = _$_Branch.fromJson;
 
@@ -730,215 +730,9 @@ abstract class _Branch implements Branch {
   @override
   District? get district;
   @override
-  ManagerDetail? get managerDetail;
+  Manager? get managerDetail;
   @override
   @JsonKey(ignore: true)
   _$$_BranchCopyWith<_$_Branch> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-ManagerDetail _$ManagerDetailFromJson(Map<String, dynamic> json) {
-  return _ManagerDetail.fromJson(json);
-}
-
-/// @nodoc
-mixin _$ManagerDetail {
-  int? get id => throw _privateConstructorUsedError;
-  int? get userId => throw _privateConstructorUsedError;
-  String? get email => throw _privateConstructorUsedError;
-  User? get user => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $ManagerDetailCopyWith<ManagerDetail> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ManagerDetailCopyWith<$Res> {
-  factory $ManagerDetailCopyWith(
-          ManagerDetail value, $Res Function(ManagerDetail) then) =
-      _$ManagerDetailCopyWithImpl<$Res, ManagerDetail>;
-  @useResult
-  $Res call({int? id, int? userId, String? email, User? user});
-
-  $UserCopyWith<$Res>? get user;
-}
-
-/// @nodoc
-class _$ManagerDetailCopyWithImpl<$Res, $Val extends ManagerDetail>
-    implements $ManagerDetailCopyWith<$Res> {
-  _$ManagerDetailCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? userId = freezed,
-    Object? email = freezed,
-    Object? user = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      user: freezed == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User?,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res>? get user {
-    if (_value.user == null) {
-      return null;
-    }
-
-    return $UserCopyWith<$Res>(_value.user!, (value) {
-      return _then(_value.copyWith(user: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$_ManagerDetailCopyWith<$Res>
-    implements $ManagerDetailCopyWith<$Res> {
-  factory _$$_ManagerDetailCopyWith(
-          _$_ManagerDetail value, $Res Function(_$_ManagerDetail) then) =
-      __$$_ManagerDetailCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int? id, int? userId, String? email, User? user});
-
-  @override
-  $UserCopyWith<$Res>? get user;
-}
-
-/// @nodoc
-class __$$_ManagerDetailCopyWithImpl<$Res>
-    extends _$ManagerDetailCopyWithImpl<$Res, _$_ManagerDetail>
-    implements _$$_ManagerDetailCopyWith<$Res> {
-  __$$_ManagerDetailCopyWithImpl(
-      _$_ManagerDetail _value, $Res Function(_$_ManagerDetail) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? userId = freezed,
-    Object? email = freezed,
-    Object? user = freezed,
-  }) {
-    return _then(_$_ManagerDetail(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      user: freezed == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User?,
-    ));
-  }
-}
-
-/// @nodoc
-
-@JsonSerializable(fieldRename: FieldRename.snake)
-class _$_ManagerDetail implements _ManagerDetail {
-  const _$_ManagerDetail({this.id, this.userId, this.email, this.user});
-
-  factory _$_ManagerDetail.fromJson(Map<String, dynamic> json) =>
-      _$$_ManagerDetailFromJson(json);
-
-  @override
-  final int? id;
-  @override
-  final int? userId;
-  @override
-  final String? email;
-  @override
-  final User? user;
-
-  @override
-  String toString() {
-    return 'ManagerDetail(id: $id, userId: $userId, email: $email, user: $user)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_ManagerDetail &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.user, user) || other.user == user));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, userId, email, user);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_ManagerDetailCopyWith<_$_ManagerDetail> get copyWith =>
-      __$$_ManagerDetailCopyWithImpl<_$_ManagerDetail>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_ManagerDetailToJson(
-      this,
-    );
-  }
-}
-
-abstract class _ManagerDetail implements ManagerDetail {
-  const factory _ManagerDetail(
-      {final int? id,
-      final int? userId,
-      final String? email,
-      final User? user}) = _$_ManagerDetail;
-
-  factory _ManagerDetail.fromJson(Map<String, dynamic> json) =
-      _$_ManagerDetail.fromJson;
-
-  @override
-  int? get id;
-  @override
-  int? get userId;
-  @override
-  String? get email;
-  @override
-  User? get user;
-  @override
-  @JsonKey(ignore: true)
-  _$$_ManagerDetailCopyWith<_$_ManagerDetail> get copyWith =>
       throw _privateConstructorUsedError;
 }

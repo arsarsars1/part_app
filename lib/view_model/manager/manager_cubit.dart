@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/manager_request.dart';
 import 'package:part_app/model/data_model/manager_response.dart';
@@ -168,6 +170,7 @@ class ManagerCubit extends Cubit<ManagerState> {
         branchId: id,
       );
       if (response?.status == 1) {
+        await clearImageCache();
         await getManagerById(id: int.parse(id));
         await getManagers();
         emit(UpdatedManager());
@@ -195,6 +198,7 @@ class ManagerCubit extends Cubit<ManagerState> {
         branchId: id,
       );
       if (response?.status == 1) {
+        await clearImageCache();
         await getManagerById(id: int.parse(id));
         await getManagers();
         emit(UpdatedManager());
@@ -214,5 +218,23 @@ class ManagerCubit extends Cubit<ManagerState> {
     doc2 = null;
     image = null;
     _managerRequest = const ManagerRequest();
+  }
+
+  Future clearImageCache() async {
+    var tempTrainer = _manager!.managerDetail![0];
+    var docUrl1 =
+        '${F.baseUrl}/admin/documents/manager/${tempTrainer.id}/${tempTrainer.document_1}';
+    var docUrl2 =
+        '${F.baseUrl}/admin/documents/manager/${tempTrainer.id}/${tempTrainer.document_1}';
+
+    var profileUrl =
+        '${F.baseUrl}/admin/images/manager/${tempTrainer.id}/${tempTrainer.profilePic}';
+
+    // clear doc 1
+    await CachedNetworkImage.evictFromCache(docUrl1);
+    // clear doc 2
+    await CachedNetworkImage.evictFromCache(docUrl2);
+    // clear profile pic
+    await CachedNetworkImage.evictFromCache(profileUrl);
   }
 }

@@ -171,6 +171,7 @@ class _AddTrainerState extends State<AddTrainer> {
                   length: 50,
                   title: 'Email *',
                   hint: 'Eg: contact@polestar.com',
+                  capitalization: TextCapitalization.none,
                   validator: (value) {
                     if (value == null || value.toString().isEmpty) {
                       return 'Please enter email';
@@ -204,6 +205,7 @@ class _AddTrainerState extends State<AddTrainer> {
                   length: 300,
                   maxLines: 3,
                   title: 'Address *',
+                  textInputAction: TextInputAction.newline,
                   hint: 'Enter Communication Address',
                   validator: (value) {
                     if (value == null || value.toString().isEmpty) {

@@ -52,8 +52,7 @@ _$_Branch _$$_BranchFromJson(Map<String, dynamic> json) => _$_Branch(
           : District.fromJson(json['district'] as Map<String, dynamic>),
       managerDetail: json['manager_detail'] == null
           ? null
-          : ManagerDetail.fromJson(
-              json['manager_detail'] as Map<String, dynamic>),
+          : Manager.fromJson(json['manager_detail'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_BranchToJson(_$_Branch instance) => <String, dynamic>{
@@ -73,22 +72,4 @@ Map<String, dynamic> _$$_BranchToJson(_$_Branch instance) => <String, dynamic>{
       'state': instance.state,
       'district': instance.district,
       'manager_detail': instance.managerDetail,
-    };
-
-_$_ManagerDetail _$$_ManagerDetailFromJson(Map<String, dynamic> json) =>
-    _$_ManagerDetail(
-      id: json['id'] as int?,
-      userId: json['user_id'] as int?,
-      email: json['email'] as String?,
-      user: json['user'] == null
-          ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$$_ManagerDetailToJson(_$_ManagerDetail instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'user_id': instance.userId,
-      'email': instance.email,
-      'user': instance.user,
     };

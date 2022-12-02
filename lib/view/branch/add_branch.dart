@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/branch/components/enable_switch.dart';
@@ -129,6 +128,7 @@ class _AddBranchState extends State<AddBranch> {
                 node: addressFocus,
                 length: 300,
                 title: 'Address *',
+                textInputAction: TextInputAction.newline,
                 hint: 'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum',
                 maxLines: 3,
                 validator: (value) {
