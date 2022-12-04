@@ -69,7 +69,6 @@ class ManagerService {
       return commonFromJson(jsonEncode(response));
     } catch (e) {
       return null;
-      print(e);
     }
   }
 }

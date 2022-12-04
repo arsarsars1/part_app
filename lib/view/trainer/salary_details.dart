@@ -8,6 +8,7 @@ import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view/manager/manager_page.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -90,9 +91,14 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                     upiId = value;
                   },
                   validator: (value) {
-                    // return value == null || value.toString().isEmpty
-                    //     ? 'Please enter trainer name.'
-                    //     : null;
+                    if (value == null || value.toString().isEmpty) {
+                      return null;
+                    } else if (value != null &&
+                        !RegExp(upiRegex).hasMatch(value)) {
+                      return 'Please enter a valid UPI.';
+                    } else {
+                      return null;
+                    }
                   },
                 ),
                 const SizedBox(
@@ -151,7 +157,7 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                   },
                   showInfo: true,
                   toolTipMessage:
-                      'Select the date in which you pay the monthly salary to this employee',
+                      'Enter the day of the month in which you pay the monthly salary to this employee.',
                 ),
               ],
             ),

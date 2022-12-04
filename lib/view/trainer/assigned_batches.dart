@@ -34,8 +34,7 @@ class _AssignedBatchesState extends State<AssignedBatches> {
       appBar: const CommonBar(title: 'Assigned Batches'),
       body: SizedBox(
         width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: ListView(
           children: [
             Text(
               trainer?.name ?? 'NA',

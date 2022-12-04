@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/batch/batch_students.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/rescheduled_classes.dart';
@@ -247,7 +248,8 @@ class _BatchDetailsState extends State<BatchDetails> {
                     )
                   ],
                 ),
-              )
+              ),
+              BatchStudents(),
             ],
           );
         },

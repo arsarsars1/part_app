@@ -1,12 +1,27 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 
 class ApiClient {
+  static final ApiClient _client = ApiClient._internal();
+
+  factory ApiClient() {
+    return _client;
+  }
+
+  ApiClient._internal() {
+    controller ??= StreamController<int>();
+  }
+
+  /// listener for api status
+  StreamController<int>? controller;
+
   final _baseUrl = F.baseUrl;
   final _token = 'h5uA9WokuxSNDJGYK0UevodqEWJjYzlB';
   final _dio = Dio();
@@ -22,13 +37,24 @@ class ApiClient {
       print(bearerToken);
     }
 
+    // check for internet connectivity
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      controller?.add(600);
+      return;
+    }
     try {
       var response = await _dio.get(
         baseUrl ?? path,
         options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status != null && status < 500;
+          },
           headers: {
             'MOBILE-APP-TOKEN': _token,
             'Authorization': 'Bearer $bearerToken',
+            'Accept': 'application/json',
           },
         ),
       );
@@ -73,6 +99,13 @@ class ApiClient {
       print('POST Path => $path');
     }
 
+    // check for internet connectivity
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      controller?.add(600);
+      return null;
+    }
+
     // posts the data to service with headers
     try {
       var response = await _dio.post(
@@ -106,6 +139,9 @@ class ApiClient {
   }
 
   dynamic _handleResponse(Response response) {
+    if (response.statusCode == 401) {
+      controller?.add(401);
+    }
     return response.data;
   }
 }

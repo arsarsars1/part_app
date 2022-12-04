@@ -6,6 +6,7 @@ import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
 import 'package:part_app/model/data_model/reschedule_response.dart';
+import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api_client.dart';
 
@@ -136,6 +137,17 @@ class BatchService {
       );
 
       return rescheduleResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<StudentsResponse?> getStudentsByBatch(int? batchId) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/batches/$batchId/students',
+      );
+      return studentsResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

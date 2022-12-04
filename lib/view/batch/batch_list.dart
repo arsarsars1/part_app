@@ -62,7 +62,7 @@ class _BatchesPageState extends State<BatchesPage> {
           ),
           CommonField(
             title: 'Search',
-            hint: 'Search Branch',
+            hint: 'Search Batch',
             onChange: (value) {},
           ),
           const SizedBox(

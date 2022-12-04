@@ -136,13 +136,11 @@ class _ManagerBranchesState extends State<ManagerBranches> {
           child: Center(
             child: Button(
               onTap: () {
+                var list =
+                    managerCubit.selectedBranches.map((e) => '$e').toList();
                 managerCubit.updateManager(
                   request: {
-                    'branch_id[]': managerCubit.selectedBranches
-                        .map(
-                          (e) => '$e',
-                        )
-                        .toList(),
+                    'branch_id[]': list.isEmpty ? '' : list,
                   },
                 );
               },

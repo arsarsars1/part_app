@@ -54,3 +54,11 @@ class RescheduleFailed extends BatchState {
 
   RescheduleFailed(this.message);
 }
+
+// Students
+
+class FetchingBatchStudents extends BatchState {}
+
+class FetchedBatchStudents extends BatchState {}
+
+class FetchingBatchStudentsFailed extends BatchState {}

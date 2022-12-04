@@ -17,6 +17,7 @@ String studentsResponseToJson(StudentsResponse data) =>
 
 @freezed
 abstract class StudentsResponse with _$StudentsResponse {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory StudentsResponse({
     int? status,
     Students? students,
@@ -28,6 +29,7 @@ abstract class StudentsResponse with _$StudentsResponse {
 
 @freezed
 abstract class Students with _$Students {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Students({
     int? currentPage,
     List<Student>? data,
@@ -44,6 +46,7 @@ abstract class Students with _$Students {
 
 @freezed
 abstract class Student with _$Student {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Student({
     int? id,
     String? countryCode,
@@ -59,6 +62,7 @@ abstract class Student with _$Student {
 
 @freezed
 abstract class StudentDetail with _$StudentDetail {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory StudentDetail({
     int? id,
     String? name,

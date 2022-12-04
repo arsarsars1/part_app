@@ -9,6 +9,7 @@ import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/reschedule_response.dart';
+import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/service/admin/batch.dart';
 import 'package:part_app/view/constants/default_values.dart';
 
@@ -26,6 +27,8 @@ class BatchCubit extends Cubit<BatchState> {
   final List<String> _selectedTrainers = [];
   List<BatchModel> _batches = [];
   List<BatchDetail> _rescheduledList = [];
+  List<Student>? _students;
+
   BatchModel? _batchModel;
   Batch? _batch;
 
@@ -41,6 +44,8 @@ class BatchCubit extends Cubit<BatchState> {
   List<String> get selectedTrainers => _selectedTrainers;
 
   List<BatchModel> get batches => _batches;
+
+  List<Student>? get students => _students;
 
   List<BatchDetail> get rescheduledList => _rescheduledList;
 
@@ -186,6 +191,10 @@ class BatchCubit extends Cubit<BatchState> {
       _batch = response?.batch;
       _batchModel = BatchModel.fromEntity(response!.batch!);
 
+      // fetch the students
+      getStudentsByBatch(_batch?.id);
+
+      // fetch the courses list
       if (_courses == null || _courses!.isEmpty) {
         await getCourses();
       }
@@ -229,6 +238,19 @@ class BatchCubit extends Cubit<BatchState> {
     if (response?.status == 1) {
       _rescheduledList = response?.rescheduledClasses?.batchDetails ?? [];
       emit(RescheduledListFetched());
+    }
+  }
+
+  /// Method to get the students
+  Future getStudentsByBatch(int? batchId) async {
+    emit(FetchingBatchStudents());
+    StudentsResponse? response =
+        await _batchService.getStudentsByBatch(batchId);
+    if (response?.status == 1) {
+      _students = response?.students?.data;
+      emit(FetchedBatchStudents());
+    } else {
+      emit(FetchingBatchStudentsFailed());
     }
   }
 }
