@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:part_app/view/batch/batch_details.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
+import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
@@ -38,7 +38,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
           } else if (state is RescheduledBatch) {
             Navigator.popUntil(
               context,
-              ModalRoute.withName(BatchDetails.route),
+              ModalRoute.withName(RescheduledClasses.route),
             );
             Alert(context).show(message: 'Batch Rescheduled.');
           } else if (state is RescheduleFailed) {

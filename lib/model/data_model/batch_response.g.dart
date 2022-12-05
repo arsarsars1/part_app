@@ -31,6 +31,7 @@ _$_Datum _$$_DatumFromJson(Map<String, dynamic> json) => _$_Datum(
           .toList(),
       from: json['from'] as int?,
       perPage: json['per_page'] as int?,
+      nextPageUrl: json['next_page_url'] as String?,
       to: json['to'] as int?,
     );
 
@@ -39,6 +40,7 @@ Map<String, dynamic> _$$_DatumToJson(_$_Datum instance) => <String, dynamic>{
       'data': instance.data,
       'from': instance.from,
       'per_page': instance.perPage,
+      'next_page_url': instance.nextPageUrl,
       'to': instance.to,
     };
 
@@ -51,6 +53,7 @@ _$_Batch _$$_BatchFromJson(Map<String, dynamic> json) => _$_Batch(
       subjectId: json['subject_id'] as int?,
       batchStatus: json['batch_status'] as String?,
       feeAmount: json['fee_amount'] as int?,
+      studentsCount: json['students_count'] as int?,
       admissionFees: json['admission_fees'] as int?,
       isActive: json['is_active'] as int?,
       batchDetail: (json['batch_detail'] as List<dynamic>?)
@@ -79,6 +82,7 @@ Map<String, dynamic> _$$_BatchToJson(_$_Batch instance) => <String, dynamic>{
       'subject_id': instance.subjectId,
       'batch_status': instance.batchStatus,
       'fee_amount': instance.feeAmount,
+      'students_count': instance.studentsCount,
       'admission_fees': instance.admissionFees,
       'is_active': instance.isActive,
       'batch_detail': instance.batchDetail,

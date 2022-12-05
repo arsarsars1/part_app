@@ -30,11 +30,11 @@ class DefaultValues {
       title: 'Ongoing',
       item: 'Ongoing',
     ),
-    const DropDownItem(
-      id: 'new',
-      title: 'New',
-      item: 'New',
-    ),
+    // const DropDownItem(
+    //   id: 'new',
+    //   title: 'New',
+    //   item: 'New',
+    // ),
     const DropDownItem(
       id: 'completed',
       title: 'Completed',

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
+import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view_model/batch/batch_cubit.dart';
 
 class TrainingDays extends StatelessWidget {
-  const TrainingDays({Key? key}) : super(key: key);
+  final bool edit;
+
+  const TrainingDays({Key? key, this.edit = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +48,28 @@ class TrainingDays extends StatelessWidget {
                             .toList();
                         if (items.isNotEmpty) {
                           days = items[0];
+                        }
+
+                        if (edit && days != null) {
+                          String day =
+                              DefaultValues.defaultTrainingDays[days.day];
+
+                          CommonDialog(
+                            subColor: AppColors.primaryColor,
+                            context: context,
+                            message:
+                                'Do you want to continue with deactivation of class on',
+                            subMessage:
+                                '$day ${days.startTime}-${days.endTime}?',
+                            buttonText: 'Yes',
+                            onTap: () {
+                              if (days != null) {
+                                Navigator.pop(context);
+                                context.read<BatchCubit>().removeDay(days);
+                              }
+                            },
+                          ).show();
+                          return;
                         }
                         showDialog(
                           context: context,

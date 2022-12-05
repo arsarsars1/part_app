@@ -39,6 +39,7 @@ abstract class Datum with _$Datum {
     required List<Batch> data,
     int? from,
     int? perPage,
+    String? nextPageUrl,
     int? to,
   }) = _Datum;
 
@@ -57,6 +58,7 @@ abstract class Batch with _$Batch {
     int? subjectId,
     String? batchStatus,
     int? feeAmount,
+    int? studentsCount,
     int? admissionFees,
     int? isActive,
     List<BatchDetail>? batchDetail,

@@ -14,6 +14,7 @@ class BatchModel {
   final String subjectName;
   final int? admissionFee;
   final int? fee;
+  final int? studentCount;
   final List<Trainer>? trainers;
 
   BatchModel({
@@ -27,6 +28,7 @@ class BatchModel {
     this.branchId,
     this.admissionFee,
     this.fee,
+    this.studentCount,
     this.trainers,
   });
 
@@ -51,6 +53,7 @@ class BatchModel {
       subjectName: batch.subject?.subjectName ?? 'NA',
       admissionFee: batch.admissionFees,
       fee: batch.feeAmount,
+      studentCount: batch.studentsCount,
       trainers: batch.trainers,
     );
   }

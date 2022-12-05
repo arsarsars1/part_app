@@ -182,7 +182,9 @@ class _AddBatchState extends State<AddBatch> {
                       const SizedBox(
                         height: 20,
                       ),
-                      const TrainingDays(),
+                      const TrainingDays(
+                        edit: false,
+                      ),
                       const SizedBox(
                         height: 20,
                       ),

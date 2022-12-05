@@ -53,6 +53,15 @@ class BatchService {
   Future<Common?> updateBatch(BatchRequest request, int? batchId) async {
     var data = request.toJson();
     data.removeWhere((key, value) => value == null);
+
+    if (data.containsKey('trainers[]')) {
+      var items = data['trainers[]'];
+      if (items.isEmpty) {
+        data.remove('trainers[]');
+        data.putIfAbsent('trainers[]', () => '');
+      }
+    }
+    print(data);
     try {
       var response = await _apiClient.post(
         postPath: '/admin/batches/$batchId',
@@ -69,6 +78,36 @@ class BatchService {
     try {
       var response = await _apiClient.get(
         queryPath: '/admin/batches/',
+      );
+
+      return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// this method will handle four different apis based on
+  /// [ branchId ] , [ status ] , [ search ]
+  Future<BatchResponse?> getBatchesByStatus({
+    int? branchId,
+    String status = 'ongoing',
+    String? search,
+    required int page,
+  }) async {
+    try {
+      String path = branchId == null
+          ? '/admin/batches/batch-status/$status'
+          : '/admin/branches/$branchId/batches/batch-status/$status';
+
+      /// append the search text if search query is not null
+      if (search != null) {
+        path += '/search/$search';
+      }
+
+      path += '?page=$page';
+
+      var response = await _apiClient.get(
+        queryPath: path,
       );
 
       return batchResponseFromJson(jsonEncode(response));
@@ -122,6 +161,19 @@ class BatchService {
       var response = await _apiClient.post(
         postPath: '/admin/batches/$batchId/reschedule-class',
         data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> deactivateClass(
+      {required int? batchId, required int? classId}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/batches/$classId/activation/0',
       );
 
       return commonFromJson(jsonEncode(response));

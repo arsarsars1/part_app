@@ -32,6 +32,11 @@ class BatchCubit extends Cubit<BatchState> {
   BatchModel? _batchModel;
   Batch? _batch;
 
+  // pagination
+
+  int page = 1;
+  String? nextPageUrl = '';
+
   DropDownItem? _defaultCourse;
   DropDownItem? _defaultSubject;
 
@@ -60,6 +65,12 @@ class BatchCubit extends Cubit<BatchState> {
   void addDay(Days day) {
     _days.removeWhere((element) => element.day == day.day);
     _days.add(day);
+
+    emit(DaysUpdated());
+  }
+
+  void removeDay(Days day) {
+    _days.removeWhere((element) => element.day == day.day);
 
     emit(DaysUpdated());
   }
@@ -145,10 +156,10 @@ class BatchCubit extends Cubit<BatchState> {
         await getBatch(batchId: '${_batchModel?.id}');
         emit(UpdatedBatch());
       } else {
-        emit(UpdateBatchFailed(response?.message ?? 'Failed to create batch.'));
+        emit(UpdateBatchFailed(response?.message ?? 'Failed to update batch.'));
       }
     } catch (e) {
-      emit(UpdateBatchFailed('Failed to create batch.'));
+      emit(UpdateBatchFailed('Failed to update batch.'));
     }
   }
 
@@ -160,6 +171,47 @@ class BatchCubit extends Cubit<BatchState> {
               .toList() ??
           [];
       emit(BatchesFetched());
+    }
+  }
+
+  Future getBatchesByStatus({
+    int? branchId,
+    String status = 'ongoing',
+    String? search,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(FetchingBatches());
+    } else {
+      emit(FetchingBatches(pagination: true));
+    }
+    if (nextPageUrl == null) {
+      emit(BatchesFetched());
+      return;
+    }
+    BatchResponse? response = await _batchService.getBatchesByStatus(
+      branchId: branchId,
+      status: status,
+      search: search,
+      page: page,
+    );
+
+    if (response?.status == 1) {
+      nextPageUrl = response?.batches?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      var items = response?.batches?.data
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
+
+      _batches.addAll(items);
+      emit(BatchesFetched(moreItems: nextPageUrl != null));
     }
   }
 
@@ -224,6 +276,21 @@ class BatchCubit extends Cubit<BatchState> {
       batchModel?.id,
     );
     if (response?.status == 1) {
+      await getRescheduledBatches();
+      emit(RescheduledBatch());
+    } else {
+      emit(RescheduleFailed(response?.message ?? 'Failed to reschedule'));
+    }
+  }
+
+  Future deactivateClass(int? batchDetailId) async {
+    emit(ReschedulingBatch());
+    Common? response = await _batchService.deactivateClass(
+      classId: batchDetailId,
+      batchId: _batch?.id,
+    );
+    if (response?.status == 1) {
+      await getRescheduledBatches();
       emit(RescheduledBatch());
     } else {
       emit(RescheduleFailed(response?.message ?? 'Failed to reschedule'));

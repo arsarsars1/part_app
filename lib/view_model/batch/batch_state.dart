@@ -11,7 +11,17 @@ class GettingCourses extends BatchState {}
 
 class CoursesUpdated extends BatchState {}
 
-class BatchesFetched extends BatchState {}
+class FetchingBatches extends BatchState {
+  final bool pagination;
+
+  FetchingBatches({this.pagination = false});
+}
+
+class BatchesFetched extends BatchState {
+  final bool moreItems;
+
+  BatchesFetched({this.moreItems = false});
+}
 
 class CreatingBatch extends BatchState {}
 

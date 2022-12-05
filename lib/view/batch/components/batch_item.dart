@@ -44,7 +44,7 @@ class BatchItem extends StatelessWidget {
                 ),
                 if (!reschedule)
                   Text(
-                    'Active Students: 10',
+                    'Active Students: ${batch.studentCount}',
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
                           color: AppColors.primaryColor,
                         ),

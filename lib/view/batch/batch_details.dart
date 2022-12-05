@@ -249,7 +249,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                   ],
                 ),
               ),
-              BatchStudents(),
+              const BatchStudents(),
             ],
           );
         },

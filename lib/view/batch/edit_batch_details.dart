@@ -189,7 +189,9 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                       const SizedBox(
                         height: 20,
                       ),
-                      const TrainingDays(),
+                      const TrainingDays(
+                        edit: true,
+                      ),
                       const SizedBox(
                         height: 20,
                       ),

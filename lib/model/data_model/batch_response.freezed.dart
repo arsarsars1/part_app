@@ -228,6 +228,7 @@ mixin _$Datum {
   List<Batch> get data => throw _privateConstructorUsedError;
   int? get from => throw _privateConstructorUsedError;
   int? get perPage => throw _privateConstructorUsedError;
+  String? get nextPageUrl => throw _privateConstructorUsedError;
   int? get to => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -241,7 +242,12 @@ abstract class $DatumCopyWith<$Res> {
       _$DatumCopyWithImpl<$Res, Datum>;
   @useResult
   $Res call(
-      {int? currentPage, List<Batch> data, int? from, int? perPage, int? to});
+      {int? currentPage,
+      List<Batch> data,
+      int? from,
+      int? perPage,
+      String? nextPageUrl,
+      int? to});
 }
 
 /// @nodoc
@@ -261,6 +267,7 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
     Object? data = null,
     Object? from = freezed,
     Object? perPage = freezed,
+    Object? nextPageUrl = freezed,
     Object? to = freezed,
   }) {
     return _then(_value.copyWith(
@@ -280,6 +287,10 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
           ? _value.perPage
           : perPage // ignore: cast_nullable_to_non_nullable
               as int?,
+      nextPageUrl: freezed == nextPageUrl
+          ? _value.nextPageUrl
+          : nextPageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       to: freezed == to
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
@@ -295,7 +306,12 @@ abstract class _$$_DatumCopyWith<$Res> implements $DatumCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int? currentPage, List<Batch> data, int? from, int? perPage, int? to});
+      {int? currentPage,
+      List<Batch> data,
+      int? from,
+      int? perPage,
+      String? nextPageUrl,
+      int? to});
 }
 
 /// @nodoc
@@ -311,6 +327,7 @@ class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
     Object? data = null,
     Object? from = freezed,
     Object? perPage = freezed,
+    Object? nextPageUrl = freezed,
     Object? to = freezed,
   }) {
     return _then(_$_Datum(
@@ -330,6 +347,10 @@ class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
           ? _value.perPage
           : perPage // ignore: cast_nullable_to_non_nullable
               as int?,
+      nextPageUrl: freezed == nextPageUrl
+          ? _value.nextPageUrl
+          : nextPageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       to: freezed == to
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
@@ -347,6 +368,7 @@ class _$_Datum implements _Datum {
       required final List<Batch> data,
       this.from,
       this.perPage,
+      this.nextPageUrl,
       this.to})
       : _data = data;
 
@@ -367,11 +389,13 @@ class _$_Datum implements _Datum {
   @override
   final int? perPage;
   @override
+  final String? nextPageUrl;
+  @override
   final int? to;
 
   @override
   String toString() {
-    return 'Datum(currentPage: $currentPage, data: $data, from: $from, perPage: $perPage, to: $to)';
+    return 'Datum(currentPage: $currentPage, data: $data, from: $from, perPage: $perPage, nextPageUrl: $nextPageUrl, to: $to)';
   }
 
   @override
@@ -384,13 +408,21 @@ class _$_Datum implements _Datum {
             const DeepCollectionEquality().equals(other._data, _data) &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
+            (identical(other.nextPageUrl, nextPageUrl) ||
+                other.nextPageUrl == nextPageUrl) &&
             (identical(other.to, to) || other.to == to));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, currentPage,
-      const DeepCollectionEquality().hash(_data), from, perPage, to);
+  int get hashCode => Object.hash(
+      runtimeType,
+      currentPage,
+      const DeepCollectionEquality().hash(_data),
+      from,
+      perPage,
+      nextPageUrl,
+      to);
 
   @JsonKey(ignore: true)
   @override
@@ -412,6 +444,7 @@ abstract class _Datum implements Datum {
       required final List<Batch> data,
       final int? from,
       final int? perPage,
+      final String? nextPageUrl,
       final int? to}) = _$_Datum;
 
   factory _Datum.fromJson(Map<String, dynamic> json) = _$_Datum.fromJson;
@@ -424,6 +457,8 @@ abstract class _Datum implements Datum {
   int? get from;
   @override
   int? get perPage;
+  @override
+  String? get nextPageUrl;
   @override
   int? get to;
   @override
@@ -446,6 +481,7 @@ mixin _$Batch {
   int? get subjectId => throw _privateConstructorUsedError;
   String? get batchStatus => throw _privateConstructorUsedError;
   int? get feeAmount => throw _privateConstructorUsedError;
+  int? get studentsCount => throw _privateConstructorUsedError;
   int? get admissionFees => throw _privateConstructorUsedError;
   int? get isActive => throw _privateConstructorUsedError;
   List<BatchDetail>? get batchDetail => throw _privateConstructorUsedError;
@@ -473,6 +509,7 @@ abstract class $BatchCopyWith<$Res> {
       int? subjectId,
       String? batchStatus,
       int? feeAmount,
+      int? studentsCount,
       int? admissionFees,
       int? isActive,
       List<BatchDetail>? batchDetail,
@@ -507,6 +544,7 @@ class _$BatchCopyWithImpl<$Res, $Val extends Batch>
     Object? subjectId = freezed,
     Object? batchStatus = freezed,
     Object? feeAmount = freezed,
+    Object? studentsCount = freezed,
     Object? admissionFees = freezed,
     Object? isActive = freezed,
     Object? batchDetail = freezed,
@@ -547,6 +585,10 @@ class _$BatchCopyWithImpl<$Res, $Val extends Batch>
       feeAmount: freezed == feeAmount
           ? _value.feeAmount
           : feeAmount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      studentsCount: freezed == studentsCount
+          ? _value.studentsCount
+          : studentsCount // ignore: cast_nullable_to_non_nullable
               as int?,
       admissionFees: freezed == admissionFees
           ? _value.admissionFees
@@ -631,6 +673,7 @@ abstract class _$$_BatchCopyWith<$Res> implements $BatchCopyWith<$Res> {
       int? subjectId,
       String? batchStatus,
       int? feeAmount,
+      int? studentsCount,
       int? admissionFees,
       int? isActive,
       List<BatchDetail>? batchDetail,
@@ -664,6 +707,7 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
     Object? subjectId = freezed,
     Object? batchStatus = freezed,
     Object? feeAmount = freezed,
+    Object? studentsCount = freezed,
     Object? admissionFees = freezed,
     Object? isActive = freezed,
     Object? batchDetail = freezed,
@@ -704,6 +748,10 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
       feeAmount: freezed == feeAmount
           ? _value.feeAmount
           : feeAmount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      studentsCount: freezed == studentsCount
+          ? _value.studentsCount
+          : studentsCount // ignore: cast_nullable_to_non_nullable
               as int?,
       admissionFees: freezed == admissionFees
           ? _value.admissionFees
@@ -750,6 +798,7 @@ class _$_Batch implements _Batch {
       this.subjectId,
       this.batchStatus,
       this.feeAmount,
+      this.studentsCount,
       this.admissionFees,
       this.isActive,
       final List<BatchDetail>? batchDetail,
@@ -779,6 +828,8 @@ class _$_Batch implements _Batch {
   final String? batchStatus;
   @override
   final int? feeAmount;
+  @override
+  final int? studentsCount;
   @override
   final int? admissionFees;
   @override
@@ -810,7 +861,7 @@ class _$_Batch implements _Batch {
 
   @override
   String toString() {
-    return 'Batch(id: $id, batchName: $batchName, academyId: $academyId, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, batchStatus: $batchStatus, feeAmount: $feeAmount, admissionFees: $admissionFees, isActive: $isActive, batchDetail: $batchDetail, trainers: $trainers, course: $course, subject: $subject, branch: $branch)';
+    return 'Batch(id: $id, batchName: $batchName, academyId: $academyId, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, batchStatus: $batchStatus, feeAmount: $feeAmount, studentsCount: $studentsCount, admissionFees: $admissionFees, isActive: $isActive, batchDetail: $batchDetail, trainers: $trainers, course: $course, subject: $subject, branch: $branch)';
   }
 
   @override
@@ -833,6 +884,8 @@ class _$_Batch implements _Batch {
                 other.batchStatus == batchStatus) &&
             (identical(other.feeAmount, feeAmount) ||
                 other.feeAmount == feeAmount) &&
+            (identical(other.studentsCount, studentsCount) ||
+                other.studentsCount == studentsCount) &&
             (identical(other.admissionFees, admissionFees) ||
                 other.admissionFees == admissionFees) &&
             (identical(other.isActive, isActive) ||
@@ -857,6 +910,7 @@ class _$_Batch implements _Batch {
       subjectId,
       batchStatus,
       feeAmount,
+      studentsCount,
       admissionFees,
       isActive,
       const DeepCollectionEquality().hash(_batchDetail),
@@ -889,6 +943,7 @@ abstract class _Batch implements Batch {
       final int? subjectId,
       final String? batchStatus,
       final int? feeAmount,
+      final int? studentsCount,
       final int? admissionFees,
       final int? isActive,
       final List<BatchDetail>? batchDetail,
@@ -915,6 +970,8 @@ abstract class _Batch implements Batch {
   String? get batchStatus;
   @override
   int? get feeAmount;
+  @override
+  int? get studentsCount;
   @override
   int? get admissionFees;
   @override
