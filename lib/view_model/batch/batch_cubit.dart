@@ -149,8 +149,10 @@ class BatchCubit extends Cubit<BatchState> {
   Future updateBatch(BatchRequest request) async {
     emit(UpdatingBatch());
     try {
-      Common? response =
-          await _batchService.updateBatch(request, _batchModel?.id);
+      Common? response = await _batchService.updateBatch(
+        request,
+        _batchModel?.id,
+      );
       if (response?.status == 1) {
         await getBatches();
         await getBatch(batchId: '${_batchModel?.id}');
@@ -311,8 +313,9 @@ class BatchCubit extends Cubit<BatchState> {
   /// Method to get the students
   Future getStudentsByBatch(int? batchId) async {
     emit(FetchingBatchStudents());
-    StudentsResponse? response =
-        await _batchService.getStudentsByBatch(batchId);
+    StudentsResponse? response = await _batchService.getStudentsByBatch(
+      batchId,
+    );
     if (response?.status == 1) {
       _students = response?.students?.data;
       emit(FetchedBatchStudents());

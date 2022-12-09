@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/manager_request.dart';
 import 'package:part_app/model/extensions.dart';
@@ -188,6 +187,7 @@ class _AddManagerState extends State<AddManager> {
                     setState(() {
                       selected = value;
                     });
+                    whatsappNo = null;
                   },
                   onNumberChange: (String value) {
                     whatsappNo = value;

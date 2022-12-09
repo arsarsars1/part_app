@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
-import 'package:part_app/view/components/checkbox.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/dialog.dart';
+import 'package:part_app/view/components/text_swtich_button.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -70,7 +70,7 @@ class _TrainerBranchesState extends State<TrainerBranches> {
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         margin: const EdgeInsets.symmetric(vertical: 8),
-                        child: TextCheckBox(
+                        child: TextSwitchButton(
                           onChange: (value) {
                             if (!value) {
                               CommonDialog(

@@ -81,4 +81,10 @@ extension StringExtension on String {
   String toAmPM() {
     return DateFormat('hh:mm a').format(DateFormat('hh:mm:ss').parse(this));
   }
+
+  DateTime toDateTime() {
+    return DateFormat('hh:mm').parse(this);
+  }
 }
+
+extension BoolExtension on bool {}

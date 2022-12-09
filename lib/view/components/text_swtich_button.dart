@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:part_app/view/constants/constant.dart';
 
-class TextCheckBox extends StatefulWidget {
+class TextSwitchButton extends StatefulWidget {
   final ValueChanged<bool> onChange;
   final String title;
   final String? subTitle;
   final bool selected;
 
-  const TextCheckBox(
+  const TextSwitchButton(
       {Key? key,
       required this.onChange,
       required this.title,
@@ -17,10 +17,10 @@ class TextCheckBox extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<TextCheckBox> createState() => _TextCheckBoxState();
+  State<TextSwitchButton> createState() => _TextSwitchButtonState();
 }
 
-class _TextCheckBoxState extends State<TextCheckBox> {
+class _TextSwitchButtonState extends State<TextSwitchButton> {
   bool selected = false;
 
   @override
@@ -73,7 +73,9 @@ class _TextCheckBoxState extends State<TextCheckBox> {
             child: FittedBox(
               fit: BoxFit.contain,
               child: CupertinoSwitch(
+                thumbColor: AppColors.liteDark,
                 trackColor: AppColors.grey500,
+                activeColor: AppColors.green,
                 value: widget.selected,
                 onChanged: (value) {
                   widget.onChange(value);

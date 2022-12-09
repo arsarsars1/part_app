@@ -23,8 +23,8 @@ abstract class BatchRequest with _$BatchRequest {
     int? courseId,
     int? subjectId,
     String? batchStatus,
-    int? feeAmount,
-    int? admissionFees,
+    dynamic feeAmount,
+    dynamic admissionFees,
     @JsonKey(name: 'trainers[]') List<int?>? trainers,
     @JsonKey(name: 'days[]') List<String>? days,
   }) = _BatchRequest;

@@ -23,11 +23,15 @@ class _DocumentImageState extends State<DocumentImage> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: CachedImage(
-                  widget.imageUrl!,
-                  height: MediaQuery.of(context).size.width * 0.75,
-                  fit: BoxFit.contain,
-                ).image(),
+                content: InteractiveViewer(
+                  panEnabled: false,
+                  maxScale: 2,
+                  child: CachedImage(
+                    widget.imageUrl!,
+                    height: MediaQuery.of(context).size.width * 0.75,
+                    fit: BoxFit.contain,
+                  ).image(),
+                ),
               );
             });
       },

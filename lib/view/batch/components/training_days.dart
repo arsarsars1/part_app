@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
+import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
@@ -60,7 +62,7 @@ class TrainingDays extends StatelessWidget {
                             message:
                                 'Do you want to continue with deactivation of class on',
                             subMessage:
-                                '$day ${days.startTime}-${days.endTime}?',
+                                '$day ${days.startTime?.toAmPM()}-${days.endTime?.toAmPM()}?',
                             buttonText: 'Yes',
                             onTap: () {
                               if (days != null) {
@@ -183,7 +185,7 @@ class _ClassTimeState extends State<ClassTime> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      timePicker().then((value) {
+                      timePicker(true).then((value) {
                         setState(() {
                           startTime = value;
                         });
@@ -226,7 +228,13 @@ class _ClassTimeState extends State<ClassTime> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      timePicker().then((value) {
+                      if (startTime == null) {
+                        Alert(context).show(
+                          message: 'Please select start time.',
+                        );
+                        return;
+                      }
+                      timePicker(false).then((value) {
                         setState(() {
                           endTime = value;
                         });
@@ -334,7 +342,7 @@ class _ClassTimeState extends State<ClassTime> {
     );
   }
 
-  Future<String?> timePicker() async {
+  Future<String?> timePicker(bool start) async {
     TimeOfDay? time = await showTimePicker(
       builder: (context, child) {
         return Theme(
@@ -371,6 +379,14 @@ class _ClassTimeState extends State<ClassTime> {
         time,
         alwaysUse24HourFormat: true,
       );
+      if (startTime != null && !start) {
+        if (formattedTimeOfDay.toDateTime().isBefore(startTime!.toDateTime())) {
+          Alert(context).show(
+            message: 'Selected end time is before start time.',
+          );
+          return null;
+        }
+      }
       return formattedTimeOfDay;
     }
     return null;

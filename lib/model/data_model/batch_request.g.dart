@@ -13,8 +13,8 @@ _$_BatchRequest _$$_BatchRequestFromJson(Map<String, dynamic> json) =>
       courseId: json['course_id'] as int?,
       subjectId: json['subject_id'] as int?,
       batchStatus: json['batch_status'] as String?,
-      feeAmount: json['fee_amount'] as int?,
-      admissionFees: json['admission_fees'] as int?,
+      feeAmount: json['fee_amount'],
+      admissionFees: json['admission_fees'],
       trainers: (json['trainers[]'] as List<dynamic>?)
           ?.map((e) => e as int?)
           .toList(),

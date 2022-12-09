@@ -34,17 +34,21 @@ class BatchItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  batch.name,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                Expanded(
+                  child: Text(
+                    batch.name,
+                    maxLines: 2,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
                 ),
                 if (!reschedule)
                   Text(
-                    'Active Students: ${batch.studentCount}',
+                    'Active Students: ${batch.studentCount ?? 0}',
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
                           color: AppColors.primaryColor,
                         ),

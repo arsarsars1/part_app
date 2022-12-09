@@ -158,6 +158,7 @@ class _AddTrainerState extends State<AddTrainer> {
                     setState(() {
                       selected = value;
                     });
+                    whatsappNo = null;
                   },
                   onNumberChange: (String value) {
                     whatsappNo = value;

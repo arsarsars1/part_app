@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
-import 'package:part_app/view/batch/batch_list.dart';
+import 'package:part_app/view/batch/batch_details.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
 import 'package:part_app/view/components/branch_field.dart';
 import 'package:part_app/view/components/common_bar.dart';
@@ -61,16 +61,16 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
       appBar: const CommonBar(title: 'Edit Batch'),
       body: BlocListener<BatchCubit, BatchState>(
         listener: (context, state) {
-          if (state is CreatingBatch) {
-            Loader(context).show();
-          } else if (state is CreatedBatch) {
+          if (state is UpdatingBatch) {
+            Loader(context, message: 'Updating batch..').show();
+          } else if (state is UpdatedBatch) {
             Navigator.popUntil(
               context,
-              ModalRoute.withName(BatchesPage.route),
+              ModalRoute.withName(BatchDetails.route),
             );
-            Alert(context).show(message: 'Batch created successfully.');
-          } else if (state is CreateBatchFailed) {
-            Alert(context).show(message: 'Batch created successfully.');
+            Alert(context).show(message: 'Batch updated successfully.');
+          } else if (state is UpdateBatchFailed) {
+            Alert(context).show(message: state.message);
             Navigator.pop(context);
           }
         },
@@ -243,8 +243,8 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                         batchStatus: batchStatus,
                         subjectId: subjectId,
                         courseId: courseId,
-                        feeAmount: int.parse(fee!),
-                        admissionFees: int.parse(admissionFee!),
+                        feeAmount: fee,
+                        admissionFees: admissionFee,
                       );
 
                       cubit.updateBatch(request);

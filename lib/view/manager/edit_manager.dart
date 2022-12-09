@@ -161,6 +161,7 @@ class _EditManagerState extends State<EditManager> {
                       setState(() {
                         selected = value;
                       });
+                      whatsappNo = null;
                     },
                     onNumberChange: (String value) {
                       whatsappNo = value;

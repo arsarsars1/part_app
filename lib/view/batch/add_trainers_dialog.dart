@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/button.dart';
-import 'package:part_app/view/components/checkbox.dart';
+import 'package:part_app/view/components/text_swtich_button.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AddTrainersDialog extends StatefulWidget {
@@ -62,7 +62,7 @@ class _AddTrainersDialogState extends State<AddTrainersDialog> {
                       Trainer? trainer = cubit.activeTrainers?[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: TextCheckBox(
+                        child: TextSwitchButton(
                           onChange: (value) {
                             setState(() {
                               if (value) {

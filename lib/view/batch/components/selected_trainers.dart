@@ -65,7 +65,14 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                 const SizedBox(
                   height: 4,
                 ),
-                Text('${detail.name}'),
+                SizedBox(
+                  width: width,
+                  child: Text(
+                    '${detail.name}',
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
               ],
             );
           },
