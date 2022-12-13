@@ -200,11 +200,14 @@ class _BranchDetailsState extends State<BranchDetails> {
                           height: 30.h,
                           width: 100,
                           onTap: () {
+                            /// to handle the new trainer addition flow
                             context.read<TrainerCubit>().fromBranch = true;
-                            Navigator.pushNamed(
-                              context,
-                              AddTrainer.route,
-                            );
+                            context.read<TrainerCubit>().selectedBranches = [
+                              branch!.id
+                            ];
+
+                            /// opens the add trainer view
+                            Navigator.pushNamed(context, AddTrainer.route);
                           },
                           title: 'Add Trainer',
                         ),

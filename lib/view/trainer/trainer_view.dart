@@ -54,6 +54,7 @@ class _TrainerPageState extends State<TrainerPage> {
                 height: 30.h,
                 onTap: () {
                   cubit.fromBranch = false;
+                  cubit.selectedBranches = [];
                   Navigator.pushNamed(context, AddTrainer.route);
                 },
                 title: 'Add New Trainer',

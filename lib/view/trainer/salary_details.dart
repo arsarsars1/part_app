@@ -188,7 +188,7 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                   trainerCubit.updateRequest(
                     request,
                   );
-                  trainerCubit.selectedBranches.clear();
+
                   Navigator.pushNamed(context, AddTrainerBranches.route);
                 } else {
                   ManagerRequest request = managerCubit.managerRequest.copyWith(

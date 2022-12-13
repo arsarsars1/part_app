@@ -43,6 +43,12 @@ class TrainerCubit extends Cubit<TrainerState> {
 
   List<int> get selectedBranches => _selectedBranches;
 
+  set selectedBranches(List<int> branches) {
+    _selectedBranches.clear();
+    _selectedBranches.addAll(branches);
+    print(_selectedBranches);
+  }
+
   bool fromBranch = false;
 
   set trainer(Trainer? temp) {
@@ -264,6 +270,7 @@ class TrainerCubit extends Cubit<TrainerState> {
     doc1 = null;
     doc2 = null;
     image = null;
+
     _request = const TrainerRequest();
   }
 
