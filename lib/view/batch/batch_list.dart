@@ -101,6 +101,7 @@ class _BatchesPageState extends State<BatchesPage> {
                     title: 'Search',
                     hint: 'Search Batch',
                     onChange: (value) {},
+                    prefixIcon: const Icon(Icons.search),
                     onSubmit: (value) {
                       if (value.isEmpty) {
                         query = null;
@@ -145,17 +146,7 @@ class _BatchesPageState extends State<BatchesPage> {
                     height: 20,
                   ),
                   BlocConsumer<BatchCubit, BatchState>(
-                    listener: (context, state) {
-                      // if (state is BatchesFetched && state.moreItems) {
-                      //   var scrollValue =
-                      //       scrollController.position.pixels + 100;
-                      //   scrollController.animateTo(
-                      //     scrollValue,
-                      //     duration: const Duration(milliseconds: 300),
-                      //     curve: Curves.fastOutSlowIn,
-                      //   );
-                      // }
-                    },
+                    listener: (context, state) {},
                     buildWhen: (prv, crr) =>
                         crr is BatchesFetched || crr is FetchingBatches,
                     builder: (context, state) {
@@ -169,7 +160,10 @@ class _BatchesPageState extends State<BatchesPage> {
                       }
                       if (cubit.batches.isEmpty) {
                         return const Center(
-                          child: Text('Add Batch to Get Started'),
+                          child: Padding(
+                            padding: EdgeInsets.all(64.0),
+                            child: Text('Add Batch to Get Started'),
+                          ),
                         );
                       }
                       return ListView.builder(

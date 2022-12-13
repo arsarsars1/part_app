@@ -28,6 +28,7 @@ import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
+import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
 import 'package:part_app/view/trainer/assigned_batches.dart';
@@ -251,6 +252,11 @@ class RouteGenerator {
           builder: (_) => ManagerDetails(
             managerId: settings.arguments as int,
           ),
+          settings: settings,
+        );
+      case StudentsView.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentsView(),
           settings: settings,
         );
       default:

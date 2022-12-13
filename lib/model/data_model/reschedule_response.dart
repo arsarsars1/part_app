@@ -21,26 +21,26 @@ abstract class RescheduleResponse with _$RescheduleResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory RescheduleResponse({
     int? status,
-    RescheduledClasses? rescheduledClasses,
+    List<BatchDetail>? rescheduledClasses,
   }) = _RescheduleResponse;
 
   factory RescheduleResponse.fromJson(Map<String, dynamic> json) =>
       _$RescheduleResponseFromJson(json);
 }
-
-@freezed
-abstract class RescheduledClasses with _$RescheduledClasses {
-  @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory RescheduledClasses({
-    int? currentPage,
-    @JsonKey(name: 'data') List<BatchDetail>? batchDetails,
-    String? firstPageUrl,
-    int? from,
-    String? path,
-    int? perPage,
-    int? to,
-  }) = _RescheduledClasses;
-
-  factory RescheduledClasses.fromJson(Map<String, dynamic> json) =>
-      _$RescheduledClassesFromJson(json);
-}
+//
+// @freezed
+// abstract class RescheduledClasses with _$RescheduledClasses {
+//   @JsonSerializable(fieldRename: FieldRename.snake)
+//   const factory RescheduledClasses({
+//     int? currentPage,
+//     @JsonKey(name: 'data') List<BatchDetail>? batchDetails,
+//     String? firstPageUrl,
+//     int? from,
+//     String? path,
+//     int? perPage,
+//     int? to,
+//   }) = _RescheduledClasses;
+//
+//   factory RescheduledClasses.fromJson(Map<String, dynamic> json) =>
+//       _$RescheduledClassesFromJson(json);
+// }

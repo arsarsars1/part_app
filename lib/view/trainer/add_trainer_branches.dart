@@ -58,41 +58,53 @@ class _AddTrainerBranchesState extends State<AddTrainerBranches> {
             Alert(context).show(message: state.message);
           }
         },
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            itemCount: cubit.activeBranches.length,
-            itemBuilder: (context, index) {
-              Branch branch = cubit.activeBranches[index];
-              return BlocBuilder<TrainerCubit, TrainerState>(
-                buildWhen: (prv, crr) => crr is BranchesUpdated,
-                builder: (context, state) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.liteDark,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                    child: TextSwitchButton(
-                      onChange: (value) {
-                        trainerCubit.updateBranchSelection(branch.id);
+        child: cubit.activeBranches.isNotEmpty
+            ? Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount: cubit.activeBranches.length,
+                  itemBuilder: (context, index) {
+                    Branch branch = cubit.activeBranches[index];
+                    return BlocBuilder<TrainerCubit, TrainerState>(
+                      buildWhen: (prv, crr) => crr is BranchesUpdated,
+                      builder: (context, state) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.liteDark,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          child: TextSwitchButton(
+                            onChange: (value) {
+                              trainerCubit.updateBranchSelection(branch.id);
+                            },
+                            title: branch.branchName ?? 'N/A',
+                            subTitle:
+                                '${branch.district?.districtName}, ${branch.state?.stateName}',
+                            selected: trainerCubit.selectedBranches.contains(
+                              branch.id,
+                            ),
+                          ),
+                        );
                       },
-                      title: branch.branchName ?? 'N/A',
-                      subTitle:
-                          '${branch.district?.districtName}, ${branch.state?.stateName}',
-                      selected: trainerCubit.selectedBranches.contains(
-                        branch.id,
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-        ),
+                    );
+                  },
+                ),
+              )
+            : const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(32.0),
+                  child: Text(
+                    'No Active Branches present, '
+                    '\nPlease Add/Activate a Branch and come back again.',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
       ),
       bottomNavigationBar: SizedBox(
         height: 132.h,
@@ -101,6 +113,9 @@ class _AddTrainerBranchesState extends State<AddTrainerBranches> {
           child: Center(
             child: Button(
               onTap: () {
+                if (trainerCubit.selectedBranches.isEmpty) {
+                  return;
+                }
                 TrainerRequest request = trainerCubit.request.copyWith(
                   branchId:
                       trainerCubit.selectedBranches.map((e) => '$e').toList(),
@@ -114,7 +129,7 @@ class _AddTrainerBranchesState extends State<AddTrainerBranches> {
                 // informs the cubit to create a trainer
                 trainerCubit.createTrainer();
               },
-              title: 'Continue',
+              title: 'Create',
             ),
           ),
         ),

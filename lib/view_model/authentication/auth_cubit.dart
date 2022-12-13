@@ -82,11 +82,15 @@ class AuthCubit extends Cubit<AuthState> {
   Future login({String? password}) async {
     if (password != null) {
       emit(Authenticating());
-      UserResponse userResponse = await _authService.login(
+      UserResponse userResponse = await _authService
+          .login(
         phoneNo: _phoneNo!,
         countryCode: _countryCode!,
         password: password,
-      );
+      )
+          .onError((error, stackTrace) {
+        emit(LoginFailed('Login failed, Please try again'));
+      });
 
       if (userResponse.status == 1) {
         _user = userResponse.user;

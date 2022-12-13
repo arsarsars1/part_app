@@ -166,9 +166,12 @@ class BatchCubit extends Cubit<BatchState> {
   }
 
   Future getBatches() async {
+    _batches.clear();
+    emit(FetchingBatches(pagination: false));
     BatchResponse? response = await _batchService.getBatches();
     if (response?.status == 1) {
       _batches = response?.batches?.data
+              .where((element) => element.branch?.isActive == 1)
               .map((e) => BatchModel.fromEntity(e))
               .toList() ??
           [];
@@ -208,6 +211,10 @@ class BatchCubit extends Cubit<BatchState> {
       }
 
       var items = response?.batches?.data
+              .where(
+                (element) =>
+                    element.isActive == 1 && element.branch?.isActive == 1,
+              )
               .map((e) => BatchModel.fromEntity(e))
               .toList() ??
           [];
@@ -267,7 +274,7 @@ class BatchCubit extends Cubit<BatchState> {
           [];
       emit(FetchedBatch());
     } else {
-      emit(FetchBatchFailed('Failed to fetch details.'));
+      emit(FetchBatchFailed('Failed to fetch batch details.'));
     }
   }
 
@@ -299,15 +306,20 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
-  Future getRescheduledBatches() async {
+  Future getRescheduledBatches({int? year, int? month}) async {
+    emit(RescheduledListFetching());
     RescheduleResponse? response = await _batchService.rescheduledClasses(
       batchModel?.id,
+      year: year,
+      month: month,
     );
 
     if (response?.status == 1) {
-      _rescheduledList = response?.rescheduledClasses?.batchDetails ?? [];
-      emit(RescheduledListFetched());
+      _rescheduledList = response?.rescheduledClasses ?? [];
+    } else {
+      _rescheduledList = [];
     }
+    emit(RescheduledListFetched());
   }
 
   /// Method to get the students

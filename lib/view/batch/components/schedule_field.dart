@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/common_field.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -8,17 +9,21 @@ class ScheduleField extends StatefulWidget {
   final bool time;
   final bool dateMonth;
   final String? hint;
+  final String? initialValue;
   final ValueChanged<String>? onSelect;
   final ValueChanged<DateTime>? onDateSelect;
+  final bool onlyMonth;
 
   const ScheduleField({
     Key? key,
     required this.title,
     this.onSelect,
     this.hint,
+    this.initialValue,
     this.dateMonth = false,
     required this.time,
     this.onDateSelect,
+    this.onlyMonth = false,
   }) : super(key: key);
 
   @override
@@ -33,6 +38,9 @@ class _ScheduleFieldState extends State<ScheduleField> {
   void initState() {
     super.initState();
     hint = widget.time ? 'hh:mm' : 'dd/mm/yyyy';
+    if (widget.initialValue != null) {
+      controller.text = widget.initialValue!;
+    }
   }
 
   @override
@@ -45,9 +53,15 @@ class _ScheduleFieldState extends State<ScheduleField> {
             controller.text = value ?? '';
           });
         } else {
-          datePicker().then((value) {
-            controller.text = value ?? '';
-          });
+          if (widget.onlyMonth) {
+            monthYearPicker().then((value) {
+              controller.text = value ?? '';
+            });
+          } else {
+            datePicker().then((value) {
+              controller.text = value ?? '';
+            });
+          }
         }
       },
       controller: controller,
@@ -152,9 +166,7 @@ class _ScheduleFieldState extends State<ScheduleField> {
       },
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(
-        DateTime.now().year - 2,
-      ),
+      firstDate: DateTime.now(),
       lastDate: DateTime(
         DateTime.now().year + 100,
       ),
@@ -162,6 +174,53 @@ class _ScheduleFieldState extends State<ScheduleField> {
 
     if (widget.onSelect != null && dateTime != null) {
       widget.onSelect!(dateTime.toServerYMD());
+    }
+    return widget.dateMonth ? dateTime?.toMMMMYYYY() : dateTime?.toDateString();
+  }
+
+  Future<String?> monthYearPicker() async {
+    DateTime? dateTime = await showMonthYearPicker(
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              onPrimary: Colors.white,
+              onSurface: Colors.white, // default text color
+              primary: AppColors.primaryColor, // circle color
+            ),
+            dialogBackgroundColor: AppColors.liteDark,
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                textStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(
+        DateTime.now().year - 1,
+      ),
+      lastDate: DateTime(
+        DateTime.now().year + 2,
+      ),
+    );
+
+    if (widget.onSelect != null && dateTime != null) {
+      widget.onSelect!(dateTime.toServerYMD());
+    }
+
+    if (widget.onDateSelect != null && dateTime != null) {
+      widget.onDateSelect!(dateTime);
     }
     return widget.dateMonth ? dateTime?.toMMMMYYYY() : dateTime?.toDateString();
   }

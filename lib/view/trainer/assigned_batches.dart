@@ -45,8 +45,9 @@ class _AssignedBatchesState extends State<AssignedBatches> {
               builder: (context, state) {
                 var batchCubit = context.read<BatchCubit>();
                 if (batchCubit.batches.isEmpty) {
-                  return const Expanded(
-                    child: Center(
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(64.0),
                       child: Text('No batches assigned.'),
                     ),
                   );

@@ -35,9 +35,14 @@ class BatchModel {
   factory BatchModel.fromEntity(Batch batch) {
     String trainer = '';
     List<String>? days = [];
-    batch.trainers?.forEach((element) {
-      trainer += '${element.name}, ';
-    });
+    if (batch.trainers != null && batch.trainers!.isNotEmpty) {
+      batch.trainers?.forEach((element) {
+        trainer += '${element.name}, ';
+      });
+      trainer = trainer.trimRight().removeLast();
+    } else {
+      trainer = 'No Trainer Allocated';
+    }
     days = batch.batchDetail?.map((e) {
       String day = DefaultValues.defaultTrainingDays[e.day];
       return '${day.substring(0, 3)} ${e.startTime?.toAmPM()} - ${e.endTime?.toAmPM()}';
@@ -45,7 +50,7 @@ class BatchModel {
     return BatchModel(
       branchId: batch.branch?.id,
       name: batch.batchName ?? '',
-      trainersString: trainer.trimRight().removeLast(),
+      trainersString: trainer,
       branchName: batch.branch?.branchName ?? 'NA',
       id: batch.id ?? 0,
       days: days ?? [],

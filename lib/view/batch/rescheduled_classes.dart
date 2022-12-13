@@ -7,6 +7,7 @@ import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/dialog.dart';
+import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -57,13 +58,30 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
           ),
           ScheduleField(
             title: 'Month, Year',
-            hint: 'Select Month & Year',
+            hint: 'Select month & year',
+            initialValue: DateTime.now().toMMMMYYYY(),
             dateMonth: true,
-            onDateSelect: (DateTime value) {},
+            onDateSelect: (DateTime value) {
+              context
+                  .read<BatchCubit>()
+                  .getRescheduledBatches(month: value.month, year: value.year);
+            },
             time: false,
+            onlyMonth: true,
           ),
           BlocBuilder<BatchCubit, BatchState>(
             builder: (context, state) {
+              if (state is RescheduledListFetching) {
+                return const Expanded(child: LoadingView());
+              }
+
+              if (cubit.rescheduledList.isEmpty) {
+                return const Expanded(
+                  child: Center(
+                    child: Text('No classes rescheduled.'),
+                  ),
+                );
+              }
               return ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -122,7 +140,7 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                             onTap: () {
                               if (detail.newDate!.isBefore(DateTime.now())) {
                                 Alert(context).show(
-                                  message: 'Past date cannot be reschedule.',
+                                  message: 'Past date cannot be rescheduled.',
                                 );
                               } else {
                                 CommonDialog(

@@ -69,8 +69,8 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                   width: width,
                   child: Text(
                     '${detail.name}',
-                    maxLines: 1,
-                    overflow: TextOverflow.fade,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
                   ),
                 ),
               ],

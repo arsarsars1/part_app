@@ -62,6 +62,7 @@ dependencies:
   # cached image
   cached_network_image: ^3.2.2
   connectivity_plus: ^3.0.2
+  month_year_picker: ^0.2.0+3
 
 dev_dependencies:
   flutter_test:

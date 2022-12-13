@@ -182,10 +182,14 @@ class BatchService {
     }
   }
 
-  Future<RescheduleResponse?> rescheduledClasses(int? batchId) async {
+  Future<RescheduleResponse?> rescheduledClasses(int? batchId,
+      {int? year, int? month}) async {
+    String query = 'year=${year ?? DateTime.now().year}'
+        '&month=${month ?? DateTime.now().month}';
+
     try {
       var response = await _apiClient.get(
-        queryPath: '/admin/batches/$batchId/rescheduled-classes',
+        queryPath: '/admin/batches/$batchId/rescheduled-classes?$query',
       );
 
       return rescheduleResponseFromJson(jsonEncode(response));

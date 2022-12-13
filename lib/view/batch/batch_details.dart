@@ -48,6 +48,12 @@ class _BatchDetailsState extends State<BatchDetails> {
               child: CircularProgressIndicator(),
             );
           }
+
+          if (state is FetchBatchFailed) {
+            return Center(
+              child: Text(state.message),
+            );
+          }
           return Column(
             children: [
               Container(

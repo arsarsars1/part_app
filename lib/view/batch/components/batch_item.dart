@@ -37,7 +37,7 @@ class BatchItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
+                Flexible(
                   child: Text(
                     batch.name,
                     maxLines: 2,
@@ -45,6 +45,9 @@ class BatchItem extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                   ),
+                ),
+                const SizedBox(
+                  width: 16,
                 ),
                 if (!reschedule)
                   Text(
