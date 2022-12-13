@@ -8,7 +8,7 @@ import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/otp.dart';
 import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
-import 'package:part_app/model/service/authentication/auth_service.dart';
+import 'package:part_app/model/service/api.dart';
 
 part 'auth_state.dart';
 
@@ -82,11 +82,15 @@ class AuthCubit extends Cubit<AuthState> {
   Future login({String? password}) async {
     if (password != null) {
       emit(Authenticating());
-      UserResponse userResponse = await _authService.login(
+      UserResponse userResponse = await _authService
+          .login(
         phoneNo: _phoneNo!,
         countryCode: _countryCode!,
         password: password,
-      );
+      )
+          .onError((error, stackTrace) {
+        emit(LoginFailed('Login failed, Please try again'));
+      });
 
       if (userResponse.status == 1) {
         _user = userResponse.user;
@@ -156,7 +160,7 @@ class AuthCubit extends Cubit<AuthState> {
       branchName: branchName,
       countryId: countryId,
       stateId: stateId,
-      districtId: districtId, // todo add token
+      districtId: districtId,
     );
     register();
   }
@@ -175,6 +179,18 @@ class AuthCubit extends Cubit<AuthState> {
     } else {
       emit(RegisterFailed(value?.message ?? ' Failed to register the user'));
     }
+  }
+
+  /// method to initialize the [ 401 ] listener to handle
+  /// alert
+  Future init401Listener() async {
+    ApiClient().controller?.stream.listen((event) {
+      if (event == 401) {
+        emit(UnAuthenticated());
+      } else if (event == 600) {
+        emit(NetworkError());
+      }
+    });
   }
 
   Future validateLocalUser() async {

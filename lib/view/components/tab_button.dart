@@ -24,8 +24,11 @@ class _TabButtonState extends State<TabButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 38.h,
-      color: Colors.white.withOpacity(0.13),
+      height: 40.h,
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.13),
+        borderRadius: BorderRadius.circular(4),
+      ),
       child: Row(
         children: [
           ...widget.options.map(
@@ -41,7 +44,7 @@ class _TabButtonState extends State<TabButton> {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
-                    vertical: 4,
+                    vertical: 5,
                   ),
                   decoration: e == selectedIndex
                       ? BoxDecoration(

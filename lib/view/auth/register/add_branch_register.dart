@@ -95,6 +95,7 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
               ),
               CommonField(
                 length: 300,
+                textInputAction: TextInputAction.newline,
                 title: 'Address *',
                 hint: 'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum',
                 maxLines: 3,

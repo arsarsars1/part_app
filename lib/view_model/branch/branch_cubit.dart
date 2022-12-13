@@ -19,7 +19,14 @@ class BranchCubit extends Cubit<BranchState> {
 
   List<Branch> get branches => _branches;
 
+  List<Branch> get activeBranches =>
+      _branches.where((element) => element.isActive == 1).toList() ?? [];
+
   List<Trainer>? get trainers => _trainers;
+
+  List<Trainer>? get activeTrainers => _trainers
+      ?.where((element) => element.trainerDetail?[0].isActive == 1)
+      .toList();
 
   Branch? get branch => _branch;
 
@@ -44,6 +51,7 @@ class BranchCubit extends Cubit<BranchState> {
   Future getBranches() async {
     emit(BranchesLoading());
     List<Branch>? list = await _branchService.getBranches();
+
     branches = list ?? [];
   }
 
@@ -52,6 +60,7 @@ class BranchCubit extends Cubit<BranchState> {
   Future getBranchById({required String id}) async {
     emit(BranchLoading());
     Branch? temp = await _branchService.getBranchById(id: id);
+
     if (temp != null) {
       branch = temp;
     } else {
@@ -63,11 +72,11 @@ class BranchCubit extends Cubit<BranchState> {
   /// [ branchId ] is the branch Id and is required
   Future getBranchTrainers({required String branchId}) async {
     emit(TrainersLoading());
-    TrainerResponse? temp = await _branchService.getTrainers(
+    List<Trainer>? temp = await _branchService.getTrainers(
       branchId: branchId,
     );
-    if (temp != null && temp.status == 1) {
-      trainers = temp.trainers;
+    if (temp != null) {
+      trainers = temp;
       emit(TrainersLoaded());
     } else {
       emit(TrainersFailed('Failed to get the trainers list'));
@@ -166,7 +175,35 @@ class BranchCubit extends Cubit<BranchState> {
 
   List<DropDownItem> dropDownBranches() {
     return _branches
+        .where((element) => element.isActive == 1)
         .map((e) => DropDownItem(id: e.id, title: e.branchName, item: e))
         .toList();
+  }
+
+  List<DropDownItem> branchesWithoutManager() {
+    return _branches
+        .where(
+            (element) => element.managerDetail == null && element.isActive == 1)
+        .map((e) => DropDownItem(id: e.id, title: e.branchName, item: e))
+        .toList();
+  }
+
+  List<Branch> branchesForManager(int? managerId) {
+    return _branches.where((element) {
+      if (element.managerDetail?.id == managerId && element.isActive == 1) {
+        return true;
+      }
+      if (element.managerDetail == null && element.isActive == 1) {
+        return true;
+      }
+      return false;
+    }).toList();
+  }
+
+  DropDownItem? initialBranch(int? branchId) {
+    if (branchId == null) return null;
+    Branch? item = _branches.firstWhere((element) => element.id == branchId);
+
+    return DropDownItem(id: item.id, title: item.branchName, item: item);
   }
 }

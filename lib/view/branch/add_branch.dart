@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/branch/components/enable_switch.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
-import 'package:part_app/view_model/branch/branch_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AddBranch extends StatefulWidget {
@@ -130,6 +128,7 @@ class _AddBranchState extends State<AddBranch> {
                 node: addressFocus,
                 length: 300,
                 title: 'Address *',
+                textInputAction: TextInputAction.newline,
                 hint: 'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum',
                 maxLines: 3,
                 validator: (value) {

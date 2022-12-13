@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 
 part 'trainer_response.freezed.dart';
@@ -21,12 +22,26 @@ abstract class TrainerResponse with _$TrainerResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory TrainerResponse({
     required int status,
-    List<Trainer>? trainers,
+    Datum? trainers,
     Trainer? trainer,
   }) = _TrainerResponse;
 
   factory TrainerResponse.fromJson(Map<String, dynamic> json) =>
       _$TrainerResponseFromJson(json);
+}
+
+@freezed
+abstract class Datum with _$Datum {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory Datum({
+    int? currentPage,
+    required List<Trainer> data,
+    int? from,
+    int? perPage,
+    int? to,
+  }) = _Datum;
+
+  factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
 }
 
 @freezed
@@ -40,17 +55,25 @@ abstract class Trainer with _$Trainer {
     DateTime? dob,
     DateTime? doj,
     String? whatsappNo,
+    String? mobileNo,
+    String? countryCode,
+    String? name,
     String? email,
     String? upiId,
     String? salaryType,
+    String? address,
+    String? expertise,
     int? salaryDate,
-    String? salaryAmount,
+    int? salaryAmount,
     String? profilePic,
     String? profilePicType,
     int? isActive,
-    Pivot? pivot,
     User? user,
     Academy? academy,
+    List<Branch>? branches,
+    @JsonKey(name: 'document_1') String? document1,
+    @JsonKey(name: 'document_2') String? document2,
+    List<Trainer>? trainerDetail,
   }) = _Trainer;
 
   factory Trainer.fromJson(Map<String, dynamic> json) =>
@@ -58,30 +81,16 @@ abstract class Trainer with _$Trainer {
 }
 
 @freezed
-abstract class Pivot with _$Pivot {
-  @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory Pivot({
-    required int branchId,
-    int? trainerDetailId,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) = _Pivot;
+abstract class Document with _$Document {
+  const factory Document({
+    int? id,
+    int? documentIndex,
+    String? image,
+    String? ofType,
+    int? ofId,
+    int? isAvailable,
+  }) = _Document;
 
-  factory Pivot.fromJson(Map<String, dynamic> json) => _$PivotFromJson(json);
+  factory Document.fromJson(Map<String, dynamic> json) =>
+      _$DocumentFromJson(json);
 }
-
-// @freezed
-// abstract class User with _$User {
-//   const factory User({
-//    required int id,
-//     String? name,
-//     String? countryCode,
-//     String? mobileNo,
-//     String? firebaseToken,
-//     int? isActive,
-//     DateTime? createdAt,
-//     DateTime? updatedAt,
-//   }) = _User;
-//
-//   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-// }

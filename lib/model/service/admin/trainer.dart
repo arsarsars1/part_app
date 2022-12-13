@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:part_app/model/data_model/branch_trainer_response.dart';
+import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/api.dart';
 
@@ -21,7 +23,7 @@ class TrainerService {
     }
   }
 
-  Future<TrainerResponse?> searchTrainer(int? branchId,
+  Future<List<Trainer>?> searchTrainer(int? branchId,
       {required String query}) async {
     Map<String, dynamic> response;
     if (branchId == null) {
@@ -33,10 +35,10 @@ class TrainerService {
     }
 
     try {
-      TrainerResponse trainerResponse = trainerResponseFromJson(
+      BranchTrainerResponse trainerResponse = branchTrainerResponseFromJson(
         jsonEncode(response),
       );
-      return trainerResponse;
+      return trainerResponse.trainers;
     } on Exception catch (e) {
       return null;
     }
@@ -65,5 +67,47 @@ class TrainerService {
     }
 
     return null;
+  }
+
+  Future<Common?> createTrainer(Map<String, dynamic> data) async {
+    try {
+      var response = await _client.post(
+        postPath: '/admin/trainers',
+        data: data,
+        formData: true,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> updateTrainer(
+    Map<String, dynamic> data,
+    int trainerId,
+  ) async {
+    try {
+      var response = await _client.post(
+        postPath: '/admin/trainers/$trainerId',
+        data: data,
+        formData: true,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> updateTrainerStatus(
+      {required int trainerId, required int status}) async {
+    try {
+      var map = await _client.get(
+        queryPath: '/admin/trainers/$trainerId/activation/$status',
+      );
+
+      return commonFromJson(jsonEncode(map));
+    } on Exception catch (e) {
+      return null;
+    }
   }
 }

@@ -9,8 +9,21 @@ extension DateExtension on DateTime {
     return DateFormat('yyyy/MM/dd').format(this);
   }
 
+  /// format y-m-d
+  String toServerYMD() {
+    return DateFormat('yyyy-MM-dd').format(this);
+  }
+
   String toEEMMDD() {
     return DateFormat('EEEE, MMMM dd').format(this);
+  }
+
+  String toMMMMYYYY() {
+    return DateFormat('MMMM, yyyy').format(this);
+  }
+
+  String toDDMMYYY() {
+    return DateFormat('dd MMM, yyyy').format(this);
   }
 
   String toTime() {
@@ -30,4 +43,48 @@ extension DateExtension on DateTime {
       return '';
     }
   }
+
+  /// Formats the [ DateTime ] to 12th Aug
+  String formattedDay() {
+    try {
+      var suffix = "th";
+      var digit = day % 10;
+      if ((digit > 0 && digit < 4) && (day < 11 || day > 13)) {
+        suffix = ["st", "nd", "rd"][digit - 1];
+      }
+      return DateFormat("d'$suffix' EEE").format(this);
+    } catch (e) {
+      return '';
+    }
+  }
 }
+
+extension StringExtension on String {
+  String currencyFormat() {
+    return NumberFormat("#,##,###", "en_US").format(double.parse(this));
+  }
+
+  String capitalize() {
+    if (trim().isEmpty) return "";
+
+    return "${this[0].toUpperCase()}${substring(1)}";
+  }
+
+  String removeLast() {
+    if (length > 0) {
+      return trim().substring(0, length - 1);
+    }
+
+    return '';
+  }
+
+  String toAmPM() {
+    return DateFormat('hh:mm a').format(DateFormat('hh:mm:ss').parse(this));
+  }
+
+  DateTime toDateTime() {
+    return DateFormat('hh:mm').parse(this);
+  }
+}
+
+extension BoolExtension on bool {}

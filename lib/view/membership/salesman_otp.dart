@@ -85,7 +85,7 @@ class _SalesManOTPState extends State<SalesManOTP> {
                       height: 36.h,
                     ),
                     SizedBox(
-                      width: 200.w,
+                      width: 250.w,
                       child: CommonField(
                         textAlign: TextAlign.center,
                         letterSpacing: 8,

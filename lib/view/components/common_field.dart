@@ -28,38 +28,46 @@ class CommonField extends StatelessWidget {
   final CrossAxisAlignment crossAxisAlignment;
   final EdgeInsets? padding;
   final FocusNode? node;
+  final ValueChanged<String>? onSubmit;
+  final bool showInfo;
+  final String toolTipMessage;
 
   final Icon? prefixIcon;
+  final TextCapitalization capitalization;
 
-  const CommonField(
-      {Key? key,
-      required this.title,
-      this.hint,
-      this.node,
-      this.dropDown = false,
-      this.dropDownItems,
-      this.defaultItem,
-      this.initialValue,
-      this.fillColor,
-      this.textColor,
-      this.maxLines,
-      this.onTap,
-      this.controller,
-      this.inputType,
-      this.textAlign,
-      this.textInputAction,
-      this.letterSpacing,
-      this.suffixIcon,
-      this.length,
-      this.validator,
-      this.padding,
-      this.crossAxisAlignment = CrossAxisAlignment.start,
-      this.phoneField = false,
-      this.singleLine = false,
-      required this.onChange,
-      this.disabled = false,
-      this.prefixIcon})
-      : super(key: key);
+  const CommonField({
+    Key? key,
+    required this.title,
+    this.hint,
+    this.node,
+    this.dropDown = false,
+    this.dropDownItems,
+    this.defaultItem,
+    this.initialValue,
+    this.fillColor,
+    this.textColor,
+    this.maxLines,
+    this.onTap,
+    this.controller,
+    this.inputType,
+    this.textAlign,
+    this.textInputAction = TextInputAction.next,
+    this.letterSpacing,
+    this.suffixIcon,
+    this.length,
+    this.validator,
+    this.padding,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+    this.phoneField = false,
+    this.singleLine = false,
+    required this.onChange,
+    this.disabled = false,
+    this.onSubmit,
+    this.prefixIcon,
+    this.showInfo = false,
+    this.capitalization = TextCapitalization.sentences,
+    this.toolTipMessage = 'Info not available.',
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +137,7 @@ class CommonField extends StatelessWidget {
                   onSaved: (value) {
                     onChange(value);
                   },
+                  onFieldSubmitted: onSubmit,
                   textInputAction: textInputAction,
                   buildCounter: (
                     BuildContext context, {
@@ -148,6 +157,7 @@ class CommonField extends StatelessWidget {
                       : null,
                   textAlign: textAlign ?? TextAlign.start,
                   cursorColor: Colors.white,
+                  textCapitalization: capitalization,
                   decoration: InputDecoration(
                     contentPadding: padding,
                     suffixIcon: suffixIcon,
@@ -156,6 +166,18 @@ class CommonField extends StatelessWidget {
                     fillColor: fillColor,
                   ),
                 ),
+          if (showInfo)
+            Align(
+              alignment: Alignment.centerRight,
+              child: Tooltip(
+                message: toolTipMessage,
+                triggerMode: TooltipTriggerMode.tap,
+                child: const Icon(
+                  Icons.info_outline,
+                  color: Colors.white,
+                ),
+              ),
+            )
         ],
       ),
     );

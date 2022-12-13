@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/otp.dart';
@@ -41,8 +42,14 @@ class AuthService {
     required String countryCode,
     required String password,
   }) async {
-    final fcmToken = await FirebaseMessaging.instance.getToken();
     try {
+      String? fcmToken;
+      try {
+        fcmToken = await FirebaseMessaging.instance.getToken();
+      } on FirebaseException catch (e) {
+        fcmToken = 'Failed to generate token';
+        print(e);
+      }
       var data = {
         'country_code': countryCode,
         'mobile_no': phoneNo,

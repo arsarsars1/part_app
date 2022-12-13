@@ -72,3 +72,7 @@ class ErrorFields extends AuthState {
 
   ErrorFields(this.message);
 }
+
+class UnAuthenticated extends AuthState {}
+
+class NetworkError extends AuthState {}

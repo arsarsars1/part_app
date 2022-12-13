@@ -7,16 +7,35 @@ import 'package:part_app/view/auth/register/add_branch_register.dart';
 import 'package:part_app/view/auth/register/admin_details.dart';
 import 'package:part_app/view/auth/register/sign_up.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
+import 'package:part_app/view/batch/add_batch.dart';
+import 'package:part_app/view/batch/batch_details.dart';
+import 'package:part_app/view/batch/batch_list.dart';
+import 'package:part_app/view/batch/edit_batch_details.dart';
+import 'package:part_app/view/batch/reschedule_class.dart';
+import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
 import 'package:part_app/view/home/home.dart';
+import 'package:part_app/view/manager/add_manager.dart';
+import 'package:part_app/view/manager/edit_manager.dart';
+import 'package:part_app/view/manager/edit_salary.dart';
+import 'package:part_app/view/manager/manager_branches.dart';
+import 'package:part_app/view/manager/manager_details.dart';
+import 'package:part_app/view/manager/manager_page.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
-import 'package:part_app/view/trainer/add_edit_trainer.dart';
+import 'package:part_app/view/students/students_view.dart';
+import 'package:part_app/view/trainer/add_trainer.dart';
+import 'package:part_app/view/trainer/add_trainer_branches.dart';
+import 'package:part_app/view/trainer/assigned_batches.dart';
+import 'package:part_app/view/trainer/edit_salary_trainer.dart';
+import 'package:part_app/view/trainer/edit_trainer.dart';
+import 'package:part_app/view/trainer/salary_details.dart';
+import 'package:part_app/view/trainer/trainer_branches.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
@@ -136,9 +155,108 @@ class RouteGenerator {
           builder: (_) => const TrainerDetails(),
           settings: settings,
         );
-      case AddEditTrainer.route:
+      case AddTrainer.route:
         return MaterialPageRoute(
-          builder: (_) => const AddEditTrainer(),
+          builder: (_) => const AddTrainer(),
+          settings: settings,
+        );
+      case SalaryDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => SalaryDetails(
+            trainer: settings.arguments as bool,
+          ),
+          settings: settings,
+        );
+      case AddTrainerBranches.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddTrainerBranches(),
+          settings: settings,
+        );
+      case AddManager.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddManager(),
+          settings: settings,
+        );
+      case ManagerPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerPage(),
+          settings: settings,
+        );
+      case ManagerBranches.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerBranches(),
+          settings: settings,
+        );
+      case EditManager.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditManager(),
+          settings: settings,
+        );
+      case EditTrainer.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditTrainer(),
+          settings: settings,
+        );
+      case EditSalaryManager.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditSalaryManager(),
+          settings: settings,
+        );
+      case EditSalaryTrainer.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditSalaryTrainer(),
+          settings: settings,
+        );
+      case BatchesPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const BatchesPage(),
+          settings: settings,
+        );
+      case AddBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddBatch(),
+          settings: settings,
+        );
+      case TrainerBranches.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerBranches(),
+          settings: settings,
+        );
+      case BatchDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const BatchDetails(),
+          settings: settings,
+        );
+      case AssignedBatches.route:
+        return MaterialPageRoute(
+          builder: (_) => const AssignedBatches(),
+          settings: settings,
+        );
+      case EditBatchDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditBatchDetails(),
+          settings: settings,
+        );
+      case RescheduledClasses.route:
+        return MaterialPageRoute(
+          builder: (_) => const RescheduledClasses(),
+          settings: settings,
+        );
+      case RescheduleClass.route:
+        return MaterialPageRoute(
+          builder: (_) => const RescheduleClass(),
+          settings: settings,
+        );
+      case ManagerDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => ManagerDetails(
+            managerId: settings.arguments as int,
+          ),
+          settings: settings,
+        );
+      case StudentsView.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentsView(),
           settings: settings,
         );
       default:

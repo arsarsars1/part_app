@@ -87,6 +87,9 @@ class _SalesManPhoneState extends State<SalesManPhone> {
                       hint: 'Eg: +91 **********',
                       onChange: (value) {
                         phoneNo = value;
+                        if (phoneNo.length >= 10) {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        }
                       },
                     ),
                     const SizedBox(

@@ -6,9 +6,15 @@ import 'package:part_app/view/constants/constant.dart';
 class WhatsappCheckButton extends StatefulWidget {
   final ValueChanged<bool> onChange;
   final ValueChanged<String> onNumberChange;
+  final String? initialValue;
+  final bool selected;
 
   const WhatsappCheckButton(
-      {Key? key, required this.onChange, required this.onNumberChange})
+      {Key? key,
+      required this.onChange,
+      required this.onNumberChange,
+      this.initialValue,
+      this.selected = false})
       : super(key: key);
 
   @override
@@ -17,6 +23,12 @@ class WhatsappCheckButton extends StatefulWidget {
 
 class _WhatsappCheckButtonState extends State<WhatsappCheckButton> {
   bool selected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    selected = widget.selected;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +77,7 @@ class _WhatsappCheckButtonState extends State<WhatsappCheckButton> {
         selected
             ? const Offstage()
             : CommonField(
+                initialValue: widget.initialValue,
                 validator: (value) {
                   if (value == null || value.toString().isEmpty) {
                     return 'Please enter Whatsapp number.';

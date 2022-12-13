@@ -1,0 +1,571 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+
+part of 'dashboard.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+Dashboard _$DashboardFromJson(Map<String, dynamic> json) {
+  return _Dashboard.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Dashboard {
+  int? get status => throw _privateConstructorUsedError;
+  int? get totalStudents => throw _privateConstructorUsedError;
+  List<Banner>? get banners => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DashboardCopyWith<Dashboard> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DashboardCopyWith<$Res> {
+  factory $DashboardCopyWith(Dashboard value, $Res Function(Dashboard) then) =
+      _$DashboardCopyWithImpl<$Res, Dashboard>;
+  @useResult
+  $Res call({int? status, int? totalStudents, List<Banner>? banners});
+}
+
+/// @nodoc
+class _$DashboardCopyWithImpl<$Res, $Val extends Dashboard>
+    implements $DashboardCopyWith<$Res> {
+  _$DashboardCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? totalStudents = freezed,
+    Object? banners = freezed,
+  }) {
+    return _then(_value.copyWith(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      totalStudents: freezed == totalStudents
+          ? _value.totalStudents
+          : totalStudents // ignore: cast_nullable_to_non_nullable
+              as int?,
+      banners: freezed == banners
+          ? _value.banners
+          : banners // ignore: cast_nullable_to_non_nullable
+              as List<Banner>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_DashboardCopyWith<$Res> implements $DashboardCopyWith<$Res> {
+  factory _$$_DashboardCopyWith(
+          _$_Dashboard value, $Res Function(_$_Dashboard) then) =
+      __$$_DashboardCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? status, int? totalStudents, List<Banner>? banners});
+}
+
+/// @nodoc
+class __$$_DashboardCopyWithImpl<$Res>
+    extends _$DashboardCopyWithImpl<$Res, _$_Dashboard>
+    implements _$$_DashboardCopyWith<$Res> {
+  __$$_DashboardCopyWithImpl(
+      _$_Dashboard _value, $Res Function(_$_Dashboard) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? totalStudents = freezed,
+    Object? banners = freezed,
+  }) {
+    return _then(_$_Dashboard(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      totalStudents: freezed == totalStudents
+          ? _value.totalStudents
+          : totalStudents // ignore: cast_nullable_to_non_nullable
+              as int?,
+      banners: freezed == banners
+          ? _value._banners
+          : banners // ignore: cast_nullable_to_non_nullable
+              as List<Banner>?,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class _$_Dashboard implements _Dashboard {
+  const _$_Dashboard(
+      {this.status, this.totalStudents, final List<Banner>? banners})
+      : _banners = banners;
+
+  factory _$_Dashboard.fromJson(Map<String, dynamic> json) =>
+      _$$_DashboardFromJson(json);
+
+  @override
+  final int? status;
+  @override
+  final int? totalStudents;
+  final List<Banner>? _banners;
+  @override
+  List<Banner>? get banners {
+    final value = _banners;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'Dashboard(status: $status, totalStudents: $totalStudents, banners: $banners)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Dashboard &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.totalStudents, totalStudents) ||
+                other.totalStudents == totalStudents) &&
+            const DeepCollectionEquality().equals(other._banners, _banners));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, status, totalStudents,
+      const DeepCollectionEquality().hash(_banners));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DashboardCopyWith<_$_Dashboard> get copyWith =>
+      __$$_DashboardCopyWithImpl<_$_Dashboard>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_DashboardToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Dashboard implements Dashboard {
+  const factory _Dashboard(
+      {final int? status,
+      final int? totalStudents,
+      final List<Banner>? banners}) = _$_Dashboard;
+
+  factory _Dashboard.fromJson(Map<String, dynamic> json) =
+      _$_Dashboard.fromJson;
+
+  @override
+  int? get status;
+  @override
+  int? get totalStudents;
+  @override
+  List<Banner>? get banners;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DashboardCopyWith<_$_Dashboard> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Banner _$BannerFromJson(Map<String, dynamic> json) {
+  return _Banner.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Banner {
+  int? get id => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
+  String? get extUrl => throw _privateConstructorUsedError;
+  String? get extUrlButtonText => throw _privateConstructorUsedError;
+  DateTime? get startTime => throw _privateConstructorUsedError;
+  DateTime? get endTime => throw _privateConstructorUsedError;
+  int? get order => throw _privateConstructorUsedError;
+  int? get academyTypeId => throw _privateConstructorUsedError;
+  int? get isActive => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $BannerCopyWith<Banner> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BannerCopyWith<$Res> {
+  factory $BannerCopyWith(Banner value, $Res Function(Banner) then) =
+      _$BannerCopyWithImpl<$Res, Banner>;
+  @useResult
+  $Res call(
+      {int? id,
+      String? description,
+      String? imageUrl,
+      String? extUrl,
+      String? extUrlButtonText,
+      DateTime? startTime,
+      DateTime? endTime,
+      int? order,
+      int? academyTypeId,
+      int? isActive,
+      DateTime? createdAt,
+      DateTime? updatedAt});
+}
+
+/// @nodoc
+class _$BannerCopyWithImpl<$Res, $Val extends Banner>
+    implements $BannerCopyWith<$Res> {
+  _$BannerCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? description = freezed,
+    Object? imageUrl = freezed,
+    Object? extUrl = freezed,
+    Object? extUrlButtonText = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
+    Object? order = freezed,
+    Object? academyTypeId = freezed,
+    Object? isActive = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      extUrl: freezed == extUrl
+          ? _value.extUrl
+          : extUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      extUrlButtonText: freezed == extUrlButtonText
+          ? _value.extUrlButtonText
+          : extUrlButtonText // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startTime: freezed == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endTime: freezed == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      order: freezed == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int?,
+      academyTypeId: freezed == academyTypeId
+          ? _value.academyTypeId
+          : academyTypeId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as int?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_BannerCopyWith<$Res> implements $BannerCopyWith<$Res> {
+  factory _$$_BannerCopyWith(_$_Banner value, $Res Function(_$_Banner) then) =
+      __$$_BannerCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int? id,
+      String? description,
+      String? imageUrl,
+      String? extUrl,
+      String? extUrlButtonText,
+      DateTime? startTime,
+      DateTime? endTime,
+      int? order,
+      int? academyTypeId,
+      int? isActive,
+      DateTime? createdAt,
+      DateTime? updatedAt});
+}
+
+/// @nodoc
+class __$$_BannerCopyWithImpl<$Res>
+    extends _$BannerCopyWithImpl<$Res, _$_Banner>
+    implements _$$_BannerCopyWith<$Res> {
+  __$$_BannerCopyWithImpl(_$_Banner _value, $Res Function(_$_Banner) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? description = freezed,
+    Object? imageUrl = freezed,
+    Object? extUrl = freezed,
+    Object? extUrlButtonText = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
+    Object? order = freezed,
+    Object? academyTypeId = freezed,
+    Object? isActive = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(_$_Banner(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      extUrl: freezed == extUrl
+          ? _value.extUrl
+          : extUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      extUrlButtonText: freezed == extUrlButtonText
+          ? _value.extUrlButtonText
+          : extUrlButtonText // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startTime: freezed == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endTime: freezed == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      order: freezed == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int?,
+      academyTypeId: freezed == academyTypeId
+          ? _value.academyTypeId
+          : academyTypeId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as int?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class _$_Banner implements _Banner {
+  const _$_Banner(
+      {this.id,
+      this.description,
+      this.imageUrl,
+      this.extUrl,
+      this.extUrlButtonText,
+      this.startTime,
+      this.endTime,
+      this.order,
+      this.academyTypeId,
+      this.isActive,
+      this.createdAt,
+      this.updatedAt});
+
+  factory _$_Banner.fromJson(Map<String, dynamic> json) =>
+      _$$_BannerFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? description;
+  @override
+  final String? imageUrl;
+  @override
+  final String? extUrl;
+  @override
+  final String? extUrlButtonText;
+  @override
+  final DateTime? startTime;
+  @override
+  final DateTime? endTime;
+  @override
+  final int? order;
+  @override
+  final int? academyTypeId;
+  @override
+  final int? isActive;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
+
+  @override
+  String toString() {
+    return 'Banner(id: $id, description: $description, imageUrl: $imageUrl, extUrl: $extUrl, extUrlButtonText: $extUrlButtonText, startTime: $startTime, endTime: $endTime, order: $order, academyTypeId: $academyTypeId, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Banner &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
+            (identical(other.extUrl, extUrl) || other.extUrl == extUrl) &&
+            (identical(other.extUrlButtonText, extUrlButtonText) ||
+                other.extUrlButtonText == extUrlButtonText) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.order, order) || other.order == order) &&
+            (identical(other.academyTypeId, academyTypeId) ||
+                other.academyTypeId == academyTypeId) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      description,
+      imageUrl,
+      extUrl,
+      extUrlButtonText,
+      startTime,
+      endTime,
+      order,
+      academyTypeId,
+      isActive,
+      createdAt,
+      updatedAt);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_BannerCopyWith<_$_Banner> get copyWith =>
+      __$$_BannerCopyWithImpl<_$_Banner>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_BannerToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Banner implements Banner {
+  const factory _Banner(
+      {final int? id,
+      final String? description,
+      final String? imageUrl,
+      final String? extUrl,
+      final String? extUrlButtonText,
+      final DateTime? startTime,
+      final DateTime? endTime,
+      final int? order,
+      final int? academyTypeId,
+      final int? isActive,
+      final DateTime? createdAt,
+      final DateTime? updatedAt}) = _$_Banner;
+
+  factory _Banner.fromJson(Map<String, dynamic> json) = _$_Banner.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get description;
+  @override
+  String? get imageUrl;
+  @override
+  String? get extUrl;
+  @override
+  String? get extUrlButtonText;
+  @override
+  DateTime? get startTime;
+  @override
+  DateTime? get endTime;
+  @override
+  int? get order;
+  @override
+  int? get academyTypeId;
+  @override
+  int? get isActive;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
+  @override
+  @JsonKey(ignore: true)
+  _$$_BannerCopyWith<_$_Banner> get copyWith =>
+      throw _privateConstructorUsedError;
+}

@@ -1,0 +1,76 @@
+part of 'batch_cubit.dart';
+
+@immutable
+abstract class BatchState {}
+
+class BatchInitial extends BatchState {}
+
+class DaysUpdated extends BatchState {}
+
+class GettingCourses extends BatchState {}
+
+class CoursesUpdated extends BatchState {}
+
+class FetchingBatches extends BatchState {
+  final bool pagination;
+
+  FetchingBatches({this.pagination = false});
+}
+
+class BatchesFetched extends BatchState {
+  final bool moreItems;
+
+  BatchesFetched({this.moreItems = false});
+}
+
+class CreatingBatch extends BatchState {}
+
+class CreatedBatch extends BatchState {}
+
+class CreateBatchFailed extends BatchState {
+  final String message;
+
+  CreateBatchFailed(this.message);
+}
+
+class UpdatingBatch extends BatchState {}
+
+class UpdatedBatch extends BatchState {}
+
+class UpdateBatchFailed extends BatchState {
+  final String message;
+
+  UpdateBatchFailed(this.message);
+}
+
+class FetchingBatch extends BatchState {}
+
+class FetchedBatch extends BatchState {}
+
+class RescheduledListFetched extends BatchState {}
+
+class RescheduledListFetching extends BatchState {}
+
+class FetchBatchFailed extends BatchState {
+  final String message;
+
+  FetchBatchFailed(this.message);
+}
+
+class ReschedulingBatch extends BatchState {}
+
+class RescheduledBatch extends BatchState {}
+
+class RescheduleFailed extends BatchState {
+  final String message;
+
+  RescheduleFailed(this.message);
+}
+
+// Students
+
+class FetchingBatchStudents extends BatchState {}
+
+class FetchedBatchStudents extends BatchState {}
+
+class FetchingBatchStudentsFailed extends BatchState {}

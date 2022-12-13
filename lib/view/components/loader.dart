@@ -3,13 +3,15 @@ import 'package:part_app/view/constants/app_colors.dart';
 
 class LoadingView extends StatelessWidget {
   final String? message;
+  final bool hideColor;
 
-  const LoadingView({Key? key, this.message}) : super(key: key);
+  const LoadingView({Key? key, this.message, this.hideColor = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white.withOpacity(0.1),
+      color: hideColor ? Colors.black : Colors.white.withOpacity(0.1),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

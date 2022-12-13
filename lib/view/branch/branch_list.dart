@@ -54,6 +54,16 @@ class _BranchListState extends State<BranchList> {
           ),
           BlocBuilder<BranchCubit, BranchState>(
             builder: (context, state) {
+              if (cubit.branches.isEmpty) {
+                return const Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(32.0),
+                    child: Center(
+                      child: Text('Add Branch To Get Started.'),
+                    ),
+                  ),
+                );
+              }
               return Expanded(
                 child: ListView.builder(
                   itemCount: cubit.branches.length,

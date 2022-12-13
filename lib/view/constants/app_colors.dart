@@ -24,7 +24,7 @@ class AppColors {
   static Color teal500 = const Color(0xFF009687);
   static Color teal600 = const Color(0xFF00897A);
   static Color teal700 = const Color(0xFF00786B);
-  static Color successGreen = const Color(0xFF40AB35);
+  static Color green = const Color(0xFF4DFF94);
 
   //shades of orange
 
@@ -40,4 +40,5 @@ class AppColors {
   static Color hintColor = const Color(0xFF6C6C6C);
   static Color disabledColor = const Color(0xFFBABABA);
   static Color liteDark = const Color(0xFF242424);
+  static Color defaultBlue = const Color(0xFF41A0F8);
 }

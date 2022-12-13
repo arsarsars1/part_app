@@ -1,8 +1,17 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_app/model/data_model/branch_response.dart';
+import 'package:part_app/flavors.dart';
+import 'package:part_app/model/data_model/common.dart';
+import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
+import 'package:part_app/model/service/admin/branch.dart';
 import 'package:part_app/model/service/admin/trainer.dart';
+import 'package:part_app/view_model/utils.dart';
 
 part 'trainer_state.dart';
 
@@ -10,19 +19,37 @@ class TrainerCubit extends Cubit<TrainerState> {
   TrainerCubit() : super(TrainerInitial());
 
   final _trainerService = TrainerService();
+  final _branchService = BranchService();
 
   Trainer? _trainer;
-  List<Trainer> _trainers = [];
+  List<Trainer>? _trainers = [];
 
   List<Trainer> _filteredTrainers = [];
+  List<int> _selectedBranches = [];
 
   Trainer? get trainer => _trainer;
 
-  List<Trainer> get trainers => _trainers;
+  List<Trainer>? get trainers => _trainers;
 
   List<Trainer> get filteredTrainers => _filteredTrainers;
 
   bool _isActive = true;
+
+  TrainerRequest _request = const TrainerRequest();
+
+  TrainerRequest get request => _request;
+
+  File? image, doc1, doc2;
+
+  List<int> get selectedBranches => _selectedBranches;
+
+  set selectedBranches(List<int> branches) {
+    _selectedBranches.clear();
+    _selectedBranches.addAll(branches);
+    print(_selectedBranches);
+  }
+
+  bool fromBranch = false;
 
   set trainer(Trainer? temp) {
     _trainer = temp;
@@ -37,12 +64,23 @@ class TrainerCubit extends Cubit<TrainerState> {
   Future getTrainerDetails({required int trainerId}) async {
     emit(TrainerDetailsLoading());
     Trainer? temp = await _trainerService.getTrainerById(trainerId: trainerId);
-    if (temp != null) {
+    if (temp != null && temp.trainerDetail != null) {
       trainer = temp;
+      _selectedBranches =
+          trainer!.trainerDetail![0].branches?.map((e) => e.id).toList() ?? [];
       emit(TrainerDetailsLoaded());
       return;
     }
     emit(TrainerDetailsFailed('Failed to load the trainer details'));
+  }
+
+  void updateBranchSelection(int branchId) {
+    if (_selectedBranches.contains(branchId)) {
+      _selectedBranches.remove(branchId);
+    } else {
+      _selectedBranches.add(branchId);
+    }
+    emit(BranchesUpdated());
   }
 
   Future getTrainers() async {
@@ -50,41 +88,207 @@ class TrainerCubit extends Cubit<TrainerState> {
     TrainerResponse? response = await _trainerService.getTrainers();
 
     if (response?.trainers != null) {
-      _trainers = response!.trainers!;
+      _trainers = response?.trainers?.data ?? [];
       filterTrainers(active: _isActive);
     } else {
       emit(FailedToFetchTrainers('Failed to fetch the trainers'));
     }
   }
 
-  List<Trainer> filterTrainers({required bool active}) {
+  List<Trainer>? filterTrainers({required bool active}) {
     _isActive = active;
-    List<Trainer> list = _trainers.where((element) {
+    List<Trainer>? list = _trainers?.where((element) {
       if (active) {
-        return element.isActive == 1;
+        return element.trainerDetail?[0].isActive == 1;
       } else {
-        return element.isActive == 0;
+        return element.trainerDetail?[0].isActive == 0;
       }
     }).toList();
 
-    filteredTrainers = list;
+    filteredTrainers = list ?? [];
 
     return list;
   }
 
-  Future searchTrainers(Branch? branch, {required String query}) async {
+  Future searchTrainers(int? branchID, {String? query}) async {
     _trainers = [];
     emit(FetchingTrainers());
-    TrainerResponse? response = await _trainerService.searchTrainer(
-      branch?.id,
-      query: query,
-    );
 
-    if (response?.trainers != null) {
-      _trainers = response!.trainers!;
+    if (branchID != null && query == null) {
+      _trainers = await _branchService.getTrainers(
+        branchId: branchID.toString(),
+      );
+    }
+
+    if (query != null) {
+      _trainers = await _trainerService.searchTrainer(
+        branchID,
+        query: query,
+      );
+    }
+
+    if (_trainers != null) {
       filterTrainers(active: _isActive);
+      emit(SearchedTrainers());
     } else {
       emit(FailedToFetchTrainers('Failed to fetch the trainers'));
     }
+  }
+
+  void updateRequest(
+    TrainerRequest trainerRequest, {
+    File? image,
+    File? doc1,
+    File? doc2,
+  }) async {
+    if (image != null) {
+      this.image = image;
+    }
+    if (doc1 != null) {
+      this.doc1 = doc1;
+    }
+    if (doc2 != null) {
+      this.doc2 = doc2;
+    }
+    _request = trainerRequest;
+    if (kDebugMode) {
+      log(_request.toString());
+    }
+  }
+
+  Future createTrainer() async {
+    emit(CreatingTrainer());
+    Map<String, dynamic> map = _request.toJson();
+
+    /// prepare files for upload
+    if (image != null) {
+      MultipartFile? imageFile = await Utils().generateMultiPartFile(image!);
+      map.putIfAbsent('profile_pic', () => imageFile);
+    }
+
+    if (doc1 != null) {
+      MultipartFile? doc1File = await Utils().generateMultiPartFile(doc1!);
+      map.putIfAbsent('document_1', () => doc1File);
+    }
+
+    if (doc2 != null) {
+      MultipartFile? doc2File = await Utils().generateMultiPartFile(doc2!);
+
+      map.putIfAbsent('document_2', () => doc2File);
+    }
+    Common? response = await _trainerService.createTrainer(map);
+
+    if (response != null && response.status == 1) {
+      await getTrainers();
+      emit(TrainerCreated(fromBranch));
+    } else {
+      emit(
+        CreatingTrainerFailed(
+          response?.message ?? 'Failed to create the trainer',
+        ),
+      );
+    }
+  }
+
+  Future trainerStatus({required int id, required int status}) async {
+    emit(UpdatingTrainer());
+    Common? response = await _trainerService.updateTrainerStatus(
+      trainerId: id,
+      status: status,
+    );
+
+    if (response?.status == 1) {
+      emit(TrainerStatusUpdated(status == 1));
+      await getTrainers();
+      await getTrainerDetails(trainerId: id);
+    } else {
+      emit(UpdatingTrainerFailed('Fetching manager details failed.'));
+    }
+  }
+
+  Future updateTrainer(TrainerRequest request, {File? doc1, File? doc2}) async {
+    emit(UpdatingTrainer());
+    Map<String, dynamic> data = request.toJson();
+
+    data.removeWhere((key, value) => value == null);
+
+    if (doc1 != null) {
+      MultipartFile? doc1File = await Utils().generateMultiPartFile(doc1);
+      data.putIfAbsent('document_1', () => doc1File);
+    }
+
+    if (doc2 != null) {
+      MultipartFile? doc2File = await Utils().generateMultiPartFile(doc2);
+
+      data.putIfAbsent('document_2', () => doc2File);
+    }
+
+    Common? common = await _trainerService.updateTrainer(
+      data,
+      trainer!.trainerDetail![0].id,
+    );
+
+    if (common?.status == 1) {
+      await clearImageCache();
+      await getTrainerDetails(
+        trainerId: trainer!.trainerDetail![0].id,
+      );
+      await getTrainers();
+      emit(TrainerUpdated());
+    } else {
+      emit(
+        UpdatingTrainerFailed(common?.message ?? 'Failed to update trainer'),
+      );
+    }
+  }
+
+  Future updateProfilePic({required File profilePic}) async {
+    emit(UpdatingTrainer());
+    MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
+    Map<String, dynamic> data = {
+      'profile_pic': picFile,
+    };
+    Common? common = await _trainerService.updateTrainer(
+      data,
+      trainer!.trainerDetail![0].id,
+    );
+    if (common?.status == 1) {
+      await clearImageCache();
+      await getTrainerDetails(
+        trainerId: trainer!.trainerDetail![0].id,
+      );
+      await getTrainers();
+      emit(TrainerUpdated());
+    } else {
+      emit(
+        UpdatingTrainerFailed(common?.message ?? 'Failed to update trainer'),
+      );
+    }
+  }
+
+  void cleanup() {
+    doc1 = null;
+    doc2 = null;
+    image = null;
+
+    _request = const TrainerRequest();
+  }
+
+  Future clearImageCache() async {
+    var tempTrainer = trainer!.trainerDetail![0];
+    var docUrl1 =
+        '${F.baseUrl}/admin/documents/trainer/${tempTrainer.id}/${tempTrainer.document1}';
+    var docUrl2 =
+        '${F.baseUrl}/admin/documents/trainer/${tempTrainer.id}/${tempTrainer.document2}';
+
+    var profileUrl =
+        '${F.baseUrl}/admin/images/trainer/${tempTrainer.id}/${tempTrainer.profilePic}';
+
+    // clear doc 1
+    await CachedNetworkImage.evictFromCache(docUrl1);
+    // clear doc 2
+    await CachedNetworkImage.evictFromCache(docUrl2);
+    // clear profile pic
+    await CachedNetworkImage.evictFromCache(profileUrl);
   }
 }
