@@ -93,11 +93,16 @@ class BatchService {
     String status = 'ongoing',
     String? search,
     required int page,
+    bool branchSearch = false,
   }) async {
     try {
       String path = branchId == null
           ? '/admin/batches/batch-status/$status'
           : '/admin/branches/$branchId/batches/batch-status/$status';
+
+      if (branchSearch) {
+        path = '/admin/branches/$branchId/batches';
+      }
 
       /// append the search text if search query is not null
       if (search != null) {

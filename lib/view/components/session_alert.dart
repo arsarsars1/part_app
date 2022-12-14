@@ -45,25 +45,28 @@ class _SessionDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      color: AppColors.liteDark,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            'Session Expired, Please login again.',
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Button(
-            height: 30,
-            onTap: onTap,
-            title: 'Login',
-          ),
-        ],
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        color: AppColors.liteDark,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Session Expired, Please login again.',
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Button(
+              height: 30,
+              onTap: onTap,
+              title: 'Login',
+            ),
+          ],
+        ),
       ),
     );
   }

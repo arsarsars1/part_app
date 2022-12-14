@@ -20,6 +20,7 @@ class AppTheme {
     Color? primaryColor,
   }) {
     return ThemeData(
+      unselectedWidgetColor: Colors.white,
       splashColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       scaffoldBackgroundColor: Colors.black,

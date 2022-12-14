@@ -16,6 +16,7 @@ class BatchModel {
   final int? fee;
   final int? studentCount;
   final List<Trainer>? trainers;
+  final bool active;
 
   BatchModel({
     required this.name,
@@ -30,6 +31,7 @@ class BatchModel {
     this.fee,
     this.studentCount,
     this.trainers,
+    required this.active,
   });
 
   factory BatchModel.fromEntity(Batch batch) {
@@ -51,7 +53,7 @@ class BatchModel {
       branchId: batch.branch?.id,
       name: batch.batchName ?? '',
       trainersString: trainer,
-      branchName: batch.branch?.branchName ?? 'NA',
+      branchName: batch.branch?.branchName ?? 'Branch Not Allocated',
       id: batch.id ?? 0,
       days: days ?? [],
       courseName: batch.course?.courseName ?? 'NA',
@@ -60,6 +62,7 @@ class BatchModel {
       fee: batch.feeAmount,
       studentCount: batch.studentsCount,
       trainers: batch.trainers,
+      active: batch.isActive == 1,
     );
   }
 }

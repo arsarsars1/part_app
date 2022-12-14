@@ -21,12 +21,7 @@ class _AppState extends State<App> {
   @override
   void initState() {
     stream = ApiClient().controller?.stream;
-    // stream?.listen((event) {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) => AlertDialog(),
-    //   );
-    // });
+
     super.initState();
   }
 
@@ -64,6 +59,9 @@ class _AppState extends State<App> {
         ),
         BlocProvider<BatchCubit>(
           create: (context) => BatchCubit(),
+        ),
+        BlocProvider<StudentCubit>(
+          create: (context) => StudentCubit(),
         ),
       ],
       child: GestureDetector(

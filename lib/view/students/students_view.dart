@@ -5,6 +5,7 @@ import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/tab_button.dart';
 import 'package:part_app/view/constants/default_values.dart';
+import 'package:part_app/view/students/add_student.dart';
 
 class StudentsView extends StatefulWidget {
   static const route = '/students';
@@ -34,7 +35,7 @@ class _StudentsViewState extends State<StudentsView> {
               ),
               child: Button(
                 height: 30.h,
-                onTap: () {},
+                onTap: () => Navigator.pushNamed(context, AddStudent.route),
                 title: 'Add New Student',
               ),
             ),

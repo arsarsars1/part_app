@@ -50,6 +50,9 @@ class BatchCubit extends Cubit<BatchState> {
 
   List<BatchModel> get batches => _batches;
 
+  List<BatchModel> get activeBatches =>
+      _batches.where((element) => element.active).toList();
+
   List<Student>? get students => _students;
 
   List<BatchDetail> get rescheduledList => _rescheduledList;
@@ -109,6 +112,12 @@ class BatchCubit extends Cubit<BatchState> {
     );
 
     return item;
+  }
+
+  /// reset
+  void reset() {
+    _batches.clear();
+    emit(BatchInitial());
   }
 
   List<DropDownItem>? getSubjectsDropDown() {
@@ -184,6 +193,7 @@ class BatchCubit extends Cubit<BatchState> {
     String status = 'ongoing',
     String? search,
     bool clean = false,
+    bool branchSearch = false,
   }) async {
     if (clean) {
       page = 1;
@@ -202,6 +212,7 @@ class BatchCubit extends Cubit<BatchState> {
       status: status,
       search: search,
       page: page,
+      branchSearch: branchSearch,
     );
 
     if (response?.status == 1) {
@@ -211,10 +222,6 @@ class BatchCubit extends Cubit<BatchState> {
       }
 
       var items = response?.batches?.data
-              .where(
-                (element) =>
-                    element.isActive == 1 && element.branch?.isActive == 1,
-              )
               .map((e) => BatchModel.fromEntity(e))
               .toList() ??
           [];

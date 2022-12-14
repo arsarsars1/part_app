@@ -28,6 +28,9 @@ import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
+import 'package:part_app/view/students/add_student.dart';
+import 'package:part_app/view/students/assign_batch.dart';
+import 'package:part_app/view/students/assign_student_batch.dart';
 import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
@@ -257,6 +260,21 @@ class RouteGenerator {
       case StudentsView.route:
         return MaterialPageRoute(
           builder: (_) => const StudentsView(),
+          settings: settings,
+        );
+      case AddStudent.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddStudent(),
+          settings: settings,
+        );
+      case AssignBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => const AssignBatch(),
+          settings: settings,
+        );
+      case AssignStudentBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => const AssignStudentBatch(),
           settings: settings,
         );
       default:
