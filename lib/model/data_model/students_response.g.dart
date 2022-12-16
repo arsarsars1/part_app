@@ -26,6 +26,7 @@ _$_Students _$$_StudentsFromJson(Map<String, dynamic> json) => _$_Students(
           ?.map((e) => Student.fromJson(e as Map<String, dynamic>))
           .toList(),
       firstPageUrl: json['first_page_url'] as String?,
+      nextPageUrl: json['next_page_url'] as String?,
       from: json['from'] as int?,
       path: json['path'] as String?,
       perPage: json['per_page'] as int?,
@@ -37,10 +38,27 @@ Map<String, dynamic> _$$_StudentsToJson(_$_Students instance) =>
       'current_page': instance.currentPage,
       'data': instance.data,
       'first_page_url': instance.firstPageUrl,
+      'next_page_url': instance.nextPageUrl,
       'from': instance.from,
       'path': instance.path,
       'per_page': instance.perPage,
       'to': instance.to,
+    };
+
+_$_StudentResponse _$$_StudentResponseFromJson(Map<String, dynamic> json) =>
+    _$_StudentResponse(
+      status: json['status'] as int?,
+      student: json['student'] == null
+          ? null
+          : Student.fromJson(json['student'] as Map<String, dynamic>),
+      message: json['message'] as String?,
+    );
+
+Map<String, dynamic> _$$_StudentResponseToJson(_$_StudentResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'student': instance.student,
+      'message': instance.message,
     };
 
 _$_Student _$$_StudentFromJson(Map<String, dynamic> json) => _$_Student(

@@ -21,11 +21,7 @@ class BatchItem extends StatelessWidget {
     this.reschedule = false,
     this.addBatch = false,
     this.onAddToBatch,
-  })  : assert(
-          onAddToBatch != null && addBatch,
-          'Add batch requires the onAddToBatch',
-        ),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

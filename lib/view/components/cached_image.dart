@@ -54,8 +54,11 @@ class CachedImage {
       imageUrl: imageUrl,
       fit: fit,
       errorWidget: (context, str, _) {
-        return SvgPicture.asset(
-          Assets.trainerListIcon,
+        return Padding(
+          padding: const EdgeInsets.all(9.0),
+          child: SvgPicture.asset(
+            Assets.trainerListIcon,
+          ),
         );
       },
       httpHeaders: {

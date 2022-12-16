@@ -21,7 +21,8 @@ class _BatchStudentsState extends State<BatchStudents> {
     var batchCubit = context.read<BatchCubit>();
     return BlocBuilder<BatchCubit, BatchState>(
       builder: (context, state) {
-        if (state is FetchingBatch) {
+        var students = batchCubit.students ?? [];
+        if (state is FetchingBatch && students.isEmpty) {
           return const LoadingView();
         }
         if (state is FetchBatchFailed) {}

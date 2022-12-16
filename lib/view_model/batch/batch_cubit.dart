@@ -107,11 +107,14 @@ class BatchCubit extends Cubit<BatchState> {
   }
 
   DropDownItem? getSubjectMenuItem(int? courseId) {
-    var item = getSubjectsDropDown()?.firstWhere(
-      (element) => element.id == courseId,
-    );
-
-    return item;
+    try {
+      var item = getSubjectsDropDown()?.firstWhere(
+        (element) => element.id == courseId,
+      );
+      return item;
+    } catch (e) {
+      return null;
+    }
   }
 
   /// reset

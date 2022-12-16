@@ -34,6 +34,7 @@ abstract class Students with _$Students {
     int? currentPage,
     List<Student>? data,
     String? firstPageUrl,
+    String? nextPageUrl,
     int? from,
     String? path,
     int? perPage,
@@ -42,6 +43,24 @@ abstract class Students with _$Students {
 
   factory Students.fromJson(Map<String, dynamic> json) =>
       _$StudentsFromJson(json);
+}
+
+StudentResponse studentResponseFromJson(String str) =>
+    StudentResponse.fromJson(json.decode(str));
+
+String studentResponseToJson(StudentResponse data) =>
+    json.encode(data.toJson());
+
+@freezed
+abstract class StudentResponse with _$StudentResponse {
+  const factory StudentResponse({
+    int? status,
+    Student? student,
+    String? message,
+  }) = _StudentResponse;
+
+  factory StudentResponse.fromJson(Map<String, dynamic> json) =>
+      _$StudentResponseFromJson(json);
 }
 
 @freezed

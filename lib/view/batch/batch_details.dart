@@ -54,7 +54,7 @@ class _BatchDetailsState extends State<BatchDetails> {
               child: Text(state.message),
             );
           }
-          return Column(
+          return ListView(
             children: [
               Container(
                 margin: const EdgeInsets.all(16),

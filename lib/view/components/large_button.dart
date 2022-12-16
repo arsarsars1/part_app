@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import 'package:part_app/view/constants/constant.dart';
+
+class LargeButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+  final Color? color;
+
+  const LargeButton(
+      {Key? key, required this.title, required this.onTap, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: color ?? AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(45),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Spacer(),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 12,
+                  ),
+            ),
+            const Spacer(),
+            const Icon(
+              Icons.keyboard_arrow_right,
+              size: 24,
+              color: Colors.white,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

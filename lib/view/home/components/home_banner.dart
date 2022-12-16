@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class HomeBanner extends StatefulWidget {
@@ -118,7 +119,7 @@ class _HomeBannerState extends State<HomeBanner> {
                                     ),
                                   ),
                                   Button(
-                                    backgroundColor: const Color(0xFF41A0F8),
+                                    backgroundColor: AppColors.defaultBlue,
                                     height: 22.h,
                                     width: 97.w,
                                     fontSize: 10.sp,

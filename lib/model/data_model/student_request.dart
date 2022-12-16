@@ -20,9 +20,10 @@ abstract class StudentRequest with _$StudentRequest {
     dynamic admissionFees,
     int? batchId,
     int? isParent,
-    int? isCourseFeePaid,
-    int? isAdmissionFeePaid,
+    int? isCourseFeesPaid,
+    int? isAdmissionFeesPaid,
     int? noOfClasses,
+    int? paymentDueDate,
     String? address,
     String? parentName,
   }) = _StudentRequest;
