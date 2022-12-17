@@ -100,17 +100,22 @@ class CommonField extends StatelessWidget {
                   decoration: InputDecoration(
                     contentPadding: padding,
                   ),
-                  items: dropDownItems?.map((e) {
-                    return DropdownMenuItem(
-                      value: e,
-                      child: Text(
-                        e.title ?? '',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: Colors.white,
+                  items: disabled
+                      ? null
+                      : dropDownItems?.map((e) {
+                          return DropdownMenuItem(
+                            value: e,
+                            child: Text(
+                              e.title ?? '',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                  ),
                             ),
-                      ),
-                    );
-                  }).toList(),
+                          );
+                        }).toList(),
                   onSaved: (value) {
                     selectedItem = value;
                     onChange(value);

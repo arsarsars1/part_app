@@ -7,6 +7,7 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/tab_button.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/students/add_student.dart';
+import 'package:part_app/view/students/student/batch_picker.dart';
 import 'package:part_app/view/students/student/student_item.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -22,6 +23,7 @@ class StudentsView extends StatefulWidget {
 
 class _StudentsViewState extends State<StudentsView> {
   ScrollController scrollController = ScrollController();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   String? status;
   int? branchId;
@@ -49,6 +51,7 @@ class _StudentsViewState extends State<StudentsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: const CommonBar(
         title: 'Students',
       ),
@@ -74,7 +77,10 @@ class _StudentsViewState extends State<StudentsView> {
           ),
           BranchField(
             onSelect: (value) {
-              branchId = value;
+              setState(() {
+                branchId = value;
+              });
+
               doSearch();
             },
           ),
@@ -82,13 +88,19 @@ class _StudentsViewState extends State<StudentsView> {
             height: 20,
           ),
           CommonField(
+            disabled: branchId == null,
             title: 'Batch Status *',
             hint: 'Select Batch Status',
             dropDown: true,
             dropDownItems: DefaultValues().batchStatus,
             onChange: (value) {
-              status = value;
-              doSearch();
+              status = value.id;
+
+              context.read<BatchCubit>().getBatchesByStatus(
+                    branchId: branchId,
+                    status: status!,
+                    clean: true,
+                  );
             },
             validator: (value) {
               return value == null ? 'Please select batch status.' : null;
@@ -99,12 +111,22 @@ class _StudentsViewState extends State<StudentsView> {
             height: 20,
           ),
           CommonField(
+            onTap: () {
+              scaffoldKey.currentState?.showBottomSheet(
+                backgroundColor: Colors.transparent,
+                (context) => BatchPicker(
+                  branchId: branchId!,
+                  status: status!,
+                ),
+              );
+            },
+            disabled: true,
             title: 'Batch *',
             hint: 'Select Batch',
-            dropDown: true,
-            dropDownItems: DefaultValues().batchStatus,
             onChange: (value) {
-              batchId = value;
+              setState(() {
+                batchId = value;
+              });
               doSearch();
             },
             validator: (value) {
