@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class BatchPicker extends StatefulWidget {
   final String status;
   final int branchId;
+  final ValueChanged<BatchModel> onSelect;
 
-  const BatchPicker({Key? key, required this.status, required this.branchId})
+  const BatchPicker(
+      {Key? key,
+      required this.status,
+      required this.branchId,
+      required this.onSelect})
       : super(key: key);
 
   @override
@@ -45,7 +51,7 @@ class _BatchPickerState extends State<BatchPicker> {
           ),
           padding: const EdgeInsets.all(16),
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.85,
+            maxHeight: MediaQuery.of(context).size.height * 0.65,
           ),
           child: Column(
             children: [
@@ -88,22 +94,59 @@ class _BatchPickerState extends State<BatchPicker> {
               const Divider(
                 color: Colors.white24,
               ),
-              Expanded(
-                child: ListView.builder(
-                  controller: scrollController,
-                  shrinkWrap: true,
-                  itemCount: cubit.batches.length,
-                  itemBuilder: (context, index) {
-                    BatchModel batch = cubit.batches[index];
-                    return ListTile(
-                      onTap: () => Navigator.pop(context),
-                      title: Text(
-                        batch.name,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    );
-                  },
-                ),
+              cubit.batches.isEmpty
+                  ? const Expanded(
+                      child: Center(
+                      child: Text('Sorry, No batches found.'),
+                    ))
+                  : Expanded(
+                      child: cubit.batches.isEmpty && state is! FetchingBatches
+                          ? const LoadingView()
+                          : ListView.builder(
+                              controller: scrollController,
+                              shrinkWrap: true,
+                              itemCount: cubit.batches.length,
+                              itemBuilder: (context, index) {
+                                BatchModel batch = cubit.batches[index];
+                                return ListTile(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    widget.onSelect(batch);
+                                  },
+                                  title: Text(
+                                    batch.name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          fontSize: 15,
+                                        ),
+                                  ),
+                                  subtitle: Text(
+                                    '${batch.courseName}, ${batch.subjectName}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          color: AppColors.primaryColor,
+                                        ),
+                                  ),
+                                );
+                              },
+                            ),
+                    ),
+              BlocBuilder<BatchCubit, BatchState>(
+                builder: (context, state) {
+                  return AnimatedContainer(
+                    height:
+                        state is FetchingBatches && state.pagination ? 30 : 0,
+                    color: Colors.black,
+                    duration: const Duration(
+                      milliseconds: 250,
+                    ),
+                    child: const Center(child: Text('Fetching more items ..')),
+                  );
+                },
               ),
             ],
           ),

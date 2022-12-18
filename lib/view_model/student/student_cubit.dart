@@ -120,10 +120,16 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
+  void clean() {
+    page = 1;
+    nextPageUrl = '';
+    _students?.clear();
+    emit(StudentInitial());
+  }
+
   Future getStudents({
-    String? status,
     String? searchQuery,
-    int? branchId,
+    String? activeStatus,
     int? batchId,
     bool clean = false,
   }) async {
@@ -141,7 +147,12 @@ class StudentCubit extends Cubit<StudentState> {
       return;
     }
 
-    StudentsResponse? response = await _studentService.getStudents();
+    StudentsResponse? response = await _studentService.getStudents(
+      batchId: batchId,
+      searchQuery: searchQuery,
+      activeStatus: activeStatus,
+      pageNo: page,
+    );
 
     if (response?.status == 1) {
       nextPageUrl = response?.students?.nextPageUrl;

@@ -42,13 +42,30 @@ class StudentService {
   }
 
   Future<StudentsResponse?> getStudents({
-    String? status,
     String? searchQuery,
-    int? branchId,
+    String? activeStatus,
     int? batchId,
+    int? pageNo,
   }) async {
     try {
-      var response = await _client.get(queryPath: '/admin/students');
+      String path = '';
+
+      if (searchQuery == null && batchId == null) {
+        path = '/admin/students';
+      } else if (batchId != null) {
+        path = '/admin/batches/$batchId/students';
+      }
+      if (activeStatus != null) {
+        path = '/admin/batches/$batchId/$activeStatus';
+      }
+
+      if (searchQuery != null) {
+        path += '/search/$searchQuery';
+      }
+
+      path += '?page=$pageNo';
+
+      var response = await _client.get(queryPath: path);
       return studentsResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
