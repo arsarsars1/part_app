@@ -123,6 +123,10 @@ class BatchCubit extends Cubit<BatchState> {
     emit(BatchInitial());
   }
 
+  void refresh() {
+    emit(BatchesFetched());
+  }
+
   List<DropDownItem>? getSubjectsDropDown() {
     return _subjects
         ?.map((e) => DropDownItem(id: e.id, title: e.subjectName, item: e))

@@ -14,6 +14,7 @@ import 'package:part_app/view/components/profile_pictrue.dart';
 import 'package:part_app/view/components/titled_text.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/students/edit_student.dart';
+import 'package:part_app/view/students/edit_student_batches.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class StudentDetails extends StatefulWidget {
@@ -166,7 +167,13 @@ class _StudentDetailsState extends State<StudentDetails> {
                     ],
                   ),
                 ),
-                LargeButton(title: 'Student Batches', onTap: () {}),
+                LargeButton(
+                  title: 'Student Batches',
+                  onTap: () {
+                    context.read<StudentCubit>().getStudentBatches();
+                    Navigator.pushNamed(context, EditStudentBatches.route);
+                  },
+                ),
                 const SizedBox(
                   height: 16,
                 ),

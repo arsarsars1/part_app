@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/text_swtich_button.dart';
@@ -13,7 +13,10 @@ import 'package:part_app/view_model/cubits.dart';
 class AssignStudentBatch extends StatefulWidget {
   static const route = '/students/add/assign-batch';
 
-  const AssignStudentBatch({Key? key}) : super(key: key);
+  final bool editStudent;
+
+  const AssignStudentBatch({Key? key, required this.editStudent})
+      : super(key: key);
 
   @override
   State<AssignStudentBatch> createState() => _AssignStudentBatchState();
@@ -44,13 +47,25 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
       body: BlocListener<StudentCubit, StudentState>(
         listener: (context, state) {
           if (state is CreatingStudent) {
-            Loader(context, message: 'Creating student..').show();
+            Loader(
+              context,
+              message:
+                  widget.editStudent ? 'Adding to batch' : 'Creating student..',
+            ).show();
           } else if (state is CreatedStudent) {
-            Alert(context).show(message: 'Created student');
+            Alert(context).show(
+              message:
+                  widget.editStudent ? 'Added to batch' : 'Created student',
+            );
+
             Navigator.popUntil(
               context,
               ModalRoute.withName(AssignBatch.route),
             );
+
+            if (widget.editStudent) {
+              context.read<BatchCubit>().refresh();
+            }
           } else if (state is CreateStudentFailed) {
             Alert(context).show(message: state.message);
             Navigator.pop(context);
@@ -291,24 +306,44 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
                           onTap: () {
                             formKey.currentState!.save();
                             if (formKey.currentState!.validate()) {
-                              cubit.setStudent(cubit.studentRequest.copyWith(
-                                feeAmount: fee,
-                                countryCode: 91,
-                                batchId: batch?.id,
-                                admissionFees: admissionFee,
-                                doj: joiningDate,
-                                feeType: selected,
-                                noOfClasses: selected == 'class'
-                                    ? int.tryParse(payDay!)
-                                    : null,
-                                paymentDueDate: selected != 'class'
-                                    ? int.tryParse(payDay!)
-                                    : null,
-                                isAdmissionFeesPaid: admissionFeePaid ? 1 : 0,
-                                isCourseFeesPaid: feePaid ? 1 : 0,
-                              ));
+                              if (widget.editStudent) {
+                                cubit.setStudent(StudentRequest(
+                                  feeAmount: fee,
+                                  countryCode: 91,
+                                  batchId: batch?.id,
+                                  admissionFees: admissionFee,
+                                  doj: joiningDate,
+                                  feeType: selected,
+                                  noOfClasses: selected == 'class'
+                                      ? int.tryParse(payDay!)
+                                      : null,
+                                  paymentDueDate: selected != 'class'
+                                      ? int.tryParse(payDay!)
+                                      : null,
+                                  isAdmissionFeesPaid: admissionFeePaid ? 1 : 0,
+                                  isCourseFeesPaid: feePaid ? 1 : 0,
+                                ));
 
-                              cubit.createStudent();
+                                cubit.enrollToBatch();
+                              } else {
+                                cubit.setStudent(cubit.studentRequest.copyWith(
+                                  feeAmount: fee,
+                                  countryCode: 91,
+                                  batchId: batch?.id,
+                                  admissionFees: admissionFee,
+                                  doj: joiningDate,
+                                  feeType: selected,
+                                  noOfClasses: selected == 'class'
+                                      ? int.tryParse(payDay!)
+                                      : null,
+                                  paymentDueDate: selected != 'class'
+                                      ? int.tryParse(payDay!)
+                                      : null,
+                                  isAdmissionFeesPaid: admissionFeePaid ? 1 : 0,
+                                  isCourseFeesPaid: feePaid ? 1 : 0,
+                                ));
+                                cubit.createStudent();
+                              }
                             }
                           },
                           title: 'Ok',

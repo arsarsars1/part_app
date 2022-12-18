@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/constants/constant.dart';
 
 class BatchItem extends StatelessWidget {
@@ -12,6 +13,9 @@ class BatchItem extends StatelessWidget {
   final bool reschedule;
   final bool addBatch;
   final VoidCallback? onAddToBatch;
+  final bool enrolled;
+
+  final bool edit;
 
   const BatchItem({
     Key? key,
@@ -20,6 +24,8 @@ class BatchItem extends StatelessWidget {
     this.hideTrainer = false,
     this.reschedule = false,
     this.addBatch = false,
+    this.edit = false,
+    this.enrolled = false,
     this.onAddToBatch,
   }) : super(key: key);
 
@@ -67,7 +73,7 @@ class BatchItem extends StatelessWidget {
                           const SizedBox(
                             width: 16,
                           ),
-                          if (!reschedule)
+                          if (!reschedule && !edit)
                             Text(
                               'Active Students: ${batch.studentCount ?? 0}',
                               style: Theme.of(context)
@@ -100,12 +106,34 @@ class BatchItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (addBatch)
+                if (addBatch && !enrolled)
                   Button(
                     height: 26.h,
                     width: 100.w,
                     onTap: onAddToBatch,
                     title: 'Add To Batch',
+                  ),
+                if (enrolled)
+                  Text(
+                    'Enrolled',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: AppColors.green,
+                        ),
+                  ),
+                if (edit)
+                  Row(
+                    children: [
+                      RoundButton(
+                        edit: false,
+                        onTap: () {},
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      RoundButton(
+                        onTap: () {},
+                      ),
+                    ],
                   )
               ],
             ),
@@ -144,7 +172,7 @@ class BatchItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (!reschedule)
+                if (!reschedule && !edit)
                   const Icon(
                     Icons.keyboard_arrow_right,
                     color: Colors.white,
@@ -164,7 +192,7 @@ class BatchItem extends StatelessWidget {
               },
               itemCount: batch.days.length,
             ),
-            if (addBatch)
+            if (addBatch || edit)
               Column(
                 children: [
                   Align(

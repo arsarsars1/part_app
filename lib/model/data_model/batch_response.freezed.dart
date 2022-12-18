@@ -218,6 +218,172 @@ abstract class _BatchResponse implements BatchResponse {
       throw _privateConstructorUsedError;
 }
 
+StudentsBatchResponse _$StudentsBatchResponseFromJson(
+    Map<String, dynamic> json) {
+  return _StudentsBatchResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$StudentsBatchResponse {
+  int? get status => throw _privateConstructorUsedError;
+  List<Batch>? get batches => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $StudentsBatchResponseCopyWith<StudentsBatchResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StudentsBatchResponseCopyWith<$Res> {
+  factory $StudentsBatchResponseCopyWith(StudentsBatchResponse value,
+          $Res Function(StudentsBatchResponse) then) =
+      _$StudentsBatchResponseCopyWithImpl<$Res, StudentsBatchResponse>;
+  @useResult
+  $Res call({int? status, List<Batch>? batches});
+}
+
+/// @nodoc
+class _$StudentsBatchResponseCopyWithImpl<$Res,
+        $Val extends StudentsBatchResponse>
+    implements $StudentsBatchResponseCopyWith<$Res> {
+  _$StudentsBatchResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? batches = freezed,
+  }) {
+    return _then(_value.copyWith(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      batches: freezed == batches
+          ? _value.batches
+          : batches // ignore: cast_nullable_to_non_nullable
+              as List<Batch>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_StudentsBatchResponseCopyWith<$Res>
+    implements $StudentsBatchResponseCopyWith<$Res> {
+  factory _$$_StudentsBatchResponseCopyWith(_$_StudentsBatchResponse value,
+          $Res Function(_$_StudentsBatchResponse) then) =
+      __$$_StudentsBatchResponseCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? status, List<Batch>? batches});
+}
+
+/// @nodoc
+class __$$_StudentsBatchResponseCopyWithImpl<$Res>
+    extends _$StudentsBatchResponseCopyWithImpl<$Res, _$_StudentsBatchResponse>
+    implements _$$_StudentsBatchResponseCopyWith<$Res> {
+  __$$_StudentsBatchResponseCopyWithImpl(_$_StudentsBatchResponse _value,
+      $Res Function(_$_StudentsBatchResponse) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? batches = freezed,
+  }) {
+    return _then(_$_StudentsBatchResponse(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      batches: freezed == batches
+          ? _value._batches
+          : batches // ignore: cast_nullable_to_non_nullable
+              as List<Batch>?,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class _$_StudentsBatchResponse implements _StudentsBatchResponse {
+  const _$_StudentsBatchResponse({this.status, final List<Batch>? batches})
+      : _batches = batches;
+
+  factory _$_StudentsBatchResponse.fromJson(Map<String, dynamic> json) =>
+      _$$_StudentsBatchResponseFromJson(json);
+
+  @override
+  final int? status;
+  final List<Batch>? _batches;
+  @override
+  List<Batch>? get batches {
+    final value = _batches;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'StudentsBatchResponse(status: $status, batches: $batches)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StudentsBatchResponse &&
+            (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality().equals(other._batches, _batches));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, status, const DeepCollectionEquality().hash(_batches));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StudentsBatchResponseCopyWith<_$_StudentsBatchResponse> get copyWith =>
+      __$$_StudentsBatchResponseCopyWithImpl<_$_StudentsBatchResponse>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_StudentsBatchResponseToJson(
+      this,
+    );
+  }
+}
+
+abstract class _StudentsBatchResponse implements StudentsBatchResponse {
+  const factory _StudentsBatchResponse(
+      {final int? status,
+      final List<Batch>? batches}) = _$_StudentsBatchResponse;
+
+  factory _StudentsBatchResponse.fromJson(Map<String, dynamic> json) =
+      _$_StudentsBatchResponse.fromJson;
+
+  @override
+  int? get status;
+  @override
+  List<Batch>? get batches;
+  @override
+  @JsonKey(ignore: true)
+  _$$_StudentsBatchResponseCopyWith<_$_StudentsBatchResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 Datum _$DatumFromJson(Map<String, dynamic> json) {
   return _Datum.fromJson(json);
 }

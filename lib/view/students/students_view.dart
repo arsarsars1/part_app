@@ -5,9 +5,9 @@ import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/students/add_student.dart';
-import 'package:part_app/view/students/student/batch_picker.dart';
-import 'package:part_app/view/students/student/student_item.dart';
 import 'package:part_app/view/students/student_details.dart';
+import 'package:part_app/view/students/widgets/batch_picker.dart';
+import 'package:part_app/view/students/widgets/student_item.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class StudentsView extends StatefulWidget {

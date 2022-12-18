@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/service/api_client.dart';
@@ -12,6 +13,18 @@ class StudentService {
       request.removeWhere((key, value) => value == null);
       var response =
           await _client.post(postPath: '/admin/students', data: request);
+      return studentResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<StudentResponse?> enrollToBatch(
+      Map<String, dynamic> request, int? studentId) async {
+    try {
+      request.removeWhere((key, value) => value == null);
+      var response = await _client.post(
+          postPath: '/admin/students/$studentId/enroll', data: request);
       return studentResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
@@ -79,5 +92,12 @@ class StudentService {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<StudentsBatchResponse?> getStudentBatches(int? studentId) async {
+    var response =
+        await _client.get(queryPath: '/admin/students/$studentId/batches');
+
+    return studentBatchResponseFromJson(jsonEncode(response));
   }
 }

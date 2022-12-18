@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
-import 'package:part_app/view/components/branch_field.dart';
-import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/students/assign_student_batch.dart';
@@ -10,8 +8,9 @@ import 'package:part_app/view_model/cubits.dart';
 
 class AssignBatch extends StatefulWidget {
   static const route = '/students/add/batches';
+  final bool editStudent;
 
-  const AssignBatch({Key? key}) : super(key: key);
+  const AssignBatch({Key? key, required this.editStudent}) : super(key: key);
 
   @override
   State<AssignBatch> createState() => _AssignBatchState();
@@ -47,7 +46,13 @@ class _AssignBatchState extends State<AssignBatch> {
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<StudentCubit>();
+    var studentCubit = context.read<StudentCubit>();
+    String student = 'Not Available';
+    if (widget.editStudent) {
+      student = studentCubit.student?.studentDetail?[0].name ?? 'Not Available';
+    } else {
+      student = studentCubit.studentRequest.name ?? 'Not Available';
+    }
     return Scaffold(
       appBar: const CommonBar(title: 'Assign Batches'),
       body: Column(
@@ -57,7 +62,7 @@ class _AssignBatchState extends State<AssignBatch> {
               controller: scrollController,
               children: [
                 Center(
-                  child: Text(cubit.studentRequest.name ?? 'Not Available'),
+                  child: Text(student),
                 ),
                 const SizedBox(
                   height: 20,
@@ -115,8 +120,9 @@ class _AssignBatchState extends State<AssignBatch> {
                       crr is FetchingBatches ||
                       crr is BatchInitial,
                   builder: (context, state) {
-                    var cubit = context.read<BatchCubit>();
-                    if (cubit.batches.isEmpty && state is FetchingBatches) {
+                    var batchCubit = context.read<BatchCubit>();
+                    if (batchCubit.batches.isEmpty &&
+                        state is FetchingBatches) {
                       return const Padding(
                         padding: EdgeInsets.only(top: 32),
                         child: LoadingView(
@@ -124,7 +130,7 @@ class _AssignBatchState extends State<AssignBatch> {
                         ),
                       );
                     }
-                    if (cubit.batches.isEmpty) {
+                    if (batchCubit.batches.isEmpty) {
                       return Center(
                         child: Padding(
                           padding: const EdgeInsets.all(64.0),
@@ -139,19 +145,24 @@ class _AssignBatchState extends State<AssignBatch> {
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: cubit.activeBatches.length,
+                      itemCount: batchCubit.activeBatches.length,
                       itemBuilder: (context, index) {
-                        BatchModel batch = cubit.activeBatches[index];
+                        BatchModel batch = batchCubit.activeBatches[index];
                         return BatchItem(
                           reschedule: true,
                           addBatch: true,
                           batch: batch,
+                          enrolled:
+                              studentCubit.enrolledBatches.contains(batch.id),
                           onAddToBatch: () {
                             context
                                 .read<BatchCubit>()
                                 .getBatch(batchId: '${batch.id}');
                             Navigator.pushNamed(
-                                context, AssignStudentBatch.route);
+                              context,
+                              AssignStudentBatch.route,
+                              arguments: widget.editStudent,
+                            );
                           },
                           onTap: () {},
                         );

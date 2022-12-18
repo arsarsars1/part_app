@@ -48,3 +48,13 @@ class StudentDetailsFailed extends StudentState {
 
   StudentDetailsFailed(this.message);
 }
+
+class StudentBatchesFetched extends StudentState {}
+
+class StudentBatchesFetching extends StudentState {}
+
+class StudentBatchesFailed extends StudentState {
+  final String message;
+
+  StudentBatchesFailed(this.message);
+}

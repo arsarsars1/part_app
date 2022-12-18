@@ -24,6 +24,22 @@ Map<String, dynamic> _$$_BatchResponseToJson(_$_BatchResponse instance) =>
       'batch': instance.batch,
     };
 
+_$_StudentsBatchResponse _$$_StudentsBatchResponseFromJson(
+        Map<String, dynamic> json) =>
+    _$_StudentsBatchResponse(
+      status: json['status'] as int?,
+      batches: (json['batches'] as List<dynamic>?)
+          ?.map((e) => Batch.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$_StudentsBatchResponseToJson(
+        _$_StudentsBatchResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'batches': instance.batches,
+    };
+
 _$_Datum _$$_DatumFromJson(Map<String, dynamic> json) => _$_Datum(
       currentPage: json['current_page'] as int?,
       data: (json['data'] as List<dynamic>)

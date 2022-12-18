@@ -32,6 +32,7 @@ import 'package:part_app/view/students/add_student.dart';
 import 'package:part_app/view/students/assign_batch.dart';
 import 'package:part_app/view/students/assign_student_batch.dart';
 import 'package:part_app/view/students/edit_student.dart';
+import 'package:part_app/view/students/edit_student_batches.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
@@ -271,12 +272,16 @@ class RouteGenerator {
         );
       case AssignBatch.route:
         return MaterialPageRoute(
-          builder: (_) => const AssignBatch(),
+          builder: (_) => AssignBatch(
+            editStudent: settings.arguments as bool,
+          ),
           settings: settings,
         );
       case AssignStudentBatch.route:
         return MaterialPageRoute(
-          builder: (_) => const AssignStudentBatch(),
+          builder: (_) => AssignStudentBatch(
+            editStudent: settings.arguments as bool,
+          ),
           settings: settings,
         );
       case StudentDetails.route:
@@ -287,6 +292,11 @@ class RouteGenerator {
       case EditStudent.route:
         return MaterialPageRoute(
           builder: (_) => const EditStudent(),
+          settings: settings,
+        );
+      case EditStudentBatches.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditStudentBatches(),
           settings: settings,
         );
       default:

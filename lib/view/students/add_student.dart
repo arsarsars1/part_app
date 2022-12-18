@@ -298,7 +298,11 @@ class _AddStudentState extends State<AddStudent> {
                       );
 
                       cubit.setStudent(request);
-                      Navigator.pushNamed(context, AssignBatch.route);
+                      Navigator.pushNamed(
+                        context,
+                        AssignBatch.route,
+                        arguments: false,
+                      );
                     }
                   },
                   title: 'Continue',

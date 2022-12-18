@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:part_app/flavors.dart';
+import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/data_model/students_response.dart';
@@ -30,6 +32,12 @@ class StudentCubit extends Cubit<StudentState> {
 
   List<Student>? get students => _students;
 
+  List<BatchModel> _batches = [];
+
+  List<BatchModel> get batches => _batches;
+
+  List<int> get enrolledBatches => _batches.map((e) => e.id).toList();
+
   // pagination
 
   int page = 1;
@@ -49,9 +57,28 @@ class StudentCubit extends Cubit<StudentState> {
     if (response?.status == 1) {
       _student = response?.student;
       emit(CreatedStudent());
+      _studentRequest = const StudentRequest();
     } else {
       emit(
         CreateStudentFailed(response?.message ?? 'Failed to create student'),
+      );
+    }
+  }
+
+  Future enrollToBatch() async {
+    emit(CreatingStudent());
+
+    StudentResponse? response = await _studentService.enrollToBatch(
+      _studentRequest.toJson(),
+      _student?.studentDetail?[0].id,
+    );
+
+    if (response?.status == 1) {
+      await getStudentBatches();
+      emit(CreatedStudent());
+    } else {
+      emit(
+        CreateStudentFailed(response?.message ?? 'Failed to add batch.'),
       );
     }
   }
@@ -192,5 +219,22 @@ class StudentCubit extends Cubit<StudentState> {
     }
 
     emit(StudentsFetched());
+  }
+
+  Future getStudentBatches() async {
+    emit(StudentBatchesFetching());
+    StudentsBatchResponse? response = await _studentService.getStudentBatches(
+      _student?.studentDetail?[0].id,
+    );
+
+    if (response?.status == 1) {
+      var items =
+          response?.batches?.map((e) => BatchModel.fromEntity(e)).toList() ??
+              [];
+      _batches = items;
+      emit(StudentBatchesFetched());
+    } else {
+      emit(StudentBatchesFailed('Failed to fetch batches.'));
+    }
   }
 }

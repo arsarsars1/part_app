@@ -16,6 +16,9 @@ part 'batch_response.g.dart';
 BatchResponse batchResponseFromJson(String str) =>
     BatchResponse.fromJson(json.decode(str));
 
+StudentsBatchResponse studentBatchResponseFromJson(String str) =>
+    StudentsBatchResponse.fromJson(json.decode(str));
+
 String batchResponseToJson(BatchResponse data) => json.encode(data.toJson());
 
 @freezed
@@ -29,6 +32,18 @@ abstract class BatchResponse with _$BatchResponse {
 
   factory BatchResponse.fromJson(Map<String, dynamic> json) =>
       _$BatchResponseFromJson(json);
+}
+
+@freezed
+abstract class StudentsBatchResponse with _$StudentsBatchResponse {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory StudentsBatchResponse({
+    int? status,
+    List<Batch>? batches,
+  }) = _StudentsBatchResponse;
+
+  factory StudentsBatchResponse.fromJson(Map<String, dynamic> json) =>
+      _$StudentsBatchResponseFromJson(json);
 }
 
 @freezed
