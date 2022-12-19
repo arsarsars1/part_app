@@ -34,7 +34,7 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
   bool admissionFeePaid = false;
   bool feePaid = false;
 
-  String selected = 'class';
+  String selected = 'monthly';
 
   var formKey = GlobalKey<FormState>();
 

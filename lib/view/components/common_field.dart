@@ -35,6 +35,8 @@ class CommonField extends StatelessWidget {
   final Icon? prefixIcon;
   final TextCapitalization capitalization;
 
+  final EdgeInsets? contentPadding;
+
   const CommonField({
     Key? key,
     required this.title,
@@ -63,6 +65,7 @@ class CommonField extends StatelessWidget {
     required this.onChange,
     this.disabled = false,
     this.onSubmit,
+    this.contentPadding,
     this.prefixIcon,
     this.showInfo = false,
     this.capitalization = TextCapitalization.sentences,
@@ -73,7 +76,7 @@ class CommonField extends StatelessWidget {
   Widget build(BuildContext context) {
     DropDownItem? selectedItem;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: crossAxisAlignment,
         children: [

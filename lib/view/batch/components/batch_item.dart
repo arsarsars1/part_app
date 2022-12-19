@@ -16,6 +16,7 @@ class BatchItem extends StatelessWidget {
   final bool enrolled;
 
   final bool edit;
+  final VoidCallback? onEdit;
 
   const BatchItem({
     Key? key,
@@ -27,6 +28,7 @@ class BatchItem extends StatelessWidget {
     this.edit = false,
     this.enrolled = false,
     this.onAddToBatch,
+    this.onEdit,
   }) : super(key: key);
 
   @override
@@ -125,7 +127,7 @@ class BatchItem extends StatelessWidget {
                     children: [
                       RoundButton(
                         edit: false,
-                        onTap: () {},
+                        onTap: onEdit!,
                       ),
                       const SizedBox(
                         width: 16,

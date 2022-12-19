@@ -100,4 +100,14 @@ class StudentService {
 
     return studentBatchResponseFromJson(jsonEncode(response));
   }
+
+  Future<Common?> removeStudentBatch(int? batchId, int? studentId,
+      {required String date, required String reason}) async {
+    var response = await _client.post(
+      postPath: '/admin/batches/$batchId/remove/$studentId',
+      data: {'rejoining_date': date, 'reason': reason},
+    );
+
+    return commonFromJson(jsonEncode(response));
+  }
 }

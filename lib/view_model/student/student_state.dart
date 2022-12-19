@@ -58,3 +58,13 @@ class StudentBatchesFailed extends StudentState {
 
   StudentBatchesFailed(this.message);
 }
+
+class RemovingStudent extends StudentState {}
+
+class RemovedStudent extends StudentState {}
+
+class RemoveStudentFailed extends StudentState {
+  final String message;
+
+  RemoveStudentFailed(this.message);
+}

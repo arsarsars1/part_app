@@ -237,4 +237,22 @@ class StudentCubit extends Cubit<StudentState> {
       emit(StudentBatchesFailed('Failed to fetch batches.'));
     }
   }
+
+  Future removeStudentBatch(int? batchId,
+      {required String date, reason}) async {
+    emit(RemovingStudent());
+    Common? common = await _studentService.removeStudentBatch(
+      batchId,
+      _student?.studentDetail?[0].id,
+      date: date,
+      reason: reason,
+    );
+
+    if (common?.status == 1) {
+      getStudentBatches();
+      emit(RemovedStudent());
+    } else {
+      emit(RemoveStudentFailed(common?.message ?? 'Failed to remove student'));
+    }
+  }
 }
