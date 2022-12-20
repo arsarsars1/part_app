@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/students/assign_batch.dart';
+import 'package:part_app/view/students/edit_assigned_batch.dart';
 import 'package:part_app/view/students/widgets/remove_student.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -22,6 +24,8 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<StudentCubit>();
+    Student? student = cubit.student;
+    StudentDetail? details = student?.studentDetail![0];
     return Scaffold(
       appBar: const CommonBar(
         title: 'Assigned Batches',
@@ -83,7 +87,7 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
                       edit: true,
                       batch: batch,
                       onTap: () {},
-                      onEdit: () {
+                      onRemove: () {
                         var formKey = GlobalKey<FormState>();
                         String? rejoining;
                         String? remark;
@@ -115,6 +119,12 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
                             }
                           },
                         ).show();
+                      },
+                      onEdit: () {
+                        // context
+                        //     .read<BatchCubit>()
+                        //     .getBatch(batchId: '${batch.id}');
+                        // Navigator.pushNamed(context, EditAssignedBatch.route);
                       },
                     );
                   },

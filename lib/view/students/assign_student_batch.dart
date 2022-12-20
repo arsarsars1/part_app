@@ -8,6 +8,7 @@ import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/text_swtich_button.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/students/assign_batch.dart';
+import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AssignStudentBatch extends StatefulWidget {
@@ -58,13 +59,18 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
                   widget.editStudent ? 'Added to batch' : 'Created student',
             );
 
-            Navigator.popUntil(
-              context,
-              ModalRoute.withName(AssignBatch.route),
-            );
-
             if (widget.editStudent) {
               context.read<BatchCubit>().refresh();
+
+              Navigator.popUntil(
+                context,
+                ModalRoute.withName(AssignBatch.route),
+              );
+            } else {
+              Navigator.popUntil(
+                context,
+                ModalRoute.withName(StudentsView.route),
+              );
             }
           } else if (state is CreateStudentFailed) {
             Alert(context).show(message: state.message);

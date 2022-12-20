@@ -55,7 +55,9 @@ class _AddStudentState extends State<AddStudent> {
                 padding: const EdgeInsets.all(16.0),
                 child: ProfilePicture(
                   onEdit: () {},
-                  onChange: (value) {},
+                  onChange: (value) {
+                    context.read<StudentCubit>().setProfilePic(value);
+                  },
                 ),
               ),
             ),

@@ -28,15 +28,17 @@ class StudentCubit extends Cubit<StudentState> {
 
   Student? get student => _student;
 
-  List<Student>? _students = [];
+  Map<int?, Student>? _studentsMap = {};
 
-  List<Student>? get students => _students;
+  List<Student>? get students => _studentsMap?.values.toList();
 
   List<BatchModel> _batches = [];
 
   List<BatchModel> get batches => _batches;
 
   List<int> get enrolledBatches => _batches.map((e) => e.id).toList();
+
+  File? _profilePic;
 
   // pagination
 
@@ -47,16 +49,29 @@ class StudentCubit extends Cubit<StudentState> {
     _studentRequest = request;
   }
 
+  void setProfilePic(File file) {
+    _profilePic = file;
+  }
+
   Future createStudent() async {
     emit(CreatingStudent());
     _student = null;
+    var request = _studentRequest.toJson();
+
+    if (_profilePic != null) {
+      MultipartFile? picFile =
+          await Utils().generateMultiPartFile(_profilePic!);
+      request.putIfAbsent('profile_pic', () => picFile);
+    }
     StudentResponse? response = await _studentService.createStudent(
-      _studentRequest.toJson(),
+      request,
     );
 
     if (response?.status == 1) {
       _student = response?.student;
+      // updateStudentsList();
       emit(CreatedStudent());
+      _profilePic = null;
       _studentRequest = const StudentRequest();
     } else {
       emit(
@@ -92,7 +107,7 @@ class StudentCubit extends Cubit<StudentState> {
 
     if (response?.status == 1) {
       _student = response?.student;
-      resetStudentList();
+      updateStudentsList();
       emit(UpdatedStudent());
     } else {
       emit(
@@ -119,7 +134,7 @@ class StudentCubit extends Cubit<StudentState> {
           '${F.baseUrl}/admin/images/student/${_student?.studentDetail?[0].id}'
           '/${_student?.studentDetail?[0].profilePic}';
       await CachedNetworkImage.evictFromCache(url);
-      resetStudentList();
+      updateStudentsList();
       emit(UpdatedStudent());
     } else {
       emit(
@@ -138,7 +153,7 @@ class StudentCubit extends Cubit<StudentState> {
     );
     if (response?.status == 1) {
       await studentDetails(_student?.studentDetail?[0].id);
-      resetStudentList();
+      updateStudentsList();
       emit(UpdatedStudent());
     } else {
       emit(
@@ -150,7 +165,7 @@ class StudentCubit extends Cubit<StudentState> {
   void clean() {
     page = 1;
     nextPageUrl = '';
-    _students?.clear();
+    _studentsMap?.clear();
     emit(StudentInitial());
   }
 
@@ -163,7 +178,7 @@ class StudentCubit extends Cubit<StudentState> {
     if (clean) {
       page = 1;
       nextPageUrl = '';
-      _students?.clear();
+      _studentsMap?.clear();
       emit(FetchingStudents());
     } else {
       emit(FetchingStudents(pagination: true));
@@ -189,7 +204,8 @@ class StudentCubit extends Cubit<StudentState> {
 
       var items = response?.students?.data ?? [];
 
-      _students?.addAll(items);
+      _studentsMap?.addEntries(items.map((e) => MapEntry(e.id, e)));
+
       emit(StudentsFetched(moreItems: nextPageUrl != null));
     }
   }
@@ -209,14 +225,21 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
-  void resetStudentList() {
-    int? index = _students?.indexWhere((element) => element.id == _student?.id);
+  void insertStudent() {
+    emit(StudentsFetched());
+  }
 
-    if (index != null) {
-      _students?.removeAt(index);
+  void updateStudentsList() {
+    // int? index = _students?.indexWhere((element) => element.id == _student?.id);
+    // int? index = _studentsMap?.keys
+    //     .toList()
+    //     .indexWhere((element) => element == _student?.id);
 
-      _students?.insert(index, _student!);
-    }
+    _studentsMap?.update(
+      _student?.id,
+      (student) => _student!,
+      ifAbsent: () => _student!,
+    );
 
     emit(StudentsFetched());
   }

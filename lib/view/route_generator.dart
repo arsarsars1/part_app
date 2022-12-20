@@ -31,6 +31,7 @@ import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/students/add_student.dart';
 import 'package:part_app/view/students/assign_batch.dart';
 import 'package:part_app/view/students/assign_student_batch.dart';
+import 'package:part_app/view/students/edit_assigned_batch.dart';
 import 'package:part_app/view/students/edit_student.dart';
 import 'package:part_app/view/students/edit_student_batches.dart';
 import 'package:part_app/view/students/student_details.dart';
@@ -297,6 +298,11 @@ class RouteGenerator {
       case EditStudentBatches.route:
         return MaterialPageRoute(
           builder: (_) => const EditStudentBatches(),
+          settings: settings,
+        );
+      case EditAssignedBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditAssignedBatch(),
           settings: settings,
         );
       default:

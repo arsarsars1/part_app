@@ -647,7 +647,8 @@ mixin _$Batch {
   int? get subjectId => throw _privateConstructorUsedError;
   String? get batchStatus => throw _privateConstructorUsedError;
   int? get feeAmount => throw _privateConstructorUsedError;
-  int? get studentsCount => throw _privateConstructorUsedError;
+  int? get activeStudentsCount => throw _privateConstructorUsedError;
+  int? get inactiveStudentsCount => throw _privateConstructorUsedError;
   int? get admissionFees => throw _privateConstructorUsedError;
   int? get isActive => throw _privateConstructorUsedError;
   List<BatchDetail>? get batchDetail => throw _privateConstructorUsedError;
@@ -675,7 +676,8 @@ abstract class $BatchCopyWith<$Res> {
       int? subjectId,
       String? batchStatus,
       int? feeAmount,
-      int? studentsCount,
+      int? activeStudentsCount,
+      int? inactiveStudentsCount,
       int? admissionFees,
       int? isActive,
       List<BatchDetail>? batchDetail,
@@ -710,7 +712,8 @@ class _$BatchCopyWithImpl<$Res, $Val extends Batch>
     Object? subjectId = freezed,
     Object? batchStatus = freezed,
     Object? feeAmount = freezed,
-    Object? studentsCount = freezed,
+    Object? activeStudentsCount = freezed,
+    Object? inactiveStudentsCount = freezed,
     Object? admissionFees = freezed,
     Object? isActive = freezed,
     Object? batchDetail = freezed,
@@ -752,9 +755,13 @@ class _$BatchCopyWithImpl<$Res, $Val extends Batch>
           ? _value.feeAmount
           : feeAmount // ignore: cast_nullable_to_non_nullable
               as int?,
-      studentsCount: freezed == studentsCount
-          ? _value.studentsCount
-          : studentsCount // ignore: cast_nullable_to_non_nullable
+      activeStudentsCount: freezed == activeStudentsCount
+          ? _value.activeStudentsCount
+          : activeStudentsCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      inactiveStudentsCount: freezed == inactiveStudentsCount
+          ? _value.inactiveStudentsCount
+          : inactiveStudentsCount // ignore: cast_nullable_to_non_nullable
               as int?,
       admissionFees: freezed == admissionFees
           ? _value.admissionFees
@@ -839,7 +846,8 @@ abstract class _$$_BatchCopyWith<$Res> implements $BatchCopyWith<$Res> {
       int? subjectId,
       String? batchStatus,
       int? feeAmount,
-      int? studentsCount,
+      int? activeStudentsCount,
+      int? inactiveStudentsCount,
       int? admissionFees,
       int? isActive,
       List<BatchDetail>? batchDetail,
@@ -873,7 +881,8 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
     Object? subjectId = freezed,
     Object? batchStatus = freezed,
     Object? feeAmount = freezed,
-    Object? studentsCount = freezed,
+    Object? activeStudentsCount = freezed,
+    Object? inactiveStudentsCount = freezed,
     Object? admissionFees = freezed,
     Object? isActive = freezed,
     Object? batchDetail = freezed,
@@ -915,9 +924,13 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
           ? _value.feeAmount
           : feeAmount // ignore: cast_nullable_to_non_nullable
               as int?,
-      studentsCount: freezed == studentsCount
-          ? _value.studentsCount
-          : studentsCount // ignore: cast_nullable_to_non_nullable
+      activeStudentsCount: freezed == activeStudentsCount
+          ? _value.activeStudentsCount
+          : activeStudentsCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      inactiveStudentsCount: freezed == inactiveStudentsCount
+          ? _value.inactiveStudentsCount
+          : inactiveStudentsCount // ignore: cast_nullable_to_non_nullable
               as int?,
       admissionFees: freezed == admissionFees
           ? _value.admissionFees
@@ -964,7 +977,8 @@ class _$_Batch implements _Batch {
       this.subjectId,
       this.batchStatus,
       this.feeAmount,
-      this.studentsCount,
+      this.activeStudentsCount,
+      this.inactiveStudentsCount,
       this.admissionFees,
       this.isActive,
       final List<BatchDetail>? batchDetail,
@@ -995,7 +1009,9 @@ class _$_Batch implements _Batch {
   @override
   final int? feeAmount;
   @override
-  final int? studentsCount;
+  final int? activeStudentsCount;
+  @override
+  final int? inactiveStudentsCount;
   @override
   final int? admissionFees;
   @override
@@ -1027,7 +1043,7 @@ class _$_Batch implements _Batch {
 
   @override
   String toString() {
-    return 'Batch(id: $id, batchName: $batchName, academyId: $academyId, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, batchStatus: $batchStatus, feeAmount: $feeAmount, studentsCount: $studentsCount, admissionFees: $admissionFees, isActive: $isActive, batchDetail: $batchDetail, trainers: $trainers, course: $course, subject: $subject, branch: $branch)';
+    return 'Batch(id: $id, batchName: $batchName, academyId: $academyId, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, batchStatus: $batchStatus, feeAmount: $feeAmount, activeStudentsCount: $activeStudentsCount, inactiveStudentsCount: $inactiveStudentsCount, admissionFees: $admissionFees, isActive: $isActive, batchDetail: $batchDetail, trainers: $trainers, course: $course, subject: $subject, branch: $branch)';
   }
 
   @override
@@ -1050,8 +1066,10 @@ class _$_Batch implements _Batch {
                 other.batchStatus == batchStatus) &&
             (identical(other.feeAmount, feeAmount) ||
                 other.feeAmount == feeAmount) &&
-            (identical(other.studentsCount, studentsCount) ||
-                other.studentsCount == studentsCount) &&
+            (identical(other.activeStudentsCount, activeStudentsCount) ||
+                other.activeStudentsCount == activeStudentsCount) &&
+            (identical(other.inactiveStudentsCount, inactiveStudentsCount) ||
+                other.inactiveStudentsCount == inactiveStudentsCount) &&
             (identical(other.admissionFees, admissionFees) ||
                 other.admissionFees == admissionFees) &&
             (identical(other.isActive, isActive) ||
@@ -1076,7 +1094,8 @@ class _$_Batch implements _Batch {
       subjectId,
       batchStatus,
       feeAmount,
-      studentsCount,
+      activeStudentsCount,
+      inactiveStudentsCount,
       admissionFees,
       isActive,
       const DeepCollectionEquality().hash(_batchDetail),
@@ -1109,7 +1128,8 @@ abstract class _Batch implements Batch {
       final int? subjectId,
       final String? batchStatus,
       final int? feeAmount,
-      final int? studentsCount,
+      final int? activeStudentsCount,
+      final int? inactiveStudentsCount,
       final int? admissionFees,
       final int? isActive,
       final List<BatchDetail>? batchDetail,
@@ -1137,7 +1157,9 @@ abstract class _Batch implements Batch {
   @override
   int? get feeAmount;
   @override
-  int? get studentsCount;
+  int? get activeStudentsCount;
+  @override
+  int? get inactiveStudentsCount;
   @override
   int? get admissionFees;
   @override

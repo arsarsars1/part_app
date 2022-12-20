@@ -60,7 +60,7 @@ class BatchModel {
       subjectName: batch.subject?.subjectName ?? 'NA',
       admissionFee: batch.admissionFees,
       fee: batch.feeAmount,
-      studentCount: batch.studentsCount,
+      studentCount: batch.activeStudentsCount,
       trainers: batch.trainers,
       active: batch.isActive == 1,
     );

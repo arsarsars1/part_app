@@ -267,7 +267,7 @@ class BatchCubit extends Cubit<BatchState> {
       _batchModel = BatchModel.fromEntity(response!.batch!);
 
       // fetch the students
-      getStudentsByBatch(_batch?.id);
+      // getStudentsByBatch(_batch?.id);
 
       // fetch the courses list
       if (_courses == null || _courses!.isEmpty) {

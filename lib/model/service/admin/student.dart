@@ -11,8 +11,11 @@ class StudentService {
   Future<StudentResponse?> createStudent(Map<String, dynamic> request) async {
     try {
       request.removeWhere((key, value) => value == null);
-      var response =
-          await _client.post(postPath: '/admin/students', data: request);
+      var response = await _client.post(
+        postPath: '/admin/students',
+        data: request,
+        formData: true,
+      );
       return studentResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
