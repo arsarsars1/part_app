@@ -93,6 +93,8 @@ class _BatchDetailsState extends State<BatchDetails> {
                                   children: [
                                     Text(
                                       "${batch?.name}",
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
@@ -114,6 +116,9 @@ class _BatchDetailsState extends State<BatchDetails> {
                                     ),
                                   ],
                                 ),
+                              ),
+                              const SizedBox(
+                                width: 8,
                               ),
                               GestureDetector(
                                 onTap: () {

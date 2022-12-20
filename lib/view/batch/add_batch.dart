@@ -6,8 +6,6 @@ import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/view/batch/batch_list.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
-import 'package:part_app/view/components/branch_field.dart';
-import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/app_colors.dart';

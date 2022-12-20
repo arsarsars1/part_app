@@ -83,7 +83,7 @@ extension StringExtension on String {
   }
 
   DateTime toDateTime() {
-    return DateFormat('hh:mm').parse(this);
+    return DateFormat('hh:mm a').parse(this);
   }
 }
 

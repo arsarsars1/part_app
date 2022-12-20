@@ -111,6 +111,7 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                               ? 'Please enter batch name.'
                               : null;
                         },
+                        length: 100,
                       ),
                       const SizedBox(
                         height: 20,

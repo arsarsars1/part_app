@@ -93,14 +93,10 @@ class _RemoveStudentState extends State<RemoveStudent> {
         );
       },
       context: context,
-      initialDate: DateTime(
-        DateTime.now().year - 18,
-      ),
-      firstDate: DateTime(
-        DateTime.now().year - 100,
-      ),
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
       lastDate: DateTime(
-        DateTime.now().year - 18,
+        DateTime.now().year + 10,
       ),
     ).then((value) {
       if (value != null) {
