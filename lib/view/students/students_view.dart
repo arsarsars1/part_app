@@ -145,7 +145,7 @@ class _StudentsViewState extends State<StudentsView> {
                                 batchController.text = value.name;
 
                                 doSearch(true);
-                                setState(() {});
+                                // setState(() {});
                               },
                             ),
                           );
@@ -154,11 +154,18 @@ class _StudentsViewState extends State<StudentsView> {
                               message: 'Please select Branch and Status.');
                         }
                       },
-                      dropDown: true,
                       disabled: true,
                       title: 'Batch *',
                       hint: 'Select Batch',
                       onChange: (value) {},
+                      suffixIcon: const Padding(
+                        padding: EdgeInsets.only(right: 32),
+                        child: Icon(
+                          Icons.arrow_drop_down,
+                          size: 24,
+                          color: Colors.white24,
+                        ),
+                      ),
                       validator: (value) {
                         return value == null ? 'Please select batch.' : null;
                       },

@@ -94,8 +94,8 @@ class _BatchStudentsState extends State<BatchStudents> {
                           children: [
                             UserImage(
                               profilePic: '${F.baseUrl}'
-                                  '/admin/images/trainer/'
-                                  '${student.id}/${detail?.profilePic}',
+                                  '/admin/images/student/'
+                                  '${detail?.id}/${detail?.profilePic}',
                             ),
                             const SizedBox(
                               width: 12,
