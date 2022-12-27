@@ -16,6 +16,7 @@ import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
+import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/manager/add_manager.dart';
 import 'package:part_app/view/manager/edit_manager.dart';
@@ -298,6 +299,11 @@ class RouteGenerator {
       case EditStudentBatches.route:
         return MaterialPageRoute(
           builder: (_) => const EditStudentBatches(),
+          settings: settings,
+        );
+      case ClassLinkView.route:
+        return MaterialPageRoute(
+          builder: (_) => const ClassLinkView(),
           settings: settings,
         );
       case EditAssignedBatch.route:
