@@ -45,10 +45,12 @@ class BatchModel {
     } else {
       trainer = 'No Trainer Allocated';
     }
+
     days = batch.batchDetail?.map((e) {
       String day = DefaultValues.defaultTrainingDays[e.day];
       return '${day.substring(0, 3)} ${e.startTime?.toAmPM()} - ${e.endTime?.toAmPM()}';
     }).toList();
+
     return BatchModel(
       branchId: batch.branch?.id,
       name: batch.batchName ?? '',

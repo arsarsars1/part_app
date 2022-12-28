@@ -16,6 +16,7 @@ import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
+import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/manager/add_manager.dart';
@@ -302,13 +303,27 @@ class RouteGenerator {
           settings: settings,
         );
       case ClassLinkView.route:
-        return MaterialPageRoute(
-          builder: (_) => const ClassLinkView(),
-          settings: settings,
-        );
+        {
+          bool edit = false;
+          if (settings.arguments != null) {
+            edit = settings.arguments as bool;
+          }
+          return MaterialPageRoute(
+            builder: (_) => ClassLinkView(
+              isEdit: edit,
+            ),
+            settings: settings,
+          );
+        }
+
       case EditAssignedBatch.route:
         return MaterialPageRoute(
           builder: (_) => const EditAssignedBatch(),
+          settings: settings,
+        );
+      case ClassLinkList.route:
+        return MaterialPageRoute(
+          builder: (_) => const ClassLinkList(),
           settings: settings,
         );
       default:

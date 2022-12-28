@@ -74,3 +74,27 @@ class FetchingBatchStudents extends BatchState {}
 class FetchedBatchStudents extends BatchState {}
 
 class FetchingBatchStudentsFailed extends BatchState {}
+
+/// add Class Link
+
+class AddingLink extends BatchState {}
+
+class AddedLink extends BatchState {}
+
+class AddLinkFailed extends BatchState {
+  final String message;
+
+  AddLinkFailed(this.message);
+}
+
+// get class links
+
+class FetchingLinks extends BatchState {}
+
+class FetchedLinks extends BatchState {}
+
+class RemovingLink extends BatchState {}
+
+class RemovedLink extends BatchState {}
+
+class RemoveLinkFailed extends BatchState {}

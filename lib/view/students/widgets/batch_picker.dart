@@ -10,12 +10,15 @@ class BatchPicker extends StatefulWidget {
   final int branchId;
   final ValueChanged<BatchModel> onSelect;
 
-  const BatchPicker(
-      {Key? key,
-      required this.status,
-      required this.branchId,
-      required this.onSelect})
-      : super(key: key);
+  final bool branchSearch;
+
+  const BatchPicker({
+    Key? key,
+    required this.status,
+    required this.branchId,
+    required this.onSelect,
+    this.branchSearch = false,
+  }) : super(key: key);
 
   @override
   State<BatchPicker> createState() => _BatchPickerState();
@@ -34,6 +37,7 @@ class _BatchPickerState extends State<BatchPicker> {
         context.read<BatchCubit>().getBatchesByStatus(
               status: widget.status,
               branchId: widget.branchId,
+              branchSearch: widget.branchSearch,
             );
       }
     });

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
@@ -28,6 +29,7 @@ class BatchCubit extends Cubit<BatchState> {
   List<BatchModel> _batches = [];
   List<BatchDetail> _rescheduledList = [];
   List<Student>? _students;
+  List<ClassLink>? _classLinks;
 
   BatchModel? _batchModel;
   Batch? _batch;
@@ -54,6 +56,8 @@ class BatchCubit extends Cubit<BatchState> {
       _batches.where((element) => element.active).toList();
 
   List<Student>? get students => _students;
+
+  List<ClassLink>? get classLinks => _classLinks;
 
   List<BatchDetail> get rescheduledList => _rescheduledList;
 
@@ -238,14 +242,31 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
-  Future getBatchesByBranch(int? branchId) async {
-    BatchResponse? response = await _batchService.getBatches();
+  Future getBatchesByBranch(int? branchId, {bool clean = false}) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(FetchingBatches());
+    } else {
+      emit(FetchingBatches(pagination: true));
+    }
+    BatchResponse? response = await _batchService.getBatchesByBranch(
+      page: page,
+      branchId: branchId,
+    );
     if (response?.status == 1) {
-      _batches = response?.batches?.data
+      nextPageUrl = response?.batches?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+      var items = response?.batches?.data
               .map((e) => BatchModel.fromEntity(e))
               .toList() ??
           [];
-      emit(BatchesFetched());
+
+      _batches.addAll(items);
+      emit(BatchesFetched(moreItems: nextPageUrl != null));
     }
   }
 
@@ -347,6 +368,50 @@ class BatchCubit extends Cubit<BatchState> {
       emit(FetchedBatchStudents());
     } else {
       emit(FetchingBatchStudentsFailed());
+    }
+  }
+
+  Future addClassLink(int? batchId, Map<String, dynamic> data) async {
+    try {
+      emit(AddingLink());
+      Common? response = await _batchService.addClassLink(batchId, data);
+
+      if (response?.status == 1) {
+        emit(AddedLink());
+      } else {
+        emit(AddLinkFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future getClassLink(int? batchId, DateTime dateTime) async {
+    emit(FetchingLinks());
+    ClassLinkResponse? response = await _batchService.getClassLink(
+      batchId,
+      dateTime,
+    );
+    if (response?.classLinks != null) {
+      _classLinks = response?.classLinks;
+      emit(FetchedLinks());
+    }
+  }
+
+  Future removeClassLint(
+    int? batchId,
+    int? linkId,
+  ) async {
+    emit(RemovingLink());
+    Common? response = await _batchService.removeClassLink(
+      batchId,
+      linkId,
+    );
+
+    if (response?.status == 1) {
+      emit(RemovedLink());
+    } else {
+      emit(RemoveLinkFailed());
     }
   }
 }
