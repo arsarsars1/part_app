@@ -7,6 +7,7 @@ import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
+import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/service/admin/student.dart';
@@ -203,6 +204,21 @@ class StudentCubit extends Cubit<StudentState> {
       }
 
       var items = response?.students?.data ?? [];
+
+      List<StudentModel> tempStudents = [];
+
+      for (var student in items) {
+        var details = student.studentDetail;
+        if (details != null) {
+          for (var details in details) {
+            var newStudent = StudentModel.fromEntity(student, details);
+            tempStudents.add(newStudent);
+          }
+        }
+      }
+
+      print(tempStudents);
+      print('STUDENT COUNT ${tempStudents.length}');
 
       _studentsMap?.addEntries(items.map((e) => MapEntry(e.id, e)));
 
