@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
-import 'package:part_app/model/data_model/students_response.dart';
+import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/tab_button.dart';
 import 'package:part_app/view/components/user_image.dart';
@@ -72,11 +72,10 @@ class _BatchStudentsState extends State<BatchStudents> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: studentCubit.students?.length ?? 0,
                   itemBuilder: (context, index) {
-                    Student student = studentCubit.students![index];
-                    StudentDetail? detail = student.studentDetail?[0];
+                    StudentModel student = studentCubit.students![index];
                     return GestureDetector(
                       onTap: () {
-                        studentCubit.studentDetails(detail?.id);
+                        studentCubit.studentDetails(student.detailId);
                         Navigator.pushNamed(
                           context,
                           StudentDetails.route,
@@ -95,7 +94,7 @@ class _BatchStudentsState extends State<BatchStudents> {
                             UserImage(
                               profilePic: '${F.baseUrl}'
                                   '/admin/images/student/'
-                                  '${detail?.id}/${detail?.profilePic}',
+                                  '${student.detailId}/${student.profilePic}',
                             ),
                             const SizedBox(
                               width: 12,
@@ -105,7 +104,7 @@ class _BatchStudentsState extends State<BatchStudents> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    student.studentDetail?[0].name ?? '',
+                                    student.name ?? '',
                                   ),
                                   Text(
                                     'N/A',

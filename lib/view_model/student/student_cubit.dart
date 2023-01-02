@@ -29,9 +29,9 @@ class StudentCubit extends Cubit<StudentState> {
 
   Student? get student => _student;
 
-  Map<int?, Student>? _studentsMap = {};
+  final Map<int?, StudentModel> _studentsMap = {};
 
-  List<Student>? get students => _studentsMap?.values.toList();
+  List<StudentModel>? get students => _studentsMap.values.toList();
 
   List<BatchModel> _batches = [];
 
@@ -52,6 +52,10 @@ class StudentCubit extends Cubit<StudentState> {
 
   void setProfilePic(File file) {
     _profilePic = file;
+  }
+
+  void clearBatches() {
+    _batches.clear();
   }
 
   Future createStudent() async {
@@ -166,7 +170,7 @@ class StudentCubit extends Cubit<StudentState> {
   void clean() {
     page = 1;
     nextPageUrl = '';
-    _studentsMap?.clear();
+    _studentsMap.clear();
     emit(StudentInitial());
   }
 
@@ -179,7 +183,7 @@ class StudentCubit extends Cubit<StudentState> {
     if (clean) {
       page = 1;
       nextPageUrl = '';
-      _studentsMap?.clear();
+      _studentsMap.clear();
       emit(FetchingStudents());
     } else {
       emit(FetchingStudents(pagination: true));
@@ -217,10 +221,7 @@ class StudentCubit extends Cubit<StudentState> {
         }
       }
 
-      print(tempStudents);
-      print('STUDENT COUNT ${tempStudents.length}');
-
-      _studentsMap?.addEntries(items.map((e) => MapEntry(e.id, e)));
+      _studentsMap.addEntries(tempStudents.map((e) => MapEntry(e.detailId, e)));
 
       emit(StudentsFetched(moreItems: nextPageUrl != null));
     }
@@ -245,19 +246,21 @@ class StudentCubit extends Cubit<StudentState> {
     emit(StudentsFetched());
   }
 
+  // this method will manipulate the local list to show the updates
   void updateStudentsList() {
-    // int? index = _students?.indexWhere((element) => element.id == _student?.id);
-    // int? index = _studentsMap?.keys
-    //     .toList()
-    //     .indexWhere((element) => element == _student?.id);
+    if (_student?.studentDetail != null) {
+      for (var details in _student!.studentDetail!) {
+        var newStudent = StudentModel.fromEntity(_student!, details);
+        _studentsMap.update(
+          _student?.id,
+          (student) => newStudent,
+          ifAbsent: () => newStudent,
+        );
+      }
 
-    _studentsMap?.update(
-      _student?.id,
-      (student) => _student!,
-      ifAbsent: () => _student!,
-    );
-
-    emit(StudentsFetched());
+      // updates the UI
+      emit(StudentsFetched());
+    }
   }
 
   Future getStudentBatches() async {

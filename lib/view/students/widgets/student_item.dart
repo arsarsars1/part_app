@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:part_app/flavors.dart';
-import 'package:part_app/model/data_model/students_response.dart';
+import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/view/components/launcher.dart';
 import 'package:part_app/view/components/user_image.dart';
 import 'package:part_app/view/constants/constant.dart';
 
 class StudentItem extends StatelessWidget {
-  final Student student;
+  final StudentModel student;
   final VoidCallback onTap;
 
   const StudentItem({Key? key, required this.student, required this.onTap})
@@ -16,7 +16,6 @@ class StudentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    StudentDetail detail = student.studentDetail![0];
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -39,12 +38,12 @@ class StudentItem extends StatelessWidget {
                   UserImage(
                     profilePic: '${F.baseUrl}'
                         '/admin/images/student/'
-                        '${detail.id}/${detail.profilePic}',
+                        '${student.detailId}/${student.profilePic}',
                   ),
                   SizedBox(width: 16.w),
                   Expanded(
                     child: Text(
-                      '${detail.name}',
+                      '${student.name}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -59,11 +58,12 @@ class StudentItem extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      if (detail.whatsappNo != null) {
+                      if (student.whatsappNo != null) {
                         Launcher.openWhatsapp(
                           context: context,
                           text: '',
-                          number: '+${student.countryCode}${detail.whatsappNo}',
+                          number:
+                              '+${student.countryCode}${student.whatsappNo}',
                         );
                       }
                     },

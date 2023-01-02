@@ -276,7 +276,7 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
                       length: selected == 'class' ? 3 : 2,
                       title: selected == 'class'
                           ? 'Total Classes *'
-                          : 'Monthly ${selected == 'class' ? 'pay day' : 'days'} *',
+                          : 'Monthly Pay Day *',
                       hint: 'Enter ${selected != 'class' ? 'pay day' : 'days'}',
                       textInputAction: TextInputAction.done,
                       validator: (value) {

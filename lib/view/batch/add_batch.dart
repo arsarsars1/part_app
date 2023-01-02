@@ -95,6 +95,7 @@ class _AddBatchState extends State<AddBatch> {
                         height: 20,
                       ),
                       CommonField(
+                        length: 100,
                         title: 'Batch Name *',
                         hint: 'Enter Batch Name',
                         onChange: (value) {

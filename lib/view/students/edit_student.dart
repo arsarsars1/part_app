@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
-import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/constants/default_values.dart';
-import 'package:part_app/view/constants/regex.dart';
+import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -23,7 +19,7 @@ class EditStudent extends StatefulWidget {
 
 class _EditStudentState extends State<EditStudent> {
   var list = ['student', 'parent'];
-  var selected = 'student';
+  String? selected;
 
   String? name;
   String? parentName;
@@ -56,8 +52,10 @@ class _EditStudentState extends State<EditStudent> {
   Widget build(BuildContext context) {
     student = context.read<StudentCubit>().student;
     details = student?.studentDetail![0];
+
+    selected ??= details!.parentName != null ? 'parent' : 'student';
     return Scaffold(
-      appBar: const CommonBar(title: 'Add New Student'),
+      appBar: const CommonBar(title: 'Edit Student Profile'),
       body: BlocListener<StudentCubit, StudentState>(
         listener: (context, state) {
           if (state is UpdatingStudent) {
@@ -360,15 +358,11 @@ class _EditStudentState extends State<EditStudent> {
         );
       },
       context: context,
-      initialDate: DateTime(
-        DateTime.now().year - 18,
-      ),
+      initialDate: DateTime.now(),
       firstDate: DateTime(
         DateTime.now().year - 100,
       ),
-      lastDate: DateTime(
-        DateTime.now().year - 18,
-      ),
+      lastDate: DateTime.now(),
     ).then((value) {
       if (value != null) {
         dob = value.toServerString();

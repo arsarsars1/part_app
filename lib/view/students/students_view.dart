@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
-import 'package:part_app/model/data_model/students_response.dart';
+import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/students/add_student.dart';
@@ -53,7 +53,7 @@ class _StudentsViewState extends State<StudentsView> {
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
-        title: 'Students',
+        title: 'Students List',
       ),
       body: BlocBuilder<StudentCubit, StudentState>(
         // buildWhen: (prv, crr) =>
@@ -135,6 +135,7 @@ class _StudentsViewState extends State<StudentsView> {
                       onTap: () {
                         if (branchId != null && status != null) {
                           scaffoldKey.currentState?.showBottomSheet(
+                            elevation: 10,
                             backgroundColor: Colors.transparent,
                             (context) => BatchPicker(
                               branchId: branchId!,
@@ -150,7 +151,8 @@ class _StudentsViewState extends State<StudentsView> {
                           );
                         } else {
                           Alert(context).show(
-                              message: 'Please select Branch and Status.');
+                            message: 'Please select Branch and Status.',
+                          );
                         }
                       },
                       disabled: true,
@@ -237,13 +239,11 @@ class _StudentsViewState extends State<StudentsView> {
                                 itemCount: cubit.students?.length ?? 0,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
-                                  Student student = cubit.students![index];
-                                  StudentDetail detail =
-                                      student.studentDetail![0];
+                                  StudentModel student = cubit.students![index];
                                   return StudentItem(
                                     student: student,
                                     onTap: () {
-                                      cubit.studentDetails(detail.id);
+                                      cubit.studentDetails(student.detailId);
                                       Navigator.pushNamed(
                                         context,
                                         StudentDetails.route,

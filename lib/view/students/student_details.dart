@@ -2,16 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/components/common_bar.dart';
-import 'package:part_app/view/components/dialog.dart';
-import 'package:part_app/view/components/large_button.dart';
-import 'package:part_app/view/components/launchers.dart';
-import 'package:part_app/view/components/profile_pictrue.dart';
-import 'package:part_app/view/components/titled_text.dart';
+import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/students/edit_student.dart';
 import 'package:part_app/view/students/edit_student_batches.dart';

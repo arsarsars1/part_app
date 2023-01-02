@@ -7,7 +7,6 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/students/assign_batch.dart';
-import 'package:part_app/view/students/edit_assigned_batch.dart';
 import 'package:part_app/view/students/widgets/remove_student.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -96,8 +95,8 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
                           subMessage:
                               '${cubit.student?.studentDetail?[0].name}',
                           message:
-                              'Do You Want TO Deactivate The Student\n From Batch Name?'
-                              '\n\nSelect Date Of Learning And Confirm',
+                              'Do You Want To Deactivate The Student\n From ${batch.name}?'
+                              '\n\nSelect Date Of Leaving And Confirm',
                           subContent: RemoveStudent(
                             formKey: formKey,
                             rejoiningDate: (value) {
