@@ -98,6 +98,14 @@ class _StudentsViewState extends State<StudentsView> {
                         });
                         batchController.clear();
                         batch = null;
+
+                        if (status != null) {
+                          context.read<BatchCubit>().getBatchesByStatus(
+                                branchId: branchId,
+                                status: status!,
+                                clean: true,
+                              );
+                        }
                       },
                     ),
                     const SizedBox(
@@ -228,9 +236,11 @@ class _StudentsViewState extends State<StudentsView> {
                                 padding: const EdgeInsets.all(64),
                                 child: Center(
                                   child: Text(
-                                    state is! StudentsFetched
-                                        ? 'Select a batch to list the students.'
-                                        : 'Sorry, No matching results found',
+                                    query == null
+                                        ? 'Add a student to get started'
+                                        : state is StudentsFetched
+                                            ? 'Sorry, No matching results found'
+                                            : 'Select a batch to list the students.',
                                   ),
                                 ),
                               )
