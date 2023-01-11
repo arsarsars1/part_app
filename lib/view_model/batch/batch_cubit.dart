@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
@@ -28,6 +29,7 @@ class BatchCubit extends Cubit<BatchState> {
   List<BatchModel> _batches = [];
   List<BatchDetail> _rescheduledList = [];
   List<Student>? _students;
+  List<ClassLink>? _classLinks;
 
   BatchModel? _batchModel;
   Batch? _batch;
@@ -50,7 +52,12 @@ class BatchCubit extends Cubit<BatchState> {
 
   List<BatchModel> get batches => _batches;
 
+  List<BatchModel> get activeBatches =>
+      _batches.where((element) => element.active).toList();
+
   List<Student>? get students => _students;
+
+  List<ClassLink>? get classLinks => _classLinks;
 
   List<BatchDetail> get rescheduledList => _rescheduledList;
 
@@ -104,11 +111,24 @@ class BatchCubit extends Cubit<BatchState> {
   }
 
   DropDownItem? getSubjectMenuItem(int? courseId) {
-    var item = getSubjectsDropDown()?.firstWhere(
-      (element) => element.id == courseId,
-    );
+    try {
+      var item = getSubjectsDropDown()?.firstWhere(
+        (element) => element.id == courseId,
+      );
+      return item;
+    } catch (e) {
+      return null;
+    }
+  }
 
-    return item;
+  /// reset
+  void reset() {
+    _batches.clear();
+    emit(BatchInitial());
+  }
+
+  void refresh() {
+    emit(BatchesFetched());
   }
 
   List<DropDownItem>? getSubjectsDropDown() {
@@ -184,6 +204,7 @@ class BatchCubit extends Cubit<BatchState> {
     String status = 'ongoing',
     String? search,
     bool clean = false,
+    bool branchSearch = false,
   }) async {
     if (clean) {
       page = 1;
@@ -202,6 +223,7 @@ class BatchCubit extends Cubit<BatchState> {
       status: status,
       search: search,
       page: page,
+      branchSearch: branchSearch,
     );
 
     if (response?.status == 1) {
@@ -211,10 +233,6 @@ class BatchCubit extends Cubit<BatchState> {
       }
 
       var items = response?.batches?.data
-              .where(
-                (element) =>
-                    element.isActive == 1 && element.branch?.isActive == 1,
-              )
               .map((e) => BatchModel.fromEntity(e))
               .toList() ??
           [];
@@ -224,14 +242,31 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
-  Future getBatchesByBranch(int? branchId) async {
-    BatchResponse? response = await _batchService.getBatches();
+  Future getBatchesByBranch(int? branchId, {bool clean = false}) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(FetchingBatches());
+    } else {
+      emit(FetchingBatches(pagination: true));
+    }
+    BatchResponse? response = await _batchService.getBatchesByBranch(
+      page: page,
+      branchId: branchId,
+    );
     if (response?.status == 1) {
-      _batches = response?.batches?.data
+      nextPageUrl = response?.batches?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+      var items = response?.batches?.data
               .map((e) => BatchModel.fromEntity(e))
               .toList() ??
           [];
-      emit(BatchesFetched());
+
+      _batches.addAll(items);
+      emit(BatchesFetched(moreItems: nextPageUrl != null));
     }
   }
 
@@ -253,7 +288,7 @@ class BatchCubit extends Cubit<BatchState> {
       _batchModel = BatchModel.fromEntity(response!.batch!);
 
       // fetch the students
-      getStudentsByBatch(_batch?.id);
+      // getStudentsByBatch(_batch?.id);
 
       // fetch the courses list
       if (_courses == null || _courses!.isEmpty) {
@@ -333,6 +368,50 @@ class BatchCubit extends Cubit<BatchState> {
       emit(FetchedBatchStudents());
     } else {
       emit(FetchingBatchStudentsFailed());
+    }
+  }
+
+  Future addClassLink(int? batchId, Map<String, dynamic> data) async {
+    try {
+      emit(AddingLink());
+      Common? response = await _batchService.addClassLink(batchId, data);
+
+      if (response?.status == 1) {
+        emit(AddedLink());
+      } else {
+        emit(AddLinkFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future getClassLink(int? batchId, DateTime dateTime) async {
+    emit(FetchingLinks());
+    ClassLinkResponse? response = await _batchService.getClassLink(
+      batchId,
+      dateTime,
+    );
+    if (response?.classLinks != null) {
+      _classLinks = response?.classLinks;
+      emit(FetchedLinks());
+    }
+  }
+
+  Future removeClassLint(
+    int? batchId,
+    int? linkId,
+  ) async {
+    emit(RemovingLink());
+    Common? response = await _batchService.removeClassLink(
+      batchId,
+      linkId,
+    );
+
+    if (response?.status == 1) {
+      emit(RemovedLink());
+    } else {
+      emit(RemoveLinkFailed());
     }
   }
 }

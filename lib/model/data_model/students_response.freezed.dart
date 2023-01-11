@@ -195,6 +195,7 @@ mixin _$Students {
   int? get currentPage => throw _privateConstructorUsedError;
   List<Student>? get data => throw _privateConstructorUsedError;
   String? get firstPageUrl => throw _privateConstructorUsedError;
+  String? get nextPageUrl => throw _privateConstructorUsedError;
   int? get from => throw _privateConstructorUsedError;
   String? get path => throw _privateConstructorUsedError;
   int? get perPage => throw _privateConstructorUsedError;
@@ -215,6 +216,7 @@ abstract class $StudentsCopyWith<$Res> {
       {int? currentPage,
       List<Student>? data,
       String? firstPageUrl,
+      String? nextPageUrl,
       int? from,
       String? path,
       int? perPage,
@@ -237,6 +239,7 @@ class _$StudentsCopyWithImpl<$Res, $Val extends Students>
     Object? currentPage = freezed,
     Object? data = freezed,
     Object? firstPageUrl = freezed,
+    Object? nextPageUrl = freezed,
     Object? from = freezed,
     Object? path = freezed,
     Object? perPage = freezed,
@@ -254,6 +257,10 @@ class _$StudentsCopyWithImpl<$Res, $Val extends Students>
       firstPageUrl: freezed == firstPageUrl
           ? _value.firstPageUrl
           : firstPageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nextPageUrl: freezed == nextPageUrl
+          ? _value.nextPageUrl
+          : nextPageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       from: freezed == from
           ? _value.from
@@ -286,6 +293,7 @@ abstract class _$$_StudentsCopyWith<$Res> implements $StudentsCopyWith<$Res> {
       {int? currentPage,
       List<Student>? data,
       String? firstPageUrl,
+      String? nextPageUrl,
       int? from,
       String? path,
       int? perPage,
@@ -306,6 +314,7 @@ class __$$_StudentsCopyWithImpl<$Res>
     Object? currentPage = freezed,
     Object? data = freezed,
     Object? firstPageUrl = freezed,
+    Object? nextPageUrl = freezed,
     Object? from = freezed,
     Object? path = freezed,
     Object? perPage = freezed,
@@ -323,6 +332,10 @@ class __$$_StudentsCopyWithImpl<$Res>
       firstPageUrl: freezed == firstPageUrl
           ? _value.firstPageUrl
           : firstPageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nextPageUrl: freezed == nextPageUrl
+          ? _value.nextPageUrl
+          : nextPageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       from: freezed == from
           ? _value.from
@@ -352,6 +365,7 @@ class _$_Students implements _Students {
       {this.currentPage,
       final List<Student>? data,
       this.firstPageUrl,
+      this.nextPageUrl,
       this.from,
       this.path,
       this.perPage,
@@ -375,6 +389,8 @@ class _$_Students implements _Students {
   @override
   final String? firstPageUrl;
   @override
+  final String? nextPageUrl;
+  @override
   final int? from;
   @override
   final String? path;
@@ -385,7 +401,7 @@ class _$_Students implements _Students {
 
   @override
   String toString() {
-    return 'Students(currentPage: $currentPage, data: $data, firstPageUrl: $firstPageUrl, from: $from, path: $path, perPage: $perPage, to: $to)';
+    return 'Students(currentPage: $currentPage, data: $data, firstPageUrl: $firstPageUrl, nextPageUrl: $nextPageUrl, from: $from, path: $path, perPage: $perPage, to: $to)';
   }
 
   @override
@@ -398,6 +414,8 @@ class _$_Students implements _Students {
             const DeepCollectionEquality().equals(other._data, _data) &&
             (identical(other.firstPageUrl, firstPageUrl) ||
                 other.firstPageUrl == firstPageUrl) &&
+            (identical(other.nextPageUrl, nextPageUrl) ||
+                other.nextPageUrl == nextPageUrl) &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.path, path) || other.path == path) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
@@ -411,6 +429,7 @@ class _$_Students implements _Students {
       currentPage,
       const DeepCollectionEquality().hash(_data),
       firstPageUrl,
+      nextPageUrl,
       from,
       path,
       perPage,
@@ -435,6 +454,7 @@ abstract class _Students implements Students {
       {final int? currentPage,
       final List<Student>? data,
       final String? firstPageUrl,
+      final String? nextPageUrl,
       final int? from,
       final String? path,
       final int? perPage,
@@ -449,6 +469,8 @@ abstract class _Students implements Students {
   @override
   String? get firstPageUrl;
   @override
+  String? get nextPageUrl;
+  @override
   int? get from;
   @override
   String? get path;
@@ -459,6 +481,194 @@ abstract class _Students implements Students {
   @override
   @JsonKey(ignore: true)
   _$$_StudentsCopyWith<_$_Students> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+StudentResponse _$StudentResponseFromJson(Map<String, dynamic> json) {
+  return _StudentResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$StudentResponse {
+  int? get status => throw _privateConstructorUsedError;
+  Student? get student => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $StudentResponseCopyWith<StudentResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StudentResponseCopyWith<$Res> {
+  factory $StudentResponseCopyWith(
+          StudentResponse value, $Res Function(StudentResponse) then) =
+      _$StudentResponseCopyWithImpl<$Res, StudentResponse>;
+  @useResult
+  $Res call({int? status, Student? student, String? message});
+
+  $StudentCopyWith<$Res>? get student;
+}
+
+/// @nodoc
+class _$StudentResponseCopyWithImpl<$Res, $Val extends StudentResponse>
+    implements $StudentResponseCopyWith<$Res> {
+  _$StudentResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? student = freezed,
+    Object? message = freezed,
+  }) {
+    return _then(_value.copyWith(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      student: freezed == student
+          ? _value.student
+          : student // ignore: cast_nullable_to_non_nullable
+              as Student?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $StudentCopyWith<$Res>? get student {
+    if (_value.student == null) {
+      return null;
+    }
+
+    return $StudentCopyWith<$Res>(_value.student!, (value) {
+      return _then(_value.copyWith(student: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_StudentResponseCopyWith<$Res>
+    implements $StudentResponseCopyWith<$Res> {
+  factory _$$_StudentResponseCopyWith(
+          _$_StudentResponse value, $Res Function(_$_StudentResponse) then) =
+      __$$_StudentResponseCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? status, Student? student, String? message});
+
+  @override
+  $StudentCopyWith<$Res>? get student;
+}
+
+/// @nodoc
+class __$$_StudentResponseCopyWithImpl<$Res>
+    extends _$StudentResponseCopyWithImpl<$Res, _$_StudentResponse>
+    implements _$$_StudentResponseCopyWith<$Res> {
+  __$$_StudentResponseCopyWithImpl(
+      _$_StudentResponse _value, $Res Function(_$_StudentResponse) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? student = freezed,
+    Object? message = freezed,
+  }) {
+    return _then(_$_StudentResponse(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      student: freezed == student
+          ? _value.student
+          : student // ignore: cast_nullable_to_non_nullable
+              as Student?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_StudentResponse implements _StudentResponse {
+  const _$_StudentResponse({this.status, this.student, this.message});
+
+  factory _$_StudentResponse.fromJson(Map<String, dynamic> json) =>
+      _$$_StudentResponseFromJson(json);
+
+  @override
+  final int? status;
+  @override
+  final Student? student;
+  @override
+  final String? message;
+
+  @override
+  String toString() {
+    return 'StudentResponse(status: $status, student: $student, message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StudentResponse &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.student, student) || other.student == student) &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, status, student, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StudentResponseCopyWith<_$_StudentResponse> get copyWith =>
+      __$$_StudentResponseCopyWithImpl<_$_StudentResponse>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_StudentResponseToJson(
+      this,
+    );
+  }
+}
+
+abstract class _StudentResponse implements StudentResponse {
+  const factory _StudentResponse(
+      {final int? status,
+      final Student? student,
+      final String? message}) = _$_StudentResponse;
+
+  factory _StudentResponse.fromJson(Map<String, dynamic> json) =
+      _$_StudentResponse.fromJson;
+
+  @override
+  int? get status;
+  @override
+  Student? get student;
+  @override
+  String? get message;
+  @override
+  @JsonKey(ignore: true)
+  _$$_StudentResponseCopyWith<_$_StudentResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

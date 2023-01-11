@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:part_app/model/data_model/dashboard_item.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
+import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/manager/manager_page.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
@@ -75,7 +76,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Class Link',
-      route: '/students',
+      route: ClassLinkView.route,
       asset: Assets.todays,
       color: Color(0xFFE100FF),
     ),

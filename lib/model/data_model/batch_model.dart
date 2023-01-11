@@ -16,6 +16,7 @@ class BatchModel {
   final int? fee;
   final int? studentCount;
   final List<Trainer>? trainers;
+  final bool active;
 
   BatchModel({
     required this.name,
@@ -30,6 +31,7 @@ class BatchModel {
     this.fee,
     this.studentCount,
     this.trainers,
+    required this.active,
   });
 
   factory BatchModel.fromEntity(Batch batch) {
@@ -43,23 +45,26 @@ class BatchModel {
     } else {
       trainer = 'No Trainer Allocated';
     }
+
     days = batch.batchDetail?.map((e) {
       String day = DefaultValues.defaultTrainingDays[e.day];
       return '${day.substring(0, 3)} ${e.startTime?.toAmPM()} - ${e.endTime?.toAmPM()}';
     }).toList();
+
     return BatchModel(
       branchId: batch.branch?.id,
       name: batch.batchName ?? '',
       trainersString: trainer,
-      branchName: batch.branch?.branchName ?? 'NA',
+      branchName: batch.branch?.branchName ?? 'Branch Not Allocated',
       id: batch.id ?? 0,
       days: days ?? [],
       courseName: batch.course?.courseName ?? 'NA',
       subjectName: batch.subject?.subjectName ?? 'NA',
       admissionFee: batch.admissionFees,
       fee: batch.feeAmount,
-      studentCount: batch.studentsCount,
+      studentCount: batch.activeStudentsCount,
       trainers: batch.trainers,
+      active: batch.isActive == 1,
     );
   }
 }

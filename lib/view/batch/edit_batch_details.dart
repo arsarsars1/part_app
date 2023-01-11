@@ -1,14 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/view/batch/batch_details.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
-import 'package:part_app/view/components/branch_field.dart';
-import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/default_values.dart';
@@ -111,6 +108,7 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                               ? 'Please enter batch name.'
                               : null;
                         },
+                        length: 100,
                       ),
                       const SizedBox(
                         height: 20,

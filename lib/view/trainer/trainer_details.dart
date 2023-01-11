@@ -12,7 +12,7 @@ import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/components/document_image.dart';
 import 'package:part_app/view/components/launchers.dart';
-import 'package:part_app/view/components/profile_pictrue.dart';
+import 'package:part_app/view/components/profile_picture.dart';
 import 'package:part_app/view/components/titled_text.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/trainer/assigned_batches.dart';
@@ -143,62 +143,66 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                               fontSize: 12,
                             ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: trainer?.branches?.length ?? 0,
-                              itemBuilder: (context, index) {
-                                Branch? branch = trainer?.branches?[index];
-                                bool active = branch?.isActive == 1;
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 2),
-                                  child: Text(
-                                    branch?.branchName ?? '',
-                                    style: !active
-                                        ? Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(
-                                              color: AppColors.grey700,
-                                            )
-                                        : null,
+                      trainer!.branches!.isEmpty
+                          ? const Text('No Branches Allocated')
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: trainer.branches?.length ?? 0,
+                                    itemBuilder: (context, index) {
+                                      Branch? branch = trainer.branches?[index];
+                                      bool active = branch?.isActive == 1;
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 2,
+                                        ),
+                                        child: Text(
+                                          branch?.branchName ?? '',
+                                          style: !active
+                                              ? Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1
+                                                  ?.copyWith(
+                                                    color: AppColors.grey700,
+                                                  )
+                                              : null,
+                                        ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                TrainerBranches.route,
-                              );
-                            },
-                            child: Container(
-                              width: 24.w,
-                              height: 24.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.black54,
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 2,
                                 ),
-                              ),
-                              child: const Icon(
-                                Icons.edit_outlined,
-                                size: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      TrainerBranches.route,
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 24.w,
+                                    height: 24.w,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.black54,
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.edit_outlined,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
                     ],
                   ),
                 ),
@@ -281,7 +285,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                         children: [
                           TitledText(
                             title: 'Gender',
-                            subText: '${trainer?.gender?.capitalize()}',
+                            subText: '${trainer.gender?.capitalize()}',
                           ),
                           GestureDetector(
                             onTap: () {
@@ -313,23 +317,23 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       ),
                       TitledText(
                         title: 'Whatsapp No',
-                        subText: '${trainer?.whatsappNo}',
+                        subText: '${trainer.whatsappNo}',
                       ),
                       TitledText(
                         title: 'Date Of Birth',
-                        subText: '${trainer?.dob?.toDateString()}',
+                        subText: '${trainer.dob?.toDateString()}',
                       ),
                       TitledText(
                         title: 'Email Id',
-                        subText: '${trainer?.email}',
+                        subText: '${trainer.email}',
                       ),
                       TitledText(
                         title: 'Area Of Expertise',
-                        subText: trainer?.expertise ?? 'NA',
+                        subText: trainer.expertise ?? 'NA',
                       ),
                       TitledText(
                         title: 'Address',
-                        subText: '${trainer?.address}',
+                        subText: '${trainer.address}',
                       ),
                       const SizedBox(
                         height: 16,
@@ -347,14 +351,14 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                         children: [
                           DocumentImage(
                             imageUrl:
-                                '${F.baseUrl}/admin/documents/trainer/${trainer?.id}/${trainer?.document1}',
+                                '${F.baseUrl}/admin/documents/trainer/${trainer.id}/${trainer.document1}',
                           ),
                           const SizedBox(
                             width: 16,
                           ),
                           DocumentImage(
                             imageUrl:
-                                '${F.baseUrl}/admin/documents/trainer/${trainer?.id}/${trainer?.document2}',
+                                '${F.baseUrl}/admin/documents/trainer/${trainer.id}/${trainer.document2}',
                           ),
                         ],
                       )
@@ -381,7 +385,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                           TitledText(
                             title: 'UPI ID',
                             titleColor: Colors.white,
-                            subText: trainer?.upiId ?? 'UPI Not Added',
+                            subText: trainer.upiId ?? 'UPI Not Added',
                           ),
                           GestureDetector(
                             onTap: () {
@@ -416,7 +420,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       TitledText(
                         title: 'Pay Day',
                         titleColor: Colors.white,
-                        subText: '${trainer?.salaryDate}',
+                        subText: '${trainer.salaryDate}',
                       ),
                       const SizedBox(
                         height: 8,
@@ -425,7 +429,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                         title: 'Amount',
                         titleColor: Colors.white,
                         subText:
-                            'Rs. ${trainer?.salaryAmount?.toString().currencyFormat()}/-',
+                            'Rs. ${trainer.salaryAmount?.toString().currencyFormat()}/-',
                       ),
                       const SizedBox(
                         height: 8,
@@ -433,7 +437,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       TitledText(
                         title: 'Joining Date',
                         titleColor: Colors.white,
-                        subText: '${trainer?.doj?.toDDMMYYY()}',
+                        subText: '${trainer.doj?.toDDMMYYY()}',
                       ),
                     ],
                   ),

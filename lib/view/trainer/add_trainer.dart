@@ -7,7 +7,7 @@ import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/profile_pictrue.dart';
+import 'package:part_app/view/components/profile_picture.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/constants/default_values.dart';

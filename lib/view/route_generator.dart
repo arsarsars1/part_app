@@ -16,6 +16,8 @@ import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
+import 'package:part_app/view/class_link/class_link_list.dart';
+import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/manager/add_manager.dart';
 import 'package:part_app/view/manager/edit_manager.dart';
@@ -28,6 +30,13 @@ import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
+import 'package:part_app/view/students/add_student.dart';
+import 'package:part_app/view/students/assign_batch.dart';
+import 'package:part_app/view/students/assign_student_batch.dart';
+import 'package:part_app/view/students/edit_assigned_batch.dart';
+import 'package:part_app/view/students/edit_student.dart';
+import 'package:part_app/view/students/edit_student_batches.dart';
+import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
@@ -257,6 +266,64 @@ class RouteGenerator {
       case StudentsView.route:
         return MaterialPageRoute(
           builder: (_) => const StudentsView(),
+          settings: settings,
+        );
+      case AddStudent.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddStudent(),
+          settings: settings,
+        );
+      case AssignBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => AssignBatch(
+            editStudent: settings.arguments as bool,
+          ),
+          settings: settings,
+        );
+      case AssignStudentBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => AssignStudentBatch(
+            editStudent: settings.arguments as bool,
+          ),
+          settings: settings,
+        );
+      case StudentDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentDetails(),
+          settings: settings,
+        );
+      case EditStudent.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditStudent(),
+          settings: settings,
+        );
+      case EditStudentBatches.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditStudentBatches(),
+          settings: settings,
+        );
+      case ClassLinkView.route:
+        {
+          bool edit = false;
+          if (settings.arguments != null) {
+            edit = settings.arguments as bool;
+          }
+          return MaterialPageRoute(
+            builder: (_) => ClassLinkView(
+              isEdit: edit,
+            ),
+            settings: settings,
+          );
+        }
+
+      case EditAssignedBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditAssignedBatch(),
+          settings: settings,
+        );
+      case ClassLinkList.route:
+        return MaterialPageRoute(
+          builder: (_) => const ClassLinkList(),
           settings: settings,
         );
       default:

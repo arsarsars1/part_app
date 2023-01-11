@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/components/cached_image.dart';
 
 class UserImage extends StatelessWidget {
@@ -23,10 +22,12 @@ class UserImage extends StatelessWidget {
           ],
         ),
       ),
-      padding: EdgeInsets.all(9.r),
-      child: CachedImage(
-        profilePic!,
-      ).userImage(),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(4),
+        child: CachedImage(
+          profilePic!,
+        ).userImage(),
+      ),
     );
   }
 }

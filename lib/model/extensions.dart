@@ -26,6 +26,10 @@ extension DateExtension on DateTime {
     return DateFormat('dd MMM, yyyy').format(this);
   }
 
+  String toDay() {
+    return DateFormat('EEEE').format(this);
+  }
+
   String toTime() {
     return DateFormat.jm().format(this);
   }
@@ -83,7 +87,7 @@ extension StringExtension on String {
   }
 
   DateTime toDateTime() {
-    return DateFormat('hh:mm').parse(this);
+    return DateFormat('hh:mm a').parse(this);
   }
 }
 

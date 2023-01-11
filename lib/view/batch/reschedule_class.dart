@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/batch/rescheduled_classes.dart';
-import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view_model/cubits.dart';

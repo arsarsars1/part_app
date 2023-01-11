@@ -22,7 +22,7 @@ class WhatsappCheckButton extends StatefulWidget {
 }
 
 class _WhatsappCheckButtonState extends State<WhatsappCheckButton> {
-  bool selected = false;
+  bool selected = true;
 
   @override
   void initState() {

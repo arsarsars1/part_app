@@ -8,4 +8,5 @@ export 'home/home_cubit.dart';
 export 'manager/manager_cubit.dart';
 export 'membership/membership_cubit.dart';
 export 'payment/payment_cubit.dart';
+export 'student/student_cubit.dart';
 export 'trainer/trainer_cubit.dart';

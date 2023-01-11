@@ -137,6 +137,9 @@ class _ClassTimeState extends State<ClassTime> {
   String? startTime;
   String? endTime;
 
+  TimeOfDay? startTimeOfDay;
+  TimeOfDay? endTimeOfDay;
+
   @override
   void initState() {
     startTime = widget.start;
@@ -374,13 +377,28 @@ class _ClassTimeState extends State<ClassTime> {
     );
 
     if (time != null) {
+      if (start) {
+        startTimeOfDay = time;
+      } else {
+        endTimeOfDay = time;
+      }
       final localizations = MaterialLocalizations.of(context);
       final formattedTimeOfDay = localizations.formatTimeOfDay(
         time,
         alwaysUse24HourFormat: true,
       );
       if (startTime != null && !start) {
-        if (formattedTimeOfDay.toDateTime().isBefore(startTime!.toDateTime())) {
+        final tempFormat = localizations.formatTimeOfDay(
+          time,
+          alwaysUse24HourFormat: false,
+        );
+        final tempFormatStart = localizations.formatTimeOfDay(
+          startTimeOfDay!,
+          alwaysUse24HourFormat: false,
+        );
+
+        print(tempFormat);
+        if (tempFormat.toDateTime().isBefore(tempFormatStart.toDateTime())) {
           Alert(context).show(
             message: 'Selected end time is before start time.',
           );

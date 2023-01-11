@@ -13,7 +13,7 @@ import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/components/document_image.dart';
 import 'package:part_app/view/components/launchers.dart';
 import 'package:part_app/view/components/loader.dart';
-import 'package:part_app/view/components/profile_pictrue.dart';
+import 'package:part_app/view/components/profile_picture.dart';
 import 'package:part_app/view/components/titled_text.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/manager/edit_manager.dart';

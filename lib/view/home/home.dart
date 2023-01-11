@@ -5,6 +5,7 @@ import 'package:part_app/view/components/session_alert.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/home/dashboard/dashboard.dart';
+import 'package:part_app/view/leads/leads_view.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -47,7 +48,7 @@ class _HomeState extends State<Home> {
         }
       },
       child: Scaffold(
-        body: const Dashboard(),
+        body: getBody(),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: AppColors.liteDark,
           currentIndex: currentIndex,
@@ -106,6 +107,18 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget getBody() {
+    if (currentIndex == 0) {
+      return const Dashboard();
+    } else if (currentIndex == 3) {
+      return const Leads();
+    }
+
+    return const Center(
+      child: Text('WIP'),
     );
   }
 }

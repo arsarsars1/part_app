@@ -24,6 +24,22 @@ Map<String, dynamic> _$$_BatchResponseToJson(_$_BatchResponse instance) =>
       'batch': instance.batch,
     };
 
+_$_StudentsBatchResponse _$$_StudentsBatchResponseFromJson(
+        Map<String, dynamic> json) =>
+    _$_StudentsBatchResponse(
+      status: json['status'] as int?,
+      batches: (json['batches'] as List<dynamic>?)
+          ?.map((e) => Batch.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$_StudentsBatchResponseToJson(
+        _$_StudentsBatchResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'batches': instance.batches,
+    };
+
 _$_Datum _$$_DatumFromJson(Map<String, dynamic> json) => _$_Datum(
       currentPage: json['current_page'] as int?,
       data: (json['data'] as List<dynamic>)
@@ -53,7 +69,8 @@ _$_Batch _$$_BatchFromJson(Map<String, dynamic> json) => _$_Batch(
       subjectId: json['subject_id'] as int?,
       batchStatus: json['batch_status'] as String?,
       feeAmount: json['fee_amount'] as int?,
-      studentsCount: json['students_count'] as int?,
+      activeStudentsCount: json['active_students_count'] as int?,
+      inactiveStudentsCount: json['inactive_students_count'] as int?,
       admissionFees: json['admission_fees'] as int?,
       isActive: json['is_active'] as int?,
       batchDetail: (json['batch_detail'] as List<dynamic>?)
@@ -82,7 +99,8 @@ Map<String, dynamic> _$$_BatchToJson(_$_Batch instance) => <String, dynamic>{
       'subject_id': instance.subjectId,
       'batch_status': instance.batchStatus,
       'fee_amount': instance.feeAmount,
-      'students_count': instance.studentsCount,
+      'active_students_count': instance.activeStudentsCount,
+      'inactive_students_count': instance.inactiveStudentsCount,
       'admission_fees': instance.admissionFees,
       'is_active': instance.isActive,
       'batch_detail': instance.batchDetail,

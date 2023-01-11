@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
 import 'package:part_app/model/data_model/reschedule_response.dart';
@@ -93,11 +94,16 @@ class BatchService {
     String status = 'ongoing',
     String? search,
     required int page,
+    bool branchSearch = false,
   }) async {
     try {
       String path = branchId == null
           ? '/admin/batches/batch-status/$status'
           : '/admin/branches/$branchId/batches/batch-status/$status';
+
+      if (branchSearch) {
+        path = '/admin/branches/$branchId/batches';
+      }
 
       /// append the search text if search query is not null
       if (search != null) {
@@ -116,10 +122,11 @@ class BatchService {
     }
   }
 
-  Future<BatchResponse?> getBatchesByBranch() async {
+  Future<BatchResponse?> getBatchesByBranch(
+      {required int page, required int? branchId}) async {
     try {
       var response = await _apiClient.get(
-        queryPath: '/admin/batches/',
+        queryPath: '/admin/branches/$branchId/batches?page=$page',
       );
 
       return batchResponseFromJson(jsonEncode(response));
@@ -204,6 +211,43 @@ class BatchService {
         queryPath: '/admin/batches/$batchId/students',
       );
       return studentsResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> addClassLink(int? batchId, Map<String, dynamic> data) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/batches/$batchId/class-link',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> removeClassLink(int? batchId, int? linkId) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/batches/$batchId/class-link/$linkId/remove',
+        data: {},
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<ClassLinkResponse?> getClassLink(
+      int? batchId, DateTime dateTime) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/admin/batches/$batchId/class-link/${dateTime.year}/${dateTime.month}',
+      );
+      return classLinkResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

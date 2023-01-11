@@ -159,10 +159,14 @@ class _BatchesPageState extends State<BatchesPage> {
                         );
                       }
                       if (cubit.batches.isEmpty) {
-                        return const Center(
+                        return Center(
                           child: Padding(
-                            padding: EdgeInsets.all(64.0),
-                            child: Text('Add Batch to Get Started'),
+                            padding: const EdgeInsets.all(64.0),
+                            child: Text(
+                              branchId == null
+                                  ? 'Add Batch to Get Started'
+                                  : 'Sorry, No Matching Results Found.',
+                            ),
                           ),
                         );
                       }
