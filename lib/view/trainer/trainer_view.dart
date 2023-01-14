@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
-import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/tab_button.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/components/trainer_list.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
@@ -20,6 +17,7 @@ class TrainerPage extends StatefulWidget {
 
 class _TrainerPageState extends State<TrainerPage> {
   int? branchId;
+  String? query;
 
   @override
   void initState() {
@@ -90,15 +88,16 @@ class _TrainerPageState extends State<TrainerPage> {
             textInputAction: TextInputAction.search,
             onSubmit: (value) {
               if (value.toString().isNotEmpty) {
+                query = value;
                 cubit.searchTrainers(branchId, query: value);
               } else {
                 cubit.getTrainers();
+                query = null;
               }
             },
             onChange: (value) {
-              if (value.toString().isNotEmpty) {
-                cubit.searchTrainers(branchId, query: value);
-              } else {
+              if (value.toString().isEmpty) {
+                query = null;
                 cubit.getTrainers();
               }
             },
@@ -125,21 +124,16 @@ class _TrainerPageState extends State<TrainerPage> {
                   ),
                 );
               }
-              if ((cubit.trainers == null || cubit.trainers!.isEmpty) &&
-                  state is! SearchedTrainers) {
-                return const Padding(
-                  padding: EdgeInsets.all(64.0),
-                  child: Center(
-                    child: Text('Add Trainer to Get Started'),
-                  ),
-                );
-              }
 
               if (cubit.filteredTrainers.isEmpty) {
-                return const Padding(
-                  padding: EdgeInsets.all(64.0),
+                return Padding(
+                  padding: const EdgeInsets.all(64.0),
                   child: Center(
-                    child: Text('Sorry, No Matching Results Found.'),
+                    child: Text(
+                      query == null
+                          ? 'Add Trainer to Get Started'
+                          : 'Sorry, No Matching Results Found.',
+                    ),
                   ),
                 );
               }

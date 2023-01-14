@@ -39,6 +39,7 @@ abstract class Datum with _$Datum {
     int? from,
     int? perPage,
     int? to,
+    String? nextPageUrl,
   }) = _Datum;
 
   factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/button.dart';
-import 'package:part_app/view/components/text_swtich_button.dart';
+import 'package:part_app/view/components/text_switch_button.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AddTrainersDialog extends StatefulWidget {

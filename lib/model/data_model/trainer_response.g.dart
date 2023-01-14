@@ -32,6 +32,7 @@ _$_Datum _$$_DatumFromJson(Map<String, dynamic> json) => _$_Datum(
       from: json['from'] as int?,
       perPage: json['per_page'] as int?,
       to: json['to'] as int?,
+      nextPageUrl: json['next_page_url'] as String?,
     );
 
 Map<String, dynamic> _$$_DatumToJson(_$_Datum instance) => <String, dynamic>{
@@ -40,6 +41,7 @@ Map<String, dynamic> _$$_DatumToJson(_$_Datum instance) => <String, dynamic>{
       'from': instance.from,
       'per_page': instance.perPage,
       'to': instance.to,
+      'next_page_url': instance.nextPageUrl,
     };
 
 _$_Trainer _$$_TrainerFromJson(Map<String, dynamic> json) => _$_Trainer(

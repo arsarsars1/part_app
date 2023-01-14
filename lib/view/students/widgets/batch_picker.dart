@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
-import 'package:part_app/view/components/loader.dart';
+import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -157,8 +156,9 @@ class _BatchPickerState extends State<BatchPicker> {
                         duration: const Duration(
                           milliseconds: 250,
                         ),
-                        child:
-                            const Center(child: Text('Fetching more items ..')),
+                        child: const Center(
+                          child: Text('Fetching more items ..'),
+                        ),
                       );
                     },
                   ),

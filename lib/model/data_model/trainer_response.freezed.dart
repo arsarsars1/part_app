@@ -230,6 +230,7 @@ mixin _$Datum {
   int? get from => throw _privateConstructorUsedError;
   int? get perPage => throw _privateConstructorUsedError;
   int? get to => throw _privateConstructorUsedError;
+  String? get nextPageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -242,7 +243,12 @@ abstract class $DatumCopyWith<$Res> {
       _$DatumCopyWithImpl<$Res, Datum>;
   @useResult
   $Res call(
-      {int? currentPage, List<Trainer> data, int? from, int? perPage, int? to});
+      {int? currentPage,
+      List<Trainer> data,
+      int? from,
+      int? perPage,
+      int? to,
+      String? nextPageUrl});
 }
 
 /// @nodoc
@@ -263,6 +269,7 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
     Object? from = freezed,
     Object? perPage = freezed,
     Object? to = freezed,
+    Object? nextPageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       currentPage: freezed == currentPage
@@ -285,6 +292,10 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
               as int?,
+      nextPageUrl: freezed == nextPageUrl
+          ? _value.nextPageUrl
+          : nextPageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -296,7 +307,12 @@ abstract class _$$_DatumCopyWith<$Res> implements $DatumCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int? currentPage, List<Trainer> data, int? from, int? perPage, int? to});
+      {int? currentPage,
+      List<Trainer> data,
+      int? from,
+      int? perPage,
+      int? to,
+      String? nextPageUrl});
 }
 
 /// @nodoc
@@ -313,6 +329,7 @@ class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
     Object? from = freezed,
     Object? perPage = freezed,
     Object? to = freezed,
+    Object? nextPageUrl = freezed,
   }) {
     return _then(_$_Datum(
       currentPage: freezed == currentPage
@@ -335,6 +352,10 @@ class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
               as int?,
+      nextPageUrl: freezed == nextPageUrl
+          ? _value.nextPageUrl
+          : nextPageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -348,7 +369,8 @@ class _$_Datum implements _Datum {
       required final List<Trainer> data,
       this.from,
       this.perPage,
-      this.to})
+      this.to,
+      this.nextPageUrl})
       : _data = data;
 
   factory _$_Datum.fromJson(Map<String, dynamic> json) =>
@@ -369,10 +391,12 @@ class _$_Datum implements _Datum {
   final int? perPage;
   @override
   final int? to;
+  @override
+  final String? nextPageUrl;
 
   @override
   String toString() {
-    return 'Datum(currentPage: $currentPage, data: $data, from: $from, perPage: $perPage, to: $to)';
+    return 'Datum(currentPage: $currentPage, data: $data, from: $from, perPage: $perPage, to: $to, nextPageUrl: $nextPageUrl)';
   }
 
   @override
@@ -385,13 +409,21 @@ class _$_Datum implements _Datum {
             const DeepCollectionEquality().equals(other._data, _data) &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
-            (identical(other.to, to) || other.to == to));
+            (identical(other.to, to) || other.to == to) &&
+            (identical(other.nextPageUrl, nextPageUrl) ||
+                other.nextPageUrl == nextPageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, currentPage,
-      const DeepCollectionEquality().hash(_data), from, perPage, to);
+  int get hashCode => Object.hash(
+      runtimeType,
+      currentPage,
+      const DeepCollectionEquality().hash(_data),
+      from,
+      perPage,
+      to,
+      nextPageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -413,7 +445,8 @@ abstract class _Datum implements Datum {
       required final List<Trainer> data,
       final int? from,
       final int? perPage,
-      final int? to}) = _$_Datum;
+      final int? to,
+      final String? nextPageUrl}) = _$_Datum;
 
   factory _Datum.fromJson(Map<String, dynamic> json) = _$_Datum.fromJson;
 
@@ -427,6 +460,8 @@ abstract class _Datum implements Datum {
   int? get perPage;
   @override
   int? get to;
+  @override
+  String? get nextPageUrl;
   @override
   @JsonKey(ignore: true)
   _$$_DatumCopyWith<_$_Datum> get copyWith =>

@@ -107,12 +107,13 @@ class BranchService {
     );
   }
 
-  Future<List<Trainer>?> getTrainers({required String branchId}) async {
+  Future<TrainerResponse?> getTrainers(
+      {required String branchId, int pageNo = 1}) async {
     try {
       var response = await _apiClient.get(
-        queryPath: '/admin/branches/$branchId/trainers',
+        queryPath: '/admin/branches/$branchId/trainers?page=$pageNo',
       );
-      return trainerResponseFromJson(jsonEncode(response)).trainers?.data;
+      return trainerResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

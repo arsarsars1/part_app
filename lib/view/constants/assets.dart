@@ -23,4 +23,8 @@ class Assets {
   static const email = 'assets/icons/email.svg';
   static const avatar = 'assets/icons/avatar.svg';
   static const fileUpload = 'assets/icons/file_upload.svg';
+  static const newLeadImage = 'assets/images/new_lead.png';
+  static const todayFollowUp = 'assets/images/today_follow_up.png';
+  static const tipsIdeas = 'assets/images/tips_ideas.png';
+  static const allLeads = 'assets/images/all_leads.png';
 }
