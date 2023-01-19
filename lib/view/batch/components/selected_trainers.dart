@@ -6,15 +6,17 @@ import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/trainer/trainer_picker.dart';
 
 class SelectedTrainers extends StatefulWidget {
-  final ValueChanged<List<int?>> selectedTrainers;
+  final ValueChanged<List<Trainer?>> selectedTrainers;
   final List<Trainer>? trainers;
   final int? branchId;
+  final bool batchDetails;
   final GlobalKey<ScaffoldState>? scaffoldKey;
 
   const SelectedTrainers(
       {Key? key,
       required this.selectedTrainers,
       this.trainers,
+      this.batchDetails = false,
       this.scaffoldKey,
       this.branchId})
       : super(key: key);
@@ -85,19 +87,26 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
         ),
         GestureDetector(
           onTap: () {
+            List<int?> trainers = [];
+            if (widget.batchDetails) {
+              trainers = widget.trainers?.map((e) => e.userId).toList() ?? [];
+            } else {
+              trainers = widget.trainers
+                      ?.map((e) => e.trainerDetail?[0].userId)
+                      .toList() ??
+                  [];
+            }
+
             if (widget.branchId == null) return;
             widget.scaffoldKey?.currentState?.showBottomSheet(
               elevation: 10,
               backgroundColor: Colors.transparent,
               (context) => TrainerPicker(
                 branchId: widget.branchId!,
-                selectedTrainers: widget.trainers
-                        ?.map((e) => e.trainerDetail?[0].id)
-                        .toList() ??
-                    [],
+                selectedTrainers: trainers,
                 onSave: (List<Trainer?> value) {
                   widget.selectedTrainers(
-                    value.map((e) => e?.trainerDetail?[0].id).toList(),
+                    value,
                   );
 
                   setState(() {

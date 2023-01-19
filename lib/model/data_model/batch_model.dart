@@ -1,4 +1,5 @@
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/constants/default_values.dart';
@@ -16,6 +17,7 @@ class BatchModel {
   final int? fee;
   final int? studentCount;
   final List<Trainer>? trainers;
+  final List<TrainerModel>? trainersList;
   final bool active;
 
   BatchModel({
@@ -31,6 +33,7 @@ class BatchModel {
     this.fee,
     this.studentCount,
     this.trainers,
+    this.trainersList,
     required this.active,
   });
 
@@ -64,6 +67,8 @@ class BatchModel {
       fee: batch.feeAmount,
       studentCount: batch.activeStudentsCount,
       trainers: batch.trainers,
+      trainersList:
+          batch.trainers?.map((e) => TrainerModel.fromEntity(e)).toList(),
       active: batch.isActive == 1,
     );
   }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
+import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/view/batch/batch_list.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
@@ -225,14 +226,16 @@ class _AddBatchState extends State<AddBatch> {
                               trainers: context
                                   .read<BranchCubit>()
                                   .trainers
-                                  ?.where((element) => selectedTrainers
-                                      .contains(element.trainerDetail?[0].id))
+                                  ?.where(
+                                      (element) => selectedTrainers.contains(
+                                            element.id,
+                                          ))
                                   .toList(),
                               branchId: branchId,
                               scaffoldKey: scaffoldKey,
-                              selectedTrainers: (List<int?> value) {
-                                selectedTrainers = value;
-                                print(selectedTrainers);
+                              selectedTrainers: (List<Trainer?> value) {
+                                selectedTrainers =
+                                    value.map((e) => e?.id).toList();
                               },
                             )
                           ],
@@ -260,7 +263,13 @@ class _AddBatchState extends State<AddBatch> {
                                       subjectId: subjectId,
                                       courseId: courseId,
                                       feeAmount: int.parse(fee!),
-                                      trainers: selectedTrainers,
+                                      trainers: context
+                                          .read<BranchCubit>()
+                                          .trainers
+                                          ?.where(
+                                              (element) => selectedTrainers.contains(
+                                            element.id,
+                                          )).map((e) => e.trainerDetail?[0].id).toList(),
                                       admissionFees: int.parse(admissionFee!),
                                     );
 

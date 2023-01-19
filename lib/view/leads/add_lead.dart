@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/data_model/trainer_response.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
+import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/students/widgets/batch_picker.dart';
+import 'package:part_app/view/trainer/trainer_picker.dart';
+import 'package:part_app/view_model/cubits.dart';
 
 class AddLead extends StatefulWidget {
   static const route = '/leads/add';
@@ -13,11 +20,31 @@ class AddLead extends StatefulWidget {
 
 class _AddLeadState extends State<AddLead> {
   String? status;
+  String? name;
+  String? age;
+  String? gender;
+  String? mobileNumber;
+  String? whatsappNumber;
+  int? branchId;
+  BatchModel? batchId;
+  String? date;
+  String? time;
+  String? assign;
+  String? comments;
+
+  TextEditingController dateController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
+  TextEditingController batchController = TextEditingController();
+
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    var batchCubit = context.read<BatchCubit>();
     return Scaffold(
+      key: scaffoldKey,
       appBar: const CommonBar(
+        enableBack: false,
         title: 'Add Lead',
       ),
       body: SingleChildScrollView(
@@ -32,8 +59,11 @@ class _AddLeadState extends State<AddLead> {
               length: 50,
               maxLines: 1,
               dropDown: true,
+              dropDownItems: DefaultValues.leadStatus,
               textInputAction: TextInputAction.next,
-              onChange: (value) {},
+              onChange: (value) {
+                status = value.id;
+              },
               validator: (value) {
                 return value == null || value.toString().isEmpty
                     ? 'Please select lead status.'
@@ -49,7 +79,9 @@ class _AddLeadState extends State<AddLead> {
               length: 50,
               maxLines: 1,
               textInputAction: TextInputAction.next,
-              onChange: (value) {},
+              onChange: (value) {
+                name = value;
+              },
               validator: (value) {
                 return value == null || value.toString().isEmpty
                     ? 'Please select lead status.'
@@ -65,7 +97,9 @@ class _AddLeadState extends State<AddLead> {
               length: 50,
               maxLines: 1,
               textInputAction: TextInputAction.next,
-              onChange: (value) {},
+              onChange: (value) {
+                age = value;
+              },
               validator: (value) {
                 return value == null || value.toString().isEmpty
                     ? 'Please select lead status.'
@@ -82,7 +116,9 @@ class _AddLeadState extends State<AddLead> {
               maxLines: 1,
               dropDown: true,
               textInputAction: TextInputAction.next,
-              onChange: (value) {},
+              onChange: (value) {
+                gender = value.id;
+              },
               validator: (value) {
                 return value == null || value.toString().isEmpty
                     ? 'Please select lead status.'
@@ -98,7 +134,9 @@ class _AddLeadState extends State<AddLead> {
               length: 50,
               maxLines: 1,
               textInputAction: TextInputAction.next,
-              onChange: (value) {},
+              onChange: (value) {
+                mobileNumber = value;
+              },
               validator: (value) {
                 return value == null || value.toString().isEmpty
                     ? 'Please select lead status.'
@@ -107,13 +145,22 @@ class _AddLeadState extends State<AddLead> {
             ),
             WhatsappCheckButton(
               onChange: (value) {},
-              onNumberChange: (value) {},
+              onNumberChange: (value) {
+                whatsappNumber = value;
+              },
             ),
             const SizedBox(
               height: 20,
             ),
             BranchField(
-              onSelect: (value) {},
+              onSelect: (value) {
+                branchId = value;
+                batchCubit.getBatchesByStatus(
+                  branchId: branchId,
+                  clean: true,
+                  branchSearch: true,
+                );
+              },
             ),
             const SizedBox(
               height: 20,
@@ -121,11 +168,34 @@ class _AddLeadState extends State<AddLead> {
             CommonField(
               title: 'Batch',
               hint: 'Please select batch',
-              length: 50,
+              controller: batchController,
               maxLines: 1,
-              dropDown: true,
+              disabled: true,
               textInputAction: TextInputAction.next,
               onChange: (value) {},
+              suffixIcon: const Padding(
+                padding: EdgeInsets.only(right: 32),
+                child: Icon(
+                  Icons.arrow_drop_down,
+                  size: 24,
+                  color: Colors.white24,
+                ),
+              ),
+              onTap: () {
+                if (branchId == null) return;
+                scaffoldKey.currentState?.showBottomSheet(
+                  backgroundColor: Colors.transparent,
+                  (context) => BatchPicker(
+                    branchId: branchId!,
+                    status: '',
+                    branchSearch: true,
+                    onSelect: (value) {
+                      batchId = value;
+                      batchController.text = value.name;
+                    },
+                  ),
+                );
+              },
               validator: (value) {
                 return value == null || value.toString().isEmpty
                     ? 'Please select lead status.'
@@ -138,14 +208,18 @@ class _AddLeadState extends State<AddLead> {
             CommonField(
               title: 'Followup Date',
               hint: 'Please select date',
+              controller: dateController,
               length: 50,
               maxLines: 1,
-              dropDown: true,
+              disabled: true,
+              onTap: () {
+                datePicker();
+              },
               textInputAction: TextInputAction.next,
               onChange: (value) {},
               validator: (value) {
                 return value == null || value.toString().isEmpty
-                    ? 'Please select lead status.'
+                    ? 'Please select date'
                     : null;
               },
             ),
@@ -155,14 +229,18 @@ class _AddLeadState extends State<AddLead> {
             CommonField(
               title: 'Followup time',
               hint: 'Please select time',
+              controller: timeController,
+              onTap: () {
+                timePicker();
+              },
               length: 50,
               maxLines: 1,
-              dropDown: true,
+              disabled: true,
               textInputAction: TextInputAction.next,
               onChange: (value) {},
               validator: (value) {
                 return value == null || value.toString().isEmpty
-                    ? 'Please select lead status.'
+                    ? 'Please select time'
                     : null;
               },
             ),
@@ -172,9 +250,20 @@ class _AddLeadState extends State<AddLead> {
             CommonField(
               title: 'Assign',
               hint: 'Please select Trainer or Branch Admin',
-              length: 50,
               maxLines: 1,
-              dropDown: true,
+              disabled: true,
+              onTap: () {
+                scaffoldKey.currentState?.showBottomSheet(
+                  elevation: 10,
+                  backgroundColor: Colors.transparent,
+                  (context) => TrainerPicker(
+                    multiPicker: false,
+                    branchId: branchId!,
+                    selectedTrainers: [],
+                    onSave: (List<Trainer?> value) {},
+                  ),
+                );
+              },
               textInputAction: TextInputAction.next,
               onChange: (value) {},
               validator: (value) {
@@ -191,7 +280,9 @@ class _AddLeadState extends State<AddLead> {
               hint: 'Enter Comments',
               maxLines: 5,
               textInputAction: TextInputAction.next,
-              onChange: (value) {},
+              onChange: (value) {
+                comments = value;
+              },
               validator: (value) {
                 return value == null || value.toString().isEmpty
                     ? 'Please select lead status.'
@@ -202,7 +293,10 @@ class _AddLeadState extends State<AddLead> {
               height: 20,
             ),
             Center(
-              child: Button(onTap: () {}, title: 'Add Lead'),
+              child: Button(
+                onTap: () {},
+                title: 'Add Lead',
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -211,5 +305,88 @@ class _AddLeadState extends State<AddLead> {
         ),
       ),
     );
+  }
+
+  // method to get the date for [ dob ]
+  void datePicker() {
+    showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              onPrimary: Colors.white,
+              onSurface: Colors.white, // default text color
+              primary: AppColors.primaryColor, // circle color
+            ),
+            dialogBackgroundColor: AppColors.liteDark,
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                textStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(
+        DateTime.now().year + 2,
+      ),
+    ).then((value) {
+      if (value != null) {
+        date = value.toServerString();
+        dateController.text = value.toDateString();
+      }
+    });
+  }
+
+  void timePicker() {
+    showTimePicker(
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              onPrimary: Colors.white,
+              onSurface: Colors.white, // default text color
+              primary: AppColors.primaryColor, // circle color
+            ),
+            dialogBackgroundColor: AppColors.liteDark,
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                textStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      context: context,
+      initialTime: const TimeOfDay(hour: 09, minute: 00),
+    ).then((value) {
+      if (value != null) {
+        final localizations = MaterialLocalizations.of(context);
+        final formattedTimeOfDay = localizations.formatTimeOfDay(
+          value,
+          alwaysUse24HourFormat: true,
+        );
+        timeController.text = formattedTimeOfDay;
+      }
+    });
   }
 }

@@ -9,16 +9,19 @@ class TrainerPicker extends StatefulWidget {
   final List<int?> selectedTrainers;
 
   final ValueChanged<List<Trainer?>> onSave;
+  final ValueChanged<TrainerModel?>? onSelect;
 
   final bool branchSearch;
+  final bool multiPicker;
 
   const TrainerPicker({
     Key? key,
     required this.branchId,
-    // required this.onSelect,
+    this.onSelect,
     this.branchSearch = false,
     required this.selectedTrainers,
     required this.onSave,
+    this.multiPicker = true,
   }) : super(key: key);
 
   @override
@@ -126,25 +129,37 @@ class _TrainerPickerState extends State<TrainerPicker> {
                                         cubit.trainersList[index];
                                     return ListTile(
                                       onTap: () {
-                                        Navigator.pop(context);
-                                        // widget.onSelect(trainer);
+                                        if (widget.onSelect != null) {
+                                          widget.onSelect!(trainer);
+                                        }
                                       },
-                                      title: TextSwitchButton(
-                                        onChange: (bool value) {
-                                          if (value) {
-                                            trainers.add(trainer.detailId);
-                                          } else {
-                                            trainers.remove(trainer.detailId);
-                                          }
-
-                                          setState(() {});
-                                        },
-                                        title: trainer.trainerName ?? 'NA',
-                                        selected: trainers.contains(
-                                          trainer.detailId,
-                                        ),
-                                        horizontalPadding: 0,
-                                      ),
+                                      title: widget.multiPicker
+                                          ? TextSwitchButton(
+                                              onChange: (bool value) {
+                                                if (value) {
+                                                  trainers.add(trainer.id);
+                                                } else {
+                                                  trainers.remove(trainer.id);
+                                                }
+                                                setState(() {});
+                                              },
+                                              title:
+                                                  trainer.trainerName ?? 'NA',
+                                              selected: trainers.contains(
+                                                trainer.id,
+                                              ),
+                                              horizontalPadding: 0,
+                                            )
+                                          : Text(
+                                              trainer.trainerName ?? 'NA',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1
+                                                  ?.copyWith(
+                                                    color:
+                                                        AppColors.primaryColor,
+                                                  ),
+                                            ),
                                       leading: UserImage(
                                         profilePic: trainer.profilePic,
                                       ),
@@ -181,8 +196,8 @@ class _TrainerPickerState extends State<TrainerPicker> {
                     onTap: () {
                       var cubit = context.read<BranchCubit>();
                       List<Trainer>? tempTrainers = cubit.trainers
-                          ?.where((element) =>
-                              trainers.contains(element.trainerDetail?[0].id))
+                          ?.where((element) => trainers
+                              .contains(element.trainerDetail?[0].userId))
                           .toList();
                       widget.onSave(tempTrainers ?? []);
                       Navigator.pop(context);
