@@ -8,6 +8,7 @@ class TrainerModel {
   final int? detailId;
   final String? profilePic;
   final String? expertise;
+  final String? type;
 
   TrainerModel({
     this.trainerName,
@@ -16,16 +17,18 @@ class TrainerModel {
     this.profilePic,
     this.detailId,
     this.expertise,
+    this.type,
   });
 
   factory TrainerModel.fromEntity(Trainer trainer) {
     Trainer? detail = trainer.trainerDetail?[0];
     return TrainerModel(
-        id: trainer.id,
-        detailId: detail?.id,
-        trainerName: detail?.name,
-        profilePic: '${F.baseUrl}/admin/images/'
-            'trainer/${detail?.id}/${detail?.profilePic}',
-        expertise: detail?.expertise);
+      id: trainer.id,
+      detailId: detail?.id,
+      trainerName: detail?.name,
+      profilePic: '${F.baseUrl}/admin/images/'
+          'trainer/${detail?.id}/${detail?.profilePic}',
+      expertise: detail?.expertise,
+    );
   }
 }

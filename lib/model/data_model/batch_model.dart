@@ -1,6 +1,5 @@
 import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/models.dart';
-import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/constants/default_values.dart';
 

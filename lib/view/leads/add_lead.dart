@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
-import 'package:part_app/model/data_model/trainer_response.dart';
+import 'package:part_app/model/data_model/lead_request.dart';
+import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
@@ -8,6 +9,7 @@ import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view/trainer/trainer_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/view_model/leads/leads_cubit.dart';
 
 class AddLead extends StatefulWidget {
   static const route = '/leads/add';
@@ -31,12 +33,15 @@ class _AddLeadState extends State<AddLead> {
   String? time;
   String? assign;
   String? comments;
+  TrainerModel? trainer;
 
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController batchController = TextEditingController();
+  TextEditingController trainerController = TextEditingController();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -48,260 +53,290 @@ class _AddLeadState extends State<AddLead> {
         title: 'Add Lead',
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Lead Status *',
-              hint: 'Select status',
-              length: 50,
-              maxLines: 1,
-              dropDown: true,
-              dropDownItems: DefaultValues.leadStatus,
-              textInputAction: TextInputAction.next,
-              onChange: (value) {
-                status = value.id;
-              },
-              validator: (value) {
-                return value == null || value.toString().isEmpty
-                    ? 'Please select lead status.'
-                    : null;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Name *',
-              hint: 'Please enter name',
-              length: 50,
-              maxLines: 1,
-              textInputAction: TextInputAction.next,
-              onChange: (value) {
-                name = value;
-              },
-              validator: (value) {
-                return value == null || value.toString().isEmpty
-                    ? 'Please select lead status.'
-                    : null;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Age',
-              hint: 'Please enter age',
-              length: 50,
-              maxLines: 1,
-              textInputAction: TextInputAction.next,
-              onChange: (value) {
-                age = value;
-              },
-              validator: (value) {
-                return value == null || value.toString().isEmpty
-                    ? 'Please select lead status.'
-                    : null;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Gender',
-              hint: 'Please select name',
-              length: 50,
-              maxLines: 1,
-              dropDown: true,
-              textInputAction: TextInputAction.next,
-              onChange: (value) {
-                gender = value.id;
-              },
-              validator: (value) {
-                return value == null || value.toString().isEmpty
-                    ? 'Please select lead status.'
-                    : null;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Mobile Number *',
-              hint: 'Please enter number',
-              length: 50,
-              maxLines: 1,
-              textInputAction: TextInputAction.next,
-              onChange: (value) {
-                mobileNumber = value;
-              },
-              validator: (value) {
-                return value == null || value.toString().isEmpty
-                    ? 'Please select lead status.'
-                    : null;
-              },
-            ),
-            WhatsappCheckButton(
-              onChange: (value) {},
-              onNumberChange: (value) {
-                whatsappNumber = value;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            BranchField(
-              onSelect: (value) {
-                branchId = value;
-                batchCubit.getBatchesByStatus(
-                  branchId: branchId,
-                  clean: true,
-                  branchSearch: true,
-                );
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Batch',
-              hint: 'Please select batch',
-              controller: batchController,
-              maxLines: 1,
-              disabled: true,
-              textInputAction: TextInputAction.next,
-              onChange: (value) {},
-              suffixIcon: const Padding(
-                padding: EdgeInsets.only(right: 32),
-                child: Icon(
-                  Icons.arrow_drop_down,
-                  size: 24,
-                  color: Colors.white24,
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'Lead Status *',
+                hint: 'Select status',
+                length: 50,
+                maxLines: 1,
+                dropDown: true,
+                dropDownItems: DefaultValues.leadStatus,
+                textInputAction: TextInputAction.next,
+                onChange: (value) {
+                  status = value.title;
+                },
+                validator: (value) {
+                  return value == null || value.toString().isEmpty
+                      ? 'Please select lead status.'
+                      : null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'Name *',
+                hint: 'Please enter name',
+                length: 50,
+                maxLines: 1,
+                textInputAction: TextInputAction.next,
+                onChange: (value) {
+                  name = value;
+                },
+                validator: (value) {
+                  return value == null || value.toString().isEmpty
+                      ? 'Please select lead status.'
+                      : null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'Age',
+                hint: 'Please enter age',
+                length: 2,
+                maxLines: 1,
+                inputType: TextInputType.number,
+                textInputAction: TextInputAction.next,
+                onChange: (value) {
+                  age = value;
+                },
+                validator: (value) {
+                  return value == null || value.toString().isEmpty
+                      ? 'Please enter the age.'
+                      : null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'Gender',
+                hint: 'Please select gender.',
+                length: 50,
+                maxLines: 1,
+                dropDown: true,
+                dropDownItems: DefaultValues().genders,
+                textInputAction: TextInputAction.next,
+                onChange: (value) {
+                  gender = value.id;
+                },
+                validator: (value) {
+                  return value == null || value.toString().isEmpty
+                      ? 'Please select gender.'
+                      : null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'Mobile Number *',
+                hint: 'Please enter number',
+                length: 10,
+                maxLines: 1,
+                inputType: TextInputType.phone,
+                textInputAction: TextInputAction.next,
+                onChange: (value) {
+                  mobileNumber = value;
+                  if (value.length >= 10) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  }
+                },
+                validator: (value) {
+                  return value == null || value.toString().isEmpty
+                      ? 'Please enter the phone number.'
+                      : null;
+                },
+              ),
+              WhatsappCheckButton(
+                onChange: (value) {},
+                onNumberChange: (value) {
+                  whatsappNumber = value;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BranchField(
+                onSelect: (value) {
+                  branchId = value;
+                  batchCubit.getBatchesByStatus(
+                    branchId: branchId,
+                    clean: true,
+                    branchSearch: true,
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'Batch',
+                hint: 'Please select batch',
+                controller: batchController,
+                maxLines: 1,
+                disabled: true,
+                textInputAction: TextInputAction.next,
+                onChange: (value) {},
+                suffixIcon: const Padding(
+                  padding: EdgeInsets.only(right: 32),
+                  child: Icon(
+                    Icons.arrow_drop_down,
+                    size: 24,
+                    color: Colors.white24,
+                  ),
+                ),
+                onTap: () {
+                  if (branchId == null) return;
+                  scaffoldKey.currentState?.showBottomSheet(
+                    backgroundColor: Colors.transparent,
+                    (context) => BatchPicker(
+                      branchId: branchId!,
+                      status: '',
+                      branchSearch: true,
+                      onSelect: (value) {
+                        batchId = value;
+                        batchController.text = value.name;
+                      },
+                    ),
+                  );
+                },
+                validator: (value) {
+                  return value == null || value.toString().isEmpty
+                      ? 'Please select batch.'
+                      : null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'Followup Date',
+                hint: 'Please select date',
+                controller: dateController,
+                length: 50,
+                maxLines: 1,
+                disabled: true,
+                onTap: () {
+                  datePicker();
+                },
+                textInputAction: TextInputAction.next,
+                onChange: (value) {},
+                validator: (value) {
+                  return value == null || value.toString().isEmpty
+                      ? 'Please select date'
+                      : null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'Followup time',
+                hint: 'Please select time',
+                controller: timeController,
+                onTap: () {
+                  timePicker();
+                },
+                length: 50,
+                maxLines: 1,
+                disabled: true,
+                textInputAction: TextInputAction.next,
+                onChange: (value) {},
+                validator: (value) {
+                  return value == null || value.toString().isEmpty
+                      ? 'Please select time'
+                      : null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                controller: trainerController,
+                title: 'Assign',
+                hint: 'Please select Trainer or Branch Admin',
+                maxLines: 1,
+                disabled: true,
+                onTap: () {
+                  scaffoldKey.currentState?.showBottomSheet(
+                    elevation: 10,
+                    backgroundColor: Colors.transparent,
+                    (context) => TrainerPicker(
+                      isBatch: true,
+                      multiPicker: false,
+                      batchId: batchId?.id,
+                      selectedTrainers: const [],
+                      onSave: (List<Trainer?> value) {},
+                      onSelect: (TrainerModel? trainer) {
+                        this.trainer = trainer;
+                        trainerController.text = trainer?.trainerName ?? '';
+                      },
+                    ),
+                  );
+                },
+                textInputAction: TextInputAction.next,
+                onChange: (value) {},
+                validator: (value) {
+                  return value == null || value.toString().isEmpty
+                      ? 'Please select trainer'
+                      : null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonField(
+                title: 'Comments',
+                hint: 'Enter Comments',
+                maxLines: 5,
+                textInputAction: TextInputAction.next,
+                onChange: (value) {
+                  comments = value;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Center(
+                child: Button(
+                  onTap: () {
+                    if (formKey.currentState!.validate()) {
+                      LeadRequest request = LeadRequest(
+                        name: name,
+                        mobileNo: mobileNumber,
+                        whatsappNo: whatsappNumber ?? mobileNumber,
+                        gender: gender,
+                        branchId: branchId,
+                        batchId: batchId?.id,
+                        leadStatus: status,
+                        followUpDate: date,
+                        followUpTime: time,
+                        age: age,
+                        followUpComment: comments,
+                        assignedToId: trainer?.detailId,
+                        assignedToType: r'\App\Models\TrainerDetail',
+                      );
+
+                      context.read<LeadsCubit>().create(request);
+                    }
+                  },
+                  title: 'Add Lead',
                 ),
               ),
-              onTap: () {
-                if (branchId == null) return;
-                scaffoldKey.currentState?.showBottomSheet(
-                  backgroundColor: Colors.transparent,
-                  (context) => BatchPicker(
-                    branchId: branchId!,
-                    status: '',
-                    branchSearch: true,
-                    onSelect: (value) {
-                      batchId = value;
-                      batchController.text = value.name;
-                    },
-                  ),
-                );
-              },
-              validator: (value) {
-                return value == null || value.toString().isEmpty
-                    ? 'Please select lead status.'
-                    : null;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Followup Date',
-              hint: 'Please select date',
-              controller: dateController,
-              length: 50,
-              maxLines: 1,
-              disabled: true,
-              onTap: () {
-                datePicker();
-              },
-              textInputAction: TextInputAction.next,
-              onChange: (value) {},
-              validator: (value) {
-                return value == null || value.toString().isEmpty
-                    ? 'Please select date'
-                    : null;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Followup time',
-              hint: 'Please select time',
-              controller: timeController,
-              onTap: () {
-                timePicker();
-              },
-              length: 50,
-              maxLines: 1,
-              disabled: true,
-              textInputAction: TextInputAction.next,
-              onChange: (value) {},
-              validator: (value) {
-                return value == null || value.toString().isEmpty
-                    ? 'Please select time'
-                    : null;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Assign',
-              hint: 'Please select Trainer or Branch Admin',
-              maxLines: 1,
-              disabled: true,
-              onTap: () {
-                scaffoldKey.currentState?.showBottomSheet(
-                  elevation: 10,
-                  backgroundColor: Colors.transparent,
-                  (context) => TrainerPicker(
-                    multiPicker: false,
-                    branchId: branchId!,
-                    selectedTrainers: [],
-                    onSave: (List<Trainer?> value) {},
-                  ),
-                );
-              },
-              textInputAction: TextInputAction.next,
-              onChange: (value) {},
-              validator: (value) {
-                return value == null || value.toString().isEmpty
-                    ? 'Please select lead status.'
-                    : null;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CommonField(
-              title: 'Comments',
-              hint: 'Enter Comments',
-              maxLines: 5,
-              textInputAction: TextInputAction.next,
-              onChange: (value) {
-                comments = value;
-              },
-              validator: (value) {
-                return value == null || value.toString().isEmpty
-                    ? 'Please select lead status.'
-                    : null;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Center(
-              child: Button(
-                onTap: () {},
-                title: 'Add Lead',
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -343,7 +378,7 @@ class _AddLeadState extends State<AddLead> {
       ),
     ).then((value) {
       if (value != null) {
-        date = value.toServerString();
+        date = value.toServerYMD();
         dateController.text = value.toDateString();
       }
     });
@@ -385,6 +420,7 @@ class _AddLeadState extends State<AddLead> {
           value,
           alwaysUse24HourFormat: true,
         );
+        time = formattedTimeOfDay;
         timeController.text = formattedTimeOfDay;
       }
     });

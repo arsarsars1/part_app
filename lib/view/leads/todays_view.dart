@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/model/data_model/leads_response.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/leads/lead_details.dart';
+import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/view_model/leads/leads_cubit.dart';
 
 class TodayFollowView extends StatefulWidget {
   static const route = '/leads/followups';
@@ -13,133 +17,78 @@ class TodayFollowView extends StatefulWidget {
 
 class _TodayFollowViewState extends State<TodayFollowView> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<LeadsCubit>().todayList();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var cubit = context.read<LeadsCubit>();
     return Scaffold(
       appBar: const CommonBar(title: 'Today\'s Lead Followups'),
-      body: ListView(
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-                color: AppColors.liteDark,
-                borderRadius: BorderRadius.circular(4)),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      body: BlocBuilder<LeadsCubit, LeadsState>(
+        buildWhen: (prv, crr) => crr is FetchingLeads || crr is FetchedLeads,
+        builder: (context, state) {
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: cubit.leads.length,
+            itemBuilder: (context, index) {
+              Lead lead = cubit.leads[index];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, LeadDetails.route);
+                },
+                child: Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      color: AppColors.liteDark,
+                      borderRadius: BorderRadius.circular(4)),
+                  child: Row(
                     children: [
-                      Text(
-                        'Gamini',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: AppColors.primaryColor,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              lead.name ?? '',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(
+                                    color: AppColors.primaryColor,
+                                  ),
                             ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              lead.leadStatus ?? '',
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(
-                        height: 8,
+                      const Expanded(
+                        child: Text(
+                          'Not Interested',
+                        ),
                       ),
-                      const Text(
-                        'New Lead',
-                      ),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.white,
+                        size: 20,
+                      )
                     ],
                   ),
                 ),
-                const Expanded(
-                  child: Text(
-                    'Not Interested',
-                  ),
-                ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
-                  size: 20,
-                )
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-                color: AppColors.liteDark,
-                borderRadius: BorderRadius.circular(4)),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Leo Elstin',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: AppColors.primaryColor,
-                            ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Text(
-                        'New Lead',
-                      ),
-                    ],
-                  ),
-                ),
-                const Expanded(
-                  child: Text(
-                    'New Lead',
-                  ),
-                ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
-                  size: 20,
-                )
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-                color: AppColors.liteDark,
-                borderRadius: BorderRadius.circular(4)),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Yamini',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: AppColors.primaryColor,
-                            ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Text(
-                        'Busy'
-                        '',
-                      ),
-                    ],
-                  ),
-                ),
-                const Expanded(
-                  child: Text(
-                    'Not Interested',
-                  ),
-                ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
-                  size: 20,
-                )
-              ],
-            ),
-          ),
-        ],
+              );
+            },
+          );
+        },
       ),
     );
   }

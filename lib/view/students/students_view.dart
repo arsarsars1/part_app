@@ -209,28 +209,28 @@ class _StudentsViewState extends State<StudentsView> {
                     ),
                     Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: TabButton(
-                            onChange: (String value) {
-                              if (branchId == null ||
-                                  status == null ||
-                                  batch == null) {
-                                return;
-                              }
-                              if (value == 'Active Students') {
-                                activeStatus = null;
-                              } else {
-                                activeStatus = 'inactive-students';
-                              }
-                              doSearch(true);
-                            },
-                            options: const [
-                              'Active Students',
-                              'Inactive Students',
-                            ],
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                        //   child: TabButton(
+                        //     onChange: (String value) {
+                        //       if (branchId == null ||
+                        //           status == null ||
+                        //           batch == null) {
+                        //         return;
+                        //       }
+                        //       if (value == 'Active Students') {
+                        //         activeStatus = null;
+                        //       } else {
+                        //         activeStatus = 'inactive-students';
+                        //       }
+                        //       doSearch(true);
+                        //     },
+                        //     options: const [
+                        //       'Active Students',
+                        //       'Inactive Students',
+                        //     ],
+                        //   ),
+                        // ),
                         cubit.students == null || cubit.students!.isEmpty
                             ? Padding(
                                 padding: const EdgeInsets.all(64),
@@ -264,66 +264,6 @@ class _StudentsViewState extends State<StudentsView> {
                               ),
                       ],
                     )
-                    // BlocBuilder<StudentCubit, StudentState>(
-                    //   builder: (context, state) {
-                    //     var cubit = context.read<StudentCubit>();
-                    //
-                    //     return Column(
-                    //       children: [
-                    //         Padding(
-                    //           padding:
-                    //               const EdgeInsets.symmetric(horizontal: 16),
-                    //           child: TabButton(
-                    //             onChange: (String value) {
-                    //               if (value == 'Active Students') {
-                    //                 activeStatus = null;
-                    //               } else {
-                    //                 activeStatus = 'inactive-students';
-                    //               }
-                    //               doSearch(true);
-                    //             },
-                    //             options: const [
-                    //               'Active Students',
-                    //               'Inactive Students',
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         cubit.students == null || cubit.students!.isEmpty
-                    //             ? Padding(
-                    //                 padding: const EdgeInsets.all(64),
-                    //                 child: Center(
-                    //                   child: Text(
-                    //                     state is! StudentsFetched
-                    //                         ? 'Select a batch to list the students.'
-                    //                         : 'Sorry, No matching results found',
-                    //                   ),
-                    //                 ),
-                    //               )
-                    //             : ListView.builder(
-                    //                 shrinkWrap: true,
-                    //                 itemCount: cubit.students?.length ?? 0,
-                    //                 physics:
-                    //                     const NeverScrollableScrollPhysics(),
-                    //                 itemBuilder: (context, index) {
-                    //                   Student student = cubit.students![index];
-                    //                   StudentDetail detail =
-                    //                       student.studentDetail![0];
-                    //                   return StudentItem(
-                    //                     student: student,
-                    //                     onTap: () {
-                    //                       cubit.studentDetails(detail.id);
-                    //                       Navigator.pushNamed(
-                    //                         context,
-                    //                         StudentDetails.route,
-                    //                       );
-                    //                     },
-                    //                   );
-                    //                 },
-                    //               ),
-                    //       ],
-                    //     );
-                    //   },
-                    // ),
                   ],
                 ),
               ),

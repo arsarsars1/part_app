@@ -159,7 +159,7 @@ class ManagerCubit extends Cubit<ManagerState> {
     }
 
     if (doc2 != null) {
-      MultipartFile? doc2File = await Utils().generateMultiPartFile(doc2!);
+      MultipartFile? doc2File = await Utils().generateMultiPartFile(doc2);
 
       request.putIfAbsent('document_2', () => doc2File);
     }

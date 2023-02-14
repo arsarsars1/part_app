@@ -5,20 +5,22 @@ import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerPicker extends StatefulWidget {
-  final int branchId;
+  final int? branchId;
+  final int? batchId;
   final List<int?> selectedTrainers;
 
   final ValueChanged<List<Trainer?>> onSave;
   final ValueChanged<TrainerModel?>? onSelect;
 
-  final bool branchSearch;
+  final bool isBatch;
   final bool multiPicker;
 
   const TrainerPicker({
     Key? key,
-    required this.branchId,
+    this.branchId,
     this.onSelect,
-    this.branchSearch = false,
+    this.batchId,
+    this.isBatch = false,
     required this.selectedTrainers,
     required this.onSave,
     this.multiPicker = true,
@@ -37,14 +39,27 @@ class _TrainerPickerState extends State<TrainerPicker> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.isBatch) {
+      context.read<BranchCubit>().getBatchTrainers(
+            batchId: '${widget.batchId}',
+            clean: true,
+          );
+    }
     trainers.addAll(widget.selectedTrainers);
     // Pagination listener
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        context.read<BranchCubit>().getBranchTrainers(
-              branchId: '${widget.branchId}',
-            );
+        if (widget.isBatch) {
+          context.read<BranchCubit>().getBatchTrainers(
+                batchId: '${widget.batchId}',
+              );
+        } else {
+          context.read<BranchCubit>().getBranchTrainers(
+                branchId: '${widget.branchId}',
+              );
+        }
       }
     });
   }
@@ -131,6 +146,7 @@ class _TrainerPickerState extends State<TrainerPicker> {
                                       onTap: () {
                                         if (widget.onSelect != null) {
                                           widget.onSelect!(trainer);
+                                          Navigator.pop(context);
                                         }
                                       },
                                       title: widget.multiPicker
@@ -192,18 +208,19 @@ class _TrainerPickerState extends State<TrainerPicker> {
                       );
                     },
                   ),
-                  Button(
-                    onTap: () {
-                      var cubit = context.read<BranchCubit>();
-                      List<Trainer>? tempTrainers = cubit.trainers
-                          ?.where((element) => trainers
-                              .contains(element.trainerDetail?[0].userId))
-                          .toList();
-                      widget.onSave(tempTrainers ?? []);
-                      Navigator.pop(context);
-                    },
-                    title: 'Save',
-                  )
+                  if (widget.multiPicker)
+                    Button(
+                      onTap: () {
+                        var cubit = context.read<BranchCubit>();
+                        List<Trainer>? tempTrainers = cubit.trainers
+                            ?.where((element) => trainers
+                                .contains(element.trainerDetail?[0].userId))
+                            .toList();
+                        widget.onSave(tempTrainers ?? []);
+                        Navigator.pop(context);
+                      },
+                      title: 'Save',
+                    )
                 ],
               ),
             ),
