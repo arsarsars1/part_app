@@ -62,7 +62,7 @@ class BatchService {
         data.putIfAbsent('trainers[]', () => '');
       }
     }
-    print(data);
+
     try {
       var response = await _apiClient.post(
         postPath: '/admin/batches/$batchId',

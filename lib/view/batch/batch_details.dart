@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
+import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/batch_students.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
@@ -24,6 +24,7 @@ class _BatchDetailsState extends State<BatchDetails> {
   bool isActive = true;
   ScrollController scrollController = ScrollController();
   BatchModel? batch;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -42,6 +43,7 @@ class _BatchDetailsState extends State<BatchDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: const CommonBar(
         title: 'Batch Details',
       ),
@@ -283,10 +285,15 @@ class _BatchDetailsState extends State<BatchDetails> {
                             height: 16,
                           ),
                           SelectedTrainers(
+                            batchDetails: true,
+                            branchId: batch?.branchId,
+                            scaffoldKey: scaffoldKey,
                             trainers: batch?.trainers,
-                            selectedTrainers: (List<int?> value) {
+                            selectedTrainers: (List<Trainer?> value) {
+                              var trainerList =
+                                  value.map((e) => e?.id).toList();
                               BatchRequest request = BatchRequest(
-                                trainers: value,
+                                trainers: trainerList,
                               );
                               context.read<BatchCubit>().updateBatch(request);
                             },

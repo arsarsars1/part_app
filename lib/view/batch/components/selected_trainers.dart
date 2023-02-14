@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
-import 'package:part_app/view/batch/add_trainers_dialog.dart';
 import 'package:part_app/view/components/cached_image.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/trainer/trainer_picker.dart';
 
 class SelectedTrainers extends StatefulWidget {
-  final ValueChanged<List<int?>> selectedTrainers;
+  final ValueChanged<List<Trainer?>> selectedTrainers;
   final List<Trainer>? trainers;
+  final int? branchId;
+  final bool batchDetails;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
 
   const SelectedTrainers(
-      {Key? key, required this.selectedTrainers, this.trainers})
+      {Key? key,
+      required this.selectedTrainers,
+      this.trainers,
+      this.batchDetails = false,
+      this.scaffoldKey,
+      this.branchId})
       : super(key: key);
 
   @override
@@ -18,7 +26,7 @@ class SelectedTrainers extends StatefulWidget {
 }
 
 class _SelectedTrainersState extends State<SelectedTrainers> {
-  List<Trainer> selectedTrainers = [];
+  List<Trainer?> selectedTrainers = [];
 
   @override
   void initState() {
@@ -36,7 +44,7 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
       children: [
         ...selectedTrainers.map(
           (e) {
-            var detail = e.trainerDetail?[0] ?? e;
+            var detail = e?.trainerDetail?[0] ?? e;
             return Column(
               children: [
                 Container(
@@ -58,7 +66,7 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(45),
                     child: CachedImage(
-                      '${F.baseUrl}/admin/images/trainer/${detail.id}/${detail.profilePic}',
+                      '${F.baseUrl}/admin/images/trainer/${detail?.id}/${detail?.profilePic}',
                     ).image(),
                   ),
                 ),
@@ -68,7 +76,7 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                 SizedBox(
                   width: width,
                   child: Text(
-                    '${detail.name}',
+                    '${detail?.name}',
                     textAlign: TextAlign.center,
                     maxLines: 2,
                   ),
@@ -79,27 +87,33 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
         ),
         GestureDetector(
           onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  backgroundColor: AppColors.liteDark,
-                  content: AddTrainersDialog(
-                    selectedItems: widget.trainers ?? [],
-                    onSave: (List<Trainer> value) {
-                      widget.selectedTrainers(
-                        value.map((e) => e.trainerDetail?[0].id).toList(),
-                      );
+            List<int?> trainers = [];
+            if (widget.batchDetails) {
+              trainers = widget.trainers?.map((e) => e.userId).toList() ?? [];
+            } else {
+              trainers = widget.trainers
+                      ?.map((e) => e.trainerDetail?[0].userId)
+                      .toList() ??
+                  [];
+            }
 
-                      setState(() {
-                        selectedTrainers = value;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                  contentPadding: EdgeInsets.zero,
-                );
-              },
+            if (widget.branchId == null) return;
+            widget.scaffoldKey?.currentState?.showBottomSheet(
+              elevation: 10,
+              backgroundColor: Colors.transparent,
+              (context) => TrainerPicker(
+                branchId: widget.branchId!,
+                selectedTrainers: trainers,
+                onSave: (List<Trainer?> value) {
+                  widget.selectedTrainers(
+                    value,
+                  );
+
+                  setState(() {
+                    selectedTrainers = value;
+                  });
+                },
+              ),
             );
           },
           child: Container(

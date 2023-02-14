@@ -7,13 +7,15 @@ class TextSwitchButton extends StatefulWidget {
   final String title;
   final String? subTitle;
   final bool selected;
+  final double horizontalPadding;
 
   const TextSwitchButton(
       {Key? key,
       required this.onChange,
       required this.title,
       this.subTitle,
-      required this.selected})
+      required this.selected,
+      this.horizontalPadding = 16})
       : super(key: key);
 
   @override
@@ -33,11 +35,12 @@ class _TextSwitchButtonState extends State<TextSwitchButton> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
           flex: 5,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: widget.horizontalPadding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

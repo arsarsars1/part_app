@@ -115,9 +115,10 @@ class TrainerCubit extends Cubit<TrainerState> {
     emit(FetchingTrainers());
 
     if (branchID != null && query == null) {
-      _trainers = await _branchService.getTrainers(
+      var response = await _branchService.getTrainers(
         branchId: branchID.toString(),
       );
+      _trainers = response?.trainers?.data;
     }
 
     if (query != null) {

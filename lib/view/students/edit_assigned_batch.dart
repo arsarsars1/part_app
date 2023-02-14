@@ -3,7 +3,6 @@ import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/text_swtich_button.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -44,7 +43,7 @@ class _EditAssignedBatchState extends State<EditAssignedBatch> {
     details = student?.studentDetail![0];
     return Scaffold(
       appBar: const CommonBar(
-        title: 'Assign Student To Batch',
+        title: 'Edit Assigned Student To Batch',
       ),
       body: BlocListener<StudentCubit, StudentState>(
         listener: (context, state) {

@@ -43,6 +43,39 @@ class DefaultValues {
     ),
   ];
 
+  static List<DropDownItem> leadStatus = [
+    const DropDownItem(
+      id: 'new_lead',
+      title: 'New Lead',
+      item: 'new_lead',
+    ),
+    const DropDownItem(
+      id: 'not_interested',
+      title: 'Not Interested',
+      item: 'not_interested',
+    ),
+    const DropDownItem(
+      id: 'interested',
+      title: 'Interested',
+      item: 'interested',
+    ),
+    const DropDownItem(
+      id: 'busy',
+      title: 'Busy',
+      item: 'busy',
+    ),
+    const DropDownItem(
+      id: 'unanswered',
+      title: 'Unanswered',
+      item: 'unanswered',
+    ),
+    const DropDownItem(
+      id: 'converted',
+      title: 'Converted',
+      item: 'converted',
+    ),
+  ];
+
   static const dashboardItems = [
     DashboardItem(
       title: 'Students',

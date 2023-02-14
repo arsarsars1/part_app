@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
+import 'package:part_app/model/data_model/trainer_model.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/admin/branch.dart';
 
@@ -13,22 +14,30 @@ class BranchCubit extends Cubit<BranchState> {
   final _branchService = BranchService();
 
   List<Branch> _branches = [];
-  List<Trainer>? _trainers = [];
+  final List<Trainer> _trainers = [];
 
   Branch? _branch;
 
   List<Branch> get branches => _branches;
 
   List<Branch> get activeBranches =>
-      _branches.where((element) => element.isActive == 1).toList() ?? [];
+      _branches.where((element) => element.isActive == 1).toList();
 
   List<Trainer>? get trainers => _trainers;
 
+  @Deprecated('Moved the type to TrainerModel')
   List<Trainer>? get activeTrainers => _trainers
-      ?.where((element) => element.trainerDetail?[0].isActive == 1)
+      .where((element) => element.trainerDetail?[0].isActive == 1)
       .toList();
 
+  List<TrainerModel> get trainersList =>
+      activeTrainers?.map((e) => TrainerModel.fromEntity(e)).toList() ?? [];
+
   Branch? get branch => _branch;
+
+  // pagination
+  int page = 1;
+  String? nextPageUrl = '';
 
   set branch(Branch? tempBranch) {
     _branch = tempBranch;
@@ -40,13 +49,19 @@ class BranchCubit extends Cubit<BranchState> {
     emit(BranchesLoaded());
   }
 
-  set trainers(List<Trainer>? tempTrainers) {
-    _trainers = tempTrainers;
-    emit(TrainersLoaded());
-  }
+  // set trainers(List<Trainer>? tempTrainers) {
+  //   _trainers = tempTrainers;
+  //   emit(TrainersLoaded());
+  // }
 
   /// METHOD TO GET THE LIST OF BRANCHES
   /// for the logged in admin user
+
+  void clean() {
+    page = 1;
+    nextPageUrl = '';
+    _trainers.clear();
+  }
 
   Future getBranches() async {
     emit(BranchesLoading());
@@ -70,13 +85,68 @@ class BranchCubit extends Cubit<BranchState> {
 
   /// Method to get thr trainers list for the specific branch
   /// [ branchId ] is the branch Id and is required
-  Future getBranchTrainers({required String branchId}) async {
-    emit(TrainersLoading());
-    List<Trainer>? temp = await _branchService.getTrainers(
+  Future getBranchTrainers({
+    required String branchId,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _trainers.clear();
+      emit(TrainersLoading());
+    } else {
+      emit(TrainersLoading(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(TrainersLoaded());
+      return;
+    }
+
+    var temp = await _branchService.getTrainers(
       branchId: branchId,
+      pageNo: page,
     );
-    if (temp != null) {
-      trainers = temp;
+    if (temp?.status == 1) {
+      nextPageUrl = temp?.trainers?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+      _trainers.addAll(temp!.trainers!.data);
+      emit(TrainersLoaded());
+    } else {
+      emit(TrainersFailed('Failed to get the trainers list'));
+    }
+  }
+
+  Future getBatchTrainers({
+    required String batchId,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _trainers.clear();
+      emit(TrainersLoading());
+    } else {
+      emit(TrainersLoading(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(TrainersLoaded());
+      return;
+    }
+
+    var temp = await _branchService.getBatchTrainers(
+      batchId: batchId,
+      pageNo: page,
+    );
+    if (temp?.status == 1) {
+      nextPageUrl = temp?.trainers?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+      _trainers.addAll(temp!.trainers!.data);
       emit(TrainersLoaded());
     } else {
       emit(TrainersFailed('Failed to get the trainers list'));

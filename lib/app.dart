@@ -7,6 +7,7 @@ import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/route_generator.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/view_model/leads/leads_cubit.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -62,6 +63,9 @@ class _AppState extends State<App> {
         ),
         BlocProvider<StudentCubit>(
           create: (context) => StudentCubit(),
+        ),
+        BlocProvider<LeadsCubit>(
+          create: (context) => LeadsCubit(),
         ),
       ],
       child: GestureDetector(

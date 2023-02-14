@@ -90,6 +90,7 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                           branchId = value;
                           context.read<BranchCubit>().getBranchTrainers(
                                 branchId: '$branchId',
+                                clean: true,
                               );
                         },
                       ),

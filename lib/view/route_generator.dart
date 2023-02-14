@@ -19,6 +19,9 @@ import 'package:part_app/view/branch/branch_list.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/home/home.dart';
+import 'package:part_app/view/leads/add_lead.dart';
+import 'package:part_app/view/leads/lead_details.dart';
+import 'package:part_app/view/leads/todays_view.dart';
 import 'package:part_app/view/manager/add_manager.dart';
 import 'package:part_app/view/manager/edit_manager.dart';
 import 'package:part_app/view/manager/edit_salary.dart';
@@ -324,6 +327,21 @@ class RouteGenerator {
       case ClassLinkList.route:
         return MaterialPageRoute(
           builder: (_) => const ClassLinkList(),
+          settings: settings,
+        );
+      case AddLead.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddLead(),
+          settings: settings,
+        );
+      case TodayFollowView.route:
+        return MaterialPageRoute(
+          builder: (_) => const TodayFollowView(),
+          settings: settings,
+        );
+      case LeadDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const LeadDetails(),
           settings: settings,
         );
       default:

@@ -25,7 +25,7 @@ class BatchCubit extends Cubit<BatchState> {
   List<Course>? _courses;
   List<Course>? _subjects;
 
-  final List<String> _selectedTrainers = [];
+  final List<int?> _selectedTrainers = [];
   List<BatchModel> _batches = [];
   List<BatchDetail> _rescheduledList = [];
   List<Student>? _students;
@@ -48,7 +48,7 @@ class BatchCubit extends Cubit<BatchState> {
 
   List<Course>? get subjects => _subjects;
 
-  List<String> get selectedTrainers => _selectedTrainers;
+  List<int?> get selectedTrainers => _selectedTrainers;
 
   List<BatchModel> get batches => _batches;
 
@@ -307,6 +307,11 @@ class BatchCubit extends Cubit<BatchState> {
                   ))
               .toList() ??
           [];
+
+      var items = _batch?.trainers?.map((e) => e.id).toList();
+      if (items != null) {
+        _selectedTrainers.addAll(items);
+      }
       emit(FetchedBatch());
     } else {
       emit(FetchBatchFailed('Failed to fetch batch details.'));

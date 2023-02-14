@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/view/auth/components/phone_number.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/auth/register/sign_up.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/loader.dart';
-import 'package:part_app/view/components/logo.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 

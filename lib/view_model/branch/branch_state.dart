@@ -7,7 +7,11 @@ class BranchInitial extends BranchState {}
 
 class BranchesLoaded extends BranchState {}
 
-class BranchesLoading extends BranchState {}
+class BranchesLoading extends BranchState {
+  final bool pagination;
+
+  BranchesLoading({this.pagination = false});
+}
 
 // Branch details  **************
 class BranchLoading extends BranchState {}
@@ -39,7 +43,11 @@ class UpdateBranchFailed extends BranchState {
 
 // Trainers
 
-class TrainersLoading extends BranchState {}
+class TrainersLoading extends BranchState {
+  final bool pagination;
+
+  TrainersLoading({this.pagination = false});
+}
 
 class TrainersLoaded extends BranchState {}
 

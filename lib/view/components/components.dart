@@ -18,4 +18,6 @@ export 'loader.dart';
 export 'logo.dart';
 export 'profile_picture.dart';
 export 'tab_button.dart';
+export 'text_switch_button.dart';
 export 'titled_text.dart';
+export 'user_image.dart';

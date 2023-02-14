@@ -1,13 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
+import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/view/batch/batch_list.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -23,6 +22,7 @@ class AddBatch extends StatefulWidget {
 
 class _AddBatchState extends State<AddBatch> {
   TextEditingController dobController = TextEditingController();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   String? batchName;
   int? branchId;
@@ -56,6 +56,7 @@ class _AddBatchState extends State<AddBatch> {
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
     return Scaffold(
+      key: scaffoldKey,
       appBar: const CommonBar(title: 'Add New Batch'),
       body: BlocListener<BatchCubit, BatchState>(
         listener: (context, state) {
@@ -89,7 +90,9 @@ class _AddBatchState extends State<AddBatch> {
                         branchId = value;
                         context.read<BranchCubit>().getBranchTrainers(
                               branchId: '$branchId',
+                              clean: true,
                             );
+                        setState(() {});
                       }),
                       const SizedBox(
                         height: 20,
@@ -220,11 +223,63 @@ class _AddBatchState extends State<AddBatch> {
                               height: 16,
                             ),
                             SelectedTrainers(
-                              selectedTrainers: (List<int?> value) {
-                                selectedTrainers = value;
+                              trainers: context
+                                  .read<BranchCubit>()
+                                  .trainers
+                                  ?.where(
+                                      (element) => selectedTrainers.contains(
+                                            element.id,
+                                          ))
+                                  .toList(),
+                              branchId: branchId,
+                              scaffoldKey: scaffoldKey,
+                              selectedTrainers: (List<Trainer?> value) {
+                                selectedTrainers =
+                                    value.map((e) => e?.id).toList();
                               },
                             )
                           ],
+                        ),
+                      ),
+                      Center(
+                        child: SafeArea(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 32),
+                            child: Button(
+                              onTap: () {
+                                if (formKey.currentState!.validate()) {
+                                  if (cubit.days.isEmpty) {
+                                    Alert(context).show(
+                                      message:
+                                          'Please select the training days.',
+                                    );
+                                    return;
+                                  } else {
+                                    BatchRequest request = BatchRequest(
+                                      branchId: branchId,
+                                      days: cubit.buildDaysList(),
+                                      batchName: batchName,
+                                      batchStatus: batchStatus,
+                                      subjectId: subjectId,
+                                      courseId: courseId,
+                                      feeAmount: int.parse(fee!),
+                                      trainers: context
+                                          .read<BranchCubit>()
+                                          .trainers
+                                          ?.where(
+                                              (element) => selectedTrainers.contains(
+                                            element.id,
+                                          )).map((e) => e.trainerDetail?[0].id).toList(),
+                                      admissionFees: int.parse(admissionFee!),
+                                    );
+
+                                    cubit.createBatch(request);
+                                  }
+                                }
+                              },
+                              title: 'Save Batch',
+                            ),
+                          ),
                         ),
                       )
                     ],
@@ -232,43 +287,6 @@ class _AddBatchState extends State<AddBatch> {
                 ),
               );
             },
-          ),
-        ),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: SizedBox(
-          height: 132.h,
-          child: BottomAppBar(
-            color: Colors.black,
-            child: Center(
-              child: Button(
-                onTap: () {
-                  if (formKey.currentState!.validate()) {
-                    if (cubit.days.isEmpty) {
-                      Alert(context).show(
-                        message: 'Please select the training days.',
-                      );
-                      return;
-                    } else {
-                      BatchRequest request = BatchRequest(
-                        branchId: branchId,
-                        days: cubit.buildDaysList(),
-                        batchName: batchName,
-                        batchStatus: batchStatus,
-                        subjectId: subjectId,
-                        courseId: courseId,
-                        feeAmount: int.parse(fee!),
-                        trainers: selectedTrainers,
-                        admissionFees: int.parse(admissionFee!),
-                      );
-
-                      cubit.createBatch(request);
-                    }
-                  }
-                },
-                title: 'Save Batch',
-              ),
-            ),
           ),
         ),
       ),

@@ -53,7 +53,9 @@ class _EditStudentState extends State<EditStudent> {
     student = context.read<StudentCubit>().student;
     details = student?.studentDetail![0];
 
-    selected ??= details!.parentName != null ? 'parent' : 'student';
+    selected ??= details?.parentName != null && details!.parentName!.isNotEmpty
+        ? 'parent'
+        : 'student';
     return Scaffold(
       appBar: const CommonBar(title: 'Edit Student Profile'),
       body: BlocListener<StudentCubit, StudentState>(
@@ -134,7 +136,7 @@ class _EditStudentState extends State<EditStudent> {
                       height: 20,
                     ),
                     CommonField(
-                      initialValue: parentName,
+                      initialValue: details?.parentName,
                       title: 'Parent Name *',
                       hint: 'Enter Parent Name',
                       maxLines: 1,
@@ -301,6 +303,10 @@ class _EditStudentState extends State<EditStudent> {
 
                       if (formKey.currentState!.validate()) {
                         var cubit = context.read<StudentCubit>();
+
+                        if (selected == 'student') {
+                          parentName = '';
+                        }
 
                         StudentRequest request = StudentRequest(
                           name: name,

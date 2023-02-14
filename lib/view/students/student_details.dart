@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/students_response.dart';
@@ -56,35 +55,6 @@ class _StudentDetailsState extends State<StudentDetails> {
                       .textTheme
                       .bodyText1
                       ?.copyWith(fontWeight: FontWeight.w700),
-                ),
-                SizedBox(
-                  height: 16.h,
-                ),
-                Container(
-                  height: 25.0.h,
-                  alignment: Alignment.center,
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: CupertinoSwitch(
-                      trackColor: AppColors.grey500,
-                      value: details?.isActive == 1,
-                      onChanged: (value) {
-                        CommonDialog(
-                          context: context,
-                          message:
-                              'Do You Want To ${details?.isActive == 1 ? 'Deactivate' : 'Activate'} The Student?',
-                          subMessage: '${details?.name}',
-                          onTap: () {
-                            active = value;
-                            Navigator.pop(context);
-                            context.read<StudentCubit>().updateStatus(
-                                  active: active ? 1 : 0,
-                                );
-                          },
-                        ).show();
-                      },
-                    ),
-                  ),
                 ),
                 const SizedBox(
                   height: 16,
