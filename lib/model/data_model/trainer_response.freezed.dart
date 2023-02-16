@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'trainer_response.dart';
 
@@ -381,6 +381,7 @@ class _$_Datum implements _Datum {
   final List<Trainer> _data;
   @override
   List<Trainer> get data {
+    if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_data);
   }
@@ -991,6 +992,7 @@ class _$_Trainer implements _Trainer {
   List<Branch>? get branches {
     final value = _branches;
     if (value == null) return null;
+    if (_branches is EqualUnmodifiableListView) return _branches;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -1006,6 +1008,7 @@ class _$_Trainer implements _Trainer {
   List<Trainer>? get trainerDetail {
     final value = _trainerDetail;
     if (value == null) return null;
+    if (_trainerDetail is EqualUnmodifiableListView) return _trainerDetail;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }

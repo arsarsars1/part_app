@@ -4,8 +4,6 @@ import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/dialog.dart';
-import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
