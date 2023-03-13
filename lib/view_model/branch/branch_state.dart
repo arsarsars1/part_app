@@ -7,6 +7,8 @@ class BranchInitial extends BranchState {}
 
 class BranchesLoaded extends BranchState {}
 
+class BranchNetworkError extends BranchState {}
+
 class BranchesLoading extends BranchState {
   final bool pagination;
 

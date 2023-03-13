@@ -83,7 +83,7 @@ extension StringExtension on String {
   }
 
   String toAmPM() {
-    return DateFormat('hh:mm a').format(DateFormat('hh:mm:ss').parse(this));
+    return DateFormat('jm').format(DateFormat('Hm').parse(this));
   }
 
   DateTime toDateTime() {

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/branch/components/enable_switch.dart';
-import 'package:part_app/view/components/common_bar.dart';
+import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AddBranch extends StatefulWidget {
@@ -67,7 +65,9 @@ class _AddBranchState extends State<AddBranch> {
       body: BlocListener<BranchCubit, BranchState>(
         listener: (context, state) {
           if (state is BranchLoaded) {}
-          if (state is AddingBranch || state is UpdatingBranch) {
+          if (state is BranchNetworkError) {
+            AlertBox.showErrorAlert(context);
+          } else if (state is AddingBranch || state is UpdatingBranch) {
             Loader(context, message: 'Adding Branch ...').show();
           } else if (state is AddingBranchFailed) {
             Navigator.pop(context);

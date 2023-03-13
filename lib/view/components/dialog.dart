@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 
@@ -29,7 +28,7 @@ class CommonDialog {
         return AlertDialog(
           backgroundColor: AppColors.liteDark,
           contentPadding: EdgeInsets.zero,
-          content: _Logout(
+          content: Logout(
             subColor: subColor,
             message: message,
             subMessage: subMessage,
@@ -43,15 +42,15 @@ class CommonDialog {
   }
 }
 
-class _Logout extends StatelessWidget {
+class Logout extends StatelessWidget {
   final String message;
   final String? subMessage;
   final VoidCallback onTap;
   final Color? subColor;
   final String? buttonText;
   final Widget? subContent;
-
-  const _Logout({
+  final bool? isCancel;
+  const Logout({
     Key? key,
     required this.message,
     this.subMessage,
@@ -59,6 +58,7 @@ class _Logout extends StatelessWidget {
     this.subColor,
     this.buttonText,
     this.subContent,
+    this.isCancel = false,
   }) : super(key: key);
 
   @override
@@ -101,18 +101,23 @@ class _Logout extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Button(
-                  width: 95.w,
-                  height: 36.h,
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  title: 'Cancel',
-                  border: true,
-                ),
-                SizedBox(
-                  width: 32.w,
-                ),
+                if (isCancel!)
+                  Row(
+                    children: [
+                      Button(
+                        width: 95.w,
+                        height: 36.h,
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        title: 'Cancel',
+                        border: true,
+                      ),
+                      SizedBox(
+                        width: 32.w,
+                      ),
+                    ],
+                  ),
                 Button(
                   width: 95.w,
                   height: 36.h,

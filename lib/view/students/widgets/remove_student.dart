@@ -47,7 +47,7 @@ class _RemoveStudentState extends State<RemoveStudent> {
           CommonField(
             title: 'Remark/Reason For Deactivation *',
             hint: 'Eg: School Final Exam',
-            maxLines: 3,
+            maxLines: 2,
             contentPadding: EdgeInsets.zero,
             onChange: (value) {
               widget.remark(value);

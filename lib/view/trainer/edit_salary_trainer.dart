@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/constant.dart';
-import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 

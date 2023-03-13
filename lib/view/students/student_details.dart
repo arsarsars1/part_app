@@ -109,6 +109,11 @@ class _StudentDetailsState extends State<StudentDetails> {
                         title: 'Whatsapp No',
                         subText: '${details?.whatsappNo}',
                       ),
+                      if (details?.parentName != null)
+                        TitledText(
+                          title: 'Parent Name',
+                          subText: '${details?.parentName}',
+                        ),
                       TitledText(
                         title: 'Date Of Birth',
                         subText: '${details?.dob?.toDateString()}',

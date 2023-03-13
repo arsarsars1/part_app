@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/membership/subscription_success.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
@@ -48,6 +49,9 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
         key: formKey,
         child: BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
+            if (state is NetworkError) {
+              AlertBox.showErrorAlert(context);
+            }
             if (state is RegisteringUser) {
               Loader(
                 context,
@@ -76,6 +80,7 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
                 length: 100,
                 maxLines: 1,
                 textInputAction: TextInputAction.next,
+                capitalization: TextCapitalization.words,
                 title: 'Enter Branch Name *',
                 hint: 'Eg: Main Branch',
                 validator: (value) {
@@ -93,6 +98,7 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
               CommonField(
                 length: 300,
                 textInputAction: TextInputAction.newline,
+                capitalization: TextCapitalization.words,
                 title: 'Address *',
                 hint: 'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum',
                 maxLines: 3,

@@ -30,6 +30,7 @@ class StudentService {
           postPath: '/admin/students/$studentId/enroll', data: request);
       return studentResponseFromJson(jsonEncode(response));
     } catch (e) {
+      print(e);
       return null;
     }
   }

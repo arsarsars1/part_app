@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/student_model.dart';

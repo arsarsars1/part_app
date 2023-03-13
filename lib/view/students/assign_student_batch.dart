@@ -94,7 +94,8 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
                   children: [
                     Center(
                       child: Text(
-                        cubit.studentRequest.name ?? 'Not Available',
+                        cubit.student?.studentDetail?[0].name ??
+                            'Not Available',
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.bold,

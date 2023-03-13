@@ -104,3 +104,21 @@ abstract class BatchDetail with _$BatchDetail {
   factory BatchDetail.fromJson(Map<String, dynamic> json) =>
       _$BatchDetailFromJson(json);
 }
+
+@freezed
+class BatchResponsePivot with _$BatchResponsePivot {
+    const factory BatchResponsePivot({
+        int? studentDetailId,
+        int? batchId,
+        dynamic? noOfClasses,
+        String? feeType,
+        int? feeAmount,
+        int? admissionFees,
+        int? cycle,
+        DateTime? doj,
+        DateTime? createdAt,
+        DateTime? updatedAt,
+    }) = _BatchResponsePivot;
+
+    factory BatchResponsePivot.fromJson(Map<String, dynamic> json) => _$BatchResponsePivotFromJson(json);
+}

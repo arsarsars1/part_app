@@ -137,3 +137,37 @@ Map<String, dynamic> _$$_BatchDetailToJson(_$_BatchDetail instance) =>
       'end_time': instance.endTime,
       'is_active': instance.isActive,
     };
+
+_$_BatchResponsePivot _$$_BatchResponsePivotFromJson(
+        Map<String, dynamic> json) =>
+    _$_BatchResponsePivot(
+      studentDetailId: json['studentDetailId'] as int?,
+      batchId: json['batchId'] as int?,
+      noOfClasses: json['noOfClasses'],
+      feeType: json['feeType'] as String?,
+      feeAmount: json['feeAmount'] as int?,
+      admissionFees: json['admissionFees'] as int?,
+      cycle: json['cycle'] as int?,
+      doj: json['doj'] == null ? null : DateTime.parse(json['doj'] as String),
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
+    );
+
+Map<String, dynamic> _$$_BatchResponsePivotToJson(
+        _$_BatchResponsePivot instance) =>
+    <String, dynamic>{
+      'studentDetailId': instance.studentDetailId,
+      'batchId': instance.batchId,
+      'noOfClasses': instance.noOfClasses,
+      'feeType': instance.feeType,
+      'feeAmount': instance.feeAmount,
+      'admissionFees': instance.admissionFees,
+      'cycle': instance.cycle,
+      'doj': instance.doj?.toIso8601String(),
+      'createdAt': instance.createdAt?.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
+    };

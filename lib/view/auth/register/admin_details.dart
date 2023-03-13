@@ -36,78 +36,84 @@ class _WAValidationState extends State<AdminDetails> {
         },
         child: Form(
           key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CommonField(
-                textInputAction: TextInputAction.next,
-                maxLines: 1,
-                length: 50,
-                title: 'Enter you name *',
-                hint: 'Name',
-                onChange: (value) {
-                  name = value;
-                },
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please enter name.'
-                      : null;
-                },
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CommonField(
+                    textInputAction: TextInputAction.next,
+                    capitalization: TextCapitalization.words,
+                    maxLines: 1,
+                    length: 50,
+                    title: 'Enter you name *',
+                    hint: 'Name',
+                    onChange: (value) {
+                      name = value;
+                    },
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please enter name.'
+                          : null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    inputType: TextInputType.emailAddress,
+                    capitalization: TextCapitalization.none,
+                    length: 50,
+                    title: 'Enter Email *',
+                    hint: 'Eg: contact@polestar.com',
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter email';
+                      } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                        return 'Invalid email address.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChange: (value) {
+                      email = value;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    onTap: datePicker,
+                    disabled: true,
+                    controller: dobController,
+                    hint: 'dd/mm/yyyy',
+                    title: 'Date of Birth *',
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please enter dob.'
+                          : null;
+                    },
+                    onChange: (value) {},
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Gender *',
+                    onChange: (value) {
+                      gender = value?.title;
+                    },
+                    hint: 'Select Gender',
+                    validator: (value) {
+                      return value == null ? 'Please select gender.' : null;
+                    },
+                    dropDown: true,
+                    dropDownItems: DefaultValues().genders,
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                inputType: TextInputType.emailAddress,
-                length: 50,
-                title: 'Enter Email *',
-                hint: 'Eg: contact@polestar.com',
-                validator: (value) {
-                  if (value == null || value.toString().isEmpty) {
-                    return 'Please enter email';
-                  } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                    return 'Invalid email address.';
-                  } else {
-                    return null;
-                  }
-                },
-                onChange: (value) {
-                  email = value;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                onTap: datePicker,
-                disabled: true,
-                controller: dobController,
-                hint: 'dd/mm/yyyy',
-                title: 'Date of Birth *',
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please enter dob.'
-                      : null;
-                },
-                onChange: (value) {},
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'Gender *',
-                onChange: (value) {
-                  gender = value?.title;
-                },
-                hint: 'Select Gender',
-                validator: (value) {
-                  return value == null ? 'Please select gender.' : null;
-                },
-                dropDown: true,
-                dropDownItems: DefaultValues().genders,
-              ),
-            ],
+            ),
           ),
         ),
       ),

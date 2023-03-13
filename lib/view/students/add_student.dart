@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/profile_picture.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';

@@ -42,7 +42,7 @@ class _LeadDetailsState extends State<LeadDetails> {
           const SizedBox(
             height: 16,
           ),
-          Launchers(
+          const Launchers(
             phoneNo: '+',
             whatsappNo: '',
             email: '',
@@ -60,7 +60,7 @@ class _LeadDetailsState extends State<LeadDetails> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TitledText(
+                    const TitledText(
                       title: 'Lead Status',
                       subText: 'student.mobileNo}',
                     ),
@@ -86,35 +86,35 @@ class _LeadDetailsState extends State<LeadDetails> {
                     ),
                   ],
                 ),
-                TitledText(
+                const TitledText(
                   title: 'Mobile No',
                   subText: 'details?.whatsappNo}',
                 ),
-                TitledText(
+                const TitledText(
                   title: 'Whatsapp No',
                   subText: 'details?.whatsappNo}',
                 ),
-                TitledText(
+                const TitledText(
                   title: 'Age',
                   subText: 'details?.whatsappNo}',
                 ),
-                TitledText(
+                const TitledText(
                   title: 'Date Of Birth',
                   subText: 'details?.dob?.toDateString()}',
                 ),
-                TitledText(
+                const TitledText(
                   title: 'Gender',
                   subText: 'details?.gender?.capitalize()}',
                 ),
-                TitledText(
+                const TitledText(
                   title: 'Email Id',
                   subText: 'details?.gender?.capitalize()}',
                 ),
-                TitledText(
+                const TitledText(
                   title: 'Branch',
                   subText: 'details?.email}',
                 ),
-                TitledText(
+                const TitledText(
                   title: 'Batch',
                   subText: 'details?.address}',
                 ),

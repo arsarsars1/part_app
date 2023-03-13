@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
@@ -206,6 +205,16 @@ class BatchItem extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(),
                     ),
                   ),
+                  // const SizedBox(
+                  //   height: 4,
+                  // ),
+                  // Align(
+                  //   alignment: Alignment.centerRight,
+                  //   child: Text(
+                  //     '${batch.fee}',
+                  //     style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 4,
                   ),

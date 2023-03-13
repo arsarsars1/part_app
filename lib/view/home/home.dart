@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/session_alert.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/assets.dart';
@@ -36,7 +36,9 @@ class _HomeState extends State<Home> {
     Color unselectedColor = const Color(0xFF8A8A8A);
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is UserNotAvailable) {
+        if (state is NetworkError) {
+          AlertBox.showErrorAlert(context);
+        } else if (state is UserNotAvailable) {
           Navigator.pushNamedAndRemoveUntil(
             context,
             SplashScreen.route,

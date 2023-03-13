@@ -180,11 +180,13 @@ class BranchCubit extends Cubit<BranchState> {
       // if success ca get the branches from API & update the UI
       getBranches();
       emit(BranchAdded());
+    } else if (common == null) {
+      emit(BranchNetworkError());
     } else {
       // update the UI when the branch adding API failed
       emit(
         AddingBranchFailed(
-          common?.message ?? 'Failed to add branch, please try gain.',
+          common.message ?? 'Failed to add branch, please try gain.',
         ),
       );
     }

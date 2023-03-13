@@ -205,68 +205,78 @@ class _BatchDetailsState extends State<BatchDetails> {
                         ],
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        RescheduledClasses.route,
-                      ),
-                      child: Container(
-                        height: 34,
-                        decoration: BoxDecoration(
-                          color: AppColors.defaultBlue,
-                          borderRadius: BorderRadius.circular(45),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 4),
-                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Spacer(),
-                            Text(
-                              'Rescheduled Classes',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(
-                                    fontSize: 12,
-                                  ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              RescheduledClasses.route,
                             ),
-                            const Spacer(),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    GestureDetector(
-                      onTap: null,
-                      child: Container(
-                        height: 34,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(45),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 4),
-                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Spacer(),
-                            Text(
-                              'Cancelled Classes',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(
-                                    fontSize: 12,
+                            child: Container(
+                              height: 34.h,
+                              width: 158.w,
+                              decoration: BoxDecoration(
+                                color: AppColors.defaultBlue,
+                                borderRadius: BorderRadius.circular(45),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 4),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Spacer(),
+                                  Text(
+                                    'Reschedule',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          fontSize: 12,
+                                        ),
                                   ),
+                                  const Spacer(),
+                                ],
+                              ),
                             ),
-                            const Spacer(),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          GestureDetector(
+                            onTap: null,
+                            child: Container(
+                              height: 34.h,
+                              width: 158.w,
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(45),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 4),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Spacer(),
+                                  Text(
+                                    'Cancel',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          fontSize: 12,
+                                        ),
+                                  ),
+                                  const Spacer(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Container(
