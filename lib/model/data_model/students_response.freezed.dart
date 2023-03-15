@@ -946,6 +946,7 @@ mixin _$StudentDetail {
   String? get address => throw _privateConstructorUsedError;
   String? get profilePic => throw _privateConstructorUsedError;
   int? get isActive => throw _privateConstructorUsedError;
+  PivotClass? get pivot => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -972,7 +973,10 @@ abstract class $StudentDetailCopyWith<$Res> {
       String? whatsappNo,
       String? address,
       String? profilePic,
-      int? isActive});
+      int? isActive,
+      PivotClass? pivot});
+
+  $PivotClassCopyWith<$Res>? get pivot;
 }
 
 /// @nodoc
@@ -1001,6 +1005,7 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
     Object? address = freezed,
     Object? profilePic = freezed,
     Object? isActive = freezed,
+    Object? pivot = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -1055,7 +1060,23 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as int?,
+      pivot: freezed == pivot
+          ? _value.pivot
+          : pivot // ignore: cast_nullable_to_non_nullable
+              as PivotClass?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PivotClassCopyWith<$Res>? get pivot {
+    if (_value.pivot == null) {
+      return null;
+    }
+
+    return $PivotClassCopyWith<$Res>(_value.pivot!, (value) {
+      return _then(_value.copyWith(pivot: value) as $Val);
+    });
   }
 }
 
@@ -1080,7 +1101,11 @@ abstract class _$$_StudentDetailCopyWith<$Res>
       String? whatsappNo,
       String? address,
       String? profilePic,
-      int? isActive});
+      int? isActive,
+      PivotClass? pivot});
+
+  @override
+  $PivotClassCopyWith<$Res>? get pivot;
 }
 
 /// @nodoc
@@ -1107,6 +1132,7 @@ class __$$_StudentDetailCopyWithImpl<$Res>
     Object? address = freezed,
     Object? profilePic = freezed,
     Object? isActive = freezed,
+    Object? pivot = freezed,
   }) {
     return _then(_$_StudentDetail(
       id: freezed == id
@@ -1161,6 +1187,10 @@ class __$$_StudentDetailCopyWithImpl<$Res>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as int?,
+      pivot: freezed == pivot
+          ? _value.pivot
+          : pivot // ignore: cast_nullable_to_non_nullable
+              as PivotClass?,
     ));
   }
 }
@@ -1182,7 +1212,8 @@ class _$_StudentDetail implements _StudentDetail {
       this.whatsappNo,
       this.address,
       this.profilePic,
-      this.isActive});
+      this.isActive,
+      this.pivot});
 
   factory _$_StudentDetail.fromJson(Map<String, dynamic> json) =>
       _$$_StudentDetailFromJson(json);
@@ -1213,10 +1244,12 @@ class _$_StudentDetail implements _StudentDetail {
   final String? profilePic;
   @override
   final int? isActive;
+  @override
+  final PivotClass? pivot;
 
   @override
   String toString() {
-    return 'StudentDetail(id: $id, name: $name, parentName: $parentName, userId: $userId, academyId: $academyId, gender: $gender, dob: $dob, doj: $doj, email: $email, whatsappNo: $whatsappNo, address: $address, profilePic: $profilePic, isActive: $isActive)';
+    return 'StudentDetail(id: $id, name: $name, parentName: $parentName, userId: $userId, academyId: $academyId, gender: $gender, dob: $dob, doj: $doj, email: $email, whatsappNo: $whatsappNo, address: $address, profilePic: $profilePic, isActive: $isActive, pivot: $pivot)';
   }
 
   @override
@@ -1241,7 +1274,8 @@ class _$_StudentDetail implements _StudentDetail {
             (identical(other.profilePic, profilePic) ||
                 other.profilePic == profilePic) &&
             (identical(other.isActive, isActive) ||
-                other.isActive == isActive));
+                other.isActive == isActive) &&
+            (identical(other.pivot, pivot) || other.pivot == pivot));
   }
 
   @JsonKey(ignore: true)
@@ -1260,7 +1294,8 @@ class _$_StudentDetail implements _StudentDetail {
       whatsappNo,
       address,
       profilePic,
-      isActive);
+      isActive,
+      pivot);
 
   @JsonKey(ignore: true)
   @override
@@ -1290,7 +1325,8 @@ abstract class _StudentDetail implements StudentDetail {
       final String? whatsappNo,
       final String? address,
       final String? profilePic,
-      final int? isActive}) = _$_StudentDetail;
+      final int? isActive,
+      final PivotClass? pivot}) = _$_StudentDetail;
 
   factory _StudentDetail.fromJson(Map<String, dynamic> json) =
       _$_StudentDetail.fromJson;
@@ -1321,6 +1357,8 @@ abstract class _StudentDetail implements StudentDetail {
   String? get profilePic;
   @override
   int? get isActive;
+  @override
+  PivotClass? get pivot;
   @override
   @JsonKey(ignore: true)
   _$$_StudentDetailCopyWith<_$_StudentDetail> get copyWith =>

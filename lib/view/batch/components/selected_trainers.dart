@@ -68,7 +68,7 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                     child: CachedImage(
                       detail?.profilePic != ""
                           ? '${F.baseUrl}/admin/images/trainer/${detail?.id}/${detail?.profilePic}'
-                          : 'https://www.mindsparktechnologies.com/wp-content/uploads/2021/02/ToyFaces_Colored_BG_29-7QFYBYH.jpg',
+                          : 'https://dev.partapp.in/images/avatars/avatar-5.png',
                     ).image(),
                   ),
                 ),

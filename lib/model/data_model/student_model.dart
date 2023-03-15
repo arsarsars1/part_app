@@ -1,3 +1,4 @@
+import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 
 class StudentModel {
@@ -7,7 +8,7 @@ class StudentModel {
   final int? isActive;
   final String? mobileUnique;
   final int? detailId;
-
+  final PivotClass? pivot;
   final String? name;
   final String? parentName;
   final int? userId;
@@ -28,6 +29,7 @@ class StudentModel {
     this.isActive,
     this.mobileUnique,
     this.detailId,
+    this.pivot,
     this.name,
     this.parentName,
     this.userId,
@@ -53,6 +55,7 @@ class StudentModel {
       parentName: detail.parentName,
       userId: detail.userId,
       academyId: detail.academyId,
+      pivot: student.studentDetail?[0].pivot,
       gender: detail.gender,
       dob: detail.dob,
       doj: detail.doj,

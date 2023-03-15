@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:part_app/model/data_model/batch_response.dart';
 
 part 'students_response.freezed.dart';
 part 'students_response.g.dart';
@@ -96,6 +97,7 @@ abstract class StudentDetail with _$StudentDetail {
     String? address,
     String? profilePic,
     int? isActive,
+    PivotClass? pivot,
   }) = _StudentDetail;
 
   factory StudentDetail.fromJson(Map<String, dynamic> json) =>

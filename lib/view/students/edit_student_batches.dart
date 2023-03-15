@@ -37,7 +37,7 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
                 onTap: () {
                   Navigator.pop(context);
                 },
-                title: 'View Studnet Profile',
+                title: 'View Student Profile',
               ),
             ),
           ),
