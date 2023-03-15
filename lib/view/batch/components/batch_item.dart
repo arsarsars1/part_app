@@ -211,8 +211,10 @@ class BatchItem extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      '${batch.pivot?.feeType}',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+                      '${batch.pivot?.feeType?.capitalize()}',
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: AppColors.primaryColor,
+                          ),
                     ),
                   ),
                   const SizedBox(
