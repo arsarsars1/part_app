@@ -27,6 +27,22 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
       appBar: const CommonBar(
         title: 'Assigned Batches',
       ),
+      bottomNavigationBar: SafeArea(
+        child: SizedBox(
+          height: 132.h,
+          child: BottomAppBar(
+            color: Colors.black,
+            child: Center(
+              child: Button(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                title: 'View Studnet Profile',
+              ),
+            ),
+          ),
+        ),
+      ),
       body: BlocListener<StudentCubit, StudentState>(
         listener: (context, state) {
           if (state is RemovingStudent) {
