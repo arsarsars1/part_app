@@ -66,7 +66,9 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(45),
                     child: CachedImage(
-                      '${F.baseUrl}/admin/images/trainer/${detail?.id}/${detail?.profilePic}',
+                      detail?.profilePic != ""
+                          ? '${F.baseUrl}/admin/images/trainer/${detail?.id}/${detail?.profilePic}'
+                          : 'https://www.mindsparktechnologies.com/wp-content/uploads/2021/02/ToyFaces_Colored_BG_29-7QFYBYH.jpg',
                     ).image(),
                   ),
                 ),
