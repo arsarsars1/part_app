@@ -205,16 +205,16 @@ class BatchItem extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(),
                     ),
                   ),
-                  // const SizedBox(
-                  //   height: 4,
-                  // ),
-                  // Align(
-                  //   alignment: Alignment.centerRight,
-                  //   child: Text(
-                  //     '${batch.fee}',
-                  //     style: Theme.of(context).textTheme.bodyText1?.copyWith(),
-                  //   ),
-                  // ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      '${batch.pivot?.feeType}',
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+                    ),
+                  ),
                   const SizedBox(
                     height: 4,
                   ),

@@ -5,7 +5,6 @@
 import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/course.dart';
 
@@ -78,7 +77,7 @@ abstract class Batch with _$Batch {
     int? inactiveStudentsCount,
     int? admissionFees,
     int? isActive,
-    // Pivot? pivot,
+    PivotClass? pivot,
     List<BatchDetail>? batchDetail,
     List<Trainer>? trainers,
     Course? course,
@@ -105,4 +104,24 @@ abstract class BatchDetail with _$BatchDetail {
 
   factory BatchDetail.fromJson(Map<String, dynamic> json) =>
       _$BatchDetailFromJson(json);
+}
+
+@freezed
+abstract class PivotClass with _$PivotClass {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory PivotClass({
+    int? studentDetailId,
+    int? batchId,
+    dynamic? noOfClasses,
+    String? feeType,
+    int? feeAmount,
+    int? admissionFees,
+    int? cycle,
+    DateTime? doj,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) = _PivotClass;
+
+  factory PivotClass.fromJson(Map<String, dynamic> json) =>
+      _$PivotClassFromJson(json);
 }
