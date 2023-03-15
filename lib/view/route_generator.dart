@@ -321,7 +321,9 @@ class RouteGenerator {
 
       case EditAssignedBatch.route:
         return MaterialPageRoute(
-          builder: (_) => const EditAssignedBatch(),
+          builder: (_) => EditAssignedBatch(
+            editStudent: settings.arguments as bool,
+          ),
           settings: settings,
         );
       case ClassLinkList.route:

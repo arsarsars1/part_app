@@ -119,7 +119,11 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
                         context
                             .read<BatchCubit>()
                             .getBatch(batchId: '${batch.id}');
-                        Navigator.pushNamed(context, EditAssignedBatch.route);
+                        Navigator.pushNamed(
+                          context,
+                          EditAssignedBatch.route,
+                          arguments: true,
+                        );
                       },
                     );
                   },
