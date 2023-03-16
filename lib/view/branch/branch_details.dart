@@ -76,10 +76,29 @@ class _BranchDetailsState extends State<BranchDetails> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child: Text(
-                              branch?.branchName ?? '',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  branch?.branchName ?? '',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  branch?.isActive == 1
+                                      ? 'Active'
+                                      : 'Deactivated',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                        fontSize: 12.sm,
+                                        color: branch?.isActive == 1
+                                            ? Colors.white
+                                            : AppColors.primaryColor,
+                                      ),
+                                )
+                              ],
                             ),
                           ),
                           const SizedBox(
@@ -127,7 +146,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                         '${branch?.address}, ${branch?.pincode}',
                       ),
                       SizedBox(
-                        height: 16.h,
+                        height: 4.h,
                       ),
                       Text(
                         '${branch?.country?.name}, '
