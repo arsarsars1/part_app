@@ -35,8 +35,12 @@ class _StudentDetailsState extends State<StudentDetails> {
               children: [
                 Center(
                   child: ProfilePicture(
-                    imageUrl: '${F.baseUrl}/admin/images/student/${details?.id}'
-                        '/${details?.profilePic}',
+                    imageUrl: details?.profilePic != ""
+                        ? '${F.baseUrl}/admin/images/student/${details?.id}'
+                            '/${details?.profilePic}'
+                        : details?.gender == "male"
+                            ? "https://dev.partapp.in/images/avatars/avatar-5.png"
+                            : "https://dev.partapp.in/images/avatars/avatar-1.png",
                     onEdit: () {},
                     onChange: (File value) {
                       context

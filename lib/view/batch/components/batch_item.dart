@@ -130,12 +130,12 @@ class BatchItem extends StatelessWidget {
                         edit: false,
                         onTap: onRemove!,
                       ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      RoundButton(
-                        onTap: onEdit!,
-                      ),
+                      // const SizedBox(
+                      //   width: 16,
+                      // ),
+                      // RoundButton(
+                      //   onTap: onEdit!,
+                      // ),
                     ],
                   )
               ],
@@ -205,18 +205,24 @@ class BatchItem extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(),
                     ),
                   ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      '${batch.pivot?.feeType?.capitalize()}',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            color: AppColors.primaryColor,
+                  if (batch.pivot?.feeType != null)
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            '${batch.pivot?.feeType?.capitalize()}',
+                            style:
+                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      color: AppColors.primaryColor,
+                                    ),
                           ),
+                        ),
+                      ],
                     ),
-                  ),
                   const SizedBox(
                     height: 4,
                   ),
