@@ -33,7 +33,7 @@ class _AddBranchState extends State<AddBranch> {
   final nameController = TextEditingController();
   final addressController = TextEditingController();
   final pinController = TextEditingController();
-
+  final ScrollController _scrollController = ScrollController();
   DropDownItem? defaultState;
 
   @override
@@ -87,6 +87,7 @@ class _AddBranchState extends State<AddBranch> {
         child: Form(
           key: formKey,
           child: ListView(
+            controller: _scrollController,
             children: [
               if (!widget.addBranch)
                 const SizedBox(
@@ -237,14 +238,29 @@ class _AddBranchState extends State<AddBranch> {
                   formKey.currentState?.validate();
                   formKey.currentState?.save();
                   if (branchName.trim().isEmpty) {
+                    _scrollController.animateTo(
+                      nameFocus.offset.dy,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeIn,
+                    );
                     nameFocus.requestFocus();
                     return;
                   }
                   if (address.trim().isEmpty) {
+                    _scrollController.animateTo(
+                      addressFocus.offset.dy,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeIn,
+                    );
                     addressFocus.requestFocus();
                     return;
                   }
                   if (pinCode.trim().isEmpty || pinCode.length < 6) {
+                    _scrollController.animateTo(
+                      pinFocus.offset.dy,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeIn,
+                    );
                     pinFocus.requestFocus();
                     return;
                   }
