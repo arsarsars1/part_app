@@ -29,6 +29,7 @@ class _AddManagerState extends State<AddManager> {
   String? areaOfExpertise;
   String? address;
   int? branchId;
+  String? avatar;
 
   bool selected = false;
 
@@ -70,6 +71,9 @@ class _AddManagerState extends State<AddManager> {
                     onEdit: () {},
                     onChange: (File value) {
                       image = value;
+                    },
+                    onAvatar: (String value) {
+                      avatar = value;
                     },
                   ),
                 ),

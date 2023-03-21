@@ -56,6 +56,7 @@ class _AddStudentState extends State<AddStudent> {
                     onChange: (value) {
                       context.read<StudentCubit>().setProfilePic(value);
                     },
+                    onAvatar: (String value) {},
                   ),
                 ),
               ),

@@ -73,6 +73,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                     onChange: (File value) {
                       cubit.updateProfilePic(profilePic: value);
                     },
+                    onAvatar: (String value) {},
                   ),
                 ),
                 const SizedBox(

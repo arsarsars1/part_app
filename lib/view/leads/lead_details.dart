@@ -26,6 +26,7 @@ class _LeadDetailsState extends State<LeadDetails> {
               imageUrl: '',
               onEdit: () {},
               onChange: (File value) {},
+              onAvatar: (String value) {},
             ),
           ),
           const SizedBox(

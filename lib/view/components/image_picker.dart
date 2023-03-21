@@ -147,22 +147,29 @@ class _PickerList extends StatelessWidget {
             ),
           ),
           if (!documents)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                children: [
-                  SvgPicture.asset(Assets.avatar),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'Choose Avatar Profile Picture',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(color: Colors.white70),
-                  ),
-                ],
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+                
+              },
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(Assets.avatar),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      'Choose Avatar Profile Picture',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: Colors.white70),
+                    ),
+                  ],
+                ),
               ),
             ),
           const SizedBox(

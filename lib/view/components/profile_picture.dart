@@ -12,12 +12,14 @@ import 'package:part_app/view/constants/constant.dart';
 class ProfilePicture extends StatefulWidget {
   final VoidCallback onEdit;
   final ValueChanged<File> onChange;
+  final ValueChanged<String> onAvatar;
   final String? imageUrl;
 
   const ProfilePicture({
     Key? key,
     required this.onEdit,
     required this.onChange,
+    required this.onAvatar,
     this.imageUrl,
   }) : super(key: key);
 

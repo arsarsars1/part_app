@@ -85,6 +85,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                     onChange: (File value) {
                       cubit.updateProfile(profilePic: value);
                     },
+                    onAvatar: (String value) {},
                   ),
                 ),
                 const SizedBox(

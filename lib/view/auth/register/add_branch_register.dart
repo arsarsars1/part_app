@@ -22,7 +22,12 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
   int? stateId;
   int? districtId;
   String pinCode = '';
-
+  final ScrollController _scrollController = ScrollController();
+  final List<FocusNode> _focusNodes = [
+    FocusNode(),
+    FocusNode(),
+    FocusNode(),
+  ];
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -72,6 +77,7 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
             }
           },
           child: ListView(
+            controller: _scrollController,
             children: [
               const SizedBox(
                 height: 20,
@@ -81,6 +87,7 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
                 maxLines: 1,
                 textInputAction: TextInputAction.next,
                 capitalization: TextCapitalization.words,
+                node: _focusNodes[0],
                 title: 'Enter Branch Name *',
                 hint: 'Eg: Main Branch',
                 validator: (value) {
@@ -102,6 +109,7 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
                 title: 'Address *',
                 hint: 'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum',
                 maxLines: 3,
+                node: _focusNodes[1],
                 validator: (value) {
                   return value == null || value.isEmpty
                       ? 'Please enter address.'
@@ -169,9 +177,10 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
                   return value == null ||
                           value.isEmpty ||
                           value.toString().length < 6
-                      ? 'Please enter pin code.'
+                      ? 'Please enter a valid pin code.'
                       : null;
                 },
+                node: _focusNodes[2],
                 length: 6,
                 textInputAction: TextInputAction.done,
                 inputType: TextInputType.number,
@@ -206,6 +215,31 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
                           districtId: districtId!,
                           stateId: stateId!,
                         );
+                  } else {
+                    if (branchName.trim().isEmpty) {
+                      _scrollController.animateTo(
+                        _focusNodes[0].offset.dy,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeIn,
+                      );
+                      _focusNodes[0].requestFocus();
+                      return;
+                    } else if (address.trim().isEmpty) {
+                      _scrollController.animateTo(
+                        _focusNodes[1].offset.dy,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeIn,
+                      );
+                      _focusNodes[1].requestFocus();
+                      return;
+                    } else if (pinCode.trim().isEmpty || pinCode.length < 6) {
+                      _scrollController.animateTo(
+                        _focusNodes[2].offset.dy,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeIn,
+                      );
+                      _focusNodes[2].requestFocus();
+                    }
                   }
                 },
                 title: 'Sign Up',
