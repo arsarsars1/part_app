@@ -213,13 +213,25 @@ class BatchItem extends StatelessWidget {
                         ),
                         Align(
                           alignment: Alignment.centerRight,
-                          child: Text(
-                            '${batch.pivot?.feeType?.capitalize()}',
-                            style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
-                                      color: AppColors.primaryColor,
-                                    ),
-                          ),
+                          child: batch.pivot?.feeType == "monthly"
+                              ? Text(
+                                  'Monthly',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                        color: AppColors.primaryColor,
+                                      ),
+                                )
+                              : Text(
+                                  'Class Based : ${batch.pivot?.noOfClasses.toString()} Nos.',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                          color: AppColors.green,
+                                          fontWeight: FontWeight.bold),
+                                ),
                         ),
                       ],
                     ),
