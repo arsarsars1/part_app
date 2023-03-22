@@ -158,63 +158,67 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       const SizedBox(
                         height: 4,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: managerDetails?.branches?.length ?? 0,
-                              itemBuilder: (context, index) {
-                                Branch? branch =
-                                    managerDetails?.branches?[index];
-                                bool active = branch?.isActive == 1;
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 2),
-                                  child: Text(
-                                    branch?.branchName ?? '',
-                                    style: !active
-                                        ? Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(
-                                              color: AppColors.grey700,
-                                            )
-                                        : null,
+                      managerDetails!.branches!.isEmpty
+                          ? const Text('No Branches Allocated')
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount:
+                                        managerDetails.branches?.length ?? 0,
+                                    itemBuilder: (context, index) {
+                                      Branch? branch =
+                                          managerDetails.branches?[index];
+                                      bool active = branch?.isActive == 1;
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 2),
+                                        child: Text(
+                                          branch?.branchName ?? '',
+                                          style: !active
+                                              ? Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1
+                                                  ?.copyWith(
+                                                    color: AppColors.grey700,
+                                                  )
+                                              : null,
+                                        ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                ManagerBranches.route,
-                              );
-                            },
-                            child: Container(
-                              width: 24.w,
-                              height: 24.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.black54,
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 2,
                                 ),
-                              ),
-                              child: const Icon(
-                                Icons.edit_outlined,
-                                size: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      ManagerBranches.route,
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 24.w,
+                                    height: 24.w,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.black54,
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.edit_outlined,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
                     ],
                   ),
                 ),
@@ -260,7 +264,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                         children: [
                           TitledText(
                             title: 'Gender',
-                            subText: '${managerDetails?.gender?.capitalize()}',
+                            subText: '${managerDetails.gender?.capitalize()}',
                           ),
                           GestureDetector(
                             onTap: () {
@@ -292,19 +296,19 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       ),
                       TitledText(
                         title: 'Whatsapp No',
-                        subText: '${managerDetails?.whatsappNo}',
+                        subText: '${managerDetails.whatsappNo}',
                       ),
                       TitledText(
                         title: 'Date Of Birth',
-                        subText: '${managerDetails?.dob?.toDateString()}',
+                        subText: '${managerDetails.dob?.toDateString()}',
                       ),
                       TitledText(
                         title: 'Email Id',
-                        subText: '${managerDetails?.email}',
+                        subText: '${managerDetails.email}',
                       ),
                       TitledText(
                         title: 'Address',
-                        subText: '${managerDetails?.address}',
+                        subText: '${managerDetails.address}',
                       ),
                       const SizedBox(
                         height: 24,
@@ -317,14 +321,14 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                         children: [
                           DocumentImage(
                             imageUrl:
-                                '${F.baseUrl}/admin/documents/manager/${managerDetails?.id}/${managerDetails?.document_1}',
+                                '${F.baseUrl}/admin/documents/manager/${managerDetails.id}/${managerDetails.document_1}',
                           ),
                           const SizedBox(
                             width: 16,
                           ),
                           DocumentImage(
                             imageUrl:
-                                '${F.baseUrl}/admin/documents/manager/${managerDetails?.id}/${managerDetails?.document_2}',
+                                '${F.baseUrl}/admin/documents/manager/${managerDetails.id}/${managerDetails.document_2}',
                           ),
                         ],
                       )
@@ -351,7 +355,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                           TitledText(
                             title: 'UPI ID',
                             titleColor: Colors.white,
-                            subText: managerDetails?.upiId ?? 'UPI Not Added',
+                            subText: managerDetails.upiId ?? 'UPI Not Added',
                           ),
                           InkWell(
                             onTap: () {
@@ -386,7 +390,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       TitledText(
                         title: 'Pay Day',
                         titleColor: Colors.white,
-                        subText: '${managerDetails?.salaryDate}',
+                        subText: '${managerDetails.salaryDate}',
                       ),
                       const SizedBox(
                         height: 8,
@@ -395,7 +399,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                         title: 'Amount',
                         titleColor: Colors.white,
                         subText:
-                            'Rs. ${managerDetails?.salaryAmount?.toString().currencyFormat()}/-',
+                            'Rs. ${managerDetails.salaryAmount?.toString().currencyFormat()}/-',
                       ),
                       const SizedBox(
                         height: 8,
@@ -403,7 +407,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       TitledText(
                         title: 'Joining Date',
                         titleColor: Colors.white,
-                        subText: '${managerDetails?.doj?.toDDMMYYY()}',
+                        subText: '${managerDetails.doj?.toDDMMYYY()}',
                       ),
                     ],
                   ),
