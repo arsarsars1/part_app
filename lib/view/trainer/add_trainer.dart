@@ -68,7 +68,7 @@ class _AddTrainerState extends State<AddTrainer> {
                     onChange: (File value) {
                       image = value;
                     },
-                    onAvatar: (String value) {},
+                    onAvatar: (File value) {},
                   ),
                 ),
                 const SizedBox(

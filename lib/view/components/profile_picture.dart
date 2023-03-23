@@ -12,7 +12,7 @@ import 'package:part_app/view/constants/constant.dart';
 class ProfilePicture extends StatefulWidget {
   final VoidCallback onEdit;
   final ValueChanged<File> onChange;
-  final ValueChanged<String> onAvatar;
+  final ValueChanged<File> onAvatar;
   final String? imageUrl;
 
   const ProfilePicture({

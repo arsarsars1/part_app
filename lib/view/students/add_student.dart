@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/extensions.dart';
@@ -56,7 +58,7 @@ class _AddStudentState extends State<AddStudent> {
                     onChange: (value) {
                       context.read<StudentCubit>().setProfilePic(value);
                     },
-                    onAvatar: (String value) {},
+                    onAvatar: (File value) {},
                   ),
                 ),
               ),

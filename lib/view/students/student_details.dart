@@ -42,7 +42,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                             ? "https://dev.partapp.in/images/avatars/avatar-5.png"
                             : "https://dev.partapp.in/images/avatars/avatar-1.png",
                     onEdit: () {},
-                    onAvatar: (String value) {},
+                    onAvatar: (File value) {},
                     onChange: (File value) {
                       context
                           .read<StudentCubit>()

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class ImagePickerDialog {
               Navigator.pop(context);
               switch (value) {
                 case ImageType.camera:
-                  // Capture a photo
+                  // Capture a photo using camera
                   final XFile? photo = await picker.pickImage(
                     source: ImageSource.camera,
                   );
@@ -40,7 +41,7 @@ class ImagePickerDialog {
                   }
                   break;
                 case ImageType.gallery:
-                  // Capture a photo
+                  // Choose a photo from device
                   final XFile? photo = await picker.pickImage(
                     source: ImageSource.gallery,
                   );
@@ -49,6 +50,7 @@ class ImagePickerDialog {
                   }
                   break;
                 case ImageType.avatar:
+                  log('hello');
                   break;
               }
             },
@@ -149,8 +151,7 @@ class _PickerList extends StatelessWidget {
           if (!documents)
             InkWell(
               onTap: () {
-                Navigator.pop(context);
-                
+                onSelect(ImageType.avatar);
               },
               child: Padding(
                 padding:

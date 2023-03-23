@@ -72,9 +72,7 @@ class _AddManagerState extends State<AddManager> {
                     onChange: (File value) {
                       image = value;
                     },
-                    onAvatar: (String value) {
-                      avatar = value;
-                    },
+                    onAvatar: (File value) {},
                   ),
                 ),
                 SizedBox(
