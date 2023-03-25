@@ -61,7 +61,10 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
               context.read<BatchCubit>().refresh();
 
               context.read<StudentCubit>().getStudentBatches();
-              Navigator.pushNamed(context, EditStudentBatches.route);
+              Navigator.popUntil(
+                context,
+                ModalRoute.withName(EditStudentBatches.route),
+              );
             } else {
               Navigator.popUntil(
                 context,
