@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/constants/constant.dart';
 
 class ImagePickerDialog {
@@ -50,7 +51,302 @@ class ImagePickerDialog {
                   }
                   break;
                 case ImageType.avatar:
-                  log('hello');
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      contentPadding: EdgeInsets.zero,
+                      backgroundColor: Colors.transparent,
+                      content: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.liteDark,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Column(
+                          // crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                'Choose an avatar',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
+                                        fontSize: 18.sm, color: Colors.white70),
+                              ),
+                            ),
+                            const Divider(
+                              color: Colors.white70,
+                            ),
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        File file =
+                                            await getImageFileFromAssets(
+                                                'avatar-1.png');
+                                        onSelect(file);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/avatar-1.png',
+                                            width: 70.w,
+                                            height: 70.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        File file =
+                                            await getImageFileFromAssets(
+                                                'avatar-2.png');
+                                        onSelect(file);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/avatar-2.png',
+                                            width: 70.w,
+                                            height: 70.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        File file =
+                                            await getImageFileFromAssets(
+                                                'avatar-3.png');
+                                        onSelect(file);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/avatar-3.png',
+                                            width: 70.w,
+                                            height: 70.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        File file =
+                                            await getImageFileFromAssets(
+                                                'avatar-4.png');
+                                        onSelect(file);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/avatar-4.png',
+                                            width: 70.w,
+                                            height: 70.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        File file =
+                                            await getImageFileFromAssets(
+                                                'avatar-5.png');
+                                        onSelect(file);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/avatar-5.png',
+                                            width: 70.w,
+                                            height: 70.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        File file =
+                                            await getImageFileFromAssets(
+                                                'avatar-6.png');
+                                        onSelect(file);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/avatar-6.png',
+                                            width: 70.w,
+                                            height: 70.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        File file =
+                                            await getImageFileFromAssets(
+                                                'avatar-7.png');
+                                        onSelect(file);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/avatar-7.png',
+                                            width: 70.w,
+                                            height: 70.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        File file =
+                                            await getImageFileFromAssets(
+                                                'avatar-8.png');
+                                        onSelect(file);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/avatar-8.png',
+                                            width: 70.w,
+                                            height: 70.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        File file =
+                                            await getImageFileFromAssets(
+                                                'avatar-9.png');
+                                        onSelect(file);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/avatar-9.png',
+                                            width: 70.w,
+                                            height: 70.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        File file =
+                                            await getImageFileFromAssets(
+                                                'avatar-10.png');
+                                        onSelect(file);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/avatar-10.png',
+                                            width: 70.w,
+                                            height: 70.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        File file =
+                                            await getImageFileFromAssets(
+                                                'avatar-11.png');
+                                        onSelect(file);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/avatar-11.png',
+                                            width: 70.w,
+                                            height: 70.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        File file =
+                                            await getImageFileFromAssets(
+                                                'avatar-12.png');
+                                        onSelect(file);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/avatar-12.png',
+                                            width: 70.w,
+                                            height: 70.h,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
                   break;
               }
             },

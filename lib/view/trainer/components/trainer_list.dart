@@ -29,12 +29,10 @@ class _TrainerListState extends State<TrainerList> {
   void initState() {
     // Pagination listener
     scrollController.addListener(() {
-      // var nextPageTrigger = 0.60 * scrollController.position.maxScrollExtent;
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        // doSearch(false);
+            
         context.read<TrainerCubit>().getRestOfTheTrainers(nextPage: true);
-        // log('hello');
       }
     });
     super.initState();
