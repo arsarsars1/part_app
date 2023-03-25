@@ -99,14 +99,8 @@ class _BatchPickerState extends State<BatchPicker> {
                       )
                     ],
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   CommonField(
-                    title: 'Search',
+                    title: '',
                     hint: 'Search Batch',
                     onChange: (value) {},
                     prefixIcon: const Icon(Icons.search),
