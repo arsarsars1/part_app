@@ -38,7 +38,8 @@ class _TrainerPageState extends State<TrainerPage> {
       appBar: const CommonBar(
         title: 'Trainers List',
       ),
-      body: ListView(
+      body: Column(
+        // physics: const NeverScrollableScrollPhysics(),
         children: [
           Align(
             alignment: Alignment.centerRight,
@@ -137,14 +138,16 @@ class _TrainerPageState extends State<TrainerPage> {
                   ),
                 );
               }
-              return TrainerList(
-                trainers: cubit.filteredTrainers,
-                onSelect: (Trainer trainer) {
-                  context.read<TrainerCubit>().getTrainerDetails(
-                        trainerId: trainer.id,
-                      );
-                  Navigator.pushNamed(context, TrainerDetails.route);
-                },
+              return Expanded(
+                child: TrainerList(
+                  trainers: cubit.filteredTrainers,
+                  onSelect: (Trainer trainer) {
+                    context.read<TrainerCubit>().getTrainerDetails(
+                          trainerId: trainer.id,
+                        );
+                    Navigator.pushNamed(context, TrainerDetails.route);
+                  },
+                ),
               );
             },
           ),
