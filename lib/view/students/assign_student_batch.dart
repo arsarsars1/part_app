@@ -5,6 +5,7 @@ import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/students/edit_student_batches.dart';
+import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -65,11 +66,19 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
                 ModalRoute.withName(EditStudentBatches.route),
               );
             } else {
-              context.read<StudentCubit>().getStudentBatches();
-              Navigator.popUntil(
+              // Navigator.popUntil(
+              //   context,
+              //   ModalRoute.withName(StudentsView.route),
+              // );
+              var cubit = context.read<StudentCubit>();
+              cubit.studentDetails(cubit.tempStudent?.studentDetail?[0].id);
+              Navigator.pop(context);
+              Navigator.pop(
                 context,
-                ModalRoute.withName(EditStudentBatches.route),
+                StudentDetails.route,
               );
+              context.read<StudentCubit>().getStudentBatches();
+              Navigator.pushNamed(context, EditStudentBatches.route);
             }
           } else if (state is CreateStudentFailed) {
             Alert(context).show(message: state.message);

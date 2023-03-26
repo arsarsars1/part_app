@@ -26,6 +26,7 @@ class StudentCubit extends Cubit<StudentState> {
   StudentRequest get studentRequest => _studentRequest;
 
   Student? _student;
+  Student? tempStudent;
 
   Student? get student => _student;
 
@@ -74,6 +75,7 @@ class StudentCubit extends Cubit<StudentState> {
 
     if (response?.status == 1) {
       _student = response?.student;
+      tempStudent = response?.student;
       // updateStudentsList();
       emit(CreatedStudent());
       _profilePic = null;
@@ -266,7 +268,7 @@ class StudentCubit extends Cubit<StudentState> {
   Future getStudentBatches() async {
     emit(StudentBatchesFetching());
     StudentsBatchResponse? response = await _studentService.getStudentBatches(
-      _student?.studentDetail?[0].id,
+      _student?.studentDetail?[0].id ?? tempStudent?.studentDetail?[0].id,
     );
 
     if (response?.status == 1) {
