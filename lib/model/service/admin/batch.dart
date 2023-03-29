@@ -53,26 +53,27 @@ class BatchService {
   }
 
   Future<Common?> updateBatch(BatchRequest request, int? batchId) async {
+    // List<int?>? tempData = request.trainers;
+    // List<Map<String, dynamic>> data = [];
+    // tempData?.forEach((element) {
+    //   data.add({"trainer[]": element});
+    // });
     var data = request.toJson();
     data.removeWhere((key, value) => value == null);
     if (data.containsKey('trainers[]')) {
-      List<dynamic> items = data['trainers[]'];
-      for (var i = 0; i < items.length; i++) {
-        log(items[i]);
-      }
+      var items = data['trainers[]'];
       if (items.isEmpty) {
         data.remove('trainers[]');
         data.putIfAbsent('trainers[]', () => '');
       } else {
-        for (var i = 0; i < items.length; i++) {
-          final gasGiants = <String, dynamic>{'trainers[]': items[i]};
-          data.addEntries(gasGiants.entries);
-        }
-        log(data.toString());
+        data.remove('trainers[]');
+        final gasGiants = <String, dynamic>{'trainers': items};
+        data.addEntries(gasGiants.entries);
       }
     }
 
     try {
+      log(data.toString());
       var response = await _apiClient.post(
         postPath: '/admin/batches/$batchId',
         data: data,
