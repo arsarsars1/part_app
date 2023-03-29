@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
@@ -54,12 +55,20 @@ class BatchService {
   Future<Common?> updateBatch(BatchRequest request, int? batchId) async {
     var data = request.toJson();
     data.removeWhere((key, value) => value == null);
-
     if (data.containsKey('trainers[]')) {
-      var items = data['trainers[]'];
+      List<dynamic> items = data['trainers[]'];
+      for (var i = 0; i < items.length; i++) {
+        log(items[i]);
+      }
       if (items.isEmpty) {
         data.remove('trainers[]');
         data.putIfAbsent('trainers[]', () => '');
+      } else {
+        for (var i = 0; i < items.length; i++) {
+          final gasGiants = <String, dynamic>{'trainers[]': items[i]};
+          data.addEntries(gasGiants.entries);
+        }
+        log(data.toString());
       }
     }
 
