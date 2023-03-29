@@ -43,6 +43,8 @@ class _AddTrainerBranchesState extends State<AddTrainerBranches> {
                 ModalRoute.withName(TrainerPage.route),
               );
             } else {
+              cubit.getBranchTrainers(
+                  branchId: '${cubit.branch?.id}', clean: true);
               Navigator.popUntil(
                 context,
                 ModalRoute.withName(BranchDetails.route),
