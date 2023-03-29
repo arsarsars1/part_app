@@ -32,7 +32,7 @@ class _RemoveStudentState extends State<RemoveStudent> {
         children: [
           CommonField(
             controller: rejoiningController,
-            title: 'Date Of Rejoining The Batch *',
+            title: 'Date Of Rejoining The Batch',
             disabled: true,
             hint: 'dd/mm/yyyy',
             onTap: datePicker,
@@ -45,7 +45,7 @@ class _RemoveStudentState extends State<RemoveStudent> {
             },
           ),
           CommonField(
-            title: 'Remark/Reason For Deactivation *',
+            title: 'Remark/Reason For Deactivation',
             hint: 'Eg: School Final Exam',
             maxLines: 2,
             contentPadding: EdgeInsets.zero,

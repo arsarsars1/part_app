@@ -120,14 +120,15 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
                           ),
                           onTap: () {
                             formKey.currentState!.save();
-                            if (formKey.currentState!.validate()) {
-                              Navigator.pop(context);
-                              cubit.removeStudentBatch(
-                                batch.id,
-                                date: rejoining!,
-                                reason: remark,
-                              );
-                            }
+                            // if (formKey.currentState!.validate()) {
+                            Navigator.pop(context);
+                            cubit.removeStudentBatch(
+                              batch.id,
+                              // date: rejoining!,
+                              date: rejoining ?? "",
+                              reason: remark,
+                            );
+                            // }
                           },
                         ).show();
                       },
