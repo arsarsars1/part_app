@@ -29,7 +29,7 @@ class _BranchDetailsState extends State<BranchDetails> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       cubit.getBranchById(id: '${widget.id}');
-      cubit.getBranchTrainers(branchId: '${widget.id}');
+      cubit.getBranchTrainers(branchId: '${widget.id}', clean: true);
     });
   }
 
