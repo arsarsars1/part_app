@@ -126,7 +126,7 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
                               batch.id,
                               // date: rejoining!,
                               date: rejoining ?? "",
-                              reason: remark,
+                              reason: remark == "" ? "Nil" : remark,
                             );
                             // }
                           },

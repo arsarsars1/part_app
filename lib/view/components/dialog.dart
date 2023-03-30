@@ -77,6 +77,7 @@ class Logout extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
+            
             Text(
               message,
               style: Theme.of(context).textTheme.bodyText2,
