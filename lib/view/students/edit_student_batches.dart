@@ -107,7 +107,7 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
                         CommonDialog(
                           context: context,
                           message:
-                              'Do You Want To Deactivate ${cubit.student?.studentDetail?[0].name}\n From ${batch.name}?'
+                              'Do You Want To Deactivate ${cubit.student?.studentDetail?[0].name}\n From ${batch.name} ?'
                               '\n\nSelect Date Of Leaving And Confirm',
                           subContent: RemoveStudent(
                             formKey: formKey,

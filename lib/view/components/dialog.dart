@@ -77,12 +77,41 @@ class Logout extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            
-            Text(
-              message,
-              style: Theme.of(context).textTheme.bodyText2,
-              textAlign: TextAlign.center,
-            ),
+            message.contains('Do You Want To Deactivate')
+                ? RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Do You Want To Deactivate ',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        TextSpan(
+                          text: "${message.split(" ")[5]}\n",
+                          style:
+                              Theme.of(context).textTheme.bodyText2?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                        ),
+                        TextSpan(
+                          text: 'From ',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        TextSpan(
+                          text:
+                              "${message.split(" ")[8]} ${message.split(" ")[9]} ?",
+                          style:
+                              Theme.of(context).textTheme.bodyText2?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Text(
+                    message,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
+                  ),
             SizedBox(
               height: 20.h,
             ),
