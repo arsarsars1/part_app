@@ -59,8 +59,9 @@ class BatchModel {
       branchId: batch.branchId,
       name: batch.batchName ?? '',
       trainersString: trainer,
-      branchName:
-          batch.trainers?[0].branches?[0].branchName ?? 'Branch Not Allocated',
+      branchName: batch.branch?.branchName ??
+          batch.trainers?[0].branches?[0].branchName ??
+          'Branch Not Allocated',
       id: batch.id ?? 0,
       days: days ?? [],
       courseName: batch.course?.courseName ?? 'NA',
