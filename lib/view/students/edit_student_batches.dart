@@ -59,7 +59,9 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
           children: [
             Center(
               child: Text(
-                cubit.student?.studentDetail?[0].name ?? 'Not Available',
+                cubit.student?.studentDetail?[0].name ??
+                    cubit.studentRequest.name ??
+                    'Not Available',
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
