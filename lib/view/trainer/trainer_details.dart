@@ -102,7 +102,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                         CommonDialog(
                           context: context,
                           message:
-                              'Do You Want To ${trainer?.isActive == 1 ? 'Deactivate' : 'Activate'} The Trainer?',
+                              'Do You Want To ${trainer?.isActive == 1 ? 'Deactivate' : 'Activate'} The Below Trainer?',
                           subMessage: '${trainer?.name}',
                           onTap: () {
                             active = value;

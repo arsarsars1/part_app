@@ -48,7 +48,6 @@ class TrainerCubit extends Cubit<TrainerState> {
   set selectedBranches(List<int> branches) {
     _selectedBranches.clear();
     _selectedBranches.addAll(branches);
-    print(_selectedBranches);
   }
 
   bool fromBranch = false;
@@ -120,6 +119,11 @@ class TrainerCubit extends Cubit<TrainerState> {
 
   List<Trainer>? filterTrainers({required bool active}) {
     _isActive = active;
+    log("=======================================================================");
+    _trainers?.forEach((element) {
+      log(element.toJson().toString());
+    });
+    log("=======================================================================");
     List<Trainer>? list = _trainers?.where((element) {
       if (active) {
         return element.trainerDetail?[0].isActive == 1;

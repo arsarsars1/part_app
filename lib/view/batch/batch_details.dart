@@ -74,6 +74,10 @@ class _BatchDetailsState extends State<BatchDetails> {
                     child: Text(state.message),
                   );
                 }
+
+                if (state is UpdatedBatch) {
+                  Alert(context).show(message: 'Batch updated successfully.');
+                }
                 return ListView(
                   controller: scrollController,
                   children: [
@@ -303,7 +307,14 @@ class _BatchDetailsState extends State<BatchDetails> {
                               var trainerList =
                                   value.map((e) => e?.id).toList();
                               BatchRequest request = BatchRequest(
-                                trainers: trainerList,
+                                trainers: context
+                                    .read<BranchCubit>()
+                                    .trainers
+                                    ?.where((element) => trainerList.contains(
+                                          element.id,
+                                        ))
+                                    .map((e) => e.trainerDetail?[0].id)
+                                    .toList(),
                               );
                               context.read<BatchCubit>().updateBatch(request);
                             },

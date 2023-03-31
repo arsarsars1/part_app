@@ -72,6 +72,7 @@ class _TrainerPageState extends State<TrainerPage> {
                 dropDownItems: branchCubit.dropDownBranches(),
                 onChange: (value) {
                   branchId = value.id;
+                  cubit.filteredTrainers.clear();
                   cubit.searchTrainers(branchId, query: null);
                 },
               );

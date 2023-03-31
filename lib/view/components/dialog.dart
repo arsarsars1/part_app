@@ -77,7 +77,8 @@ class Logout extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            message.contains('Do You Want To Deactivate')
+            message.contains('Do You Want To Deactivate') &&
+                    message.contains('From')
                 ? RichText(
                     text: TextSpan(
                       children: <TextSpan>[

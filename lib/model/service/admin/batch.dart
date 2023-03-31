@@ -60,17 +60,17 @@ class BatchService {
     // });
     var data = request.toJson();
     data.removeWhere((key, value) => value == null);
-    if (data.containsKey('trainers[]')) {
-      var items = data['trainers[]'];
-      if (items.isEmpty) {
-        data.remove('trainers[]');
-        data.putIfAbsent('trainers[]', () => '');
-      } else {
-        data.remove('trainers[]');
-        final gasGiants = <String, dynamic>{'trainers': items};
-        data.addEntries(gasGiants.entries);
-      }
-    }
+    // if (data.containsKey('trainers[]')) {
+    //   var items = data['trainers[]'];
+    //   if (items.isEmpty) {
+    //     data.remove('trainers[]');
+    //     data.putIfAbsent('trainers[]', () => '');
+    //   } else {
+    //     data.remove('trainers[]');
+    //     final gasGiants = <String, dynamic>{'trainers': items};
+    //     data.addEntries(gasGiants.entries);
+    //   }
+    // }
 
     try {
       log(data.toString());
