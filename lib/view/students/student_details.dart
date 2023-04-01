@@ -145,7 +145,11 @@ class _StudentDetailsState extends State<StudentDetails> {
                   title: 'Student Batches',
                   onTap: () {
                     context.read<StudentCubit>().getStudentBatches();
-                    Navigator.pushNamed(context, EditStudentBatches.route);
+                    Navigator.pushNamed(
+                      context,
+                      EditStudentBatches.route,
+                      arguments: true,
+                    );
                   },
                 ),
                 const SizedBox(

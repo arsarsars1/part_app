@@ -6,7 +6,6 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/students/edit_student_batches.dart';
 import 'package:part_app/view/students/student_details.dart';
-import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AssignStudentBatch extends StatefulWidget {
@@ -39,6 +38,13 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
 
   @override
   Widget build(BuildContext context) {
+    var studentCubit = context.read<StudentCubit>();
+    String student = 'Not Available';
+    if (widget.editStudent) {
+      student = studentCubit.student?.studentDetail?[0].name ?? 'Not Available';
+    } else {
+      student = studentCubit.studentRequest.name ?? 'Not Available';
+    }
     return Scaffold(
       appBar: const CommonBar(
         title: 'Assign Student To Batch',
@@ -61,9 +67,11 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
               context.read<BatchCubit>().refresh();
 
               context.read<StudentCubit>().getStudentBatches();
-              Navigator.popUntil(
+              context.read<StudentCubit>().second = true;
+              Navigator.pushNamed(
                 context,
-                ModalRoute.withName(EditStudentBatches.route),
+                EditStudentBatches.route,
+                arguments: widget.editStudent,
               );
             } else {
               // Navigator.popUntil(
@@ -78,7 +86,8 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
                 StudentDetails.route,
               );
               context.read<StudentCubit>().getStudentBatches();
-              Navigator.pushNamed(context, EditStudentBatches.route);
+              Navigator.pushNamed(context, EditStudentBatches.route,
+                  arguments: widget.editStudent);
             }
           } else if (state is CreateStudentFailed) {
             Alert(context).show(message: state.message);
@@ -105,9 +114,7 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
                   children: [
                     Center(
                       child: Text(
-                        cubit.student?.studentDetail?[0].name ??
-                            cubit.studentRequest.name ??
-                            'Not Available',
+                        student,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.bold,

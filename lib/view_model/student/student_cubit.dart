@@ -27,6 +27,7 @@ class StudentCubit extends Cubit<StudentState> {
 
   Student? _student;
   Student? tempStudent;
+  bool second = false;
 
   Student? get student => _student;
 
@@ -282,8 +283,7 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
-  Future removeStudentBatch(int? batchId,
-      {String? date, reason}) async {
+  Future removeStudentBatch(int? batchId, {String? date, reason}) async {
     emit(RemovingStudent());
     Common? common = await _studentService.removeStudentBatch(
       batchId,

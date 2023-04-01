@@ -302,7 +302,9 @@ class RouteGenerator {
         );
       case EditStudentBatches.route:
         return MaterialPageRoute(
-          builder: (_) => const EditStudentBatches(),
+          builder: (_) => EditStudentBatches(
+            editStudent: settings.arguments as bool,
+          ),
           settings: settings,
         );
       case ClassLinkView.route:
