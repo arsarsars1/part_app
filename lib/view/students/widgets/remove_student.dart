@@ -64,7 +64,7 @@ class _RemoveStudentState extends State<RemoveStudent> {
     );
   }
 
-  // method to get the date for [ dob ]
+  // method to get the date for [ rejoining date ]
   void datePicker() {
     showDatePicker(
       builder: (context, child) {
@@ -94,10 +94,10 @@ class _RemoveStudentState extends State<RemoveStudent> {
       },
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(
-        DateTime.now().year + 10,
+      firstDate: DateTime(
+        DateTime.now().year - 50,
       ),
+      lastDate: DateTime(DateTime.now().year + 20),
     ).then((value) {
       if (value != null) {
         rejoining = value.toServerYMD();
