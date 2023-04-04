@@ -255,10 +255,9 @@ class _ClassLinkViewState extends State<ClassLinkView> {
       },
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      firstDate: DateTime(1900),
       lastDate: DateTime(
-        DateTime.now().year + 2,
-      ),
+          DateTime.now().year, DateTime.now().month + 3, DateTime.now().day),
     ).then((value) {
       if (value != null) {
         date = value;
