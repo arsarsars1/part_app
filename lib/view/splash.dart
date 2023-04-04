@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/auth/login/login.dart';
+import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -30,7 +30,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is UserAvailable) {
+        if (state is NetworkError) {
+          AlertBox.showErrorAlert(context);
+        } else if (state is UserAvailable) {
           if (state.member) {
             Navigator.pushNamedAndRemoveUntil(
               context,

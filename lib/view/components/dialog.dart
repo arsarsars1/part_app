@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 
@@ -29,7 +28,7 @@ class CommonDialog {
         return AlertDialog(
           backgroundColor: AppColors.liteDark,
           contentPadding: EdgeInsets.zero,
-          content: _Logout(
+          content: Logout(
             subColor: subColor,
             message: message,
             subMessage: subMessage,
@@ -43,15 +42,15 @@ class CommonDialog {
   }
 }
 
-class _Logout extends StatelessWidget {
+class Logout extends StatelessWidget {
   final String message;
   final String? subMessage;
   final VoidCallback onTap;
   final Color? subColor;
   final String? buttonText;
   final Widget? subContent;
-
-  const _Logout({
+  final bool? isCancel;
+  const Logout({
     Key? key,
     required this.message,
     this.subMessage,
@@ -59,6 +58,7 @@ class _Logout extends StatelessWidget {
     this.subColor,
     this.buttonText,
     this.subContent,
+    this.isCancel = false,
   }) : super(key: key);
 
   @override
@@ -77,11 +77,42 @@ class _Logout extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              message,
-              style: Theme.of(context).textTheme.bodyText2,
-              textAlign: TextAlign.center,
-            ),
+            message.contains('Do You Want To Deactivate') &&
+                    message.contains('From')
+                ? RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Do You Want To Deactivate ',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        TextSpan(
+                          text: "${message.split(" ")[5]}\n",
+                          style:
+                              Theme.of(context).textTheme.bodyText2?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                        ),
+                        TextSpan(
+                          text: 'From ',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        TextSpan(
+                          text:
+                              "${message.split(" ")[8]} ${message.split(" ")[9]} ?",
+                          style:
+                              Theme.of(context).textTheme.bodyText2?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Text(
+                    message,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
+                  ),
             SizedBox(
               height: 20.h,
             ),
@@ -101,18 +132,23 @@ class _Logout extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Button(
-                  width: 95.w,
-                  height: 36.h,
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  title: 'Cancel',
-                  border: true,
-                ),
-                SizedBox(
-                  width: 32.w,
-                ),
+                if (isCancel!)
+                  Row(
+                    children: [
+                      Button(
+                        width: 95.w,
+                        height: 36.h,
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        title: 'Cancel',
+                        border: true,
+                      ),
+                      SizedBox(
+                        width: 32.w,
+                      ),
+                    ],
+                  ),
                 Button(
                   width: 95.w,
                   height: 36.h,

@@ -4,7 +4,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/model/data_model/district.dart';
 import 'package:part_app/model/data_model/manager_response.dart';
-import 'package:part_app/model/data_model/user_response.dart';
 
 part 'branch_response.freezed.dart';
 part 'branch_response.g.dart';

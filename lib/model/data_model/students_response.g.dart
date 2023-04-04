@@ -97,6 +97,9 @@ _$_StudentDetail _$$_StudentDetailFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String?,
       profilePic: json['profile_pic'] as String?,
       isActive: json['is_active'] as int?,
+      pivot: json['pivot'] == null
+          ? null
+          : PivotClass.fromJson(json['pivot'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_StudentDetailToJson(_$_StudentDetail instance) =>
@@ -114,4 +117,5 @@ Map<String, dynamic> _$$_StudentDetailToJson(_$_StudentDetail instance) =>
       'address': instance.address,
       'profile_pic': instance.profilePic,
       'is_active': instance.isActive,
+      'pivot': instance.pivot,
     };

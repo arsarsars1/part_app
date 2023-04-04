@@ -3,6 +3,7 @@ import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/view/auth/components/phone_number.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/auth/register/sign_up.dart';
+import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -36,7 +37,9 @@ class _LoginState extends State<Login> {
       ),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state is SendingOtp) {
+          if (state is NetworkError) {
+            AlertBox.showErrorAlert(context);
+          } else if (state is SendingOtp) {
             Loader(context, message: 'Please wait').show();
           }
 

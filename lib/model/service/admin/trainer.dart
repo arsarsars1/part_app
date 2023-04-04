@@ -23,6 +23,19 @@ class TrainerService {
     }
   }
 
+  Future<TrainerResponse?> getRestOfTheTrainers({String? path = ""}) async {
+    var response = await _client.get(queryPath: '/admin/trainers?$path');
+
+    try {
+      TrainerResponse trainerResponse = trainerResponseFromJson(
+        jsonEncode(response),
+      );
+      return trainerResponse;
+    } on Exception catch (e) {
+      return null;
+    }
+  }
+
   Future<List<Trainer>?> searchTrainer(int? branchId,
       {required String query}) async {
     Map<String, dynamic> response;

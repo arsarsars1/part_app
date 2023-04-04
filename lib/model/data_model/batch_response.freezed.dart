@@ -653,6 +653,7 @@ mixin _$Batch {
   int? get inactiveStudentsCount => throw _privateConstructorUsedError;
   int? get admissionFees => throw _privateConstructorUsedError;
   int? get isActive => throw _privateConstructorUsedError;
+  PivotClass? get pivot => throw _privateConstructorUsedError;
   List<BatchDetail>? get batchDetail => throw _privateConstructorUsedError;
   List<Trainer>? get trainers => throw _privateConstructorUsedError;
   Course? get course => throw _privateConstructorUsedError;
@@ -682,12 +683,14 @@ abstract class $BatchCopyWith<$Res> {
       int? inactiveStudentsCount,
       int? admissionFees,
       int? isActive,
+      PivotClass? pivot,
       List<BatchDetail>? batchDetail,
       List<Trainer>? trainers,
       Course? course,
       Course? subject,
       Branch? branch});
 
+  $PivotClassCopyWith<$Res>? get pivot;
   $CourseCopyWith<$Res>? get course;
   $CourseCopyWith<$Res>? get subject;
   $BranchCopyWith<$Res>? get branch;
@@ -718,6 +721,7 @@ class _$BatchCopyWithImpl<$Res, $Val extends Batch>
     Object? inactiveStudentsCount = freezed,
     Object? admissionFees = freezed,
     Object? isActive = freezed,
+    Object? pivot = freezed,
     Object? batchDetail = freezed,
     Object? trainers = freezed,
     Object? course = freezed,
@@ -773,6 +777,10 @@ class _$BatchCopyWithImpl<$Res, $Val extends Batch>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as int?,
+      pivot: freezed == pivot
+          ? _value.pivot
+          : pivot // ignore: cast_nullable_to_non_nullable
+              as PivotClass?,
       batchDetail: freezed == batchDetail
           ? _value.batchDetail
           : batchDetail // ignore: cast_nullable_to_non_nullable
@@ -794,6 +802,18 @@ class _$BatchCopyWithImpl<$Res, $Val extends Batch>
           : branch // ignore: cast_nullable_to_non_nullable
               as Branch?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PivotClassCopyWith<$Res>? get pivot {
+    if (_value.pivot == null) {
+      return null;
+    }
+
+    return $PivotClassCopyWith<$Res>(_value.pivot!, (value) {
+      return _then(_value.copyWith(pivot: value) as $Val);
+    });
   }
 
   @override
@@ -852,12 +872,15 @@ abstract class _$$_BatchCopyWith<$Res> implements $BatchCopyWith<$Res> {
       int? inactiveStudentsCount,
       int? admissionFees,
       int? isActive,
+      PivotClass? pivot,
       List<BatchDetail>? batchDetail,
       List<Trainer>? trainers,
       Course? course,
       Course? subject,
       Branch? branch});
 
+  @override
+  $PivotClassCopyWith<$Res>? get pivot;
   @override
   $CourseCopyWith<$Res>? get course;
   @override
@@ -887,6 +910,7 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
     Object? inactiveStudentsCount = freezed,
     Object? admissionFees = freezed,
     Object? isActive = freezed,
+    Object? pivot = freezed,
     Object? batchDetail = freezed,
     Object? trainers = freezed,
     Object? course = freezed,
@@ -942,6 +966,10 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as int?,
+      pivot: freezed == pivot
+          ? _value.pivot
+          : pivot // ignore: cast_nullable_to_non_nullable
+              as PivotClass?,
       batchDetail: freezed == batchDetail
           ? _value._batchDetail
           : batchDetail // ignore: cast_nullable_to_non_nullable
@@ -983,6 +1011,7 @@ class _$_Batch implements _Batch {
       this.inactiveStudentsCount,
       this.admissionFees,
       this.isActive,
+      this.pivot,
       final List<BatchDetail>? batchDetail,
       final List<Trainer>? trainers,
       this.course,
@@ -1018,6 +1047,8 @@ class _$_Batch implements _Batch {
   final int? admissionFees;
   @override
   final int? isActive;
+  @override
+  final PivotClass? pivot;
   final List<BatchDetail>? _batchDetail;
   @override
   List<BatchDetail>? get batchDetail {
@@ -1047,7 +1078,7 @@ class _$_Batch implements _Batch {
 
   @override
   String toString() {
-    return 'Batch(id: $id, batchName: $batchName, academyId: $academyId, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, batchStatus: $batchStatus, feeAmount: $feeAmount, activeStudentsCount: $activeStudentsCount, inactiveStudentsCount: $inactiveStudentsCount, admissionFees: $admissionFees, isActive: $isActive, batchDetail: $batchDetail, trainers: $trainers, course: $course, subject: $subject, branch: $branch)';
+    return 'Batch(id: $id, batchName: $batchName, academyId: $academyId, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, batchStatus: $batchStatus, feeAmount: $feeAmount, activeStudentsCount: $activeStudentsCount, inactiveStudentsCount: $inactiveStudentsCount, admissionFees: $admissionFees, isActive: $isActive, pivot: $pivot, batchDetail: $batchDetail, trainers: $trainers, course: $course, subject: $subject, branch: $branch)';
   }
 
   @override
@@ -1078,6 +1109,7 @@ class _$_Batch implements _Batch {
                 other.admissionFees == admissionFees) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
+            (identical(other.pivot, pivot) || other.pivot == pivot) &&
             const DeepCollectionEquality()
                 .equals(other._batchDetail, _batchDetail) &&
             const DeepCollectionEquality().equals(other._trainers, _trainers) &&
@@ -1102,6 +1134,7 @@ class _$_Batch implements _Batch {
       inactiveStudentsCount,
       admissionFees,
       isActive,
+      pivot,
       const DeepCollectionEquality().hash(_batchDetail),
       const DeepCollectionEquality().hash(_trainers),
       course,
@@ -1136,6 +1169,7 @@ abstract class _Batch implements Batch {
       final int? inactiveStudentsCount,
       final int? admissionFees,
       final int? isActive,
+      final PivotClass? pivot,
       final List<BatchDetail>? batchDetail,
       final List<Trainer>? trainers,
       final Course? course,
@@ -1168,6 +1202,8 @@ abstract class _Batch implements Batch {
   int? get admissionFees;
   @override
   int? get isActive;
+  @override
+  PivotClass? get pivot;
   @override
   List<BatchDetail>? get batchDetail;
   @override
@@ -1466,5 +1502,343 @@ abstract class _BatchDetail implements BatchDetail {
   @override
   @JsonKey(ignore: true)
   _$$_BatchDetailCopyWith<_$_BatchDetail> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+PivotClass _$PivotClassFromJson(Map<String, dynamic> json) {
+  return _PivotClass.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PivotClass {
+  int? get studentDetailId => throw _privateConstructorUsedError;
+  int? get batchId => throw _privateConstructorUsedError;
+  dynamic? get noOfClasses => throw _privateConstructorUsedError;
+  String? get feeType => throw _privateConstructorUsedError;
+  int? get feeAmount => throw _privateConstructorUsedError;
+  int? get admissionFees => throw _privateConstructorUsedError;
+  int? get cycle => throw _privateConstructorUsedError;
+  DateTime? get doj => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PivotClassCopyWith<PivotClass> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PivotClassCopyWith<$Res> {
+  factory $PivotClassCopyWith(
+          PivotClass value, $Res Function(PivotClass) then) =
+      _$PivotClassCopyWithImpl<$Res, PivotClass>;
+  @useResult
+  $Res call(
+      {int? studentDetailId,
+      int? batchId,
+      dynamic? noOfClasses,
+      String? feeType,
+      int? feeAmount,
+      int? admissionFees,
+      int? cycle,
+      DateTime? doj,
+      DateTime? createdAt,
+      DateTime? updatedAt});
+}
+
+/// @nodoc
+class _$PivotClassCopyWithImpl<$Res, $Val extends PivotClass>
+    implements $PivotClassCopyWith<$Res> {
+  _$PivotClassCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? studentDetailId = freezed,
+    Object? batchId = freezed,
+    Object? noOfClasses = null,
+    Object? feeType = freezed,
+    Object? feeAmount = freezed,
+    Object? admissionFees = freezed,
+    Object? cycle = freezed,
+    Object? doj = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(_value.copyWith(
+      studentDetailId: freezed == studentDetailId
+          ? _value.studentDetailId
+          : studentDetailId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      batchId: freezed == batchId
+          ? _value.batchId
+          : batchId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      noOfClasses: null == noOfClasses
+          ? _value.noOfClasses
+          : noOfClasses // ignore: cast_nullable_to_non_nullable
+              as dynamic?,
+      feeType: freezed == feeType
+          ? _value.feeType
+          : feeType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      feeAmount: freezed == feeAmount
+          ? _value.feeAmount
+          : feeAmount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      admissionFees: freezed == admissionFees
+          ? _value.admissionFees
+          : admissionFees // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cycle: freezed == cycle
+          ? _value.cycle
+          : cycle // ignore: cast_nullable_to_non_nullable
+              as int?,
+      doj: freezed == doj
+          ? _value.doj
+          : doj // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_PivotClassCopyWith<$Res>
+    implements $PivotClassCopyWith<$Res> {
+  factory _$$_PivotClassCopyWith(
+          _$_PivotClass value, $Res Function(_$_PivotClass) then) =
+      __$$_PivotClassCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int? studentDetailId,
+      int? batchId,
+      dynamic? noOfClasses,
+      String? feeType,
+      int? feeAmount,
+      int? admissionFees,
+      int? cycle,
+      DateTime? doj,
+      DateTime? createdAt,
+      DateTime? updatedAt});
+}
+
+/// @nodoc
+class __$$_PivotClassCopyWithImpl<$Res>
+    extends _$PivotClassCopyWithImpl<$Res, _$_PivotClass>
+    implements _$$_PivotClassCopyWith<$Res> {
+  __$$_PivotClassCopyWithImpl(
+      _$_PivotClass _value, $Res Function(_$_PivotClass) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? studentDetailId = freezed,
+    Object? batchId = freezed,
+    Object? noOfClasses = null,
+    Object? feeType = freezed,
+    Object? feeAmount = freezed,
+    Object? admissionFees = freezed,
+    Object? cycle = freezed,
+    Object? doj = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(_$_PivotClass(
+      studentDetailId: freezed == studentDetailId
+          ? _value.studentDetailId
+          : studentDetailId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      batchId: freezed == batchId
+          ? _value.batchId
+          : batchId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      noOfClasses: null == noOfClasses
+          ? _value.noOfClasses
+          : noOfClasses // ignore: cast_nullable_to_non_nullable
+              as dynamic?,
+      feeType: freezed == feeType
+          ? _value.feeType
+          : feeType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      feeAmount: freezed == feeAmount
+          ? _value.feeAmount
+          : feeAmount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      admissionFees: freezed == admissionFees
+          ? _value.admissionFees
+          : admissionFees // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cycle: freezed == cycle
+          ? _value.cycle
+          : cycle // ignore: cast_nullable_to_non_nullable
+              as int?,
+      doj: freezed == doj
+          ? _value.doj
+          : doj // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class _$_PivotClass implements _PivotClass {
+  const _$_PivotClass(
+      {this.studentDetailId,
+      this.batchId,
+      this.noOfClasses,
+      this.feeType,
+      this.feeAmount,
+      this.admissionFees,
+      this.cycle,
+      this.doj,
+      this.createdAt,
+      this.updatedAt});
+
+  factory _$_PivotClass.fromJson(Map<String, dynamic> json) =>
+      _$$_PivotClassFromJson(json);
+
+  @override
+  final int? studentDetailId;
+  @override
+  final int? batchId;
+  @override
+  final dynamic? noOfClasses;
+  @override
+  final String? feeType;
+  @override
+  final int? feeAmount;
+  @override
+  final int? admissionFees;
+  @override
+  final int? cycle;
+  @override
+  final DateTime? doj;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
+
+  @override
+  String toString() {
+    return 'PivotClass(studentDetailId: $studentDetailId, batchId: $batchId, noOfClasses: $noOfClasses, feeType: $feeType, feeAmount: $feeAmount, admissionFees: $admissionFees, cycle: $cycle, doj: $doj, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PivotClass &&
+            (identical(other.studentDetailId, studentDetailId) ||
+                other.studentDetailId == studentDetailId) &&
+            (identical(other.batchId, batchId) || other.batchId == batchId) &&
+            const DeepCollectionEquality()
+                .equals(other.noOfClasses, noOfClasses) &&
+            (identical(other.feeType, feeType) || other.feeType == feeType) &&
+            (identical(other.feeAmount, feeAmount) ||
+                other.feeAmount == feeAmount) &&
+            (identical(other.admissionFees, admissionFees) ||
+                other.admissionFees == admissionFees) &&
+            (identical(other.cycle, cycle) || other.cycle == cycle) &&
+            (identical(other.doj, doj) || other.doj == doj) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      studentDetailId,
+      batchId,
+      const DeepCollectionEquality().hash(noOfClasses),
+      feeType,
+      feeAmount,
+      admissionFees,
+      cycle,
+      doj,
+      createdAt,
+      updatedAt);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PivotClassCopyWith<_$_PivotClass> get copyWith =>
+      __$$_PivotClassCopyWithImpl<_$_PivotClass>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_PivotClassToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PivotClass implements PivotClass {
+  const factory _PivotClass(
+      {final int? studentDetailId,
+      final int? batchId,
+      final dynamic? noOfClasses,
+      final String? feeType,
+      final int? feeAmount,
+      final int? admissionFees,
+      final int? cycle,
+      final DateTime? doj,
+      final DateTime? createdAt,
+      final DateTime? updatedAt}) = _$_PivotClass;
+
+  factory _PivotClass.fromJson(Map<String, dynamic> json) =
+      _$_PivotClass.fromJson;
+
+  @override
+  int? get studentDetailId;
+  @override
+  int? get batchId;
+  @override
+  dynamic? get noOfClasses;
+  @override
+  String? get feeType;
+  @override
+  int? get feeAmount;
+  @override
+  int? get admissionFees;
+  @override
+  int? get cycle;
+  @override
+  DateTime? get doj;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
+  @override
+  @JsonKey(ignore: true)
+  _$$_PivotClassCopyWith<_$_PivotClass> get copyWith =>
       throw _privateConstructorUsedError;
 }

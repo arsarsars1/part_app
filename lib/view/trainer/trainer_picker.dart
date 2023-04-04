@@ -179,15 +179,6 @@ class _TrainerPickerState extends State<TrainerPicker> {
                                       leading: UserImage(
                                         profilePic: trainer.profilePic,
                                       ),
-                                      subtitle: Text(
-                                        '${trainer.expertise}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(
-                                              color: AppColors.primaryColor,
-                                            ),
-                                      ),
                                     );
                                   },
                                 ),

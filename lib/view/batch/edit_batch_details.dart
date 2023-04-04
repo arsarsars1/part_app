@@ -7,7 +7,6 @@ import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/view/batch/batch_details.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view_model/cubits.dart';
 

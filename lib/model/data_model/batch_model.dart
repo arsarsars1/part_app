@@ -15,6 +15,7 @@ class BatchModel {
   final int? admissionFee;
   final int? fee;
   final int? studentCount;
+  final PivotClass? pivot;
   final List<Trainer>? trainers;
   final List<TrainerModel>? trainersList;
   final bool active;
@@ -31,6 +32,7 @@ class BatchModel {
     this.admissionFee,
     this.fee,
     this.studentCount,
+    this.pivot,
     this.trainers,
     this.trainersList,
     required this.active,
@@ -54,10 +56,12 @@ class BatchModel {
     }).toList();
 
     return BatchModel(
-      branchId: batch.branch?.id,
+      branchId: batch.branchId,
       name: batch.batchName ?? '',
       trainersString: trainer,
-      branchName: batch.branch?.branchName ?? 'Branch Not Allocated',
+      branchName: batch.branch?.branchName ??
+          batch.trainers?[0].branches?[0].branchName ??
+          'Branch Not Allocated',
       id: batch.id ?? 0,
       days: days ?? [],
       courseName: batch.course?.courseName ?? 'NA',
@@ -66,9 +70,55 @@ class BatchModel {
       fee: batch.feeAmount,
       studentCount: batch.activeStudentsCount,
       trainers: batch.trainers,
+      pivot: batch.pivot,
       trainersList:
           batch.trainers?.map((e) => TrainerModel.fromEntity(e)).toList(),
       active: batch.isActive == 1,
     );
   }
 }
+
+
+
+// class Pivot {
+//   Pivot({
+//     this.studentDetailId,
+//     this.batchId,
+//     this.noOfClasses,
+//     this.feeType,
+//     this.feeAmount,
+//     this.admissionFees,
+//     this.cycle,
+//     this.doj,
+//     this.createdAt,
+//     this.updatedAt,
+//   });
+
+//   int? studentDetailId;
+//   int? batchId;
+//   dynamic noOfClasses;
+//   String? feeType;
+//   int? feeAmount;
+//   int? admissionFees;
+//   int? cycle;
+//   DateTime? doj;
+//   DateTime? createdAt;
+//   DateTime? updatedAt;
+
+//   factory Pivot.fromJson(Map<String, dynamic> json) => Pivot(
+//         studentDetailId: json["student_detail_id"],
+//         batchId: json["batch_id"],
+//         noOfClasses: json["no_of_classes"],
+//         feeType: json["fee_type"],
+//         feeAmount: json["fee_amount"],
+//         admissionFees: json["admission_fees"],
+//         cycle: json["cycle"],
+//         doj: json["doj"] == null ? null : DateTime.parse(json["doj"]),
+//         createdAt: json["created_at"] == null
+//             ? null
+//             : DateTime.parse(json["created_at"]),
+//         updatedAt: json["updated_at"] == null
+//             ? null
+//             : DateTime.parse(json["updated_at"]),
+//       );
+// }

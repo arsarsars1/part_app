@@ -6,6 +6,7 @@ import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/view/batch/batch_list.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
+import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
@@ -60,7 +61,10 @@ class _AddBatchState extends State<AddBatch> {
       appBar: const CommonBar(title: 'Add New Batch'),
       body: BlocListener<BatchCubit, BatchState>(
         listener: (context, state) {
-          if (state is CreatingBatch) {
+          if(state is BatchNetworkError){
+            AlertBox.showErrorAlert(context);
+          }
+          else if (state is CreatingBatch) {
             Loader(context).show();
           } else if (state is CreatedBatch) {
             Navigator.popUntil(

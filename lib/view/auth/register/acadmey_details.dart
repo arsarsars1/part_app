@@ -33,6 +33,7 @@ class _WAValidationState extends State<AcademyDetails> {
             CommonField(
               length: 100,
               textInputAction: TextInputAction.done,
+              capitalization: TextCapitalization.words,
               maxLines: 1,
               title: 'Enter Academy Name *',
               hint: 'Eg: Polestar',

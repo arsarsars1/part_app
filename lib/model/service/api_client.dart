@@ -41,7 +41,7 @@ class ApiClient {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
       controller?.add(600);
-      return;
+      return null;
     }
     try {
       var response = await _dio.get(
@@ -64,7 +64,7 @@ class ApiClient {
         response,
       );
     } catch (e) {
-      return null;
+      return e;
     }
   }
 

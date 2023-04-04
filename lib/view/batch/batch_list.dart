@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/batch/add_batch.dart';
 import 'package:part_app/view/batch/batch_details.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
-import 'package:part_app/view/components/branch_field.dart';
-import 'package:part_app/view/components/common_bar.dart';
+import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/loader.dart';
-import 'package:part_app/view/components/tab_button.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class BatchesPage extends StatefulWidget {
@@ -150,6 +146,9 @@ class _BatchesPageState extends State<BatchesPage> {
                     buildWhen: (prv, crr) =>
                         crr is BatchesFetched || crr is FetchingBatches,
                     builder: (context, state) {
+                      if (state is BatchNetworkError) {
+                        AlertBox.showErrorAlert(context);
+                      }
                       if (cubit.batches.isEmpty && state is FetchingBatches) {
                         return const Padding(
                           padding: EdgeInsets.only(top: 32),

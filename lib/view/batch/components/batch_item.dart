@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
@@ -131,12 +130,12 @@ class BatchItem extends StatelessWidget {
                         edit: false,
                         onTap: onRemove!,
                       ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      RoundButton(
-                        onTap: onEdit!,
-                      ),
+                      // const SizedBox(
+                      //   width: 16,
+                      // ),
+                      // RoundButton(
+                      //   onTap: onEdit!,
+                      // ),
                     ],
                   )
               ],
@@ -206,6 +205,36 @@ class BatchItem extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(),
                     ),
                   ),
+                  if (batch.pivot?.feeType != null)
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: batch.pivot?.feeType == "monthly"
+                              ? Text(
+                                  'Monthly',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                        color: AppColors.primaryColor,
+                                      ),
+                                )
+                              : Text(
+                                  'Class Based : ${batch.pivot?.noOfClasses.toString()} Nos.',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                          color: AppColors.green,
+                                          fontWeight: FontWeight.bold),
+                                ),
+                        ),
+                      ],
+                    ),
                   const SizedBox(
                     height: 4,
                   ),

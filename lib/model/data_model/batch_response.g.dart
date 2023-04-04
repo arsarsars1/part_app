@@ -73,6 +73,9 @@ _$_Batch _$$_BatchFromJson(Map<String, dynamic> json) => _$_Batch(
       inactiveStudentsCount: json['inactive_students_count'] as int?,
       admissionFees: json['admission_fees'] as int?,
       isActive: json['is_active'] as int?,
+      pivot: json['pivot'] == null
+          ? null
+          : PivotClass.fromJson(json['pivot'] as Map<String, dynamic>),
       batchDetail: (json['batch_detail'] as List<dynamic>?)
           ?.map((e) => BatchDetail.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -103,6 +106,7 @@ Map<String, dynamic> _$$_BatchToJson(_$_Batch instance) => <String, dynamic>{
       'inactive_students_count': instance.inactiveStudentsCount,
       'admission_fees': instance.admissionFees,
       'is_active': instance.isActive,
+      'pivot': instance.pivot,
       'batch_detail': instance.batchDetail,
       'trainers': instance.trainers,
       'course': instance.course,
@@ -136,4 +140,36 @@ Map<String, dynamic> _$$_BatchDetailToJson(_$_BatchDetail instance) =>
       'start_time': instance.startTime,
       'end_time': instance.endTime,
       'is_active': instance.isActive,
+    };
+
+_$_PivotClass _$$_PivotClassFromJson(Map<String, dynamic> json) =>
+    _$_PivotClass(
+      studentDetailId: json['student_detail_id'] as int?,
+      batchId: json['batch_id'] as int?,
+      noOfClasses: json['no_of_classes'],
+      feeType: json['fee_type'] as String?,
+      feeAmount: json['fee_amount'] as int?,
+      admissionFees: json['admission_fees'] as int?,
+      cycle: json['cycle'] as int?,
+      doj: json['doj'] == null ? null : DateTime.parse(json['doj'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+    );
+
+Map<String, dynamic> _$$_PivotClassToJson(_$_PivotClass instance) =>
+    <String, dynamic>{
+      'student_detail_id': instance.studentDetailId,
+      'batch_id': instance.batchId,
+      'no_of_classes': instance.noOfClasses,
+      'fee_type': instance.feeType,
+      'fee_amount': instance.feeAmount,
+      'admission_fees': instance.admissionFees,
+      'cycle': instance.cycle,
+      'doj': instance.doj?.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
     };

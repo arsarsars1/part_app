@@ -77,6 +77,7 @@ abstract class Batch with _$Batch {
     int? inactiveStudentsCount,
     int? admissionFees,
     int? isActive,
+    PivotClass? pivot,
     List<BatchDetail>? batchDetail,
     List<Trainer>? trainers,
     Course? course,
@@ -103,4 +104,24 @@ abstract class BatchDetail with _$BatchDetail {
 
   factory BatchDetail.fromJson(Map<String, dynamic> json) =>
       _$BatchDetailFromJson(json);
+}
+
+@freezed
+abstract class PivotClass with _$PivotClass {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory PivotClass({
+    int? studentDetailId,
+    int? batchId,
+    dynamic? noOfClasses,
+    String? feeType,
+    int? feeAmount,
+    int? admissionFees,
+    int? cycle,
+    DateTime? doj,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) = _PivotClass;
+
+  factory PivotClass.fromJson(Map<String, dynamic> json) =>
+      _$PivotClassFromJson(json);
 }

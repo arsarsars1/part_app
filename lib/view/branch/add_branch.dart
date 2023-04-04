@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/branch/components/enable_switch.dart';
-import 'package:part_app/view/components/common_bar.dart';
+import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AddBranch extends StatefulWidget {
@@ -35,7 +33,7 @@ class _AddBranchState extends State<AddBranch> {
   final nameController = TextEditingController();
   final addressController = TextEditingController();
   final pinController = TextEditingController();
-
+  final ScrollController _scrollController = ScrollController();
   DropDownItem? defaultState;
 
   @override
@@ -67,7 +65,9 @@ class _AddBranchState extends State<AddBranch> {
       body: BlocListener<BranchCubit, BranchState>(
         listener: (context, state) {
           if (state is BranchLoaded) {}
-          if (state is AddingBranch || state is UpdatingBranch) {
+          if (state is BranchNetworkError) {
+            AlertBox.showErrorAlert(context);
+          } else if (state is AddingBranch || state is UpdatingBranch) {
             Loader(context, message: 'Adding Branch ...').show();
           } else if (state is AddingBranchFailed) {
             Navigator.pop(context);
@@ -87,6 +87,7 @@ class _AddBranchState extends State<AddBranch> {
         child: Form(
           key: formKey,
           child: ListView(
+            controller: _scrollController,
             children: [
               if (!widget.addBranch)
                 const SizedBox(
@@ -237,14 +238,29 @@ class _AddBranchState extends State<AddBranch> {
                   formKey.currentState?.validate();
                   formKey.currentState?.save();
                   if (branchName.trim().isEmpty) {
+                    _scrollController.animateTo(
+                      nameFocus.offset.dy,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeIn,
+                    );
                     nameFocus.requestFocus();
                     return;
                   }
                   if (address.trim().isEmpty) {
+                    _scrollController.animateTo(
+                      addressFocus.offset.dy,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeIn,
+                    );
                     addressFocus.requestFocus();
                     return;
                   }
                   if (pinCode.trim().isEmpty || pinCode.length < 6) {
+                    _scrollController.animateTo(
+                      pinFocus.offset.dy,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeIn,
+                    );
                     pinFocus.requestFocus();
                     return;
                   }

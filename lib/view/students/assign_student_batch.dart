@@ -4,8 +4,8 @@ import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/students/assign_batch.dart';
-import 'package:part_app/view/students/students_view.dart';
+import 'package:part_app/view/students/edit_student_batches.dart';
+import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AssignStudentBatch extends StatefulWidget {
@@ -38,6 +38,13 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
 
   @override
   Widget build(BuildContext context) {
+    var studentCubit = context.read<StudentCubit>();
+    String student = 'Not Available';
+    if (widget.editStudent) {
+      student = studentCubit.student?.studentDetail?[0].name ?? 'Not Available';
+    } else {
+      student = studentCubit.studentRequest.name ?? 'Not Available';
+    }
     return Scaffold(
       appBar: const CommonBar(
         title: 'Assign Student To Batch',
@@ -59,15 +66,28 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
             if (widget.editStudent) {
               context.read<BatchCubit>().refresh();
 
-              Navigator.popUntil(
+              context.read<StudentCubit>().getStudentBatches();
+              context.read<StudentCubit>().second = true;
+              Navigator.pushNamed(
                 context,
-                ModalRoute.withName(AssignBatch.route),
+                EditStudentBatches.route,
+                arguments: widget.editStudent,
               );
             } else {
-              Navigator.popUntil(
+              // Navigator.popUntil(
+              //   context,
+              //   ModalRoute.withName(StudentsView.route),
+              // );
+              var cubit = context.read<StudentCubit>();
+              cubit.studentDetails(cubit.tempStudent?.studentDetail?[0].id);
+              Navigator.pop(context);
+              Navigator.pop(
                 context,
-                ModalRoute.withName(StudentsView.route),
+                StudentDetails.route,
               );
+              context.read<StudentCubit>().getStudentBatches();
+              Navigator.pushNamed(context, EditStudentBatches.route,
+                  arguments: widget.editStudent);
             }
           } else if (state is CreateStudentFailed) {
             Alert(context).show(message: state.message);
@@ -94,7 +114,7 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
                   children: [
                     Center(
                       child: Text(
-                        cubit.studentRequest.name ?? 'Not Available',
+                        student,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.bold,

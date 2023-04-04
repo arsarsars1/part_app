@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:part_app/model/data_model/academy_type.dart';
 import 'package:part_app/model/data_model/country.dart';

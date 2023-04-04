@@ -38,7 +38,8 @@ class _TrainerPageState extends State<TrainerPage> {
       appBar: const CommonBar(
         title: 'Trainers List',
       ),
-      body: ListView(
+      body: Column(
+        // physics: const NeverScrollableScrollPhysics(),
         children: [
           Align(
             alignment: Alignment.centerRight,
@@ -71,6 +72,7 @@ class _TrainerPageState extends State<TrainerPage> {
                 dropDownItems: branchCubit.dropDownBranches(),
                 onChange: (value) {
                   branchId = value.id;
+                  cubit.filteredTrainers.clear();
                   cubit.searchTrainers(branchId, query: null);
                 },
               );
@@ -137,14 +139,16 @@ class _TrainerPageState extends State<TrainerPage> {
                   ),
                 );
               }
-              return TrainerList(
-                trainers: cubit.filteredTrainers,
-                onSelect: (Trainer trainer) {
-                  context.read<TrainerCubit>().getTrainerDetails(
-                        trainerId: trainer.id,
-                      );
-                  Navigator.pushNamed(context, TrainerDetails.route);
-                },
+              return Expanded(
+                child: TrainerList(
+                  trainers: cubit.filteredTrainers,
+                  onSelect: (Trainer trainer) {
+                    context.read<TrainerCubit>().getTrainerDetails(
+                          trainerId: trainer.id,
+                        );
+                    Navigator.pushNamed(context, TrainerDetails.route);
+                  },
+                ),
               );
             },
           ),

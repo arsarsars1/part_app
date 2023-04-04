@@ -25,6 +25,7 @@ class BatchPicker extends StatefulWidget {
 
 class _BatchPickerState extends State<BatchPicker> {
   ScrollController scrollController = ScrollController();
+  String? query;
 
   @override
   void initState() {
@@ -98,8 +99,25 @@ class _BatchPickerState extends State<BatchPicker> {
                       )
                     ],
                   ),
-                  const SizedBox(
-                    height: 8,
+                  CommonField(
+                    title: '',
+                    hint: 'Search Batch',
+                    onChange: (value) {},
+                    prefixIcon: const Icon(Icons.search),
+                    onSubmit: (value) {
+                      if (value.isEmpty) {
+                        query = null;
+                      } else {
+                        query = value;
+                      }
+                      context.read<BatchCubit>().getBatchesByStatus(
+                            branchId: widget.branchId,
+                            status: widget.status,
+                            search: query,
+                            clean: true,
+                          );
+                    },
+                    textInputAction: TextInputAction.search,
                   ),
                   const Divider(
                     color: Colors.white24,
@@ -110,41 +128,40 @@ class _BatchPickerState extends State<BatchPicker> {
                           child: Text('Sorry, No batches found.'),
                         ))
                       : Expanded(
-                          child:
-                              cubit.batches.isEmpty && state is! FetchingBatches
-                                  ? const LoadingView()
-                                  : ListView.builder(
-                                      controller: scrollController,
-                                      shrinkWrap: true,
-                                      itemCount: cubit.batches.length,
-                                      itemBuilder: (context, index) {
-                                        BatchModel batch = cubit.batches[index];
-                                        return ListTile(
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            widget.onSelect(batch);
-                                          },
-                                          title: Text(
-                                            batch.name,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1
-                                                ?.copyWith(
-                                                  fontSize: 15,
-                                                ),
-                                          ),
-                                          subtitle: Text(
-                                            '${batch.courseName}, ${batch.subjectName}',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1
-                                                ?.copyWith(
-                                                  color: AppColors.primaryColor,
-                                                ),
-                                          ),
-                                        );
+                          child: state is FetchingBatches
+                              ? const LoadingView()
+                              : ListView.builder(
+                                  controller: scrollController,
+                                  shrinkWrap: true,
+                                  itemCount: cubit.batches.length,
+                                  itemBuilder: (context, index) {
+                                    BatchModel batch = cubit.batches[index];
+                                    return ListTile(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        widget.onSelect(batch);
                                       },
-                                    ),
+                                      title: Text(
+                                        batch.name,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.copyWith(
+                                              fontSize: 15,
+                                            ),
+                                      ),
+                                      subtitle: Text(
+                                        '${batch.courseName}, ${batch.subjectName}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.copyWith(
+                                              color: AppColors.primaryColor,
+                                            ),
+                                      ),
+                                    );
+                                  },
+                                ),
                         ),
                   BlocBuilder<BatchCubit, BatchState>(
                     builder: (context, state) {

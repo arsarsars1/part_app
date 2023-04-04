@@ -34,7 +34,7 @@ class _SalaryDetailsState extends State<SalaryDetails> {
   void initState() {
     super.initState();
     _focusNode.addListener(() {
-      print("Has focus: ${_focusNode.hasFocus}");
+      debugPrint("Has focus: ${_focusNode.hasFocus}");
     });
   }
 

@@ -1,16 +1,18 @@
+import 'dart:developer';
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view_model/trainer/trainer_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class TrainerList extends StatelessWidget {
+class TrainerList extends StatefulWidget {
   final List<Trainer> trainers;
   final ValueChanged<Trainer> onSelect;
 
@@ -18,19 +20,38 @@ class TrainerList extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<TrainerList> createState() => _TrainerListState();
+}
+
+class _TrainerListState extends State<TrainerList> {
+  late ScrollController scrollController = ScrollController();
+  @override
+  void initState() {
+    // Pagination listener
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+            
+        context.read<TrainerCubit>().getRestOfTheTrainers(nextPage: true);
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var token = 'Bearer ${Database().getToken()}';
 
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: trainers.length,
-      physics: const NeverScrollableScrollPhysics(),
+      itemCount: widget.trainers.length,
+      controller: scrollController,
       itemBuilder: (context, index) {
-        Trainer trainer = trainers[index].trainerDetail![0];
+        Trainer trainer = widget.trainers[index].trainerDetail![0];
         return InkWell(
           onTap: () {
             // call back to parent widget
-            onSelect(trainer);
+            widget.onSelect(trainer);
           },
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -108,7 +129,7 @@ class TrainerList extends StatelessWidget {
                               context: context,
                               text: '',
                               number:
-                                  '+${trainers[index].countryCode}${trainer.whatsappNo}',
+                                  '+${widget.trainers[index].countryCode}${trainer.whatsappNo}',
                             );
                           }
                         },
@@ -128,9 +149,9 @@ class TrainerList extends StatelessWidget {
                       SizedBox(width: 10.w),
                       InkWell(
                         onTap: () {
-                          if (trainers[index].mobileNo != null) {
+                          if (widget.trainers[index].mobileNo != null) {
                             _makePhoneCall(
-                              '+${trainers[index].countryCode}${trainers[index].mobileNo}',
+                              '+${widget.trainers[index].countryCode}${widget.trainers[index].mobileNo}',
                               context,
                             );
                           }

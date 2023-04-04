@@ -98,3 +98,5 @@ class RemovingLink extends BatchState {}
 class RemovedLink extends BatchState {}
 
 class RemoveLinkFailed extends BatchState {}
+
+class BatchNetworkError extends BatchState {}

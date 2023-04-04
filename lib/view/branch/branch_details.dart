@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/branch/add_branch.dart';
-import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/components/trainer_list.dart';
@@ -32,7 +29,7 @@ class _BranchDetailsState extends State<BranchDetails> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       cubit.getBranchById(id: '${widget.id}');
-      cubit.getBranchTrainers(branchId: '${widget.id}');
+      cubit.getBranchTrainers(branchId: '${widget.id}', clean: true);
     });
   }
 
@@ -79,10 +76,29 @@ class _BranchDetailsState extends State<BranchDetails> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child: Text(
-                              branch?.branchName ?? '',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  branch?.branchName ?? '',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  branch?.isActive == 1
+                                      ? 'Active'
+                                      : 'Deactivated',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                        fontSize: 12.sm,
+                                        color: branch?.isActive == 1
+                                            ? Colors.white
+                                            : AppColors.primaryColor,
+                                      ),
+                                )
+                              ],
                             ),
                           ),
                           const SizedBox(
@@ -130,7 +146,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                         '${branch?.address}, ${branch?.pincode}',
                       ),
                       SizedBox(
-                        height: 16.h,
+                        height: 4.h,
                       ),
                       Text(
                         '${branch?.country?.name}, '

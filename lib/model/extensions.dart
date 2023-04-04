@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 extension DateExtension on DateTime {
   String toDateString() {
@@ -83,7 +87,7 @@ extension StringExtension on String {
   }
 
   String toAmPM() {
-    return DateFormat('hh:mm a').format(DateFormat('hh:mm:ss').parse(this));
+    return DateFormat('jm').format(DateFormat('Hm').parse(this));
   }
 
   DateTime toDateTime() {
@@ -92,3 +96,11 @@ extension StringExtension on String {
 }
 
 extension BoolExtension on bool {}
+
+Future<File> getImageFileFromAssets(String assetName) async {
+  final ByteData imageData = await rootBundle.load('assets/images/$assetName');
+  final Directory tempDir = await getTemporaryDirectory();
+  final File file = File('${tempDir.path}/$assetName');
+  await file.writeAsBytes(imageData.buffer.asUint8List(), flush: true);
+  return file;
+}

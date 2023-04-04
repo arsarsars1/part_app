@@ -66,7 +66,9 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(45),
                     child: CachedImage(
-                      '${F.baseUrl}/admin/images/trainer/${detail?.id}/${detail?.profilePic}',
+                      detail?.profilePic != ""
+                          ? '${F.baseUrl}/admin/images/trainer/${detail?.id}/${detail?.profilePic}'
+                          : 'https://dev.partapp.in/images/avatars/avatar-5.png',
                     ).image(),
                   ),
                 ),

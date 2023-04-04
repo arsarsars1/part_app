@@ -73,6 +73,8 @@ class AuthCubit extends Cubit<AuthState> {
 
       if (response != null && response.status != 1) {
         emit(SendingOtpFailed(response.message, login));
+      } else if (response == null) {
+        emit(NetworkError());
       } else {
         emit(OTPSent(resend, login: login));
       }
@@ -170,14 +172,16 @@ class AuthCubit extends Cubit<AuthState> {
     UserResponse? value = await _authService.register(
       registerRequest: _registerRequest,
     );
-    if (value?.status == 1) {
-      _token = value?.token;
-      _user = value?.user;
-      Hive.box(Database.userBox).put(Database.token, value?.token);
+    if (value == null) {
+      emit(NetworkError());
+    } else if (value.status == 1) {
+      _token = value.token;
+      _user = value.user;
+      Hive.box(Database.userBox).put(Database.token, value.token);
       Hive.box(Database.userBox).put(Database.userData, jsonEncode(value));
       emit(RegisterSuccess());
     } else {
-      emit(RegisterFailed(value?.message ?? ' Failed to register the user'));
+      emit(RegisterFailed(value.message ?? ' Failed to register the user'));
     }
   }
 

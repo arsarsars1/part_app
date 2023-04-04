@@ -35,6 +35,8 @@ class TrainerCubit extends Cubit<TrainerState> {
 
   bool _isActive = true;
 
+  TrainerResponse? tempResponse;
+
   TrainerRequest _request = const TrainerRequest();
 
   TrainerRequest get request => _request;
@@ -46,7 +48,6 @@ class TrainerCubit extends Cubit<TrainerState> {
   set selectedBranches(List<int> branches) {
     _selectedBranches.clear();
     _selectedBranches.addAll(branches);
-    print(_selectedBranches);
   }
 
   bool fromBranch = false;
@@ -83,9 +84,11 @@ class TrainerCubit extends Cubit<TrainerState> {
     emit(BranchesUpdated());
   }
 
-  Future getTrainers() async {
+  Future getTrainers({bool nextPage = false}) async {
+    String? arg = "";
     emit(FetchingTrainers());
     TrainerResponse? response = await _trainerService.getTrainers();
+    tempResponse = response;
 
     if (response?.trainers != null) {
       _trainers = response?.trainers?.data ?? [];
@@ -95,8 +98,32 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
   }
 
+  Future getRestOfTheTrainers({bool nextPage = false}) async {
+    String? arg = "";
+    if (tempResponse?.trainers?.nextPageUrl != null) {
+      arg = tempResponse?.trainers?.nextPageUrl?.split("?")[1];
+    }
+    if (nextPage) {
+      TrainerResponse? response1 =
+          await _trainerService.getRestOfTheTrainers(path: arg);
+      if (response1?.trainers != null) {
+        for (Trainer element in response1?.trainers?.data ?? []) {
+          if (_trainers?.contains(element) == false) {
+            _trainers = [...?_trainers, element];
+          }
+        }
+        filterTrainers(active: _isActive);
+      }
+    }
+  }
+
   List<Trainer>? filterTrainers({required bool active}) {
     _isActive = active;
+    log("=======================================================================");
+    _trainers?.forEach((element) {
+      log(element.toJson().toString());
+    });
+    log("=======================================================================");
     List<Trainer>? list = _trainers?.where((element) {
       if (active) {
         return element.trainerDetail?[0].isActive == 1;

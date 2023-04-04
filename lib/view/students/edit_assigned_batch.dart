@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/students/assign_batch.dart';
+import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class EditAssignedBatch extends StatefulWidget {
   static const route = '/students/add/edit-assign-batch';
-
-  const EditAssignedBatch({
-    Key? key,
-  }) : super(key: key);
+  final bool editStudent;
+  const EditAssignedBatch({Key? key, required this.editStudent}) : super(key: key);
 
   @override
   State<EditAssignedBatch> createState() => _EditAssignedBatchState();
@@ -48,33 +49,33 @@ class _EditAssignedBatchState extends State<EditAssignedBatch> {
       body: BlocListener<StudentCubit, StudentState>(
         listener: (context, state) {
           if (state is CreatingStudent) {
-            // Loader(
-            //   context,
-            //   message:
-            //       widget.editStudent ? 'Adding to batch' : 'Creating student..',
-            // ).show();
+            Loader(
+              context,
+              message:
+                  widget.editStudent ? 'Adding to batch' : 'Creating student..',
+            ).show();
           } else if (state is CreatedStudent) {
-            // Alert(context).show(
-            //   message:
-            //       widget.editStudent ? 'Added to batch' : 'Created student',
-            // );
-            //
-            // if (widget.editStudent) {
-            //   context.read<BatchCubit>().refresh();
-            //
-            //   Navigator.popUntil(
-            //     context,
-            //     ModalRoute.withName(AssignBatch.route),
-            //   );
-            // } else {
-            //   Navigator.popUntil(
-            //     context,
-            //     ModalRoute.withName(StudentsView.route),
-            //   );
-            // }
+            Alert(context).show(
+              message:
+                  widget.editStudent ? 'Added to batch' : 'Created student',
+            );
+
+            if (widget.editStudent) {
+              context.read<BatchCubit>().refresh();
+
+              Navigator.popUntil(
+                context,
+                ModalRoute.withName(AssignBatch.route),
+              );
+            } else {
+              Navigator.popUntil(
+                context,
+                ModalRoute.withName(StudentsView.route),
+              );
+            }
           } else if (state is CreateStudentFailed) {
-            // Alert(context).show(message: state.message);
-            // Navigator.pop(context);
+            Alert(context).show(message: state.message);
+            Navigator.pop(context);
           }
         },
         child: BlocBuilder<BatchCubit, BatchState>(
@@ -90,7 +91,7 @@ class _EditAssignedBatchState extends State<EditAssignedBatch> {
                 children: [
                   Center(
                     child: Text(
-                      cubit.studentRequest.name ?? 'Not Available',
+                      cubit.student?.studentDetail?[0].name ?? 'Not Available',
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                             color: AppColors.primaryColor,
                             fontWeight: FontWeight.bold,
@@ -302,44 +303,44 @@ class _EditAssignedBatchState extends State<EditAssignedBatch> {
                         onTap: () {
                           formKey.currentState!.save();
                           if (formKey.currentState!.validate()) {
-                            // if (widget.editStudent) {
-                            //   cubit.setStudent(StudentRequest(
-                            //     feeAmount: fee,
-                            //     countryCode: 91,
-                            //     batchId: batch?.id,
-                            //     admissionFees: admissionFee,
-                            //     doj: joiningDate,
-                            //     feeType: selected,
-                            //     noOfClasses: selected == 'class'
-                            //         ? int.tryParse(payDay!)
-                            //         : null,
-                            //     paymentDueDate: selected != 'class'
-                            //         ? int.tryParse(payDay!)
-                            //         : null,
-                            //     isAdmissionFeesPaid: admissionFeePaid ? 1 : 0,
-                            //     isCourseFeesPaid: feePaid ? 1 : 0,
-                            //   ));
-                            //
-                            //   cubit.enrollToBatch();
-                            // } else {
-                            //   cubit.setStudent(cubit.studentRequest.copyWith(
-                            //     feeAmount: fee,
-                            //     countryCode: 91,
-                            //     batchId: batch?.id,
-                            //     admissionFees: admissionFee,
-                            //     doj: joiningDate,
-                            //     feeType: selected,
-                            //     noOfClasses: selected == 'class'
-                            //         ? int.tryParse(payDay!)
-                            //         : null,
-                            //     paymentDueDate: selected != 'class'
-                            //         ? int.tryParse(payDay!)
-                            //         : null,
-                            //     isAdmissionFeesPaid: admissionFeePaid ? 1 : 0,
-                            //     isCourseFeesPaid: feePaid ? 1 : 0,
-                            //   ));
-                            //   cubit.createStudent();
-                            // }
+                            if (widget.editStudent) {
+                              cubit.setStudent(StudentRequest(
+                                feeAmount: fee,
+                                countryCode: 91,
+                                batchId: batch?.id,
+                                admissionFees: admissionFee,
+                                doj: joiningDate,
+                                feeType: selected,
+                                noOfClasses: selected == 'class'
+                                    ? int.tryParse(payDay!)
+                                    : null,
+                                paymentDueDate: selected != 'class'
+                                    ? int.tryParse(payDay!)
+                                    : null,
+                                isAdmissionFeesPaid: admissionFeePaid ? 1 : 0,
+                                isCourseFeesPaid: feePaid ? 1 : 0,
+                              ));
+
+                              cubit.enrollToBatch();
+                            } else {
+                              cubit.setStudent(cubit.studentRequest.copyWith(
+                                feeAmount: fee,
+                                countryCode: 91,
+                                batchId: batch?.id,
+                                admissionFees: admissionFee,
+                                doj: joiningDate,
+                                feeType: selected,
+                                noOfClasses: selected == 'class'
+                                    ? int.tryParse(payDay!)
+                                    : null,
+                                paymentDueDate: selected != 'class'
+                                    ? int.tryParse(payDay!)
+                                    : null,
+                                isAdmissionFeesPaid: admissionFeePaid ? 1 : 0,
+                                isCourseFeesPaid: feePaid ? 1 : 0,
+                              ));
+                              cubit.createStudent();
+                            }
                           }
                         },
                         title: 'Ok',

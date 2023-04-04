@@ -35,9 +35,14 @@ class _StudentDetailsState extends State<StudentDetails> {
               children: [
                 Center(
                   child: ProfilePicture(
-                    imageUrl: '${F.baseUrl}/admin/images/student/${details?.id}'
-                        '/${details?.profilePic}',
+                    imageUrl: details?.profilePic != ""
+                        ? '${F.baseUrl}/admin/images/student/${details?.id}'
+                            '/${details?.profilePic}'
+                        : details?.gender == "male"
+                            ? "https://dev.partapp.in/images/avatars/avatar-5.png"
+                            : "https://dev.partapp.in/images/avatars/avatar-1.png",
                     onEdit: () {},
+                    onAvatar: (File value) {},
                     onChange: (File value) {
                       context
                           .read<StudentCubit>()
@@ -109,6 +114,11 @@ class _StudentDetailsState extends State<StudentDetails> {
                         title: 'Whatsapp No',
                         subText: '${details?.whatsappNo}',
                       ),
+                      if (details?.parentName != null)
+                        TitledText(
+                          title: 'Parent Name',
+                          subText: '${details?.parentName}',
+                        ),
                       TitledText(
                         title: 'Date Of Birth',
                         subText: '${details?.dob?.toDateString()}',
@@ -135,7 +145,11 @@ class _StudentDetailsState extends State<StudentDetails> {
                   title: 'Student Batches',
                   onTap: () {
                     context.read<StudentCubit>().getStudentBatches();
-                    Navigator.pushNamed(context, EditStudentBatches.route);
+                    Navigator.pushNamed(
+                      context,
+                      EditStudentBatches.route,
+                      arguments: true,
+                    );
                   },
                 ),
                 const SizedBox(

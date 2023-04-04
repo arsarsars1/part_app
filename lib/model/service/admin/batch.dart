@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
@@ -52,18 +53,27 @@ class BatchService {
   }
 
   Future<Common?> updateBatch(BatchRequest request, int? batchId) async {
+    // List<int?>? tempData = request.trainers;
+    // List<Map<String, dynamic>> data = [];
+    // tempData?.forEach((element) {
+    //   data.add({"trainer[]": element});
+    // });
     var data = request.toJson();
     data.removeWhere((key, value) => value == null);
-
-    if (data.containsKey('trainers[]')) {
-      var items = data['trainers[]'];
-      if (items.isEmpty) {
-        data.remove('trainers[]');
-        data.putIfAbsent('trainers[]', () => '');
-      }
-    }
+    // if (data.containsKey('trainers[]')) {
+    //   var items = data['trainers[]'];
+    //   if (items.isEmpty) {
+    //     data.remove('trainers[]');
+    //     data.putIfAbsent('trainers[]', () => '');
+    //   } else {
+    //     data.remove('trainers[]');
+    //     final gasGiants = <String, dynamic>{'trainers': items};
+    //     data.addEntries(gasGiants.entries);
+    //   }
+    // }
 
     try {
+      log(data.toString());
       var response = await _apiClient.post(
         postPath: '/admin/batches/$batchId',
         data: data,

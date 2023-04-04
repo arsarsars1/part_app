@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:part_app/model/data_model/dashboard_item.dart';
 import 'package:part_app/view/constants/constant.dart';
-import 'package:part_app/view/constants/default_values.dart';
 
 class DashboardIcons extends StatelessWidget {
   const DashboardIcons({Key? key}) : super(key: key);

@@ -1,16 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/manager_request.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/profile_picture.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/constants/constant.dart';
-import 'package:part_app/view/constants/default_values.dart';
-import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view/trainer/components/docs_upload.dart';
 import 'package:part_app/view/trainer/salary_details.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -34,6 +29,7 @@ class _AddManagerState extends State<AddManager> {
   String? areaOfExpertise;
   String? address;
   int? branchId;
+  String? avatar;
 
   bool selected = false;
 
@@ -76,6 +72,7 @@ class _AddManagerState extends State<AddManager> {
                     onChange: (File value) {
                       image = value;
                     },
+                    onAvatar: (File value) {},
                   ),
                 ),
                 SizedBox(

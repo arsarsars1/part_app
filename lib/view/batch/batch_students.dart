@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
+import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/tab_button.dart';
@@ -73,6 +73,7 @@ class _BatchStudentsState extends State<BatchStudents> {
                   itemCount: studentCubit.students?.length ?? 0,
                   itemBuilder: (context, index) {
                     StudentModel student = studentCubit.students![index];
+
                     return GestureDetector(
                       onTap: () {
                         studentCubit.studentDetails(student.detailId);
@@ -107,7 +108,7 @@ class _BatchStudentsState extends State<BatchStudents> {
                                     student.name ?? '',
                                   ),
                                   Text(
-                                    'N/A',
+                                    student.pivot?.feeType ?? "N/A",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyText1
