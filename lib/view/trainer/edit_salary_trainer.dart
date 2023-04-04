@@ -188,7 +188,7 @@ class _EditSalaryTrainerState extends State<EditSalaryTrainer> {
     );
   }
 
-  // method to get the date for [ dob ]
+  // method to get the date for [ joining date ]
   void datePicker() {
     showDatePicker(
       builder: (context, child) {
@@ -219,7 +219,7 @@ class _EditSalaryTrainerState extends State<EditSalaryTrainer> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(
-        DateTime.now().year - 99,
+        DateTime.now().year - 50,
       ),
       lastDate: DateTime.now(),
     ).then((value) {

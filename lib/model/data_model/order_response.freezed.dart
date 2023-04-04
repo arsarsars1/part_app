@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'order_response.dart';
 
@@ -78,7 +78,7 @@ class _$OrderResponseCopyWithImpl<$Res, $Val extends OrderResponse>
     Object? amountDue = freezed,
     Object? currency = freezed,
     Object? receipt = freezed,
-    Object? offerId = freezed,
+    Object? offerId = null,
     Object? status = freezed,
     Object? attempts = freezed,
     Object? createdAt = freezed,
@@ -112,7 +112,7 @@ class _$OrderResponseCopyWithImpl<$Res, $Val extends OrderResponse>
           ? _value.receipt
           : receipt // ignore: cast_nullable_to_non_nullable
               as String?,
-      offerId: freezed == offerId
+      offerId: null == offerId
           ? _value.offerId
           : offerId // ignore: cast_nullable_to_non_nullable
               as dynamic?,
@@ -172,7 +172,7 @@ class __$$_OrderResponseCopyWithImpl<$Res>
     Object? amountDue = freezed,
     Object? currency = freezed,
     Object? receipt = freezed,
-    Object? offerId = freezed,
+    Object? offerId = null,
     Object? status = freezed,
     Object? attempts = freezed,
     Object? createdAt = freezed,
@@ -206,7 +206,7 @@ class __$$_OrderResponseCopyWithImpl<$Res>
           ? _value.receipt
           : receipt // ignore: cast_nullable_to_non_nullable
               as String?,
-      offerId: freezed == offerId
+      offerId: null == offerId
           ? _value.offerId
           : offerId // ignore: cast_nullable_to_non_nullable
               as dynamic?,

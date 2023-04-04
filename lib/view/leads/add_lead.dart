@@ -342,7 +342,7 @@ class _AddLeadState extends State<AddLead> {
     );
   }
 
-  // method to get the date for [ dob ]
+  // method to get the date for [ followup date ]
   void datePicker() {
     showDatePicker(
       builder: (context, child) {
@@ -372,7 +372,9 @@ class _AddLeadState extends State<AddLead> {
       },
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      firstDate: DateTime(
+        DateTime.now().year - 2,
+      ),
       lastDate: DateTime(
         DateTime.now().year + 2,
       ),

@@ -385,6 +385,7 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
     );
   }
 
+  // method to get the date for [ joining date ]
   void datePicker() {
     showDatePicker(
       builder: (context, child) {
@@ -413,15 +414,11 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
         );
       },
       context: context,
-      initialDate: DateTime(
-        DateTime.now().year - 18,
-      ),
+      initialDate: DateTime.now(),
       firstDate: DateTime(
-        DateTime.now().year - 100,
+        DateTime.now().year - 50,
       ),
-      lastDate: DateTime(
-        DateTime.now().year - 18,
-      ),
+      lastDate: DateTime.now(),
     ).then((value) {
       if (value != null) {
         joiningDate = value.toServerString();
