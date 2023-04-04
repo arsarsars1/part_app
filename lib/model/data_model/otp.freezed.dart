@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'otp.dart';
 
@@ -50,7 +50,7 @@ class _$OtpCopyWithImpl<$Res, $Val extends Otp> implements $OtpCopyWith<$Res> {
   @override
   $Res call({
     Object? message = null,
-    Object? otp = freezed,
+    Object? otp = null,
     Object? status = freezed,
   }) {
     return _then(_value.copyWith(
@@ -58,7 +58,7 @@ class _$OtpCopyWithImpl<$Res, $Val extends Otp> implements $OtpCopyWith<$Res> {
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      otp: freezed == otp
+      otp: null == otp
           ? _value.otp
           : otp // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -89,7 +89,7 @@ class __$$_OtpCopyWithImpl<$Res> extends _$OtpCopyWithImpl<$Res, _$_Otp>
   @override
   $Res call({
     Object? message = null,
-    Object? otp = freezed,
+    Object? otp = null,
     Object? status = freezed,
   }) {
     return _then(_$_Otp(
@@ -97,7 +97,7 @@ class __$$_OtpCopyWithImpl<$Res> extends _$OtpCopyWithImpl<$Res, _$_Otp>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      otp: freezed == otp
+      otp: null == otp
           ? _value.otp
           : otp // ignore: cast_nullable_to_non_nullable
               as dynamic,
