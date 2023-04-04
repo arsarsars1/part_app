@@ -225,7 +225,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
     return str ?? '-';
   }
 
-  // method to get the date for [ dob ]
+  // method to get the date for [ class ]
   void datePicker() {
     showDatePicker(
       builder: (context, child) {
