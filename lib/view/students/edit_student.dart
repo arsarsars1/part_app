@@ -365,9 +365,7 @@ class _EditStudentState extends State<EditStudent> {
       },
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(
-        DateTime.now().year - 100,
-      ),
+      firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     ).then((value) {
       if (value != null) {

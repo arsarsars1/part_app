@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'batch_request.dart';
 
@@ -74,8 +74,8 @@ class _$BatchRequestCopyWithImpl<$Res, $Val extends BatchRequest>
     Object? courseId = freezed,
     Object? subjectId = freezed,
     Object? batchStatus = freezed,
-    Object? feeAmount = freezed,
-    Object? admissionFees = freezed,
+    Object? feeAmount = null,
+    Object? admissionFees = null,
     Object? trainers = freezed,
     Object? days = freezed,
   }) {
@@ -100,11 +100,11 @@ class _$BatchRequestCopyWithImpl<$Res, $Val extends BatchRequest>
           ? _value.batchStatus
           : batchStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      feeAmount: freezed == feeAmount
+      feeAmount: null == feeAmount
           ? _value.feeAmount
           : feeAmount // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      admissionFees: freezed == admissionFees
+      admissionFees: null == admissionFees
           ? _value.admissionFees
           : admissionFees // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -156,8 +156,8 @@ class __$$_BatchRequestCopyWithImpl<$Res>
     Object? courseId = freezed,
     Object? subjectId = freezed,
     Object? batchStatus = freezed,
-    Object? feeAmount = freezed,
-    Object? admissionFees = freezed,
+    Object? feeAmount = null,
+    Object? admissionFees = null,
     Object? trainers = freezed,
     Object? days = freezed,
   }) {
@@ -182,11 +182,11 @@ class __$$_BatchRequestCopyWithImpl<$Res>
           ? _value.batchStatus
           : batchStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      feeAmount: freezed == feeAmount
+      feeAmount: null == feeAmount
           ? _value.feeAmount
           : feeAmount // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      admissionFees: freezed == admissionFees
+      admissionFees: null == admissionFees
           ? _value.admissionFees
           : admissionFees // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -242,7 +242,6 @@ class _$_BatchRequest implements _BatchRequest {
   List<int?>? get trainers {
     final value = _trainers;
     if (value == null) return null;
-    if (_trainers is EqualUnmodifiableListView) return _trainers;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -253,7 +252,6 @@ class _$_BatchRequest implements _BatchRequest {
   List<String>? get days {
     final value = _days;
     if (value == null) return null;
-    if (_days is EqualUnmodifiableListView) return _days;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }

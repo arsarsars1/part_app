@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'batch_response.dart';
 
@@ -328,7 +328,6 @@ class _$_StudentsBatchResponse implements _StudentsBatchResponse {
   List<Batch>? get batches {
     final value = _batches;
     if (value == null) return null;
-    if (_batches is EqualUnmodifiableListView) return _batches;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -547,7 +546,6 @@ class _$_Datum implements _Datum {
   final List<Batch> _data;
   @override
   List<Batch> get data {
-    if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_data);
   }
@@ -1054,7 +1052,6 @@ class _$_Batch implements _Batch {
   List<BatchDetail>? get batchDetail {
     final value = _batchDetail;
     if (value == null) return null;
-    if (_batchDetail is EqualUnmodifiableListView) return _batchDetail;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -1064,7 +1061,6 @@ class _$_Batch implements _Batch {
   List<Trainer>? get trainers {
     final value = _trainers;
     if (value == null) return null;
-    if (_trainers is EqualUnmodifiableListView) return _trainers;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }

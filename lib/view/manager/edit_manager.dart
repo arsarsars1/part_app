@@ -316,15 +316,9 @@ class _EditManagerState extends State<EditManager> {
         );
       },
       context: context,
-      initialDate: DateTime(
-        DateTime.now().year - 18,
-      ),
-      firstDate: DateTime(
-        DateTime.now().year - 100,
-      ),
-      lastDate: DateTime(
-        DateTime.now().year - 18,
-      ),
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
     ).then((value) {
       if (value != null) {
         dob = value.toServerString();
