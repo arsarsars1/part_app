@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
+import 'package:part_app/view/batch/components/class_picker.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/components/components.dart';
@@ -20,11 +23,13 @@ class _RescheduleClassState extends State<RescheduleClass> {
   String? startDate;
   String? endDate;
   var formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
     return Scaffold(
+      key: scaffoldKey,
       appBar: const CommonBar(
         title: 'Reschedule Class',
       ),
@@ -47,6 +52,24 @@ class _RescheduleClassState extends State<RescheduleClass> {
           key: formKey,
           child: Column(
             children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 16.w,
+                    right: 16.w,
+                    top: 16.h,
+                  ),
+                  child: Button(
+                    height: 30.h,
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      RescheduledClasses.route,
+                    ),
+                    title: 'Rescheduled List',
+                  ),
+                ),
+              ),
               Center(
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -55,14 +78,14 @@ class _RescheduleClassState extends State<RescheduleClass> {
                     top: 16.h,
                   ),
                   child: const Text(
-                    'Select from date and to date for rescheduling a class',
+                    'Select "From Date" and "To Date" for rescheduling a class',
                     textAlign: TextAlign.center,
                   ),
                 ),
               ),
               BatchItem(
                 batch: cubit.batchModel!,
-                hideTrainer: true,
+                hideTrainer: false,
                 reschedule: true,
                 onTap: () {},
               ),
@@ -74,6 +97,16 @@ class _RescheduleClassState extends State<RescheduleClass> {
                       title: 'From Date',
                       onSelect: (String value) {
                         startDate = value;
+                        scaffoldKey.currentState?.showBottomSheet(
+                          enableDrag: false,
+                          elevation: 10,
+                          backgroundColor: Colors.transparent,
+                          (context) => ClassPicker(
+                            branchId: cubit.batchModel?.branchId,
+                            scaffoldKey: scaffoldKey,
+                            onSave: (String value) {},
+                          ),
+                        );
                       },
                       time: false,
                     ),
@@ -112,33 +145,37 @@ class _RescheduleClassState extends State<RescheduleClass> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 15.h,
+              ),
+              Button(
+                onTap: () {
+                  formKey.currentState?.save();
+                  if (!formKey.currentState!.validate()) {
+                    return;
+                  }
+                  cubit.reschedule({
+                    'previous_date': startDate,
+                    'new_date': endDate,
+                    'start_time': startTime,
+                    'end_time': endTime,
+                  });
+                },
+                title: 'Reschedule Class',
+              )
             ],
           ),
         ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 132.h,
-        child: BottomAppBar(
-          color: Colors.black,
-          child: Center(
-            child: Button(
-              onTap: () {
-                formKey.currentState?.save();
-                if (!formKey.currentState!.validate()) {
-                  return;
-                }
-                cubit.reschedule({
-                  'previous_date': startDate,
-                  'new_date': endDate,
-                  'start_time': startTime,
-                  'end_time': endTime,
-                });
-              },
-              title: 'Reschedule Class',
-            ),
-          ),
-        ),
-      ),
+      // bottomNavigationBar: SizedBox(
+      //   height: 132.h,
+      //   child: BottomAppBar(
+      //     color: Colors.black,
+      //     child: Center(
+      //       child: ,
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
