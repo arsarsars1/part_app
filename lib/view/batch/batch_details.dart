@@ -74,10 +74,6 @@ class _BatchDetailsState extends State<BatchDetails> {
                     child: Text(state.message),
                   );
                 }
-
-                if (state is UpdatedBatch) {
-                  Alert(context).show(message: 'Batch updated successfully.');
-                }
                 return ListView(
                   controller: scrollController,
                   children: [
