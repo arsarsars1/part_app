@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
+import 'package:part_app/model/data_model/class_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/api_client.dart';
@@ -126,6 +127,21 @@ class BranchService {
         queryPath: '/admin/batches/$batchId/trainers?page=$pageNo',
       );
       return trainerResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<ClassResponse?> getBatchClasses(
+      {required String batchId,
+      required String brabchId,
+      required String date,
+      int pageNo = 1}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/batches/$batchId/classes/$date',
+      );
+      return classResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

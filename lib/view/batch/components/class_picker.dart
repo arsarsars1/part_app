@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -32,8 +34,12 @@ class _ClassPickerState extends State<ClassPicker> {
   @override
   void initState() {
     super.initState();
+    // log(widget.batchId.toString());
+    // log(widget.branchId.toString());
+    // log(widget.date.toString());
     context.read<BranchCubit>().getBatchClassesOfDate(
           batchId: '${widget.batchId}',
+          branchId: '${widget.branchId}',
           date: '${widget.date}',
           clean: true,
         );
@@ -101,16 +107,16 @@ class _ClassPickerState extends State<ClassPicker> {
                   const Divider(
                     color: Colors.white24,
                   ),
-                  cubit.trainersList.isEmpty
+                  cubit.classes!.isEmpty
                       ? const Center(
                           child: Text('Sorry, No trainers found.'),
                         )
-                      : cubit.trainersList.isEmpty && state is! FetchingBatches
+                      : cubit.classes!.isEmpty && state is! ClassesLoading
                           ? const LoadingView()
                           : ListView.builder(
                               controller: scrollController,
                               shrinkWrap: true,
-                              itemCount: 5,
+                              itemCount: cubit.classes?.length,
                               itemBuilder: (context, index) {
                                 return ListTile(
                                   onTap: () {},

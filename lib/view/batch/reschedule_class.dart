@@ -103,6 +103,8 @@ class _RescheduleClassState extends State<RescheduleClass> {
                           backgroundColor: Colors.transparent,
                           (context) => ClassPicker(
                             branchId: cubit.batchModel?.branchId,
+                            batchId: cubit.batchModel?.id,
+                            date: startDate,
                             scaffoldKey: scaffoldKey,
                             onSave: (String value) {},
                           ),
