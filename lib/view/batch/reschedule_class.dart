@@ -241,10 +241,14 @@ class _RescheduleClassState extends State<RescheduleClass> {
                     return;
                   }
                   cubit.reschedule({
-                    'previous_date': startDate,
+                    'old_date': startDate,
+                    'old_start_time':
+                        "${cubit.batchModel?.batchDetail?[0].startTime}:00",
+                    'old_end_time':
+                        "${cubit.batchModel?.batchDetail?[0].endTime}:00",
                     'new_date': endDate,
-                    'start_time': startTime,
-                    'end_time': endTime,
+                    'new_start_time': startTime,
+                    'new_end_time': endTime,
                   });
                 },
                 title: 'Reschedule Class',
