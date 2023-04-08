@@ -41,4 +41,5 @@ class AppColors {
   static Color disabledColor = const Color(0xFFBABABA);
   static Color liteDark = const Color(0xFF242424);
   static Color defaultBlue = const Color(0xFF41A0F8);
+  static Color yellow = const Color(0xFFFFFF00);
 }

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -72,7 +73,7 @@ class _ClassPickerState extends State<ClassPicker> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Select Class',
+                        'Select A Class',
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -108,8 +109,16 @@ class _ClassPickerState extends State<ClassPicker> {
                     color: Colors.white24,
                   ),
                   cubit.classes!.isEmpty
-                      ? const Center(
-                          child: Text('Sorry, No trainers found.'),
+                      ? Column(
+                          children: [
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            const Center(
+                              child: Text(
+                                  'Sorry, No classes scheduled for this date.'),
+                            ),
+                          ],
                         )
                       : cubit.classes!.isEmpty && state is! ClassesLoading
                           ? const LoadingView()
@@ -118,9 +127,59 @@ class _ClassPickerState extends State<ClassPicker> {
                               shrinkWrap: true,
                               itemCount: cubit.classes?.length,
                               itemBuilder: (context, index) {
-                                return ListTile(
-                                  onTap: () {},
-                                  title: const Text("data"),
+                                return Container(
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.grey,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                  ),
+                                  child: ListTile(
+                                    onTap: () {},
+                                    title: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "${cubit.classes?[index].startTime} - ${cubit.classes?[index].endTime}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1
+                                                  ?.copyWith(),
+                                            ),
+                                          ],
+                                        ),
+                                        cubit.classes?[index].rescheduled ==
+                                                true
+                                            ? Text(
+                                                "Rescheduled from ${cubit.classes?[index].oldDate.toDateString()}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: AppColors.yellow,
+                                                    ),
+                                              )
+                                            : Text(
+                                                "Scheduled Class",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: AppColors.yellow,
+                                                    ),
+                                              ),
+                                      ],
+                                    ),
+                                  ),
                                 );
                               },
                             ),
