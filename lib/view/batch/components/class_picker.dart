@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -11,7 +10,7 @@ class ClassPicker extends StatefulWidget {
   final int? batchId;
   final String? date;
   final GlobalKey<ScaffoldState>? scaffoldKey;
-  final ValueChanged<String> onSave;
+  final ValueChanged<ClassModel> onSave;
   final ValueChanged<String>? onSelect;
 
   const ClassPicker({
@@ -137,7 +136,10 @@ class _ClassPickerState extends State<ClassPicker> {
                                     ),
                                   ),
                                   child: ListTile(
-                                    onTap: () {},
+                                    onTap: () {
+                                      widget.onSave(cubit.classes![index]);
+                                      Navigator.pop(context);
+                                    },
                                     title: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,

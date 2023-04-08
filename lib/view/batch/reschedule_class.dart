@@ -1,11 +1,14 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:part_app/model/data_model/class_model.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/batch/components/class_picker.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class RescheduleClass extends StatefulWidget {
@@ -22,6 +25,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
   String? endTime;
   String? startDate;
   String? endDate;
+  ClassModel? selectedclass;
   var formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -97,6 +101,9 @@ class _RescheduleClassState extends State<RescheduleClass> {
                       title: 'From Date',
                       onSelect: (String value) {
                         startDate = value;
+                        setState(() {
+                          selectedclass = null;
+                        });
                         scaffoldKey.currentState?.showBottomSheet(
                           enableDrag: false,
                           elevation: 10,
@@ -106,7 +113,11 @@ class _RescheduleClassState extends State<RescheduleClass> {
                             batchId: cubit.batchModel?.id,
                             date: startDate,
                             scaffoldKey: scaffoldKey,
-                            onSave: (String value) {},
+                            onSave: (ClassModel value) {
+                              setState(() {
+                                selectedclass = value;
+                              });
+                            },
                           ),
                         );
                       },
@@ -124,6 +135,79 @@ class _RescheduleClassState extends State<RescheduleClass> {
                   ),
                 ],
               ),
+              if (selectedclass != null)
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Text(
+                      'Selected class scheduled on',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    Text(
+                      DateTime.parse(startDate ?? "").formattedString(),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.liteDark,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "${selectedclass?.startTime} - ${selectedclass?.endTime}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(),
+                              ),
+                            ],
+                          ),
+                          selectedclass?.rescheduled == true
+                              ? Text(
+                                  "Rescheduled from ${selectedclass?.oldDate.toDateString()}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.yellow,
+                                      ),
+                                )
+                              : Text(
+                                  "Scheduled Class",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.yellow,
+                                      ),
+                                ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
