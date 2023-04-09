@@ -10,6 +10,7 @@ import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/batch/add_batch.dart';
 import 'package:part_app/view/batch/batch_details.dart';
 import 'package:part_app/view/batch/batch_list.dart';
+import 'package:part_app/view/batch/class_batch_class.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/batch/rescheduled_classes.dart';
@@ -259,6 +260,11 @@ class RouteGenerator {
           builder: (_) => const RescheduleClass(),
           settings: settings,
         );
+      case CancelClass.route:
+        return MaterialPageRoute(
+          builder: (_) => const CancelClass(),
+          settings: settings,
+        );  
       case ManagerDetails.route:
         return MaterialPageRoute(
           builder: (_) => ManagerDetails(
