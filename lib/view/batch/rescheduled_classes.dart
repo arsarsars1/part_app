@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/reschedule_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
@@ -83,7 +84,7 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                 shrinkWrap: true,
                 itemCount: cubit.rescheduledList.length,
                 itemBuilder: (context, index) {
-                  BatchDetail detail = cubit.rescheduledList[index];
+                  RescheduledClass detail = cubit.rescheduledList[index];
                   return Opacity(
                     opacity:
                         detail.newDate!.isBefore(DateTime.now()) ? 0.50 : 1,
@@ -114,9 +115,9 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                                   height: 4,
                                 ),
                                 Text(
-                                  '${detail.previousDate?.formattedDay()} '
-                                  '${detail.startTime?.toAmPM()} - '
-                                  '${detail.endTime?.toAmPM()}',
+                                  '${detail.oldDate?.toDateString()} ${detail.oldDate?.formattedDay2()} '
+                                  '${detail.oldStartTime?.toAmPM()} - '
+                                  '${detail.oldEndTime?.toAmPM()}',
                                 ),
                                 const Text(
                                   'to',
@@ -125,9 +126,9 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                                   height: 4,
                                 ),
                                 Text(
-                                  '${detail.newDate?.formattedDay()} '
-                                  '${detail.startTime?.toAmPM()} - '
-                                  '${detail.endTime?.toAmPM()}',
+                                  '${detail.newDate?.toDateString()} ${detail.newDate?.formattedDay2()} '
+                                  '${detail.newStartTime?.toAmPM()} - '
+                                  '${detail.newEndTime?.toAmPM()}',
                                 ),
                               ],
                             ),
@@ -150,8 +151,8 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                                     children: [
                                       Text(
                                         'date ${detail.newDate?.formattedString()} '
-                                        '\ntime ${detail.startTime?.toAmPM()} - '
-                                        '${detail.endTime?.toAmPM()}',
+                                        '\ntime ${detail.newStartTime?.toAmPM()} - '
+                                        '${detail.newEndTime?.toAmPM()}',
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
@@ -165,9 +166,9 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                                         textAlign: TextAlign.center,
                                       ),
                                       Text(
-                                        'date ${detail.previousDate?.formattedString()} '
-                                        'time \n${detail.startTime?.toAmPM()} - '
-                                        '${detail.endTime?.toAmPM()}',
+                                        'date ${detail.oldDate?.formattedString()} '
+                                        'time \n${detail.oldStartTime?.toAmPM()} - '
+                                        '${detail.oldEndTime?.toAmPM()}',
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme

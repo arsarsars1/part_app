@@ -167,8 +167,8 @@ class BatchItem extends StatelessWidget {
                                     color: AppColors.primaryColor,
                                   ),
                             ),
-                            const SizedBox(
-                              height: 16,
+                            SizedBox(
+                              height: 10.h,
                             ),
                           ],
                         ),

@@ -18,6 +18,7 @@ class BatchModel {
   final PivotClass? pivot;
   final List<Trainer>? trainers;
   final List<TrainerModel>? trainersList;
+  final List<BatchDetail>? batchDetail;
   final bool active;
 
   BatchModel({
@@ -34,6 +35,7 @@ class BatchModel {
     this.studentCount,
     this.pivot,
     this.trainers,
+    this.batchDetail,
     this.trainersList,
     required this.active,
   });
@@ -68,6 +70,7 @@ class BatchModel {
       subjectName: batch.subject?.subjectName ?? 'NA',
       admissionFee: batch.admissionFees,
       fee: batch.feeAmount,
+      batchDetail: batch.batchDetail,
       studentCount: batch.activeStudentsCount,
       trainers: batch.trainers,
       pivot: batch.pivot,
