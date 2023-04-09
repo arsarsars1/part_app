@@ -28,7 +28,7 @@ class BatchCubit extends Cubit<BatchState> {
 
   final List<int?> _selectedTrainers = [];
   List<BatchModel> _batches = [];
-  List<BatchDetail> _rescheduledList = [];
+  List<RescheduledClass> _rescheduledList = [];
   List<Student>? _students;
   List<ClassLink>? _classLinks;
 
@@ -60,7 +60,7 @@ class BatchCubit extends Cubit<BatchState> {
 
   List<ClassLink>? get classLinks => _classLinks;
 
-  List<BatchDetail> get rescheduledList => _rescheduledList;
+  List<RescheduledClass> get rescheduledList => _rescheduledList;
 
   BatchModel? get batchModel => _batchModel;
 
