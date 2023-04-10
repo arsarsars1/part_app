@@ -19,21 +19,24 @@ class CancelClass extends StatefulWidget {
 }
 
 class _RescheduleClassState extends State<CancelClass> {
-  String? startTime;
-  String? endTime;
-  String? startDate;
-  String? endDate;
-  ClassModel? selectedclass;
+  String? selectedDate = "";
   var formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  ScrollController scrollController = ScrollController();
+  int _selectedValue = 1;
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
+    var branchcubit = context.read<BranchCubit>();
     return Scaffold(
       key: scaffoldKey,
-      appBar: const CommonBar(
+      appBar: CommonBar(
         title: 'Cancel Class',
+        onPressed: () {
+          branchcubit.classes?.clear();
+          selectedDate = "";
+          Navigator.pop(context);
+        },
       ),
       body: BlocListener<BatchCubit, BatchState>(
         listener: (context, state) {
@@ -94,29 +97,142 @@ class _RescheduleClassState extends State<CancelClass> {
               ScheduleField(
                 title: 'Select Date',
                 onSelect: (String value) {
-                  startDate = value;
                   setState(() {
-                    selectedclass = null;
+                    selectedDate = value;
                   });
-                  scaffoldKey.currentState?.showBottomSheet(
-                    enableDrag: false,
-                    elevation: 10,
-                    backgroundColor: Colors.transparent,
-                    (context) => ClassPicker(
-                      branchId: cubit.batchModel?.branchId,
-                      batchId: cubit.batchModel?.id,
-                      date: startDate,
-                      scaffoldKey: scaffoldKey,
-                      onSave: (ClassModel value) {
-                        setState(() {
-                          selectedclass = value;
-                        });
-                      },
-                    ),
-                  );
+                  context.read<BranchCubit>().getBatchClassesOfDate(
+                        batchId: '${cubit.batchModel?.id}',
+                        branchId: '${cubit.batchModel?.branchId}',
+                        date: "23-04-09",
+                        clean: true,
+                      );
                 },
                 time: false,
               ),
+              if (selectedDate != "")
+                BlocBuilder<BranchCubit, BranchState>(
+                    builder: (context, state) {
+                  return branchcubit.classes!.isEmpty
+                      ? Column(
+                          children: [
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            const Center(
+                              child: Text(
+                                  'Sorry, No classes scheduled for this date.'),
+                            ),
+                          ],
+                        )
+                      : branchcubit.classes!.isEmpty && state is! ClassesLoading
+                          ? const LoadingView()
+                          : Column(
+                              children: [
+                                SizedBox(
+                                  height: 15.h,
+                                ),
+                                Text(
+                                  'Following are the classes\nscheduled on\n',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  DateTime.parse(selectedDate ?? "")
+                                      .toEEEDDMMYYY(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primaryColor,
+                                      ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                ListView.builder(
+                                  controller: scrollController,
+                                  shrinkWrap: true,
+                                  itemCount: branchcubit.classes?.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColors.liteDark,
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
+                                        child: ListTile(
+                                          onTap: () {
+                                            // widget.onSave(cubit.classes![index]);
+                                            // Navigator.pop(context);
+                                          },
+                                          trailing: Theme(
+                                            data: ThemeData.dark(),
+                                            child: Radio<int>(
+                                              value: index,
+                                              groupValue: _selectedValue,
+                                              activeColor: Colors.white,
+                                              onChanged: (int? value) {
+                                                setState(() {
+                                                  _selectedValue = value!;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                          title: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${branchcubit.classes?[index].startTime} - ${branchcubit.classes?[index].endTime}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1
+                                                    ?.copyWith(),
+                                              ),
+                                              branchcubit.classes?[index]
+                                                          .rescheduled ==
+                                                      true
+                                                  ? Text(
+                                                      "Rescheduled from ${branchcubit.classes?[index].oldDate.toDateString()}",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1
+                                                          ?.copyWith(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: AppColors
+                                                                .yellow,
+                                                          ),
+                                                    )
+                                                  : Text(
+                                                      "Scheduled Class",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1
+                                                          ?.copyWith(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: AppColors
+                                                                .yellow,
+                                                          ),
+                                                    ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            );
+                }),
               SizedBox(
                 height: 15.h,
               ),
@@ -126,16 +242,7 @@ class _RescheduleClassState extends State<CancelClass> {
                   if (!formKey.currentState!.validate()) {
                     return;
                   }
-                  cubit.reschedule({
-                    'old_date': startDate,
-                    'old_start_time':
-                        "${cubit.batchModel?.batchDetail?[0].startTime}:00",
-                    'old_end_time':
-                        "${cubit.batchModel?.batchDetail?[0].endTime}:00",
-                    'new_date': endDate,
-                    'new_start_time': startTime,
-                    'new_end_time': endTime,
-                  });
+                  
                 },
                 title: 'Cancel Class',
               )

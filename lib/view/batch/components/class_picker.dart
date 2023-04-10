@@ -34,9 +34,6 @@ class _ClassPickerState extends State<ClassPicker> {
   @override
   void initState() {
     super.initState();
-    // log(widget.batchId.toString());
-    // log(widget.branchId.toString());
-    // log(widget.date.toString());
     context.read<BranchCubit>().getBatchClassesOfDate(
           batchId: '${widget.batchId}',
           branchId: '${widget.branchId}',
