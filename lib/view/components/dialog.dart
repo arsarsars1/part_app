@@ -29,6 +29,7 @@ class CommonDialog {
           backgroundColor: AppColors.liteDark,
           contentPadding: EdgeInsets.zero,
           content: Logout(
+            isCancel: true,
             subColor: subColor,
             message: message,
             subMessage: subMessage,
@@ -63,6 +64,12 @@ class Logout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const start = "Deactivate";
+    final startIndex = message.indexOf(start);
+    const middle = "From";
+    final middleIndex = message.indexOf(middle, startIndex + start.length);
+    const end = "?";
+    final endIndex = message.indexOf(end, middleIndex + middle.length);
     return Material(
       color: Colors.transparent,
       child: Container(
@@ -80,26 +87,28 @@ class Logout extends StatelessWidget {
             message.contains('Do You Want To Deactivate') &&
                     message.contains('From')
                 ? RichText(
+                    textAlign: TextAlign.center,
                     text: TextSpan(
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Do You Want To Deactivate ',
+                          text: 'Do You Want To Deactivate',
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                         TextSpan(
-                          text: "${message.split(" ")[5]}\n",
+                          text:
+                              "${message.substring(startIndex + start.length, middleIndex)}\n",
                           style:
                               Theme.of(context).textTheme.bodyText2?.copyWith(
                                     fontWeight: FontWeight.w900,
                                   ),
                         ),
                         TextSpan(
-                          text: 'From ',
+                          text: 'From',
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                         TextSpan(
                           text:
-                              "${message.split(" ")[8]} ${message.split(" ")[9]} ?",
+                              "${message.substring(middleIndex + middle.length, endIndex)} ?",
                           style:
                               Theme.of(context).textTheme.bodyText2?.copyWith(
                                     fontWeight: FontWeight.w900,

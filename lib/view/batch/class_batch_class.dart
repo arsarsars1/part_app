@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
+import 'package:part_app/view/batch/components/cancel_class.dart';
 import 'package:part_app/view/batch/components/class_picker.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/batch/rescheduled_classes.dart';
@@ -55,198 +56,230 @@ class _RescheduleClassState extends State<CancelClass> {
         },
         child: Form(
           key: formKey,
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 16.w,
-                    right: 16.w,
-                    top: 16.h,
-                  ),
-                  child: Button(
-                    height: 30.h,
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      RescheduledClasses.route,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: 16.w,
+                      right: 16.w,
+                      top: 16.h,
                     ),
-                    title: 'Cancelled List',
+                    child: Button(
+                      height: 30.h,
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        RescheduledClasses.route,
+                      ),
+                      title: 'Cancelled List',
+                    ),
                   ),
                 ),
-              ),
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 75.w,
-                    right: 75.w,
-                    top: 16.h,
-                  ),
-                  child: const Text(
-                    'Select date for cancelling a\nscheduled class',
-                    textAlign: TextAlign.center,
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: 75.w,
+                      right: 75.w,
+                      top: 16.h,
+                    ),
+                    child: const Text(
+                      'Select date for cancelling a\nscheduled class',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
-              ),
-              BatchItem(
-                batch: cubit.batchModel!,
-                hideTrainer: false,
-                reschedule: true,
-                onTap: () {},
-              ),
-              ScheduleField(
-                title: 'Select Date',
-                onSelect: (String value) {
-                  setState(() {
-                    selectedDate = value;
-                  });
-                  context.read<BranchCubit>().getBatchClassesOfDate(
-                        batchId: '${cubit.batchModel?.id}',
-                        branchId: '${cubit.batchModel?.branchId}',
-                        date: "23-04-09",
-                        clean: true,
-                      );
-                },
-                time: false,
-              ),
-              if (selectedDate != "")
-                BlocBuilder<BranchCubit, BranchState>(
+                BatchItem(
+                  batch: cubit.batchModel!,
+                  hideTrainer: false,
+                  reschedule: true,
+                  onTap: () {},
+                ),
+                ScheduleField(
+                  title: 'Select Date',
+                  onSelect: (String value) {
+                    setState(() {
+                      selectedDate = value;
+                    });
+                    context.read<BranchCubit>().getBatchClassesOfDate(
+                          batchId: '${cubit.batchModel?.id}',
+                          branchId: '${cubit.batchModel?.branchId}',
+                          date: "23-04-09",
+                          clean: true,
+                        );
+                  },
+                  time: false,
+                ),
+                if (selectedDate != "")
+                  BlocBuilder<BranchCubit, BranchState>(
                     builder: (context, state) {
-                  return branchcubit.classes!.isEmpty
-                      ? Column(
-                          children: [
-                            SizedBox(
-                              height: 15.h,
-                            ),
-                            const Center(
-                              child: Text(
-                                  'Sorry, No classes scheduled for this date.'),
-                            ),
-                          ],
-                        )
-                      : branchcubit.classes!.isEmpty && state is! ClassesLoading
-                          ? const LoadingView()
-                          : Column(
+                      return branchcubit.classes!.isEmpty
+                          ? Column(
                               children: [
                                 SizedBox(
                                   height: 15.h,
                                 ),
-                                Text(
-                                  'Following are the classes\nscheduled on\n',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(),
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  DateTime.parse(selectedDate ?? "")
-                                      .toEEEDDMMYYY(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.primaryColor,
-                                      ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                ListView.builder(
-                                  controller: scrollController,
-                                  shrinkWrap: true,
-                                  itemCount: branchcubit.classes?.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: AppColors.liteDark,
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: ListTile(
-                                          onTap: () {
-                                            // widget.onSave(cubit.classes![index]);
-                                            // Navigator.pop(context);
-                                          },
-                                          trailing: Theme(
-                                            data: ThemeData.dark(),
-                                            child: Radio<int>(
-                                              value: index,
-                                              groupValue: _selectedValue,
-                                              activeColor: Colors.white,
-                                              onChanged: (int? value) {
-                                                setState(() {
-                                                  _selectedValue = value!;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                          title: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "${branchcubit.classes?[index].startTime} - ${branchcubit.classes?[index].endTime}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText1
-                                                    ?.copyWith(),
-                                              ),
-                                              branchcubit.classes?[index]
-                                                          .rescheduled ==
-                                                      true
-                                                  ? Text(
-                                                      "Rescheduled from ${branchcubit.classes?[index].oldDate.toDateString()}",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyText1
-                                                          ?.copyWith(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: AppColors
-                                                                .yellow,
-                                                          ),
-                                                    )
-                                                  : Text(
-                                                      "Scheduled Class",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyText1
-                                                          ?.copyWith(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: AppColors
-                                                                .yellow,
-                                                          ),
-                                                    ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                const Center(
+                                  child: Text(
+                                      'Sorry, No classes scheduled for this date.'),
                                 ),
                               ],
-                            );
-                }),
-              SizedBox(
-                height: 15.h,
-              ),
-              Button(
-                onTap: () {
-                  formKey.currentState?.save();
-                  if (!formKey.currentState!.validate()) {
-                    return;
-                  }
-                  
-                },
-                title: 'Cancel Class',
-              )
-            ],
+                            )
+                          : branchcubit.classes!.isEmpty &&
+                                  state is! ClassesLoading
+                              ? const LoadingView()
+                              : Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 15.h,
+                                    ),
+                                    Text(
+                                      'Following are the classes\nscheduled on\n',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          ?.copyWith(),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      DateTime.parse(selectedDate ?? "")
+                                          .toEEEDDMMYYY(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.primaryColor,
+                                          ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(
+                                      height: 5.h,
+                                    ),
+                                    ListView.builder(
+                                      controller: scrollController,
+                                      shrinkWrap: true,
+                                      itemCount: branchcubit.classes?.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: AppColors.liteDark,
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                            ),
+                                            child: ListTile(
+                                              onTap: () {
+                                                // widget.onSave(cubit.classes![index]);
+                                                // Navigator.pop(context);
+                                              },
+                                              trailing: Theme(
+                                                data: ThemeData.dark(),
+                                                child: Radio<int>(
+                                                  value: index,
+                                                  groupValue: _selectedValue,
+                                                  activeColor: Colors.white,
+                                                  onChanged: (int? value) {
+                                                    setState(() {
+                                                      _selectedValue = value!;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              title: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${branchcubit.classes?[index].startTime} - ${branchcubit.classes?[index].endTime}",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText1
+                                                        ?.copyWith(),
+                                                  ),
+                                                  branchcubit.classes?[index]
+                                                              .rescheduled ==
+                                                          true
+                                                      ? Text(
+                                                          "Rescheduled from ${branchcubit.classes?[index].oldDate.toDateString()}",
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyText1
+                                                                  ?.copyWith(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: AppColors
+                                                                        .yellow,
+                                                                  ),
+                                                        )
+                                                      : Text(
+                                                          "Scheduled Class",
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyText1
+                                                                  ?.copyWith(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: AppColors
+                                                                        .yellow,
+                                                                  ),
+                                                        ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                );
+                    },
+                  ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                Button(
+                  onTap: () {
+                    var formKey1 = GlobalKey<FormState>();
+                    String? reason;
+                    CommonDialog(
+                      context: context,
+                      message:
+                          'Do You Want To cancel the class on\nDate: ${DateTime.parse(selectedDate ?? "").toDDMMYYY()}\nTime: ${branchcubit.classes?[_selectedValue].startTime}-${branchcubit.classes?[_selectedValue].endTime} ?',
+                      subContent: CancelClassPopUp(
+                        formKey: formKey1,
+                        reason: (value) {
+                          reason = value;
+                        },
+                      ),
+                      onTap: () {
+                        formKey.currentState!.save();
+                        // if (formKey.currentState!.validate()) {
+                        Navigator.pop(context);
+                        // studentCubit.removeStudentBatch(
+                        //   batch.id,
+                        //   // date: rejoining!,
+                        //   date: rejoining ?? "",
+                        //   reason: remark == "" ? "Nil" : remark,
+                        // );
+                        // }
+                      },
+                    ).show();
+                    // formKey.currentState?.save();
+                    // if (!formKey.currentState!.validate()) {
+                    //   return;
+                    // }
+                  },
+                  title: 'Cancel Class',
+                )
+              ],
+            ),
           ),
         ),
       ),
