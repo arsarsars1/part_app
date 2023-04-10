@@ -340,6 +340,20 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future cancelClass(Map<String, dynamic> request) async {
+    emit(CancellingClassBatch());
+    Common? response = await _batchService.cancelClass(
+      request,
+      batchModel?.id,
+    );
+    if (response?.status == 1) {
+      await getRescheduledBatches();
+      emit(CancelledClassBatch());
+    } else {
+      emit(CancelClassFailed(response?.message ?? 'Failed to reschedule'));
+    }
+  }
+
   Future deactivateClass(int? batchDetailId) async {
     emit(ReschedulingBatch());
     Common? response = await _batchService.deactivateClass(

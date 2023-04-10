@@ -105,7 +105,7 @@ class _RescheduleClassState extends State<CancelClass> {
                     context.read<BranchCubit>().getBatchClassesOfDate(
                           batchId: '${cubit.batchModel?.id}',
                           branchId: '${cubit.batchModel?.branchId}',
-                          date: "23-04-09",
+                          date: "$selectedDate",
                           clean: true,
                         );
                   },
@@ -251,7 +251,8 @@ class _RescheduleClassState extends State<CancelClass> {
                     CommonDialog(
                       context: context,
                       message:
-                          'Do You Want To cancel the class on\nDate: ${DateTime.parse(selectedDate ?? "").toDDMMYYY()}\nTime: ${branchcubit.classes?[_selectedValue].startTime}-${branchcubit.classes?[_selectedValue].endTime} ?',
+                          'Do You Want To cancel the class on\nDate: ${DateTime.parse(selectedDate ?? "").toDDMMYYY()}\nTime: ${branchcubit.classes?[_selectedValue].startTime}-${branchcubit.classes?[_selectedValue].endTime} ?'
+                          '\n\nNote: Students and Trainers will be\nnotified.',
                       subContent: CancelClassPopUp(
                         formKey: formKey1,
                         reason: (value) {
@@ -262,13 +263,14 @@ class _RescheduleClassState extends State<CancelClass> {
                         formKey.currentState!.save();
                         // if (formKey.currentState!.validate()) {
                         Navigator.pop(context);
-                        // studentCubit.removeStudentBatch(
-                        //   batch.id,
-                        //   // date: rejoining!,
-                        //   date: rejoining ?? "",
-                        //   reason: remark == "" ? "Nil" : remark,
-                        // );
-                        // }
+                        cubit.cancelClass({
+                          'start_time':
+                              "${branchcubit.classes?[_selectedValue].startTime}",
+                          'end_time':
+                              "${branchcubit.classes?[_selectedValue].endTime}",
+                          'class_date': "$selectedDate",
+                          'reason': reason,
+                        });
                       },
                     ).show();
                     // formKey.currentState?.save();
@@ -283,15 +285,6 @@ class _RescheduleClassState extends State<CancelClass> {
           ),
         ),
       ),
-      // bottomNavigationBar: SizedBox(
-      //   height: 132.h,
-      //   child: BottomAppBar(
-      //     color: Colors.black,
-      //     child: Center(
-      //       child: ,
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

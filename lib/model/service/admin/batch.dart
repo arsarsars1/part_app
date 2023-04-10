@@ -186,6 +186,20 @@ class BatchService {
     }
   }
 
+  Future<Common?> cancelClass(Map<String, dynamic> request,
+      [int? batchId]) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/batches/$batchId/cancel-class',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> deactivateClass(
       {required int? batchId, required int? classId}) async {
     try {
