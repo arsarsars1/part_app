@@ -70,7 +70,7 @@ extension DateExtension on DateTime {
     }
   }
 
-  /// Formats the [ DateTime ] to 12th Aug
+  /// Formats the [ DateTime ] to Wed
   String formattedDay2() {
     try {
       var suffix = "th";

@@ -14,10 +14,6 @@ class CancelClassPopUp extends StatefulWidget {
 }
 
 class _CancelClassPopUpState extends State<CancelClassPopUp> {
-  TextEditingController rejoiningController = TextEditingController();
-
-  String? rejoining;
-
   @override
   Widget build(BuildContext context) {
     return Form(

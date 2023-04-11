@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/cancel_response.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
@@ -13,6 +14,7 @@ import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/reschedule_response.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/service/admin/batch.dart';
+import 'package:part_app/view/batch/cancel_batch_class.dart';
 import 'package:part_app/view/constants/default_values.dart';
 
 part 'batch_state.dart';
@@ -25,10 +27,11 @@ class BatchCubit extends Cubit<BatchState> {
   List<Days> _days = [];
   List<Course>? _courses;
   List<Course>? _subjects;
-
+  bool second = false;
   final List<int?> _selectedTrainers = [];
   List<BatchModel> _batches = [];
   List<RescheduledClass> _rescheduledList = [];
+  List<CancelledClass> _cancelledList = [];
   List<Student>? _students;
   List<ClassLink>? _classLinks;
 
@@ -61,6 +64,8 @@ class BatchCubit extends Cubit<BatchState> {
   List<ClassLink>? get classLinks => _classLinks;
 
   List<RescheduledClass> get rescheduledList => _rescheduledList;
+
+  List<CancelledClass>? get cancelledList => _cancelledList;
 
   BatchModel? get batchModel => _batchModel;
 
@@ -346,8 +351,9 @@ class BatchCubit extends Cubit<BatchState> {
       request,
       batchModel?.id,
     );
+    log((response?.status).toString());
     if (response?.status == 1) {
-      await getRescheduledBatches();
+      // await getRescheduledBatches();
       emit(CancelledClassBatch());
     } else {
       emit(CancelClassFailed(response?.message ?? 'Failed to reschedule'));
@@ -382,6 +388,22 @@ class BatchCubit extends Cubit<BatchState> {
       _rescheduledList = [];
     }
     emit(RescheduledListFetched());
+  }
+
+  Future getCancelledBatches({int? year, int? month}) async {
+    emit(CancelledListFetching());
+    CancelResponse? response = await _batchService.cancelledClasses(
+      batchModel?.id,
+      year: year,
+      month: month,
+    );
+
+    if (response?.status == 1) {
+      _cancelledList = response?.cancelledClasses ?? [];
+    } else {
+      _cancelledList = [];
+    }
+    emit(CancelledListFetched());
   }
 
   /// Method to get the students

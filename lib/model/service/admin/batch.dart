@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/cancel_response.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
@@ -224,6 +225,22 @@ class BatchService {
       );
 
       return rescheduleResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<CancelResponse?> cancelledClasses(int? batchId,
+      {int? year, int? month}) async {
+    String query = 'year=${year ?? DateTime.now().year}'
+        '&month=${month ?? DateTime.now().month}';
+
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/batches/$batchId/cancelled-classes?$query',
+      );
+
+      return cancelResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

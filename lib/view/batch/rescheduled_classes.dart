@@ -6,6 +6,7 @@ import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class RescheduledClasses extends StatefulWidget {
@@ -30,8 +31,20 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
     return Scaffold(
-      appBar: const CommonBar(
+      appBar: CommonBar(
         title: 'Rescheduled Classes',
+        onPressed: () {
+          if (cubit.second) {
+            cubit.second = false;
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              Home.route,
+              (route) => false,
+            );
+          } else {
+            Navigator.pop(context);
+          }
+        },
       ),
       body: Column(
         children: [

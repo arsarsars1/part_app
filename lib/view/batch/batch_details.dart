@@ -4,7 +4,7 @@ import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/batch_students.dart';
-import 'package:part_app/view/batch/class_batch_class.dart';
+import 'package:part_app/view/batch/cancel_batch_class.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';

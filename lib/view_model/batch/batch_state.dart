@@ -51,6 +51,10 @@ class RescheduledListFetched extends BatchState {}
 
 class RescheduledListFetching extends BatchState {}
 
+class CancelledListFetched extends BatchState {}
+
+class CancelledListFetching extends BatchState {}
+
 class FetchBatchFailed extends BatchState {
   final String message;
 

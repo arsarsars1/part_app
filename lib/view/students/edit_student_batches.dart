@@ -20,16 +20,9 @@ class EditStudentBatches extends StatefulWidget {
 }
 
 class _EditStudentBatchesState extends State<EditStudentBatches> {
-  // ignore: prefer_typing_uninitialized_variables
-  var studentCubit;
-  @override
-  void initState() {
-    studentCubit = context.read<StudentCubit>();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    var studentCubit = context.read<StudentCubit>();
     return Scaffold(
       appBar: CommonBar(
         title: 'Assigned Batches',

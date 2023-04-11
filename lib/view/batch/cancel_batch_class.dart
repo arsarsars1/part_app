@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/batch/cancelled_batch_class.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/batch/components/cancel_class.dart';
-import 'package:part_app/view/batch/components/class_picker.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
-import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -24,7 +22,7 @@ class _RescheduleClassState extends State<CancelClass> {
   var formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   ScrollController scrollController = ScrollController();
-  int _selectedValue = 1;
+  int _selectedValue = -1;
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
@@ -41,15 +39,16 @@ class _RescheduleClassState extends State<CancelClass> {
       ),
       body: BlocListener<BatchCubit, BatchState>(
         listener: (context, state) {
-          if (state is ReschedulingBatch) {
+          if (state is CancellingClassBatch) {
             Loader(context).show();
-          } else if (state is RescheduledBatch) {
-            Navigator.popUntil(
+          } else if (state is CancelledClassBatch) {
+            cubit.second = true;
+            Navigator.pushNamed(
               context,
-              ModalRoute.withName(RescheduledClasses.route),
+              CancelledClasses.route,
             );
-            Alert(context).show(message: 'Batch Rescheduled.');
-          } else if (state is RescheduleFailed) {
+            Alert(context).show(message: 'Batch Cancelled.');
+          } else if (state is CancelClassFailed) {
             Navigator.pop(context);
             Alert(context).show(message: state.message);
           }
@@ -71,7 +70,7 @@ class _RescheduleClassState extends State<CancelClass> {
                       height: 30.h,
                       onTap: () => Navigator.pushNamed(
                         context,
-                        RescheduledClasses.route,
+                        CancelledClasses.route,
                       ),
                       title: 'Cancelled List',
                     ),
@@ -246,37 +245,42 @@ class _RescheduleClassState extends State<CancelClass> {
                 ),
                 Button(
                   onTap: () {
-                    var formKey1 = GlobalKey<FormState>();
-                    String? reason;
-                    CommonDialog(
-                      context: context,
-                      message:
-                          'Do You Want To cancel the class on\nDate: ${DateTime.parse(selectedDate ?? "").toDDMMYYY()}\nTime: ${branchcubit.classes?[_selectedValue].startTime}-${branchcubit.classes?[_selectedValue].endTime} ?'
-                          '\n\nNote: Students and Trainers will be\nnotified.',
-                      subContent: CancelClassPopUp(
-                        formKey: formKey1,
-                        reason: (value) {
-                          reason = value;
-                        },
-                      ),
-                      onTap: () {
-                        formKey.currentState!.save();
-                        // if (formKey.currentState!.validate()) {
-                        Navigator.pop(context);
-                        cubit.cancelClass({
-                          'start_time':
-                              "${branchcubit.classes?[_selectedValue].startTime}",
-                          'end_time':
-                              "${branchcubit.classes?[_selectedValue].endTime}",
-                          'class_date': "$selectedDate",
-                          'reason': reason,
-                        });
-                      },
-                    ).show();
-                    // formKey.currentState?.save();
-                    // if (!formKey.currentState!.validate()) {
-                    //   return;
-                    // }
+                    if (formKey.currentState!.validate()) {
+                      var formKey1 = GlobalKey<FormState>();
+                      String? reason;
+
+                      if (_selectedValue == -1) {
+                        Alert(context).show(message: 'Select a class');
+                      } else {
+                        CommonDialog(
+                          context: context,
+                          message:
+                              'Do You Want To cancel the class on\nDate: ${DateTime.parse(selectedDate ?? "").toDDMMYYY()}\nTime: ${branchcubit.classes?[_selectedValue].startTime}-${branchcubit.classes?[_selectedValue].endTime} ?'
+                              '\n\nNote: Students and Trainers will be\nnotified.',
+                          subContent: CancelClassPopUp(
+                            formKey: formKey1,
+                            reason: (value) {
+                              reason = value;
+                            },
+                          ),
+                          onTap: () {
+                            formKey1.currentState!.save();
+                            if (formKey1.currentState!.validate()) {
+                              Navigator.pop(context);
+                              cubit.cancelClass({
+                                'start_time':
+                                    "${branchcubit.classes?[_selectedValue].startTime}",
+                                'end_time':
+                                    "${branchcubit.classes?[_selectedValue].endTime}",
+                                'class_date': "$selectedDate",
+                                'reason': reason,
+                              });
+                            }
+                          },
+                        ).show();
+                      }
+                      return;
+                    }
                   },
                   title: 'Cancel Class',
                 )

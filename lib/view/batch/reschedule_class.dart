@@ -40,9 +40,10 @@ class _RescheduleClassState extends State<RescheduleClass> {
           if (state is ReschedulingBatch) {
             Loader(context).show();
           } else if (state is RescheduledBatch) {
-            Navigator.popUntil(
+            cubit.second = true;
+            Navigator.pushNamed(
               context,
-              ModalRoute.withName(RescheduledClasses.route),
+              RescheduledClasses.route,
             );
             Alert(context).show(message: 'Batch Rescheduled.');
           } else if (state is RescheduleFailed) {
