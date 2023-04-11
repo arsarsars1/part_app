@@ -107,15 +107,25 @@ class _BatchStudentsState extends State<BatchStudents> {
                                   Text(
                                     student.name ?? '',
                                   ),
-                                  Text(
-                                    student.pivot?.feeType ?? "N/A",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        ?.copyWith(
-                                          color: AppColors.green,
+                                  student.pivot?.feeType == "monthly"
+                                      ? Text(
+                                          'Monthly',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.copyWith(
+                                                color: AppColors.primaryColor,
+                                              ),
+                                        )
+                                      : Text(
+                                          'Class Based : ${student.pivot?.noOfClasses.toString()} Nos.',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.copyWith(
+                                                  color: AppColors.green,
+                                                  fontWeight: FontWeight.bold),
                                         ),
-                                  ),
                                 ],
                               ),
                             ),
