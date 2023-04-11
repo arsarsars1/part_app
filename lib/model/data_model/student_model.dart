@@ -55,7 +55,7 @@ class StudentModel {
       parentName: detail.parentName,
       userId: detail.userId,
       academyId: detail.academyId,
-      pivot: student.studentDetail?[0].pivot,
+      pivot: student.studentDetail?[0].batches?[0].pivot,
       gender: detail.gender,
       dob: detail.dob,
       doj: detail.doj,

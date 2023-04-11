@@ -97,6 +97,7 @@ abstract class StudentDetail with _$StudentDetail {
     String? address,
     String? profilePic,
     int? isActive,
+    List<Batch>? batches,
     PivotClass? pivot,
   }) = _StudentDetail;
 
