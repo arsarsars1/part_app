@@ -51,6 +51,10 @@ class RescheduledListFetched extends BatchState {}
 
 class RescheduledListFetching extends BatchState {}
 
+class CancelledListFetched extends BatchState {}
+
+class CancelledListFetching extends BatchState {}
+
 class FetchBatchFailed extends BatchState {
   final String message;
 
@@ -65,6 +69,18 @@ class RescheduleFailed extends BatchState {
   final String message;
 
   RescheduleFailed(this.message);
+}
+
+// Cancel
+
+class CancellingClassBatch extends BatchState {}
+
+class CancelledClassBatch extends BatchState {}
+
+class CancelClassFailed extends BatchState {
+  final String message;
+
+  CancelClassFailed(this.message);
 }
 
 // Students

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/extensions.dart';
@@ -42,9 +40,10 @@ class _RescheduleClassState extends State<RescheduleClass> {
           if (state is ReschedulingBatch) {
             Loader(context).show();
           } else if (state is RescheduledBatch) {
-            Navigator.popUntil(
+            cubit.second = true;
+            Navigator.pushNamed(
               context,
-              ModalRoute.withName(RescheduledClasses.route),
+              RescheduledClasses.route,
             );
             Alert(context).show(message: 'Batch Rescheduled.');
           } else if (state is RescheduleFailed) {

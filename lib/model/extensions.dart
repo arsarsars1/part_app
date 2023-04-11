@@ -30,6 +30,10 @@ extension DateExtension on DateTime {
     return DateFormat('dd MMM, yyyy').format(this);
   }
 
+  String toEEEDDMMYYY() {
+    return DateFormat('EEE, dd MMMM yyyy').format(this);
+  }
+
   String toDay() {
     return DateFormat('EEEE').format(this);
   }
@@ -66,7 +70,7 @@ extension DateExtension on DateTime {
     }
   }
 
-  /// Formats the [ DateTime ] to 12th Aug
+  /// Formats the [ DateTime ] to Wed
   String formattedDay2() {
     try {
       var suffix = "th";
