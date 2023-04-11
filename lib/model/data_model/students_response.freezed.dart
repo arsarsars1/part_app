@@ -946,6 +946,7 @@ mixin _$StudentDetail {
   String? get address => throw _privateConstructorUsedError;
   String? get profilePic => throw _privateConstructorUsedError;
   int? get isActive => throw _privateConstructorUsedError;
+  List<Batch>? get batches => throw _privateConstructorUsedError;
   PivotClass? get pivot => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -974,6 +975,7 @@ abstract class $StudentDetailCopyWith<$Res> {
       String? address,
       String? profilePic,
       int? isActive,
+      List<Batch>? batches,
       PivotClass? pivot});
 
   $PivotClassCopyWith<$Res>? get pivot;
@@ -1005,6 +1007,7 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
     Object? address = freezed,
     Object? profilePic = freezed,
     Object? isActive = freezed,
+    Object? batches = freezed,
     Object? pivot = freezed,
   }) {
     return _then(_value.copyWith(
@@ -1060,6 +1063,10 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as int?,
+      batches: freezed == batches
+          ? _value.batches
+          : batches // ignore: cast_nullable_to_non_nullable
+              as List<Batch>?,
       pivot: freezed == pivot
           ? _value.pivot
           : pivot // ignore: cast_nullable_to_non_nullable
@@ -1102,6 +1109,7 @@ abstract class _$$_StudentDetailCopyWith<$Res>
       String? address,
       String? profilePic,
       int? isActive,
+      List<Batch>? batches,
       PivotClass? pivot});
 
   @override
@@ -1132,6 +1140,7 @@ class __$$_StudentDetailCopyWithImpl<$Res>
     Object? address = freezed,
     Object? profilePic = freezed,
     Object? isActive = freezed,
+    Object? batches = freezed,
     Object? pivot = freezed,
   }) {
     return _then(_$_StudentDetail(
@@ -1187,6 +1196,10 @@ class __$$_StudentDetailCopyWithImpl<$Res>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as int?,
+      batches: freezed == batches
+          ? _value._batches
+          : batches // ignore: cast_nullable_to_non_nullable
+              as List<Batch>?,
       pivot: freezed == pivot
           ? _value.pivot
           : pivot // ignore: cast_nullable_to_non_nullable
@@ -1213,7 +1226,9 @@ class _$_StudentDetail implements _StudentDetail {
       this.address,
       this.profilePic,
       this.isActive,
-      this.pivot});
+      final List<Batch>? batches,
+      this.pivot})
+      : _batches = batches;
 
   factory _$_StudentDetail.fromJson(Map<String, dynamic> json) =>
       _$$_StudentDetailFromJson(json);
@@ -1244,12 +1259,21 @@ class _$_StudentDetail implements _StudentDetail {
   final String? profilePic;
   @override
   final int? isActive;
+  final List<Batch>? _batches;
+  @override
+  List<Batch>? get batches {
+    final value = _batches;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final PivotClass? pivot;
 
   @override
   String toString() {
-    return 'StudentDetail(id: $id, name: $name, parentName: $parentName, userId: $userId, academyId: $academyId, gender: $gender, dob: $dob, doj: $doj, email: $email, whatsappNo: $whatsappNo, address: $address, profilePic: $profilePic, isActive: $isActive, pivot: $pivot)';
+    return 'StudentDetail(id: $id, name: $name, parentName: $parentName, userId: $userId, academyId: $academyId, gender: $gender, dob: $dob, doj: $doj, email: $email, whatsappNo: $whatsappNo, address: $address, profilePic: $profilePic, isActive: $isActive, batches: $batches, pivot: $pivot)';
   }
 
   @override
@@ -1275,6 +1299,7 @@ class _$_StudentDetail implements _StudentDetail {
                 other.profilePic == profilePic) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
+            const DeepCollectionEquality().equals(other._batches, _batches) &&
             (identical(other.pivot, pivot) || other.pivot == pivot));
   }
 
@@ -1295,6 +1320,7 @@ class _$_StudentDetail implements _StudentDetail {
       address,
       profilePic,
       isActive,
+      const DeepCollectionEquality().hash(_batches),
       pivot);
 
   @JsonKey(ignore: true)
@@ -1326,6 +1352,7 @@ abstract class _StudentDetail implements StudentDetail {
       final String? address,
       final String? profilePic,
       final int? isActive,
+      final List<Batch>? batches,
       final PivotClass? pivot}) = _$_StudentDetail;
 
   factory _StudentDetail.fromJson(Map<String, dynamic> json) =
@@ -1357,6 +1384,8 @@ abstract class _StudentDetail implements StudentDetail {
   String? get profilePic;
   @override
   int? get isActive;
+  @override
+  List<Batch>? get batches;
   @override
   PivotClass? get pivot;
   @override
