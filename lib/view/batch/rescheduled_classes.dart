@@ -99,8 +99,11 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                 itemBuilder: (context, index) {
                   RescheduledClass detail = cubit.rescheduledList[index];
                   return Opacity(
-                    opacity:
-                        detail.newDate!.isBefore(DateTime.now()) ? 0.50 : 1,
+                    opacity: detail.newDate!.isBefore(DateTime.now()) &&
+                            "${detail.newDate!.day}-${detail.newDate!.month}-${detail.newDate!.year}" !=
+                                "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}"
+                        ? 0.50
+                        : 1,
                     child: Container(
                       margin: const EdgeInsets.all(16),
                       padding: const EdgeInsets.all(16),
@@ -146,85 +149,122 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                               ],
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              if (detail.newDate!.isBefore(DateTime.now())) {
-                                Alert(context).show(
-                                  message: 'Past date cannot be rescheduled.',
-                                );
-                              } else {
-                                CommonDialog(
-                                  context: context,
-                                  message:
-                                      'Do you want to delete the rescheduled class,'
-                                      ' it will be restored to its scheduled date',
-                                  buttonText: 'Yes',
-                                  subColor: AppColors.primaryColor,
-                                  subContent: Column(
-                                    children: [
-                                      Text(
-                                        'date ${detail.newDate?.formattedString()} '
-                                        '\ntime ${detail.newStartTime?.toAmPM()} - '
-                                        '${detail.newEndTime?.toAmPM()}',
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(
-                                              color: AppColors.primaryColor,
-                                            ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  if (detail.newDate!
+                                          .isBefore(DateTime.now()) &&
+                                      "${detail.newDate!.day}-${detail.newDate!.month}-${detail.newDate!.year}" !=
+                                          "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}") {
+                                    Alert(context).show(
+                                      message:
+                                          'Past date cannot be rescheduled.',
+                                    );
+                                  } else {
+                                    CommonDialog(
+                                      context: context,
+                                      message:
+                                          'Do you want to delete the rescheduled class,'
+                                          ' it will be restored to its scheduled date',
+                                      buttonText: 'Yes',
+                                      subColor: AppColors.primaryColor,
+                                      subContent: Column(
+                                        children: [
+                                          Text(
+                                            'Date: ${detail.newDate?.formattedString()} '
+                                            '\nTime: ${detail.newStartTime?.toAmPM()} - '
+                                            '${detail.newEndTime?.toAmPM()}',
+                                            textAlign: TextAlign.center,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                ?.copyWith(
+                                                  color: AppColors.primaryColor,
+                                                ),
+                                          ),
+                                          const Text(
+                                            'to',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          Text(
+                                            'Date: ${detail.oldDate?.formattedString()} '
+                                            '\nTime: ${detail.oldStartTime?.toAmPM()} - '
+                                            '${detail.oldEndTime?.toAmPM()} ?',
+                                            textAlign: TextAlign.center,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                ?.copyWith(
+                                                  color: AppColors.primaryColor,
+                                                ),
+                                          ),
+                                          SizedBox(
+                                            height: 15.h,
+                                          ),
+                                          const Text(
+                                            'Note: Students and Trainers will be \nnotified.\n',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
                                       ),
-                                      const Text(
-                                        'to',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      Text(
-                                        'date ${detail.oldDate?.formattedString()} '
-                                        'time \n${detail.oldStartTime?.toAmPM()} - '
-                                        '${detail.oldEndTime?.toAmPM()}',
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(
-                                              color: AppColors.primaryColor,
-                                            ),
-                                      ),
-                                      const Text(
-                                        '?',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      const Text(
-                                        'Not: Students and Trainers will be \nnotified.\n',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
+                                      onTap: () {
+                                        context
+                                            .read<BatchCubit>()
+                                            .deactivateClass(
+                                              detail.id,
+                                            );
+                                      },
+                                    ).show();
+                                  }
+                                },
+                                child: Container(
+                                  width: 24.w,
+                                  height: 24.w,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.black54,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
                                   ),
-                                  onTap: () {
-                                    context.read<BatchCubit>().deactivateClass(
-                                          detail.id,
-                                        );
-                                  },
-                                ).show();
-                              }
-                            },
-                            child: Container(
-                              width: 24.w,
-                              height: 24.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.black54,
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 2,
+                                  child: const Icon(
+                                    Icons.close,
+                                    size: 16,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
-                              child: const Icon(
-                                Icons.close,
-                                size: 16,
-                                color: Colors.white,
+                              SizedBox(
+                                height: 40.h,
                               ),
-                            ),
+                              if (detail.cancelledDate != null)
+                                Text(
+                                  'Cancelled',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(
+                                        color: AppColors.primaryColor,
+                                      ),
+                                )
+                              else if (detail.newDate!
+                                      .isBefore(DateTime.now()) &&
+                                  "${detail.newDate!.day}-${detail.newDate!.month}-${detail.newDate!.year}" !=
+                                      "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}")
+                                Text(
+                                  'Expired',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(
+                                        color: AppColors.grey100,
+                                      ),
+                                ),
+                            ],
                           ),
                         ],
                       ),
