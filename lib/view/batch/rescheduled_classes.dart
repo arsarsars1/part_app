@@ -99,9 +99,10 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                 itemBuilder: (context, index) {
                   RescheduledClass detail = cubit.rescheduledList[index];
                   return Opacity(
-                    opacity: detail.newDate!.isBefore(DateTime.now()) &&
-                            "${detail.newDate!.day}-${detail.newDate!.month}-${detail.newDate!.year}" !=
-                                "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}"
+                    opacity: (detail.newDate!.isBefore(DateTime.now()) &&
+                                "${detail.newDate!.day}-${detail.newDate!.month}-${detail.newDate!.year}" !=
+                                    "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}") ||
+                            detail.cancelledDate != null
                         ? 0.50
                         : 1,
                     child: Container(
@@ -155,14 +156,22 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  if (detail.newDate!
-                                          .isBefore(DateTime.now()) &&
-                                      "${detail.newDate!.day}-${detail.newDate!.month}-${detail.newDate!.year}" !=
-                                          "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}") {
-                                    Alert(context).show(
-                                      message:
-                                          'Past date cannot be rescheduled.',
-                                    );
+                                  if ((detail.newDate!
+                                              .isBefore(DateTime.now()) &&
+                                          "${detail.newDate!.day}-${detail.newDate!.month}-${detail.newDate!.year}" !=
+                                              "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}") ||
+                                      detail.cancelledDate != null) {
+                                    if (detail.cancelledDate != null) {
+                                      Alert(context).show(
+                                        message:
+                                            'Cancelled class cannot be changed.',
+                                      );
+                                    } else {
+                                      Alert(context).show(
+                                        message:
+                                            'Past date cannot be rescheduled.',
+                                      );
+                                    }
                                   } else {
                                     CommonDialog(
                                       context: context,
