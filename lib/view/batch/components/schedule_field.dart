@@ -128,9 +128,9 @@ class _ScheduleFieldState extends State<ScheduleField> {
         alwaysUse24HourFormat: true,
       );
       if (widget.onSelect != null) {
-        widget.onSelect!('$formattedTimeOfDay:00');
+        widget.onSelect!(formattedTimeOfDay);
       }
-      return '$formattedTimeOfDay:00';
+      return formattedTimeOfDay;
     }
     return null;
   }
