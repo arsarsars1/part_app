@@ -22,6 +22,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
   BatchModel? batch;
   DateTime? date;
   String? classLink;
+  List<String>? batchDays = [];
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController batchController = TextEditingController();
@@ -113,6 +114,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
               CommonField(
                 controller: batchController,
                 onTap: () {
+                  batchDays?.clear();
                   if (branchId != null) {
                     scaffoldKey.currentState?.showBottomSheet(
                       backgroundColor: Colors.transparent,
@@ -123,6 +125,9 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                         onSelect: (value) {
                           batch = value;
                           batchController.text = value.name;
+                          for (var element in batch!.days) {
+                            batchDays?.add(element.split(" ")[0]);
+                          }
                         },
                       ),
                     );
@@ -262,6 +267,12 @@ class _ClassLinkViewState extends State<ClassLinkView> {
           DateTime.now().year, DateTime.now().month + 3, DateTime.now().day),
     ).then((value) {
       if (value != null) {
+        if (!batchDays!.contains(date?.toDay())) {
+          Alert(context).show(
+            message: 'Selected batch does not have class on selected date',
+          );
+          return;
+        }
         date = value;
         dateController.text = value.toDateString();
         setState(() {});
