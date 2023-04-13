@@ -196,9 +196,11 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                       formKey.currentState!.save();
 
                       batchCubit.addClassLink(batch?.id, {
-                        'batch_date': date?.toServerYMD(),
+                        'class_date': date?.toServerYMD(),
                         'link': classLink,
                         'service': Uri.parse(classLink!).host,
+                        'start_time': batch?.batchDetail?[0].startTime,
+                        'end_time': batch?.batchDetail?[0].endTime
                       });
                     }
                   },
