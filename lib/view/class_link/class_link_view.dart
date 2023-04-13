@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
@@ -267,7 +269,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
           DateTime.now().year, DateTime.now().month + 3, DateTime.now().day),
     ).then((value) {
       if (value != null) {
-        if (!batchDays!.contains(date?.toDay())) {
+        if (!batchDays!.contains(value.formattedDay2())) {
           Alert(context).show(
             message: 'Selected batch does not have class on selected date',
           );
