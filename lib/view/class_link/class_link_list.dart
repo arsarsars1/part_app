@@ -110,37 +110,12 @@ class _ClassLinkListState extends State<ClassLinkList> {
               ),
               CommonField(
                 controller: dateController,
-                title: 'From Date *',
+                title: 'Select Date *',
                 hint: 'Select the date',
                 suffixIcon: const Padding(
                   padding: EdgeInsets.only(right: 32),
                   child: Icon(
-                    Icons.arrow_drop_down,
-                    size: 24,
-                    color: Colors.white24,
-                  ),
-                ),
-                disabled: true,
-                onTap: () {
-                  datePicker();
-                },
-                onChange: (value) {},
-                validator: (value) {
-                  return value.isEmpty ? 'Please select the date.' : null;
-                },
-                onSubmit: (value) {},
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                controller: dateController,
-                title: 'To Date *',
-                hint: 'Select the date',
-                suffixIcon: const Padding(
-                  padding: EdgeInsets.only(right: 32),
-                  child: Icon(
-                    Icons.arrow_drop_down,
+                    Icons.calendar_month,
                     size: 24,
                     color: Colors.white24,
                   ),
@@ -157,14 +132,14 @@ class _ClassLinkListState extends State<ClassLinkList> {
               ),
               const Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Text('Online Classes Scheduled For The Selected\nDates'),
+                child: Text('Online Classes Scheduled For The Selected Date'),
               ),
               BlocBuilder<BatchCubit, BatchState>(
                 builder: (context, state) {
                   if (branchId == null || batch == null || date == null) {
                     return const Center(
                       child: Padding(
-                        padding: EdgeInsets.all(64.0),
+                        padding: EdgeInsets.all(30.0),
                         child: Text(
                           'Please select batch, branch to show the class links',
                           textAlign: TextAlign.center,
@@ -175,7 +150,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                       batchCubit!.classLinks!.isEmpty) {
                     return const Center(
                       child: Padding(
-                        padding: EdgeInsets.all(64.0),
+                        padding: EdgeInsets.all(30.0),
                         child: Text(
                           'No matching results found.',
                         ),
@@ -187,7 +162,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: batchCubit?.classLinks?.length ?? 0,
                     itemBuilder: (context, index) {
-                      ClassLink classLink = batchCubit!.classLinks![0];
+                      ClassLink classLink = batchCubit!.classLinks![index];
                       return Container(
                         decoration: BoxDecoration(
                           color: AppColors.liteDark,

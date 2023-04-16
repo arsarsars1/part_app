@@ -288,6 +288,7 @@ class BatchService {
         queryPath:
             '/admin/batches/$batchId/class-link/${dateTime.year}/${dateTime.month}',
       );
+      log(response);
       return classLinkResponseFromJson(jsonEncode(response));
     } catch (e) {
       log(e.toString());

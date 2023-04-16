@@ -33,6 +33,10 @@ _$_ClassLink _$$_ClassLinkFromJson(Map<String, dynamic> json) => _$_ClassLink(
       endTime: json['end_time'] as String?,
       addedByType: json['added_by_type'] as String?,
       addedById: json['added_by_id'] as int?,
+      batchName: json['batch_name'] as String?,
+      branchName: json['branch_name'] as String?,
+      courseName: json['course_name'] as String?,
+      subjectName: json['subject_name'] as String?,
     );
 
 Map<String, dynamic> _$$_ClassLinkToJson(_$_ClassLink instance) =>
@@ -46,4 +50,8 @@ Map<String, dynamic> _$$_ClassLinkToJson(_$_ClassLink instance) =>
       'end_time': instance.endTime,
       'added_by_type': instance.addedByType,
       'added_by_id': instance.addedById,
+      'batch_name': instance.batchName,
+      'branch_name': instance.branchName,
+      'course_name': instance.courseName,
+      'subject_name': instance.subjectName,
     };

@@ -31,8 +31,8 @@ class BatchCubit extends Cubit<BatchState> {
   List<BatchModel> _batches = [];
   List<RescheduledClass> _rescheduledList = [];
   List<CancelledClass> _cancelledList = [];
-  List<Student>? _students;
-  List<ClassLink>? _classLinks;
+  List<Student>? _students = [];
+  List<ClassLink>? _classLinks = [];
 
   BatchModel? _batchModel;
   Batch? _batch;

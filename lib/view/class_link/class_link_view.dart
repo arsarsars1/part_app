@@ -38,7 +38,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
     var batchCubit = context.read<BatchCubit>();
     return Scaffold(
       key: scaffoldKey,
-      appBar: CommonBar(title: 'Online Class ${batchCubit.classLinks?.length}'),
+      appBar: const CommonBar(title: 'Online Class'),
       body: BlocListener<BatchCubit, BatchState>(
         listener: (context, state) {
           if (state is AddingLink) {

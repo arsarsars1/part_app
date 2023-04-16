@@ -194,6 +194,10 @@ mixin _$ClassLink {
   String? get endTime => throw _privateConstructorUsedError;
   String? get addedByType => throw _privateConstructorUsedError;
   int? get addedById => throw _privateConstructorUsedError;
+  String? get batchName => throw _privateConstructorUsedError;
+  String? get branchName => throw _privateConstructorUsedError;
+  String? get courseName => throw _privateConstructorUsedError;
+  String? get subjectName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -215,7 +219,11 @@ abstract class $ClassLinkCopyWith<$Res> {
       String? startTime,
       String? endTime,
       String? addedByType,
-      int? addedById});
+      int? addedById,
+      String? batchName,
+      String? branchName,
+      String? courseName,
+      String? subjectName});
 }
 
 /// @nodoc
@@ -240,6 +248,10 @@ class _$ClassLinkCopyWithImpl<$Res, $Val extends ClassLink>
     Object? endTime = freezed,
     Object? addedByType = freezed,
     Object? addedById = freezed,
+    Object? batchName = freezed,
+    Object? branchName = freezed,
+    Object? courseName = freezed,
+    Object? subjectName = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -278,6 +290,22 @@ class _$ClassLinkCopyWithImpl<$Res, $Val extends ClassLink>
           ? _value.addedById
           : addedById // ignore: cast_nullable_to_non_nullable
               as int?,
+      batchName: freezed == batchName
+          ? _value.batchName
+          : batchName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      branchName: freezed == branchName
+          ? _value.branchName
+          : branchName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      courseName: freezed == courseName
+          ? _value.courseName
+          : courseName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subjectName: freezed == subjectName
+          ? _value.subjectName
+          : subjectName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -298,7 +326,11 @@ abstract class _$$_ClassLinkCopyWith<$Res> implements $ClassLinkCopyWith<$Res> {
       String? startTime,
       String? endTime,
       String? addedByType,
-      int? addedById});
+      int? addedById,
+      String? batchName,
+      String? branchName,
+      String? courseName,
+      String? subjectName});
 }
 
 /// @nodoc
@@ -321,6 +353,10 @@ class __$$_ClassLinkCopyWithImpl<$Res>
     Object? endTime = freezed,
     Object? addedByType = freezed,
     Object? addedById = freezed,
+    Object? batchName = freezed,
+    Object? branchName = freezed,
+    Object? courseName = freezed,
+    Object? subjectName = freezed,
   }) {
     return _then(_$_ClassLink(
       id: freezed == id
@@ -359,6 +395,22 @@ class __$$_ClassLinkCopyWithImpl<$Res>
           ? _value.addedById
           : addedById // ignore: cast_nullable_to_non_nullable
               as int?,
+      batchName: freezed == batchName
+          ? _value.batchName
+          : batchName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      branchName: freezed == branchName
+          ? _value.branchName
+          : branchName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      courseName: freezed == courseName
+          ? _value.courseName
+          : courseName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subjectName: freezed == subjectName
+          ? _value.subjectName
+          : subjectName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -376,7 +428,11 @@ class _$_ClassLink implements _ClassLink {
       this.startTime,
       this.endTime,
       this.addedByType,
-      this.addedById});
+      this.addedById,
+      this.batchName,
+      this.branchName,
+      this.courseName,
+      this.subjectName});
 
   factory _$_ClassLink.fromJson(Map<String, dynamic> json) =>
       _$$_ClassLinkFromJson(json);
@@ -399,10 +455,18 @@ class _$_ClassLink implements _ClassLink {
   final String? addedByType;
   @override
   final int? addedById;
+  @override
+  final String? batchName;
+  @override
+  final String? branchName;
+  @override
+  final String? courseName;
+  @override
+  final String? subjectName;
 
   @override
   String toString() {
-    return 'ClassLink(id: $id, batchId: $batchId, link: $link, service: $service, classDate: $classDate, startTime: $startTime, endTime: $endTime, addedByType: $addedByType, addedById: $addedById)';
+    return 'ClassLink(id: $id, batchId: $batchId, link: $link, service: $service, classDate: $classDate, startTime: $startTime, endTime: $endTime, addedByType: $addedByType, addedById: $addedById, batchName: $batchName, branchName: $branchName, courseName: $courseName, subjectName: $subjectName)';
   }
 
   @override
@@ -422,13 +486,34 @@ class _$_ClassLink implements _ClassLink {
             (identical(other.addedByType, addedByType) ||
                 other.addedByType == addedByType) &&
             (identical(other.addedById, addedById) ||
-                other.addedById == addedById));
+                other.addedById == addedById) &&
+            (identical(other.batchName, batchName) ||
+                other.batchName == batchName) &&
+            (identical(other.branchName, branchName) ||
+                other.branchName == branchName) &&
+            (identical(other.courseName, courseName) ||
+                other.courseName == courseName) &&
+            (identical(other.subjectName, subjectName) ||
+                other.subjectName == subjectName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, batchId, link, service,
-      classDate, startTime, endTime, addedByType, addedById);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      batchId,
+      link,
+      service,
+      classDate,
+      startTime,
+      endTime,
+      addedByType,
+      addedById,
+      batchName,
+      branchName,
+      courseName,
+      subjectName);
 
   @JsonKey(ignore: true)
   @override
@@ -454,7 +539,11 @@ abstract class _ClassLink implements ClassLink {
       final String? startTime,
       final String? endTime,
       final String? addedByType,
-      final int? addedById}) = _$_ClassLink;
+      final int? addedById,
+      final String? batchName,
+      final String? branchName,
+      final String? courseName,
+      final String? subjectName}) = _$_ClassLink;
 
   factory _ClassLink.fromJson(Map<String, dynamic> json) =
       _$_ClassLink.fromJson;
@@ -477,6 +566,14 @@ abstract class _ClassLink implements ClassLink {
   String? get addedByType;
   @override
   int? get addedById;
+  @override
+  String? get batchName;
+  @override
+  String? get branchName;
+  @override
+  String? get courseName;
+  @override
+  String? get subjectName;
   @override
   @JsonKey(ignore: true)
   _$$_ClassLinkCopyWith<_$_ClassLink> get copyWith =>
