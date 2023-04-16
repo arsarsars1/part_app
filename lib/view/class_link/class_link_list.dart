@@ -203,7 +203,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    classLink.batchDate?.toDateString() ??
+                                    classLink.classDate?.toDateString() ??
                                         'N/A',
                                     style: Theme.of(context)
                                         .textTheme
@@ -252,7 +252,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                             children: [
                                               const Text('Date: '),
                                               Text(
-                                                classLink.batchDate
+                                                classLink.classDate
                                                         ?.toDateString() ??
                                                     'N/A',
                                                 style: Theme.of(context)

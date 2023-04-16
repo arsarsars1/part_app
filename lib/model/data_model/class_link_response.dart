@@ -2,9 +2,8 @@
 //
 //     final classLinkResponse = classLinkResponseFromJson(jsonString);
 
-import 'dart:convert';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'dart:convert';
 
 part 'class_link_response.freezed.dart';
 part 'class_link_response.g.dart';
@@ -16,7 +15,7 @@ String classLinkResponseToJson(ClassLinkResponse data) =>
     json.encode(data.toJson());
 
 @freezed
-abstract class ClassLinkResponse with _$ClassLinkResponse {
+class ClassLinkResponse with _$ClassLinkResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory ClassLinkResponse({
     int? status,
@@ -28,14 +27,16 @@ abstract class ClassLinkResponse with _$ClassLinkResponse {
 }
 
 @freezed
-abstract class ClassLink with _$ClassLink {
+class ClassLink with _$ClassLink {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory ClassLink({
     int? id,
     int? batchId,
     String? link,
     String? service,
-    DateTime? batchDate,
+    DateTime? classDate,
+    String? startTime,
+    String? endTime,
     String? addedByType,
     int? addedById,
   }) = _ClassLink;

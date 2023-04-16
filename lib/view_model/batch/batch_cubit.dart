@@ -14,7 +14,6 @@ import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/reschedule_response.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/service/admin/batch.dart';
-import 'package:part_app/view/batch/cancel_batch_class.dart';
 import 'package:part_app/view/constants/default_values.dart';
 
 part 'batch_state.dart';
@@ -441,9 +440,11 @@ class BatchCubit extends Cubit<BatchState> {
       batchId,
       dateTime,
     );
-    if (response?.classLinks != null) {
+    if (response?.status == 1) {
       _classLinks = response?.classLinks;
       emit(FetchedLinks());
+    } else {
+      emit(FetchingLinks());
     }
   }
 

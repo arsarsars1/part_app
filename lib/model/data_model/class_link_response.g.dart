@@ -26,9 +26,11 @@ _$_ClassLink _$$_ClassLinkFromJson(Map<String, dynamic> json) => _$_ClassLink(
       batchId: json['batch_id'] as int?,
       link: json['link'] as String?,
       service: json['service'] as String?,
-      batchDate: json['batch_date'] == null
+      classDate: json['class_date'] == null
           ? null
-          : DateTime.parse(json['batch_date'] as String),
+          : DateTime.parse(json['class_date'] as String),
+      startTime: json['start_time'] as String?,
+      endTime: json['end_time'] as String?,
       addedByType: json['added_by_type'] as String?,
       addedById: json['added_by_id'] as int?,
     );
@@ -39,7 +41,9 @@ Map<String, dynamic> _$$_ClassLinkToJson(_$_ClassLink instance) =>
       'batch_id': instance.batchId,
       'link': instance.link,
       'service': instance.service,
-      'batch_date': instance.batchDate?.toIso8601String(),
+      'class_date': instance.classDate?.toIso8601String(),
+      'start_time': instance.startTime,
+      'end_time': instance.endTime,
       'added_by_type': instance.addedByType,
       'added_by_id': instance.addedById,
     };

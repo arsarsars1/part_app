@@ -290,6 +290,7 @@ class BatchService {
       );
       return classLinkResponseFromJson(jsonEncode(response));
     } catch (e) {
+      log(e.toString());
       return null;
     }
   }

@@ -189,7 +189,9 @@ mixin _$ClassLink {
   int? get batchId => throw _privateConstructorUsedError;
   String? get link => throw _privateConstructorUsedError;
   String? get service => throw _privateConstructorUsedError;
-  DateTime? get batchDate => throw _privateConstructorUsedError;
+  DateTime? get classDate => throw _privateConstructorUsedError;
+  String? get startTime => throw _privateConstructorUsedError;
+  String? get endTime => throw _privateConstructorUsedError;
   String? get addedByType => throw _privateConstructorUsedError;
   int? get addedById => throw _privateConstructorUsedError;
 
@@ -209,7 +211,9 @@ abstract class $ClassLinkCopyWith<$Res> {
       int? batchId,
       String? link,
       String? service,
-      DateTime? batchDate,
+      DateTime? classDate,
+      String? startTime,
+      String? endTime,
       String? addedByType,
       int? addedById});
 }
@@ -231,7 +235,9 @@ class _$ClassLinkCopyWithImpl<$Res, $Val extends ClassLink>
     Object? batchId = freezed,
     Object? link = freezed,
     Object? service = freezed,
-    Object? batchDate = freezed,
+    Object? classDate = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
     Object? addedByType = freezed,
     Object? addedById = freezed,
   }) {
@@ -252,10 +258,18 @@ class _$ClassLinkCopyWithImpl<$Res, $Val extends ClassLink>
           ? _value.service
           : service // ignore: cast_nullable_to_non_nullable
               as String?,
-      batchDate: freezed == batchDate
-          ? _value.batchDate
-          : batchDate // ignore: cast_nullable_to_non_nullable
+      classDate: freezed == classDate
+          ? _value.classDate
+          : classDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      startTime: freezed == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      endTime: freezed == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String?,
       addedByType: freezed == addedByType
           ? _value.addedByType
           : addedByType // ignore: cast_nullable_to_non_nullable
@@ -280,7 +294,9 @@ abstract class _$$_ClassLinkCopyWith<$Res> implements $ClassLinkCopyWith<$Res> {
       int? batchId,
       String? link,
       String? service,
-      DateTime? batchDate,
+      DateTime? classDate,
+      String? startTime,
+      String? endTime,
       String? addedByType,
       int? addedById});
 }
@@ -300,7 +316,9 @@ class __$$_ClassLinkCopyWithImpl<$Res>
     Object? batchId = freezed,
     Object? link = freezed,
     Object? service = freezed,
-    Object? batchDate = freezed,
+    Object? classDate = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
     Object? addedByType = freezed,
     Object? addedById = freezed,
   }) {
@@ -321,10 +339,18 @@ class __$$_ClassLinkCopyWithImpl<$Res>
           ? _value.service
           : service // ignore: cast_nullable_to_non_nullable
               as String?,
-      batchDate: freezed == batchDate
-          ? _value.batchDate
-          : batchDate // ignore: cast_nullable_to_non_nullable
+      classDate: freezed == classDate
+          ? _value.classDate
+          : classDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      startTime: freezed == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      endTime: freezed == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String?,
       addedByType: freezed == addedByType
           ? _value.addedByType
           : addedByType // ignore: cast_nullable_to_non_nullable
@@ -346,7 +372,9 @@ class _$_ClassLink implements _ClassLink {
       this.batchId,
       this.link,
       this.service,
-      this.batchDate,
+      this.classDate,
+      this.startTime,
+      this.endTime,
       this.addedByType,
       this.addedById});
 
@@ -362,7 +390,11 @@ class _$_ClassLink implements _ClassLink {
   @override
   final String? service;
   @override
-  final DateTime? batchDate;
+  final DateTime? classDate;
+  @override
+  final String? startTime;
+  @override
+  final String? endTime;
   @override
   final String? addedByType;
   @override
@@ -370,7 +402,7 @@ class _$_ClassLink implements _ClassLink {
 
   @override
   String toString() {
-    return 'ClassLink(id: $id, batchId: $batchId, link: $link, service: $service, batchDate: $batchDate, addedByType: $addedByType, addedById: $addedById)';
+    return 'ClassLink(id: $id, batchId: $batchId, link: $link, service: $service, classDate: $classDate, startTime: $startTime, endTime: $endTime, addedByType: $addedByType, addedById: $addedById)';
   }
 
   @override
@@ -382,8 +414,11 @@ class _$_ClassLink implements _ClassLink {
             (identical(other.batchId, batchId) || other.batchId == batchId) &&
             (identical(other.link, link) || other.link == link) &&
             (identical(other.service, service) || other.service == service) &&
-            (identical(other.batchDate, batchDate) ||
-                other.batchDate == batchDate) &&
+            (identical(other.classDate, classDate) ||
+                other.classDate == classDate) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
             (identical(other.addedByType, addedByType) ||
                 other.addedByType == addedByType) &&
             (identical(other.addedById, addedById) ||
@@ -393,7 +428,7 @@ class _$_ClassLink implements _ClassLink {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, batchId, link, service,
-      batchDate, addedByType, addedById);
+      classDate, startTime, endTime, addedByType, addedById);
 
   @JsonKey(ignore: true)
   @override
@@ -415,7 +450,9 @@ abstract class _ClassLink implements ClassLink {
       final int? batchId,
       final String? link,
       final String? service,
-      final DateTime? batchDate,
+      final DateTime? classDate,
+      final String? startTime,
+      final String? endTime,
       final String? addedByType,
       final int? addedById}) = _$_ClassLink;
 
@@ -431,7 +468,11 @@ abstract class _ClassLink implements ClassLink {
   @override
   String? get service;
   @override
-  DateTime? get batchDate;
+  DateTime? get classDate;
+  @override
+  String? get startTime;
+  @override
+  String? get endTime;
   @override
   String? get addedByType;
   @override
