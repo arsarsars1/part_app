@@ -93,9 +93,11 @@ class _BatchStudentsState extends State<BatchStudents> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             UserImage(
-                              profilePic: '${F.baseUrl}'
-                                  '/admin/images/student/'
-                                  '${student.detailId}/${student.profilePic}',
+                              profilePic: student.profilePic != ""
+                                  ? '${F.baseUrl}'
+                                      '/admin/images/student/'
+                                      '${student.detailId}/${student.profilePic}'
+                                  : '',
                             ),
                             const SizedBox(
                               width: 12,
