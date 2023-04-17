@@ -11,6 +11,8 @@ import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/trainer/trainer_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../flavors.dart';
+import '../../components/user_image.dart';
 
 class TrainerList extends StatefulWidget {
   final List<Trainer> trainers;
@@ -70,41 +72,12 @@ class _TrainerListState extends State<TrainerList> {
                   flex: 3,
                   child: Row(
                     children: [
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Color(0xFF0575E6),
-                              Color(0xFF640078),
-                            ],
-                          ),
-                          image: trainer.profilePic != null &&
-                                  trainer.profilePic!.isNotEmpty
-                              ? DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: CachedNetworkImageProvider(
-                                    'https://dev.partapp.in/api/admin/images/trainer/${trainer.id}/${trainer.profilePic}',
-                                    headers: {
-                                      "Authorization": token,
-                                      'MOBILE-APP-TOKEN':
-                                          'h5uA9WokuxSNDJGYK0UevodqEWJjYzlB'
-                                    },
-                                  ),
-                                )
-                              : null,
-                        ),
-                        padding: EdgeInsets.all(12.r),
-                        child: trainer.profilePic == null ||
-                                trainer.profilePic!.isEmpty
-                            ? SvgPicture.asset(
-                                Assets.trainerListIcon,
-                              )
-                            : null,
+                      UserImage(
+                        profilePic: trainer.profilePic != ""
+                            ? '${F.baseUrl}'
+                            '/admin/images/trainer/'
+                            '${trainer.id}/${trainer.profilePic}'
+                            : '',
                       ),
                       SizedBox(width: 16.w),
                       Expanded(

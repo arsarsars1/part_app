@@ -36,9 +36,11 @@ class StudentItem extends StatelessWidget {
               child: Row(
                 children: [
                   UserImage(
-                    profilePic: '${F.baseUrl}'
+                    profilePic: student.profilePic != ""
+                        ? '${F.baseUrl}'
                         '/admin/images/student/'
-                        '${student.detailId}/${student.profilePic}',
+                        '${student.detailId}/${student.profilePic}'
+                        : '',
                   ),
                   SizedBox(width: 16.w),
                   Expanded(
