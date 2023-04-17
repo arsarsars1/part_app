@@ -91,12 +91,11 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
           onTap: () {
             List<int?> trainers = [];
             if (widget.batchDetails) {
-              trainers = selectedTrainers.map((e) => e?.userId).toList() ?? [];
+              trainers = selectedTrainers.map((e) => e?.userId).toList();
             } else {
               trainers = selectedTrainers
-                      .map((e) => e?.trainerDetail?[0].userId)
-                      .toList() ??
-                  [];
+                  .map((e) => e?.trainerDetail?[0].userId)
+                  .toList();
             }
 
             if (widget.branchId == null) return;
