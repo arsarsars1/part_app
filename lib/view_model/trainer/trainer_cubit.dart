@@ -98,6 +98,24 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
   }
 
+  Future getActiveInactiveTrainers(
+      {bool nextPage = false, active = false, clean = false}) async {
+    String? arg = "";
+    emit(FetchingTrainers());
+    TrainerResponse? response = active
+        ? await _trainerService.getActiveTrainers(active: active)
+        : await _trainerService.getActiveTrainers();
+    tempResponse = response;
+
+    if (response?.trainers?.data != null) {
+      _trainers = response?.trainers?.data ?? [];
+      emit(TrainersFetched());
+      // filterTrainers(active: _isActive);
+    } else {
+      emit(FailedToFetchTrainers('Failed to fetch the trainers'));
+    }
+  }
+
   Future getRestOfTheTrainers({bool nextPage = false}) async {
     String? arg = "";
     if (tempResponse?.trainers?.nextPageUrl != null) {

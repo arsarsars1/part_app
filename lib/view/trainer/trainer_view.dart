@@ -25,7 +25,7 @@ class _TrainerPageState extends State<TrainerPage> {
 
     // get the trainers list
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<TrainerCubit>().getTrainers();
+      context.read<TrainerCubit>().getActiveInactiveTrainers(active: true);
       context.read<BranchCubit>().getBranches();
     });
   }
@@ -72,7 +72,7 @@ class _TrainerPageState extends State<TrainerPage> {
                 dropDownItems: branchCubit.dropDownBranches(),
                 onChange: (value) {
                   branchId = value.id;
-                  cubit.filteredTrainers.clear();
+                  cubit.trainers?.clear();
                   cubit.searchTrainers(branchId, query: null);
                 },
               );
@@ -109,7 +109,17 @@ class _TrainerPageState extends State<TrainerPage> {
           ),
           TabButton(
             onChange: (String value) {
-              cubit.filterTrainers(active: value == 'Active Trainers');
+              if (value == "Active Trainers") {
+                context
+                    .read<TrainerCubit>()
+                    .getActiveInactiveTrainers(active: true);
+              } else {
+                context
+                    .read<TrainerCubit>()
+                    .getActiveInactiveTrainers(clean: true);
+              }
+
+              // cubit.filterTrainers(active: value == 'Active Trainers');
             },
             options: const [
               'Active Trainers',
@@ -127,7 +137,7 @@ class _TrainerPageState extends State<TrainerPage> {
                 );
               }
 
-              if (cubit.filteredTrainers.isEmpty) {
+              if (cubit.trainers!.isEmpty) {
                 return Padding(
                   padding: const EdgeInsets.all(64.0),
                   child: Center(
@@ -141,7 +151,7 @@ class _TrainerPageState extends State<TrainerPage> {
               }
               return Expanded(
                 child: TrainerList(
-                  trainers: cubit.filteredTrainers,
+                  trainers: cubit.trainers ?? [],
                   onSelect: (Trainer trainer) {
                     context.read<TrainerCubit>().getTrainerDetails(
                           trainerId: trainer.id,
