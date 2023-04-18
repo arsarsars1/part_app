@@ -21,7 +21,7 @@ class _CancelClassPopUpState extends State<CancelClassPopUp> {
       child: Column(
         children: [
           CommonField(
-            title: 'Remark/Reason For Cancellation',
+            title: 'Remark/Reason For Cancellation *',
             hint: 'Eg: School Final Exam',
             maxLines: 2,
             contentPadding: EdgeInsets.zero,
