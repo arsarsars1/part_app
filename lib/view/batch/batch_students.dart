@@ -120,13 +120,13 @@ class _BatchStudentsState extends State<BatchStudents> {
                                               ),
                                         )
                                       : Text(
-                                          'Class Based : ${student.pivot?.noOfClasses.toString()} Nos.',
+                                          'Class Based',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyText1
                                               ?.copyWith(
-                                                  color: AppColors.green,
-                                                  fontWeight: FontWeight.bold),
+                                                color: AppColors.green,
+                                              ),
                                         ),
                                 ],
                               ),
