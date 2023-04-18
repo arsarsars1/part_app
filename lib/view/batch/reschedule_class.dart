@@ -129,6 +129,13 @@ class _RescheduleClassState extends State<RescheduleClass> {
                         title: 'To Date',
                         onSelect: (String value) {
                           endDate = value;
+                          context.read<BranchCubit>().getBatchClassesOfDate(
+                                batchId: '${cubit.batchModel?.id}',
+                                branchId: '${cubit.batchModel?.branchId}',
+                                date: '$endDate',
+                                clean: true,
+                              );
+                          setState(() {});
                         },
                         time: false,
                       ),
@@ -206,6 +213,79 @@ class _RescheduleClassState extends State<RescheduleClass> {
                           ],
                         ),
                       )
+                    ],
+                  ),
+                if (endDate != null)
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      Text(
+                        'Following are the classes scheduled on',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      Text(
+                        DateTime.parse(endDate ?? "").formattedString(),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primaryColor),
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     color: AppColors.liteDark,
+                      //     borderRadius: BorderRadius.circular(4),
+                      //   ),
+                      //   margin: const EdgeInsets.symmetric(
+                      //     horizontal: 16,
+                      //     vertical: 8,
+                      //   ),
+                      //   padding: const EdgeInsets.all(16),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       Row(
+                      //         children: [
+                      //           Text(
+                      //             "${selectedclass?.startTime} - ${selectedclass?.endTime}",
+                      //             style: Theme.of(context)
+                      //                 .textTheme
+                      //                 .bodyText1
+                      //                 ?.copyWith(),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       selectedclass?.rescheduled == true
+                      //           ? Text(
+                      //               "Rescheduled from ${selectedclass?.oldDate.toDateString()}",
+                      //               style: Theme.of(context)
+                      //                   .textTheme
+                      //                   .bodyText1
+                      //                   ?.copyWith(
+                      //                     fontWeight: FontWeight.bold,
+                      //                     color: AppColors.yellow,
+                      //                   ),
+                      //             )
+                      //           : Text(
+                      //               "Scheduled Class",
+                      //               style: Theme.of(context)
+                      //                   .textTheme
+                      //                   .bodyText1
+                      //                   ?.copyWith(
+                      //                     fontWeight: FontWeight.bold,
+                      //                     color: AppColors.yellow,
+                      //                   ),
+                      //             ),
+                      //     ],
+                      //   ),
+                      // )
                     ],
                   ),
                 Row(
