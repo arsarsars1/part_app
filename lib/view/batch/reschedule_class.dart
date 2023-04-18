@@ -240,16 +240,64 @@ class _RescheduleClassState extends State<RescheduleClass> {
                     if (!formKey.currentState!.validate()) {
                       return;
                     }
-                    cubit.reschedule({
-                      'old_date': startDate,
-                      'old_start_time':
-                          "${cubit.batchModel?.batchDetail?[0].startTime}",
-                      'old_end_time':
-                          "${cubit.batchModel?.batchDetail?[0].endTime}",
-                      'new_date': endDate,
-                      'new_start_time': startTime,
-                      'new_end_time': endTime,
-                    });
+                    CommonDialog(
+                      context: context,
+                      message:
+                          'Do you want to continue with rescheduling of class on',
+                      buttonText: 'Yes',
+                      subColor: AppColors.primaryColor,
+                      subContent: Column(
+                        children: [
+                          Text(
+                            'Date : ${DateTime.parse(startDate ?? "").formattedString()} '
+                            '\nTime : ${cubit.batchModel?.batchDetail?[0].startTime?.toAmPM()} - '
+                            '${cubit.batchModel?.batchDetail?[0].endTime?.toAmPM()}',
+                            textAlign: TextAlign.center,
+                            style:
+                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      color: AppColors.primaryColor,
+                                    ),
+                          ),
+                          Text(
+                            'to',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(),
+                          ),
+                          Text(
+                            'Date : ${DateTime.parse(endDate ?? "").formattedString()} '
+                            '\nTime : ${startTime?.toAmPM()} - '
+                            '${endTime?.toAmPM()} ?',
+                            textAlign: TextAlign.center,
+                            style:
+                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      color: AppColors.primaryColor,
+                                    ),
+                          ),
+                          SizedBox(
+                            height: 15.h,
+                          ),
+                          const Text(
+                            'Note: Students and Trainers will be \nnotified.',
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        cubit.reschedule({
+                          'old_date': startDate,
+                          'old_start_time':
+                              "${cubit.batchModel?.batchDetail?[0].startTime}",
+                          'old_end_time':
+                              "${cubit.batchModel?.batchDetail?[0].endTime}",
+                          'new_date': endDate,
+                          'new_start_time': startTime,
+                          'new_end_time': endTime,
+                        });
+                      },
+                    ).show();
                   },
                   title: 'Reschedule Class',
                 )
