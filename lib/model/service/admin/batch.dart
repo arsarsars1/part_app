@@ -230,6 +230,19 @@ class BatchService {
     }
   }
 
+  Future<Common?> deleteClassCancellation(
+      {required int? batchId, required int? classId}) async {
+    try {
+      var response = await _apiClient.delete(
+        queryPath: '/admin/batches/$batchId/cancelled-classes/$classId',
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<CancelResponse?> cancelledClasses(int? batchId,
       {int? year, int? month}) async {
     String query = 'year=${year ?? DateTime.now().year}'

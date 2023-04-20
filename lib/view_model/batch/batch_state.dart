@@ -77,6 +77,15 @@ class CancellingClassBatch extends BatchState {}
 
 class CancelledClassBatch extends BatchState {}
 
+class DeleteCancelledClass extends BatchState {}
+
+class DeletedCancelledClass extends BatchState {}
+
+class CancelledClassDeletionFailed extends BatchState {
+  final String message;
+  CancelledClassDeletionFailed(this.message);
+}
+
 class CancelClassFailed extends BatchState {
   final String message;
 
