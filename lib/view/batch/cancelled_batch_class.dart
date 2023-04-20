@@ -123,7 +123,7 @@ class CancelledClassesState extends State<CancelledClasses> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                if (detail.updatedAt!
+                                if (detail.classDate!
                                     .isBefore(DateTime.now())) {
                                   Alert(context).show(
                                     message: 'Past date cannot be cancelled.',
@@ -156,9 +156,10 @@ class CancelledClassesState extends State<CancelledClasses> {
                                       ],
                                     ),
                                     onTap: () {
+                                      Navigator.pop(context);
                                       context
                                           .read<BatchCubit>()
-                                          .deactivateClass(
+                                          .deleteClassCancellation(
                                             detail.id,
                                           );
                                     },
