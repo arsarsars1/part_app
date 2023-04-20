@@ -57,8 +57,6 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
             child: Center(
               child: Button(
                 onTap: () {
-                  // Navigator.pop(context);
-                  // cubit.studentDetails(student.detailId);
                   Navigator.pushNamed(
                     context,
                     StudentDetails.route,
