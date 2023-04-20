@@ -127,10 +127,11 @@ class _RescheduleClassState extends State<RescheduleClass> {
                     Expanded(
                       child: ScheduleField(
                         title: 'To Date',
-                        onSelect: (String value) {
+                        onSelect: (String value) async {
                           endDate = value;
-                          context.read<BranchCubit>().getBatchClassesOfDate(
-                                batchId: '${cubit.batchModel?.id}',
+                          await context
+                              .read<BranchCubit>()
+                              .getBranchClassesOfDate(
                                 branchId: '${cubit.batchModel?.branchId}',
                                 date: '$endDate',
                                 clean: true,
@@ -215,7 +216,8 @@ class _RescheduleClassState extends State<RescheduleClass> {
                       )
                     ],
                   ),
-                if (endDate != null)
+                if (endDate != null &&
+                    (context.read<BranchCubit>().newClasses?.length ?? 0) > 0)
                   Column(
                     children: [
                       SizedBox(
@@ -238,54 +240,72 @@ class _RescheduleClassState extends State<RescheduleClass> {
                       SizedBox(
                         height: 15.h,
                       ),
-                      // Container(
-                      //   decoration: BoxDecoration(
-                      //     color: AppColors.liteDark,
-                      //     borderRadius: BorderRadius.circular(4),
-                      //   ),
-                      //   margin: const EdgeInsets.symmetric(
-                      //     horizontal: 16,
-                      //     vertical: 8,
-                      //   ),
-                      //   padding: const EdgeInsets.all(16),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       Row(
-                      //         children: [
-                      //           Text(
-                      //             "${selectedclass?.startTime} - ${selectedclass?.endTime}",
-                      //             style: Theme.of(context)
-                      //                 .textTheme
-                      //                 .bodyText1
-                      //                 ?.copyWith(),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       selectedclass?.rescheduled == true
-                      //           ? Text(
-                      //               "Rescheduled from ${selectedclass?.oldDate.toDateString()}",
-                      //               style: Theme.of(context)
-                      //                   .textTheme
-                      //                   .bodyText1
-                      //                   ?.copyWith(
-                      //                     fontWeight: FontWeight.bold,
-                      //                     color: AppColors.yellow,
-                      //                   ),
-                      //             )
-                      //           : Text(
-                      //               "Scheduled Class",
-                      //               style: Theme.of(context)
-                      //                   .textTheme
-                      //                   .bodyText1
-                      //                   ?.copyWith(
-                      //                     fontWeight: FontWeight.bold,
-                      //                     color: AppColors.yellow,
-                      //                   ),
-                      //             ),
-                      //     ],
-                      //   ),
-                      // )
+                      ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount:
+                              context.read<BranchCubit>().newClasses?.length,
+                          itemBuilder: (context, index) {
+                            ClassModel? singleClass =
+                                context.read<BranchCubit>().newClasses?[index];
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.liteDark,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "${singleClass?.batchName}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+                                  Text(
+                                    "${singleClass?.courseName}, ${singleClass?.subjectName}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(),
+                                  ),
+                                  Text(
+                                    "Trainers- No Trainer details obtained",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          color: AppColors.primaryColor,
+                                        ),
+                                  ),
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+                                  Text(
+                                    "${DateTime.parse(endDate ?? "").formattedDay2()} ${singleClass?.startTime} - ${singleClass?.endTime}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
                     ],
                   ),
                 Row(
