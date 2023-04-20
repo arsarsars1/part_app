@@ -194,12 +194,14 @@ class CancelledClassesState extends State<CancelledClasses> {
                                   .bodyText1
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                              '${detail.reason} ',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(),
+                            Expanded(
+                              child: Text(
+                                '${detail.reason} ',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(),
+                              ),
                             ),
                           ],
                         ),

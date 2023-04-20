@@ -330,8 +330,8 @@ class _RescheduleClassState extends State<RescheduleClass> {
                         children: [
                           Text(
                             'Date : ${DateTime.parse(startDate ?? "").formattedString()} '
-                            '\nTime : ${cubit.batchModel?.batchDetail?[0].startTime?.toAmPM()} - '
-                            '${cubit.batchModel?.batchDetail?[0].endTime?.toAmPM()}',
+                            '\nTime : ${selectedclass?.startTime.toAmPM()} - '
+                            '${selectedclass?.endTime.toAmPM()}',
                             textAlign: TextAlign.center,
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
@@ -368,10 +368,8 @@ class _RescheduleClassState extends State<RescheduleClass> {
                       onTap: () {
                         cubit.reschedule({
                           'old_date': startDate,
-                          'old_start_time':
-                              "${cubit.batchModel?.batchDetail?[0].startTime}",
-                          'old_end_time':
-                              "${cubit.batchModel?.batchDetail?[0].endTime}",
+                          'old_start_time': "${selectedclass?.startTime}",
+                          'old_end_time': "${selectedclass?.endTime}",
                           'new_date': endDate,
                           'new_start_time': startTime,
                           'new_end_time': endTime,
