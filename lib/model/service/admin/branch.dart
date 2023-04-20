@@ -146,4 +146,16 @@ class BranchService {
       return null;
     }
   }
+
+  Future<ClassResponse?> getBranchClasses(
+      {required String branchId, required String date, int pageNo = 1}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/branches/$branchId/daily-classes/$date',
+      );
+      return classResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
 }
