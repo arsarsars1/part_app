@@ -359,6 +359,20 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future deleteClassCancellation(int? batchDetailId) async {
+    emit(DeleteCancelledClass());
+    Common? response = await _batchService.deleteClassCancellation(
+      classId: batchDetailId,
+      batchId: _batch?.id,
+    );
+    if (response?.status == 1) {
+      await getCancelledBatches();
+      emit(DeletedCancelledClass());
+    } else {
+      emit(CancelledClassDeletionFailed(response?.message ?? 'Failed to delete class'));
+    }
+  }
+
   Future deactivateClass(int? batchDetailId) async {
     emit(ReschedulingBatch());
     Common? response = await _batchService.deactivateClass(

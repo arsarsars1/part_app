@@ -6,6 +6,7 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/students/assign_batch.dart';
 import 'package:part_app/view/students/edit_assigned_batch.dart';
+import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/widgets/remove_student.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -56,7 +57,10 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
             child: Center(
               child: Button(
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(
+                    context,
+                    StudentDetails.route,
+                  );
                 },
                 title: 'View Student Profile',
               ),

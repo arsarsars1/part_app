@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:part_app/view/components/cached_image.dart';
+import '../constants/assets.dart';
 
 class UserImage extends StatelessWidget {
   final String? profilePic;
@@ -24,9 +26,15 @@ class UserImage extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(4),
-        child: CachedImage(
-          profilePic!,
-        ).userImage(),
+        child: profilePic != ""
+            ? CachedImage(profilePic!)
+                .userImage()
+            : Padding(
+                padding: const EdgeInsets.all(9.0),
+                child: SvgPicture.asset(
+                  Assets.trainerListIcon,
+                ),
+              ),
       ),
     );
   }

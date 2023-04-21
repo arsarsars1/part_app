@@ -93,9 +93,11 @@ class _BatchStudentsState extends State<BatchStudents> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             UserImage(
-                              profilePic: '${F.baseUrl}'
-                                  '/admin/images/student/'
-                                  '${student.detailId}/${student.profilePic}',
+                              profilePic: student.profilePic != ""
+                                  ? '${F.baseUrl}'
+                                      '/admin/images/student/'
+                                      '${student.detailId}/${student.profilePic}'
+                                  : '',
                             ),
                             const SizedBox(
                               width: 12,
@@ -118,13 +120,13 @@ class _BatchStudentsState extends State<BatchStudents> {
                                               ),
                                         )
                                       : Text(
-                                          'Class Based : ${student.pivot?.noOfClasses.toString()} Nos.',
+                                          'Class Based',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyText1
                                               ?.copyWith(
-                                                  color: AppColors.green,
-                                                  fontWeight: FontWeight.bold),
+                                                color: AppColors.green,
+                                              ),
                                         ),
                                 ],
                               ),
