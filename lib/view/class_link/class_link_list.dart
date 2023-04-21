@@ -132,16 +132,24 @@ class _ClassLinkListState extends State<ClassLinkList> {
               ),
               const Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Text('Online Classes Scheduled For The Selected Date'),
+                child: Text('Online Classes Scheduled For The Selectedn\nDate'),
               ),
               BlocBuilder<BatchCubit, BatchState>(
                 builder: (context, state) {
+                  if (state is FetchingLinks) {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 32),
+                      child: LoadingView(
+                        hideColor: true,
+                      ),
+                    );
+                  }
                   if (branchId == null || batch == null || date == null) {
                     return const Center(
                       child: Padding(
                         padding: EdgeInsets.all(30.0),
                         child: Text(
-                          'Please select batch, branch to show the class links',
+                          'Please select branch, batch and date to show the class links',
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -187,6 +195,29 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                           color: AppColors.primaryColor,
                                         ),
                                   ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Text(
+                                    '${classLink.branchName}, ${classLink.batchName}, ${classLink.courseName}, ${classLink.subjectName}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(),
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Text(
+                                    '${classLink.classDate?.formattedDay2()} ${classLink.startTime?.toAmPM()}-${classLink.endTime?.toAmPM()}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(),
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
                                   Text(
                                     classLink.link ?? 'N/A',
                                     style: Theme.of(context)
@@ -200,6 +231,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                               ),
                             ),
                             Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 RoundButton(
                                   onTap: () {
@@ -210,8 +242,8 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                     );
                                   },
                                 ),
-                                const SizedBox(
-                                  height: 16,
+                                SizedBox(
+                                  height: 35.h,
                                 ),
                                 RoundButton(
                                   onTap: () {
@@ -246,7 +278,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                         ],
                                       ),
                                       onTap: () {
-                                        batchCubit?.removeClassLint(
+                                        batchCubit?.removeClassLink(
                                           classLink.batchId,
                                           classLink.id,
                                         );

@@ -15,7 +15,7 @@ String classLinkResponseToJson(ClassLinkResponse data) =>
     json.encode(data.toJson());
 
 @freezed
-abstract class ClassLinkResponse with _$ClassLinkResponse {
+class ClassLinkResponse with _$ClassLinkResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory ClassLinkResponse({
     int? status,
@@ -27,7 +27,7 @@ abstract class ClassLinkResponse with _$ClassLinkResponse {
 }
 
 @freezed
-abstract class ClassLink with _$ClassLink {
+class ClassLink with _$ClassLink {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory ClassLink({
     int? id,

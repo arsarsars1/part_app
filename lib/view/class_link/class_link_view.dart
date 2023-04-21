@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
@@ -38,13 +36,20 @@ class _ClassLinkViewState extends State<ClassLinkView> {
     var batchCubit = context.read<BatchCubit>();
     return Scaffold(
       key: scaffoldKey,
-      appBar: const CommonBar(title: 'Online Class'),
+      appBar: CommonBar(
+        title: 'Online Class',
+        onPressed: () {
+          batchCubit.classLinks;
+          Navigator.pop(context);
+        },
+      ),
       body: BlocListener<BatchCubit, BatchState>(
         listener: (context, state) {
           if (state is AddingLink) {
             Loader(context).show();
           } else if (state is AddedLink) {
             Navigator.pop(context);
+            batchCubit.getClassLink(batch?.id, DateTime.now());
             Alert(context).show(message: 'Class link added');
             formKey.currentState?.reset();
             batchController.clear();
@@ -54,6 +59,16 @@ class _ClassLinkViewState extends State<ClassLinkView> {
           } else if (state is AddLinkFailed) {
             Navigator.pop(context);
             Alert(context).show(message: state.message);
+          } else if (state is FetchingLinks || state is RemovingLink) {
+            Loader(context).show();
+          } else if (state is RemovedLink) {
+            Navigator.pop(context);
+            Alert(context).show(message: 'Online Class Deleted');
+            batchCubit.getClassLink(batch?.id, DateTime.now());
+          } else if (state is RemoveLinkFailed) {
+            Alert(context).show(message: state.message);
+          } else if (state is FetchedLinks) {
+            Navigator.pop(context);
           }
         },
         child: Form(
@@ -88,6 +103,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 onChange: (value) {
                   classLink = value;
                 },
+                capitalization: TextCapitalization.none,
                 validator: (value) {
                   bool validUrl = Uri.parse(value).isAbsolute;
 
@@ -132,12 +148,11 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                           for (var element in batch!.days) {
                             batchDays?.add(element.split(" ")[0]);
                           }
-                          batchCubit.classLinks?.clear();
+                          // batchCubit.getClassLink(batch?.id, DateTime.now());
                           batchCubit.getClassLink(batch?.id, DateTime.now());
                         },
                       ),
                     );
-                    setState(() {});
                   } else {
                     Alert(context).show(
                       message: 'Please select the Branch.',
@@ -185,24 +200,229 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 },
                 onSubmit: (value) {},
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text('Time: '),
-                    Text(
-                      date == null ? '-' : getBatchTime(date!),
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            color: AppColors.primaryColor,
-                          ),
-                    ),
-                  ],
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text('Selected Class'),
                 ),
               ),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.liteDark,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                padding: const EdgeInsets.all(16),
+                margin: const EdgeInsets.all(16),
+                child: Text(
+                  date == null ? 'No class selected' : getBatchTime(date!),
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+                ),
+              ),
+              if (!widget.isEdit)
+                BlocBuilder<BatchCubit, BatchState>(
+                  builder: (context, state) {
+                    if (branchId == null || batch == null) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(30.0),
+                          child: Text(
+                            'Please select branch and batch to show the today\'s class links',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    } else if (batchCubit.classLinks == null ||
+                        batchCubit.classLinks!.isEmpty) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(30.0),
+                          child: Text(
+                            'No matching results found.',
+                          ),
+                        ),
+                      );
+                    }
+                    return Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text('Today\'s Online Classes'),
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: batchCubit.classLinks?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            ClassLink classLink = batchCubit.classLinks![index];
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.liteDark,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              padding: const EdgeInsets.all(16),
+                              margin: const EdgeInsets.all(16),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          classLink.classDate?.toDateString() ??
+                                              'N/A',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.copyWith(
+                                                color: AppColors.primaryColor,
+                                              ),
+                                        ),
+                                        SizedBox(
+                                          height: 10.h,
+                                        ),
+                                        Text(
+                                          '${classLink.branchName}, ${classLink.batchName}, ${classLink.courseName}, ${classLink.subjectName}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.copyWith(),
+                                        ),
+                                        SizedBox(
+                                          height: 10.h,
+                                        ),
+                                        Text(
+                                          '${classLink.classDate?.formattedDay2()} ${classLink.startTime?.toAmPM()}-${classLink.endTime?.toAmPM()}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.copyWith(),
+                                        ),
+                                        SizedBox(
+                                          height: 10.h,
+                                        ),
+                                        Text(
+                                          classLink.link ?? 'N/A',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.copyWith(
+                                                color: AppColors.defaultBlue,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      RoundButton(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            ClassLinkView.route,
+                                            arguments: true,
+                                          );
+                                        },
+                                      ),
+                                      SizedBox(
+                                        height: 35.h,
+                                      ),
+                                      RoundButton(
+                                        onTap: () {
+                                          CommonDialog(
+                                            context: context,
+                                            message:
+                                                'Are You Sure You Want To Remove\nClass Link?',
+                                            subContent: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    const Text('Date: '),
+                                                    Text(
+                                                      "${classLink.classDate?.toDateString()}",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1
+                                                          ?.copyWith(
+                                                            color: AppColors
+                                                                .primaryColor,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    const Text('Time: '),
+                                                    Text(
+                                                      "${classLink.startTime?.toAmPM()} - ${classLink.endTime?.toAmPM()}",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1
+                                                          ?.copyWith(
+                                                            color: AppColors
+                                                                .primaryColor,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Text(
+                                                  "${classLink.branchName}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1
+                                                      ?.copyWith(),
+                                                ),
+                                                Text(
+                                                  "${classLink.batchName}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1
+                                                      ?.copyWith(),
+                                                ),
+                                                Text(
+                                                  "${classLink.courseName}, ${classLink.subjectName}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1
+                                                      ?.copyWith(),
+                                                ),
+                                                const SizedBox(
+                                                  height: 32,
+                                                ),
+                                              ],
+                                            ),
+                                            onTap: () {
+                                              batchCubit.removeClassLink(
+                                                classLink.batchId,
+                                                classLink.id,
+                                              );
+                                              Navigator.pop(context);
+                                            },
+                                          ).show();
+                                        },
+                                        edit: false,
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                ),
               Center(
                 child: Button(
-                  height: 30.h,
+                  height: 50.h,
                   onTap: () {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
@@ -219,122 +439,6 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                   title: widget.isEdit ? 'Update Class Link' : 'Add Class Link',
                 ),
               ),
-              if (!widget.isEdit)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text('Today\'s Online Classes'),
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: batchCubit.classLinks?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        ClassLink classLink = batchCubit.classLinks![index];
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.liteDark,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          padding: const EdgeInsets.all(16),
-                          margin: const EdgeInsets.all(16),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      classLink.classDate?.toDateString() ??
-                                          'N/A',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          ?.copyWith(
-                                            color: AppColors.primaryColor,
-                                          ),
-                                    ),
-                                    Text(
-                                      classLink.link ?? 'N/A',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          ?.copyWith(
-                                            color: AppColors.defaultBlue,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                children: [
-                                  RoundButton(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                        context,
-                                        ClassLinkView.route,
-                                        arguments: true,
-                                      );
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  RoundButton(
-                                    onTap: () {
-                                      CommonDialog(
-                                        context: context,
-                                        message:
-                                            'Are You Sure You Want To Remove Class Link?',
-                                        subContent: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                const Text('Date: '),
-                                                Text(
-                                                  classLink.classDate
-                                                          ?.toDateString() ??
-                                                      'N/A',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1
-                                                      ?.copyWith(
-                                                        color: AppColors
-                                                            .primaryColor,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 32,
-                                            ),
-                                          ],
-                                        ),
-                                        onTap: () {
-                                          batchCubit.removeClassLint(
-                                            classLink.batchId,
-                                            classLink.id,
-                                          );
-                                          Navigator.pop(context);
-                                        },
-                                      ).show();
-                                    },
-                                    edit: false,
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    )
-                  ],
-                ),
             ],
           ),
         ),

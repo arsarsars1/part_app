@@ -369,7 +369,8 @@ class BatchCubit extends Cubit<BatchState> {
       await getCancelledBatches();
       emit(DeletedCancelledClass());
     } else {
-      emit(CancelledClassDeletionFailed(response?.message ?? 'Failed to delete class'));
+      emit(CancelledClassDeletionFailed(
+          response?.message ?? 'Failed to delete class'));
     }
   }
 
@@ -450,11 +451,12 @@ class BatchCubit extends Cubit<BatchState> {
 
   Future getClassLink(int? batchId, DateTime dateTime) async {
     emit(FetchingLinks());
+    _classLinks = [];
     ClassLinkResponse? response = await _batchService.getClassLink(
       batchId,
       dateTime,
     );
-    if (response?.status == 1) {
+    if (response?.classLinks != null) {
       _classLinks = response?.classLinks;
       emit(FetchedLinks());
     } else {
@@ -462,7 +464,7 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
-  Future removeClassLint(
+  Future removeClassLink(
     int? batchId,
     int? linkId,
   ) async {
@@ -475,7 +477,7 @@ class BatchCubit extends Cubit<BatchState> {
     if (response?.status == 1) {
       emit(RemovedLink());
     } else {
-      emit(RemoveLinkFailed());
+      emit(RemoveLinkFailed(response?.message ?? 'Failed to add link.'));
     }
   }
 }
