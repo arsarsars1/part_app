@@ -136,14 +136,6 @@ class _ClassLinkListState extends State<ClassLinkList> {
               ),
               BlocBuilder<BatchCubit, BatchState>(
                 builder: (context, state) {
-                  if (state is FetchingLinks) {
-                    return const Padding(
-                      padding: EdgeInsets.only(top: 32),
-                      child: LoadingView(
-                        hideColor: true,
-                      ),
-                    );
-                  }
                   if (branchId == null || batch == null || date == null) {
                     return const Center(
                       child: Padding(
@@ -259,9 +251,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                             children: [
                                               const Text('Date: '),
                                               Text(
-                                                classLink.classDate
-                                                        ?.toDateString() ??
-                                                    'N/A',
+                                                "${classLink.classDate?.toDateString()}",
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyText1
@@ -271,6 +261,44 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                                     ),
                                               ),
                                             ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              const Text('Time: '),
+                                              Text(
+                                                "${classLink.startTime?.toAmPM()} - ${classLink.endTime?.toAmPM()}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1
+                                                    ?.copyWith(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                            "${classLink.branchName}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                ?.copyWith(),
+                                          ),
+                                          Text(
+                                            "${classLink.batchName}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                ?.copyWith(),
+                                          ),
+                                          Text(
+                                            "${classLink.courseName}, ${classLink.subjectName}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                ?.copyWith(),
                                           ),
                                           const SizedBox(
                                             height: 32,
