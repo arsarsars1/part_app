@@ -212,7 +212,7 @@ class CancelledClassesState extends State<CancelledClasses> {
                         Row(
                           children: [
                             Text(
-                              '${detail.classDate?.formattedDay()} ',
+                              '${detail.classDate?.toDateString()} ',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1
