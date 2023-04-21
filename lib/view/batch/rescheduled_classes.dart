@@ -31,7 +31,20 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
     return WillPopScope(
-      onWillPop: () async => cubit.second ? false : true,
+      onWillPop: () async {
+        if (cubit.second) {
+          cubit.second = false;
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            Home.route,
+            (route) => false,
+          );
+          return true;
+        } else {
+          Navigator.pop(context);
+          return true;
+        }
+      },
       child: Scaffold(
         appBar: CommonBar(
           title: 'Rescheduled Classes',
