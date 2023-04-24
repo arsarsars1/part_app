@@ -201,7 +201,7 @@ class BatchItem extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      'Admission Fees: ${batch.admissionFee.toString().currencyFormat()}/-',
+                      'Admission Fees: ₹${batch.admissionFee.toString().currencyFormat()}/-',
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(),
                     ),
                   ),
@@ -241,7 +241,7 @@ class BatchItem extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      'Fees: ${batch.fee.toString().currencyFormat()}/-',
+                      'Fees: ₹${batch.fee.toString().currencyFormat()}/-',
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(),
                     ),
                   ),
