@@ -183,7 +183,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              'Admission Fees: ${batch?.admissionFee.toString().currencyFormat()}/-',
+                              'Admission Fees: ₹${batch?.admissionFee.toString().currencyFormat()}/-',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1
@@ -196,7 +196,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              'Fees: ${batch?.fee.toString().currencyFormat()}/-',
+                              'Fees: ₹${batch?.fee.toString().currencyFormat()}/-',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1
