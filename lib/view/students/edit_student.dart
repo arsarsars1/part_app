@@ -32,6 +32,7 @@ class _EditStudentState extends State<EditStudent> {
   String? address;
 
   bool whatsappSelected = false;
+  late DateTime selectedDate;
 
   TextEditingController dobController = TextEditingController();
 
@@ -45,6 +46,7 @@ class _EditStudentState extends State<EditStudent> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       dobController.text = details?.dob?.toDateString() ?? '';
+      selectedDate = details?.dob ?? DateTime.now();
     });
   }
 
@@ -364,13 +366,15 @@ class _EditStudentState extends State<EditStudent> {
         );
       },
       context: context,
-      initialDate: DateTime.now(),
+      // initialDate: DateTime.now(),
+      initialDate: selectedDate,
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     ).then((value) {
       if (value != null) {
         dob = value.toServerString();
         dobController.text = value.toDateString();
+        selectedDate = value;
       }
     });
   }
