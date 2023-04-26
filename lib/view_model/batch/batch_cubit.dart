@@ -35,6 +35,7 @@ class BatchCubit extends Cubit<BatchState> {
   List<ClassLink>? _classLinks = [];
 
   BatchModel? _batchModel;
+  ClassLink? tempClass;
   Batch? _batch;
 
   // pagination

@@ -2,23 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/class_link/class_link_list.dart';
-import 'package:part_app/view/class_link/edit_class_link.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class ClassLinkView extends StatefulWidget {
-  static const route = '/class-link';
-  const ClassLinkView({Key? key}) : super(key: key);
+class EditClassLink extends StatefulWidget {
+  static const route = '/edit-class-link';
+
+  const EditClassLink({Key? key}) : super(key: key);
 
   @override
-  State<ClassLinkView> createState() => _ClassLinkViewState();
+  State<EditClassLink> createState() => _EditClassLinkState();
 }
 
-class _ClassLinkViewState extends State<ClassLinkView> {
+class _EditClassLinkState extends State<EditClassLink> {
   int? branchId;
   BatchModel? batch;
   DateTime? date;
@@ -36,7 +35,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
     return Scaffold(
       key: scaffoldKey,
       appBar: CommonBar(
-        title: 'Online Class',
+        title: 'Edit Online Class',
         onPressed: () {
           batchCubit.classLinks;
           Navigator.pop(context);
@@ -74,29 +73,13 @@ class _ClassLinkViewState extends State<ClassLinkView> {
           key: formKey,
           child: ListView(
             children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 16.w,
-                    right: 16.w,
-                    top: 16.h,
-                  ),
-                  child: Button(
-                    height: 30.h,
-                    onTap: () {
-                      Navigator.pushNamed(context, ClassLinkList.route);
-                    },
-                    title: 'List Online Classes',
-                  ),
-                ),
-              ),
               const SizedBox(
                 height: 20,
               ),
               CommonField(
                 title: 'Online Class Link *',
                 hint: 'Enter the class link',
+                initialValue: batchCubit.tempClass?.link,
                 onChange: (value) {
                   classLink = value;
                 },
@@ -114,6 +97,14 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 height: 20.h,
               ),
               BranchField(
+                initialBranch: (context
+                        .read<BranchCubit>()
+                        .branches
+                        .where((element) =>
+                            element.branchName ==
+                            batchCubit.tempClass?.branchName)
+                        .toList())[0]
+                    .id,
                 onSelect: (value) {
                   setState(() {
                     branchId = value;
@@ -129,6 +120,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 height: 20.h,
               ),
               CommonField(
+                // initialValue: batchCubit.tempClass?.batchName ?? "",
                 controller: batchController,
                 onTap: () {
                   batchDays?.clear();
@@ -152,7 +144,9 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                     );
                   } else {
                     Alert(context).show(
-                      message: 'Please select the Branch.',
+                      message: batchCubit.tempClass?.batchName != null
+                          ? 'Please re-select the Branch.'
+                          : 'Please select the Branch.',
                     );
                   }
                 },
@@ -176,6 +170,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 height: 20,
               ),
               CommonField(
+                // initialValue: batchCubit.tempClass?.classDate?.toDateString(),
                 controller: dateController,
                 title: 'Date *',
                 hint: 'Select the date',
@@ -433,7 +428,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                       });
                     }
                   },
-                  title: 'Add Class Link',
+                  title: 'Update Class Link',
                 ),
               ),
             ],

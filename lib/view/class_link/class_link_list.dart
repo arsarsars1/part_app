@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/class_link/class_link_view.dart';
+import 'package:part_app/view/class_link/edit_class_link.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/constants/app_colors.dart';
@@ -227,9 +227,10 @@ class _ClassLinkListState extends State<ClassLinkList> {
                               children: [
                                 RoundButton(
                                   onTap: () {
+                                    batchCubit?.tempClass = classLink;
                                     Navigator.pushNamed(
                                       context,
-                                      ClassLinkView.route,
+                                      EditClassLink.route,
                                       arguments: true,
                                     );
                                   },
