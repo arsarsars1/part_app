@@ -28,7 +28,7 @@ mixin _$BatchRequest {
   dynamic get feeAmount => throw _privateConstructorUsedError;
   dynamic get admissionFees => throw _privateConstructorUsedError;
   @JsonKey(name: 'trainers[]')
-  List<int?>? get trainers => throw _privateConstructorUsedError;
+  dynamic get trainers => throw _privateConstructorUsedError;
   @JsonKey(name: 'days[]')
   List<String>? get days => throw _privateConstructorUsedError;
 
@@ -52,7 +52,7 @@ abstract class $BatchRequestCopyWith<$Res> {
       String? batchStatus,
       dynamic feeAmount,
       dynamic admissionFees,
-      @JsonKey(name: 'trainers[]') List<int?>? trainers,
+      @JsonKey(name: 'trainers[]') dynamic trainers,
       @JsonKey(name: 'days[]') List<String>? days});
 }
 
@@ -76,7 +76,7 @@ class _$BatchRequestCopyWithImpl<$Res, $Val extends BatchRequest>
     Object? batchStatus = freezed,
     Object? feeAmount = null,
     Object? admissionFees = null,
-    Object? trainers = freezed,
+    Object? trainers = null,
     Object? days = freezed,
   }) {
     return _then(_value.copyWith(
@@ -108,10 +108,10 @@ class _$BatchRequestCopyWithImpl<$Res, $Val extends BatchRequest>
           ? _value.admissionFees
           : admissionFees // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      trainers: freezed == trainers
+      trainers: null == trainers
           ? _value.trainers
           : trainers // ignore: cast_nullable_to_non_nullable
-              as List<int?>?,
+              as dynamic,
       days: freezed == days
           ? _value.days
           : days // ignore: cast_nullable_to_non_nullable
@@ -136,7 +136,7 @@ abstract class _$$_BatchRequestCopyWith<$Res>
       String? batchStatus,
       dynamic feeAmount,
       dynamic admissionFees,
-      @JsonKey(name: 'trainers[]') List<int?>? trainers,
+      @JsonKey(name: 'trainers[]') dynamic trainers,
       @JsonKey(name: 'days[]') List<String>? days});
 }
 
@@ -158,7 +158,7 @@ class __$$_BatchRequestCopyWithImpl<$Res>
     Object? batchStatus = freezed,
     Object? feeAmount = null,
     Object? admissionFees = null,
-    Object? trainers = freezed,
+    Object? trainers = null,
     Object? days = freezed,
   }) {
     return _then(_$_BatchRequest(
@@ -190,10 +190,10 @@ class __$$_BatchRequestCopyWithImpl<$Res>
           ? _value.admissionFees
           : admissionFees // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      trainers: freezed == trainers
-          ? _value._trainers
+      trainers: null == trainers
+          ? _value.trainers
           : trainers // ignore: cast_nullable_to_non_nullable
-              as List<int?>?,
+              as dynamic,
       days: freezed == days
           ? _value._days
           : days // ignore: cast_nullable_to_non_nullable
@@ -214,10 +214,9 @@ class _$_BatchRequest implements _BatchRequest {
       this.batchStatus,
       this.feeAmount,
       this.admissionFees,
-      @JsonKey(name: 'trainers[]') final List<int?>? trainers,
+      @JsonKey(name: 'trainers[]') this.trainers,
       @JsonKey(name: 'days[]') final List<String>? days})
-      : _trainers = trainers,
-        _days = days;
+      : _days = days;
 
   factory _$_BatchRequest.fromJson(Map<String, dynamic> json) =>
       _$$_BatchRequestFromJson(json);
@@ -236,16 +235,9 @@ class _$_BatchRequest implements _BatchRequest {
   final dynamic feeAmount;
   @override
   final dynamic admissionFees;
-  final List<int?>? _trainers;
   @override
   @JsonKey(name: 'trainers[]')
-  List<int?>? get trainers {
-    final value = _trainers;
-    if (value == null) return null;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final dynamic trainers;
   final List<String>? _days;
   @override
   @JsonKey(name: 'days[]')
@@ -279,7 +271,7 @@ class _$_BatchRequest implements _BatchRequest {
             const DeepCollectionEquality().equals(other.feeAmount, feeAmount) &&
             const DeepCollectionEquality()
                 .equals(other.admissionFees, admissionFees) &&
-            const DeepCollectionEquality().equals(other._trainers, _trainers) &&
+            const DeepCollectionEquality().equals(other.trainers, trainers) &&
             const DeepCollectionEquality().equals(other._days, _days));
   }
 
@@ -294,7 +286,7 @@ class _$_BatchRequest implements _BatchRequest {
       batchStatus,
       const DeepCollectionEquality().hash(feeAmount),
       const DeepCollectionEquality().hash(admissionFees),
-      const DeepCollectionEquality().hash(_trainers),
+      const DeepCollectionEquality().hash(trainers),
       const DeepCollectionEquality().hash(_days));
 
   @JsonKey(ignore: true)
@@ -320,7 +312,7 @@ abstract class _BatchRequest implements BatchRequest {
       final String? batchStatus,
       final dynamic feeAmount,
       final dynamic admissionFees,
-      @JsonKey(name: 'trainers[]') final List<int?>? trainers,
+      @JsonKey(name: 'trainers[]') final dynamic trainers,
       @JsonKey(name: 'days[]') final List<String>? days}) = _$_BatchRequest;
 
   factory _BatchRequest.fromJson(Map<String, dynamic> json) =
@@ -342,7 +334,7 @@ abstract class _BatchRequest implements BatchRequest {
   dynamic get admissionFees;
   @override
   @JsonKey(name: 'trainers[]')
-  List<int?>? get trainers;
+  dynamic get trainers;
   @override
   @JsonKey(name: 'days[]')
   List<String>? get days;

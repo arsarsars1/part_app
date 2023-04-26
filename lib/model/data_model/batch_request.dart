@@ -25,7 +25,7 @@ abstract class BatchRequest with _$BatchRequest {
     String? batchStatus,
     dynamic feeAmount,
     dynamic admissionFees,
-    @JsonKey(name: 'trainers[]') List<int?>? trainers,
+    @JsonKey(name: 'trainers[]') dynamic trainers,
     @JsonKey(name: 'days[]') List<String>? days,
   }) = _BatchRequest;
 
