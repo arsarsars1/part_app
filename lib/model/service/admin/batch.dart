@@ -297,7 +297,7 @@ class BatchService {
     try {
       var response = await _apiClient.get(
         queryPath:
-            '/admin/batches/$batchId/class-link/${dateTime?.year}/${dateTime?.month}',
+            '/admin/batches/$batchId/class-link/date/${dateTime?.year}-${dateTime?.month}-${dateTime?.day}',
       );
       // log(response.toString());
       return classLinkResponseFromJson(json.encode(response));

@@ -237,7 +237,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                         child: Padding(
                           padding: EdgeInsets.all(30.0),
                           child: Text(
-                            'No matching results found.',
+                            'No classes scheduled for today.',
                           ),
                         ),
                       );
