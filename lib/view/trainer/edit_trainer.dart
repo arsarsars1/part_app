@@ -37,6 +37,7 @@ class _EditTrainerState extends State<EditTrainer> {
 
   final scrollController = ScrollController();
   TextEditingController dobController = TextEditingController();
+  late DateTime selectedDate;
 
   // Files
   File? image;
@@ -50,6 +51,7 @@ class _EditTrainerState extends State<EditTrainer> {
       var trainerCubit = context.read<TrainerCubit>();
       dobController.text =
           trainerCubit.trainer?.trainerDetail?[0].dob?.toDateString() ?? '';
+      selectedDate = trainerCubit.trainer?.trainerDetail?[0].dob ?? DateTime.now();
     });
   }
 
@@ -325,13 +327,14 @@ class _EditTrainerState extends State<EditTrainer> {
         );
       },
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: selectedDate,
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     ).then((value) {
       if (value != null) {
         dob = value.toServerString();
         dobController.text = value.toDateString();
+        selectedDate = value;
       }
     });
   }

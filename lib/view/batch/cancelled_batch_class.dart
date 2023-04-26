@@ -123,7 +123,7 @@ class CancelledClassesState extends State<CancelledClasses> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                if (detail.updatedAt!
+                                if (detail.classDate!
                                     .isBefore(DateTime.now())) {
                                   Alert(context).show(
                                     message: 'Past date cannot be cancelled.',
@@ -156,9 +156,10 @@ class CancelledClassesState extends State<CancelledClasses> {
                                       ],
                                     ),
                                     onTap: () {
+                                      Navigator.pop(context);
                                       context
                                           .read<BatchCubit>()
-                                          .deactivateClass(
+                                          .deleteClassCancellation(
                                             detail.id,
                                           );
                                     },
@@ -194,12 +195,14 @@ class CancelledClassesState extends State<CancelledClasses> {
                                   .bodyText1
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                              '${detail.reason} ',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(),
+                            Expanded(
+                              child: Text(
+                                '${detail.reason} ',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(),
+                              ),
                             ),
                           ],
                         ),
@@ -209,7 +212,7 @@ class CancelledClassesState extends State<CancelledClasses> {
                         Row(
                           children: [
                             Text(
-                              '${detail.classDate?.formattedDay()} ',
+                              '${detail.classDate?.toDateString()} ',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1

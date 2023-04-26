@@ -33,7 +33,7 @@ class _EditManagerState extends State<EditManager> {
   int? branchId;
 
   bool selected = false;
-
+  late DateTime selectedDate;
   final formKey = GlobalKey<FormState>();
 
   final scrollController = ScrollController();
@@ -51,6 +51,7 @@ class _EditManagerState extends State<EditManager> {
       var managerCubit = context.read<ManagerCubit>();
       dobController.text =
           managerCubit.manager?.managerDetail?[0].dob?.toDateString() ?? '';
+      selectedDate = managerCubit.manager?.managerDetail?[0].dob ?? DateTime.now();
     });
   }
 
@@ -316,13 +317,14 @@ class _EditManagerState extends State<EditManager> {
         );
       },
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: selectedDate,
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     ).then((value) {
       if (value != null) {
         dob = value.toServerString();
         dobController.text = value.toDateString();
+        selectedDate = value;
       }
     });
   }

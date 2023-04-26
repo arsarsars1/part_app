@@ -27,6 +27,12 @@ _$_Class _$$_ClassFromJson(Map<String, dynamic> json) => _$_Class(
       oldDate: json['old_date'] == null
           ? null
           : DateTime.parse(json['old_date'] as String),
+      batchId: json['batch_id'] as int?,
+      batchName: json['batch_name'] as String?,
+      studentCount: json['student_count'] as int?,
+      courseName: json['course_name'] as String?,
+      subjectName: json['subject_name'] as String?,
+      branchName: json['branch_name'] as String?,
     );
 
 Map<String, dynamic> _$$_ClassToJson(_$_Class instance) => <String, dynamic>{
@@ -34,4 +40,10 @@ Map<String, dynamic> _$$_ClassToJson(_$_Class instance) => <String, dynamic>{
       'end_time': instance.endTime,
       'rescheduled': instance.rescheduled,
       'old_date': instance.oldDate?.toIso8601String(),
+      'batch_id': instance.batchId,
+      'batch_name': instance.batchName,
+      'student_count': instance.studentCount,
+      'course_name': instance.courseName,
+      'subject_name': instance.subjectName,
+      'branch_name': instance.branchName,
     };

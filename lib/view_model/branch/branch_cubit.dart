@@ -18,6 +18,7 @@ class BranchCubit extends Cubit<BranchState> {
   List<Branch> _branches = [];
   final List<Trainer> _trainers = [];
   List<ClassModel> _classes = [];
+  List<ClassModel> _newClasses = [];
 
   Branch? _branch;
 
@@ -29,6 +30,8 @@ class BranchCubit extends Cubit<BranchState> {
   List<Trainer>? get trainers => _trainers;
 
   List<ClassModel>? get classes => _classes;
+
+  List<ClassModel>? get newClasses => _newClasses;
 
   @Deprecated('Moved the type to TrainerModel')
   List<Trainer>? get activeTrainers => _trainers
@@ -192,6 +195,33 @@ class BranchCubit extends Cubit<BranchState> {
       var items =
           temp?.classes?.map((e) => ClassModel.fromEntity(e)).toList() ?? [];
       _classes = items;
+      // _classes.addAll(temp!.classes);
+      emit(ClassesLoaded());
+    } else {
+      emit(ClassesFailed('Failed to get the class list'));
+    }
+  }
+
+  Future getBranchClassesOfDate({
+    required String branchId,
+    required String date,
+    bool clean = false,
+  }) async {
+    _newClasses.clear();
+
+    ClassResponse? temp = await _branchService.getBranchClasses(
+      branchId: branchId,
+      date: date,
+      pageNo: page,
+    );
+    if (temp?.status == 1) {
+      // nextPageUrl = temp?.trainers?.nextPageUrl;
+      // if (nextPageUrl != null) {
+      //   page++;
+      // }
+      var items =
+          temp?.classes?.map((e) => ClassModel.fromEntity(e)).toList() ?? [];
+      _newClasses = items;
       // _classes.addAll(temp!.classes);
       emit(ClassesLoaded());
     } else {
