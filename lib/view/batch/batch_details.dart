@@ -304,19 +304,25 @@ class _BatchDetailsState extends State<BatchDetails> {
                             scaffoldKey: scaffoldKey,
                             trainers: batch?.trainers,
                             selectedTrainers: (List<Trainer?> value) {
-                              var trainerList =
-                                  value.map((e) => e?.id).toList();
-                              BatchRequest request = BatchRequest(
-                                trainers: context
-                                    .read<BranchCubit>()
-                                    .trainers
-                                    ?.where((element) => trainerList.contains(
-                                          element.id,
-                                        ))
-                                    .map((e) => e.trainerDetail?[0].id)
-                                    .toList(),
-                              );
-                              context.read<BatchCubit>().updateBatch(request);
+                              var trainerList = value.map((e) => e?.id).toList();
+                              if(value.isEmpty){
+                                BatchRequest request = const BatchRequest(
+                                  trainers: "",
+                                );
+                                context.read<BatchCubit>().updateBatch(request);
+                              } else {
+                                BatchRequest request = BatchRequest(
+                                  trainers: context
+                                      .read<BranchCubit>()
+                                      .trainers
+                                      ?.where((element) =>
+                                      trainerList.contains(element.id,))
+                                      .map((e) => e.trainerDetail?[0].id)
+                                      .toList(),
+                                );
+                                context.read<BatchCubit>().updateBatch(request);
+                              }
+
                             },
                           )
                         ],
