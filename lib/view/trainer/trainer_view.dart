@@ -18,7 +18,7 @@ class TrainerPage extends StatefulWidget {
 class _TrainerPageState extends State<TrainerPage> {
   int? branchId;
   String? query;
-
+  String? temp;
   @override
   void initState() {
     super.initState();
@@ -108,6 +108,7 @@ class _TrainerPageState extends State<TrainerPage> {
           ),
           TabButton(
             onChange: (String value) {
+              temp = value;
               if (value == "Active Trainers") {
                 context
                     .read<TrainerCubit>()
@@ -142,7 +143,7 @@ class _TrainerPageState extends State<TrainerPage> {
                   child: Center(
                     child: Text(
                       query == null
-                          ? 'Add Trainer to Get Started'
+                          ? 'Empty List'
                           : 'Sorry, No Matching Results Found.',
                     ),
                   ),
@@ -151,11 +152,14 @@ class _TrainerPageState extends State<TrainerPage> {
               return Expanded(
                 child: TrainerList(
                   trainers: cubit.trainers ?? [],
-                  onSelect: (Trainer trainer) {
+                  onSelect: (Trainer trainer) async {
                     context.read<TrainerCubit>().getTrainerDetails(
                           trainerId: trainer.id,
                         );
-                    Navigator.pushNamed(context, TrainerDetails.route);
+                    await Navigator.pushNamed(context, TrainerDetails.route);
+                    // ignore: use_build_context_synchronously
+                    context.read<TrainerCubit>().getActiveInactiveTrainers(
+                        active: temp == "Active Trainers" ? true : false);
                   },
                 ),
               );

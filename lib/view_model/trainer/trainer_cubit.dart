@@ -22,7 +22,7 @@ class TrainerCubit extends Cubit<TrainerState> {
   final _branchService = BranchService();
 
   Trainer? _trainer;
-  List<Trainer>? _trainers = [];
+  List<Trainer>? _trainers;
 
   List<Trainer> _filteredTrainers = [];
   List<int> _selectedBranches = [];
@@ -73,6 +73,10 @@ class TrainerCubit extends Cubit<TrainerState> {
       return;
     }
     emit(TrainerDetailsFailed('Failed to load the trainer details'));
+  }
+
+  void clearTrainers() {
+    _trainers?.clear();
   }
 
   void updateBranchSelection(int branchId) {
