@@ -19,7 +19,7 @@ abstract class TrainerRequest with _$TrainerRequest {
     String? expertise,
     int? salaryDate,
     String? salaryAmount,
-    @JsonKey(name: "branch_id[]") List<String>? branchId,
+    @JsonKey(name: "branch_id[]") dynamic branchId,
     String? upiId,
     String? address,
   }) = _TrainerRequest;

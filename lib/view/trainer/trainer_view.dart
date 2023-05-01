@@ -137,7 +137,8 @@ class _TrainerPageState extends State<TrainerPage> {
                 );
               }
 
-              if (cubit.trainers!.isEmpty) {
+              // ignore: prefer_is_empty
+              if (cubit.trainers?.length == 0) {
                 return Padding(
                   padding: const EdgeInsets.all(64.0),
                   child: Center(
