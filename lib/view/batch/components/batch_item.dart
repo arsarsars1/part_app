@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view_model/branch/branch_cubit.dart';
 
 class BatchItem extends StatelessWidget {
   final BatchModel batch;
@@ -34,6 +36,13 @@ class BatchItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String branchName = '';
+    for (var item in context.read<BranchCubit>().branches) {
+      if (item.id == batch.branchId) {
+        branchName = item.branchName ?? "";
+        break;
+      }
+    }
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -95,7 +104,9 @@ class BatchItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            batch.branchName,
+                            batch.branchName == 'Branch Not Allocated'
+                                ? branchName
+                                : batch.branchName,
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
                                       color: AppColors.primaryColor,
