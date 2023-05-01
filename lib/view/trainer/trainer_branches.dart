@@ -105,12 +105,20 @@ class _TrainerBranchesState extends State<TrainerBranches> {
           child: Center(
             child: Button(
               onTap: () {
-                trainerCubit.updateTrainer(
-                  TrainerRequest(
-                    branchId:
-                        trainerCubit.selectedBranches.map((e) => '$e').toList(),
-                  ),
-                );
+                if (trainerCubit.selectedBranches.isEmpty) {
+                  TrainerRequest request = const TrainerRequest(
+                    branchId: "",
+                  );
+                  trainerCubit.updateTrainer(request);
+                } else {
+                  trainerCubit.updateTrainer(
+                    TrainerRequest(
+                      branchId: trainerCubit.selectedBranches
+                          .map((e) => '$e')
+                          .toList(),
+                    ),
+                  );
+                }
               },
               title: 'Update',
             ),

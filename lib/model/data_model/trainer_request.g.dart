@@ -20,9 +20,7 @@ _$_TrainerRequest _$$_TrainerRequestFromJson(Map<String, dynamic> json) =>
       expertise: json['expertise'] as String?,
       salaryDate: json['salary_date'] as int?,
       salaryAmount: json['salary_amount'] as String?,
-      branchId: (json['branch_id[]'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      branchId: json['branch_id[]'],
       upiId: json['upi_id'] as String?,
       address: json['address'] as String?,
     );
