@@ -18,14 +18,14 @@ class TrainerPage extends StatefulWidget {
 class _TrainerPageState extends State<TrainerPage> {
   int? branchId;
   String? query;
-
+  String? temp;
   @override
   void initState() {
     super.initState();
 
     // get the trainers list
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<TrainerCubit>().getTrainers();
+      context.read<TrainerCubit>().getActiveInactiveTrainers(active: true);
       context.read<BranchCubit>().getBranches();
     });
   }
@@ -72,7 +72,6 @@ class _TrainerPageState extends State<TrainerPage> {
                 dropDownItems: branchCubit.dropDownBranches(),
                 onChange: (value) {
                   branchId = value.id;
-                  cubit.filteredTrainers.clear();
                   cubit.searchTrainers(branchId, query: null);
                 },
               );
@@ -109,7 +108,18 @@ class _TrainerPageState extends State<TrainerPage> {
           ),
           TabButton(
             onChange: (String value) {
-              cubit.filterTrainers(active: value == 'Active Trainers');
+              temp = value;
+              if (value == "Active Trainers") {
+                context
+                    .read<TrainerCubit>()
+                    .getActiveInactiveTrainers(active: true);
+              } else {
+                context
+                    .read<TrainerCubit>()
+                    .getActiveInactiveTrainers(clean: true);
+              }
+
+              // cubit.filterTrainers(active: value == 'Active Trainers');
             },
             options: const [
               'Active Trainers',
@@ -127,13 +137,14 @@ class _TrainerPageState extends State<TrainerPage> {
                 );
               }
 
-              if (cubit.filteredTrainers.isEmpty) {
+              // ignore: prefer_is_empty
+              if (cubit.trainers?.length == 0) {
                 return Padding(
                   padding: const EdgeInsets.all(64.0),
                   child: Center(
                     child: Text(
                       query == null
-                          ? 'Add Trainer to Get Started'
+                          ? 'Empty List'
                           : 'Sorry, No Matching Results Found.',
                     ),
                   ),
@@ -141,12 +152,15 @@ class _TrainerPageState extends State<TrainerPage> {
               }
               return Expanded(
                 child: TrainerList(
-                  trainers: cubit.filteredTrainers,
-                  onSelect: (Trainer trainer) {
+                  trainers: cubit.trainers ?? [],
+                  onSelect: (Trainer trainer) async {
                     context.read<TrainerCubit>().getTrainerDetails(
                           trainerId: trainer.id,
                         );
-                    Navigator.pushNamed(context, TrainerDetails.route);
+                    await Navigator.pushNamed(context, TrainerDetails.route);
+                    // ignore: use_build_context_synchronously
+                    context.read<TrainerCubit>().getActiveInactiveTrainers(
+                        active: temp == "Active Trainers" ? true : false);
                   },
                 ),
               );

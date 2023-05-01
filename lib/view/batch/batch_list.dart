@@ -28,10 +28,10 @@ class _BatchesPageState extends State<BatchesPage> {
     super.initState();
     // initial call to show the batches
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<BatchCubit>().getBatchesByStatus(
+      /*context.read<BatchCubit>().getBatchesByStatus(
             status: status,
             clean: true,
-          );
+          );*/
     });
 
     // Pagination listener
@@ -51,6 +51,7 @@ class _BatchesPageState extends State<BatchesPage> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
+    cubit.reset();
 
     return Scaffold(
       appBar: const CommonBar(title: 'Batches'),

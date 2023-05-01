@@ -22,7 +22,7 @@ class TrainerCubit extends Cubit<TrainerState> {
   final _branchService = BranchService();
 
   Trainer? _trainer;
-  List<Trainer>? _trainers = [];
+  List<Trainer>? _trainers;
 
   List<Trainer> _filteredTrainers = [];
   List<int> _selectedBranches = [];
@@ -75,6 +75,10 @@ class TrainerCubit extends Cubit<TrainerState> {
     emit(TrainerDetailsFailed('Failed to load the trainer details'));
   }
 
+  void clearTrainers() {
+    _trainers?.clear();
+  }
+
   void updateBranchSelection(int branchId) {
     if (_selectedBranches.contains(branchId)) {
       _selectedBranches.remove(branchId);
@@ -93,6 +97,24 @@ class TrainerCubit extends Cubit<TrainerState> {
     if (response?.trainers != null) {
       _trainers = response?.trainers?.data ?? [];
       filterTrainers(active: _isActive);
+    } else {
+      emit(FailedToFetchTrainers('Failed to fetch the trainers'));
+    }
+  }
+
+  Future getActiveInactiveTrainers(
+      {bool nextPage = false, active = false, clean = false}) async {
+    String? arg = "";
+    emit(FetchingTrainers());
+    TrainerResponse? response = active
+        ? await _trainerService.getActiveTrainers(active: active)
+        : await _trainerService.getActiveTrainers();
+    tempResponse = response;
+
+    if (response?.trainers?.data != null) {
+      _trainers = response?.trainers?.data ?? [];
+      emit(TrainersFetched());
+      // filterTrainers(active: _isActive);
     } else {
       emit(FailedToFetchTrainers('Failed to fetch the trainers'));
     }
