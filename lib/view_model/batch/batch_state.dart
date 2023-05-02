@@ -122,6 +122,9 @@ class RemovingLink extends BatchState {}
 
 class RemovedLink extends BatchState {}
 
-class RemoveLinkFailed extends BatchState {}
+class RemoveLinkFailed extends BatchState {
+  final String message;
+  RemoveLinkFailed(this.message);
+}
 
 class BatchNetworkError extends BatchState {}

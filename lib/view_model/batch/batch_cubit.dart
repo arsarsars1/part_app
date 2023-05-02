@@ -14,7 +14,6 @@ import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/reschedule_response.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/service/admin/batch.dart';
-import 'package:part_app/view/batch/cancel_batch_class.dart';
 import 'package:part_app/view/constants/default_values.dart';
 
 part 'batch_state.dart';
@@ -32,10 +31,11 @@ class BatchCubit extends Cubit<BatchState> {
   List<BatchModel> _batches = [];
   List<RescheduledClass> _rescheduledList = [];
   List<CancelledClass> _cancelledList = [];
-  List<Student>? _students;
-  List<ClassLink>? _classLinks;
+  List<Student>? _students = [];
+  List<ClassLink>? _classLinks = [];
 
   BatchModel? _batchModel;
+  ClassLink? tempClass;
   Batch? _batch;
 
   // pagination
@@ -370,7 +370,8 @@ class BatchCubit extends Cubit<BatchState> {
       await getCancelledBatches();
       emit(DeletedCancelledClass());
     } else {
-      emit(CancelledClassDeletionFailed(response?.message ?? 'Failed to delete class'));
+      emit(CancelledClassDeletionFailed(
+          response?.message ?? 'Failed to delete class'));
     }
   }
 
@@ -451,6 +452,7 @@ class BatchCubit extends Cubit<BatchState> {
 
   Future getClassLink(int? batchId, DateTime dateTime) async {
     emit(FetchingLinks());
+    _classLinks = [];
     ClassLinkResponse? response = await _batchService.getClassLink(
       batchId,
       dateTime,
@@ -458,10 +460,12 @@ class BatchCubit extends Cubit<BatchState> {
     if (response?.classLinks != null) {
       _classLinks = response?.classLinks;
       emit(FetchedLinks());
+    } else {
+      emit(FetchingLinks());
     }
   }
 
-  Future removeClassLint(
+  Future removeClassLink(
     int? batchId,
     int? linkId,
   ) async {
@@ -474,7 +478,7 @@ class BatchCubit extends Cubit<BatchState> {
     if (response?.status == 1) {
       emit(RemovedLink());
     } else {
-      emit(RemoveLinkFailed());
+      emit(RemoveLinkFailed(response?.message ?? 'Failed to add link.'));
     }
   }
 }

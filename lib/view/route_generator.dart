@@ -20,6 +20,7 @@ import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
+import 'package:part_app/view/class_link/edit_class_link.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/leads/add_lead.dart';
 import 'package:part_app/view/leads/lead_details.dart';
@@ -321,18 +322,18 @@ class RouteGenerator {
         );
       case ClassLinkView.route:
         {
-          bool edit = false;
-          if (settings.arguments != null) {
-            edit = settings.arguments as bool;
-          }
           return MaterialPageRoute(
-            builder: (_) => ClassLinkView(
-              isEdit: edit,
-            ),
+            builder: (_) => const ClassLinkView(),
             settings: settings,
           );
         }
-
+      case EditClassLink.route:
+        {
+          return MaterialPageRoute(
+            builder: (_) => const EditClassLink(),
+            settings: settings,
+          );
+        }
       case EditAssignedBatch.route:
         return MaterialPageRoute(
           builder: (_) => EditAssignedBatch(

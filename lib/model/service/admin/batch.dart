@@ -284,10 +284,8 @@ class BatchService {
 
   Future<Common?> removeClassLink(int? batchId, int? linkId) async {
     try {
-      var response = await _apiClient.post(
-        postPath: '/admin/batches/$batchId/class-link/$linkId/remove',
-        data: {},
-      );
+      var response = await _apiClient.delete(
+          queryPath: '/admin/batches/$batchId/class-link/$linkId/');
       return commonFromJson(jsonEncode(response));
     } catch (e) {
       return null;
@@ -295,14 +293,17 @@ class BatchService {
   }
 
   Future<ClassLinkResponse?> getClassLink(
-      int? batchId, DateTime dateTime) async {
+      int? batchId, DateTime? dateTime) async {
     try {
       var response = await _apiClient.get(
         queryPath:
-            '/admin/batches/$batchId/class-link/${dateTime.year}/${dateTime.month}',
+            '/admin/batches/$batchId/class-link/date/${dateTime?.year}-${dateTime?.month}-${dateTime?.day}',
       );
-      return classLinkResponseFromJson(jsonEncode(response));
+      // log(response.toString());
+      return classLinkResponseFromJson(json.encode(response));
+      // return ClassLinkResponse.fromJson(response);
     } catch (e) {
+      log(e.toString());
       return null;
     }
   }

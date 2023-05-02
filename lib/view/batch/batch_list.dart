@@ -84,11 +84,13 @@ class _BatchesPageState extends State<BatchesPage> {
                     title: 'Select A Branch To List Batches',
                     onSelect: (value) {
                       branchId = value;
-                      context.read<BatchCubit>().getBatchesByStatus(
-                            branchId: branchId,
-                            status: status,
-                            clean: true,
-                          );
+                      setState(() {
+                        context.read<BatchCubit>().getBatchesByStatus(
+                              branchId: branchId,
+                              status: status,
+                              clean: true,
+                            );
+                      });
                     },
                   ),
                   const SizedBox(
@@ -117,96 +119,119 @@ class _BatchesPageState extends State<BatchesPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: TabButton(
-                      onChange: (String value) {
-                        if (value == 'Ongoing Batches') {
-                          status = 'ongoing';
-                        } else {
-                          status = 'completed';
-                        }
-                        context.read<BatchCubit>().getBatchesByStatus(
-                              branchId: branchId,
-                              status: status,
-                              search: query,
-                              clean: true,
-                            );
-                      },
-                      options: const [
-                        'Ongoing Batches',
-                        'Completed Batches',
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BlocConsumer<BatchCubit, BatchState>(
-                    listener: (context, state) {},
-                    buildWhen: (prv, crr) =>
-                        crr is BatchesFetched || crr is FetchingBatches,
-                    builder: (context, state) {
-                      if (state is BatchNetworkError) {
-                        AlertBox.showErrorAlert(context);
-                      }
-                      if (cubit.batches.isEmpty && state is FetchingBatches) {
-                        return const Padding(
-                          padding: EdgeInsets.only(top: 32),
-                          child: LoadingView(
-                            hideColor: true,
-                          ),
-                        );
-                      }
-                      if (cubit.batches.isEmpty) {
-                        return Center(
+                  branchId != null
+                      ? Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: TabButton(
+                                onChange: (String value) {
+                                  if (value == 'Ongoing Batches') {
+                                    status = 'ongoing';
+                                  } else {
+                                    status = 'completed';
+                                  }
+                                  context.read<BatchCubit>().getBatchesByStatus(
+                                        branchId: branchId,
+                                        status: status,
+                                        search: query,
+                                        clean: true,
+                                      );
+                                },
+                                options: const [
+                                  'Ongoing Batches',
+                                  'Completed Batches',
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            BlocConsumer<BatchCubit, BatchState>(
+                              listener: (context, state) {},
+                              buildWhen: (prv, crr) =>
+                                  crr is BatchesFetched ||
+                                  crr is FetchingBatches,
+                              builder: (context, state) {
+                                if (state is BatchNetworkError) {
+                                  AlertBox.showErrorAlert(context);
+                                }
+                                if (cubit.batches.isEmpty &&
+                                    state is FetchingBatches) {
+                                  return const Padding(
+                                    padding: EdgeInsets.only(top: 32),
+                                    child: LoadingView(
+                                      hideColor: true,
+                                    ),
+                                  );
+                                }
+                                if (cubit.batches.isEmpty) {
+                                  return Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(64.0),
+                                      child: Text(
+                                        branchId == null
+                                            ? 'Add Batch to Get Started'
+                                            : 'Sorry, No Matching Results Found.',
+                                      ),
+                                    ),
+                                  );
+                                }
+                                return ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: cubit.batches.length,
+                                  itemBuilder: (context, index) {
+                                    BatchModel batch = cubit.batches[index];
+                                    return BatchItem(
+                                      batch: batch,
+                                      onTap: () {
+                                        context
+                                            .read<BatchCubit>()
+                                            .getBatch(batchId: '${batch.id}');
+                                        context
+                                            .read<BranchCubit>()
+                                            .getBranchTrainers(
+                                              branchId: '${batch.branchId}',
+                                              clean: true,
+                                            );
+                                        Navigator.pushNamed(
+                                            context, BatchDetails.route);
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                            BlocBuilder<BatchCubit, BatchState>(
+                              builder: (context, state) {
+                                return AnimatedContainer(
+                                  height: state is FetchingBatches &&
+                                          state.pagination
+                                      ? 30
+                                      : 0,
+                                  color: Colors.black,
+                                  duration: const Duration(
+                                    milliseconds: 250,
+                                  ),
+                                  child: const Center(
+                                      child: Text('Fetching more items ..')),
+                                );
+                              },
+                            ),
+                          ],
+                        )
+                      : const Center(
                           child: Padding(
-                            padding: const EdgeInsets.all(64.0),
+                            padding: EdgeInsets.all(64.0),
                             child: Text(
-                              branchId == null
-                                  ? 'Add Batch to Get Started'
-                                  : 'Sorry, No Matching Results Found.',
+                              'Please select a branch',
                             ),
                           ),
-                        );
-                      }
-                      return ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: cubit.batches.length,
-                        itemBuilder: (context, index) {
-                          BatchModel batch = cubit.batches[index];
-                          return BatchItem(
-                            batch: batch,
-                            onTap: () {
-                              context
-                                  .read<BatchCubit>()
-                                  .getBatch(batchId: '${batch.id}');
-                              context.read<BranchCubit>().getBranchTrainers(
-                                    branchId: '${batch.branchId}',
-                                    clean: true,
-                                  );
-                              Navigator.pushNamed(context, BatchDetails.route);
-                            },
-                          );
-                        },
-                      );
-                    },
-                  ),
+                        ),
                 ],
               ),
-            ),
-            BlocBuilder<BatchCubit, BatchState>(
-              builder: (context, state) {
-                return AnimatedContainer(
-                  height: state is FetchingBatches && state.pagination ? 30 : 0,
-                  color: Colors.black,
-                  duration: const Duration(
-                    milliseconds: 250,
-                  ),
-                  child: const Center(child: Text('Fetching more items ..')),
-                );
-              },
             ),
           ],
         ),
