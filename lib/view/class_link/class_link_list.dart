@@ -132,7 +132,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
               ),
               const Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Text('Online Classes Scheduled For The Selectedn Date'),
+                child: Text('Online Classes Scheduled For The Selected Date'),
               ),
               BlocBuilder<BatchCubit, BatchState>(
                 builder: (context, state) {

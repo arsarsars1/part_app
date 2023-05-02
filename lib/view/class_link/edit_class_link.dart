@@ -119,79 +119,194 @@ class _EditClassLinkState extends State<EditClassLink> {
               SizedBox(
                 height: 20.h,
               ),
-              CommonField(
-                // initialValue: batchCubit.tempClass?.batchName ?? "",
-                controller: batchController,
-                onTap: () {
-                  batchDays?.clear();
-                  if (branchId != null) {
-                    scaffoldKey.currentState?.showBottomSheet(
-                      backgroundColor: Colors.transparent,
-                      (context) => BatchPicker(
-                        branchId: branchId!,
-                        status: '',
-                        branchSearch: true,
-                        onSelect: (value) {
-                          batch = value;
-                          batchController.text = value.name;
-                          for (var element in batch!.days) {
-                            batchDays?.add(element.split(" ")[0]);
-                          }
-                          // batchCubit.getClassLink(batch?.id, DateTime.now());
-                          batchCubit.getClassLink(batch?.id, DateTime.now());
-                        },
+              batchCubit.tempClass?.batchName != null && batch == null
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 16.w),
+                          child: Text(
+                            'Batch*',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          height: 60.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.liteDark,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 25.w),
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '${batchCubit.tempClass?.batchName}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  batchDays?.clear();
+
+                                  scaffoldKey.currentState?.showBottomSheet(
+                                    backgroundColor: Colors.transparent,
+                                    (context) => BatchPicker(
+                                      branchId:
+                                          batchCubit.tempClass?.batchId ?? 0,
+                                      status: '',
+                                      branchSearch: true,
+                                      onSelect: (value) {
+                                        batch = value;
+                                        batchController.text = value.name;
+                                        for (var element in batch!.days) {
+                                          batchDays?.add(element.split(" ")[0]);
+                                        }
+                                        // batchCubit.getClassLink(batch?.id, DateTime.now());
+                                        batchCubit.getClassLink(
+                                            batch?.id,
+                                            batchCubit.tempClass?.classDate ??
+                                                DateTime.now());
+                                        setState(() {});
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: const Icon(
+                                  Icons.arrow_drop_down,
+                                  size: 24,
+                                  color: Colors.white24,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : CommonField(
+                      // initialValue: batchCubit.tempClass?.batchName ?? "",
+                      controller: batchController,
+                      onTap: () {
+                        batchDays?.clear();
+                        if (branchId != null) {
+                          scaffoldKey.currentState?.showBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            (context) => BatchPicker(
+                              branchId: branchId!,
+                              status: '',
+                              branchSearch: true,
+                              onSelect: (value) {
+                                batch = value;
+                                batchController.text = value.name;
+                                for (var element in batch!.days) {
+                                  batchDays?.add(element.split(" ")[0]);
+                                }
+                              },
+                            ),
+                          );
+                        } else {
+                          Alert(context).show(
+                            message: batchCubit.tempClass?.batchName != null
+                                ? 'Please re-select the Branch.'
+                                : 'Please select the Branch.',
+                          );
+                        }
+                      },
+                      disabled: true,
+                      title: 'Batch *',
+                      hint: 'Select Batch',
+                      onChange: (value) {},
+                      suffixIcon: const Padding(
+                        padding: EdgeInsets.only(right: 32),
+                        child: Icon(
+                          Icons.arrow_drop_down,
+                          size: 24,
+                          color: Colors.white24,
+                        ),
                       ),
-                    );
-                  } else {
-                    Alert(context).show(
-                      message: batchCubit.tempClass?.batchName != null
-                          ? 'Please re-select the Branch.'
-                          : 'Please select the Branch.',
-                    );
-                  }
-                },
-                disabled: true,
-                title: 'Batch *',
-                hint: 'Select Batch',
-                onChange: (value) {},
-                suffixIcon: const Padding(
-                  padding: EdgeInsets.only(right: 32),
-                  child: Icon(
-                    Icons.arrow_drop_down,
-                    size: 24,
-                    color: Colors.white24,
-                  ),
-                ),
-                validator: (value) {
-                  return value.isEmpty ? 'Please select batch.' : null;
-                },
-              ),
+                      validator: (value) {
+                        return value.isEmpty ? 'Please select batch.' : null;
+                      },
+                    ),
               const SizedBox(
                 height: 20,
               ),
-              CommonField(
-                // initialValue: batchCubit.tempClass?.classDate?.toDateString(),
-                controller: dateController,
-                title: 'Date *',
-                hint: 'Select the date',
-                suffixIcon: const Padding(
-                  padding: EdgeInsets.only(right: 32),
-                  child: Icon(
-                    Icons.arrow_drop_down,
-                    size: 24,
-                    color: Colors.white24,
-                  ),
-                ),
-                disabled: true,
-                onTap: () {
-                  datePicker();
-                },
-                onChange: (value) {},
-                validator: (value) {
-                  return value.isEmpty ? 'Please select the date.' : null;
-                },
-                onSubmit: (value) {},
-              ),
+              batchCubit.tempClass?.classDate != null && date == null
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 16.w),
+                          child: Text(
+                            'Date*',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          height: 60.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.liteDark,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 25.w),
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '${batchCubit.tempClass?.classDate?.toDateString()}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  datePicker();
+                                },
+                                child: const Icon(
+                                  Icons.arrow_drop_down,
+                                  size: 24,
+                                  color: Colors.white24,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : CommonField(
+                      // initialValue: batchCubit.tempClass?.classDate?.toDateString(),
+                      controller: dateController,
+                      title: 'Date *',
+                      hint: 'Select the date',
+                      suffixIcon: const Padding(
+                        padding: EdgeInsets.only(right: 32),
+                        child: Icon(
+                          Icons.arrow_drop_down,
+                          size: 24,
+                          color: Colors.white24,
+                        ),
+                      ),
+                      disabled: true,
+                      onTap: () {
+                        datePicker();
+                      },
+                      onChange: (value) {},
+                      validator: (value) {
+                        return value.isEmpty ? 'Please select the date.' : null;
+                      },
+                      onSubmit: (value) {},
+                    ),
               const Center(
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
@@ -206,211 +321,11 @@ class _EditClassLinkState extends State<EditClassLink> {
                 padding: const EdgeInsets.all(16),
                 margin: const EdgeInsets.all(16),
                 child: Text(
-                  date == null ? 'No class selected' : getBatchTime(date!),
+                  date == null
+                      ? '${batchCubit.tempClass?.startTime?.toAmPM()}-${batchCubit.tempClass?.endTime?.toAmPM()}'
+                      : getBatchTime(date!),
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(),
                 ),
-              ),
-              BlocBuilder<BatchCubit, BatchState>(
-                builder: (context, state) {
-                  if (branchId == null || batch == null) {
-                    return const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(30.0),
-                        child: Text(
-                          'Please select branch and batch to show the today\'s class links',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
-                  } else if (batchCubit.classLinks == null ||
-                      batchCubit.classLinks!.isEmpty) {
-                    return const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(30.0),
-                        child: Text(
-                          'No classes scheduled for today.',
-                        ),
-                      ),
-                    );
-                  }
-                  return Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Text('Today\'s Online Classes'),
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: batchCubit.classLinks?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          ClassLink classLink = batchCubit.classLinks![index];
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.liteDark,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            padding: const EdgeInsets.all(16),
-                            margin: const EdgeInsets.all(16),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        classLink.classDate?.toDateString() ??
-                                            'N/A',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(
-                                              color: AppColors.primaryColor,
-                                            ),
-                                      ),
-                                      SizedBox(
-                                        height: 10.h,
-                                      ),
-                                      Text(
-                                        '${classLink.branchName}, ${classLink.batchName}, ${classLink.courseName}, ${classLink.subjectName}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(),
-                                      ),
-                                      SizedBox(
-                                        height: 10.h,
-                                      ),
-                                      Text(
-                                        '${classLink.classDate?.formattedDay2()} ${classLink.startTime?.toAmPM()}-${classLink.endTime?.toAmPM()}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(),
-                                      ),
-                                      SizedBox(
-                                        height: 10.h,
-                                      ),
-                                      Text(
-                                        classLink.link ?? 'N/A',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(
-                                              color: AppColors.defaultBlue,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    RoundButton(
-                                      onTap: () {
-                                        batchCubit.tempClass = classLink;
-                                        Navigator.pushNamed(
-                                          context,
-                                          EditClassLink.route,
-                                          arguments: true,
-                                        );
-                                      },
-                                    ),
-                                    SizedBox(
-                                      height: 35.h,
-                                    ),
-                                    RoundButton(
-                                      onTap: () {
-                                        CommonDialog(
-                                          context: context,
-                                          message:
-                                              'Are You Sure You Want To Remove\nClass Link?',
-                                          subContent: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  const Text('Date: '),
-                                                  Text(
-                                                    "${classLink.classDate?.toDateString()}",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyText1
-                                                        ?.copyWith(
-                                                          color: AppColors
-                                                              .primaryColor,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  const Text('Time: '),
-                                                  Text(
-                                                    "${classLink.startTime?.toAmPM()} - ${classLink.endTime?.toAmPM()}",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyText1
-                                                        ?.copyWith(
-                                                          color: AppColors
-                                                              .primaryColor,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Text(
-                                                "${classLink.branchName}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText1
-                                                    ?.copyWith(),
-                                              ),
-                                              Text(
-                                                "${classLink.batchName}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText1
-                                                    ?.copyWith(),
-                                              ),
-                                              Text(
-                                                "${classLink.courseName}, ${classLink.subjectName}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText1
-                                                    ?.copyWith(),
-                                              ),
-                                              const SizedBox(
-                                                height: 32,
-                                              ),
-                                            ],
-                                          ),
-                                          onTap: () {
-                                            batchCubit.removeClassLink(
-                                              classLink.batchId,
-                                              classLink.id,
-                                            );
-                                            Navigator.pop(context);
-                                          },
-                                        ).show();
-                                      },
-                                      edit: false,
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                },
               ),
               Center(
                 child: Button(
@@ -419,12 +334,18 @@ class _EditClassLinkState extends State<EditClassLink> {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
 
-                      batchCubit.addClassLink(batch?.id, {
-                        'class_date': date?.toServerYMD(),
-                        'link': classLink,
-                        'service': Uri.parse(classLink!).host,
-                        'start_time': batch?.batchDetail?[0].startTime,
-                        'end_time': batch?.batchDetail?[0].endTime
+                      batchCubit.addClassLink(
+                          batch?.id ?? batchCubit.tempClass?.batchId, {
+                        'class_date': date?.toServerYMD() ??
+                            batchCubit.tempClass?.classDate?.toServerYMD(),
+                        'link': classLink ?? batchCubit.tempClass?.link,
+                        'service': Uri.parse(
+                                classLink ?? batchCubit.tempClass?.link ?? "")
+                            .host,
+                        'start_time': batch?.batchDetail?[0].startTime ??
+                            batchCubit.tempClass?.startTime,
+                        'end_time': batch?.batchDetail?[0].endTime ??
+                            batchCubit.tempClass?.endTime
                       });
                     }
                   },
