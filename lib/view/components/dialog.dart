@@ -7,6 +7,7 @@ class CommonDialog {
   final String message;
   final String? subMessage;
   final VoidCallback onTap;
+  final VoidCallback? onCancelTap;
   final Color? subColor;
   final String? buttonText;
   final Widget? subContent;
@@ -18,6 +19,7 @@ class CommonDialog {
       this.subColor,
       this.buttonText,
       this.subContent,
+      this.onCancelTap,
       required this.onTap});
 
   void show() {
@@ -34,6 +36,7 @@ class CommonDialog {
             message: message,
             subMessage: subMessage,
             onTap: onTap,
+            onCancelTap: onCancelTap,
             buttonText: buttonText,
             subContent: subContent,
           ),
@@ -47,6 +50,7 @@ class Logout extends StatelessWidget {
   final String message;
   final String? subMessage;
   final VoidCallback onTap;
+  final VoidCallback? onCancelTap;
   final Color? subColor;
   final String? buttonText;
   final Widget? subContent;
@@ -56,6 +60,7 @@ class Logout extends StatelessWidget {
     required this.message,
     this.subMessage,
     required this.onTap,
+    this.onCancelTap,
     this.subColor,
     this.buttonText,
     this.subContent,
@@ -147,9 +152,10 @@ class Logout extends StatelessWidget {
                       Button(
                         width: 95.w,
                         height: 36.h,
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
+                        onTap: onCancelTap ??
+                            () {
+                              Navigator.pop(context);
+                            },
                         title: 'Cancel',
                         border: true,
                       ),

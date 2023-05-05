@@ -1,12 +1,16 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/batch/batch_details.dart';
+import 'package:part_app/view/batch/components/retain_student_check.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -25,6 +29,7 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
   String? batchName;
   int? branchId;
   int? courseId;
+  int? retainStudent = 1;
   String? fee;
   String? admissionFee;
   String? batchStatus;
@@ -42,9 +47,16 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
   File? doc1;
   File? doc2;
 
+  DropDownItem? selectedItem;
+
+  final _dropDownKey = GlobalKey<FormFieldState>();
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<BranchCubit>().getBranches();
+    });
   }
 
   @override
@@ -52,7 +64,7 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
     var cubit = context.read<BatchCubit>();
     BatchModel? batchModel = cubit.batchModel;
     Batch? batch = cubit.batch;
-
+    var branchCubit = context.read<BranchCubit>();
     return Scaffold(
       appBar: const CommonBar(title: 'Edit Batch'),
       body: BlocListener<BatchCubit, BatchState>(
@@ -83,16 +95,106 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                       const SizedBox(
                         height: 20,
                       ),
-                      BranchField(
-                        initialBranch: batchModel?.branchId,
-                        onSelect: (value) {
-                          branchId = value;
-                          context.read<BranchCubit>().getBranchTrainers(
-                                branchId: '$branchId',
-                                clean: true,
-                              );
-                        },
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: DropdownButtonFormField<DropDownItem>(
+                          key: _dropDownKey,
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Please select branch.';
+                            }
+                            return null;
+                          },
+                          dropdownColor:
+                              Theme.of(context).inputDecorationTheme.fillColor,
+                          value: selectedItem ??
+                              branchCubit.initialBranch(
+                                batchModel?.branchId,
+                              ),
+                          items: branchCubit.dropDownBranches().map((e) {
+                            return DropdownMenuItem(
+                              value: e,
+                              child: Text(
+                                e.title ?? '',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
+                                      color: Colors.white,
+                                    ),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            if (value?.title == batchModel?.branchName) {
+                              return;
+                            }
+                            String branchName = '';
+                            for (var item
+                                in context.read<BranchCubit>().branches) {
+                              if (item.id == value?.id) {
+                                branchName = item.branchName ?? "";
+                                break;
+                              }
+                            }
+                            CommonDialog(
+                              context: context,
+                              message:
+                                  'You are switching ${batchModel?.name} from ${batchModel?.branchName} to $branchName.',
+                              buttonText: 'Yes',
+                              subColor: AppColors.primaryColor,
+                              subContent: Column(
+                                children: [
+                                  Text(
+                                    'Do you want to retain the students assigned in the batch?',
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          color: AppColors.primaryColor,
+                                        ),
+                                  ),
+                                  SizedBox(
+                                    height: 20.h,
+                                  )
+                                ],
+                              ),
+                              onCancelTap: () {
+                                _dropDownKey.currentState?.reset();
+                                Navigator.pop(context);
+                              },
+                              onTap: () {
+                                selectedItem = value;
+                                branchId = value?.id;
+                                retainStudent = 1;
+                                Navigator.pop(context);
+                                if (branchId == batchModel?.branchId) {}
+                                setState(() {});
+                              },
+                            ).show();
+                          },
+                        ),
                       ),
+                      if (branchId != null)
+                        Column(
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            RetainStudentCheckButton(
+                              selected: true,
+                              onChange: (bool value) {
+                                setState(() {
+                                  retainStudent = value ? 1 : 0;
+                                });
+                              },
+                              onNumberChange: (int value) {
+                                retainStudent = value;
+                              },
+                            ),
+                          ],
+                        ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -234,16 +336,30 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                       );
                       return;
                     } else {
-                      BatchRequest request = BatchRequest(
-                        branchId: branchId,
-                        days: cubit.buildDaysList(),
-                        batchName: batchName,
-                        batchStatus: batchStatus,
-                        subjectId: subjectId,
-                        courseId: courseId,
-                        feeAmount: fee,
-                        admissionFees: admissionFee,
-                      );
+                      BatchRequest request;
+                      if (branchId == batchModel?.branchId) {
+                        request = BatchRequest(
+                          days: cubit.buildDaysList(),
+                          batchName: batchName,
+                          batchStatus: batchStatus,
+                          subjectId: subjectId,
+                          courseId: courseId,
+                          feeAmount: fee,
+                          admissionFees: admissionFee,
+                        );
+                      } else {
+                        request = BatchRequest(
+                          branchId: branchId,
+                          retainStudents: retainStudent,
+                          days: cubit.buildDaysList(),
+                          batchName: batchName,
+                          batchStatus: batchStatus,
+                          subjectId: subjectId,
+                          courseId: courseId,
+                          feeAmount: fee,
+                          admissionFees: admissionFee,
+                        );
+                      }
 
                       cubit.updateBatch(request);
                     }
