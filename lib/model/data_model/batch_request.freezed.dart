@@ -24,6 +24,7 @@ mixin _$BatchRequest {
   int? get branchId => throw _privateConstructorUsedError;
   int? get courseId => throw _privateConstructorUsedError;
   int? get subjectId => throw _privateConstructorUsedError;
+  int? get retainStudents => throw _privateConstructorUsedError;
   String? get batchStatus => throw _privateConstructorUsedError;
   dynamic get feeAmount => throw _privateConstructorUsedError;
   dynamic get admissionFees => throw _privateConstructorUsedError;
@@ -49,6 +50,7 @@ abstract class $BatchRequestCopyWith<$Res> {
       int? branchId,
       int? courseId,
       int? subjectId,
+      int? retainStudents,
       String? batchStatus,
       dynamic feeAmount,
       dynamic admissionFees,
@@ -73,6 +75,7 @@ class _$BatchRequestCopyWithImpl<$Res, $Val extends BatchRequest>
     Object? branchId = freezed,
     Object? courseId = freezed,
     Object? subjectId = freezed,
+    Object? retainStudents = freezed,
     Object? batchStatus = freezed,
     Object? feeAmount = null,
     Object? admissionFees = null,
@@ -95,6 +98,10 @@ class _$BatchRequestCopyWithImpl<$Res, $Val extends BatchRequest>
       subjectId: freezed == subjectId
           ? _value.subjectId
           : subjectId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      retainStudents: freezed == retainStudents
+          ? _value.retainStudents
+          : retainStudents // ignore: cast_nullable_to_non_nullable
               as int?,
       batchStatus: freezed == batchStatus
           ? _value.batchStatus
@@ -133,6 +140,7 @@ abstract class _$$_BatchRequestCopyWith<$Res>
       int? branchId,
       int? courseId,
       int? subjectId,
+      int? retainStudents,
       String? batchStatus,
       dynamic feeAmount,
       dynamic admissionFees,
@@ -155,6 +163,7 @@ class __$$_BatchRequestCopyWithImpl<$Res>
     Object? branchId = freezed,
     Object? courseId = freezed,
     Object? subjectId = freezed,
+    Object? retainStudents = freezed,
     Object? batchStatus = freezed,
     Object? feeAmount = null,
     Object? admissionFees = null,
@@ -177,6 +186,10 @@ class __$$_BatchRequestCopyWithImpl<$Res>
       subjectId: freezed == subjectId
           ? _value.subjectId
           : subjectId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      retainStudents: freezed == retainStudents
+          ? _value.retainStudents
+          : retainStudents // ignore: cast_nullable_to_non_nullable
               as int?,
       batchStatus: freezed == batchStatus
           ? _value.batchStatus
@@ -211,6 +224,7 @@ class _$_BatchRequest implements _BatchRequest {
       this.branchId,
       this.courseId,
       this.subjectId,
+      this.retainStudents,
       this.batchStatus,
       this.feeAmount,
       this.admissionFees,
@@ -229,6 +243,8 @@ class _$_BatchRequest implements _BatchRequest {
   final int? courseId;
   @override
   final int? subjectId;
+  @override
+  final int? retainStudents;
   @override
   final String? batchStatus;
   @override
@@ -250,7 +266,7 @@ class _$_BatchRequest implements _BatchRequest {
 
   @override
   String toString() {
-    return 'BatchRequest(batchName: $batchName, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, batchStatus: $batchStatus, feeAmount: $feeAmount, admissionFees: $admissionFees, trainers: $trainers, days: $days)';
+    return 'BatchRequest(batchName: $batchName, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, retainStudents: $retainStudents, batchStatus: $batchStatus, feeAmount: $feeAmount, admissionFees: $admissionFees, trainers: $trainers, days: $days)';
   }
 
   @override
@@ -266,6 +282,8 @@ class _$_BatchRequest implements _BatchRequest {
                 other.courseId == courseId) &&
             (identical(other.subjectId, subjectId) ||
                 other.subjectId == subjectId) &&
+            (identical(other.retainStudents, retainStudents) ||
+                other.retainStudents == retainStudents) &&
             (identical(other.batchStatus, batchStatus) ||
                 other.batchStatus == batchStatus) &&
             const DeepCollectionEquality().equals(other.feeAmount, feeAmount) &&
@@ -283,6 +301,7 @@ class _$_BatchRequest implements _BatchRequest {
       branchId,
       courseId,
       subjectId,
+      retainStudents,
       batchStatus,
       const DeepCollectionEquality().hash(feeAmount),
       const DeepCollectionEquality().hash(admissionFees),
@@ -309,6 +328,7 @@ abstract class _BatchRequest implements BatchRequest {
       final int? branchId,
       final int? courseId,
       final int? subjectId,
+      final int? retainStudents,
       final String? batchStatus,
       final dynamic feeAmount,
       final dynamic admissionFees,
@@ -326,6 +346,8 @@ abstract class _BatchRequest implements BatchRequest {
   int? get courseId;
   @override
   int? get subjectId;
+  @override
+  int? get retainStudents;
   @override
   String? get batchStatus;
   @override
