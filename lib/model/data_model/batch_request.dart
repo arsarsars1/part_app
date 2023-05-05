@@ -22,6 +22,7 @@ abstract class BatchRequest with _$BatchRequest {
     int? branchId,
     int? courseId,
     int? subjectId,
+    int? retainStudents,
     String? batchStatus,
     dynamic feeAmount,
     dynamic admissionFees,
