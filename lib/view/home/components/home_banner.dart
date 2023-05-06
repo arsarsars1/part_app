@@ -69,7 +69,7 @@ class _HomeBannerState extends State<HomeBanner> {
                       child: ListView.builder(
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        itemCount: activeBanners.length ?? 0,
+                        itemCount: activeBanners.length,
                         itemBuilder: (context, index) {
                           bool selected = index == currentPage;
                           return Container(
@@ -102,7 +102,7 @@ class _HomeBannerState extends State<HomeBanner> {
                           formattedString = toTime.formattedString();
                         });
                       },
-                      itemCount: activeBanners.length ?? 0,
+                      itemCount: activeBanners.length,
                       itemBuilder: (context, index) {
                         var banner = activeBanners[index];
                         tempBanner = banner;

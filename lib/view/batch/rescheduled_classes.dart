@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/reschedule_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
