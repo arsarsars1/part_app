@@ -25,6 +25,7 @@ class _TrainerPageState extends State<TrainerPage> {
 
     // get the trainers list
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // cubit.getActiveInactiveTrainers(active: true);
       context.read<BranchCubit>().getBranches();
     });
   }
@@ -112,81 +113,83 @@ class _TrainerPageState extends State<TrainerPage> {
                 SizedBox(
                   height: 20.h,
                 ),
-                branchId != null
-                    ? Column(
-                        children: [
-                          TabButton(
-                            onChange: (String value) {
-                              temp = value;
-                              if (value == "Active Trainers") {
-                                cubit.getActiveInactiveTrainers(
-                                    branchId: branchId, active: true);
-                              } else {
-                                cubit.getActiveInactiveTrainers(
-                                    branchId: branchId, clean: true);
-                              }
-                            },
-                            options: const [
-                              'Active Trainers',
-                              'Inactive Trainers',
-                            ],
-                          ),
-                          BlocBuilder<TrainerCubit, TrainerState>(
-                            builder: (context, state) {
-                              if (state is FetchingTrainers) {
-                                return const Padding(
-                                  padding: EdgeInsets.all(64.0),
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                );
-                              }
-
-                              // ignore: prefer_is_empty
-                              if (cubit.trainers?.length == 0) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(64.0),
-                                  child: Center(
-                                    child: Text(
-                                      query == null
-                                          ? 'Empty List'
-                                          : 'Sorry, No Matching Results Found.',
-                                    ),
-                                  ),
-                                );
-                              }
-                              return TrainerList(
-                                trainers: cubit.trainers ?? [],
-                                onSelect: (Trainer trainer) async {
-                                  context
-                                      .read<TrainerCubit>()
-                                      .getTrainerDetails(
-                                        trainerId: trainer.id,
-                                      );
-                                  await Navigator.pushNamed(
-                                      context, TrainerDetails.route);
-                                  // ignore: use_build_context_synchronously
-                                  context
-                                      .read<TrainerCubit>()
-                                      .getActiveInactiveTrainers(
-                                          branchId: branchId,
-                                          active: temp == "Active Trainers"
-                                              ? true
-                                              : false);
-                                },
-                              );
-                            },
-                          ),
+                // branchId != null
+                // ?
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: TabButton(
+                        onChange: (String value) {
+                          temp = value;
+                          if (value == "Active Trainers") {
+                            cubit.getActiveInactiveTrainers(
+                                branchId: branchId, active: true);
+                          } else {
+                            cubit.getActiveInactiveTrainers(
+                                branchId: branchId, clean: true);
+                          }
+                        },
+                        options: const [
+                          'Active Trainers',
+                          'Inactive Trainers',
                         ],
-                      )
-                    : const Padding(
-                        padding: EdgeInsets.all(64.0),
-                        child: Center(
-                          child: Text(
-                            'Select a branch',
-                          ),
-                        ),
                       ),
+                    ),
+                    BlocBuilder<TrainerCubit, TrainerState>(
+                      builder: (context, state) {
+                        if (state is FetchingTrainers) {
+                          return const Padding(
+                            padding: EdgeInsets.all(64.0),
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+
+                        // ignore: prefer_is_empty
+                        if (cubit.trainers?.length == 0) {
+                          return Padding(
+                            padding: const EdgeInsets.all(64.0),
+                            child: Center(
+                              child: Text(
+                                query == null
+                                    ? 'Empty List'
+                                    : 'Sorry, No Matching Results Found.',
+                              ),
+                            ),
+                          );
+                        }
+                        return TrainerList(
+                          trainers: cubit.trainers ?? [],
+                          onSelect: (Trainer trainer) async {
+                            context.read<TrainerCubit>().getTrainerDetails(
+                                  trainerId: trainer.id,
+                                );
+                            await Navigator.pushNamed(
+                                context, TrainerDetails.route);
+                            // ignore: use_build_context_synchronously
+                            context
+                                .read<TrainerCubit>()
+                                .getActiveInactiveTrainers(
+                                    branchId: branchId,
+                                    active: temp == "Active Trainers"
+                                        ? true
+                                        : false);
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                )
+                // : const Padding(
+                //     padding: EdgeInsets.all(64.0),
+                //     child: Center(
+                //       child: Text(
+                //         'Select a branch',
+                //       ),
+                //     ),
+                //   ),
               ],
             ),
           ),

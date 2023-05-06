@@ -27,9 +27,13 @@ class TrainerService {
       {int? branchId, active = false}) async {
     var response = active
         ? await _client.get(
-            queryPath: '/admin/branches/$branchId/trainers/?active=1')
+            queryPath: branchId == null
+                ? '/admin/trainers/?active=1'
+                : '/admin/branches/$branchId/trainers/?active=1')
         : await _client.get(
-            queryPath: '/admin/branches/$branchId/trainers/?active=0');
+            queryPath: branchId == null
+                ? '/admin/trainers/?active=0'
+                : '/admin/branches/$branchId/trainers/?active=0');
 
     try {
       TrainerResponse trainerResponse = trainerResponseFromJson(
