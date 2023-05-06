@@ -25,7 +25,7 @@ class _TrainerPageState extends State<TrainerPage> {
 
     // get the trainers list
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // cubit.getActiveInactiveTrainers(active: true);
+      context.read<TrainerCubit>().getActiveInactiveTrainers(active: true);
       context.read<BranchCubit>().getBranches();
     });
   }
@@ -113,29 +113,36 @@ class _TrainerPageState extends State<TrainerPage> {
                 SizedBox(
                   height: 20.h,
                 ),
-                // branchId != null
-                // ?
                 Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: TabButton(
-                        onChange: (String value) {
-                          temp = value;
-                          if (value == "Active Trainers") {
-                            cubit.getActiveInactiveTrainers(
-                                branchId: branchId, active: true);
-                          } else {
-                            cubit.getActiveInactiveTrainers(
-                                branchId: branchId, clean: true);
-                          }
-                        },
-                        options: const [
-                          'Active Trainers',
-                          'Inactive Trainers',
+                    if (branchId == null)
+                      Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: TabButton(
+                              onChange: (String value) {
+                                temp = value;
+                                if (value == "Active Trainers") {
+                                  cubit.getActiveInactiveTrainers(
+                                      branchId: branchId, active: true);
+                                } else {
+                                  cubit.getActiveInactiveTrainers(
+                                      branchId: branchId, clean: true);
+                                }
+                              },
+                              options: const [
+                                'Active Trainers',
+                                'Inactive Trainers',
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15.h,
+                          ),
                         ],
                       ),
-                    ),
                     BlocBuilder<TrainerCubit, TrainerState>(
                       builder: (context, state) {
                         if (state is FetchingTrainers) {
@@ -182,14 +189,6 @@ class _TrainerPageState extends State<TrainerPage> {
                     ),
                   ],
                 )
-                // : const Padding(
-                //     padding: EdgeInsets.all(64.0),
-                //     child: Center(
-                //       child: Text(
-                //         'Select a branch',
-                //       ),
-                //     ),
-                //   ),
               ],
             ),
           ),
