@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
@@ -19,6 +20,7 @@ class _TrainerPageState extends State<TrainerPage> {
   int? branchId;
   String? query;
   String? temp;
+  DropDownItem? selectedItem;
   @override
   void initState() {
     super.initState();
@@ -68,19 +70,86 @@ class _TrainerPageState extends State<TrainerPage> {
                 ),
                 BlocBuilder<BranchCubit, BranchState>(
                   builder: (context, state) {
-                    return CommonField(
-                      title: 'Branch',
-                      hint: 'Select Branch',
-                      dropDown: true,
-                      dropDownItems: branchCubit.dropDownBranches(),
-                      onChange: (value) {
-                        branchId = value.id;
-                        setState(() {
-                          // cubit.searchTrainers(branchId, query: null);
-                          cubit.getActiveInactiveTrainers(
-                              branchId: branchId, active: true);
-                        });
-                      },
+                    // return CommonField(
+                    //   title: 'Branch',
+                    //   hint: 'Select Branch',
+                    //   dropDown: true,
+                    //   dropDownItems: branchCubit.dropDownBranches(),
+                    //   onChange: (value) {
+                    //     branchId = value.id;
+                    //     setState(() {
+                    //       // cubit.searchTrainers(branchId, query: null);
+                    //       cubit.getActiveInactiveTrainers(
+                    //           branchId: branchId, active: true);
+                    //     });
+                    //   },
+                    // );
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Branch',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          DropdownButtonFormField<DropDownItem>(
+                            dropdownColor: Theme.of(context)
+                                .inputDecorationTheme
+                                .fillColor,
+                            value: selectedItem ?? const DropDownItem(id: -1),
+                            decoration: const InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 16),
+                            ),
+                            items: [
+                              DropdownMenuItem(
+                                value: const DropDownItem(id: -1),
+                                child: Text(
+                                  'All',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                        color: Colors.white,
+                                      ),
+                                ),
+                              ),
+                              ...branchCubit.dropDownBranches().map((e) {
+                                return DropdownMenuItem(
+                                  value: e,
+                                  child: Text(
+                                    e.title ?? '',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          color: Colors.white,
+                                        ),
+                                  ),
+                                );
+                              }).toList()
+                            ],
+                            onChanged: (value) {
+                              if (value?.id == -1) {
+                                setState(() {
+                                  branchId = null;
+                                  cubit.getActiveInactiveTrainers(active: true);
+                                });
+                              } else {
+                                branchId = value?.id;
+                                setState(() {
+                                  cubit.getActiveInactiveTrainers(
+                                      branchId: branchId, active: true);
+                                });
+                              }
+                            },
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),
