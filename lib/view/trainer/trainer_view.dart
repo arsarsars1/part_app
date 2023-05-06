@@ -75,7 +75,9 @@ class _TrainerPageState extends State<TrainerPage> {
                       onChange: (value) {
                         branchId = value.id;
                         setState(() {
-                          cubit.searchTrainers(branchId, query: null);
+                          // cubit.searchTrainers(branchId, query: null);
+                          cubit.getActiveInactiveTrainers(
+                              branchId: branchId, active: true);
                         });
                       },
                     );

@@ -116,8 +116,9 @@ class TrainerCubit extends Cubit<TrainerState> {
     String? arg = "";
     emit(FetchingTrainers());
     TrainerResponse? response = active
-        ? await _trainerService.getActiveTrainers(active: active)
-        : await _trainerService.getActiveTrainers();
+        ? await _trainerService.getActiveTrainers(
+            branchId: branchId, active: active)
+        : await _trainerService.getActiveTrainers(branchId: branchId);
     tempResponse = response;
 
     if (response?.trainers?.data != null) {
