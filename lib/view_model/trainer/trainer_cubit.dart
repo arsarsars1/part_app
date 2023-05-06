@@ -96,19 +96,29 @@ class TrainerCubit extends Cubit<TrainerState> {
 
     if (response?.trainers != null) {
       _trainers = response?.trainers?.data ?? [];
-      filterTrainers(active: _isActive);
+      // filterTrainers(active: _isActive);
     } else {
       emit(FailedToFetchTrainers('Failed to fetch the trainers'));
     }
   }
 
+  /// reset
+  void reset() {
+    _trainers?.clear();
+    emit(TrainerInitial());
+  }
+
   Future getActiveInactiveTrainers(
-      {bool nextPage = false, active = false, clean = false}) async {
+      {int? branchId,
+      bool nextPage = false,
+      active = false,
+      clean = false}) async {
     String? arg = "";
     emit(FetchingTrainers());
     TrainerResponse? response = active
-        ? await _trainerService.getActiveTrainers(active: active)
-        : await _trainerService.getActiveTrainers();
+        ? await _trainerService.getActiveTrainers(
+            branchId: branchId, active: active)
+        : await _trainerService.getActiveTrainers(branchId: branchId);
     tempResponse = response;
 
     if (response?.trainers?.data != null) {
@@ -134,30 +144,30 @@ class TrainerCubit extends Cubit<TrainerState> {
             _trainers = [...?_trainers, element];
           }
         }
-        filterTrainers(active: _isActive);
+        // filterTrainers(active: _isActive);
       }
     }
   }
 
-  List<Trainer>? filterTrainers({required bool active}) {
-    _isActive = active;
-    log("=======================================================================");
-    _trainers?.forEach((element) {
-      log(element.toJson().toString());
-    });
-    log("=======================================================================");
-    List<Trainer>? list = _trainers?.where((element) {
-      if (active) {
-        return element.trainerDetail?[0].isActive == 1;
-      } else {
-        return element.trainerDetail?[0].isActive == 0;
-      }
-    }).toList();
+  // List<Trainer>? filterTrainers({required bool active}) {
+  //   _isActive = active;
+  //   log("=======================================================================");
+  //   _trainers?.forEach((element) {
+  //     log(element.toJson().toString());
+  //   });
+  //   log("=======================================================================");
+  //   List<Trainer>? list = _trainers?.where((element) {
+  //     if (active) {
+  //       return element.trainerDetail?[0].isActive == 1;
+  //     } else {
+  //       return element.trainerDetail?[0].isActive == 0;
+  //     }
+  //   }).toList();
 
-    filteredTrainers = list ?? [];
+  //   filteredTrainers = list ?? [];
 
-    return list;
-  }
+  //   return list;
+  // }
 
   Future searchTrainers(int? branchID, {String? query}) async {
     _trainers = [];
@@ -178,7 +188,7 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
 
     if (_trainers != null) {
-      filterTrainers(active: _isActive);
+      // filterTrainers(active: _isActive);
       emit(SearchedTrainers());
     } else {
       emit(FailedToFetchTrainers('Failed to fetch the trainers'));
@@ -341,4 +351,6 @@ class TrainerCubit extends Cubit<TrainerState> {
     // clear profile pic
     await CachedNetworkImage.evictFromCache(profileUrl);
   }
+
+  void clear() {}
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
-import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/tab_button.dart';

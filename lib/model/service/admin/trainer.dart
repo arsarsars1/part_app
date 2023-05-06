@@ -23,10 +23,17 @@ class TrainerService {
     }
   }
 
-  Future<TrainerResponse?> getActiveTrainers({active = false}) async {
+  Future<TrainerResponse?> getActiveTrainers(
+      {int? branchId, active = false}) async {
     var response = active
-        ? await _client.get(queryPath: '/admin/trainers/?active=1')
-        : await _client.get(queryPath: '/admin/trainers/?active=0');
+        ? await _client.get(
+            queryPath: branchId == null
+                ? '/admin/trainers/?active=1'
+                : '/admin/branches/$branchId/trainers/?active=1')
+        : await _client.get(
+            queryPath: branchId == null
+                ? '/admin/trainers/?active=0'
+                : '/admin/branches/$branchId/trainers/?active=0');
 
     try {
       TrainerResponse trainerResponse = trainerResponseFromJson(
