@@ -33,7 +33,7 @@ class BatchCubit extends Cubit<BatchState> {
   List<CancelledClass> _cancelledList = [];
   List<Student>? _students = [];
   List<ClassLink>? _classLinks = [];
-
+  String tempStatus = 'ongoing';
   BatchModel? _batchModel;
   ClassLink? tempClass;
   Batch? _batch;
