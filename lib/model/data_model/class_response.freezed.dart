@@ -188,10 +188,12 @@ mixin _$Class {
   DateTime? get oldDate => throw _privateConstructorUsedError;
   int? get batchId => throw _privateConstructorUsedError;
   String? get batchName => throw _privateConstructorUsedError;
-  int? get studentCount => throw _privateConstructorUsedError;
+  int? get activeStudentsCount => throw _privateConstructorUsedError;
+  int? get inactiveStudentsCount => throw _privateConstructorUsedError;
   String? get courseName => throw _privateConstructorUsedError;
   String? get subjectName => throw _privateConstructorUsedError;
   String? get branchName => throw _privateConstructorUsedError;
+  String? get trainers => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -210,10 +212,12 @@ abstract class $ClassCopyWith<$Res> {
       DateTime? oldDate,
       int? batchId,
       String? batchName,
-      int? studentCount,
+      int? activeStudentsCount,
+      int? inactiveStudentsCount,
       String? courseName,
       String? subjectName,
-      String? branchName});
+      String? branchName,
+      String? trainers});
 }
 
 /// @nodoc
@@ -235,10 +239,12 @@ class _$ClassCopyWithImpl<$Res, $Val extends Class>
     Object? oldDate = freezed,
     Object? batchId = freezed,
     Object? batchName = freezed,
-    Object? studentCount = freezed,
+    Object? activeStudentsCount = freezed,
+    Object? inactiveStudentsCount = freezed,
     Object? courseName = freezed,
     Object? subjectName = freezed,
     Object? branchName = freezed,
+    Object? trainers = freezed,
   }) {
     return _then(_value.copyWith(
       startTime: freezed == startTime
@@ -265,9 +271,13 @@ class _$ClassCopyWithImpl<$Res, $Val extends Class>
           ? _value.batchName
           : batchName // ignore: cast_nullable_to_non_nullable
               as String?,
-      studentCount: freezed == studentCount
-          ? _value.studentCount
-          : studentCount // ignore: cast_nullable_to_non_nullable
+      activeStudentsCount: freezed == activeStudentsCount
+          ? _value.activeStudentsCount
+          : activeStudentsCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      inactiveStudentsCount: freezed == inactiveStudentsCount
+          ? _value.inactiveStudentsCount
+          : inactiveStudentsCount // ignore: cast_nullable_to_non_nullable
               as int?,
       courseName: freezed == courseName
           ? _value.courseName
@@ -280,6 +290,10 @@ class _$ClassCopyWithImpl<$Res, $Val extends Class>
       branchName: freezed == branchName
           ? _value.branchName
           : branchName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      trainers: freezed == trainers
+          ? _value.trainers
+          : trainers // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -298,10 +312,12 @@ abstract class _$$_ClassCopyWith<$Res> implements $ClassCopyWith<$Res> {
       DateTime? oldDate,
       int? batchId,
       String? batchName,
-      int? studentCount,
+      int? activeStudentsCount,
+      int? inactiveStudentsCount,
       String? courseName,
       String? subjectName,
-      String? branchName});
+      String? branchName,
+      String? trainers});
 }
 
 /// @nodoc
@@ -319,10 +335,12 @@ class __$$_ClassCopyWithImpl<$Res> extends _$ClassCopyWithImpl<$Res, _$_Class>
     Object? oldDate = freezed,
     Object? batchId = freezed,
     Object? batchName = freezed,
-    Object? studentCount = freezed,
+    Object? activeStudentsCount = freezed,
+    Object? inactiveStudentsCount = freezed,
     Object? courseName = freezed,
     Object? subjectName = freezed,
     Object? branchName = freezed,
+    Object? trainers = freezed,
   }) {
     return _then(_$_Class(
       startTime: freezed == startTime
@@ -349,9 +367,13 @@ class __$$_ClassCopyWithImpl<$Res> extends _$ClassCopyWithImpl<$Res, _$_Class>
           ? _value.batchName
           : batchName // ignore: cast_nullable_to_non_nullable
               as String?,
-      studentCount: freezed == studentCount
-          ? _value.studentCount
-          : studentCount // ignore: cast_nullable_to_non_nullable
+      activeStudentsCount: freezed == activeStudentsCount
+          ? _value.activeStudentsCount
+          : activeStudentsCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      inactiveStudentsCount: freezed == inactiveStudentsCount
+          ? _value.inactiveStudentsCount
+          : inactiveStudentsCount // ignore: cast_nullable_to_non_nullable
               as int?,
       courseName: freezed == courseName
           ? _value.courseName
@@ -364,6 +386,10 @@ class __$$_ClassCopyWithImpl<$Res> extends _$ClassCopyWithImpl<$Res, _$_Class>
       branchName: freezed == branchName
           ? _value.branchName
           : branchName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      trainers: freezed == trainers
+          ? _value.trainers
+          : trainers // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -380,10 +406,12 @@ class _$_Class implements _Class {
       this.oldDate,
       this.batchId,
       this.batchName,
-      this.studentCount,
+      this.activeStudentsCount,
+      this.inactiveStudentsCount,
       this.courseName,
       this.subjectName,
-      this.branchName});
+      this.branchName,
+      this.trainers});
 
   factory _$_Class.fromJson(Map<String, dynamic> json) =>
       _$$_ClassFromJson(json);
@@ -401,17 +429,21 @@ class _$_Class implements _Class {
   @override
   final String? batchName;
   @override
-  final int? studentCount;
+  final int? activeStudentsCount;
+  @override
+  final int? inactiveStudentsCount;
   @override
   final String? courseName;
   @override
   final String? subjectName;
   @override
   final String? branchName;
+  @override
+  final String? trainers;
 
   @override
   String toString() {
-    return 'Class(startTime: $startTime, endTime: $endTime, rescheduled: $rescheduled, oldDate: $oldDate, batchId: $batchId, batchName: $batchName, studentCount: $studentCount, courseName: $courseName, subjectName: $subjectName, branchName: $branchName)';
+    return 'Class(startTime: $startTime, endTime: $endTime, rescheduled: $rescheduled, oldDate: $oldDate, batchId: $batchId, batchName: $batchName, activeStudentsCount: $activeStudentsCount, inactiveStudentsCount: $inactiveStudentsCount, courseName: $courseName, subjectName: $subjectName, branchName: $branchName, trainers: $trainers)';
   }
 
   @override
@@ -428,14 +460,18 @@ class _$_Class implements _Class {
             (identical(other.batchId, batchId) || other.batchId == batchId) &&
             (identical(other.batchName, batchName) ||
                 other.batchName == batchName) &&
-            (identical(other.studentCount, studentCount) ||
-                other.studentCount == studentCount) &&
+            (identical(other.activeStudentsCount, activeStudentsCount) ||
+                other.activeStudentsCount == activeStudentsCount) &&
+            (identical(other.inactiveStudentsCount, inactiveStudentsCount) ||
+                other.inactiveStudentsCount == inactiveStudentsCount) &&
             (identical(other.courseName, courseName) ||
                 other.courseName == courseName) &&
             (identical(other.subjectName, subjectName) ||
                 other.subjectName == subjectName) &&
             (identical(other.branchName, branchName) ||
-                other.branchName == branchName));
+                other.branchName == branchName) &&
+            (identical(other.trainers, trainers) ||
+                other.trainers == trainers));
   }
 
   @JsonKey(ignore: true)
@@ -448,10 +484,12 @@ class _$_Class implements _Class {
       oldDate,
       batchId,
       batchName,
-      studentCount,
+      activeStudentsCount,
+      inactiveStudentsCount,
       courseName,
       subjectName,
-      branchName);
+      branchName,
+      trainers);
 
   @JsonKey(ignore: true)
   @override
@@ -475,10 +513,12 @@ abstract class _Class implements Class {
       final DateTime? oldDate,
       final int? batchId,
       final String? batchName,
-      final int? studentCount,
+      final int? activeStudentsCount,
+      final int? inactiveStudentsCount,
       final String? courseName,
       final String? subjectName,
-      final String? branchName}) = _$_Class;
+      final String? branchName,
+      final String? trainers}) = _$_Class;
 
   factory _Class.fromJson(Map<String, dynamic> json) = _$_Class.fromJson;
 
@@ -495,13 +535,17 @@ abstract class _Class implements Class {
   @override
   String? get batchName;
   @override
-  int? get studentCount;
+  int? get activeStudentsCount;
+  @override
+  int? get inactiveStudentsCount;
   @override
   String? get courseName;
   @override
   String? get subjectName;
   @override
   String? get branchName;
+  @override
+  String? get trainers;
   @override
   @JsonKey(ignore: true)
   _$$_ClassCopyWith<_$_Class> get copyWith =>

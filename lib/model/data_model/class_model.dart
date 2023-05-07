@@ -7,10 +7,12 @@ class ClassModel {
   final DateTime oldDate;
   final int batchId;
   final String batchName;
-  final int studentCount;
+  final int activeStudentCount;
+  final int inactiveStudentCount;
   final String courseName;
   final String subjectName;
   final String branchName;
+  final String trainers;
 
   ClassModel({
     required this.startTime,
@@ -19,10 +21,12 @@ class ClassModel {
     required this.oldDate,
     required this.batchId,
     required this.batchName,
-    required this.studentCount,
+    required this.activeStudentCount,
+    required this.inactiveStudentCount,
     required this.courseName,
     required this.subjectName,
     required this.branchName,
+    required this.trainers,
   });
 
   factory ClassModel.fromEntity(Class classes) {
@@ -33,10 +37,12 @@ class ClassModel {
       oldDate: classes.oldDate ?? DateTime.now(),
       batchId: classes.batchId ?? 0,
       batchName: classes.batchName ?? 'No batch name',
-      studentCount: classes.studentCount ?? 0,
+      activeStudentCount: classes.activeStudentsCount ?? 0,
+      inactiveStudentCount: classes.inactiveStudentsCount ?? 0,
       courseName: classes.courseName ?? 'No course name',
       subjectName: classes.subjectName ?? 'No subject name',
       branchName: classes.branchName ?? 'No branch name',
+      trainers: classes.trainers ?? 'No trainer alocated',
     );
   }
 }

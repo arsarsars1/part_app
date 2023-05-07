@@ -157,7 +157,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
                             ),
                       ),
                       Text(
-                        DateTime.parse(startDate ?? "").formattedString(),
+                        "${DateTime.parse(startDate ?? "").formattedDay2()}, ${DateTime.parse(startDate ?? "").formattedString()}",
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                             fontWeight: FontWeight.bold,
@@ -231,7 +231,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
                             ),
                       ),
                       Text(
-                        DateTime.parse(endDate ?? "").formattedString(),
+                        "${DateTime.parse(endDate ?? "").formattedDay2()}, ${DateTime.parse(endDate ?? "").formattedString()}",
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                             fontWeight: FontWeight.bold,
@@ -284,7 +284,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
                                         ?.copyWith(),
                                   ),
                                   Text(
-                                    "Trainers- No Trainer details obtained",
+                                    "Trainers- ${singleClass?.trainers}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyText1
