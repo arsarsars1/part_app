@@ -191,12 +191,12 @@ class _BatchesPageState extends State<BatchesPage> {
                                         context
                                             .read<BatchCubit>()
                                             .getBatch(batchId: '${batch.id}');
-                                        // context
-                                        //     .read<BranchCubit>()
-                                        //     .getBranchTrainers(
-                                        //       branchId: '${batch.branchId}',
-                                        //       clean: true,
-                                        //     );
+                                        context
+                                            .read<BranchCubit>()
+                                            .getBranchTrainers(
+                                              branchId: '${batch.branchId}',
+                                              clean: true,
+                                            );
                                         Navigator.pushNamed(
                                             context, BatchDetails.route);
                                       },
