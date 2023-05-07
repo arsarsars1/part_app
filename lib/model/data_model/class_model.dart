@@ -42,7 +42,9 @@ class ClassModel {
       courseName: classes.courseName ?? 'No course name',
       subjectName: classes.subjectName ?? 'No subject name',
       branchName: classes.branchName ?? 'No branch name',
-      trainers: classes.trainers ?? 'No trainer alocated',
+      trainers: classes.trainers == ""
+          ? 'No trainer alocated'
+          : classes.trainers ?? "",
     );
   }
 }
