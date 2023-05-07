@@ -163,12 +163,19 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                                 _dropDownKey.currentState?.reset();
                                 Navigator.pop(context);
                               },
+                              hasClose: true,
+                              onClose: () {
+                                selectedItem = value;
+                                branchId = value?.id;
+                                retainStudent = 0;
+                                Navigator.pop(context);
+                                setState(() {});
+                              },
                               onTap: () {
                                 selectedItem = value;
                                 branchId = value?.id;
                                 retainStudent = 1;
                                 Navigator.pop(context);
-                                if (branchId == batchModel?.branchId) {}
                                 setState(() {});
                               },
                             ).show();
@@ -182,7 +189,7 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                               height: 20,
                             ),
                             RetainStudentCheckButton(
-                              selected: true,
+                              selected: retainStudent == 1 ? true : false,
                               onChange: (bool value) {
                                 setState(() {
                                   retainStudent = value ? 1 : 0;
