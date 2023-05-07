@@ -137,10 +137,12 @@ class _TrainerPageState extends State<TrainerPage> {
                               if (value?.id == -1) {
                                 setState(() {
                                   branchId = null;
+                                  selectedItem = value;
                                   cubit.getActiveInactiveTrainers(active: true);
                                 });
                               } else {
                                 branchId = value?.id;
+                                selectedItem = value;
                                 setState(() {
                                   cubit.getActiveInactiveTrainers(
                                       branchId: branchId, active: true);
@@ -230,7 +232,9 @@ class _TrainerPageState extends State<TrainerPage> {
                             child: Center(
                               child: Text(
                                 query == null
-                                    ? 'Empty List'
+                                    ? selectedItem == null
+                                        ? 'Add a trainer to get started'
+                                        : 'No active trainers'
                                     : 'Sorry, No Matching Results Found.',
                               ),
                             ),
