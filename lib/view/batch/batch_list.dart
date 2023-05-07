@@ -129,8 +129,10 @@ class _BatchesPageState extends State<BatchesPage> {
                                 onChange: (String value) {
                                   if (value == 'Ongoing Batches') {
                                     status = 'ongoing';
+                                    cubit.tempStatus = status;
                                   } else {
                                     status = 'completed';
+                                    cubit.tempStatus = status;
                                   }
                                   context.read<BatchCubit>().getBatchesByStatus(
                                         branchId: branchId,
@@ -157,8 +159,7 @@ class _BatchesPageState extends State<BatchesPage> {
                                 if (state is BatchNetworkError) {
                                   AlertBox.showErrorAlert(context);
                                 }
-                                if (cubit.batches.isEmpty &&
-                                    state is FetchingBatches) {
+                                if (state is FetchingBatches) {
                                   return const Padding(
                                     padding: EdgeInsets.only(top: 32),
                                     child: LoadingView(
@@ -190,12 +191,12 @@ class _BatchesPageState extends State<BatchesPage> {
                                         context
                                             .read<BatchCubit>()
                                             .getBatch(batchId: '${batch.id}');
-                                        context
-                                            .read<BranchCubit>()
-                                            .getBranchTrainers(
-                                              branchId: '${batch.branchId}',
-                                              clean: true,
-                                            );
+                                        // context
+                                        //     .read<BranchCubit>()
+                                        //     .getBranchTrainers(
+                                        //       branchId: '${batch.branchId}',
+                                        //       clean: true,
+                                        //     );
                                         Navigator.pushNamed(
                                             context, BatchDetails.route);
                                       },
