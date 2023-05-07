@@ -35,10 +35,12 @@ class Class with _$Class {
     DateTime? oldDate,
     int? batchId,
     String? batchName,
-    int? studentCount,
+    int? activeStudentsCount,
+    int? inactiveStudentsCount,
     String? courseName,
     String? subjectName,
     String? branchName,
+    String? trainers,
   }) = _Class;
 
   factory Class.fromJson(Map<String, dynamic> json) => _$ClassFromJson(json);

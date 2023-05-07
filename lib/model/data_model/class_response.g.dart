@@ -29,10 +29,12 @@ _$_Class _$$_ClassFromJson(Map<String, dynamic> json) => _$_Class(
           : DateTime.parse(json['old_date'] as String),
       batchId: json['batch_id'] as int?,
       batchName: json['batch_name'] as String?,
-      studentCount: json['student_count'] as int?,
+      activeStudentsCount: json['active_students_count'] as int?,
+      inactiveStudentsCount: json['inactive_students_count'] as int?,
       courseName: json['course_name'] as String?,
       subjectName: json['subject_name'] as String?,
       branchName: json['branch_name'] as String?,
+      trainers: json['trainers'] as String?,
     );
 
 Map<String, dynamic> _$$_ClassToJson(_$_Class instance) => <String, dynamic>{
@@ -42,8 +44,10 @@ Map<String, dynamic> _$$_ClassToJson(_$_Class instance) => <String, dynamic>{
       'old_date': instance.oldDate?.toIso8601String(),
       'batch_id': instance.batchId,
       'batch_name': instance.batchName,
-      'student_count': instance.studentCount,
+      'active_students_count': instance.activeStudentsCount,
+      'inactive_students_count': instance.inactiveStudentsCount,
       'course_name': instance.courseName,
       'subject_name': instance.subjectName,
       'branch_name': instance.branchName,
+      'trainers': instance.trainers,
     };
