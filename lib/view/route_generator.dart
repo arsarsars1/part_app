@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/account/switch_account.dart';
+import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/auth/register/acadmey_details.dart';
@@ -365,6 +366,11 @@ class RouteGenerator {
       case AttendanceBatchListPage.route:
         return MaterialPageRoute(
           builder: (_) => const AttendanceBatchListPage(),
+          settings: settings,
+        );
+      case AttendanceCalenderView.route:
+        return MaterialPageRoute(
+          builder: (_) => const AttendanceCalenderView(),
           settings: settings,
         );
       default:
