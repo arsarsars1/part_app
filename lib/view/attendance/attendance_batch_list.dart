@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/batch/add_batch.dart';
-import 'package:part_app/view/batch/batch_details.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
+import '../../view_model/attendance/attendance_cubit.dart';
 
 class AttendancePage extends StatefulWidget {
   static const route = '/attendance';
@@ -19,7 +19,6 @@ class AttendancePage extends StatefulWidget {
 class _AttendancePageState extends State<AttendancePage> {
   int? branchId;
   String? query;
-  String status = 'ongoing';
 
   ScrollController scrollController = ScrollController();
 
@@ -28,7 +27,7 @@ class _AttendancePageState extends State<AttendancePage> {
     super.initState();
     // initial call to show the batches
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      /*context.read<BatchCubit>().getBatchesByStatus(
+      /*context.read<AttendanceCubit>().getBatchesByStatus(
             status: status,
             clean: true,
           );*/
@@ -39,8 +38,7 @@ class _AttendancePageState extends State<AttendancePage> {
       // var nextPageTrigger = 0.60 * scrollController.position.maxScrollExtent;
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        context.read<BatchCubit>().getBatchesByStatus(
-              status: status,
+        context.read<AttendanceCubit>().getBatchesByStatus(
               branchId: branchId,
               search: query,
             );
@@ -50,7 +48,7 @@ class _AttendancePageState extends State<AttendancePage> {
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<BatchCubit>();
+    var cubit = context.read<AttendanceCubit>();
     cubit.reset();
 
     return Scaffold(
@@ -86,11 +84,10 @@ class _AttendancePageState extends State<AttendancePage> {
                     onSelect: (value) {
                       branchId = value;
                       setState(() {
-                        context.read<BatchCubit>().getBatchesByStatus(
-                              branchId: branchId,
-                              status: status,
-                              clean: true,
-                            );
+                        context.read<AttendanceCubit>().getBatchesByStatus(
+                          branchId: branchId,
+                          clean: true,
+                        );
                       });
                     },
                   ),
@@ -108,12 +105,11 @@ class _AttendancePageState extends State<AttendancePage> {
                       } else {
                         query = value;
                       }
-                      context.read<BatchCubit>().getBatchesByStatus(
-                            branchId: branchId,
-                            status: status,
-                            search: query,
-                            clean: true,
-                          );
+                      context.read<AttendanceCubit>().getBatchesByStatus(
+                        branchId: branchId,
+                        search: query,
+                        clean: true,
+                      );
                     },
                     textInputAction: TextInputAction.search,
                   ),
@@ -123,37 +119,14 @@ class _AttendancePageState extends State<AttendancePage> {
                   branchId != null
                       ? Column(
                           children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: TabButton(
-                                onChange: (String value) {
-                                  if (value == 'Ongoing Batches') {
-                                    status = 'ongoing';
-                                  } else {
-                                    status = 'completed';
-                                  }
-                                  context.read<BatchCubit>().getBatchesByStatus(
-                                        branchId: branchId,
-                                        status: status,
-                                        search: query,
-                                        clean: true,
-                                      );
-                                },
-                                options: const [
-                                  'Ongoing Batches',
-                                  'Completed Batches',
-                                ],
-                              ),
-                            ),
                             const SizedBox(
                               height: 20,
                             ),
-                            BlocConsumer<BatchCubit, BatchState>(
+                            BlocConsumer<AttendanceCubit, AttendanceState>(
                               listener: (context, state) {},
                               buildWhen: (prv, crr) =>
-                                  crr is BatchesFetched ||
-                                  crr is FetchingBatches,
+                                  crr is FetchingAttendanceBatches ||
+                                  crr is AttendanceBatchesFetched,
                               builder: (context, state) {
                                 if (state is BatchNetworkError) {
                                   AlertBox.showErrorAlert(context);
@@ -188,36 +161,10 @@ class _AttendancePageState extends State<AttendancePage> {
                                     return BatchItem(
                                       batch: batch,
                                       onTap: () {
-                                        context
-                                            .read<BatchCubit>()
-                                            .getBatch(batchId: '${batch.id}');
-                                        context
-                                            .read<BranchCubit>()
-                                            .getBranchTrainers(
-                                              branchId: '${batch.branchId}',
-                                              clean: true,
-                                            );
-                                        Navigator.pushNamed(
-                                            context, BatchDetails.route);
+
                                       },
                                     );
                                   },
-                                );
-                              },
-                            ),
-                            BlocBuilder<BatchCubit, BatchState>(
-                              builder: (context, state) {
-                                return AnimatedContainer(
-                                  height: state is FetchingBatches &&
-                                          state.pagination
-                                      ? 30
-                                      : 0,
-                                  color: Colors.black,
-                                  duration: const Duration(
-                                    milliseconds: 250,
-                                  ),
-                                  child: const Center(
-                                      child: Text('Fetching more items ..')),
                                 );
                               },
                             ),
