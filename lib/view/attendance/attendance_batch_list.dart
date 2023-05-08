@@ -7,16 +7,16 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 import '../../view_model/attendance/attendance_cubit.dart';
 
-class AttendancePage extends StatefulWidget {
-  static const route = '/attendance';
+class AttendanceBatchListPage extends StatefulWidget {
+  static const route = '/attendance-batch-list';
 
-  const AttendancePage({Key? key}) : super(key: key);
+  const AttendanceBatchListPage({Key? key}) : super(key: key);
 
   @override
-  State<AttendancePage> createState() => _AttendancePageState();
+  State<AttendanceBatchListPage> createState() => _AttendanceBatchListPageState();
 }
 
-class _AttendancePageState extends State<AttendancePage> {
+class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
   int? branchId;
   String? query;
 
@@ -64,10 +64,7 @@ class _AttendancePageState extends State<AttendancePage> {
                     alignment: Alignment.centerRight,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        left: 16.w,
-                        right: 16.w,
-                        top: 16.h,
-                      ),
+                          left: 16.w, right: 16.w, top: 16.h, bottom: 16.h),
                       child: Button(
                         height: 30.h,
                         width: 185.w,
@@ -85,9 +82,9 @@ class _AttendancePageState extends State<AttendancePage> {
                       branchId = value;
                       setState(() {
                         context.read<AttendanceCubit>().getBatchesByStatus(
-                          branchId: branchId,
-                          clean: true,
-                        );
+                              branchId: branchId,
+                              clean: true,
+                            );
                       });
                     },
                   ),
@@ -106,10 +103,10 @@ class _AttendancePageState extends State<AttendancePage> {
                         query = value;
                       }
                       context.read<AttendanceCubit>().getBatchesByStatus(
-                        branchId: branchId,
-                        search: query,
-                        clean: true,
-                      );
+                            branchId: branchId,
+                            search: query,
+                            clean: true,
+                          );
                     },
                     textInputAction: TextInputAction.search,
                   ),
@@ -160,9 +157,7 @@ class _AttendancePageState extends State<AttendancePage> {
                                     BatchModel batch = cubit.batches[index];
                                     return BatchItem(
                                       batch: batch,
-                                      onTap: () {
-
-                                      },
+                                      onTap: () {},
                                     );
                                   },
                                 );

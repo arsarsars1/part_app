@@ -362,9 +362,9 @@ class RouteGenerator {
           builder: (_) => const LeadDetails(),
           settings: settings,
         );
-      case AttendancePage.route:
+      case AttendanceBatchListPage.route:
         return MaterialPageRoute(
-          builder: (_) => const AttendancePage(),
+          builder: (_) => const AttendanceBatchListPage(),
           settings: settings,
         );
       default:

@@ -1,19 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
-import 'package:part_app/model/data_model/cancel_response.dart';
-import 'package:part_app/model/data_model/class_link_response.dart';
-import 'package:part_app/model/data_model/drop_down_item.dart';
-import 'package:part_app/model/data_model/reschedule_response.dart';
-import 'package:part_app/model/data_model/students_response.dart';
-import 'package:part_app/view/constants/default_values.dart';
 import '../../model/service/admin/attendance.dart';
 part 'attendance_state.dart';
-
 
 class AttendanceCubit extends Cubit<AttendanceState> {
   AttendanceCubit() : super(AttendanceInitial());
@@ -45,9 +36,10 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   }) async {
     _batches.clear();
     emit(FetchingAttendanceBatches(pagination: false));
-    BatchResponse? response = await _attendanceService.getBatches(branchId: branchId!);
+    BatchResponse? response =
+        await _attendanceService.getBatches(branchId: branchId!);
     if (response?.status == 1) {
-      var items = response?.batches?.data!
+      var items = response?.batches?.data
               .where((element) => element.isActive == 1)
               .map((e) => BatchModel.fromEntity(e))
               .toList() ??
@@ -58,6 +50,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
       emit(AttendanceBatchesFetched());
     }
   }
+
   /// this method will handle four different uses based on
   /// [ branchId ] , [ search ]
 
@@ -96,13 +89,12 @@ class AttendanceCubit extends Cubit<AttendanceState> {
       }
 
       var items = response.batches?.data
-          .map((e) => BatchModel.fromEntity(e))
-          .toList() ??
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
           [];
 
       _batches.addAll(items);
       emit(AttendanceBatchesFetched(moreItems: nextPageUrl != null));
     }
   }
-
 }
