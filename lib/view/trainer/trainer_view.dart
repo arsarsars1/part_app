@@ -175,10 +175,10 @@ class _TrainerPageState extends State<TrainerPage> {
                     }
                   },
                   onChange: (value) {
-                    if (value.toString().isEmpty) {
+                    /*if (value.toString().isEmpty) {
                       query = null;
                       cubit.getTrainers();
-                    }
+                    }*/
                   },
                 ),
                 SizedBox(
