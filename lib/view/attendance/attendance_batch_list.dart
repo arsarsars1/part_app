@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/batch/add_batch.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/alert_box.dart';
@@ -13,7 +14,8 @@ class AttendanceBatchListPage extends StatefulWidget {
   const AttendanceBatchListPage({Key? key}) : super(key: key);
 
   @override
-  State<AttendanceBatchListPage> createState() => _AttendanceBatchListPageState();
+  State<AttendanceBatchListPage> createState() =>
+      _AttendanceBatchListPageState();
 }
 
 class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
@@ -157,7 +159,13 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
                                     BatchModel batch = cubit.batches[index];
                                     return BatchItem(
                                       batch: batch,
-                                      onTap: () {},
+                                      onTap: () {
+                                        context
+                                            .read<BatchCubit>()
+                                            .getBatch(batchId: '${batch.id}');
+                                        Navigator.pushNamed(context,
+                                            AttendanceCalenderView.route);
+                                      },
                                     );
                                   },
                                 );
