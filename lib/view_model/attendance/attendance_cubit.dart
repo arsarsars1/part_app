@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/model/data_model/attendance_monthly_record.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
@@ -9,6 +10,7 @@ import 'package:part_app/model/data_model/cancel_response.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/reschedule_response.dart';
+import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import '../../model/service/admin/attendance.dart';
@@ -29,9 +31,16 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   List<Days> get days => _days;
   List<BatchModel> get batches => _batches;
 
+  // final Map<int?, StudentModel> _studentsMap = {};
+  // List<StudentModel>? get students => _studentsMap.values.toList();
+
+  List<StudentAttendance>? studentAttendanceDetails;
+  int conductedClassCount = 0;
+
   /// reset
   void reset() {
     _batches.clear();
+    studentAttendanceDetails = [];
     emit(AttendanceInitial());
   }
 
@@ -102,6 +111,58 @@ class AttendanceCubit extends Cubit<AttendanceState> {
 
       _batches.addAll(items);
       emit(AttendanceBatchesFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
+  Future getStudentsMonthly({
+    String? searchQuery,
+    String? activeStatus,
+    int? batchId,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      // _studentsMap.clear();
+      studentAttendanceDetails = [];
+      emit(FetchingStudentsAttendance());
+    } else {
+      emit(FetchingStudentsAttendance(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(StudentsAttendanceFetched());
+      return;
+    }
+
+    AttendanceMonthlyRecord? response = await _attendanceService.getStudents(
+      batchId: batchId,
+      searchQuery: searchQuery,
+      activeStatus: activeStatus,
+      pageNo: page,
+    );
+
+    if (response?.status == 1) {
+      // nextPageUrl = response?.students?.nextPageUrl;
+      // if (nextPageUrl != null) {
+      //   page++;
+      // }
+      // var items = response?.students?.data ?? [];
+      studentAttendanceDetails = response?.studentAttendances ?? [];
+      conductedClassCount = response?.conductedClassCount ?? 0;
+      // List<StudentModel> tempStudents = [];
+      // for (var student in items) {
+      //   var details = student.studentDetail;
+      //   if (details != null) {
+      //     for (var details in details) {
+      //       var newStudent = StudentModel.fromEntity(student, details);
+      //       tempStudents.add(newStudent);
+      //     }
+      //   }
+      // }
+
+      // _studentsMap.addEntries(tempStudents.map((e) => MapEntry(e.detailId, e)));
+      emit(StudentsAttendanceFetched(/*moreItems: nextPageUrl != null*/));
     }
   }
 
