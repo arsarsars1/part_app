@@ -138,7 +138,11 @@ class _TrainerPageState extends State<TrainerPage> {
                                 setState(() {
                                   branchId = null;
                                   selectedItem = value;
-                                  cubit.getActiveInactiveTrainers(active: true);
+                                  if(query != null){
+                                    cubit.searchTrainers(branchId, query: query);
+                                  } else {
+                                    cubit.getActiveInactiveTrainers(active: true);
+                                  }
                                 });
                               } else {
                                 branchId = value?.id;
@@ -170,8 +174,9 @@ class _TrainerPageState extends State<TrainerPage> {
                       query = value;
                       cubit.searchTrainers(branchId, query: value);
                     } else {
-                      cubit.getTrainers();
                       query = null;
+                      cubit.getActiveInactiveTrainers(
+                          branchId: branchId, active: true);
                     }
                   },
                   onChange: (value) {
