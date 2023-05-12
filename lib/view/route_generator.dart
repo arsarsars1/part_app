@@ -55,6 +55,7 @@ import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
 import 'attendance/attendance_batch_list.dart';
+import 'attendance/monthly_attendance_view.dart';
 import 'membership/subscription_success.dart';
 
 class RouteGenerator {
@@ -365,6 +366,11 @@ class RouteGenerator {
       case AttendancePage.route:
         return MaterialPageRoute(
           builder: (_) => const AttendancePage(),
+          settings: settings,
+        );
+      case MonthlyAttendanceView.route:
+        return MaterialPageRoute(
+          builder: (_) => const MonthlyAttendanceView(),
           settings: settings,
         );
       default:

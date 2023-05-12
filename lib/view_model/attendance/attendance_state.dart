@@ -27,11 +27,16 @@ class FetchAttendanceBatchFailed extends AttendanceState {
   FetchAttendanceBatchFailed(this.message);
 }
 
-/*class FetchingAttendanceStudents extends AttendanceState {}
+// Students
+class FetchingStudentsAttendance extends AttendanceState {
+  final bool pagination;
+  FetchingStudentsAttendance({this.pagination = false});
+}
 
-class FetchedAttendanceStudents extends AttendanceState {}
-
-class FetchingAttendanceStudentsFailed extends AttendanceState {}*/
+class StudentsAttendanceFetched extends AttendanceState {
+  final bool moreItems;
+  StudentsAttendanceFetched({this.moreItems = false});
+}
 
 
 class AttendanceNetworkError extends AttendanceState {}
