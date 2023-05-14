@@ -47,6 +47,17 @@ class _ClassPickerState extends State<ClassPicker> {
     var cubit = context.read<BranchCubit>();
     return BlocBuilder<BranchCubit, BranchState>(
       builder: (context, state) {
+        if (state is ClassesLoading) {
+          return const Padding(
+            padding: EdgeInsets.only(top: 32),
+            child: LoadingView(
+              hideColor: true,
+            ),
+          );
+        } else if (state is ClassesFailed) {
+          Navigator.pop(context);
+          Alert(context).show(message: state.message);
+        }
         return Column(
           children: [
             Expanded(
