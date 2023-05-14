@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
+import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/batch/components/class_picker.dart';
+import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
 import 'package:part_app/view/components/components.dart';
@@ -24,6 +27,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
   DateTime? date;
   String? classLink;
   List<String>? batchDays = [];
+  ClassModel? selectedclass;
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController batchController = TextEditingController();
@@ -175,27 +179,56 @@ class _ClassLinkViewState extends State<ClassLinkView> {
               const SizedBox(
                 height: 20,
               ),
-              CommonField(
-                controller: dateController,
+              // CommonField(
+              //   controller: dateController,
+              //   title: 'Date *',
+              //   hint: 'Select the date',
+              //   suffixIcon: const Padding(
+              //     padding: EdgeInsets.only(right: 32),
+              //     child: Icon(
+              //       Icons.arrow_drop_down,
+              //       size: 24,
+              //       color: Colors.white24,
+              //     ),
+              //   ),
+              //   disabled: true,
+              //   onTap: () {
+              //     datePicker();
+              //   },
+              //   onChange: (value) {},
+              //   validator: (value) {
+              //     return value.isEmpty ? 'Please select the date.' : null;
+              //   },
+              //   onSubmit: (value) {},
+              // ),
+              ScheduleField(
                 title: 'Date *',
                 hint: 'Select the date',
-                suffixIcon: const Padding(
-                  padding: EdgeInsets.only(right: 32),
-                  child: Icon(
-                    Icons.arrow_drop_down,
-                    size: 24,
-                    color: Colors.white24,
-                  ),
-                ),
-                disabled: true,
-                onTap: () {
-                  datePicker();
+                onSelect: (String value) {
+                  date = DateTime.parse(value);
+                  // startDate = value;
+                  setState(() {
+                    selectedclass = null;
+                  });
+                  scaffoldKey.currentState?.showBottomSheet(
+                    enableDrag: false,
+                    elevation: 10,
+                    backgroundColor: Colors.transparent,
+                    (context) => ClassPicker(
+                      branchId: batch?.branchId,
+                      batchId: batch?.id,
+                      date: date?.toDDMMYYY(),
+                      scaffoldKey: scaffoldKey,
+                      onSave: (ClassModel value) {
+                        setState(() {
+                          dateController.text = date?.toDDMMYYY() ?? "";
+                          selectedclass = value;
+                        });
+                      },
+                    ),
+                  );
                 },
-                onChange: (value) {},
-                validator: (value) {
-                  return value.isEmpty ? 'Please select the date.' : null;
-                },
-                onSubmit: (value) {},
+                time: false,
               ),
               const Center(
                 child: Padding(
@@ -210,9 +243,59 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 ),
                 padding: const EdgeInsets.all(16),
                 margin: const EdgeInsets.all(16),
-                child: Text(
-                  date == null ? 'No class selected' : getBatchTime(date!),
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      date == null ? 'No class selected' : getBatchTime(date!),
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+                    ),
+                    if (date != null)
+                      GestureDetector(
+                        onTap: () {
+                          scaffoldKey.currentState?.showBottomSheet(
+                            enableDrag: false,
+                            elevation: 10,
+                            backgroundColor: Colors.transparent,
+                            (context) => ClassPicker(
+                              branchId: batch?.branchId,
+                              batchId: batch?.id,
+                              date: date?.toDDMMYYY(),
+                              scaffoldKey: scaffoldKey,
+                              onSave: (ClassModel value) {
+                                setState(() {
+                                  selectedclass = value;
+                                });
+                              },
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.edit,
+                          size: 24,
+                          color: Colors.white24,
+                        ),
+                      )
+                  ],
+                ),
+              ),
+              Center(
+                child: Button(
+                  height: 50.h,
+                  onTap: () {
+                    if (formKey.currentState!.validate()) {
+                      formKey.currentState!.save();
+
+                      batchCubit.addClassLink(batch?.id, {
+                        'class_date': date?.toServerYMD(),
+                        'link': classLink,
+                        'service': Uri.parse(classLink!).host,
+                        'start_time': batch?.batchDetail?[0].startTime,
+                        'end_time': batch?.batchDetail?[0].endTime
+                      });
+                    }
+                  },
+                  title: 'Add Class Link',
                 ),
               ),
               BlocBuilder<BatchCubit, BatchState>(
@@ -416,25 +499,6 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                     ],
                   );
                 },
-              ),
-              Center(
-                child: Button(
-                  height: 50.h,
-                  onTap: () {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-
-                      batchCubit.addClassLink(batch?.id, {
-                        'class_date': date?.toServerYMD(),
-                        'link': classLink,
-                        'service': Uri.parse(classLink!).host,
-                        'start_time': batch?.batchDetail?[0].startTime,
-                        'end_time': batch?.batchDetail?[0].endTime
-                      });
-                    }
-                  },
-                  title: 'Add Class Link',
-                ),
               ),
             ],
           ),
