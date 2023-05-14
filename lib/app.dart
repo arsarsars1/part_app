@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:month_year_picker/month_year_picker.dart';
+// import 'package:month_year_picker/month_year_picker.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/service/api.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -84,7 +84,7 @@ class _AppState extends State<App> {
             builder: (_, child) {
               return MaterialApp(
                 localizationsDelegates: const [
-                  MonthYearPickerLocalizations.delegate,
+                  // MonthYearPickerLocalizations.delegate,
                 ],
                 debugShowCheckedModeBanner: false,
                 title: F.title,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:month_year_picker/month_year_picker.dart';
+import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
+// import 'package:month_year_picker/month_year_picker.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/common_field.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -47,16 +48,41 @@ class _ScheduleFieldState extends State<ScheduleField> {
   Widget build(BuildContext context) {
     return CommonField(
       disabled: true,
-      onTap: () {
+      onTap: () async {
         if (widget.time) {
           timePicker().then((value) {
             controller.text = value ?? '';
           });
         } else {
           if (widget.onlyMonth) {
-            monthYearPicker().then((value) {
-              controller.text = value ?? '';
+            await DatePicker.showSimpleDatePicker(
+              context,
+              initialDate: DateTime(DateTime.now().year),
+              firstDate: DateTime(DateTime.now().year - 25),
+              lastDate: DateTime(DateTime.now().year + 25),
+              dateFormat: "MMMM-yyyy",
+              locale: DateTimePickerLocale.en_us,
+              backgroundColor: AppColors.grey800,
+              textColor: AppColors.textColor,
+              looping: false,
+            ).then((value) {
+              if (value == null) {
+                return;
+              }
+              if (widget.onSelect != null) {
+                widget.onSelect!(value.toServerYMD());
+              }
+
+              if (widget.onDateSelect != null) {
+                widget.onDateSelect!(value);
+              }
+              controller.text =
+                  widget.dateMonth ? value.toMMMMYYYY() : value.toDateString();
             });
+
+            // monthYearPicker().then((value) {
+            //
+            // });
           } else {
             datePicker().then((value) {
               controller.text = value ?? '';
@@ -178,50 +204,50 @@ class _ScheduleFieldState extends State<ScheduleField> {
     return widget.dateMonth ? dateTime?.toMMMMYYYY() : dateTime?.toDateString();
   }
 
-  Future<String?> monthYearPicker() async {
-    DateTime? dateTime = await showMonthYearPicker(
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: ColorScheme.dark(
-              onPrimary: Colors.white,
-              onSurface: Colors.white, // default text color
-              primary: AppColors.primaryColor, // circle color
-            ),
-            dialogBackgroundColor: AppColors.liteDark,
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                textStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 12,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(
-        DateTime.now().year - 1,
-      ),
-      lastDate: DateTime(
-        DateTime.now().year + 2,
-      ),
-    );
+  // Future<String?> monthYearPicker() async {
+  //   DateTime? dateTime = await showMonthYearPicker(
+  //     builder: (context, child) {
+  //       return Theme(
+  //         data: ThemeData.dark().copyWith(
+  //           colorScheme: ColorScheme.dark(
+  //             onPrimary: Colors.white,
+  //             onSurface: Colors.white, // default text color
+  //             primary: AppColors.primaryColor, // circle color
+  //           ),
+  //           dialogBackgroundColor: AppColors.liteDark,
+  //           textButtonTheme: TextButtonThemeData(
+  //             style: TextButton.styleFrom(
+  //               textStyle: TextStyle(
+  //                 color: AppColors.primaryColor,
+  //                 fontWeight: FontWeight.normal,
+  //                 fontSize: 12,
+  //               ),
+  //               shape: RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.circular(5),
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //         child: child!,
+  //       );
+  //     },
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(
+  //       DateTime.now().year - 1,
+  //     ),
+  //     lastDate: DateTime(
+  //       DateTime.now().year + 2,
+  //     ),
+  //   );
 
-    if (widget.onSelect != null && dateTime != null) {
-      widget.onSelect!(dateTime.toServerYMD());
-    }
+  //   if (widget.onSelect != null && dateTime != null) {
+  //     widget.onSelect!(dateTime.toServerYMD());
+  //   }
 
-    if (widget.onDateSelect != null && dateTime != null) {
-      widget.onDateSelect!(dateTime);
-    }
-    return widget.dateMonth ? dateTime?.toMMMMYYYY() : dateTime?.toDateString();
-  }
+  //   if (widget.onDateSelect != null && dateTime != null) {
+  //     widget.onDateSelect!(dateTime);
+  //   }
+  //   return widget.dateMonth ? dateTime?.toMMMMYYYY() : dateTime?.toDateString();
+  // }
 }
