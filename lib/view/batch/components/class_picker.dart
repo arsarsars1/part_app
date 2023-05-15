@@ -48,15 +48,95 @@ class _ClassPickerState extends State<ClassPicker> {
     return BlocBuilder<BranchCubit, BranchState>(
       builder: (context, state) {
         if (state is ClassesLoading) {
-          return const Padding(
-            padding: EdgeInsets.only(top: 32),
-            child: LoadingView(
-              hideColor: true,
-            ),
+          return Column(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Colors.black54,
+                ),
+              ),
+              Container(
+                height: 500.h,
+                decoration: BoxDecoration(
+                  color: AppColors.liteDark,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: const EdgeInsets.all(16),
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.65,
+                ),
+                child: const LoadingView(
+                  hideColor: false,
+                ),
+              ),
+            ],
           );
         } else if (state is ClassesFailed) {
-          Navigator.pop(context);
-          Alert(context).show(message: state.message);
+          return Column(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Colors.black54,
+                ),
+              ),
+              Container(
+                height: 500.h,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: AppColors.liteDark,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: const EdgeInsets.all(16),
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.65,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '',
+                          style:
+                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            width: 20.w,
+                            height: 20.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.black54,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
+                            child: const Icon(
+                              Icons.close,
+                              size: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    const Center(
+                      child: Text('Something went wrong'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
         }
         return Column(
           children: [
