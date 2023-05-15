@@ -279,6 +279,9 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
               Center(
                 child: Button(
                   height: 50.h,
