@@ -31,9 +31,6 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   List<Days> get days => _days;
   List<BatchModel> get batches => _batches;
 
-  // final Map<int?, StudentModel> _studentsMap = {};
-  // List<StudentModel>? get students => _studentsMap.values.toList();
-
   List<StudentAttendance>? studentAttendanceDetails;
   int conductedClassCount = 0;
 
@@ -118,6 +115,8 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     String? searchQuery,
     String? activeStatus,
     int? batchId,
+    int? year,
+    int? month,
     bool clean = false,
   }) async {
     if (clean) {
@@ -137,31 +136,16 @@ class AttendanceCubit extends Cubit<AttendanceState> {
 
     AttendanceMonthlyRecord? response = await _attendanceService.getStudents(
       batchId: batchId,
+      month: month,
+      year: year,
       searchQuery: searchQuery,
       activeStatus: activeStatus,
       pageNo: page,
     );
 
     if (response?.status == 1) {
-      // nextPageUrl = response?.students?.nextPageUrl;
-      // if (nextPageUrl != null) {
-      //   page++;
-      // }
-      // var items = response?.students?.data ?? [];
       studentAttendanceDetails = response?.studentAttendances ?? [];
       conductedClassCount = response?.conductedClassCount ?? 0;
-      // List<StudentModel> tempStudents = [];
-      // for (var student in items) {
-      //   var details = student.studentDetail;
-      //   if (details != null) {
-      //     for (var details in details) {
-      //       var newStudent = StudentModel.fromEntity(student, details);
-      //       tempStudents.add(newStudent);
-      //     }
-      //   }
-      // }
-
-      // _studentsMap.addEntries(tempStudents.map((e) => MapEntry(e.detailId, e)));
       emit(StudentsAttendanceFetched(/*moreItems: nextPageUrl != null*/));
     }
   }
