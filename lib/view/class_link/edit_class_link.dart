@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/batch/components/class_picker.dart';
+import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
@@ -21,6 +24,11 @@ class _EditClassLinkState extends State<EditClassLink> {
   DateTime? date;
   String? classLink;
   List<String>? batchDays = [];
+  ClassModel? selectedclass;
+  bool branchChange = false,
+      batchChange = false,
+      dateChange = false,
+      classChange = false;
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController batchController = TextEditingController();
@@ -97,6 +105,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                 onSelect: (value) {
                   setState(() {
                     branchId = value;
+                    branchChange = true;
                   });
                   batchCubit.getBatchesByStatus(
                     branchId: branchId,
@@ -108,7 +117,9 @@ class _EditClassLinkState extends State<EditClassLink> {
               SizedBox(
                 height: 20.h,
               ),
-              batchCubit.tempClass?.batchName != null && batch == null
+              batchCubit.tempClass?.batchName != null &&
+                      batch == null &&
+                      branchChange == false
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -154,6 +165,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                                       onSelect: (value) {
                                         batch = value;
                                         batchController.text = value.name;
+                                        batchChange = true;
                                         for (var element in batch!.days) {
                                           batchDays?.add(element.split(" ")[0]);
                                         }
@@ -179,33 +191,27 @@ class _EditClassLinkState extends State<EditClassLink> {
                       ],
                     )
                   : CommonField(
-                      // initialValue: batchCubit.tempClass?.batchName ?? "",
                       controller: batchController,
                       onTap: () {
                         batchDays?.clear();
-                        if (branchId != null) {
-                          scaffoldKey.currentState?.showBottomSheet(
-                            backgroundColor: Colors.transparent,
-                            (context) => BatchPicker(
-                              branchId: branchId!,
-                              status: '',
-                              branchSearch: true,
-                              onSelect: (value) {
-                                batch = value;
-                                batchController.text = value.name;
-                                for (var element in batch!.days) {
-                                  batchDays?.add(element.split(" ")[0]);
-                                }
-                              },
-                            ),
-                          );
-                        } else {
-                          Alert(context).show(
-                            message: batchCubit.tempClass?.batchName != null
-                                ? 'Please re-select the Branch.'
-                                : 'Please select the Branch.',
-                          );
-                        }
+
+                        scaffoldKey.currentState?.showBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          (context) => BatchPicker(
+                            branchId: branchId!,
+                            status: '',
+                            branchSearch: true,
+                            onSelect: (value) {
+                              batch = value;
+                              batchController.text = value.name;
+                              batchChange = true;
+                              for (var element in batch!.days) {
+                                batchDays?.add(element.split(" ")[0]);
+                              }
+                              setState(() {});
+                            },
+                          ),
+                        );
                       },
                       disabled: true,
                       title: 'Batch *',
@@ -226,7 +232,10 @@ class _EditClassLinkState extends State<EditClassLink> {
               const SizedBox(
                 height: 20,
               ),
-              batchCubit.tempClass?.classDate != null && date == null
+              batchCubit.tempClass?.classDate != null &&
+                      date == null &&
+                      branchChange == false &&
+                      batchChange == false
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -259,11 +268,9 @@ class _EditClassLinkState extends State<EditClassLink> {
                                     ?.copyWith(),
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  datePicker();
-                                },
+                                onTap: () {},
                                 child: const Icon(
-                                  Icons.arrow_drop_down,
+                                  Icons.calendar_month,
                                   size: 24,
                                   color: Colors.white24,
                                 ),
@@ -273,49 +280,145 @@ class _EditClassLinkState extends State<EditClassLink> {
                         ),
                       ],
                     )
-                  : CommonField(
-                      // initialValue: batchCubit.tempClass?.classDate?.toDateString(),
-                      controller: dateController,
+                  : ScheduleField(
                       title: 'Date *',
                       hint: 'Select the date',
-                      suffixIcon: const Padding(
-                        padding: EdgeInsets.only(right: 32),
-                        child: Icon(
-                          Icons.arrow_drop_down,
-                          size: 24,
-                          color: Colors.white24,
-                        ),
-                      ),
-                      disabled: true,
-                      onTap: () {
-                        datePicker();
+                      padding: 16,
+                      margin: 25,
+                      onSelect: (String value) {
+                        date = DateTime.parse(value);
+                        dateController.text = date?.toDateString() ?? "";
+                        setState(() {
+                          selectedclass = null;
+                        });
+                        scaffoldKey.currentState?.showBottomSheet(
+                          enableDrag: false,
+                          elevation: 10,
+                          backgroundColor: Colors.transparent,
+                          (context) => ClassPicker(
+                            branchId: batch?.branchId,
+                            batchId: batch?.id,
+                            date: date?.toServerYMD(),
+                            scaffoldKey: scaffoldKey,
+                            onSave: (ClassModel value) {
+                              setState(() {
+                                dateController.text = date?.toDDMMYYY() ?? "";
+                                selectedclass = value;
+                              });
+                            },
+                          ),
+                        );
                       },
-                      onChange: (value) {},
-                      validator: (value) {
-                        return value.isEmpty ? 'Please select the date.' : null;
-                      },
-                      onSubmit: (value) {},
+                      time: false,
                     ),
               const Center(
                 child: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
                   child: Text('Selected Class'),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.liteDark,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                padding: const EdgeInsets.all(16),
-                margin: const EdgeInsets.all(16),
-                child: Text(
-                  date == null
-                      ? '${batchCubit.tempClass?.startTime?.toAmPM()}-${batchCubit.tempClass?.endTime?.toAmPM()}'
-                      : getBatchTime(date!),
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(),
-                ),
-              ),
+              branchChange == false &&
+                      batchChange == false &&
+                      dateChange == false
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.liteDark,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            batchCubit.tempClass?.classDate == null
+                                ? 'No class selected'
+                                : '${batchCubit.tempClass?.classDate?.formattedDay2()} ${batchCubit.tempClass?.startTime?.toAmPM()} - ${batchCubit.tempClass?.endTime?.toAmPM()}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(),
+                          ),
+                          if (batchCubit.tempClass?.classDate != null)
+                            GestureDetector(
+                              onTap: () {
+                                scaffoldKey.currentState?.showBottomSheet(
+                                  enableDrag: false,
+                                  elevation: 10,
+                                  backgroundColor: Colors.transparent,
+                                  (context) => ClassPicker(
+                                    branchId: batch?.branchId,
+                                    batchId: batch?.id ??
+                                        batchCubit.tempClass?.batchId,
+                                    date: batchCubit.tempClass?.classDate
+                                        ?.toServerYMD(),
+                                    scaffoldKey: scaffoldKey,
+                                    onSave: (ClassModel value) {
+                                      setState(() {
+                                        selectedclass = value;
+                                      });
+                                    },
+                                  ),
+                                );
+                              },
+                              child: const Icon(
+                                Icons.edit,
+                                size: 24,
+                                color: Colors.white24,
+                              ),
+                            )
+                        ],
+                      ),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.liteDark,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            date == null
+                                ? 'No class selected'
+                                : "${date?.formattedDay2()} ${selectedclass?.startTime.toAmPM()} - ${selectedclass?.endTime.toAmPM()}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(),
+                          ),
+                          if (date != null)
+                            GestureDetector(
+                              onTap: () {
+                                scaffoldKey.currentState?.showBottomSheet(
+                                  enableDrag: false,
+                                  elevation: 10,
+                                  backgroundColor: Colors.transparent,
+                                  (context) => ClassPicker(
+                                    branchId: batch?.branchId,
+                                    batchId: batch?.id ??
+                                        batchCubit.tempClass?.batchId,
+                                    date: date?.toServerYMD(),
+                                    scaffoldKey: scaffoldKey,
+                                    onSave: (ClassModel value) {
+                                      setState(() {
+                                        selectedclass = value;
+                                      });
+                                    },
+                                  ),
+                                );
+                              },
+                              child: const Icon(
+                                Icons.edit,
+                                size: 24,
+                                color: Colors.white24,
+                              ),
+                            )
+                        ],
+                      ),
+                    ),
               Center(
                 child: Button(
                   height: 50.h,
@@ -358,50 +461,50 @@ class _EditClassLinkState extends State<EditClassLink> {
   }
 
   // method to get the date for [ class ]
-  void datePicker() {
-    showDatePicker(
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: ColorScheme.dark(
-              onPrimary: Colors.white,
-              onSurface: Colors.white, // default text color
-              primary: AppColors.primaryColor, // circle color
-            ),
-            dialogBackgroundColor: AppColors.liteDark,
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                textStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 12,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(
-          DateTime.now().year, DateTime.now().month + 3, DateTime.now().day),
-    ).then((value) {
-      if (value != null) {
-        if (!batchDays!.contains(value.formattedDay2())) {
-          Alert(context).show(
-            message: 'Selected batch does not have class on selected date',
-          );
-          return;
-        }
-        date = value;
-        dateController.text = value.toDateString();
-        setState(() {});
-      }
-    });
-  }
+  // void datePicker() {
+  //   showDatePicker(
+  //     builder: (context, child) {
+  //       return Theme(
+  //         data: ThemeData.dark().copyWith(
+  //           colorScheme: ColorScheme.dark(
+  //             onPrimary: Colors.white,
+  //             onSurface: Colors.white, // default text color
+  //             primary: AppColors.primaryColor, // circle color
+  //           ),
+  //           dialogBackgroundColor: AppColors.liteDark,
+  //           textButtonTheme: TextButtonThemeData(
+  //             style: TextButton.styleFrom(
+  //               textStyle: TextStyle(
+  //                 color: AppColors.primaryColor,
+  //                 fontWeight: FontWeight.normal,
+  //                 fontSize: 12,
+  //               ),
+  //               shape: RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.circular(5),
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //         child: child!,
+  //       );
+  //     },
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(1900),
+  //     lastDate: DateTime(
+  //         DateTime.now().year, DateTime.now().month + 3, DateTime.now().day),
+  //   ).then((value) {
+  //     if (value != null) {
+  //       if (!batchDays!.contains(value.formattedDay2())) {
+  //         Alert(context).show(
+  //           message: 'Selected batch does not have class on selected date',
+  //         );
+  //         return;
+  //       }
+  //       date = value;
+  //       dateController.text = value.toDateString();
+  //       setState(() {});
+  //     }
+  //   });
+  // }
 }
