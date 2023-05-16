@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/attendance_monthly_record.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/attendance/components/attendance_student_item.dart';
+import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
-import 'package:part_app/view/students/add_student.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/attendance/attendance_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -27,6 +28,8 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
   int? branchId;
   String? query;
   BatchModel? batch;
+  int? year;
+  int? month;
 
   String? activeStatus;
 
@@ -139,9 +142,6 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                               onSelect: (value) {
                                 batch = value;
                                 batchController.text = value.name;
-
-                                doSearch(true);
-                                // setState(() {});
                               },
                             ),
                           );
@@ -170,6 +170,22 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                     const SizedBox(
                       height: 20,
                     ),
+
+
+                    ScheduleField(
+                      title: 'Month, Year',
+                      hint: 'Select month & year',
+                      initialValue: DateTime.now().toMMMMYYYY(),
+                      dateMonth: true,
+                      onDateSelect: (DateTime value) {
+                        year = value.year;
+                        month = value.month;
+                        doSearch(true);
+                      },
+                      time: false,
+                      onlyMonth: true,
+                    ),
+
                     /*CommonField(
                       controller: dateController,
                       title: 'Date *',
@@ -259,6 +275,8 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
           batchId: batch?.id,
           searchQuery: query,
           activeStatus: activeStatus,
+          year: year,
+          month: month,
           clean: clean,
         );
   }
