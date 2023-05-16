@@ -4,6 +4,8 @@ import 'package:part_app/model/data_model/attendance_monthly_record.dart';
 import 'package:part_app/view/components/user_image.dart';
 import 'package:part_app/view/constants/constant.dart';
 
+import '../../../flavors.dart';
+
 class AttendanceStudentItem extends StatelessWidget {
   final StudentAttendance student;
   final VoidCallback onTap;
@@ -33,13 +35,12 @@ class AttendanceStudentItem extends StatelessWidget {
               flex: 2,
               child: Row(
                 children: [
-                  const UserImage(
-                    profilePic: '',
-                    /*profilePic: student.profilePic != ""
+                  UserImage(
+                    profilePic: student.profilePic != ''
                         ? '${F.baseUrl}'
-                        '/admin/images/student/'
-                        '${student.detailId}/${student.profilePic}'
-                        : '',*/
+                            '/admin/images/student/'
+                            '${student.studentDetailId}/${student.profilePic}'
+                        : '',
                   ),
                   SizedBox(width: 16.w),
                   Expanded(
@@ -57,12 +58,21 @@ class AttendanceStudentItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${student.feeType}',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: AppColors.green,
+                  student.feeType == 'monthly'
+                      ? Text(
+                          'Monthly',
+                          style:
+                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                                    color: AppColors.primaryColor,
+                                  ),
+                        )
+                      : Text(
+                          'Class Based',
+                          style:
+                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                                    color: AppColors.green,
+                                  ),
                         ),
-                  ),
                   SizedBox(
                     height: 10.h,
                   ),

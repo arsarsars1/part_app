@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final attendanceMonthlyRecord = attendanceMonthlyRecordFromJson(jsonString);
-
 import 'dart:convert';
 
 AttendanceMonthlyRecord attendanceMonthlyRecordFromJson(String str) => AttendanceMonthlyRecord.fromJson(json.decode(str));
@@ -38,6 +34,7 @@ class StudentAttendance {
   String? name;
   int? total;
   int? present;
+  String? profilePic;
 
   StudentAttendance({
     this.studentDetailId,
@@ -45,6 +42,7 @@ class StudentAttendance {
     this.name,
     this.total,
     this.present,
+    this.profilePic,
   });
 
   factory StudentAttendance.fromJson(Map<String, dynamic> json) => StudentAttendance(
@@ -53,6 +51,7 @@ class StudentAttendance {
     name: json["name"],
     total: json["total"],
     present: json["present"],
+    profilePic: json["profile_pic"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +60,6 @@ class StudentAttendance {
     "name": name,
     "total": total,
     "present": present,
+    "profile_pic": profilePic,
   };
 }
