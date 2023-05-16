@@ -222,7 +222,7 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                                 child: Center(
                                   child: Text(
                                     query == null
-                                        ? 'Add a student to get started'
+                                        ? 'Sorry, No matching results found'
                                         : state is StudentsAttendanceFetched
                                             ? 'Sorry, No matching results found'
                                             : 'Select a batch to list the students.',
