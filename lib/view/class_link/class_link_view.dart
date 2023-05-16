@@ -179,28 +179,6 @@ class _ClassLinkViewState extends State<ClassLinkView> {
               const SizedBox(
                 height: 20,
               ),
-              // CommonField(
-              //   controller: dateController,
-              //   title: 'Date *',
-              //   hint: 'Select the date',
-              //   suffixIcon: const Padding(
-              //     padding: EdgeInsets.only(right: 32),
-              //     child: Icon(
-              //       Icons.arrow_drop_down,
-              //       size: 24,
-              //       color: Colors.white24,
-              //     ),
-              //   ),
-              //   disabled: true,
-              //   onTap: () {
-              //     datePicker();
-              //   },
-              //   onChange: (value) {},
-              //   validator: (value) {
-              //     return value.isEmpty ? 'Please select the date.' : null;
-              //   },
-              //   onSubmit: (value) {},
-              // ),
               ScheduleField(
                 title: 'Date *',
                 hint: 'Select the date',
@@ -251,7 +229,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      selectedclass == null
+                      date == null
                           ? 'No class selected'
                           : "${date?.formattedDay2()} ${selectedclass?.startTime.toAmPM()} - ${selectedclass?.endTime.toAmPM()}",
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(),
