@@ -41,30 +41,21 @@ class _EditClassLinkState extends State<EditClassLink> {
       ),
       body: BlocListener<BatchCubit, BatchState>(
         listener: (context, state) {
-          if (state is AddingLink) {
+          if (state is UpdatingLink) {
             Loader(context).show();
-          } else if (state is AddedLink) {
+          } else if (state is UpdatedLink) {
             Navigator.pop(context);
-            batchCubit.getClassLink(batch?.id, DateTime.now());
-            Alert(context).show(message: 'Class link added');
+            Navigator.pop(context);
+            batchCubit.getClassLink(batchCubit.tempClass?.batchId,
+                batchCubit.tempClass?.classDate ?? DateTime.now());
+            Alert(context).show(message: 'Class link updated');
             formKey.currentState?.reset();
-            batchController.clear();
             dateController.clear();
             date = null;
             setState(() {});
-          } else if (state is AddLinkFailed) {
+          } else if (state is UpdateLinkFailed) {
             Navigator.pop(context);
             Alert(context).show(message: state.message);
-          } else if (state is FetchingLinks || state is RemovingLink) {
-            Loader(context).show();
-          } else if (state is RemovedLink) {
-            Navigator.pop(context);
-            Alert(context).show(message: 'Online Class Deleted');
-            batchCubit.getClassLink(batch?.id, DateTime.now());
-          } else if (state is RemoveLinkFailed) {
-            Alert(context).show(message: state.message);
-          } else if (state is FetchedLinks) {
-            Navigator.pop(context);
           }
         },
         child: Form(
@@ -332,8 +323,9 @@ class _EditClassLinkState extends State<EditClassLink> {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
 
-                      batchCubit.addClassLink(
-                          batch?.id ?? batchCubit.tempClass?.batchId, {
+                      batchCubit.updateClassLink(
+                          batch?.id ?? batchCubit.tempClass?.batchId,
+                          batchCubit.tempClass?.id, {
                         'class_date': date?.toServerYMD() ??
                             batchCubit.tempClass?.classDate?.toServerYMD(),
                         'link': classLink ?? batchCubit.tempClass?.link,

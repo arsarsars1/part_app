@@ -450,6 +450,23 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future updateClassLink(
+      int? batchId, int? classId, Map<String, dynamic> data) async {
+    try {
+      emit(UpdatingLink());
+      Common? response =
+          await _batchService.updateClassLink(batchId, classId, data);
+
+      if (response?.status == 1) {
+        emit(UpdatedLink());
+      } else {
+        emit(UpdateLinkFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future getClassLink(int? batchId, DateTime dateTime) async {
     emit(FetchingLinks());
     _classLinks = [];
