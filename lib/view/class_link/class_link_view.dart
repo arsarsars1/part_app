@@ -205,6 +205,10 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 title: 'Date *',
                 hint: 'Select the date',
                 onSelect: (String value) {
+                  if (branchId == null || batch?.id == null) {
+                    Alert(context).show(message: 'Branch or Batch is missing');
+                    return;
+                  }
                   date = DateTime.parse(value);
                   // startDate = value;
                   setState(() {
@@ -217,7 +221,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                     (context) => ClassPicker(
                       branchId: batch?.branchId,
                       batchId: batch?.id,
-                      date: date?.toDDMMYYY(),
+                      date: date?.toServerYMD(),
                       scaffoldKey: scaffoldKey,
                       onSave: (ClassModel value) {
                         setState(() {
@@ -247,7 +251,9 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      date == null ? 'No class selected' : getBatchTime(date!),
+                      selectedclass == null
+                          ? 'No class selected'
+                          : "${date?.formattedDay2()} ${selectedclass?.startTime.toAmPM()} - ${selectedclass?.endTime.toAmPM()}",
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(),
                     ),
                     if (date != null)
@@ -260,7 +266,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                             (context) => ClassPicker(
                               branchId: batch?.branchId,
                               batchId: batch?.id,
-                              date: date?.toDDMMYYY(),
+                              date: date?.toServerYMD(),
                               scaffoldKey: scaffoldKey,
                               onSave: (ClassModel value) {
                                 setState(() {
@@ -510,13 +516,13 @@ class _ClassLinkViewState extends State<ClassLinkView> {
     );
   }
 
-  String getBatchTime(DateTime date) {
-    String day = date.toDay().substring(0, 3);
+  // String getBatchTime(DateTime date) {
+  //   String day = date.toDay().substring(0, 3);
 
-    String? str = batch?.days
-        .firstWhere((element) => element.contains(day), orElse: () => '');
-    return str ?? '-';
-  }
+  //   String? str = batch?.days
+  //       .firstWhere((element) => element.contains(day), orElse: () => '');
+  //   return str ?? '-';
+  // }
 
   // method to get the date for [ class ]
   void datePicker() {
