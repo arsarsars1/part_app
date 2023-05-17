@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/attendance_monthly_record.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/attendance/attendance_batch_list.dart';
 import 'package:part_app/view/attendance/components/attendance_student_item.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
@@ -75,7 +76,7 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                         child: Button(
                           height: 30.h,
                           onTap: () {
-                            // Navigator.pushNamed(context, AddStudent.route);
+                            Navigator.pushNamed(context, AttendancePage.route);
                           },
                           title: 'Update Attendance',
                         ),
@@ -221,7 +222,7 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                                 child: Center(
                                   child: Text(
                                     query == null
-                                        ? 'Add a student to get started'
+                                        ? 'Sorry, No matching results found'
                                         : state is StudentsAttendanceFetched
                                             ? 'Sorry, No matching results found'
                                             : 'Select a batch to list the students.',
@@ -230,14 +231,20 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                               )
                             : Column(
                                 children: [
-                                  Text(
-                                    'Total Classes Taken: ${cubit.conductedClassCount}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline3
-                                        ?.copyWith(
-                                          color: AppColors.textColor,
-                                        ),
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 16.0),
+                                      child: Text(
+                                        'Total Classes Taken: ${cubit.conductedClassCount}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline3
+                                            ?.copyWith(
+                                              color: AppColors.textColor,
+                                            ),
+                                      ),
+                                    ),
                                   ),
                                   ListView.builder(
                                     shrinkWrap: true,
