@@ -233,7 +233,6 @@ class _EditClassLinkState extends State<EditClassLink> {
                 height: 20,
               ),
               batchCubit.tempClass?.classDate != null &&
-                      date == null &&
                       branchChange == false &&
                       batchChange == false
                   ? Column(
@@ -261,14 +260,45 @@ class _EditClassLinkState extends State<EditClassLink> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '${batchCubit.tempClass?.classDate?.toDateString()}',
+                                '${date?.toDateString() ?? batchCubit.tempClass?.classDate?.toDateString()}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
                                     ?.copyWith(),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  datePicker().then((value) {
+                                    date = DateTime.parse(value ?? "");
+                                    dateController.text =
+                                        date?.toDateString() ?? "";
+                                    setState(() {
+                                      selectedclass = null;
+                                      dateChange = true;
+                                    });
+                                    scaffoldKey.currentState?.showBottomSheet(
+                                      enableDrag: false,
+                                      elevation: 10,
+                                      backgroundColor: Colors.transparent,
+                                      (context) => ClassPicker(
+                                        branchId: batch?.branchId,
+                                        batchId: batch?.id ??
+                                            batchCubit.tempClass?.batchId,
+                                        date: date?.toServerYMD() ??
+                                            batchCubit.tempClass?.classDate
+                                                ?.toServerYMD(),
+                                        scaffoldKey: scaffoldKey,
+                                        onSave: (ClassModel value) {
+                                          setState(() {
+                                            // dateController.text =
+                                            //     date?.toDDMMYYY() ?? "";
+                                            selectedclass = value;
+                                          });
+                                        },
+                                      ),
+                                    );
+                                  });
+                                },
                                 child: const Icon(
                                   Icons.calendar_month,
                                   size: 24,
@@ -283,13 +313,14 @@ class _EditClassLinkState extends State<EditClassLink> {
                   : ScheduleField(
                       title: 'Date *',
                       hint: 'Select the date',
-                      padding: 16,
-                      margin: 25,
+                      // padding: 16,
+                      // margin: 25,
                       onSelect: (String value) {
                         date = DateTime.parse(value);
                         dateController.text = date?.toDateString() ?? "";
                         setState(() {
                           selectedclass = null;
+                          dateChange = true;
                         });
                         scaffoldKey.currentState?.showBottomSheet(
                           enableDrag: false,
@@ -297,8 +328,9 @@ class _EditClassLinkState extends State<EditClassLink> {
                           backgroundColor: Colors.transparent,
                           (context) => ClassPicker(
                             branchId: batch?.branchId,
-                            batchId: batch?.id,
-                            date: date?.toServerYMD(),
+                            batchId: batch?.id ?? batchCubit.tempClass?.batchId,
+                            date:
+                                batchCubit.tempClass?.classDate?.toServerYMD(),
                             scaffoldKey: scaffoldKey,
                             onSave: (ClassModel value) {
                               setState(() {
@@ -319,7 +351,8 @@ class _EditClassLinkState extends State<EditClassLink> {
               ),
               branchChange == false &&
                       batchChange == false &&
-                      dateChange == false
+                      dateChange == false &&
+                      selectedclass == null
                   ? Container(
                       decoration: BoxDecoration(
                         color: AppColors.liteDark,
@@ -381,7 +414,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            date == null
+                            date == null || selectedclass == null
                                 ? 'No class selected'
                                 : "${date?.formattedDay2()} ${selectedclass?.startTime.toAmPM()} - ${selectedclass?.endTime.toAmPM()}",
                             style: Theme.of(context)
@@ -389,7 +422,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                                 .bodyText1
                                 ?.copyWith(),
                           ),
-                          if (date != null)
+                          if (date != null && selectedclass != null)
                             GestureDetector(
                               onTap: () {
                                 scaffoldKey.currentState?.showBottomSheet(
@@ -452,59 +485,47 @@ class _EditClassLinkState extends State<EditClassLink> {
     );
   }
 
-  String getBatchTime(DateTime date) {
-    String day = date.toDay().substring(0, 3);
+  // method to get the date for [ dob ]
+  Future<String?> datePicker() async {
+    DateTime? dateTime = await showDatePicker(
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              onPrimary: Colors.white,
+              onSurface: Colors.white, // default text color
+              primary: AppColors.primaryColor, // circle color
+            ),
+            dialogBackgroundColor: AppColors.liteDark,
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                textStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(
+        DateTime.now().year + 100,
+      ),
+    );
 
-    String? str = batch?.days
-        .firstWhere((element) => element.contains(day), orElse: () => '');
-    return str ?? '-';
+    if (dateTime != null) {
+      return dateTime.toServerYMD();
+    }
+    return null;
+    // return widget.dateMonth ? dateTime?.toMMMMYYYY() : dateTime?.toDateString();
   }
-
-  // method to get the date for [ class ]
-  // void datePicker() {
-  //   showDatePicker(
-  //     builder: (context, child) {
-  //       return Theme(
-  //         data: ThemeData.dark().copyWith(
-  //           colorScheme: ColorScheme.dark(
-  //             onPrimary: Colors.white,
-  //             onSurface: Colors.white, // default text color
-  //             primary: AppColors.primaryColor, // circle color
-  //           ),
-  //           dialogBackgroundColor: AppColors.liteDark,
-  //           textButtonTheme: TextButtonThemeData(
-  //             style: TextButton.styleFrom(
-  //               textStyle: TextStyle(
-  //                 color: AppColors.primaryColor,
-  //                 fontWeight: FontWeight.normal,
-  //                 fontSize: 12,
-  //               ),
-  //               shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(5),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //         child: child!,
-  //       );
-  //     },
-  //     context: context,
-  //     initialDate: DateTime.now(),
-  //     firstDate: DateTime(1900),
-  //     lastDate: DateTime(
-  //         DateTime.now().year, DateTime.now().month + 3, DateTime.now().day),
-  //   ).then((value) {
-  //     if (value != null) {
-  //       if (!batchDays!.contains(value.formattedDay2())) {
-  //         Alert(context).show(
-  //           message: 'Selected batch does not have class on selected date',
-  //         );
-  //         return;
-  //       }
-  //       date = value;
-  //       dateController.text = value.toDateString();
-  //       setState(() {});
-  //     }
-  //   });
-  // }
 }
