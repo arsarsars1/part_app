@@ -35,4 +35,41 @@ class AlertBox {
       },
     );
   }
+
+  static void showConfirmation(BuildContext context,
+      {String? message = "",
+      String? subMessage,
+      VoidCallback? onTap,
+      VoidCallback? onCancelTap,
+      Color? subColor,
+      String? buttonText,
+      bool? hasClose,
+      Widget? subContent}) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: AppColors.liteDark,
+          contentPadding: EdgeInsets.zero,
+          content: Logout(
+            subColor: subColor,
+            message: message ?? "",
+            subMessage: subMessage,
+            hasClose: hasClose,
+            onCancelTap: onCancelTap ??
+                () {
+                  Navigator.pop(context);
+                },
+            onTap: onTap ??
+                () {
+                  exit(0);
+                },
+            buttonText: buttonText,
+            subContent: subContent,
+          ),
+        );
+      },
+    );
+  }
 }

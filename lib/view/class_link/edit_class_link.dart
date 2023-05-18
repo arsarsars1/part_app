@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/class_picker.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
+import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
@@ -21,23 +23,27 @@ class EditClassLink extends StatefulWidget {
 class _EditClassLinkState extends State<EditClassLink> {
   int? branchId;
   BatchModel? batch;
+  int? batchId;
   DateTime? date;
   String? classLink;
   List<String>? batchDays = [];
   ClassModel? selectedclass;
-  bool branchChange = false,
-      batchChange = false,
-      dateChange = false,
-      classChange = false;
+  late BatchCubit batchCubit;
+  ClassLink? tempClass;
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    batchCubit = context.read<BatchCubit>();
+    tempClass = batchCubit.tempClass;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var batchCubit = context.read<BatchCubit>();
     return Scaffold(
       key: scaffoldKey,
       appBar: CommonBar(
@@ -54,8 +60,8 @@ class _EditClassLinkState extends State<EditClassLink> {
           } else if (state is UpdatedLink) {
             Navigator.pop(context);
             Navigator.pop(context);
-            batchCubit.getClassLink(batchCubit.tempClass?.batchId,
-                batchCubit.tempClass?.classDate ?? DateTime.now());
+            batchCubit.getClassLink(
+                tempClass?.batchId, tempClass?.classDate ?? DateTime.now());
             Alert(context).show(message: 'Class link updated');
             formKey.currentState?.reset();
             dateController.clear();
@@ -76,7 +82,7 @@ class _EditClassLinkState extends State<EditClassLink> {
               CommonField(
                 title: 'Online Class Link *',
                 hint: 'Enter the class link',
-                initialValue: batchCubit.tempClass?.link,
+                initialValue: tempClass?.link,
                 onChange: (value) {
                   classLink = value;
                 },
@@ -99,40 +105,14 @@ class _EditClassLinkState extends State<EditClassLink> {
               SizedBox(
                 height: 20.h,
               ),
-              BranchField(
-                initialBranch: (context
-                        .read<BranchCubit>()
-                        .branches
-                        .where((element) =>
-                            element.branchName ==
-                            batchCubit.tempClass?.branchName)
-                        .toList())[0]
-                    .id,
-                onSelect: (value) {
-                  setState(() {
-                    branchId = value;
-                    branchChange = true;
-                  });
-                  batchCubit.getBatchesByStatus(
-                    branchId: branchId,
-                    clean: true,
-                    branchSearch: true,
-                  );
-                },
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              batchCubit.tempClass?.batchName != null &&
-                      batch == null &&
-                      branchChange == false
+              tempClass != null
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: 16.w),
                           child: Text(
-                            'Batch*',
+                            'Branch *',
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
@@ -151,7 +131,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '${batchCubit.tempClass?.batchName}',
+                                '${tempClass?.branchName}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -159,34 +139,135 @@ class _EditClassLinkState extends State<EditClassLink> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  batchDays?.clear();
-
-                                  scaffoldKey.currentState?.showBottomSheet(
-                                    backgroundColor: Colors.transparent,
-                                    (context) => BatchPicker(
-                                      branchId:
-                                          batchCubit.tempClass?.batchId ?? 0,
-                                      status: '',
-                                      branchSearch: true,
-                                      onSelect: (value) {
-                                        batch = value;
-                                        batchController.text = value.name;
-                                        batchChange = true;
-                                        for (var element in batch!.days) {
-                                          batchDays?.add(element.split(" ")[0]);
-                                        }
-                                        // batchCubit.getClassLink(batch?.id, DateTime.now());
-                                        batchCubit.getClassLink(
-                                            batch?.id,
-                                            batchCubit.tempClass?.classDate ??
-                                                DateTime.now());
-                                        setState(() {});
-                                      },
-                                    ),
+                                  AlertBox.showConfirmation(
+                                    message:
+                                        'Are your sure, that you need to change the branch',
+                                    subMessage:
+                                        'Note: Please be aware that when you change the branch, the underlying batch, date and selected class will be also cleared',
+                                    buttonText: 'OK',
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      setState(() {
+                                        tempClass = null;
+                                      });
+                                    },
+                                    hasClose: true,
+                                    context,
                                   );
                                 },
                                 child: const Icon(
-                                  Icons.arrow_drop_down,
+                                  Icons.edit,
+                                  size: 24,
+                                  color: Colors.white24,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : BranchField(
+                      initialBranch: branchId,
+                      onSelect: (value) {
+                        if (branchId != null) {
+                          AlertBox.showConfirmation(
+                            message:
+                                'Are your sure, that you need to change the branch',
+                            subMessage:
+                                'Note: Please be aware that when you change the branch, the underlying batch, date and selected class will be also cleared',
+                            buttonText: 'OK',
+                            onTap: () {
+                              Navigator.pop(context);
+                              setState(() {
+                                batch = null;
+                                batchController.text = "";
+                                dateController.text = "";
+                                selectedclass = null;
+                              });
+                            },
+                            hasClose: true,
+                            context,
+                          );
+                        }
+                        setState(() {
+                          branchId = value;
+                        });
+                        batchCubit.getBatchesByStatus(
+                          branchId: branchId,
+                          clean: true,
+                          branchSearch: true,
+                        );
+                      },
+                    ),
+              SizedBox(
+                height: 20.h,
+              ),
+              tempClass != null
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 16.w),
+                          child: Text(
+                            'Batch *',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          height: 60.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.liteDark,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 25.w),
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '${tempClass?.batchName}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  AlertBox.showConfirmation(
+                                    message:
+                                        'Are your sure, that you need to change the batch',
+                                    subMessage:
+                                        'Note: Please be aware that when you change the batch, the underlying date and selected class will be also cleared',
+                                    buttonText: 'OK',
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      setState(() {
+                                        branchId = (context
+                                                .read<BranchCubit>()
+                                                .branches
+                                                .where((element) =>
+                                                    element.branchName ==
+                                                    batchCubit
+                                                        .tempClass?.branchName)
+                                                .toList())[0]
+                                            .id;
+                                        tempClass = null;
+                                      });
+                                      batchCubit.getBatchesByStatus(
+                                        branchId: branchId,
+                                        clean: true,
+                                        branchSearch: true,
+                                      );
+                                    },
+                                    hasClose: true,
+                                    context,
+                                  );
+                                },
+                                child: const Icon(
+                                  Icons.edit,
                                   size: 24,
                                   color: Colors.white24,
                                 ),
@@ -210,7 +291,6 @@ class _EditClassLinkState extends State<EditClassLink> {
                             onSelect: (value) {
                               batch = value;
                               batchController.text = value.name;
-                              batchChange = true;
                               for (var element in batch!.days) {
                                 batchDays?.add(element.split(" ")[0]);
                               }
@@ -238,16 +318,14 @@ class _EditClassLinkState extends State<EditClassLink> {
               const SizedBox(
                 height: 20,
               ),
-              batchCubit.tempClass?.classDate != null &&
-                      branchChange == false &&
-                      batchChange == false
+              tempClass != null
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: 16.w),
                           child: Text(
-                            'Date*',
+                            'Date *',
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
@@ -266,7 +344,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '${date?.toDateString() ?? batchCubit.tempClass?.classDate?.toDateString()}',
+                                '${date?.toDateString() ?? tempClass?.classDate?.toDateString()}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -274,39 +352,69 @@ class _EditClassLinkState extends State<EditClassLink> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  datePicker().then((value) {
-                                    date = DateTime.parse(value ?? "");
-                                    dateController.text =
-                                        date?.toDateString() ?? "";
-                                    setState(() {
-                                      selectedclass = null;
-                                      dateChange = true;
-                                    });
-                                    scaffoldKey.currentState?.showBottomSheet(
-                                      enableDrag: false,
-                                      elevation: 10,
-                                      backgroundColor: Colors.transparent,
-                                      (context) => ClassPicker(
-                                        branchId: batch?.branchId,
-                                        batchId: batch?.id ??
-                                            batchCubit.tempClass?.batchId,
-                                        date: date?.toServerYMD() ??
-                                            batchCubit.tempClass?.classDate
-                                                ?.toServerYMD(),
-                                        scaffoldKey: scaffoldKey,
-                                        onSave: (ClassModel value) {
-                                          setState(() {
-                                            // dateController.text =
-                                            //     date?.toDDMMYYY() ?? "";
-                                            selectedclass = value;
-                                          });
-                                        },
-                                      ),
-                                    );
-                                  });
+                                  AlertBox.showConfirmation(
+                                    message:
+                                        'Are your sure, that you need to change the date',
+                                    subMessage:
+                                        'Note: Please be aware that when you change the date, the underlying selected class will be also cleared',
+                                    buttonText: 'OK',
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      setState(() {
+                                        branchId = (context
+                                                .read<BranchCubit>()
+                                                .branches
+                                                .where((element) =>
+                                                    element.branchName ==
+                                                    batchCubit
+                                                        .tempClass?.branchName)
+                                                .toList())[0]
+                                            .id;
+                                        batchController.text =
+                                            tempClass?.batchName ?? "";
+                                        batchId = tempClass?.batchId;
+                                        tempClass = null;
+                                      });
+                                      batchCubit.getBatchesByStatus(
+                                        branchId: branchId,
+                                        clean: true,
+                                        branchSearch: true,
+                                      );
+                                    },
+                                    hasClose: true,
+                                    context,
+                                  );
+                                  // datePicker().then((value) {
+                                  //   date = DateTime.parse(value ?? "");
+                                  //   dateController.text =
+                                  //       date?.toDateString() ?? "";
+                                  //   setState(() {
+                                  //     selectedclass = null;
+                                  //   });
+                                  //   scaffoldKey.currentState?.showBottomSheet(
+                                  //     enableDrag: false,
+                                  //     elevation: 10,
+                                  //     backgroundColor: Colors.transparent,
+                                  //     (context) => ClassPicker(
+                                  //       branchId: batch?.branchId,
+                                  //       batchId:
+                                  //           batch?.id ?? tempClass?.batchId,
+                                  //       date: date?.toServerYMD() ??
+                                  //           tempClass?.classDate?.toServerYMD(),
+                                  //       scaffoldKey: scaffoldKey,
+                                  //       onSave: (ClassModel value) {
+                                  //         setState(() {
+                                  //           // dateController.text =
+                                  //           //     date?.toDDMMYYY() ?? "";
+                                  //           selectedclass = value;
+                                  //         });
+                                  //       },
+                                  //     ),
+                                  //   );
+                                  // });
                                 },
                                 child: const Icon(
-                                  Icons.calendar_month,
+                                  Icons.edit,
                                   size: 24,
                                   color: Colors.white24,
                                 ),
@@ -326,7 +434,6 @@ class _EditClassLinkState extends State<EditClassLink> {
                         dateController.text = date?.toDateString() ?? "";
                         setState(() {
                           selectedclass = null;
-                          dateChange = true;
                         });
                         scaffoldKey.currentState?.showBottomSheet(
                           enableDrag: false,
@@ -334,9 +441,9 @@ class _EditClassLinkState extends State<EditClassLink> {
                           backgroundColor: Colors.transparent,
                           (context) => ClassPicker(
                             branchId: batch?.branchId,
-                            batchId: batch?.id ?? batchCubit.tempClass?.batchId,
-                            date:
-                                batchCubit.tempClass?.classDate?.toServerYMD(),
+                            batchId: batch?.id ?? tempClass?.batchId ?? batchId,
+                            date: date?.toServerYMD() ??
+                                tempClass?.classDate?.toServerYMD(),
                             scaffoldKey: scaffoldKey,
                             onSave: (ClassModel value) {
                               setState(() {
@@ -355,10 +462,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                   child: Text('Selected Class'),
                 ),
               ),
-              branchChange == false &&
-                      batchChange == false &&
-                      dateChange == false &&
-                      selectedclass == null
+              tempClass == null && selectedclass == null
                   ? Container(
                       decoration: BoxDecoration(
                         color: AppColors.liteDark,
@@ -370,42 +474,12 @@ class _EditClassLinkState extends State<EditClassLink> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            batchCubit.tempClass?.classDate == null
-                                ? 'No class selected'
-                                : '${batchCubit.tempClass?.classDate?.formattedDay2()} ${batchCubit.tempClass?.startTime?.toAmPM()} - ${batchCubit.tempClass?.endTime?.toAmPM()}',
+                            'No class selected',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(),
                           ),
-                          if (batchCubit.tempClass?.classDate != null)
-                            GestureDetector(
-                              onTap: () {
-                                scaffoldKey.currentState?.showBottomSheet(
-                                  enableDrag: false,
-                                  elevation: 10,
-                                  backgroundColor: Colors.transparent,
-                                  (context) => ClassPicker(
-                                    branchId: batch?.branchId,
-                                    batchId: batch?.id ??
-                                        batchCubit.tempClass?.batchId,
-                                    date: batchCubit.tempClass?.classDate
-                                        ?.toServerYMD(),
-                                    scaffoldKey: scaffoldKey,
-                                    onSave: (ClassModel value) {
-                                      setState(() {
-                                        selectedclass = value;
-                                      });
-                                    },
-                                  ),
-                                );
-                              },
-                              child: const Icon(
-                                Icons.edit,
-                                size: 24,
-                                color: Colors.white24,
-                              ),
-                            )
                         ],
                       ),
                     )
@@ -420,41 +494,40 @@ class _EditClassLinkState extends State<EditClassLink> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            date == null || selectedclass == null
-                                ? 'No class selected'
-                                : "${date?.formattedDay2()} ${selectedclass?.startTime.toAmPM()} - ${selectedclass?.endTime.toAmPM()}",
+                            "${date?.formattedDay2() ?? tempClass?.classDate?.formattedDay2()} ${selectedclass?.startTime.toAmPM() ?? tempClass?.startTime?.toAmPM()} - ${selectedclass?.endTime.toAmPM() ?? tempClass?.endTime?.toAmPM()}",
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(),
                           ),
-                          if (date != null && selectedclass != null)
-                            GestureDetector(
-                              onTap: () {
-                                scaffoldKey.currentState?.showBottomSheet(
-                                  enableDrag: false,
-                                  elevation: 10,
-                                  backgroundColor: Colors.transparent,
-                                  (context) => ClassPicker(
-                                    branchId: batch?.branchId,
-                                    batchId: batch?.id ??
-                                        batchCubit.tempClass?.batchId,
-                                    date: date?.toServerYMD(),
-                                    scaffoldKey: scaffoldKey,
-                                    onSave: (ClassModel value) {
-                                      setState(() {
-                                        selectedclass = value;
-                                      });
-                                    },
-                                  ),
-                                );
-                              },
-                              child: const Icon(
-                                Icons.edit,
-                                size: 24,
-                                color: Colors.white24,
-                              ),
-                            )
+                          GestureDetector(
+                            onTap: () {
+                              scaffoldKey.currentState?.showBottomSheet(
+                                enableDrag: false,
+                                elevation: 10,
+                                backgroundColor: Colors.transparent,
+                                (context) => ClassPicker(
+                                  branchId: batch?.branchId,
+                                  batchId: batch?.id ??
+                                      tempClass?.batchId ??
+                                      selectedclass?.batchId,
+                                  date: date?.toServerYMD() ??
+                                      tempClass?.classDate?.toServerYMD(),
+                                  scaffoldKey: scaffoldKey,
+                                  onSave: (ClassModel value) {
+                                    setState(() {
+                                      selectedclass = value;
+                                    });
+                                  },
+                                ),
+                              );
+                            },
+                            child: const Icon(
+                              Icons.edit,
+                              size: 24,
+                              color: Colors.white24,
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -466,26 +539,25 @@ class _EditClassLinkState extends State<EditClassLink> {
                       formKey.currentState!.save();
 
                       batchCubit.updateClassLink(
-                          batch?.id ?? batchCubit.tempClass?.batchId,
+                          batch?.id ?? tempClass?.batchId,
                           batchCubit.tempClass?.id, {
                         'class_date': date?.toServerYMD() ??
-                            batchCubit.tempClass?.classDate?.toServerYMD(),
-                        'link': (classLink ?? batchCubit.tempClass?.link)
+                            tempClass?.classDate?.toServerYMD(),
+                        'link': (classLink ?? tempClass?.link)
                                     ?.contains("https://") ??
                                 false
-                            ? classLink ?? batchCubit.tempClass?.link
-                            : "https://${classLink ?? batchCubit.tempClass?.link}",
-                        'service': Uri.parse((classLink ??
-                                            batchCubit.tempClass?.link)
+                            ? classLink ?? tempClass?.link
+                            : "https://${classLink ?? tempClass?.link}",
+                        'service': Uri.parse((classLink ?? tempClass?.link)
                                         ?.contains("https://") ??
                                     false
-                                ? classLink ?? batchCubit.tempClass?.link ?? ""
-                                : "https://${classLink ?? batchCubit.tempClass?.link ?? ""}")
+                                ? classLink ?? tempClass?.link ?? ""
+                                : "https://${classLink ?? tempClass?.link ?? ""}")
                             .host,
                         'start_time': batch?.batchDetail?[0].startTime ??
-                            batchCubit.tempClass?.startTime,
-                        'end_time': batch?.batchDetail?[0].endTime ??
-                            batchCubit.tempClass?.endTime
+                            tempClass?.startTime,
+                        'end_time':
+                            batch?.batchDetail?[0].endTime ?? tempClass?.endTime
                       });
                     }
                   },
