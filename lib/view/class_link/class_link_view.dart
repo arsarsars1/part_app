@@ -106,7 +106,13 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 },
                 capitalization: TextCapitalization.none,
                 validator: (value) {
-                  bool validUrl = Uri.parse(value).isAbsolute;
+                  bool validUrl;
+                  if (value.contains("https://")) {
+                    validUrl = Uri.parse(value).isAbsolute;
+                  } else {
+                    value = "https://$value";
+                    validUrl = Uri.parse(value).isAbsolute;
+                  }
 
                   return !validUrl ? 'Please enter a valid class link.' : null;
                 },
@@ -188,7 +194,6 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                     return;
                   }
                   date = DateTime.parse(value);
-                  // startDate = value;
                   setState(() {
                     selectedclass = null;
                   });
@@ -229,12 +234,12 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      date == null
+                      selectedclass == null
                           ? 'No class selected'
                           : "${date?.formattedDay2()} ${selectedclass?.startTime.toAmPM()} - ${selectedclass?.endTime.toAmPM()}",
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(),
                     ),
-                    if (date != null)
+                    if (selectedclass != null)
                       GestureDetector(
                         onTap: () {
                           scaffoldKey.currentState?.showBottomSheet(
