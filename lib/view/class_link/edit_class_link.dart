@@ -82,7 +82,13 @@ class _EditClassLinkState extends State<EditClassLink> {
                 },
                 capitalization: TextCapitalization.none,
                 validator: (value) {
-                  bool validUrl = Uri.parse(value).isAbsolute;
+                  bool validUrl;
+                  if (value.contains("https://")) {
+                    validUrl = Uri.parse(value).isAbsolute;
+                  } else {
+                    value = "https://$value";
+                    validUrl = Uri.parse(value).isAbsolute;
+                  }
 
                   return !validUrl ? 'Please enter a valid class link.' : null;
                 },
@@ -464,9 +470,17 @@ class _EditClassLinkState extends State<EditClassLink> {
                           batchCubit.tempClass?.id, {
                         'class_date': date?.toServerYMD() ??
                             batchCubit.tempClass?.classDate?.toServerYMD(),
-                        'link': classLink ?? batchCubit.tempClass?.link,
-                        'service': Uri.parse(
-                                classLink ?? batchCubit.tempClass?.link ?? "")
+                        'link': (classLink ?? batchCubit.tempClass?.link)
+                                    ?.contains("https://") ??
+                                false
+                            ? classLink ?? batchCubit.tempClass?.link
+                            : "https://${classLink ?? batchCubit.tempClass?.link}",
+                        'service': Uri.parse((classLink ??
+                                            batchCubit.tempClass?.link)
+                                        ?.contains("https://") ??
+                                    false
+                                ? classLink ?? batchCubit.tempClass?.link ?? ""
+                                : "https://${classLink ?? batchCubit.tempClass?.link ?? ""}")
                             .host,
                         'start_time': batch?.batchDetail?[0].startTime ??
                             batchCubit.tempClass?.startTime,

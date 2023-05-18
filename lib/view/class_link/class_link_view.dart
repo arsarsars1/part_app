@@ -280,8 +280,14 @@ class _ClassLinkViewState extends State<ClassLinkView> {
 
                       batchCubit.addClassLink(batch?.id, {
                         'class_date': date?.toServerYMD(),
-                        'link': classLink,
-                        'service': Uri.parse(classLink!).host,
+                        'link': classLink?.contains("https://") ?? false
+                            ? classLink
+                            : "https://$classLink",
+                        'service': Uri.parse(
+                                classLink?.contains("https://") ?? false
+                                    ? classLink ?? ""
+                                    : "https://${classLink ?? ""}")
+                            .host,
                         'start_time': batch?.batchDetail?[0].startTime,
                         'end_time': batch?.batchDetail?[0].endTime
                       });
