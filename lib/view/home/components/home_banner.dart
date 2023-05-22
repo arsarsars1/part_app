@@ -15,7 +15,8 @@ class HomeBanner extends StatefulWidget {
 }
 
 class _HomeBannerState extends State<HomeBanner> {
-  PageController controller = PageController();
+  PageController bannerPageController = PageController();
+  bool _isUserHoldingPage = false;
   int currentPage = 0;
   int scrollLimit = 0;
   int? adminAcademyTypeId;
@@ -60,129 +61,144 @@ class _HomeBannerState extends State<HomeBanner> {
           startTimer();
         }
         return activeBanners.isNotEmpty
-            ? Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 2,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
+            ? GestureDetector(
+                onLongPressStart: (_) {
+                  setState(() {
+                    _isUserHoldingPage = true;
+                    stopTimer();
+                  });
+                },
+                onLongPressEnd: (_) {
+                  setState(() {
+                    _isUserHoldingPage = false;
+                    startTimer();
+                  });
+                },
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        height: 2,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: activeBanners.length,
+                          itemBuilder: (context, index) {
+                            bool selected = index == currentPage;
+                            return Container(
+                              height: 2,
+                              width: 15,
+                              margin: const EdgeInsets.symmetric(horizontal: 4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                color: selected
+                                    ? Colors.white
+                                    : const Color(
+                                        0xFF8B8B8B,
+                                      ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 141.h,
+                      child: PageView.builder(
+                        controller: bannerPageController,
+                        onPageChanged: (int pageIndex) {
+                          setState(() {
+                            isButtonVisible =
+                                tempBanner!.extUrl!.isEmpty ? false : true;
+                            fromTime = tempBanner!.startTime;
+                            toTime = tempBanner!.endTime;
+                            formattedString = toTime.formattedString();
+                            currentPage = pageIndex;
+                          });
+                        },
                         itemCount: activeBanners.length,
                         itemBuilder: (context, index) {
-                          bool selected = index == currentPage;
+                          var banner = activeBanners[index];
+                          tempBanner = banner;
                           return Container(
-                            height: 2,
-                            width: 15,
-                            margin: const EdgeInsets.symmetric(horizontal: 4),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
-                              color: selected
-                                  ? Colors.white
-                                  : const Color(
-                                      0xFF8B8B8B,
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(banner!.imageUrl!),
+                              ),
+                            ),
+                            child: Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          5,
+                                        ),
+                                        color: Colors.black.withOpacity(
+                                          0.44,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            banner.description ?? '',
+                                          ),
+                                          Text(
+                                            '${fromTime.toTime()} '
+                                            'To ${toTime.toTime()}, '
+                                            '${formattedString}',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                ?.copyWith(
+                                                  fontSize: 10,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
+                                    if (isButtonVisible)
+                                      Button(
+                                        backgroundColor: AppColors.defaultBlue,
+                                        height: 22.h,
+                                        width: 97.w,
+                                        fontSize: 10.sp,
+                                        onTap: () async {
+                                          var url = banner.extUrl!.isEmpty
+                                              ? 'https://partapp.in/'
+                                              : banner.extUrl!;
+                                          final uri = Uri.parse(url);
+                                          if (await canLaunchUrl(uri)) {
+                                            await launchUrl(uri);
+                                          } else {
+                                            throw 'Could not launch $url';
+                                          }
+                                        },
+                                        title: banner.extUrlButtonText!.isEmpty
+                                            ? 'Register Now'
+                                            : banner.extUrlButtonText!,
+                                      ),
+                                  ],
+                                ),
+                              ),
                             ),
                           );
                         },
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 141.h,
-                    child: PageView.builder(
-                      controller: controller,
-                      onPageChanged: (int pageIndex) {
-                        setState(() {
-                          isButtonVisible =
-                              tempBanner!.extUrl!.isEmpty ? false : true;
-                          fromTime = tempBanner!.startTime;
-                          toTime = tempBanner!.endTime;
-                          formattedString = toTime.formattedString();
-                        });
-                      },
-                      itemCount: activeBanners.length,
-                      itemBuilder: (context, index) {
-                        var banner = activeBanners[index];
-                        tempBanner = banner;
-                        return Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(banner!.imageUrl!),
-                            ),
-                          ),
-                          child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(4),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                        5,
-                                      ),
-                                      color: Colors.black.withOpacity(
-                                        0.44,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          banner.description ?? '',
-                                        ),
-                                        Text(
-                                          '${fromTime.toTime()} '
-                                          'To ${toTime.toTime()}, '
-                                          '${formattedString}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1
-                                              ?.copyWith(
-                                                fontSize: 10,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  if (isButtonVisible)
-                                    Button(
-                                      backgroundColor: AppColors.defaultBlue,
-                                      height: 22.h,
-                                      width: 97.w,
-                                      fontSize: 10.sp,
-                                      onTap: () async {
-                                        var url = banner.extUrl!.isEmpty
-                                            ? 'https://partapp.in/'
-                                            : banner.extUrl!;
-                                        final uri = Uri.parse(url);
-                                        if (await canLaunchUrl(uri)) {
-                                          await launchUrl(uri);
-                                        } else {
-                                          throw 'Could not launch $url';
-                                        }
-                                      },
-                                      title: banner.extUrlButtonText!.isEmpty
-                                          ? 'Register Now'
-                                          : banner.extUrlButtonText!,
-                                    ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               )
             : const Offstage();
       },
@@ -190,14 +206,21 @@ class _HomeBannerState extends State<HomeBanner> {
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
-      if (currentPage < scrollLimit) {
-        currentPage++;
-      } else {
-        currentPage = 0;
+    timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if (!_isUserHoldingPage) {
+        if (currentPage < scrollLimit) {
+          currentPage++;
+        } else {
+          currentPage = 0;
+        }
+        bannerPageController.animateToPage(currentPage,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut);
       }
-      controller.animateToPage(currentPage,
-          duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
     });
+  }
+
+  void stopTimer() {
+    timer?.cancel();
   }
 }
