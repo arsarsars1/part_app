@@ -229,7 +229,12 @@ class _TrainerPageState extends State<TrainerPage> {
                             ),
                           );
                         }
-
+                        if(state is TrainerCreated){
+                          context.read<TrainerCubit>().getActiveInactiveTrainers(
+                              branchId: branchId, active: temp == "Active Trainers"
+                              ? true
+                              : false);
+                        }
                         // ignore: prefer_is_empty
                         if (cubit.trainers?.length == 0) {
                           return Padding(
