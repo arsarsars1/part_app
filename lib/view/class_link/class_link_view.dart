@@ -7,6 +7,7 @@ import 'package:part_app/view/batch/components/class_picker.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
+import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/constants/app_colors.dart';
@@ -125,6 +126,26 @@ class _ClassLinkViewState extends State<ClassLinkView> {
               ),
               BranchField(
                 onSelect: (value) {
+                  if (branchId != null) {
+                    AlertBox.showConfirmation(
+                      message:
+                          'Are your sure, that you need to change the branch',
+                      subMessage:
+                          'Note: Please be aware that when you change the branch, the underlying batch, date and selected class will be also cleared',
+                      buttonText: 'OK',
+                      onTap: () {
+                        Navigator.pop(context);
+                        setState(() {
+                          batch = null;
+                          batchController.text = "";
+                          dateController.text = "";
+                          selectedclass = null;
+                        });
+                      },
+                      hasClose: true,
+                      context,
+                    );
+                  }
                   setState(() {
                     branchId = value;
                   });
@@ -133,6 +154,14 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                     clean: true,
                     branchSearch: true,
                   );
+                  // setState(() {
+                  //   branchId = value;
+                  // });
+                  // batchCubit.getBatchesByStatus(
+                  //   branchId: branchId,
+                  //   clean: true,
+                  //   branchSearch: true,
+                  // );
                 },
               ),
               SizedBox(
@@ -288,8 +317,8 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                     ? classLink ?? ""
                                     : "https://${classLink ?? ""}")
                             .host,
-                        'start_time': batch?.batchDetail?[0].startTime,
-                        'end_time': batch?.batchDetail?[0].endTime
+                        'start_time': selectedclass?.startTime,
+                        'end_time': selectedclass?.endTime
                       });
                     }
                   },
