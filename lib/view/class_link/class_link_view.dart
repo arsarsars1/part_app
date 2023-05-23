@@ -33,6 +33,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -79,6 +80,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
         child: Form(
           key: formKey,
           child: ListView(
+            controller: _scrollController,
             children: [
               Align(
                 alignment: Alignment.centerRight,
@@ -179,14 +181,21 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                         branchId: branchId!,
                         status: '',
                         branchSearch: true,
-                        onSelect: (value) {
+                        onSelect: (value) async {
                           batch = value;
                           batchController.text = value.name;
                           for (var element in batch!.days) {
                             batchDays?.add(element.split(" ")[0]);
                           }
                           // batchCubit.getClassLink(batch?.id, DateTime.now());
-                          batchCubit.getClassLink(batch?.id, DateTime.now());
+                          await batchCubit.getClassLink(
+                              batch?.id, DateTime.now());
+                          _scrollController.animateTo(
+                              _scrollController.position.maxScrollExtent + 300,
+                              duration: const Duration(
+                                milliseconds: 2,
+                              ),
+                              curve: Curves.easeInOut);
                         },
                       ),
                     );
