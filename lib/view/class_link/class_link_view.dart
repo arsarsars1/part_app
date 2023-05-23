@@ -54,7 +54,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
           } else if (state is AddedLink) {
             Navigator.pop(context);
             batchCubit.getClassLink(batch?.id, DateTime.now());
-            Alert(context).show(message: 'Class link added');
+            Alert(context).show(message: 'Class Link Added');
             formKey.currentState?.reset();
             batchController.clear();
             dateController.clear();
@@ -252,51 +252,72 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                   child: Text('Selected Class'),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.liteDark,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                padding: const EdgeInsets.all(16),
-                margin: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      selectedclass == null
-                          ? 'No class selected'
-                          : "${date?.formattedDay2()} ${selectedclass?.startTime.toAmPM()} - ${selectedclass?.endTime.toAmPM()}",
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(),
-                    ),
-                    if (selectedclass != null)
-                      GestureDetector(
-                        onTap: () {
-                          scaffoldKey.currentState?.showBottomSheet(
-                            enableDrag: false,
-                            elevation: 10,
-                            backgroundColor: Colors.transparent,
-                            (context) => ClassPicker(
-                              branchId: batch?.branchId,
-                              batchId: batch?.id,
-                              date: date?.toServerYMD(),
-                              scaffoldKey: scaffoldKey,
-                              onSave: (ClassModel value) {
-                                setState(() {
-                                  selectedclass = value;
-                                });
-                              },
+              date == null || selectedclass == null
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.liteDark,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'No class selected',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.liteDark,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "${date?.formattedDay2()} ${selectedclass?.startTime.toAmPM()} - ${selectedclass?.endTime.toAmPM()}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              scaffoldKey.currentState?.showBottomSheet(
+                                enableDrag: false,
+                                elevation: 10,
+                                backgroundColor: Colors.transparent,
+                                (context) => ClassPicker(
+                                  branchId: batch?.branchId,
+                                  batchId: batch?.id,
+                                  date: date?.toServerYMD(),
+                                  scaffoldKey: scaffoldKey,
+                                  onSave: (ClassModel value) {
+                                    setState(() {
+                                      selectedclass = value;
+                                    });
+                                  },
+                                ),
+                              );
+                            },
+                            child: const Icon(
+                              Icons.edit,
+                              size: 24,
+                              color: Colors.white24,
                             ),
-                          );
-                        },
-                        child: const Icon(
-                          Icons.edit,
-                          size: 24,
-                          color: Colors.white24,
-                        ),
-                      )
-                  ],
-                ),
-              ),
+                          )
+                        ],
+                      ),
+                    ),
               const SizedBox(
                 height: 20,
               ),
