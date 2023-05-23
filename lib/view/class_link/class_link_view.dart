@@ -59,6 +59,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
             batchController.clear();
             dateController.clear();
             date = null;
+            branchId = null;
             setState(() {});
           } else if (state is AddLinkFailed) {
             Navigator.pop(context);
@@ -326,7 +327,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                   height: 50.h,
                   onTap: () {
                     if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
+                      // formKey.currentState!.save();
 
                       batchCubit.addClassLink(batch?.id, {
                         'class_date': date?.toServerYMD(),

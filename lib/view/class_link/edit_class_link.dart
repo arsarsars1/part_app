@@ -64,6 +64,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                 tempClass?.classDate ?? DateTime.now());
             Alert(context).show(message: 'Class link updated');
             formKey.currentState?.reset();
+            branchId = null;
             dateController.clear();
             date = null;
             setState(() {});
