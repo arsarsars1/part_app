@@ -239,7 +239,6 @@ class TrainerCubit extends Cubit<TrainerState> {
     Common? response = await _trainerService.createTrainer(map);
 
     if (response != null && response.status == 1) {
-      await getTrainers();
       emit(TrainerCreated(fromBranch));
     } else {
       emit(
