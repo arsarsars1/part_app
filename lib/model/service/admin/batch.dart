@@ -286,7 +286,7 @@ class BatchService {
       int? batchId, int? classId, Map<String, dynamic> data) async {
     try {
       var response = await _apiClient.post(
-        postPath: '/admin/batches/$batchId/class-link/$classId',
+        postPath: '/admin/batches/class-link/$classId',
         data: data,
       );
       return commonFromJson(jsonEncode(response));

@@ -60,8 +60,8 @@ class _EditClassLinkState extends State<EditClassLink> {
           } else if (state is UpdatedLink) {
             Navigator.pop(context);
             Navigator.pop(context);
-            batchCubit.getClassLink(
-                tempClass?.batchId, tempClass?.classDate ?? DateTime.now());
+            batchCubit.getClassLink(batchCubit.tempClass?.batchId,
+                tempClass?.classDate ?? DateTime.now());
             Alert(context).show(message: 'Class link updated');
             formKey.currentState?.reset();
             dateController.clear();
@@ -536,29 +536,36 @@ class _EditClassLinkState extends State<EditClassLink> {
                   height: 50.h,
                   onTap: () {
                     if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
+                      // formKey.currentState!.save();
 
                       batchCubit.updateClassLink(
-                          batch?.id ?? tempClass?.batchId,
-                          batchCubit.tempClass?.id, {
-                        'class_date': date?.toServerYMD() ??
-                            tempClass?.classDate?.toServerYMD(),
-                        'link': (classLink ?? tempClass?.link)
-                                    ?.contains("https://") ??
-                                false
-                            ? classLink ?? tempClass?.link
-                            : "https://${classLink ?? tempClass?.link}",
-                        'service': Uri.parse((classLink ?? tempClass?.link)
-                                        ?.contains("https://") ??
-                                    false
-                                ? classLink ?? tempClass?.link ?? ""
-                                : "https://${classLink ?? tempClass?.link ?? ""}")
-                            .host,
-                        'start_time': batch?.batchDetail?[0].startTime ??
-                            tempClass?.startTime,
-                        'end_time':
-                            batch?.batchDetail?[0].endTime ?? tempClass?.endTime
-                      });
+                        batchCubit.tempClass?.batchId,
+                        batchCubit.tempClass?.id,
+                        {
+                          'class_date': date?.toServerYMD() ??
+                              tempClass?.classDate?.toServerYMD(),
+                          'link': (classLink ?? batchCubit.tempClass?.link)
+                                      ?.contains("https://") ??
+                                  false
+                              ? classLink ?? batchCubit.tempClass?.link
+                              : "https://${classLink ?? batchCubit.tempClass?.link}",
+                          'service': Uri.parse((classLink ??
+                                              batchCubit.tempClass?.link)
+                                          ?.contains("https://") ??
+                                      false
+                                  ? classLink ??
+                                      batchCubit.tempClass?.link ??
+                                      ""
+                                  : "https://${classLink ?? batchCubit.tempClass?.link ?? ""}")
+                              .host,
+                          'start_time': batch?.batchDetail?[0].startTime ??
+                              tempClass?.startTime,
+                          'end_time': batch?.batchDetail?[0].endTime ??
+                              tempClass?.endTime,
+                          "batch_id":
+                              batch?.id ?? batchCubit.tempClass?.batchId,
+                        },
+                      );
                     }
                   },
                   title: 'Update Class Link',
