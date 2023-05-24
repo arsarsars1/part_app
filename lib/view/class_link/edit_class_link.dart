@@ -428,8 +428,6 @@ class _EditClassLinkState extends State<EditClassLink> {
                   : ScheduleField(
                       title: 'Date *',
                       hint: 'Select the date',
-                      // padding: 16,
-                      // margin: 25,
                       onSelect: (String value) {
                         date = DateTime.parse(value);
                         dateController.text = date?.toDateString() ?? "";
@@ -559,10 +557,10 @@ class _EditClassLinkState extends State<EditClassLink> {
                                       ""
                                   : "https://${classLink ?? batchCubit.tempClass?.link ?? ""}")
                               .host,
-                          'start_time': batch?.batchDetail?[0].startTime ??
-                              tempClass?.startTime,
-                          'end_time': batch?.batchDetail?[0].endTime ??
-                              tempClass?.endTime,
+                          'start_time':
+                              selectedclass?.startTime ?? tempClass?.startTime,
+                          'end_time':
+                              selectedclass?.endTime ?? tempClass?.endTime,
                           "batch_id":
                               batch?.id ?? batchCubit.tempClass?.batchId,
                         },
