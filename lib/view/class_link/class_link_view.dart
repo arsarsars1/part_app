@@ -143,6 +143,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                           batchController.text = "";
                           dateController.text = "";
                           selectedclass = null;
+                          date = null;
                         });
                       },
                       hasClose: true,
@@ -151,6 +152,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                   }
                   setState(() {
                     branchId = value;
+                    date = null;
                   });
                   batchCubit.getBatchesByStatus(
                     branchId: branchId,
@@ -190,12 +192,12 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                           // batchCubit.getClassLink(batch?.id, DateTime.now());
                           await batchCubit.getClassLink(
                               batch?.id, DateTime.now());
-                          _scrollController.animateTo(
-                              _scrollController.position.maxScrollExtent + 300,
-                              duration: const Duration(
-                                milliseconds: 2,
-                              ),
-                              curve: Curves.easeInOut);
+                          // _scrollController.animateTo(
+                          //     _scrollController.position.maxScrollExtent + 300,
+                          //     duration: const Duration(
+                          //       milliseconds: 2,
+                          //     ),
+                          //     curve: Curves.easeInOut);
                         },
                       ),
                     );
@@ -224,38 +226,91 @@ class _ClassLinkViewState extends State<ClassLinkView> {
               const SizedBox(
                 height: 20,
               ),
-              ScheduleField(
-                title: 'Date *',
-                hint: 'Select the date',
-                onSelect: (String value) {
-                  if (branchId == null || batch?.id == null) {
-                    Alert(context).show(message: 'Branch or Batch is missing');
-                    return;
-                  }
-                  date = DateTime.parse(value);
-                  setState(() {
-                    selectedclass = null;
-                  });
-                  scaffoldKey.currentState?.showBottomSheet(
-                    enableDrag: false,
-                    elevation: 10,
-                    backgroundColor: Colors.transparent,
-                    (context) => ClassPicker(
-                      branchId: batch?.branchId,
-                      batchId: batch?.id,
-                      date: date?.toServerYMD(),
-                      scaffoldKey: scaffoldKey,
-                      onSave: (ClassModel value) {
+              date == null
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 16.w),
+                          child: Text(
+                            'Date *',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          height: 60.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.liteDark,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 25.w),
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Select the date',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
+                                      color: AppColors.grey600,
+                                    ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  await datePicker();
+                                  dateController.text =
+                                      date?.toDateString() ?? "";
+                                },
+                                child: const Icon(
+                                  Icons.calendar_month,
+                                  size: 24,
+                                  color: Colors.white24,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : ScheduleField(
+                      title: 'Date *',
+                      hint: 'Select the date',
+                      initialValue: date?.toDateString(),
+                      onSelect: (String value) {
+                        if (branchId == null || batch?.id == null) {
+                          Alert(context)
+                              .show(message: 'Branch or Batch is missing');
+                          return;
+                        }
+                        date = DateTime.parse(value);
                         setState(() {
-                          dateController.text = date?.toDDMMYYY() ?? "";
-                          selectedclass = value;
+                          selectedclass = null;
                         });
+                        scaffoldKey.currentState?.showBottomSheet(
+                          enableDrag: false,
+                          elevation: 10,
+                          backgroundColor: Colors.transparent,
+                          (context) => ClassPicker(
+                            branchId: batch?.branchId,
+                            batchId: batch?.id,
+                            date: date?.toServerYMD(),
+                            scaffoldKey: scaffoldKey,
+                            onSave: (ClassModel value) {
+                              setState(() {
+                                dateController.text = date?.toDDMMYYY() ?? "";
+                                selectedclass = value;
+                              });
+                            },
+                          ),
+                        );
                       },
+                      time: false,
                     ),
-                  );
-                },
-                time: false,
-              ),
               const Center(
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
@@ -574,7 +629,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
   // }
 
   // method to get the date for [ class ]
-  void datePicker() {
+  Future<void> datePicker() async {
     showDatePicker(
       builder: (context, child) {
         return Theme(
@@ -617,6 +672,24 @@ class _ClassLinkViewState extends State<ClassLinkView> {
         date = value;
         dateController.text = value.toDateString();
         setState(() {});
+        scaffoldKey.currentState?.showBottomSheet(
+          enableDrag: false,
+          elevation: 10,
+          backgroundColor: Colors.transparent,
+          (context) => ClassPicker(
+            branchId: batch?.branchId,
+            batchId: batch?.id,
+            date: date?.toServerYMD(),
+            scaffoldKey: scaffoldKey,
+            onSave: (ClassModel value) {
+              setState(() {
+                // dateController.text =
+                //     date?.toDDMMYYY() ?? "";
+                selectedclass = value;
+              });
+            },
+          ),
+        );
       }
     });
   }

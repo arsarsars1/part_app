@@ -45,6 +45,8 @@ class _ScheduleFieldState extends State<ScheduleField> {
     hint = widget.time ? 'hh:mm' : 'dd/mm/yyyy';
     if (widget.initialValue != null) {
       controller.text = widget.initialValue!;
+    } else {
+      controller.text = "";
     }
   }
 
