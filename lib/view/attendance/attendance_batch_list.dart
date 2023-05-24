@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/view/attendance/attendance_update.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
@@ -161,7 +162,8 @@ class _AttendancePageState extends State<AttendancePage> {
                                     return BatchItem(
                                       batch: batch,
                                       onTap: () {
-
+                                        Navigator.pushNamed(
+                                            context, AttendanceUpdate.route);
                                       },
                                     );
                                   },

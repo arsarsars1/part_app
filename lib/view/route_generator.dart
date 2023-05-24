@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/account/switch_account.dart';
+import 'package:part_app/view/attendance/attendance_update.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/auth/register/acadmey_details.dart';
@@ -371,6 +372,11 @@ class RouteGenerator {
       case MonthlyAttendanceView.route:
         return MaterialPageRoute(
           builder: (_) => const MonthlyAttendanceView(),
+          settings: settings,
+        );
+      case AttendanceUpdate.route:
+        return MaterialPageRoute(
+          builder: (_) => const AttendanceUpdate(),
           settings: settings,
         );
       default:
