@@ -29,6 +29,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
   String? classLink;
   List<String>? batchDays = [];
   ClassModel? selectedclass;
+  FocusNode linkFocus = FocusNode();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController batchController = TextEditingController();
@@ -103,6 +104,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 height: 20,
               ),
               CommonField(
+                node: linkFocus,
                 title: 'Online Class Link *',
                 hint: 'Enter the class link',
                 onChange: (value) {
@@ -118,7 +120,9 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                     validUrl = Uri.parse(value).isAbsolute;
                   }
 
-                  return !validUrl ? 'Please enter a valid class link.' : null;
+                  return !validUrl || value == "https://"
+                      ? 'Please enter a valid class link.'
+                      : null;
                 },
                 onSubmit: (value) {
                   classLink = value;
@@ -392,7 +396,15 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                   onTap: () {
                     if (formKey.currentState!.validate()) {
                       // formKey.currentState!.save();
-
+                      if (classLink == "") {
+                        _scrollController.animateTo(
+                          linkFocus.offset.dy,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeIn,
+                        );
+                        linkFocus.requestFocus();
+                        return;
+                      }
                       batchCubit.addClassLink(batch?.id, {
                         'class_date': date?.toServerYMD(),
                         'link': classLink?.contains("https://") ?? false
