@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
+import 'package:part_app/view/attendance/components/attendance_update_list_item.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/trainer/add_trainer.dart';
-import 'package:part_app/view/trainer/components/trainer_list.dart';
+import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class TrainerPage extends StatefulWidget {
-  static const route = '/trainer';
+class AttendanceUpdate extends StatefulWidget {
+  static const route = '/update_attendance';
 
-  const TrainerPage({Key? key}) : super(key: key);
+  const AttendanceUpdate({Key? key}) : super(key: key);
 
   @override
-  State<TrainerPage> createState() => _TrainerPageState();
+  State<AttendanceUpdate> createState() => _AttendanceUpdateState();
 }
 
-class _TrainerPageState extends State<TrainerPage> {
+class _AttendanceUpdateState extends State<AttendanceUpdate> {
   int? branchId;
   String? query;
   String? temp;
   DropDownItem? selectedItem;
+
   @override
   void initState() {
     super.initState();
@@ -38,7 +39,7 @@ class _TrainerPageState extends State<TrainerPage> {
     var branchCubit = context.read<BranchCubit>();
     return Scaffold(
       appBar: const CommonBar(
-        title: 'Trainers List',
+        title: 'Class Attendance',
       ),
       body: Column(
         children: [
@@ -46,44 +47,11 @@ class _TrainerPageState extends State<TrainerPage> {
             child: ListView(
               shrinkWrap: true,
               children: [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: 16.w,
-                      right: 16.w,
-                      top: 16.h,
-                    ),
-                    child: Button(
-                      height: 30.h,
-                      onTap: () {
-                        cubit.fromBranch = false;
-                        cubit.selectedBranches = [];
-                        Navigator.pushNamed(context, AddTrainer.route);
-                      },
-                      title: 'Add New Trainer',
-                    ),
-                  ),
-                ),
                 SizedBox(
                   height: 20.h,
                 ),
                 BlocBuilder<BranchCubit, BranchState>(
                   builder: (context, state) {
-                    // return CommonField(
-                    //   title: 'Branch',
-                    //   hint: 'Select Branch',
-                    //   dropDown: true,
-                    //   dropDownItems: branchCubit.dropDownBranches(),
-                    //   onChange: (value) {
-                    //     branchId = value.id;
-                    //     setState(() {
-                    //       // cubit.searchTrainers(branchId, query: null);
-                    //       cubit.getActiveInactiveTrainers(
-                    //           branchId: branchId, active: true);
-                    //     });
-                    //   },
-                    // );
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
@@ -138,10 +106,12 @@ class _TrainerPageState extends State<TrainerPage> {
                                 setState(() {
                                   branchId = null;
                                   selectedItem = value;
-                                  if(query != null){
-                                    cubit.searchTrainers(branchId, query: query);
+                                  if (query != null) {
+                                    cubit.searchTrainers(branchId,
+                                        query: query);
                                   } else {
-                                    cubit.getActiveInactiveTrainers(active: true);
+                                    cubit.getActiveInactiveTrainers(
+                                        active: true);
                                   }
                                 });
                               } else {
@@ -159,39 +129,133 @@ class _TrainerPageState extends State<TrainerPage> {
                     );
                   },
                 ),
+
                 SizedBox(
                   height: 20.h,
                 ),
-                CommonField(
-                  prefixIcon: const Icon(Icons.search),
-                  title: 'Search',
-                  maxLines: 1,
-                  hint: 'Search By Trainer Name Or Phone Number',
-                  dropDown: false,
-                  textInputAction: TextInputAction.search,
-                  onSubmit: (value) {
-                    if (value.toString().isNotEmpty) {
-                      query = value;
-                      cubit.searchTrainers(branchId, query: value);
-                    } else {
-                      query = null;
-                      cubit.getActiveInactiveTrainers(
-                          branchId: branchId, active: true);
-                    }
-                  },
-                  onChange: (value) {
-                    /*if (value.toString().isEmpty) {
-                      query = null;
-                      cubit.getTrainers();
-                    }*/
-                  },
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 44.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Batch1',
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: AppColors.primaryColor,
+                              fontSize: 16,
+                            ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Time: ',
+                            style:
+                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      color: AppColors.textColor,
+                                      fontSize: 14,
+                                    ),
+                          ),
+                          Text(
+                            '9:00am - 10:00am',
+                            style:
+                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14,
+                                    ),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        'Branch Name',
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: AppColors.textColor,
+                              fontSize: 14,
+                            ),
+                      ),
+                      Text(
+                        'Course, Subject',
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: AppColors.textColor,
+                              fontSize: 14,
+                            ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Trainer - Vijay, Rahul',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
+                                      color: AppColors.primaryColor,
+                                      fontSize: 14,
+                                    ),
+                              ),
+                              Text(
+                                'Attendance: 4/6',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
+                                      color: AppColors.textColor,
+                                      fontSize: 14,
+                                    ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Monday',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
+                                      color: AppColors.textColor,
+                                      fontSize: 16,
+                                    ),
+                              ),
+                              Text(
+                                '14 August 2022',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
+                                      color: AppColors.textColor,
+                                      fontSize: 16,
+                                    ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 34.0),
+                  child: Text(
+                    'Note: You can update each students attendance from this page for the following batch on the selected date.',
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: AppColors.textColor,
+                          fontSize: 14,
+                        ),
+                  ),
                 ),
                 SizedBox(
                   height: 20.h,
                 ),
                 Column(
                   children: [
-                    if (branchId == null)
+                    /*if (branchId == null)
                       Column(
                         children: [
                           Padding(
@@ -218,7 +282,7 @@ class _TrainerPageState extends State<TrainerPage> {
                             height: 15.h,
                           ),
                         ],
-                      ),
+                      ),*/
                     BlocBuilder<TrainerCubit, TrainerState>(
                       builder: (context, state) {
                         if (state is FetchingTrainers) {
@@ -229,11 +293,13 @@ class _TrainerPageState extends State<TrainerPage> {
                             ),
                           );
                         }
-                        if(state is TrainerCreated){
-                          context.read<TrainerCubit>().getActiveInactiveTrainers(
-                              branchId: branchId, active: temp == "Active Trainers"
-                              ? true
-                              : false);
+                        if (state is TrainerCreated) {
+                          context
+                              .read<TrainerCubit>()
+                              .getActiveInactiveTrainers(
+                                  branchId: branchId,
+                                  active:
+                                      temp == "Active Trainers" ? true : false);
                         }
                         // ignore: prefer_is_empty
                         if (cubit.trainers?.length == 0) {
@@ -250,7 +316,7 @@ class _TrainerPageState extends State<TrainerPage> {
                             ),
                           );
                         }
-                        return TrainerList(
+                        return AttendanceUpdateListItem(
                           trainers: cubit.trainers ?? [],
                           onSelect: (Trainer trainer) async {
                             context.read<TrainerCubit>().getTrainerDetails(

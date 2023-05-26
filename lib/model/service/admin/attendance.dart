@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:part_app/model/data_model/attendance_monthly_record.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/service/api_client.dart';
 
@@ -47,6 +48,27 @@ class AttendanceService {
       );
 
       return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AttendanceMonthlyRecord?> getStudents({
+    String? searchQuery,
+    String? activeStatus,
+    int? batchId,
+    int? pageNo,
+    int? month,
+    int? year,
+  }) async {
+    try {
+      String path = '';
+      if (batchId != null) {
+        path = '/admin/batches/$batchId/attendance/record/$year/$month';
+      }
+      path += '?page=$pageNo';
+      var response = await _apiClient.get(queryPath: path);
+      return attendanceMonthlyRecordFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
-import 'package:part_app/view/attendance/attendance_calender_view.dart';
-import 'package:part_app/view/batch/add_batch.dart';
+import 'package:part_app/view/attendance/attendance_update.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 import '../../view_model/attendance/attendance_cubit.dart';
+import 'monthly_attendance_view.dart';
 
 class AttendanceBatchListPage extends StatefulWidget {
   static const route = '/attendance-batch-list';
@@ -72,7 +72,7 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
                         width: 185.w,
                         onTap: () {
                           cubit.days.clear();
-                          Navigator.pushNamed(context, AddBatch.route);
+                          Navigator.pushNamed(context, MonthlyAttendanceView.route);
                         },
                         title: 'View Monthly Attendance',
                       ),
@@ -160,11 +160,8 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
                                     return BatchItem(
                                       batch: batch,
                                       onTap: () {
-                                        context
-                                            .read<BatchCubit>()
-                                            .getBatch(batchId: '${batch.id}');
-                                        Navigator.pushNamed(context,
-                                            AttendanceCalenderView.route);
+                                        Navigator.pushNamed(
+                                            context, AttendanceUpdate.route);
                                       },
                                     );
                                   },

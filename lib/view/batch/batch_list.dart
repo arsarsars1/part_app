@@ -154,10 +154,19 @@ class _BatchesPageState extends State<BatchesPage> {
                               listener: (context, state) {},
                               buildWhen: (prv, crr) =>
                                   crr is BatchesFetched ||
-                                  crr is FetchingBatches,
+                                  crr is FetchingBatches ||
+                                  crr is CreatedBatch,
                               builder: (context, state) {
                                 if (state is BatchNetworkError) {
                                   AlertBox.showErrorAlert(context);
+                                }
+                                if(state is CreatedBatch){
+                                  context.read<BatchCubit>().getBatchesByStatus(
+                                    branchId: branchId,
+                                    status: status,
+                                    search: query,
+                                    clean: true,
+                                  );
                                 }
                                 if (state is FetchingBatches) {
                                   return const Padding(

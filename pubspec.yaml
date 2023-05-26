@@ -62,9 +62,11 @@ dependencies:
   # cached image
   cached_network_image: ^3.2.2
   connectivity_plus: ^3.0.2
-  month_year_picker: ^0.2.0+3
+  # month_year_picker: ^0.2.0+3
   fl_chart: ^0.55.2
   path_provider: ^2.0.14
+  # package for month picker
+  flutter_holo_date_picker: ^1.1.0
 
 dev_dependencies:
   flutter_test:

@@ -61,10 +61,9 @@ class _AddBatchState extends State<AddBatch> {
       appBar: const CommonBar(title: 'Add New Batch'),
       body: BlocListener<BatchCubit, BatchState>(
         listener: (context, state) {
-          if(state is BatchNetworkError){
+          if (state is BatchNetworkError) {
             AlertBox.showErrorAlert(context);
-          }
-          else if (state is CreatingBatch) {
+          } else if (state is CreatingBatch) {
             Loader(context).show();
           } else if (state is CreatedBatch) {
             Navigator.popUntil(
@@ -270,15 +269,23 @@ class _AddBatchState extends State<AddBatch> {
                                       trainers: context
                                           .read<BranchCubit>()
                                           .trainers
-                                          ?.where(
-                                              (element) => selectedTrainers.contains(
-                                            element.id,
-                                          )).map((e) => e.trainerDetail?[0].id).toList(),
+                                          ?.where((element) =>
+                                              selectedTrainers.contains(
+                                                element.id,
+                                              ))
+                                          .map((e) => e.trainerDetail?[0].id)
+                                          .toList(),
                                       admissionFees: int.parse(admissionFee!),
                                     );
 
                                     cubit.createBatch(request);
                                   }
+                                } else {
+                                  scrollController.animateTo(
+                                    0.5,
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut,
+                                  );
                                 }
                               },
                               title: 'Save Batch',

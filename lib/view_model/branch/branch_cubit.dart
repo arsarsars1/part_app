@@ -178,7 +178,7 @@ class BranchCubit extends Cubit<BranchState> {
     //   emit(ClassesLoaded());
     //   return;
     // }
-
+    emit(ClassesLoading());
     _classes.clear();
 
     ClassResponse? temp = await _branchService.getBatchClasses(

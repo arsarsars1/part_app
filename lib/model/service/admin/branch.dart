@@ -139,7 +139,7 @@ class BranchService {
       int pageNo = 1}) async {
     try {
       var response = await _apiClient.get(
-        queryPath: '/admin/batches/$batchId/classes/$date',
+        queryPath: '/admin/batches/$batchId/daily-classes/$date',
       );
       return classResponseFromJson(jsonEncode(response));
     } catch (e) {
