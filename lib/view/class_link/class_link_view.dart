@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
+import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/batch/components/class_picker.dart';
+import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
+import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/constants/app_colors.dart';
@@ -24,10 +28,13 @@ class _ClassLinkViewState extends State<ClassLinkView> {
   DateTime? date;
   String? classLink;
   List<String>? batchDays = [];
+  ClassModel? selectedclass;
+  FocusNode linkFocus = FocusNode();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -49,11 +56,12 @@ class _ClassLinkViewState extends State<ClassLinkView> {
           } else if (state is AddedLink) {
             Navigator.pop(context);
             batchCubit.getClassLink(batch?.id, DateTime.now());
-            Alert(context).show(message: 'Class link added');
+            Alert(context).show(message: 'Class Link Added');
             formKey.currentState?.reset();
             batchController.clear();
             dateController.clear();
             date = null;
+            branchId = null;
             setState(() {});
           } else if (state is AddLinkFailed) {
             Navigator.pop(context);
@@ -73,6 +81,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
         child: Form(
           key: formKey,
           child: ListView(
+            controller: _scrollController,
             children: [
               Align(
                 alignment: Alignment.centerRight,
@@ -95,6 +104,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 height: 20,
               ),
               CommonField(
+                node: linkFocus,
                 title: 'Online Class Link *',
                 hint: 'Enter the class link',
                 onChange: (value) {
@@ -102,9 +112,17 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 },
                 capitalization: TextCapitalization.none,
                 validator: (value) {
-                  bool validUrl = Uri.parse(value).isAbsolute;
+                  bool validUrl;
+                  if (value.contains("https://")) {
+                    validUrl = Uri.parse(value).isAbsolute;
+                  } else {
+                    value = "https://$value";
+                    validUrl = Uri.parse(value).isAbsolute;
+                  }
 
-                  return !validUrl ? 'Please enter a valid class link.' : null;
+                  return !validUrl || value == "https://"
+                      ? 'Please enter a valid class link.'
+                      : null;
                 },
                 onSubmit: (value) {
                   classLink = value;
@@ -115,14 +133,44 @@ class _ClassLinkViewState extends State<ClassLinkView> {
               ),
               BranchField(
                 onSelect: (value) {
+                  if (branchId != null) {
+                    AlertBox.showConfirmation(
+                      message:
+                          'Are your sure, that you need to change the branch',
+                      subMessage:
+                          'Note: Please be aware that when you change the branch, the underlying batch, date and selected class will be also cleared',
+                      buttonText: 'OK',
+                      onTap: () {
+                        Navigator.pop(context);
+                        setState(() {
+                          batch = null;
+                          batchController.text = "";
+                          dateController.text = "";
+                          selectedclass = null;
+                          date = null;
+                        });
+                      },
+                      hasClose: true,
+                      context,
+                    );
+                  }
                   setState(() {
                     branchId = value;
+                    date = null;
                   });
                   batchCubit.getBatchesByStatus(
                     branchId: branchId,
                     clean: true,
                     branchSearch: true,
                   );
+                  // setState(() {
+                  //   branchId = value;
+                  // });
+                  // batchCubit.getBatchesByStatus(
+                  //   branchId: branchId,
+                  //   clean: true,
+                  //   branchSearch: true,
+                  // );
                 },
               ),
               SizedBox(
@@ -139,14 +187,21 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                         branchId: branchId!,
                         status: '',
                         branchSearch: true,
-                        onSelect: (value) {
+                        onSelect: (value) async {
                           batch = value;
                           batchController.text = value.name;
                           for (var element in batch!.days) {
                             batchDays?.add(element.split(" ")[0]);
                           }
                           // batchCubit.getClassLink(batch?.id, DateTime.now());
-                          batchCubit.getClassLink(batch?.id, DateTime.now());
+                          await batchCubit.getClassLink(
+                              batch?.id, DateTime.now());
+                          // _scrollController.animateTo(
+                          //     _scrollController.position.maxScrollExtent + 300,
+                          //     duration: const Duration(
+                          //       milliseconds: 2,
+                          //     ),
+                          //     curve: Curves.easeInOut);
                         },
                       ),
                     );
@@ -175,44 +230,197 @@ class _ClassLinkViewState extends State<ClassLinkView> {
               const SizedBox(
                 height: 20,
               ),
-              CommonField(
-                controller: dateController,
-                title: 'Date *',
-                hint: 'Select the date',
-                suffixIcon: const Padding(
-                  padding: EdgeInsets.only(right: 32),
-                  child: Icon(
-                    Icons.arrow_drop_down,
-                    size: 24,
-                    color: Colors.white24,
-                  ),
-                ),
-                disabled: true,
-                onTap: () {
-                  datePicker();
-                },
-                onChange: (value) {},
-                validator: (value) {
-                  return value.isEmpty ? 'Please select the date.' : null;
-                },
-                onSubmit: (value) {},
-              ),
+              date == null
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 16.w),
+                          child: Text(
+                            'Date *',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          height: 60.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.liteDark,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 25.w),
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Select the date',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
+                                      color: AppColors.grey600,
+                                    ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  await datePicker();
+                                  dateController.text =
+                                      date?.toDateString() ?? "";
+                                },
+                                child: const Icon(
+                                  Icons.calendar_month,
+                                  size: 24,
+                                  color: Colors.white24,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : ScheduleField(
+                      title: 'Date *',
+                      hint: 'Select the date',
+                      initialValue: date?.toDateString(),
+                      onSelect: (String value) {
+                        if (branchId == null || batch?.id == null) {
+                          Alert(context)
+                              .show(message: 'Branch or Batch is missing');
+                          return;
+                        }
+                        date = DateTime.parse(value);
+                        setState(() {
+                          selectedclass = null;
+                        });
+                        scaffoldKey.currentState?.showBottomSheet(
+                          enableDrag: false,
+                          elevation: 10,
+                          backgroundColor: Colors.transparent,
+                          (context) => ClassPicker(
+                            branchId: batch?.branchId,
+                            batchId: batch?.id,
+                            date: date?.toServerYMD(),
+                            scaffoldKey: scaffoldKey,
+                            onSave: (ClassModel value) {
+                              setState(() {
+                                dateController.text = date?.toDDMMYYY() ?? "";
+                                selectedclass = value;
+                              });
+                            },
+                          ),
+                        );
+                      },
+                      time: false,
+                    ),
               const Center(
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text('Selected Class'),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.liteDark,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                padding: const EdgeInsets.all(16),
-                margin: const EdgeInsets.all(16),
-                child: Text(
-                  date == null ? 'No class selected' : getBatchTime(date!),
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+              date == null || selectedclass == null
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.liteDark,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'No class selected',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.liteDark,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "${date?.formattedDay2()} ${selectedclass?.startTime.toAmPM()} - ${selectedclass?.endTime.toAmPM()}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              scaffoldKey.currentState?.showBottomSheet(
+                                enableDrag: false,
+                                elevation: 10,
+                                backgroundColor: Colors.transparent,
+                                (context) => ClassPicker(
+                                  branchId: batch?.branchId,
+                                  batchId: batch?.id,
+                                  date: date?.toServerYMD(),
+                                  scaffoldKey: scaffoldKey,
+                                  onSave: (ClassModel value) {
+                                    setState(() {
+                                      selectedclass = value;
+                                    });
+                                  },
+                                ),
+                              );
+                            },
+                            child: const Icon(
+                              Icons.edit,
+                              size: 24,
+                              color: Colors.white24,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+              const SizedBox(
+                height: 20,
+              ),
+              Center(
+                child: Button(
+                  height: 50.h,
+                  onTap: () {
+                    if (formKey.currentState!.validate()) {
+                      // formKey.currentState!.save();
+                      if (classLink == "") {
+                        _scrollController.animateTo(
+                          linkFocus.offset.dy,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeIn,
+                        );
+                        linkFocus.requestFocus();
+                        return;
+                      }
+                      batchCubit.addClassLink(batch?.id, {
+                        'class_date': date?.toServerYMD(),
+                        'link': classLink?.contains("https://") ?? false
+                            ? classLink
+                            : "https://$classLink",
+                        'service': Uri.parse(
+                                classLink?.contains("https://") ?? false
+                                    ? classLink ?? ""
+                                    : "https://${classLink ?? ""}")
+                            .host,
+                        'start_time': selectedclass?.startTime,
+                        'end_time': selectedclass?.endTime
+                      });
+                    }
+                  },
+                  title: 'Add Class Link',
                 ),
               ),
               BlocBuilder<BatchCubit, BatchState>(
@@ -417,25 +625,6 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                   );
                 },
               ),
-              Center(
-                child: Button(
-                  height: 50.h,
-                  onTap: () {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-
-                      batchCubit.addClassLink(batch?.id, {
-                        'class_date': date?.toServerYMD(),
-                        'link': classLink,
-                        'service': Uri.parse(classLink!).host,
-                        'start_time': batch?.batchDetail?[0].startTime,
-                        'end_time': batch?.batchDetail?[0].endTime
-                      });
-                    }
-                  },
-                  title: 'Add Class Link',
-                ),
-              ),
             ],
           ),
         ),
@@ -443,16 +632,16 @@ class _ClassLinkViewState extends State<ClassLinkView> {
     );
   }
 
-  String getBatchTime(DateTime date) {
-    String day = date.toDay().substring(0, 3);
+  // String getBatchTime(DateTime date) {
+  //   String day = date.toDay().substring(0, 3);
 
-    String? str = batch?.days
-        .firstWhere((element) => element.contains(day), orElse: () => '');
-    return str ?? '-';
-  }
+  //   String? str = batch?.days
+  //       .firstWhere((element) => element.contains(day), orElse: () => '');
+  //   return str ?? '-';
+  // }
 
   // method to get the date for [ class ]
-  void datePicker() {
+  Future<void> datePicker() async {
     showDatePicker(
       builder: (context, child) {
         return Theme(
@@ -495,6 +684,24 @@ class _ClassLinkViewState extends State<ClassLinkView> {
         date = value;
         dateController.text = value.toDateString();
         setState(() {});
+        scaffoldKey.currentState?.showBottomSheet(
+          enableDrag: false,
+          elevation: 10,
+          backgroundColor: Colors.transparent,
+          (context) => ClassPicker(
+            branchId: batch?.branchId,
+            batchId: batch?.id,
+            date: date?.toServerYMD(),
+            scaffoldKey: scaffoldKey,
+            onSave: (ClassModel value) {
+              setState(() {
+                // dateController.text =
+                //     date?.toDDMMYYY() ?? "";
+                selectedclass = value;
+              });
+            },
+          ),
+        );
       }
     });
   }

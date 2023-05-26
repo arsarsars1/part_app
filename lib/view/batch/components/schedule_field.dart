@@ -14,6 +14,8 @@ class ScheduleField extends StatefulWidget {
   final ValueChanged<String>? onSelect;
   final ValueChanged<DateTime>? onDateSelect;
   final bool onlyMonth;
+  // final double padding;
+  // final double margin;
 
   const ScheduleField({
     Key? key,
@@ -25,6 +27,8 @@ class ScheduleField extends StatefulWidget {
     required this.time,
     this.onDateSelect,
     this.onlyMonth = false,
+    // this.padding = 0.0,
+    // this.margin = 0.0,
   }) : super(key: key);
 
   @override
@@ -41,12 +45,15 @@ class _ScheduleFieldState extends State<ScheduleField> {
     hint = widget.time ? 'hh:mm' : 'dd/mm/yyyy';
     if (widget.initialValue != null) {
       controller.text = widget.initialValue!;
+    } else {
+      controller.text = "";
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return CommonField(
+      // contentPadding: EdgeInsets.symmetric(horizontal: widget.padding),
       disabled: true,
       onTap: () async {
         if (widget.time) {

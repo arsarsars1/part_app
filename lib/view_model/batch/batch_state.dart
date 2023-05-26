@@ -112,6 +112,18 @@ class AddLinkFailed extends BatchState {
   AddLinkFailed(this.message);
 }
 
+/// update Class Link
+
+class UpdatingLink extends BatchState {}
+
+class UpdatedLink extends BatchState {}
+
+class UpdateLinkFailed extends BatchState {
+  final String message;
+
+  UpdateLinkFailed(this.message);
+}
+
 // get class links
 
 class FetchingLinks extends BatchState {}

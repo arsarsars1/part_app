@@ -28,6 +28,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  bool reset = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +57,8 @@ class _ClassLinkListState extends State<ClassLinkList> {
                 onSelect: (value) {
                   setState(() {
                     branchId = value;
+                    batchController.text = "";
+                    reset = true;
                   });
                   batchCubit?.getBatchesByStatus(
                     branchId: branchId,
@@ -80,6 +83,10 @@ class _ClassLinkListState extends State<ClassLinkList> {
                         onSelect: (value) {
                           batch = value;
                           batchController.text = value.name;
+                          reset = false;
+                          if (date != null) {
+                            batchCubit?.getClassLink(batch?.id, date!);
+                          }
                         },
                       ),
                     );
@@ -136,7 +143,10 @@ class _ClassLinkListState extends State<ClassLinkList> {
               ),
               BlocBuilder<BatchCubit, BatchState>(
                 builder: (context, state) {
-                  if (branchId == null || batch == null || date == null) {
+                  if (branchId == null ||
+                      batch == null ||
+                      date == null ||
+                      reset == true) {
                     return const Center(
                       child: Padding(
                         padding: EdgeInsets.all(30.0),

@@ -282,6 +282,19 @@ class BatchService {
     }
   }
 
+  Future<Common?> updateClassLink(
+      int? batchId, int? classId, Map<String, dynamic> data) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/batches/class-link/$classId',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> removeClassLink(int? batchId, int? linkId) async {
     try {
       var response = await _apiClient.delete(
