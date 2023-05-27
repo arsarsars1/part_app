@@ -63,7 +63,8 @@ class _ClassLinkListState extends State<ClassLinkList> {
                   batchCubit?.getBatchesByStatus(
                     branchId: branchId,
                     clean: true,
-                    branchSearch: true,
+                    branchSearch: false,
+                    status: 'ongoing',
                   );
                 },
               ),

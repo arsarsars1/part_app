@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
@@ -5,6 +7,7 @@ import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view_model/attendance/attendance_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AttendanceCalenderView extends StatefulWidget {
@@ -21,40 +24,47 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
   ScrollController scrollController = ScrollController();
   BatchModel? batch;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final EventList<Event> _markedDateMap = EventList<Event>(
-    events: {
-      DateTime(2023, 05, 02): [
-        Event(
-          date: DateTime(2023, 05, 02),
-          title: 'Event 1',
-          // icon: _eventIcon,
-          dot: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 1.0),
-            color: Colors.red,
-            height: 5.0,
-            width: 5.0,
-          ),
-        ),
-      ],
-      DateTime(2023, 05, 05): [
-        Event(
-          date: DateTime(2023, 05, 05),
-          title: 'Event 1',
-          // icon: _eventIcon,
-          dot: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 1.0),
-            color: Colors.green,
-            height: 5.0,
-            width: 5.0,
-          ),
-        ),
-      ],
-    },
-  );
+  final EventList<Event> _markedDateMap = EventList<Event>(events: {});
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      AttendanceCubit cubit = context.read<AttendanceCubit>();
+      await cubit.getClassesOfMonth(batchId: cubit.id, date: DateTime.now());
+      _markedDateMap.clear();
+      log("The lenght is ${cubit.attendenceClasses?.length}");
+      for (var element in cubit.attendenceClasses ?? []) {
+        _markedDateMap.add(
+          element.date ?? DateTime.now(),
+          Event(
+            date: element.date ?? DateTime.now(),
+            title: 'Event 1',
+            dot: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 1.0),
+              color: Colors.white,
+              height: 5.0,
+              width: 5.0,
+            ),
+          ),
+        );
+        setState(() {});
+      }
+      // context.read<AttendanceCubit>().attendenceClasses?.forEach((element) {
+      //   _markedDateMap.add(
+      //     element.date ?? DateTime.now(),
+      //     Event(
+      //       date: element.date ?? DateTime.now(),
+      //       title: 'Event 1',
+      //       dot: Container(
+      //         margin: const EdgeInsets.symmetric(horizontal: 1.0),
+      //         color: Colors.white,
+      //         height: 5.0,
+      //         width: 5.0,
+      //       ),
+      //     ),
+      //   );
+      // });
+    });
     super.initState();
   }
 
@@ -62,12 +72,12 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // context.read<BatchCubit>().getBatchesByStatus(
-        //       branchId: batch?.branchId,
-        //       status: context.read<BatchCubit>().tempStatus,
-        //       clean: true,
-        //     );
-        // Navigator.pop(context);
+        context.read<BatchCubit>().getBatchesByStatus(
+              branchId: context.read<BatchCubit>().batchModel?.branchId,
+              status: context.read<BatchCubit>().tempStatus,
+              clean: true,
+            );
+        Navigator.pop(context);
         return true;
       },
       child: Scaffold(
@@ -180,7 +190,6 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                     fontSize: 12.sp,
                                   ),
                         ),
-                        SizedBox(height: 25.h),
                         CalendarCarousel<Event>(
                           iconColor: Colors.white,
                           todayBorderColor: Colors.transparent,

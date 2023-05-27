@@ -43,6 +43,7 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
         context.read<AttendanceCubit>().getBatchesByStatus(
               branchId: branchId,
               search: query,
+              branchSearch: false,
             );
       }
     });
@@ -164,6 +165,8 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
                                         context
                                             .read<BatchCubit>()
                                             .getBatch(batchId: '${batch.id}');
+                                        context.read<AttendanceCubit>().id =
+                                            batch.id;
                                         Navigator.pushNamed(
                                           context,
                                           AttendanceCalenderView.route,

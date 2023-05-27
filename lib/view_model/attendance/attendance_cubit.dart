@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/attendance_monthly_record.dart';
+import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
@@ -20,8 +21,10 @@ class AttendanceCubit extends Cubit<AttendanceState> {
 
   List<Days> get days => _days;
   List<BatchModel> get batches => _batches;
+  int id = 0;
 
   List<StudentAttendance>? studentAttendanceDetails;
+  List<Class>? attendenceClasses;
   int conductedClassCount = 0;
 
   /// reset
@@ -64,6 +67,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     String? search,
     bool clean = false,
     bool branchSearch = false,
+    String status = "ongoing",
   }) async {
     if (clean) {
       page = 1;
@@ -79,7 +83,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }
     BatchResponse? response = await _attendanceService.getBatchesByStatus(
       branchId: branchId,
-      // status: status,
+      status: status,
       search: search,
       page: page,
       branchSearch: branchSearch,
@@ -142,4 +146,18 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }
   }
 
+  /// this method is used to get the classes of a batch in a particular month
+  Future getClassesOfMonth({
+    int? batchId,
+    DateTime? date,
+  }) async {
+    _batches.clear();
+    emit(FetchingAttendanceBatches(pagination: false));
+    AttendenceClassesOfMonth? response = await _attendanceService
+        .getAttendeceClassesOfMonth(batchId: batchId, date: date);
+    if (response?.status == 1) {
+      attendenceClasses = response?.classes ?? [];
+      emit(AttendanceBatchesFetched());
+    }
+  }
 }
