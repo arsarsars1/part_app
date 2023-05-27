@@ -113,14 +113,14 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 capitalization: TextCapitalization.none,
                 validator: (value) {
                   bool validUrl;
-                  if (value.contains("https://")) {
+                  if (value.contains("https://") || value.contains("http://")) {
                     validUrl = Uri.parse(value).isAbsolute;
                   } else {
                     value = "https://$value";
                     validUrl = Uri.parse(value).isAbsolute;
                   }
 
-                  return !validUrl || value == "https://"
+                  return !validUrl || value == "https://" || value == "http://"
                       ? 'Please enter a valid class link.'
                       : null;
                 },
@@ -161,7 +161,8 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                   batchCubit.getBatchesByStatus(
                     branchId: branchId,
                     clean: true,
-                    branchSearch: true,
+                    branchSearch: false,
+                    status: 'ongoing',
                   );
                   // setState(() {
                   //   branchId = value;
@@ -409,12 +410,16 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                         'class_date': date?.toServerYMD(),
                         'link': classLink?.contains("https://") ?? false
                             ? classLink
-                            : "https://$classLink",
-                        'service': Uri.parse(
-                                classLink?.contains("https://") ?? false
+                            : classLink?.contains("http://") ?? false
+                                ? classLink
+                                : "https://$classLink",
+                        'service':
+                            Uri.parse(classLink?.contains("https://") ?? false
                                     ? classLink ?? ""
-                                    : "https://${classLink ?? ""}")
-                            .host,
+                                    : classLink?.contains("http://") ?? false
+                                        ? classLink ?? ""
+                                        : "https://${classLink ?? ""}")
+                                .host,
                         'start_time': selectedclass?.startTime,
                         'end_time': selectedclass?.endTime
                       });

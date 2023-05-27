@@ -90,14 +90,16 @@ class _EditClassLinkState extends State<EditClassLink> {
                 capitalization: TextCapitalization.none,
                 validator: (value) {
                   bool validUrl;
-                  if (value.contains("https://")) {
+                  if (value.contains("https://") || value.contains("http://")) {
                     validUrl = Uri.parse(value).isAbsolute;
                   } else {
                     value = "https://$value";
                     validUrl = Uri.parse(value).isAbsolute;
                   }
 
-                  return !validUrl ? 'Please enter a valid class link.' : null;
+                  return !validUrl || value == "https://" || value == "http://"
+                      ? 'Please enter a valid class link.'
+                      : null;
                 },
                 onSubmit: (value) {
                   classLink = value;
@@ -196,7 +198,8 @@ class _EditClassLinkState extends State<EditClassLink> {
                         batchCubit.getBatchesByStatus(
                           branchId: branchId,
                           clean: true,
-                          branchSearch: true,
+                          branchSearch: false,
+                          status: 'ongoing',
                         );
                       },
                     ),
@@ -547,7 +550,11 @@ class _EditClassLinkState extends State<EditClassLink> {
                                       ?.contains("https://") ??
                                   false
                               ? classLink ?? batchCubit.tempClass?.link
-                              : "https://${classLink ?? batchCubit.tempClass?.link}",
+                              : (classLink ?? batchCubit.tempClass?.link)
+                                          ?.contains("http://") ??
+                                      false
+                                  ? classLink ?? batchCubit.tempClass?.link
+                                  : "https://${classLink ?? batchCubit.tempClass?.link}",
                           'service': Uri.parse((classLink ??
                                               batchCubit.tempClass?.link)
                                           ?.contains("https://") ??
@@ -555,7 +562,13 @@ class _EditClassLinkState extends State<EditClassLink> {
                                   ? classLink ??
                                       batchCubit.tempClass?.link ??
                                       ""
-                                  : "https://${classLink ?? batchCubit.tempClass?.link ?? ""}")
+                                  : (classLink ?? batchCubit.tempClass?.link)
+                                              ?.contains("http://") ??
+                                          false
+                                      ? classLink ??
+                                          batchCubit.tempClass?.link ??
+                                          ""
+                                      : "https://${classLink ?? batchCubit.tempClass?.link ?? ""}")
                               .host,
                           'start_time':
                               selectedclass?.startTime ?? tempClass?.startTime,
