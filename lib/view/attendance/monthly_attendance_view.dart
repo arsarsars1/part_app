@@ -3,6 +3,7 @@ import 'package:part_app/model/data_model/attendance_monthly_record.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/attendance/attendance_batch_list.dart';
+import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/attendance/components/attendance_student_item.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
@@ -76,7 +77,7 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                         child: Button(
                           height: 30.h,
                           onTap: () {
-                            Navigator.pushNamed(context, AttendancePage.route);
+                            Navigator.pushNamed(context, AttendanceCalenderView.route);
                           },
                           title: 'Update Attendance',
                         ),
