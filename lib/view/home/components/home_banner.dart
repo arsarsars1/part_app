@@ -221,6 +221,6 @@ class _HomeBannerState extends State<HomeBanner> {
   }
 
   void stopTimer() {
-    timer?.cancel();
+    timer.cancel();
   }
 }

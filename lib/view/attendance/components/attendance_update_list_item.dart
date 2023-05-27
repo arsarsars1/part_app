@@ -13,11 +13,13 @@ class AttendanceUpdateListItem extends StatefulWidget {
   final List<Trainer> trainers;
   final ValueChanged<Trainer> onSelect;
 
-  const AttendanceUpdateListItem({Key? key, required this.trainers, required this.onSelect})
+  const AttendanceUpdateListItem(
+      {Key? key, required this.trainers, required this.onSelect})
       : super(key: key);
 
   @override
-  State<AttendanceUpdateListItem> createState() => _AttendanceUpdateListItemState();
+  State<AttendanceUpdateListItem> createState() =>
+      _AttendanceUpdateListItemState();
 }
 
 class _AttendanceUpdateListItemState extends State<AttendanceUpdateListItem> {
@@ -28,7 +30,6 @@ class _AttendanceUpdateListItemState extends State<AttendanceUpdateListItem> {
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-            
         context.read<TrainerCubit>().getRestOfTheTrainers(nextPage: true);
       }
     });
@@ -70,8 +71,8 @@ class _AttendanceUpdateListItemState extends State<AttendanceUpdateListItem> {
                       UserImage(
                         profilePic: trainer.profilePic != ""
                             ? '${F.baseUrl}'
-                            '/admin/images/trainer/'
-                            '${trainer.id}/${trainer.profilePic}'
+                                '/admin/images/trainer/'
+                                '${trainer.id}/${trainer.profilePic}'
                             : '',
                       ),
                       SizedBox(width: 16.w),
@@ -97,10 +98,8 @@ class _AttendanceUpdateListItemState extends State<AttendanceUpdateListItem> {
                           fit: BoxFit.contain,
                           child: CupertinoSwitch(
                             trackColor: AppColors.grey500,
-                            value: trainer?.isActive == 1,
-                            onChanged: (value) {
-
-                            },
+                            value: trainer.isActive == 1,
+                            onChanged: (value) {},
                           ),
                         ),
                       ),

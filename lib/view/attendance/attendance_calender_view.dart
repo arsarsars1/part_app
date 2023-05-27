@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_calendar_carousel/classes/event.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
-import 'package:part_app/model/data_model/batch_request.dart';
-import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/batch/batch_students.dart';
-import 'package:part_app/view/batch/cancel_batch_class.dart';
-import 'package:part_app/view/batch/components/selected_trainers.dart';
-import 'package:part_app/view/batch/edit_batch_details.dart';
-import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -26,6 +21,42 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
   ScrollController scrollController = ScrollController();
   BatchModel? batch;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final EventList<Event> _markedDateMap = EventList<Event>(
+    events: {
+      DateTime(2023, 05, 02): [
+        Event(
+          date: DateTime(2023, 05, 02),
+          title: 'Event 1',
+          // icon: _eventIcon,
+          dot: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 1.0),
+            color: Colors.red,
+            height: 5.0,
+            width: 5.0,
+          ),
+        ),
+      ],
+      DateTime(2023, 05, 05): [
+        Event(
+          date: DateTime(2023, 05, 05),
+          title: 'Event 1',
+          // icon: _eventIcon,
+          dot: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 1.0),
+            color: Colors.green,
+            height: 5.0,
+            width: 5.0,
+          ),
+        ),
+      ],
+    },
+  );
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +170,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                     fontSize: 12.sp,
                                   ),
                         ),
-                        SizedBox(height: 25.h),
+                        SizedBox(height: 10.h),
                         Text(
                           "Note : Select current date to take today's attendance of ${batch?.name}",
                           maxLines: 2,
@@ -149,6 +180,60 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                     fontSize: 12.sp,
                                   ),
                         ),
+                        SizedBox(height: 25.h),
+                        CalendarCarousel<Event>(
+                          iconColor: Colors.white,
+                          todayBorderColor: Colors.transparent,
+                          onDayPressed: (date, events) {},
+                          daysHaveCircularBorder: true,
+                          showOnlyCurrentMonthDate: true,
+                          weekendTextStyle: const TextStyle(
+                            color: Colors.white,
+                          ),
+                          markedDatesMap: _markedDateMap,
+                          daysTextStyle: const TextStyle(
+                            color: Colors.white,
+                          ),
+                          thisMonthDayBorderColor: Colors.transparent,
+                          weekFormat: false, //firstDayOfWeek: 4,
+                          height: 420.0,
+                          weekdayTextStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          shouldShowTransform: false,
+                          weekDayFormat: WeekdayFormat.narrow,
+                          headerTextStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          customGridViewPhysics:
+                              const NeverScrollableScrollPhysics(),
+                          markedDateCustomTextStyle: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.blue,
+                          ),
+                          showHeader: true,
+                          todayTextStyle: const TextStyle(
+                            color: Colors.white,
+                          ),
+                          todayButtonColor: Colors.blue,
+                          selectedDayTextStyle: const TextStyle(
+                            color: Colors.white,
+                          ),
+                          prevDaysTextStyle: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                          inactiveDaysTextStyle: const TextStyle(
+                            color: Colors.tealAccent,
+                            fontSize: 16,
+                          ),
+                          onCalendarChanged: (DateTime date) {},
+                          onDayLongPressed: (DateTime date) {},
+                        )
                       ],
                     ),
                   );
