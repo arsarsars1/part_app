@@ -25,14 +25,13 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
   BatchModel? batch;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final EventList<Event> _markedDateMap = EventList<Event>(events: {});
-
+  DateTime currentDate = DateTime.now();
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       AttendanceCubit cubit = context.read<AttendanceCubit>();
-      await cubit.getClassesOfMonth(batchId: cubit.id, date: DateTime.now());
+      await cubit.getClassesOfMonth(batchId: cubit.id, date: currentDate);
       _markedDateMap.clear();
-      log("The lenght is ${cubit.attendenceClasses?.length}");
       for (var element in cubit.attendenceClasses ?? []) {
         _markedDateMap.add(
           element.date ?? DateTime.now(),
@@ -49,21 +48,6 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
         );
         setState(() {});
       }
-      // context.read<AttendanceCubit>().attendenceClasses?.forEach((element) {
-      //   _markedDateMap.add(
-      //     element.date ?? DateTime.now(),
-      //     Event(
-      //       date: element.date ?? DateTime.now(),
-      //       title: 'Event 1',
-      //       dot: Container(
-      //         margin: const EdgeInsets.symmetric(horizontal: 1.0),
-      //         color: Colors.white,
-      //         height: 5.0,
-      //         width: 5.0,
-      //       ),
-      //     ),
-      //   );
-      // });
     });
     super.initState();
   }
@@ -196,6 +180,36 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                           onDayPressed: (date, events) {},
                           daysHaveCircularBorder: true,
                           showOnlyCurrentMonthDate: true,
+                          onRightArrowPressed: () async {
+                            AttendanceCubit cubit =
+                                context.read<AttendanceCubit>();
+                            currentDate = DateTime(
+                                currentDate.year, currentDate.month + 1);
+                            await cubit.getClassesOfMonth(
+                                batchId: cubit.id,
+                                date: DateTime(DateTime.now().year,
+                                    DateTime.now().month + 1));
+                            _markedDateMap.clear();
+                            setState(() {
+                              for (var element
+                                  in cubit.attendenceClasses ?? []) {
+                                _markedDateMap.add(
+                                  element.date ?? DateTime.now(),
+                                  Event(
+                                    date: element.date ?? DateTime.now(),
+                                    title: 'Event 1',
+                                    dot: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 1.0),
+                                      color: Colors.white,
+                                      height: 5.0,
+                                      width: 5.0,
+                                    ),
+                                  ),
+                                );
+                              }
+                            });
+                          },
                           weekendTextStyle: const TextStyle(
                             color: Colors.white,
                           ),
