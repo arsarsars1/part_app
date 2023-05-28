@@ -25,12 +25,14 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
   BatchModel? batch;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final EventList<Event> _markedDateMap = EventList<Event>(events: {});
-  DateTime currentDate = DateTime.now();
+  int currentYear = DateTime.now().year;
+  int currentMonth = DateTime.now().month;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       AttendanceCubit cubit = context.read<AttendanceCubit>();
-      await cubit.getClassesOfMonth(batchId: cubit.id, date: currentDate);
+      await cubit.getClassesOfMonth(
+          batchId: cubit.id, date: DateTime(currentYear, currentMonth));
       _markedDateMap.clear();
       for (var element in cubit.attendenceClasses ?? []) {
         _markedDateMap.add(
@@ -181,14 +183,20 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                           daysHaveCircularBorder: true,
                           showOnlyCurrentMonthDate: true,
                           onRightArrowPressed: () async {
+                            // log("${currentDate.month}");
                             AttendanceCubit cubit =
                                 context.read<AttendanceCubit>();
-                            currentDate = DateTime(
-                                currentDate.year, currentDate.month + 1);
+                            setState(() {
+                              if (currentMonth == 12) {
+                                currentYear++;
+                                currentMonth = 1;
+                              } else {
+                                currentMonth++;
+                              }
+                            });
                             await cubit.getClassesOfMonth(
                                 batchId: cubit.id,
-                                date: DateTime(DateTime.now().year,
-                                    DateTime.now().month + 1));
+                                date: DateTime(currentYear, currentMonth));
                             _markedDateMap.clear();
                             setState(() {
                               for (var element
