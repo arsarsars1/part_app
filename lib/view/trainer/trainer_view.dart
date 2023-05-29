@@ -231,9 +231,7 @@ class _TrainerPageState extends State<TrainerPage> {
                         }
                         if(state is TrainerCreated){
                           context.read<TrainerCubit>().getActiveInactiveTrainers(
-                              branchId: branchId, active: temp == "Active Trainers"
-                              ? true
-                              : false);
+                              branchId: branchId, active: true);
                         }
                         // ignore: prefer_is_empty
                         if (cubit.trainers?.length == 0) {
