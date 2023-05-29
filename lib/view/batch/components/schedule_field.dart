@@ -14,6 +14,8 @@ class ScheduleField extends StatefulWidget {
   final ValueChanged<String>? onSelect;
   final ValueChanged<DateTime>? onDateSelect;
   final bool onlyMonth;
+  final DateTime? selectedDate;
+  final TextEditingController? controller;
   // final double padding;
   // final double margin;
 
@@ -27,6 +29,8 @@ class ScheduleField extends StatefulWidget {
     required this.time,
     this.onDateSelect,
     this.onlyMonth = false,
+    this.selectedDate,
+    this.controller,
     // this.padding = 0.0,
     // this.margin = 0.0,
   }) : super(key: key);
@@ -36,7 +40,7 @@ class ScheduleField extends StatefulWidget {
 }
 
 class _ScheduleFieldState extends State<ScheduleField> {
-  TextEditingController controller = TextEditingController();
+  // TextEditingController controller = TextEditingController();
   String? hint = '';
 
   @override
@@ -44,9 +48,9 @@ class _ScheduleFieldState extends State<ScheduleField> {
     super.initState();
     hint = widget.time ? 'hh:mm' : 'dd/mm/yyyy';
     if (widget.initialValue != null) {
-      controller.text = widget.initialValue!;
+      widget.controller?.text = widget.initialValue!;
     } else {
-      controller.text = "";
+      widget.controller?.text = "";
     }
   }
 
@@ -58,13 +62,19 @@ class _ScheduleFieldState extends State<ScheduleField> {
       onTap: () async {
         if (widget.time) {
           timePicker().then((value) {
-            controller.text = value ?? '';
+            widget.controller?.text = value ?? '';
           });
         } else {
           if (widget.onlyMonth) {
+            DateTime? updated;
+            if(widget.selectedDate != null){
+              updated = widget.selectedDate;
+            } else {
+              widget.controller?.text = '';
+            }
             await DatePicker.showSimpleDatePicker(
               context,
-              initialDate: DateTime(DateTime.now().year),
+              initialDate: updated ?? DateTime(DateTime.now().year),
               firstDate: DateTime(DateTime.now().year - 25),
               lastDate: DateTime(DateTime.now().year + 25),
               dateFormat: "MMMM-yyyy",
@@ -83,7 +93,7 @@ class _ScheduleFieldState extends State<ScheduleField> {
               if (widget.onDateSelect != null) {
                 widget.onDateSelect!(value);
               }
-              controller.text =
+              widget.controller?.text =
                   widget.dateMonth ? value.toMMMMYYYY() : value.toDateString();
             });
 
@@ -92,12 +102,12 @@ class _ScheduleFieldState extends State<ScheduleField> {
             // });
           } else {
             datePicker().then((value) {
-              controller.text = value ?? '';
+              widget.controller?.text = value ?? '';
             });
           }
         }
       },
-      controller: controller,
+      controller: widget.controller,
       padding: const EdgeInsets.only(left: 10),
       title: widget.title,
       hint: widget.hint ?? hint,
