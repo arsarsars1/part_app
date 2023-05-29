@@ -42,7 +42,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
             title: 'Event 1',
             dot: Container(
               margin: const EdgeInsets.symmetric(horizontal: 1.0),
-              color: Colors.white,
+              color: element.conducted ? Colors.green : Colors.red,
               height: 5.0,
               width: 5.0,
             ),
@@ -209,7 +209,9 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                     dot: Container(
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 1.0),
-                                      color: Colors.white,
+                                      color: element.conducted
+                                          ? Colors.green
+                                          : Colors.red,
                                       height: 5.0,
                                       width: 5.0,
                                     ),
