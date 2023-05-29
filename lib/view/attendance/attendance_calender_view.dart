@@ -34,22 +34,23 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
       await cubit.getClassesOfMonth(
           batchId: cubit.id, date: DateTime(currentYear, currentMonth));
       _markedDateMap.clear();
-      for (var element in cubit.attendenceClasses ?? []) {
-        _markedDateMap.add(
-          element.date ?? DateTime.now(),
-          Event(
-            date: element.date ?? DateTime.now(),
-            title: 'Event 1',
-            dot: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 1.0),
-              color: element.conducted ? Colors.green : Colors.red,
-              height: 5.0,
-              width: 5.0,
+      setState(() {
+        for (var element in cubit.attendenceClasses ?? []) {
+          _markedDateMap.add(
+            element.date ?? DateTime.now(),
+            Event(
+              date: element.date ?? DateTime.now(),
+              title: 'Event 1',
+              dot: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 1.0),
+                color: element.conducted ? Colors.green : Colors.red,
+                height: 5.0,
+                width: 5.0,
+              ),
             ),
-          ),
-        );
-        setState(() {});
-      }
+          );
+        }
+      });
     });
     super.initState();
   }
@@ -182,8 +183,44 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                           onDayPressed: (date, events) {},
                           daysHaveCircularBorder: true,
                           showOnlyCurrentMonthDate: true,
+                          onLeftArrowPressed: () async {
+                            AttendanceCubit cubit =
+                                context.read<AttendanceCubit>();
+                            setState(() {
+                              if (currentMonth == 1) {
+                                currentYear--;
+                                currentMonth = 12;
+                              } else {
+                                currentMonth--;
+                              }
+                            });
+                            await cubit.getClassesOfMonth(
+                                batchId: cubit.id,
+                                date: DateTime(currentYear, currentMonth));
+                            _markedDateMap.clear();
+                            setState(() {
+                              for (var element
+                                  in cubit.attendenceClasses ?? []) {
+                                _markedDateMap.add(
+                                  element.date ?? DateTime.now(),
+                                  Event(
+                                    date: element.date ?? DateTime.now(),
+                                    title: 'Event 1',
+                                    dot: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 1.0),
+                                      color: element.conducted
+                                          ? Colors.green
+                                          : Colors.red,
+                                      height: 5.0,
+                                      width: 5.0,
+                                    ),
+                                  ),
+                                );
+                              }
+                            });
+                          },
                           onRightArrowPressed: () async {
-                            // log("${currentDate.month}");
                             AttendanceCubit cubit =
                                 context.read<AttendanceCubit>();
                             setState(() {
@@ -242,6 +279,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                             fontSize: 15.sp,
                             fontWeight: FontWeight.bold,
                           ),
+                          isScrollable: false,
                           customGridViewPhysics:
                               const NeverScrollableScrollPhysics(),
                           markedDateCustomTextStyle: const TextStyle(
