@@ -85,7 +85,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Attendance',
-      route: '/attendance',
+      route: '/attendance-batch-list',
       asset: Assets.attendance,
       color: Color(0xFF2B32B2),
     ),

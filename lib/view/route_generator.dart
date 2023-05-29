@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/account/switch_account.dart';
+import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/attendance/attendance_update.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
@@ -364,9 +365,14 @@ class RouteGenerator {
           builder: (_) => const LeadDetails(),
           settings: settings,
         );
-      case AttendancePage.route:
+      case AttendanceBatchListPage.route:
         return MaterialPageRoute(
-          builder: (_) => const AttendancePage(),
+          builder: (_) => const AttendanceBatchListPage(),
+          settings: settings,
+        );
+      case AttendanceCalenderView.route:
+        return MaterialPageRoute(
+          builder: (_) => const AttendanceCalenderView(),
           settings: settings,
         );
       case MonthlyAttendanceView.route:

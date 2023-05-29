@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:part_app/model/data_model/attendance_monthly_record.dart';
+import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/service/api_client.dart';
 
@@ -18,19 +19,33 @@ class AttendanceService {
     }
   }
 
+  Future<AttendenceClassesOfMonth?> getAttendeceClassesOfMonth(
+      {required int? batchId, required DateTime? date}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/admin/batches/$batchId/monthly-classes/${date?.year}/${date?.month}',
+      );
+
+      return attendenceClassesOfMonthFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   /// this method will handle four different apis based on
   /// [ branchId ] , [ status ] , [ search ]
   Future<BatchResponse?> getBatchesByStatus({
     int? branchId,
-    // String status = 'ongoing',
+    String status = 'ongoing',
     String? search,
     required int page,
     bool branchSearch = false,
   }) async {
     try {
       String path = branchId == null
-          ? '/admin/batches'
-          : '/admin/branches/$branchId/batches';
+          ? '/admin/batches/batch-status/$status'
+          : '/admin/branches/$branchId/batches/batch-status/$status';
 
       if (branchSearch) {
         path = '/admin/branches/$branchId/batches';
@@ -73,5 +88,4 @@ class AttendanceService {
       return null;
     }
   }
-
 }
