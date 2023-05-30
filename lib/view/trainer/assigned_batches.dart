@@ -22,7 +22,7 @@ class _AssignedBatchesState extends State<AssignedBatches> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var cubit = context.read<TrainerCubit>();
       Trainer? trainer = cubit.trainer?.trainerDetail![0];
-      context.read<BatchCubit>().getBatchesForTrainer(trainer?.id);
+      context.read<BatchCubit>().getOngoigBatchesForTrainer(trainer?.id);
     });
   }
 
