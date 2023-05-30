@@ -257,13 +257,14 @@ class _TrainerPageState extends State<TrainerPage> {
                             await Navigator.pushNamed(
                                 context, TrainerDetails.route);
                             // ignore: use_build_context_synchronously
-                            context
-                                .read<TrainerCubit>()
-                                .getActiveInactiveTrainers(
-                                    branchId: branchId,
-                                    active: temp == "Active Trainers"
-                                        ? true
-                                        : false);
+                            if(temp != null){
+                              context.read<TrainerCubit>()
+                                  .getActiveInactiveTrainers(branchId: branchId,
+                                  active: temp == "Active Trainers" ? true : false);
+                            } else {
+                              context.read<TrainerCubit>()
+                                  .getActiveInactiveTrainers(branchId: branchId, active: true);
+                            }
                           },
                         );
                       },

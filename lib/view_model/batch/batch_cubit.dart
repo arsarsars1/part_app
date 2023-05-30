@@ -283,10 +283,16 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
-  Future getBatchesForTrainer(int? trainerId) async {
+  Future getOngoigBatchesForTrainer(int? trainerId) async {
+    _batches.clear();
     var items = await _batchService.getTrainerBatches(trainerId);
     if (items != null && items.isNotEmpty) {
-      _batches = items.map((e) => BatchModel.fromEntity(e)).toList();
+      for (var element in items) {
+        if(element.batchStatus == "ongoing"){
+          _batches.add(BatchModel.fromEntity(element));
+        }
+      }
+      // _batches = items.map((e) => BatchModel.fromEntity(e)).toList();
     } else {
       _batches.clear();
     }
