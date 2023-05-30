@@ -31,7 +31,7 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
   BatchModel? batch;
   int? year;
   int? month;
-
+  DateTime? finalDate = DateTime.now();
   String? activeStatus;
 
   TextEditingController batchController = TextEditingController();
@@ -89,6 +89,8 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                       onSelect: (value) {
                         setState(() {
                           branchId = value;
+                          finalDate = null;
+                          dateController.clear();
                         });
                         batchController.clear();
                         batch = null;
@@ -141,8 +143,12 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                               branchId: branchId!,
                               status: status!,
                               onSelect: (value) {
-                                batch = value;
-                                batchController.text = value.name;
+                                setState(() {
+                                  finalDate = null;
+                                  dateController.clear();
+                                  batch = value;
+                                  batchController.text = value.name;
+                                });
                               },
                             ),
                           );
@@ -176,39 +182,18 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                     ScheduleField(
                       title: 'Month, Year',
                       hint: 'Select month & year',
-                      initialValue: DateTime.now().toMMMMYYYY(),
                       dateMonth: true,
                       onDateSelect: (DateTime value) {
                         year = value.year;
                         month = value.month;
+                        finalDate = value;
                         doSearch(true);
                       },
                       time: false,
                       onlyMonth: true,
-                    ),
-
-                    /*CommonField(
+                      selectedDate : finalDate,
                       controller: dateController,
-                      title: 'Date *',
-                      hint: 'Select the date',
-                      suffixIcon: const Padding(
-                        padding: EdgeInsets.only(right: 32),
-                        child: Icon(
-                          Icons.arrow_drop_down,
-                          size: 24,
-                          color: Colors.white24,
-                        ),
-                      ),
-                      disabled: true,
-                      onTap: () {
-                        datePicker();
-                      },
-                      onChange: (value) {},
-                      validator: (value) {
-                        return value.isEmpty ? 'Please select the date.' : null;
-                      },
-                      onSubmit: (value) {},
-                    ),*/
+                    ),
 
                     const SizedBox(
                       height: 10,
