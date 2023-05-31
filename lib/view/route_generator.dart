@@ -46,6 +46,7 @@ import 'package:part_app/view/students/edit_student.dart';
 import 'package:part_app/view/students/edit_student_batches.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
+import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
 import 'package:part_app/view/trainer/assigned_batches.dart';
@@ -385,6 +386,13 @@ class RouteGenerator {
           builder: (_) => const AttendanceUpdate(),
           settings: settings,
         );
+
+      case TodaysClasses.route:
+        return MaterialPageRoute(
+          builder: (_) => const TodaysClasses(),
+          settings: settings,
+        );
+
       default:
         return MaterialPageRoute(
           builder: (_) => const Login(),
