@@ -6,10 +6,25 @@
 name: Flutter CI
 
 # This workflow is triggered on pushes to the repository.
-
 on:
-    pull_request:
-      branches: [ "develop" ]
+  pull_request:
+    types: [closed]
+    branches:
+      - develop
+  # push:
+  #   branches:
+  #     - EQAPPS-9150-inc-5422314-date-issue-during-wo-processing-in-pairing-stage
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - preprod
+        # - production
 
 jobs:
   lint:
