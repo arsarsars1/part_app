@@ -2,16 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:part_app/model/data_base/data_base.dart';
-import 'package:part_app/model/data_model/trainer_response.dart';
-import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/trainer/trainer_cubit.dart';
-import 'package:url_launcher/url_launcher.dart';
-import '../../../flavors.dart';
 import '../../../model/data_model/ClassesToday.dart';
-import '../../components/user_image.dart';
 
 class TodaysClassList extends StatefulWidget {
   final List<Class> classesList;
@@ -50,12 +45,22 @@ class _TodaysClassListState extends State<TodaysClassList> {
       controller: scrollController,
       itemBuilder: (context, index) {
         Class classItem = widget.classesList[index];
+        String? startTime = classItem.startTime;
+        String? endTime = classItem.endTime;
+        String endTime12Hour = convertTo12HourFormat(endTime!);
+        String startTime12Hour = convertTo12HourFormat(startTime!);
         if (classItem.conducted == true) {
           classStatus = "Completed";
           color = AppColors.green;
         } else {
-          classStatus = "Upnext";
-          color = AppColors.defaultBlue;
+          bool isAfterNow = isTimeAfterNow(endTime12Hour);
+          if (isAfterNow) {
+            classStatus = "Upnext";
+            color = AppColors.defaultBlue;
+          } else {
+            classStatus = "Attendance Pending";
+            color = AppColors.primaryColor;
+          }
         }
 
         return InkWell(
@@ -82,7 +87,7 @@ class _TodaysClassListState extends State<TodaysClassList> {
                     '${classItem.batchName}',
                     maxLines: 1,
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
                   ),
                 ),
@@ -139,7 +144,7 @@ class _TodaysClassListState extends State<TodaysClassList> {
                   children: [
                     Flexible(
                       child: Text(
-                        '${classItem.startTime} . - ${classItem.endTime}',
+                        '${startTime12Hour} . - ${endTime12Hour}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -151,8 +156,7 @@ class _TodaysClassListState extends State<TodaysClassList> {
                       classStatus,
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                             color: color,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                     ),
                   ],
@@ -163,5 +167,25 @@ class _TodaysClassListState extends State<TodaysClassList> {
         );
       },
     );
+  }
+
+  bool isTimeAfterNow(String timeStr) {
+    final timeFormat = DateFormat('hh:mm a');
+    final currentTime = DateTime.now();
+    final timeObj = timeFormat.parse(timeStr);
+    final updatedCurrentTime = DateTime(
+      currentTime.year,
+      currentTime.month,
+      currentTime.day,
+      timeObj.hour,
+      timeObj.minute,
+    );
+    return updatedCurrentTime.isAfter(currentTime);
+  }
+
+  String convertTo12HourFormat(String timeStr) {
+    final timeObj = DateFormat('HH:mm').parse(timeStr);
+    final time12Hour = DateFormat('hh:mm a').format(timeObj);
+    return time12Hour;
   }
 }
