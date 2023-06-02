@@ -46,7 +46,7 @@ jobs:
           # flutter-version: '1.12.x' # you can also specify exact version of flutter
       - run: flutter pub get
 
-      - run: flutter pub run build_runner build
+#       - run: flutter pub run build_runner build
 #         run: dart analyze --fatal-warnings
 
       # Check for any formatting issues in the code.
