@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:part_app/model/data_model/attendance_monthly_record.dart';
+import 'package:part_app/model/data_model/attendence_classes_conducted.dart';
 import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/service/api_client.dart';
@@ -28,6 +29,20 @@ class AttendanceService {
       );
 
       return attendenceClassesOfMonthFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AttendenceConductedClass?> getConductedAttendeceClassesOfMonth(
+      {required int? batchId, required DateTime? date}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/admin/batches/$batchId/attendance/list/${date?.year}/${date?.month}',
+      );
+
+      return attendenceConductedClassFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

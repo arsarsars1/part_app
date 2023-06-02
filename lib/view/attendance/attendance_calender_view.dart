@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/attendance/attendance_update.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/attendance/attendance_cubit.dart';
@@ -33,17 +32,28 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
       AttendanceCubit cubit = context.read<AttendanceCubit>();
       await cubit.getClassesOfMonth(
           batchId: cubit.id, date: DateTime(currentYear, currentMonth));
+      await cubit.getConductedClassesOfMonth(
+          batchId: cubit.id, date: DateTime(currentYear, currentMonth));
       _markedDateMap.clear();
       setState(() {
         for (var element in cubit.attendenceClasses ?? []) {
+          int flag = 0;
+          int conductedClassId = 0;
+          for (var element1 in cubit.conductedClasses ?? []) {
+            if (element.date == element1.conductedOn) {
+              flag = 1;
+              conductedClassId = element1.id;
+              break;
+            }
+          }
           _markedDateMap.add(
             element.date ?? DateTime.now(),
             Event(
               date: element.date ?? DateTime.now(),
-              title: 'Event 1',
+              title: conductedClassId == 0 ? 'Event 1' : '$conductedClassId',
               dot: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 1.0),
-                color: element.conducted ? Colors.green : Colors.red,
+                color: flag == 1 ? Colors.green : Colors.red,
                 height: 5.0,
                 width: 5.0,
               ),
@@ -180,7 +190,27 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                         CalendarCarousel<Event>(
                           iconColor: Colors.white,
                           todayBorderColor: Colors.transparent,
-                          onDayPressed: (date, events) {},
+                          onDayPressed: (date, events) {
+                            AttendanceCubit cubit =
+                                context.read<AttendanceCubit>();
+                            int flag = 0;
+                            for (var element in cubit.attendenceClasses ?? []) {
+                              if (date == element.date) {
+                                flag = 1;
+                                break;
+                              }
+                            }
+                            if (flag == 0) {
+                              Alert(context).show(
+                                  message:
+                                      'This batch does not have class on this day.');
+                            } else {
+                              Navigator.pushNamed(
+                                context,
+                                AttendanceUpdate.route,
+                              );
+                            }
+                          },
                           daysHaveCircularBorder: true,
                           showOnlyCurrentMonthDate: true,
                           onLeftArrowPressed: () async {
@@ -197,21 +227,35 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                             await cubit.getClassesOfMonth(
                                 batchId: cubit.id,
                                 date: DateTime(currentYear, currentMonth));
+                            await cubit.getConductedClassesOfMonth(
+                                batchId: cubit.id,
+                                date: DateTime(currentYear, currentMonth));
                             _markedDateMap.clear();
                             setState(() {
                               for (var element
                                   in cubit.attendenceClasses ?? []) {
+                                int flag = 0;
+                                int conductedClassId = 0;
+                                for (var element1
+                                    in cubit.conductedClasses ?? []) {
+                                  if (element.date == element1.conductedOn) {
+                                    flag = 1;
+                                    conductedClassId = element1.id;
+                                    break;
+                                  }
+                                }
                                 _markedDateMap.add(
                                   element.date ?? DateTime.now(),
                                   Event(
                                     date: element.date ?? DateTime.now(),
-                                    title: 'Event 1',
+                                    title: conductedClassId == 0
+                                        ? 'Event 1'
+                                        : '$conductedClassId',
                                     dot: Container(
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 1.0),
-                                      color: element.conducted
-                                          ? Colors.green
-                                          : Colors.red,
+                                      color:
+                                          flag == 1 ? Colors.green : Colors.red,
                                       height: 5.0,
                                       width: 5.0,
                                     ),
@@ -234,21 +278,35 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                             await cubit.getClassesOfMonth(
                                 batchId: cubit.id,
                                 date: DateTime(currentYear, currentMonth));
+                            await cubit.getConductedClassesOfMonth(
+                                batchId: cubit.id,
+                                date: DateTime(currentYear, currentMonth));
                             _markedDateMap.clear();
                             setState(() {
                               for (var element
                                   in cubit.attendenceClasses ?? []) {
+                                int flag = 0;
+                                int conductedClassId = 0;
+                                for (var element1
+                                    in cubit.conductedClasses ?? []) {
+                                  if (element.date == element1.conductedOn) {
+                                    flag = 1;
+                                    conductedClassId = element1.id;
+                                    break;
+                                  }
+                                }
                                 _markedDateMap.add(
                                   element.date ?? DateTime.now(),
                                   Event(
                                     date: element.date ?? DateTime.now(),
-                                    title: 'Event 1',
+                                    title: conductedClassId == 0
+                                        ? 'Event 1'
+                                        : '$conductedClassId',
                                     dot: Container(
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 1.0),
-                                      color: element.conducted
-                                          ? Colors.green
-                                          : Colors.red,
+                                      color:
+                                          flag == 1 ? Colors.green : Colors.red,
                                       height: 5.0,
                                       width: 5.0,
                                     ),

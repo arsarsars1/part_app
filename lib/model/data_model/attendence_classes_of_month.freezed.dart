@@ -562,7 +562,8 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_Batch implements _Batch {
   const _$_Batch(
       {this.id,
@@ -939,7 +940,8 @@ class __$$_BatchDetailCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_BatchDetail implements _BatchDetail {
   const _$_BatchDetail(
       {this.id,
@@ -1317,7 +1319,8 @@ class __$$_BranchCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_Branch implements _Branch {
   const _$_Branch(
       {this.id,
@@ -1626,7 +1629,8 @@ class __$$_CountryCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_Country implements _Country {
   const _$_Country(
       {this.id,
@@ -1820,7 +1824,8 @@ class __$$_DistrictCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_District implements _District {
   const _$_District({this.id, this.districtName});
 
@@ -1967,7 +1972,8 @@ class __$$_StateCopyWithImpl<$Res> extends _$StateCopyWithImpl<$Res, _$_State>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_State implements _State {
   const _$_State({this.id, this.stateName});
 
@@ -2117,7 +2123,8 @@ class __$$_TimezoneCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_Timezone implements _Timezone {
   const _$_Timezone({this.id, this.timezone});
 
@@ -2287,7 +2294,8 @@ class __$$_CourseCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_Course implements _Course {
   const _$_Course(
       {this.id, this.academyTypeId, this.courseName, this.isActive});
@@ -2475,7 +2483,8 @@ class __$$_SubjectCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_Subject implements _Subject {
   const _$_Subject({this.id, this.courseId, this.subjectName, this.isActive});
 
@@ -2681,7 +2690,8 @@ class __$$_ClassCopyWithImpl<$Res> extends _$ClassCopyWithImpl<$Res, _$_Class>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_Class implements _Class {
   const _$_Class(
       {this.startTime,
