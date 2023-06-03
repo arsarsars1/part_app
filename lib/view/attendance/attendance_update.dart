@@ -11,16 +11,16 @@ import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/attendance/attendance_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class AttendanceAdd extends StatefulWidget {
-  static const route = '/add_attendance';
+class AttendanceUpdate extends StatefulWidget {
+  static const route = '/update_attendance';
 
-  const AttendanceAdd({Key? key}) : super(key: key);
+  const AttendanceUpdate({Key? key}) : super(key: key);
 
   @override
-  State<AttendanceAdd> createState() => _AttendanceAddState();
+  State<AttendanceUpdate> createState() => _AttendanceUpdateState();
 }
 
-class _AttendanceAddState extends State<AttendanceAdd> {
+class _AttendanceUpdateState extends State<AttendanceUpdate> {
   int? branchId;
   String? query;
   String? temp;
@@ -175,6 +175,24 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                           )
                         ],
                       ),
+                      SizedBox(height: 5.h),
+                      Text(
+                        "Attendence: 4/6",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontSize: 12.sp,
+                            ),
+                      ),
+                      SizedBox(height: 15.h),
+                      Text(
+                        "Note: You can update each student's attendence from this page for the following batch on the selected date.",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontSize: 12.sp,
+                            ),
+                      ),
                       SizedBox(height: 25.h),
                       ListView.builder(
                         shrinkWrap: true,
@@ -250,33 +268,13 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                           );
                         },
                       ),
-                      SizedBox(height: 20.h),
-                      Center(
-                        child: SafeArea(
-                          child: Button(
-                            onTap: () {
-                              AttendenceAddRequest request =
-                                  AttendenceAddRequest(
-                                conductedOn:
-                                    cubit.conductedDate ?? DateTime.now(),
-                                startTime:
-                                    batch?.batchDetail?[0].startTime ?? "",
-                                endTime: batch?.batchDetail?[0].endTime ?? "",
-                                attendance: cubit.buildAttendanceList(),
-                              );
-                              print(request);
-                            },
-                            title: 'Save Attendence',
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 );
               },
             ),
           ),
-          // AttendanceAddListItem(
+          // AttendanceUpdateListItem(
           //   students: studentCubit.students ?? [],
           //   onSelect: (StudentModel student) async {},
           // )
@@ -306,7 +304,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
           //         ),
           //       );
           //     }
-          //     return AttendanceAddListItem(
+          //     return AttendanceUpdateListItem(
           //       students: studentCubit.students ?? [],
           //       onSelect: (StudentModel student) async {},
           //     );

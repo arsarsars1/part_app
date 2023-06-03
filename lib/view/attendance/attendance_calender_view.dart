@@ -4,6 +4,7 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/attendance/attendance_add.dart';
+import 'package:part_app/view/attendance/attendance_update.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/attendance/attendance_cubit.dart';
@@ -210,10 +211,25 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                   events[0].title != "Event 1"
                                       ? int.parse(events[0].title ?? "0")
                                       : 0;
-                              Navigator.pushNamed(
-                                context,
-                                AttendanceUpdate.route,
-                              );
+                              if (DateTime.now().compareTo(
+                                      cubit.conductedDate ?? DateTime.now()) <
+                                  0) {
+                                Alert(context).show(
+                                    message:
+                                        'Cannot add attendence for a future date.');
+                              } else {
+                                if (cubit.conductedClassId == 0) {
+                                  Navigator.pushNamed(
+                                    context,
+                                    AttendanceAdd.route,
+                                  );
+                                } else {
+                                  Navigator.pushNamed(
+                                    context,
+                                    AttendanceUpdate.route,
+                                  );
+                                }
+                              }
                             }
                           },
                           daysHaveCircularBorder: true,
