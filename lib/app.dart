@@ -8,6 +8,7 @@ import 'package:part_app/view/route_generator.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
+import 'package:part_app/view_model/todays_classes/classes_today_cubit.dart';
 import 'view_model/attendance/attendance_cubit.dart';
 
 class App extends StatefulWidget {
@@ -70,6 +71,9 @@ class _AppState extends State<App> {
         ),
         BlocProvider<AttendanceCubit>(
           create: (context) => AttendanceCubit(),
+        ),
+        BlocProvider<ClassesTodayCubit>(
+          create: (context) => ClassesTodayCubit(),
         ),
       ],
       child: GestureDetector(
