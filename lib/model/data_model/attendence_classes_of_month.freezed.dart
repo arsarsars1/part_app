@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'attendence_classes_of_month.dart';
 
@@ -154,6 +154,7 @@ class _$_AttendenceClassesOfMonth implements _AttendenceClassesOfMonth {
   List<Class>? get classes {
     final value = _classes;
     if (value == null) return null;
+    if (_classes is EqualUnmodifiableListView) return _classes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -620,6 +621,7 @@ class _$_Batch implements _Batch {
   List<BatchDetail>? get batchDetail {
     final value = _batchDetail;
     if (value == null) return null;
+    if (_batchDetail is EqualUnmodifiableListView) return _batchDetail;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -629,6 +631,7 @@ class _$_Batch implements _Batch {
   List<Trainer>? get trainers {
     final value = _trainers;
     if (value == null) return null;
+    if (_trainers is EqualUnmodifiableListView) return _trainers;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -644,6 +647,7 @@ class _$_Batch implements _Batch {
   List<Student>? get students {
     final value = _students;
     if (value == null) return null;
+    if (_students is EqualUnmodifiableListView) return _students;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }

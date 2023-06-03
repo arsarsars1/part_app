@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:part_app/model/data_model/attendance_monthly_record.dart';
+import 'package:part_app/model/data_model/attendence_add_request.dart';
 import 'package:part_app/model/data_model/attendence_classes_conducted.dart';
 import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/service/api_client.dart';
 
 class AttendanceService {
@@ -15,6 +17,19 @@ class AttendanceService {
       );
 
       return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> createAttendence(AttendenceAddRequest request) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/batches',
+        data: request.toJson(),
+        formData: true,
+      );
+      return commonFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

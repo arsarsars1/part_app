@@ -74,7 +74,9 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
                         onTap: () {
                           cubit.days.clear();
                           Navigator.pushNamed(
-                              context, MonthlyAttendanceView.route);
+                            context,
+                            MonthlyAttendanceView.route,
+                          );
                         },
                         title: 'View Monthly Attendance',
                       ),
