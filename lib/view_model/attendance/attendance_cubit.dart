@@ -272,15 +272,12 @@ class AttendanceCubit extends Cubit<AttendanceState> {
 
         _attendenceTaken.addAll(items);
 
-        print("part 1: ${updatedStudents.length}");
         updatedStudents.clear();
-        print("attendence taken: ${attendenceTaken.length}");
         for (AttendanceDetails element in _attendenceTaken) {
           if (element.isPresent == 1) {
             updatedStudents.add(element.studentDetailId ?? 0);
           }
         }
-        print("part 2: ${updatedStudents.length}");
 
         emit(AttendanceBatchesFetched());
       }

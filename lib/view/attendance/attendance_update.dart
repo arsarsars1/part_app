@@ -266,16 +266,44 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                       break;
                                                     }
                                                   }
-
-                                                  cubit.updateAttendence(
-                                                      request: {
-                                                        "is_present": "1"
-                                                      },
-                                                      batchId: cubit.id,
-                                                      conductedClassId: cubit
-                                                          .conductedClassId,
-                                                      conductedClassStudentId:
-                                                          selectedStudent?.id);
+                                                  CommonDialog(
+                                                    context: context,
+                                                    message:
+                                                        'Are you sure you want to update\nattendence for ${selectedStudent?.studentDetail?.name}',
+                                                    buttonText: 'Ok',
+                                                    subColor:
+                                                        AppColors.primaryColor,
+                                                    subContent: Text(
+                                                      'Date : ${cubit.conductedDate?.formattedString()} '
+                                                      '\n\nTime : ${batch?.batchDetail?[0].startTime?.toAmPM()} - '
+                                                      '${batch?.batchDetail?[0].endTime?.toAmPM()}'
+                                                      '\n\n${batch?.branchName}'
+                                                      '\n\n${batch?.name}'
+                                                      '\n\n${batch?.courseName}, ${batch?.subjectName}\n\n\n',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1
+                                                          ?.copyWith(
+                                                            color: AppColors
+                                                                .primaryColor,
+                                                          ),
+                                                    ),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      cubit.updateAttendence(
+                                                          request: {
+                                                            "is_present": "1"
+                                                          },
+                                                          batchId: cubit.id,
+                                                          conductedClassId: cubit
+                                                              .conductedClassId,
+                                                          conductedClassStudentId:
+                                                              selectedStudent
+                                                                  ?.studentDetailId);
+                                                    },
+                                                  ).show();
                                                 },
                                               ),
                                             ),

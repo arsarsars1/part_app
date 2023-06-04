@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
@@ -30,7 +31,7 @@ class StudentService {
           postPath: '/admin/students/$studentId/enroll', data: request);
       return studentResponseFromJson(jsonEncode(response));
     } catch (e) {
-      print(e);
+      log(e.toString());
       return null;
     }
   }
