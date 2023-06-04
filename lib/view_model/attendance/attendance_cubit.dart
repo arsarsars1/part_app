@@ -21,6 +21,8 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   List<Days> _days = [];
   List<BatchModel> _batches = [];
 
+  Set<int> selectedStudents = {};
+
   // pagination
   int page = 1;
   String? nextPageUrl = '';
@@ -36,6 +38,15 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   int conductedClassCount = 0;
   DateTime? conductedDate;
   int? conductedClassId;
+
+  void addOrRemoveStudent(int studentId) {
+    if (selectedStudents.contains(studentId)) {
+      selectedStudents.remove(studentId);
+    } else {
+      selectedStudents.add(studentId);
+    }
+    emit(AddedAttendance());
+  }
 
   /// reset
   void reset() {
@@ -58,18 +69,16 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }).toList();
   }
 
-  Future addAttendence(AttendenceAddRequest request) async {
+  Future addAttendence(AttendenceAddRequest request, {int? batchId}) async {
     emit(CreatingAttendance());
     try {
-      Common? response = await _attendanceService.createAttendence(request);
-      if (response == null) {
-        emit(AttendenceNetworkError());
-      } else if (response.status == 1) {
-        await getBatches();
+      Common? response =
+          await _attendanceService.createAttendence(request, batchId: batchId);
+      if (response?.status == 1) {
         emit(CreatedAttendance());
       } else {
         emit(CreateAttendanceFailed(
-            response.message ?? 'Failed to save attendence.'));
+            response?.message ?? 'Failed to save attendence.'));
       }
     } catch (e) {
       emit(CreateAttendanceFailed('Failed to save attendence.'));

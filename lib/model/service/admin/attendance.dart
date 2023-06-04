@@ -22,10 +22,11 @@ class AttendanceService {
     }
   }
 
-  Future<Common?> createAttendence(AttendenceAddRequest request) async {
+  Future<Common?> createAttendence(AttendenceAddRequest request,
+      {int? batchId}) async {
     try {
       var response = await _apiClient.post(
-        postPath: '/admin/batches',
+        postPath: '/admin/batches/$batchId/attendance',
         data: request.toJson(),
         formData: true,
       );

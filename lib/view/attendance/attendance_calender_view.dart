@@ -191,7 +191,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                         CalendarCarousel<Event>(
                           iconColor: Colors.white,
                           todayBorderColor: Colors.transparent,
-                          onDayPressed: (date, events) {
+                          onDayPressed: (date, events) async {
                             AttendanceCubit cubit =
                                 context.read<AttendanceCubit>();
                             int flag = 0;
@@ -219,10 +219,53 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                         'Cannot add attendence for a future date.');
                               } else {
                                 if (cubit.conductedClassId == 0) {
-                                  Navigator.pushNamed(
+                                  await Navigator.pushNamed(
                                     context,
                                     AttendanceAdd.route,
                                   );
+                                  await cubit.getClassesOfMonth(
+                                      batchId: cubit.id,
+                                      date:
+                                          DateTime(currentYear, currentMonth));
+                                  await cubit.getConductedClassesOfMonth(
+                                      batchId: cubit.id,
+                                      date:
+                                          DateTime(currentYear, currentMonth));
+                                  _markedDateMap.clear();
+                                  setState(() {
+                                    for (var element
+                                        in cubit.attendenceClasses ?? []) {
+                                      int flag = 0;
+                                      int conductedClassId = 0;
+                                      for (var element1
+                                          in cubit.conductedClasses ?? []) {
+                                        if (element.date ==
+                                            element1.conductedOn) {
+                                          flag = 1;
+                                          conductedClassId = element1.id;
+                                          break;
+                                        }
+                                      }
+                                      _markedDateMap.add(
+                                        element.date ?? DateTime.now(),
+                                        Event(
+                                          date: element.date ?? DateTime.now(),
+                                          title: conductedClassId == 0
+                                              ? 'Event 1'
+                                              : '$conductedClassId',
+                                          dot: Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 1.0),
+                                            color: flag == 1
+                                                ? Colors.green
+                                                : Colors.red,
+                                            height: 5.0,
+                                            width: 5.0,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  });
                                 } else {
                                   Navigator.pushNamed(
                                     context,

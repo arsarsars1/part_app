@@ -30,6 +30,8 @@ class CreateAttendanceFailed extends AttendanceState {
   CreateAttendanceFailed(this.message);
 }
 
+class AddedAttendance extends AttendanceState {}
+
 class FetchingAttendanceBatch extends AttendanceState {}
 
 class FetchedAttendanceBatch extends AttendanceState {}
