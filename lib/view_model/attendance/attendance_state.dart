@@ -40,6 +40,8 @@ class UpdateAttendenceFailed extends AttendanceState {
   UpdateAttendenceFailed(this.message);
 }
 
+class AddedForUpdateAttendance extends AttendanceState {}
+
 class AddedAttendance extends AttendanceState {}
 
 class FetchingAttendanceBatch extends AttendanceState {}

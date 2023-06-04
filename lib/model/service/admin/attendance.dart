@@ -23,6 +23,24 @@ class AttendanceService {
     }
   }
 
+  Future<Common?> updateAttendence(
+      {Map<String, dynamic>? request,
+      int? batchId,
+      int? conductedClassId,
+      int? conductedClassStudentId}) async {
+    try {
+      var response = await _apiClient.post(
+        postPath:
+            '/admin/batches/$batchId/attendance/$conductedClassId/$conductedClassStudentId',
+        data: request ?? {"": ""},
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<AttendenceTaken?> getAttendenceTaken(
       {required int batchId, required int conductedClassId}) async {
     try {

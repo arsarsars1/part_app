@@ -52,6 +52,34 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     emit(AddedAttendance());
   }
 
+  void updateStudent(int studentId) {
+    if (updatedStudents.contains(studentId)) {
+      updatedStudents.remove(studentId);
+    } else {
+      updatedStudents.add(studentId);
+    }
+    emit(AddedForUpdateAttendance());
+  }
+
+  Future updateAttendence(
+      {Map<String, dynamic>? request,
+      int? batchId,
+      int? conductedClassId,
+      int? conductedClassStudentId}) async {
+    emit(UpdatingAttendence());
+    Common? response = await _attendanceService.updateAttendence(
+      request: request,
+      batchId: batchId,
+      conductedClassId: conductedClassId,
+      conductedClassStudentId: conductedClassStudentId,
+    );
+    if (response?.status == 1) {
+      emit(UpdatedAttendence());
+    } else {
+      emit(UpdateAttendenceFailed(response?.message ?? 'Failed to reschedule'));
+    }
+  }
+
   /// reset
   void reset() {
     _batches.clear();

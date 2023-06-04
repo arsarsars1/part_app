@@ -7,6 +7,7 @@ import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/attendance/attendance_add.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/attendance/attendance_cubit.dart';
@@ -22,12 +23,9 @@ class AttendanceUpdate extends StatefulWidget {
 }
 
 class _AttendanceUpdateState extends State<AttendanceUpdate> {
-  int? branchId;
-  String? query;
-  String? temp;
-  DropDownItem? selectedItem;
   ScrollController scrollController = ScrollController();
   BatchModel? batch;
+  AttendanceDetails? selectedStudent;
 
   @override
   void initState() {
@@ -61,6 +59,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                 if (state is UpdatedAttendence) {
                   Alert(context).show(message: 'Attendence Updated');
                 }
+                if (state is AddedForUpdateAttendance) {}
               },
               builder: (context, state) {
                 batch = context.read<BatchCubit>().batchModel;
@@ -196,70 +195,98 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                             ),
                       ),
                       SizedBox(height: 25.h),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: studentCubit.students?.length,
-                        controller: scrollController,
-                        itemBuilder: (context, index) {
-                          StudentModel student = studentCubit.students![index];
-                          return Container(
-                            width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.symmetric(vertical: 8.w),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 16.h,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: AppColors.grey800,
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 3,
-                                  child: Row(
-                                    children: [
-                                      UserImage(
-                                        profilePic: student.profilePic != ""
-                                            ? '${F.baseUrl}'
-                                                '/admin/images/trainer/'
-                                                '${student.id}/${student.profilePic}'
-                                            : '',
-                                      ),
-                                      SizedBox(width: 16.w),
-                                      Expanded(
-                                        child: Text(
-                                          '${student.name}',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                      BlocBuilder<AttendanceCubit, AttendanceState>(
+                        builder: (context, state) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: studentCubit.students?.length,
+                            controller: scrollController,
+                            itemBuilder: (context, index) {
+                              StudentModel student =
+                                  studentCubit.students![index];
+                              return Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.symmetric(vertical: 8.w),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.w,
+                                  vertical: 16.h,
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height: 25.0.h,
-                                        alignment: Alignment.center,
-                                        child: FittedBox(
-                                          fit: BoxFit.contain,
-                                          child: CupertinoSwitch(
-                                            trackColor: AppColors.grey500,
-                                            value: cubit.updatedStudents
-                                                .contains(student.detailId),
-                                            onChanged: (value) {},
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: AppColors.grey800,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Row(
+                                        children: [
+                                          UserImage(
+                                            profilePic: student.profilePic != ""
+                                                ? '${F.baseUrl}'
+                                                    '/admin/images/trainer/'
+                                                    '${student.id}/${student.profilePic}'
+                                                : '',
                                           ),
-                                        ),
+                                          SizedBox(width: 16.w),
+                                          Expanded(
+                                            child: Text(
+                                              '${student.name}',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            height: 25.0.h,
+                                            alignment: Alignment.center,
+                                            child: FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: CupertinoSwitch(
+                                                trackColor: AppColors.grey500,
+                                                value: cubit.updatedStudents
+                                                    .contains(student.detailId),
+                                                onChanged: (value) {
+                                                  cubit.updateStudent(
+                                                      student.detailId ?? 0);
+                                                  for (AttendanceDetails i
+                                                      in cubit
+                                                          .attendenceTaken) {
+                                                    if (i.studentDetail?.id ==
+                                                        student.detailId) {
+                                                      selectedStudent = i;
+                                                      break;
+                                                    }
+                                                  }
+
+                                                  cubit.updateAttendence(
+                                                      request: {
+                                                        "is_present": "1"
+                                                      },
+                                                      batchId: cubit.id,
+                                                      conductedClassId: cubit
+                                                          .conductedClassId,
+                                                      conductedClassStudentId:
+                                                          selectedStudent?.id);
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
                           );
                         },
                       ),
