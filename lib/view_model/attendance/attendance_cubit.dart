@@ -6,6 +6,7 @@ import 'package:part_app/model/data_model/attendance_monthly_record.dart';
 import 'package:part_app/model/data_model/attendence_classes_conducted.dart';
 import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
 import 'package:part_app/model/data_model/attendence_add_request.dart';
+import 'package:part_app/model/data_model/attendence_taken.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
@@ -20,8 +21,10 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   List<Attendance> _attendance = [];
   List<Days> _days = [];
   List<BatchModel> _batches = [];
+  List<AttendanceDetails> _attendenceTaken = [];
 
   Set<int> selectedStudents = {};
+  Set<int> updatedStudents = {};
 
   // pagination
   int page = 1;
@@ -30,6 +33,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   List<Attendance> get attendance => _attendance;
   List<Days> get days => _days;
   List<BatchModel> get batches => _batches;
+  List<AttendanceDetails> get attendenceTaken => _attendenceTaken;
   int id = 0;
 
   List<StudentAttendance>? studentAttendanceDetails;
@@ -224,6 +228,36 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     if (response?.status == 1) {
       conductedClasses = response?.conductedClasses.data ?? [];
       emit(AttendanceBatchesFetched());
+    }
+  }
+
+  /// this method can use when needed. It is working right now
+  Future getAttendenceTaken({int? batchId, int? conductedClassId}) async {
+    selectedStudents.clear();
+    _attendenceTaken.clear();
+    emit(UpdatingAttendence());
+    try {
+      AttendenceTaken? response = await _attendanceService.getAttendenceTaken(
+          batchId: batchId ?? 0, conductedClassId: conductedClassId ?? 0);
+      if (response?.status == 1) {
+        var items = response?.conductedClass?.attendances ?? [];
+
+        _attendenceTaken.addAll(items);
+
+        print("part 1: ${updatedStudents.length}");
+        updatedStudents.clear();
+        print("attendence taken: ${attendenceTaken.length}");
+        for (AttendanceDetails element in _attendenceTaken) {
+          if (element.isPresent == 1) {
+            updatedStudents.add(element.studentDetailId ?? 0);
+          }
+        }
+        print("part 2: ${updatedStudents.length}");
+
+        emit(AttendanceBatchesFetched());
+      }
+    } catch (e) {
+      emit(UpdateAttendenceFailed(e.toString()));
     }
   }
 }

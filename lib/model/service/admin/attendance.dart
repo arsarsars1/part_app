@@ -3,6 +3,7 @@ import 'package:part_app/model/data_model/attendance_monthly_record.dart';
 import 'package:part_app/model/data_model/attendence_add_request.dart';
 import 'package:part_app/model/data_model/attendence_classes_conducted.dart';
 import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
+import 'package:part_app/model/data_model/attendence_taken.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/service/api_client.dart';
@@ -17,6 +18,19 @@ class AttendanceService {
       );
 
       return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AttendenceTaken?> getAttendenceTaken(
+      {required int batchId, required int conductedClassId}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/batches/$batchId/attendance/$conductedClassId',
+      );
+
+      return attendenceTakenFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

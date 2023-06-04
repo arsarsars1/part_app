@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/attendence_add_request.dart';
+import 'package:part_app/model/data_model/attendence_taken.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/student_model.dart';
@@ -34,10 +35,9 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
 
     // get the trainers list
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await context.read<StudentCubit>().getStudents(
-            batchId: context.read<AttendanceCubit>().id,
-            clean: true,
-          );
+      AttendanceCubit cubit = context.read<AttendanceCubit>();
+      await cubit.getAttendenceTaken(
+          batchId: cubit.id, conductedClassId: cubit.conductedClassId);
       setState(() {});
     });
   }
@@ -53,21 +53,23 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
       body: Column(
         children: [
           Expanded(
-            child: BlocConsumer<BatchCubit, BatchState>(
-              listener: (context, state) {},
+            child: BlocConsumer<AttendanceCubit, AttendanceState>(
+              listener: (context, state) {
+                if (state is UpdateAttendenceFailed) {
+                  Alert(context).show(message: state.message);
+                }
+                if (state is UpdatedAttendence) {
+                  Alert(context).show(message: 'Attendence Updated');
+                }
+              },
               builder: (context, state) {
                 batch = context.read<BatchCubit>().batchModel;
-                if (state is FetchingBatch || state is UpdatingBatch) {
+                if (state is UpdatingAttendence) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
 
-                if (state is FetchBatchFailed) {
-                  return Center(
-                    child: Text(state.message),
-                  );
-                }
                 return Padding(
                   padding: EdgeInsets.all(20.h),
                   child: ListView(
@@ -247,16 +249,9 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                           fit: BoxFit.contain,
                                           child: CupertinoSwitch(
                                             trackColor: AppColors.grey500,
-                                            value: false,
-                                            onChanged: (value) {
-                                              Attendance studentAttendence =
-                                                  Attendance(
-                                                      studentDetailId:
-                                                          student.id ?? 0,
-                                                      isPresent: 0);
-                                              cubit.addAttendenceofStudent(
-                                                  studentAttendence);
-                                            },
+                                            value: cubit.updatedStudents
+                                                .contains(student.detailId),
+                                            onChanged: (value) {},
                                           ),
                                         ),
                                       ),

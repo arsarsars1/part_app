@@ -31,10 +31,12 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       AttendanceCubit cubit = context.read<AttendanceCubit>();
+      StudentCubit studentCubit = context.read<StudentCubit>();
       await cubit.getClassesOfMonth(
           batchId: cubit.id, date: DateTime(currentYear, currentMonth));
       await cubit.getConductedClassesOfMonth(
           batchId: cubit.id, date: DateTime(currentYear, currentMonth));
+      await studentCubit.getStudents(batchId: cubit.id, clean: true);    
       _markedDateMap.clear();
       setState(() {
         for (var element in cubit.attendenceClasses ?? []) {
