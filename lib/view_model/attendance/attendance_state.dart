@@ -17,6 +17,33 @@ class AttendanceBatchesFetched extends AttendanceState {
   AttendanceBatchesFetched({this.moreItems = false});
 }
 
+//creating attendence
+class CreatingAttendance extends AttendanceState {}
+
+class CreatedAttendance extends AttendanceState {}
+
+class AttendenceNetworkError extends AttendanceState {}
+
+class CreateAttendanceFailed extends AttendanceState {
+  final String message;
+
+  CreateAttendanceFailed(this.message);
+}
+
+class UpdatingAttendence extends AttendanceState {}
+
+class UpdatedAttendence extends AttendanceState {}
+
+class UpdateAttendenceFailed extends AttendanceState {
+  final String message;
+
+  UpdateAttendenceFailed(this.message);
+}
+
+class AddedForUpdateAttendance extends AttendanceState {}
+
+class AddedAttendance extends AttendanceState {}
+
 class FetchingAttendanceBatch extends AttendanceState {}
 
 class FetchedAttendanceBatch extends AttendanceState {}
@@ -37,6 +64,5 @@ class StudentsAttendanceFetched extends AttendanceState {
   final bool moreItems;
   StudentsAttendanceFetched({this.moreItems = false});
 }
-
 
 class AttendanceNetworkError extends AttendanceState {}

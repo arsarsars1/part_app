@@ -397,8 +397,8 @@ class _ClassTimeState extends State<ClassTime> {
           alwaysUse24HourFormat: false,
         );
 
-        print(tempFormat);
         if (tempFormat.toDateTime().isBefore(tempFormatStart.toDateTime())) {
+          // ignore: use_build_context_synchronously
           Alert(context).show(
             message: 'Selected end time is before start time.',
           );

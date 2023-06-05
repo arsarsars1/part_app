@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'reschedule_response.dart';
 
@@ -124,6 +124,8 @@ class _$_RescheduleResponse implements _RescheduleResponse {
   List<RescheduledClass>? get rescheduledClasses {
     final value = _rescheduledClasses;
     if (value == null) return null;
+    if (_rescheduledClasses is EqualUnmodifiableListView)
+      return _rescheduledClasses;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -380,6 +382,7 @@ class _$_RescheduledClasses implements _RescheduledClasses {
   List<RescheduledClass>? get data {
     final value = _data;
     if (value == null) return null;
+    if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -555,9 +558,9 @@ class _$RescheduledClassCopyWithImpl<$Res, $Val extends RescheduledClass>
     Object? newEndTime = freezed,
     Object? rescheduledByType = freezed,
     Object? rescheduledById = freezed,
-    Object? cancelledDate = null,
-    Object? cancelledStartTime = null,
-    Object? cancelledEndTime = null,
+    Object? cancelledDate = freezed,
+    Object? cancelledStartTime = freezed,
+    Object? cancelledEndTime = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -600,15 +603,15 @@ class _$RescheduledClassCopyWithImpl<$Res, $Val extends RescheduledClass>
           ? _value.rescheduledById
           : rescheduledById // ignore: cast_nullable_to_non_nullable
               as int?,
-      cancelledDate: null == cancelledDate
+      cancelledDate: freezed == cancelledDate
           ? _value.cancelledDate
           : cancelledDate // ignore: cast_nullable_to_non_nullable
               as dynamic?,
-      cancelledStartTime: null == cancelledStartTime
+      cancelledStartTime: freezed == cancelledStartTime
           ? _value.cancelledStartTime
           : cancelledStartTime // ignore: cast_nullable_to_non_nullable
               as dynamic?,
-      cancelledEndTime: null == cancelledEndTime
+      cancelledEndTime: freezed == cancelledEndTime
           ? _value.cancelledEndTime
           : cancelledEndTime // ignore: cast_nullable_to_non_nullable
               as dynamic?,
@@ -661,9 +664,9 @@ class __$$_RescheduledClassCopyWithImpl<$Res>
     Object? newEndTime = freezed,
     Object? rescheduledByType = freezed,
     Object? rescheduledById = freezed,
-    Object? cancelledDate = null,
-    Object? cancelledStartTime = null,
-    Object? cancelledEndTime = null,
+    Object? cancelledDate = freezed,
+    Object? cancelledStartTime = freezed,
+    Object? cancelledEndTime = freezed,
   }) {
     return _then(_$_RescheduledClass(
       id: freezed == id
@@ -706,15 +709,15 @@ class __$$_RescheduledClassCopyWithImpl<$Res>
           ? _value.rescheduledById
           : rescheduledById // ignore: cast_nullable_to_non_nullable
               as int?,
-      cancelledDate: null == cancelledDate
+      cancelledDate: freezed == cancelledDate
           ? _value.cancelledDate
           : cancelledDate // ignore: cast_nullable_to_non_nullable
               as dynamic?,
-      cancelledStartTime: null == cancelledStartTime
+      cancelledStartTime: freezed == cancelledStartTime
           ? _value.cancelledStartTime
           : cancelledStartTime // ignore: cast_nullable_to_non_nullable
               as dynamic?,
-      cancelledEndTime: null == cancelledEndTime
+      cancelledEndTime: freezed == cancelledEndTime
           ? _value.cancelledEndTime
           : cancelledEndTime // ignore: cast_nullable_to_non_nullable
               as dynamic?,

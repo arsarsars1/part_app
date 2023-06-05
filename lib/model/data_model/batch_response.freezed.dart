@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'batch_response.dart';
 
@@ -328,6 +328,7 @@ class _$_StudentsBatchResponse implements _StudentsBatchResponse {
   List<Batch>? get batches {
     final value = _batches;
     if (value == null) return null;
+    if (_batches is EqualUnmodifiableListView) return _batches;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -546,6 +547,7 @@ class _$_Datum implements _Datum {
   final List<Batch> _data;
   @override
   List<Batch> get data {
+    if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_data);
   }
@@ -1052,6 +1054,7 @@ class _$_Batch implements _Batch {
   List<BatchDetail>? get batchDetail {
     final value = _batchDetail;
     if (value == null) return null;
+    if (_batchDetail is EqualUnmodifiableListView) return _batchDetail;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -1061,6 +1064,7 @@ class _$_Batch implements _Batch {
   List<Trainer>? get trainers {
     final value = _trainers;
     if (value == null) return null;
+    if (_trainers is EqualUnmodifiableListView) return _trainers;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -1558,7 +1562,7 @@ class _$PivotClassCopyWithImpl<$Res, $Val extends PivotClass>
   $Res call({
     Object? studentDetailId = freezed,
     Object? batchId = freezed,
-    Object? noOfClasses = null,
+    Object? noOfClasses = freezed,
     Object? feeType = freezed,
     Object? feeAmount = freezed,
     Object? admissionFees = freezed,
@@ -1576,7 +1580,7 @@ class _$PivotClassCopyWithImpl<$Res, $Val extends PivotClass>
           ? _value.batchId
           : batchId // ignore: cast_nullable_to_non_nullable
               as int?,
-      noOfClasses: null == noOfClasses
+      noOfClasses: freezed == noOfClasses
           ? _value.noOfClasses
           : noOfClasses // ignore: cast_nullable_to_non_nullable
               as dynamic?,
@@ -1646,7 +1650,7 @@ class __$$_PivotClassCopyWithImpl<$Res>
   $Res call({
     Object? studentDetailId = freezed,
     Object? batchId = freezed,
-    Object? noOfClasses = null,
+    Object? noOfClasses = freezed,
     Object? feeType = freezed,
     Object? feeAmount = freezed,
     Object? admissionFees = freezed,
@@ -1664,7 +1668,7 @@ class __$$_PivotClassCopyWithImpl<$Res>
           ? _value.batchId
           : batchId // ignore: cast_nullable_to_non_nullable
               as int?,
-      noOfClasses: null == noOfClasses
+      noOfClasses: freezed == noOfClasses
           ? _value.noOfClasses
           : noOfClasses // ignore: cast_nullable_to_non_nullable
               as dynamic?,

@@ -136,7 +136,7 @@ class ApiClient {
       }
       return _handleResponse(response);
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
   }
 

@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'package:part_app/model/data_model/attendance_monthly_record.dart';
+import 'package:part_app/model/data_model/attendence_add_request.dart';
+import 'package:part_app/model/data_model/attendence_classes_conducted.dart';
 import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
+import 'package:part_app/model/data_model/attendence_taken.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/service/api_client.dart';
 
 class AttendanceService {
@@ -19,6 +23,51 @@ class AttendanceService {
     }
   }
 
+  Future<Common?> updateAttendence(
+      {Map<String, dynamic>? request,
+      int? batchId,
+      int? conductedClassId,
+      int? conductedClassStudentId}) async {
+    try {
+      var response = await _apiClient.post(
+        postPath:
+            '/admin/batches/$batchId/attendance/$conductedClassId/$conductedClassStudentId',
+        data: request ?? {"": ""},
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AttendenceTaken?> getAttendenceTaken(
+      {required int batchId, required int conductedClassId}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/batches/$batchId/attendance/$conductedClassId',
+      );
+
+      return attendenceTakenFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> createAttendence(AttendenceAddRequest request,
+      {int? batchId}) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/batches/$batchId/attendance',
+        data: request.toJson(),
+        formData: true,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<AttendenceClassesOfMonth?> getAttendeceClassesOfMonth(
       {required int? batchId, required DateTime? date}) async {
     try {
@@ -28,6 +77,20 @@ class AttendanceService {
       );
 
       return attendenceClassesOfMonthFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AttendenceConductedClass?> getConductedAttendeceClassesOfMonth(
+      {required int? batchId, required DateTime? date}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/admin/batches/$batchId/attendance/list/${date?.year}/${date?.month}',
+      );
+
+      return attendenceConductedClassFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

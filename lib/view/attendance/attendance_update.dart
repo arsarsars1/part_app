@@ -1,10 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:part_app/flavors.dart';
+import 'package:part_app/model/data_model/attendence_add_request.dart';
+import 'package:part_app/model/data_model/attendence_taken.dart';
+import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
-import 'package:part_app/model/data_model/trainer_response.dart';
-import 'package:part_app/view/attendance/components/attendance_update_list_item.dart';
+import 'package:part_app/model/data_model/student_model.dart';
+import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/attendance/attendance_add.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/trainer/trainer_details.dart';
+import 'package:part_app/view_model/attendance/attendance_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AttendanceUpdate extends StatefulWidget {
@@ -17,26 +23,27 @@ class AttendanceUpdate extends StatefulWidget {
 }
 
 class _AttendanceUpdateState extends State<AttendanceUpdate> {
-  int? branchId;
-  String? query;
-  String? temp;
-  DropDownItem? selectedItem;
+  ScrollController scrollController = ScrollController();
+  BatchModel? batch;
+  AttendanceDetails? selectedStudent;
 
   @override
   void initState() {
     super.initState();
 
     // get the trainers list
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<TrainerCubit>().getActiveInactiveTrainers(active: true);
-      context.read<BranchCubit>().getBranches();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      AttendanceCubit cubit = context.read<AttendanceCubit>();
+      await cubit.getAttendenceTaken(
+          batchId: cubit.id, conductedClassId: cubit.conductedClassId);
+      setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<TrainerCubit>();
-    var branchCubit = context.read<BranchCubit>();
+    var cubit = context.read<AttendanceCubit>();
+    var studentCubit = context.read<StudentCubit>();
     return Scaffold(
       appBar: const CommonBar(
         title: 'Class Attendance',
@@ -44,141 +51,73 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
       body: Column(
         children: [
           Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                SizedBox(
-                  height: 20.h,
-                ),
-                BlocBuilder<BranchCubit, BranchState>(
-                  builder: (context, state) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Branch',
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          DropdownButtonFormField<DropDownItem>(
-                            dropdownColor: Theme.of(context)
-                                .inputDecorationTheme
-                                .fillColor,
-                            value: selectedItem ?? const DropDownItem(id: -1),
-                            decoration: const InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 16),
-                            ),
-                            items: [
-                              DropdownMenuItem(
-                                value: const DropDownItem(id: -1),
-                                child: Text(
-                                  'All',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(
-                                        color: Colors.white,
-                                      ),
-                                ),
-                              ),
-                              ...branchCubit.dropDownBranches().map((e) {
-                                return DropdownMenuItem(
-                                  value: e,
-                                  child: Text(
-                                    e.title ?? '',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        ?.copyWith(
-                                          color: Colors.white,
-                                        ),
-                                  ),
-                                );
-                              }).toList()
-                            ],
-                            onChanged: (value) {
-                              if (value?.id == -1) {
-                                setState(() {
-                                  branchId = null;
-                                  selectedItem = value;
-                                  if (query != null) {
-                                    cubit.searchTrainers(branchId,
-                                        query: query);
-                                  } else {
-                                    cubit.getActiveInactiveTrainers(
-                                        active: true);
-                                  }
-                                });
-                              } else {
-                                branchId = value?.id;
-                                selectedItem = value;
-                                setState(() {
-                                  cubit.getActiveInactiveTrainers(
-                                      branchId: branchId, active: true);
-                                });
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+            child: BlocConsumer<AttendanceCubit, AttendanceState>(
+              listener: (context, state) {
+                if (state is UpdateAttendenceFailed) {
+                  Alert(context).show(message: state.message);
+                }
+                if (state is UpdatedAttendence) {
+                  Alert(context).show(message: 'Attendence Updated');
+                }
+                if (state is AddedForUpdateAttendance) {}
+              },
+              builder: (context, state) {
+                batch = context.read<BatchCubit>().batchModel;
+                if (state is UpdatingAttendence) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
 
-                SizedBox(
-                  height: 20.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 44.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                return Padding(
+                  padding: EdgeInsets.all(20.h),
+                  child: ListView(
+                    controller: scrollController,
                     children: [
                       Text(
-                        'Batch1',
+                        "${batch?.name}",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: AppColors.primaryColor,
-                              fontSize: 16,
-                            ),
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primaryColor),
                       ),
+                      SizedBox(height: 10.h),
                       Row(
                         children: [
                           Text(
-                            'Time: ',
+                            "Time: ",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
-                                      color: AppColors.textColor,
-                                      fontSize: 14,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold,
                                     ),
                           ),
                           Text(
-                            '9:00am - 10:00am',
+                            "${batch?.batchDetail?[0].startTime?.toAmPM()} - ${batch?.batchDetail?[0].endTime?.toAmPM()}",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      fontSize: 12.sp,
                                       color: AppColors.primaryColor,
-                                      fontSize: 14,
                                     ),
                           ),
                         ],
                       ),
+                      SizedBox(height: 10.h),
                       Text(
-                        'Branch Name',
+                        "${batch?.branchName}",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: AppColors.textColor,
-                              fontSize: 14,
+                              fontSize: 12.sp,
                             ),
                       ),
-                      Text(
-                        'Course, Subject',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              color: AppColors.textColor,
-                              fontSize: 14,
-                            ),
-                      ),
+                      SizedBox(height: 5.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -186,24 +125,27 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Trainer - Vijay, Rahul',
+                                "${batch?.courseName}, ${batch?.subjectName}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
                                     ?.copyWith(
-                                      color: AppColors.primaryColor,
-                                      fontSize: 14,
+                                      fontSize: 12.sp,
                                     ),
                               ),
+                              SizedBox(height: 10.h),
                               Text(
-                                'Attendance: 4/6',
+                                "Trainer - ${batch?.trainersString}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
                                     ?.copyWith(
-                                      color: AppColors.textColor,
-                                      fontSize: 14,
-                                    ),
+                                        fontSize: 12.sp,
+                                        color: AppColors.primaryColor),
                               ),
                             ],
                           ),
@@ -211,7 +153,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Monday',
+                                '${cubit.conductedDate?.toDay()}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -221,7 +163,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                     ),
                               ),
                               Text(
-                                '14 August 2022',
+                                '${cubit.conductedDate?.toDDMMMYYY()}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -234,113 +176,190 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                           )
                         ],
                       ),
+                      SizedBox(height: 5.h),
+                      Text(
+                        "Attendence: 4/6",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontSize: 12.sp,
+                            ),
+                      ),
+                      SizedBox(height: 15.h),
+                      Text(
+                        "Note: You can update each student's attendence from this page for the following batch on the selected date.",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontSize: 12.sp,
+                            ),
+                      ),
+                      SizedBox(height: 25.h),
+                      BlocBuilder<AttendanceCubit, AttendanceState>(
+                        builder: (context, state) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: studentCubit.students?.length,
+                            controller: scrollController,
+                            itemBuilder: (context, index) {
+                              StudentModel student =
+                                  studentCubit.students![index];
+                              return Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.symmetric(vertical: 8.w),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.w,
+                                  vertical: 16.h,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: AppColors.grey800,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Row(
+                                        children: [
+                                          UserImage(
+                                            profilePic: student.profilePic != ""
+                                                ? '${F.baseUrl}'
+                                                    '/admin/images/trainer/'
+                                                    '${student.id}/${student.profilePic}'
+                                                : '',
+                                          ),
+                                          SizedBox(width: 16.w),
+                                          Expanded(
+                                            child: Text(
+                                              '${student.name}',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            height: 25.0.h,
+                                            alignment: Alignment.center,
+                                            child: FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: CupertinoSwitch(
+                                                trackColor: AppColors.grey500,
+                                                value: cubit.updatedStudents
+                                                    .contains(student.detailId),
+                                                onChanged: (value) {
+                                                  cubit.updateStudent(
+                                                      student.detailId ?? 0);
+                                                  for (AttendanceDetails i
+                                                      in cubit
+                                                          .attendenceTaken) {
+                                                    if (i.studentDetail?.id ==
+                                                        student.detailId) {
+                                                      selectedStudent = i;
+                                                      break;
+                                                    }
+                                                  }
+                                                  CommonDialog(
+                                                    context: context,
+                                                    message:
+                                                        'Are you sure you want to update\nattendence for ${selectedStudent?.studentDetail?.name}',
+                                                    buttonText: 'Ok',
+                                                    subColor:
+                                                        AppColors.primaryColor,
+                                                    subContent: Text(
+                                                      'Date : ${cubit.conductedDate?.formattedString()} '
+                                                      '\n\nTime : ${batch?.batchDetail?[0].startTime?.toAmPM()} - '
+                                                      '${batch?.batchDetail?[0].endTime?.toAmPM()}'
+                                                      '\n\n${batch?.branchName}'
+                                                      '\n\n${batch?.name}'
+                                                      '\n\n${batch?.courseName}, ${batch?.subjectName}\n\n\n',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1
+                                                          ?.copyWith(
+                                                            color: AppColors
+                                                                .primaryColor,
+                                                          ),
+                                                    ),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      cubit.updateAttendence(
+                                                          request: {
+                                                            "is_present": "1"
+                                                          },
+                                                          batchId: cubit.id,
+                                                          conductedClassId: cubit
+                                                              .conductedClassId,
+                                                          conductedClassStudentId:
+                                                              selectedStudent
+                                                                  ?.studentDetailId);
+                                                    },
+                                                  ).show();
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 34.0),
-                  child: Text(
-                    'Note: You can update each students attendance from this page for the following batch on the selected date.',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: AppColors.textColor,
-                          fontSize: 14,
-                        ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Column(
-                  children: [
-                    /*if (branchId == null)
-                      Column(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: TabButton(
-                              onChange: (String value) {
-                                temp = value;
-                                if (value == "Active Trainers") {
-                                  cubit.getActiveInactiveTrainers(
-                                      branchId: branchId, active: true);
-                                } else {
-                                  cubit.getActiveInactiveTrainers(
-                                      branchId: branchId, clean: true);
-                                }
-                              },
-                              options: const [
-                                'Active Trainers',
-                                'Inactive Trainers',
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                        ],
-                      ),*/
-                    BlocBuilder<TrainerCubit, TrainerState>(
-                      builder: (context, state) {
-                        if (state is FetchingTrainers) {
-                          return const Padding(
-                            padding: EdgeInsets.all(64.0),
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
-                        }
-                        if (state is TrainerCreated) {
-                          context
-                              .read<TrainerCubit>()
-                              .getActiveInactiveTrainers(
-                                  branchId: branchId,
-                                  active:
-                                      temp == "Active Trainers" ? true : false);
-                        }
-                        // ignore: prefer_is_empty
-                        if (cubit.trainers?.length == 0) {
-                          return Padding(
-                            padding: const EdgeInsets.all(64.0),
-                            child: Center(
-                              child: Text(
-                                query == null
-                                    ? selectedItem == null
-                                        ? 'Add a trainer to get started'
-                                        : 'No active trainers'
-                                    : 'Sorry, No Matching Results Found.',
-                              ),
-                            ),
-                          );
-                        }
-                        return AttendanceUpdateListItem(
-                          trainers: cubit.trainers ?? [],
-                          onSelect: (Trainer trainer) async {
-                            context.read<TrainerCubit>().getTrainerDetails(
-                                  trainerId: trainer.id,
-                                );
-                            await Navigator.pushNamed(
-                                context, TrainerDetails.route);
-                            // ignore: use_build_context_synchronously
-                            context
-                                .read<TrainerCubit>()
-                                .getActiveInactiveTrainers(
-                                    branchId: branchId,
-                                    active: temp == "Active Trainers"
-                                        ? true
-                                        : false);
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                )
-              ],
+                );
+              },
             ),
           ),
+          // AttendanceUpdateListItem(
+          //   students: studentCubit.students ?? [],
+          //   onSelect: (StudentModel student) async {},
+          // )
+          // BlocBuilder<StudentCubit, StudentState>(
+          //   builder: (context, state) {
+          //     if (state is FetchingTrainers) {
+          //       return const Padding(
+          //         padding: EdgeInsets.all(64.0),
+          //         child: Center(
+          //           child: CircularProgressIndicator(),
+          //         ),
+          //       );
+          //     }
+
+          //     // ignore: prefer_is_empty
+          //     if (studentCubit.students?.length == 0) {
+          //       return Padding(
+          //         padding: const EdgeInsets.all(64.0),
+          //         child: Center(
+          //           child: Text(
+          //             query == null
+          //                 ? selectedItem == null
+          //                     ? 'Add a trainer to get started'
+          //                     : 'No active trainers'
+          //                 : 'Sorry, No Matching Results Found.',
+          //           ),
+          //         ),
+          //       );
+          //     }
+          //     return AttendanceUpdateListItem(
+          //       students: studentCubit.students ?? [],
+          //       onSelect: (StudentModel student) async {},
+          //     );
+          //   },
+          // ),
         ],
       ),
     );

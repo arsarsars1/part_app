@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user_response.dart';
 
@@ -502,6 +502,7 @@ class _$_User implements _User {
   List<Trainer>? get trainerDetail {
     final value = _trainerDetail;
     if (value == null) return null;
+    if (_trainerDetail is EqualUnmodifiableListView) return _trainerDetail;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -511,6 +512,7 @@ class _$_User implements _User {
   List<dynamic>? get studentDetail {
     final value = _studentDetail;
     if (value == null) return null;
+    if (_studentDetail is EqualUnmodifiableListView) return _studentDetail;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -520,6 +522,7 @@ class _$_User implements _User {
   List<dynamic>? get managerDetail {
     final value = _managerDetail;
     if (value == null) return null;
+    if (_managerDetail is EqualUnmodifiableListView) return _managerDetail;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -1152,7 +1155,7 @@ class _$AcademyCopyWithImpl<$Res, $Val extends Academy>
     Object? maxNoOfStudents = freezed,
     Object? maxNoOfBranches = freezed,
     Object? createdBy = freezed,
-    Object? updatedBy = null,
+    Object? updatedBy = freezed,
     Object? createdFrom = freezed,
     Object? isActive = freezed,
     Object? createdAt = freezed,
@@ -1215,7 +1218,7 @@ class _$AcademyCopyWithImpl<$Res, $Val extends Academy>
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as int?,
-      updatedBy: null == updatedBy
+      updatedBy: freezed == updatedBy
           ? _value.updatedBy
           : updatedBy // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -1292,7 +1295,7 @@ class __$$_AcademyCopyWithImpl<$Res>
     Object? maxNoOfStudents = freezed,
     Object? maxNoOfBranches = freezed,
     Object? createdBy = freezed,
-    Object? updatedBy = null,
+    Object? updatedBy = freezed,
     Object? createdFrom = freezed,
     Object? isActive = freezed,
     Object? createdAt = freezed,
@@ -1355,7 +1358,7 @@ class __$$_AcademyCopyWithImpl<$Res>
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as int?,
-      updatedBy: null == updatedBy
+      updatedBy: freezed == updatedBy
           ? _value.updatedBy
           : updatedBy // ignore: cast_nullable_to_non_nullable
               as dynamic,

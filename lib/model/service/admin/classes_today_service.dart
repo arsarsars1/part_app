@@ -1,11 +1,5 @@
 import 'dart:convert';
-
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:part_app/model/data_model/ClassesToday.dart';
-import 'package:part_app/model/data_model/branch_trainer_response.dart';
-import 'package:part_app/model/data_model/common.dart';
-import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/api.dart';
 
 class ClassesTodayService {

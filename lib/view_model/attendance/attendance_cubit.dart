@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/attendance_monthly_record.dart';
+import 'package:part_app/model/data_model/attendence_classes_conducted.dart';
 import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
+import 'package:part_app/model/data_model/attendence_add_request.dart';
+import 'package:part_app/model/data_model/attendence_taken.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/common.dart';
 import '../../model/service/admin/attendance.dart';
 part 'attendance_state.dart';
 
@@ -12,26 +18,103 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   AttendanceCubit() : super(AttendanceInitial());
   final _attendanceService = AttendanceService();
 
+  List<Attendance> _attendance = [];
   List<Days> _days = [];
   List<BatchModel> _batches = [];
+  List<AttendanceDetails> _attendenceTaken = [];
+
+  Set<int> selectedStudents = {};
+  Set<int> updatedStudents = {};
 
   // pagination
   int page = 1;
   String? nextPageUrl = '';
 
+  List<Attendance> get attendance => _attendance;
   List<Days> get days => _days;
   List<BatchModel> get batches => _batches;
+  List<AttendanceDetails> get attendenceTaken => _attendenceTaken;
   int id = 0;
 
   List<StudentAttendance>? studentAttendanceDetails;
   List<Class>? attendenceClasses;
+  List<ConductedClass>? conductedClasses;
   int conductedClassCount = 0;
+  DateTime? conductedDate;
+  int? conductedClassId;
+
+  void addOrRemoveStudent(int studentId) {
+    if (selectedStudents.contains(studentId)) {
+      selectedStudents.remove(studentId);
+    } else {
+      selectedStudents.add(studentId);
+    }
+    emit(AddedAttendance());
+  }
+
+  void updateStudent(int studentId) {
+    if (updatedStudents.contains(studentId)) {
+      updatedStudents.remove(studentId);
+    } else {
+      updatedStudents.add(studentId);
+    }
+    emit(AddedForUpdateAttendance());
+  }
+
+  Future updateAttendence(
+      {Map<String, dynamic>? request,
+      int? batchId,
+      int? conductedClassId,
+      int? conductedClassStudentId}) async {
+    emit(UpdatingAttendence());
+    Common? response = await _attendanceService.updateAttendence(
+      request: request,
+      batchId: batchId,
+      conductedClassId: conductedClassId,
+      conductedClassStudentId: conductedClassStudentId,
+    );
+    if (response?.status == 1) {
+      emit(UpdatedAttendence());
+    } else {
+      emit(UpdateAttendenceFailed(response?.message ?? 'Failed to reschedule'));
+    }
+  }
 
   /// reset
   void reset() {
     _batches.clear();
     studentAttendanceDetails = [];
     emit(AttendanceInitial());
+  }
+
+  void addAttendenceofStudent(Attendance attendance) {
+    _attendance.removeWhere(
+        (element) => element.studentDetailId == attendance.studentDetailId);
+    _attendance.add(attendance);
+
+    // emit(DaysUpdated());
+  }
+
+  List<String> buildAttendanceList() {
+    return _attendance.map((e) {
+      return json.encode(e);
+    }).toList();
+  }
+
+  Future addAttendence(AttendenceAddRequest request, {int? batchId}) async {
+    emit(CreatingAttendance());
+    try {
+      Common? response =
+          await _attendanceService.createAttendence(request, batchId: batchId);
+      if (response?.status == 1) {
+        emit(CreatedAttendance());
+      } else {
+        emit(CreateAttendanceFailed(
+            response?.message ?? 'Failed to save attendence.'));
+      }
+    } catch (e) {
+      emit(CreateAttendanceFailed('Failed to save attendence.'));
+    }
   }
 
   void refresh() {
@@ -158,6 +241,48 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     if (response?.status == 1) {
       attendenceClasses = response?.classes ?? [];
       emit(AttendanceBatchesFetched());
+    }
+  }
+
+  /// this method is used to get the classes of a batch in a particular month
+  Future getConductedClassesOfMonth({
+    int? batchId,
+    DateTime? date,
+  }) async {
+    _batches.clear();
+    emit(FetchingAttendanceBatches(pagination: false));
+    AttendenceConductedClass? response = await _attendanceService
+        .getConductedAttendeceClassesOfMonth(batchId: batchId, date: date);
+    if (response?.status == 1) {
+      conductedClasses = response?.conductedClasses.data ?? [];
+      emit(AttendanceBatchesFetched());
+    }
+  }
+
+  /// this method can use when needed. It is working right now
+  Future getAttendenceTaken({int? batchId, int? conductedClassId}) async {
+    selectedStudents.clear();
+    _attendenceTaken.clear();
+    emit(UpdatingAttendence());
+    try {
+      AttendenceTaken? response = await _attendanceService.getAttendenceTaken(
+          batchId: batchId ?? 0, conductedClassId: conductedClassId ?? 0);
+      if (response?.status == 1) {
+        var items = response?.conductedClass?.attendances ?? [];
+
+        _attendenceTaken.addAll(items);
+
+        updatedStudents.clear();
+        for (AttendanceDetails element in _attendenceTaken) {
+          if (element.isPresent == 1) {
+            updatedStudents.add(element.studentDetailId ?? 0);
+          }
+        }
+
+        emit(AttendanceBatchesFetched());
+      }
+    } catch (e) {
+      emit(UpdateAttendenceFailed(e.toString()));
     }
   }
 }
