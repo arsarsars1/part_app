@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:month_year_picker/month_year_picker.dart';
+// import 'package:month_year_picker/month_year_picker.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/service/api.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -8,6 +8,8 @@ import 'package:part_app/view/route_generator.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
+import 'package:part_app/view_model/todays_classes/classes_today_cubit.dart';
+import 'view_model/attendance/attendance_cubit.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -67,6 +69,12 @@ class _AppState extends State<App> {
         BlocProvider<LeadsCubit>(
           create: (context) => LeadsCubit(),
         ),
+        BlocProvider<AttendanceCubit>(
+          create: (context) => AttendanceCubit(),
+        ),
+        BlocProvider<ClassesTodayCubit>(
+          create: (context) => ClassesTodayCubit(),
+        ),
       ],
       child: GestureDetector(
         onTap: () {
@@ -80,7 +88,7 @@ class _AppState extends State<App> {
             builder: (_, child) {
               return MaterialApp(
                 localizationsDelegates: const [
-                  MonthYearPickerLocalizations.delegate,
+                  // MonthYearPickerLocalizations.delegate,
                 ],
                 debugShowCheckedModeBanner: false,
                 title: F.title,

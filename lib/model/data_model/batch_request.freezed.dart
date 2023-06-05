@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'batch_request.dart';
 
@@ -24,11 +24,12 @@ mixin _$BatchRequest {
   int? get branchId => throw _privateConstructorUsedError;
   int? get courseId => throw _privateConstructorUsedError;
   int? get subjectId => throw _privateConstructorUsedError;
+  int? get retainStudents => throw _privateConstructorUsedError;
   String? get batchStatus => throw _privateConstructorUsedError;
   dynamic get feeAmount => throw _privateConstructorUsedError;
   dynamic get admissionFees => throw _privateConstructorUsedError;
   @JsonKey(name: 'trainers[]')
-  List<int?>? get trainers => throw _privateConstructorUsedError;
+  dynamic get trainers => throw _privateConstructorUsedError;
   @JsonKey(name: 'days[]')
   List<String>? get days => throw _privateConstructorUsedError;
 
@@ -49,10 +50,11 @@ abstract class $BatchRequestCopyWith<$Res> {
       int? branchId,
       int? courseId,
       int? subjectId,
+      int? retainStudents,
       String? batchStatus,
       dynamic feeAmount,
       dynamic admissionFees,
-      @JsonKey(name: 'trainers[]') List<int?>? trainers,
+      @JsonKey(name: 'trainers[]') dynamic trainers,
       @JsonKey(name: 'days[]') List<String>? days});
 }
 
@@ -73,9 +75,10 @@ class _$BatchRequestCopyWithImpl<$Res, $Val extends BatchRequest>
     Object? branchId = freezed,
     Object? courseId = freezed,
     Object? subjectId = freezed,
+    Object? retainStudents = freezed,
     Object? batchStatus = freezed,
-    Object? feeAmount = null,
-    Object? admissionFees = null,
+    Object? feeAmount = freezed,
+    Object? admissionFees = freezed,
     Object? trainers = freezed,
     Object? days = freezed,
   }) {
@@ -96,22 +99,26 @@ class _$BatchRequestCopyWithImpl<$Res, $Val extends BatchRequest>
           ? _value.subjectId
           : subjectId // ignore: cast_nullable_to_non_nullable
               as int?,
+      retainStudents: freezed == retainStudents
+          ? _value.retainStudents
+          : retainStudents // ignore: cast_nullable_to_non_nullable
+              as int?,
       batchStatus: freezed == batchStatus
           ? _value.batchStatus
           : batchStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      feeAmount: null == feeAmount
+      feeAmount: freezed == feeAmount
           ? _value.feeAmount
           : feeAmount // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      admissionFees: null == admissionFees
+      admissionFees: freezed == admissionFees
           ? _value.admissionFees
           : admissionFees // ignore: cast_nullable_to_non_nullable
               as dynamic,
       trainers: freezed == trainers
           ? _value.trainers
           : trainers // ignore: cast_nullable_to_non_nullable
-              as List<int?>?,
+              as dynamic,
       days: freezed == days
           ? _value.days
           : days // ignore: cast_nullable_to_non_nullable
@@ -133,10 +140,11 @@ abstract class _$$_BatchRequestCopyWith<$Res>
       int? branchId,
       int? courseId,
       int? subjectId,
+      int? retainStudents,
       String? batchStatus,
       dynamic feeAmount,
       dynamic admissionFees,
-      @JsonKey(name: 'trainers[]') List<int?>? trainers,
+      @JsonKey(name: 'trainers[]') dynamic trainers,
       @JsonKey(name: 'days[]') List<String>? days});
 }
 
@@ -155,9 +163,10 @@ class __$$_BatchRequestCopyWithImpl<$Res>
     Object? branchId = freezed,
     Object? courseId = freezed,
     Object? subjectId = freezed,
+    Object? retainStudents = freezed,
     Object? batchStatus = freezed,
-    Object? feeAmount = null,
-    Object? admissionFees = null,
+    Object? feeAmount = freezed,
+    Object? admissionFees = freezed,
     Object? trainers = freezed,
     Object? days = freezed,
   }) {
@@ -178,22 +187,26 @@ class __$$_BatchRequestCopyWithImpl<$Res>
           ? _value.subjectId
           : subjectId // ignore: cast_nullable_to_non_nullable
               as int?,
+      retainStudents: freezed == retainStudents
+          ? _value.retainStudents
+          : retainStudents // ignore: cast_nullable_to_non_nullable
+              as int?,
       batchStatus: freezed == batchStatus
           ? _value.batchStatus
           : batchStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      feeAmount: null == feeAmount
+      feeAmount: freezed == feeAmount
           ? _value.feeAmount
           : feeAmount // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      admissionFees: null == admissionFees
+      admissionFees: freezed == admissionFees
           ? _value.admissionFees
           : admissionFees // ignore: cast_nullable_to_non_nullable
               as dynamic,
       trainers: freezed == trainers
-          ? _value._trainers
+          ? _value.trainers
           : trainers // ignore: cast_nullable_to_non_nullable
-              as List<int?>?,
+              as dynamic,
       days: freezed == days
           ? _value._days
           : days // ignore: cast_nullable_to_non_nullable
@@ -211,13 +224,13 @@ class _$_BatchRequest implements _BatchRequest {
       this.branchId,
       this.courseId,
       this.subjectId,
+      this.retainStudents,
       this.batchStatus,
       this.feeAmount,
       this.admissionFees,
-      @JsonKey(name: 'trainers[]') final List<int?>? trainers,
+      @JsonKey(name: 'trainers[]') this.trainers,
       @JsonKey(name: 'days[]') final List<String>? days})
-      : _trainers = trainers,
-        _days = days;
+      : _days = days;
 
   factory _$_BatchRequest.fromJson(Map<String, dynamic> json) =>
       _$$_BatchRequestFromJson(json);
@@ -231,34 +244,30 @@ class _$_BatchRequest implements _BatchRequest {
   @override
   final int? subjectId;
   @override
+  final int? retainStudents;
+  @override
   final String? batchStatus;
   @override
   final dynamic feeAmount;
   @override
   final dynamic admissionFees;
-  final List<int?>? _trainers;
   @override
   @JsonKey(name: 'trainers[]')
-  List<int?>? get trainers {
-    final value = _trainers;
-    if (value == null) return null;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final dynamic trainers;
   final List<String>? _days;
   @override
   @JsonKey(name: 'days[]')
   List<String>? get days {
     final value = _days;
     if (value == null) return null;
+    if (_days is EqualUnmodifiableListView) return _days;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
   @override
   String toString() {
-    return 'BatchRequest(batchName: $batchName, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, batchStatus: $batchStatus, feeAmount: $feeAmount, admissionFees: $admissionFees, trainers: $trainers, days: $days)';
+    return 'BatchRequest(batchName: $batchName, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, retainStudents: $retainStudents, batchStatus: $batchStatus, feeAmount: $feeAmount, admissionFees: $admissionFees, trainers: $trainers, days: $days)';
   }
 
   @override
@@ -274,12 +283,14 @@ class _$_BatchRequest implements _BatchRequest {
                 other.courseId == courseId) &&
             (identical(other.subjectId, subjectId) ||
                 other.subjectId == subjectId) &&
+            (identical(other.retainStudents, retainStudents) ||
+                other.retainStudents == retainStudents) &&
             (identical(other.batchStatus, batchStatus) ||
                 other.batchStatus == batchStatus) &&
             const DeepCollectionEquality().equals(other.feeAmount, feeAmount) &&
             const DeepCollectionEquality()
                 .equals(other.admissionFees, admissionFees) &&
-            const DeepCollectionEquality().equals(other._trainers, _trainers) &&
+            const DeepCollectionEquality().equals(other.trainers, trainers) &&
             const DeepCollectionEquality().equals(other._days, _days));
   }
 
@@ -291,10 +302,11 @@ class _$_BatchRequest implements _BatchRequest {
       branchId,
       courseId,
       subjectId,
+      retainStudents,
       batchStatus,
       const DeepCollectionEquality().hash(feeAmount),
       const DeepCollectionEquality().hash(admissionFees),
-      const DeepCollectionEquality().hash(_trainers),
+      const DeepCollectionEquality().hash(trainers),
       const DeepCollectionEquality().hash(_days));
 
   @JsonKey(ignore: true)
@@ -317,10 +329,11 @@ abstract class _BatchRequest implements BatchRequest {
       final int? branchId,
       final int? courseId,
       final int? subjectId,
+      final int? retainStudents,
       final String? batchStatus,
       final dynamic feeAmount,
       final dynamic admissionFees,
-      @JsonKey(name: 'trainers[]') final List<int?>? trainers,
+      @JsonKey(name: 'trainers[]') final dynamic trainers,
       @JsonKey(name: 'days[]') final List<String>? days}) = _$_BatchRequest;
 
   factory _BatchRequest.fromJson(Map<String, dynamic> json) =
@@ -335,6 +348,8 @@ abstract class _BatchRequest implements BatchRequest {
   @override
   int? get subjectId;
   @override
+  int? get retainStudents;
+  @override
   String? get batchStatus;
   @override
   dynamic get feeAmount;
@@ -342,7 +357,7 @@ abstract class _BatchRequest implements BatchRequest {
   dynamic get admissionFees;
   @override
   @JsonKey(name: 'trainers[]')
-  List<int?>? get trainers;
+  dynamic get trainers;
   @override
   @JsonKey(name: 'days[]')
   List<String>? get days;

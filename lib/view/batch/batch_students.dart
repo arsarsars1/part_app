@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
-import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/tab_button.dart';
@@ -93,9 +92,11 @@ class _BatchStudentsState extends State<BatchStudents> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             UserImage(
-                              profilePic: '${F.baseUrl}'
-                                  '/admin/images/student/'
-                                  '${student.detailId}/${student.profilePic}',
+                              profilePic: student.profilePic != ""
+                                  ? '${F.baseUrl}'
+                                      '/admin/images/student/'
+                                      '${student.detailId}/${student.profilePic}'
+                                  : '',
                             ),
                             const SizedBox(
                               width: 12,
@@ -107,15 +108,25 @@ class _BatchStudentsState extends State<BatchStudents> {
                                   Text(
                                     student.name ?? '',
                                   ),
-                                  Text(
-                                    student.pivot?.feeType ?? "N/A",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        ?.copyWith(
-                                          color: AppColors.green,
+                                  student.pivot?.feeType == "monthly"
+                                      ? Text(
+                                          'Monthly',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.copyWith(
+                                                color: AppColors.primaryColor,
+                                              ),
+                                        )
+                                      : Text(
+                                          'Class Based',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.copyWith(
+                                                color: AppColors.green,
+                                              ),
                                         ),
-                                  ),
                                 ],
                               ),
                             ),

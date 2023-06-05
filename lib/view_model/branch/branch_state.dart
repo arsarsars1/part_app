@@ -58,3 +58,19 @@ class TrainersFailed extends BranchState {
 
   TrainersFailed(this.message);
 }
+
+// Classes
+
+class ClassesLoading extends BranchState {
+  final bool pagination;
+
+  ClassesLoading({this.pagination = false});
+}
+
+class ClassesLoaded extends BranchState {}
+
+class ClassesFailed extends BranchState {
+  final String message;
+
+  ClassesFailed(this.message);
+}

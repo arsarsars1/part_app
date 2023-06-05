@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 
 class Utils {

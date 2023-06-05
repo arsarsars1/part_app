@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'trainer_request.dart';
 
@@ -33,7 +33,7 @@ mixin _$TrainerRequest {
   int? get salaryDate => throw _privateConstructorUsedError;
   String? get salaryAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "branch_id[]")
-  List<String>? get branchId => throw _privateConstructorUsedError;
+  dynamic get branchId => throw _privateConstructorUsedError;
   String? get upiId => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
 
@@ -62,7 +62,7 @@ abstract class $TrainerRequestCopyWith<$Res> {
       String? expertise,
       int? salaryDate,
       String? salaryAmount,
-      @JsonKey(name: "branch_id[]") List<String>? branchId,
+      @JsonKey(name: "branch_id[]") dynamic branchId,
       String? upiId,
       String? address});
 }
@@ -148,7 +148,7 @@ class _$TrainerRequestCopyWithImpl<$Res, $Val extends TrainerRequest>
       branchId: freezed == branchId
           ? _value.branchId
           : branchId // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as dynamic,
       upiId: freezed == upiId
           ? _value.upiId
           : upiId // ignore: cast_nullable_to_non_nullable
@@ -182,7 +182,7 @@ abstract class _$$_TrainerRequestCopyWith<$Res>
       String? expertise,
       int? salaryDate,
       String? salaryAmount,
-      @JsonKey(name: "branch_id[]") List<String>? branchId,
+      @JsonKey(name: "branch_id[]") dynamic branchId,
       String? upiId,
       String? address});
 }
@@ -264,9 +264,9 @@ class __$$_TrainerRequestCopyWithImpl<$Res>
           : salaryAmount // ignore: cast_nullable_to_non_nullable
               as String?,
       branchId: freezed == branchId
-          ? _value._branchId
+          ? _value.branchId
           : branchId // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as dynamic,
       upiId: freezed == upiId
           ? _value.upiId
           : upiId // ignore: cast_nullable_to_non_nullable
@@ -296,10 +296,9 @@ class _$_TrainerRequest implements _TrainerRequest {
       this.expertise,
       this.salaryDate,
       this.salaryAmount,
-      @JsonKey(name: "branch_id[]") final List<String>? branchId,
+      @JsonKey(name: "branch_id[]") this.branchId,
       this.upiId,
-      this.address})
-      : _branchId = branchId;
+      this.address});
 
   factory _$_TrainerRequest.fromJson(Map<String, dynamic> json) =>
       _$$_TrainerRequestFromJson(json);
@@ -328,16 +327,9 @@ class _$_TrainerRequest implements _TrainerRequest {
   final int? salaryDate;
   @override
   final String? salaryAmount;
-  final List<String>? _branchId;
   @override
   @JsonKey(name: "branch_id[]")
-  List<String>? get branchId {
-    final value = _branchId;
-    if (value == null) return null;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final dynamic branchId;
   @override
   final String? upiId;
   @override
@@ -372,7 +364,7 @@ class _$_TrainerRequest implements _TrainerRequest {
                 other.salaryDate == salaryDate) &&
             (identical(other.salaryAmount, salaryAmount) ||
                 other.salaryAmount == salaryAmount) &&
-            const DeepCollectionEquality().equals(other._branchId, _branchId) &&
+            const DeepCollectionEquality().equals(other.branchId, branchId) &&
             (identical(other.upiId, upiId) || other.upiId == upiId) &&
             (identical(other.address, address) || other.address == address));
   }
@@ -393,7 +385,7 @@ class _$_TrainerRequest implements _TrainerRequest {
       expertise,
       salaryDate,
       salaryAmount,
-      const DeepCollectionEquality().hash(_branchId),
+      const DeepCollectionEquality().hash(branchId),
       upiId,
       address);
 
@@ -425,7 +417,7 @@ abstract class _TrainerRequest implements TrainerRequest {
       final String? expertise,
       final int? salaryDate,
       final String? salaryAmount,
-      @JsonKey(name: "branch_id[]") final List<String>? branchId,
+      @JsonKey(name: "branch_id[]") final dynamic branchId,
       final String? upiId,
       final String? address}) = _$_TrainerRequest;
 
@@ -458,7 +450,7 @@ abstract class _TrainerRequest implements TrainerRequest {
   String? get salaryAmount;
   @override
   @JsonKey(name: "branch_id[]")
-  List<String>? get branchId;
+  dynamic get branchId;
   @override
   String? get upiId;
   @override

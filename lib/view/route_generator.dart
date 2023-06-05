@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/account/switch_account.dart';
+import 'package:part_app/view/attendance/attendance_calender_view.dart';
+import 'package:part_app/view/attendance/attendance_add.dart';
+import 'package:part_app/view/attendance/attendance_update.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/auth/register/acadmey_details.dart';
@@ -10,6 +13,8 @@ import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/batch/add_batch.dart';
 import 'package:part_app/view/batch/batch_details.dart';
 import 'package:part_app/view/batch/batch_list.dart';
+import 'package:part_app/view/batch/cancel_batch_class.dart';
+import 'package:part_app/view/batch/cancelled_batch_class.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/batch/rescheduled_classes.dart';
@@ -18,6 +23,7 @@ import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
+import 'package:part_app/view/class_link/edit_class_link.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/leads/add_lead.dart';
 import 'package:part_app/view/leads/lead_details.dart';
@@ -41,6 +47,7 @@ import 'package:part_app/view/students/edit_student.dart';
 import 'package:part_app/view/students/edit_student_batches.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
+import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
 import 'package:part_app/view/trainer/assigned_batches.dart';
@@ -51,6 +58,8 @@ import 'package:part_app/view/trainer/trainer_branches.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
+import 'attendance/attendance_batch_list.dart';
+import 'attendance/monthly_attendance_view.dart';
 import 'membership/subscription_success.dart';
 
 class RouteGenerator {
@@ -259,6 +268,16 @@ class RouteGenerator {
           builder: (_) => const RescheduleClass(),
           settings: settings,
         );
+      case CancelClass.route:
+        return MaterialPageRoute(
+          builder: (_) => const CancelClass(),
+          settings: settings,
+        );
+      case CancelledClasses.route:
+        return MaterialPageRoute(
+          builder: (_) => const CancelledClasses(),
+          settings: settings,
+        );
       case ManagerDetails.route:
         return MaterialPageRoute(
           builder: (_) => ManagerDetails(
@@ -309,18 +328,18 @@ class RouteGenerator {
         );
       case ClassLinkView.route:
         {
-          bool edit = false;
-          if (settings.arguments != null) {
-            edit = settings.arguments as bool;
-          }
           return MaterialPageRoute(
-            builder: (_) => ClassLinkView(
-              isEdit: edit,
-            ),
+            builder: (_) => const ClassLinkView(),
             settings: settings,
           );
         }
-
+      case EditClassLink.route:
+        {
+          return MaterialPageRoute(
+            builder: (_) => const EditClassLink(),
+            settings: settings,
+          );
+        }
       case EditAssignedBatch.route:
         return MaterialPageRoute(
           builder: (_) => EditAssignedBatch(
@@ -348,6 +367,37 @@ class RouteGenerator {
           builder: (_) => const LeadDetails(),
           settings: settings,
         );
+      case AttendanceBatchListPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const AttendanceBatchListPage(),
+          settings: settings,
+        );
+      case AttendanceCalenderView.route:
+        return MaterialPageRoute(
+          builder: (_) => const AttendanceCalenderView(),
+          settings: settings,
+        );
+      case MonthlyAttendanceView.route:
+        return MaterialPageRoute(
+          builder: (_) => const MonthlyAttendanceView(),
+          settings: settings,
+        );
+      case AttendanceUpdate.route:
+        return MaterialPageRoute(
+          builder: (_) => const AttendanceUpdate(),
+          settings: settings,
+        );
+      case AttendanceAdd.route:
+        return MaterialPageRoute(
+          builder: (_) => const AttendanceAdd(),
+          settings: settings,
+        );
+      case TodaysClasses.route:
+        return MaterialPageRoute(
+          builder: (_) => const TodaysClasses(),
+          settings: settings,
+        );
+
       default:
         return MaterialPageRoute(
           builder: (_) => const Login(),

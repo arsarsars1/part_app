@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
+import 'package:part_app/model/data_model/class_model.dart';
+import 'package:part_app/model/data_model/class_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/trainer_model.dart';
@@ -15,6 +17,8 @@ class BranchCubit extends Cubit<BranchState> {
 
   List<Branch> _branches = [];
   final List<Trainer> _trainers = [];
+  List<ClassModel> _classes = [];
+  List<ClassModel> _newClasses = [];
 
   Branch? _branch;
 
@@ -24,6 +28,10 @@ class BranchCubit extends Cubit<BranchState> {
       _branches.where((element) => element.isActive == 1).toList();
 
   List<Trainer>? get trainers => _trainers;
+
+  List<ClassModel>? get classes => _classes;
+
+  List<ClassModel>? get newClasses => _newClasses;
 
   @Deprecated('Moved the type to TrainerModel')
   List<Trainer>? get activeTrainers => _trainers
@@ -150,6 +158,74 @@ class BranchCubit extends Cubit<BranchState> {
       emit(TrainersLoaded());
     } else {
       emit(TrainersFailed('Failed to get the trainers list'));
+    }
+  }
+
+  Future getBatchClassesOfDate({
+    required String batchId,
+    required String branchId,
+    required String date,
+    bool clean = false,
+  }) async {
+    // if (clean) {
+    //   page = 1;
+    //   nextPageUrl = '';
+    //   _classes.clear();
+    //   // emit(ClassesLoading());
+    // }
+
+    // if (nextPageUrl == null) {
+    //   emit(ClassesLoaded());
+    //   return;
+    // }
+    emit(ClassesLoading());
+    _classes.clear();
+
+    ClassResponse? temp = await _branchService.getBatchClasses(
+      batchId: batchId,
+      brabchId: branchId,
+      date: date,
+      pageNo: page,
+    );
+    if (temp?.status == 1) {
+      // nextPageUrl = temp?.trainers?.nextPageUrl;
+      // if (nextPageUrl != null) {
+      //   page++;
+      // }
+      var items =
+          temp?.classes?.map((e) => ClassModel.fromEntity(e)).toList() ?? [];
+      _classes = items;
+      // _classes.addAll(temp!.classes);
+      emit(ClassesLoaded());
+    } else {
+      emit(ClassesFailed('Failed to get the class list'));
+    }
+  }
+
+  Future getBranchClassesOfDate({
+    required String branchId,
+    required String date,
+    bool clean = false,
+  }) async {
+    _newClasses.clear();
+
+    ClassResponse? temp = await _branchService.getBranchClasses(
+      branchId: branchId,
+      date: date,
+      pageNo: page,
+    );
+    if (temp?.status == 1) {
+      // nextPageUrl = temp?.trainers?.nextPageUrl;
+      // if (nextPageUrl != null) {
+      //   page++;
+      // }
+      var items =
+          temp?.classes?.map((e) => ClassModel.fromEntity(e)).toList() ?? [];
+      _newClasses = items;
+      // _classes.addAll(temp!.classes);
+      emit(ClassesLoaded());
+    } else {
+      emit(ClassesFailed('Failed to get the class list'));
     }
   }
 

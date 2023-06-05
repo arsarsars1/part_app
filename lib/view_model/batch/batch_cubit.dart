@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/cancel_response.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
@@ -25,14 +26,16 @@ class BatchCubit extends Cubit<BatchState> {
   List<Days> _days = [];
   List<Course>? _courses;
   List<Course>? _subjects;
-
+  bool second = false;
   final List<int?> _selectedTrainers = [];
   List<BatchModel> _batches = [];
-  List<BatchDetail> _rescheduledList = [];
-  List<Student>? _students;
-  List<ClassLink>? _classLinks;
-
+  List<RescheduledClass> _rescheduledList = [];
+  List<CancelledClass> _cancelledList = [];
+  List<Student>? _students = [];
+  List<ClassLink>? _classLinks = [];
+  String tempStatus = 'ongoing';
   BatchModel? _batchModel;
+  ClassLink? tempClass;
   Batch? _batch;
 
   // pagination
@@ -60,7 +63,9 @@ class BatchCubit extends Cubit<BatchState> {
 
   List<ClassLink>? get classLinks => _classLinks;
 
-  List<BatchDetail> get rescheduledList => _rescheduledList;
+  List<RescheduledClass> get rescheduledList => _rescheduledList;
+
+  List<CancelledClass>? get cancelledList => _cancelledList;
 
   BatchModel? get batchModel => _batchModel;
 
@@ -278,10 +283,16 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
-  Future getBatchesForTrainer(int? trainerId) async {
+  Future getOngoigBatchesForTrainer(int? trainerId) async {
+    _batches.clear();
     var items = await _batchService.getTrainerBatches(trainerId);
     if (items != null && items.isNotEmpty) {
-      _batches = items.map((e) => BatchModel.fromEntity(e)).toList();
+      for (var element in items) {
+        if(element.batchStatus == "ongoing"){
+          _batches.add(BatchModel.fromEntity(element));
+        }
+      }
+      // _batches = items.map((e) => BatchModel.fromEntity(e)).toList();
     } else {
       _batches.clear();
     }
@@ -340,6 +351,36 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future cancelClass(Map<String, dynamic> request) async {
+    emit(CancellingClassBatch());
+    Common? response = await _batchService.cancelClass(
+      request,
+      batchModel?.id,
+    );
+    log((response?.status).toString());
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(CancelledClassBatch());
+    } else {
+      emit(CancelClassFailed(response?.message ?? 'Failed to reschedule'));
+    }
+  }
+
+  Future deleteClassCancellation(int? batchDetailId) async {
+    emit(DeleteCancelledClass());
+    Common? response = await _batchService.deleteClassCancellation(
+      classId: batchDetailId,
+      batchId: _batch?.id,
+    );
+    if (response?.status == 1) {
+      await getCancelledBatches();
+      emit(DeletedCancelledClass());
+    } else {
+      emit(CancelledClassDeletionFailed(
+          response?.message ?? 'Failed to delete class'));
+    }
+  }
+
   Future deactivateClass(int? batchDetailId) async {
     emit(ReschedulingBatch());
     Common? response = await _batchService.deactivateClass(
@@ -368,6 +409,22 @@ class BatchCubit extends Cubit<BatchState> {
       _rescheduledList = [];
     }
     emit(RescheduledListFetched());
+  }
+
+  Future getCancelledBatches({int? year, int? month}) async {
+    emit(CancelledListFetching());
+    CancelResponse? response = await _batchService.cancelledClasses(
+      batchModel?.id,
+      year: year,
+      month: month,
+    );
+
+    if (response?.status == 1) {
+      _cancelledList = response?.cancelledClasses ?? [];
+    } else {
+      _cancelledList = [];
+    }
+    emit(CancelledListFetched());
   }
 
   /// Method to get the students
@@ -399,8 +456,26 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future updateClassLink(
+      int? batchId, int? classId, Map<String, dynamic> data) async {
+    try {
+      emit(UpdatingLink());
+      Common? response =
+          await _batchService.updateClassLink(batchId, classId, data);
+
+      if (response?.status == 1) {
+        emit(UpdatedLink());
+      } else {
+        emit(UpdateLinkFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future getClassLink(int? batchId, DateTime dateTime) async {
     emit(FetchingLinks());
+    _classLinks = [];
     ClassLinkResponse? response = await _batchService.getClassLink(
       batchId,
       dateTime,
@@ -408,10 +483,12 @@ class BatchCubit extends Cubit<BatchState> {
     if (response?.classLinks != null) {
       _classLinks = response?.classLinks;
       emit(FetchedLinks());
+    } else {
+      emit(FetchingLinks());
     }
   }
 
-  Future removeClassLint(
+  Future removeClassLink(
     int? batchId,
     int? linkId,
   ) async {
@@ -424,7 +501,7 @@ class BatchCubit extends Cubit<BatchState> {
     if (response?.status == 1) {
       emit(RemovedLink());
     } else {
-      emit(RemoveLinkFailed());
+      emit(RemoveLinkFailed(response?.message ?? 'Failed to add link.'));
     }
   }
 }

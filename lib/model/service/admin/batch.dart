@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
+import 'package:part_app/model/data_model/cancel_response.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
@@ -186,11 +187,25 @@ class BatchService {
     }
   }
 
+  Future<Common?> cancelClass(Map<String, dynamic> request,
+      [int? batchId]) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/batches/$batchId/cancel-class',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> deactivateClass(
       {required int? batchId, required int? classId}) async {
     try {
-      var response = await _apiClient.get(
-        queryPath: '/admin/batches/$classId/activation/0',
+      var response = await _apiClient.delete(
+        queryPath: '/admin/batches/$batchId/rescheduled-classes/$classId',
       );
 
       return commonFromJson(jsonEncode(response));
@@ -210,6 +225,35 @@ class BatchService {
       );
 
       return rescheduleResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> deleteClassCancellation(
+      {required int? batchId, required int? classId}) async {
+    try {
+      var response = await _apiClient.delete(
+        queryPath: '/admin/batches/$batchId/cancelled-classes/$classId',
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<CancelResponse?> cancelledClasses(int? batchId,
+      {int? year, int? month}) async {
+    String query = 'year=${year ?? DateTime.now().year}'
+        '&month=${month ?? DateTime.now().month}';
+
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/batches/$batchId/cancelled-classes?$query',
+      );
+
+      return cancelResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }
@@ -238,11 +282,12 @@ class BatchService {
     }
   }
 
-  Future<Common?> removeClassLink(int? batchId, int? linkId) async {
+  Future<Common?> updateClassLink(
+      int? batchId, int? classId, Map<String, dynamic> data) async {
     try {
       var response = await _apiClient.post(
-        postPath: '/admin/batches/$batchId/class-link/$linkId/remove',
-        data: {},
+        postPath: '/admin/batches/class-link/$classId',
+        data: data,
       );
       return commonFromJson(jsonEncode(response));
     } catch (e) {
@@ -250,15 +295,28 @@ class BatchService {
     }
   }
 
+  Future<Common?> removeClassLink(int? batchId, int? linkId) async {
+    try {
+      var response = await _apiClient.delete(
+          queryPath: '/admin/batches/$batchId/class-link/$linkId/');
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<ClassLinkResponse?> getClassLink(
-      int? batchId, DateTime dateTime) async {
+      int? batchId, DateTime? dateTime) async {
     try {
       var response = await _apiClient.get(
         queryPath:
-            '/admin/batches/$batchId/class-link/${dateTime.year}/${dateTime.month}',
+            '/admin/batches/$batchId/class-link/date/${dateTime?.year}-${dateTime?.month}-${dateTime?.day}',
       );
-      return classLinkResponseFromJson(jsonEncode(response));
+      // log(response.toString());
+      return classLinkResponseFromJson(json.encode(response));
+      // return ClassLinkResponse.fromJson(response);
     } catch (e) {
+      log(e.toString());
       return null;
     }
   }

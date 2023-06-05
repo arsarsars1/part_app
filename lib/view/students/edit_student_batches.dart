@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
-import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/students/assign_batch.dart';
 import 'package:part_app/view/students/edit_assigned_batch.dart';
+import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/widgets/remove_student.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -20,16 +20,9 @@ class EditStudentBatches extends StatefulWidget {
 }
 
 class _EditStudentBatchesState extends State<EditStudentBatches> {
-  // ignore: prefer_typing_uninitialized_variables
-  var studentCubit;
-  @override
-  void initState() {
-    studentCubit = context.read<StudentCubit>();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    var studentCubit = context.read<StudentCubit>();
     return Scaffold(
       appBar: CommonBar(
         title: 'Assigned Batches',
@@ -63,7 +56,10 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
             child: Center(
               child: Button(
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(
+                    context,
+                    StudentDetails.route,
+                  );
                 },
                 title: 'View Student Profile',
               ),

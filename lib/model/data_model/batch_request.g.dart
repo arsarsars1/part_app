@@ -12,12 +12,11 @@ _$_BatchRequest _$$_BatchRequestFromJson(Map<String, dynamic> json) =>
       branchId: json['branch_id'] as int?,
       courseId: json['course_id'] as int?,
       subjectId: json['subject_id'] as int?,
+      retainStudents: json['retain_students'] as int?,
       batchStatus: json['batch_status'] as String?,
       feeAmount: json['fee_amount'],
       admissionFees: json['admission_fees'],
-      trainers: (json['trainers[]'] as List<dynamic>?)
-          ?.map((e) => e as int?)
-          .toList(),
+      trainers: json['trainers[]'],
       days:
           (json['days[]'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
@@ -28,6 +27,7 @@ Map<String, dynamic> _$$_BatchRequestToJson(_$_BatchRequest instance) =>
       'branch_id': instance.branchId,
       'course_id': instance.courseId,
       'subject_id': instance.subjectId,
+      'retain_students': instance.retainStudents,
       'batch_status': instance.batchStatus,
       'fee_amount': instance.feeAmount,
       'admission_fees': instance.admissionFees,

@@ -51,6 +51,10 @@ class RescheduledListFetched extends BatchState {}
 
 class RescheduledListFetching extends BatchState {}
 
+class CancelledListFetched extends BatchState {}
+
+class CancelledListFetching extends BatchState {}
+
 class FetchBatchFailed extends BatchState {
   final String message;
 
@@ -65,6 +69,27 @@ class RescheduleFailed extends BatchState {
   final String message;
 
   RescheduleFailed(this.message);
+}
+
+// Cancel
+
+class CancellingClassBatch extends BatchState {}
+
+class CancelledClassBatch extends BatchState {}
+
+class DeleteCancelledClass extends BatchState {}
+
+class DeletedCancelledClass extends BatchState {}
+
+class CancelledClassDeletionFailed extends BatchState {
+  final String message;
+  CancelledClassDeletionFailed(this.message);
+}
+
+class CancelClassFailed extends BatchState {
+  final String message;
+
+  CancelClassFailed(this.message);
 }
 
 // Students
@@ -87,6 +112,18 @@ class AddLinkFailed extends BatchState {
   AddLinkFailed(this.message);
 }
 
+/// update Class Link
+
+class UpdatingLink extends BatchState {}
+
+class UpdatedLink extends BatchState {}
+
+class UpdateLinkFailed extends BatchState {
+  final String message;
+
+  UpdateLinkFailed(this.message);
+}
+
 // get class links
 
 class FetchingLinks extends BatchState {}
@@ -97,6 +134,9 @@ class RemovingLink extends BatchState {}
 
 class RemovedLink extends BatchState {}
 
-class RemoveLinkFailed extends BatchState {}
+class RemoveLinkFailed extends BatchState {
+  final String message;
+  RemoveLinkFailed(this.message);
+}
 
 class BatchNetworkError extends BatchState {}

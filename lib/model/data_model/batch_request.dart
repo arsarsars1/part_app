@@ -22,10 +22,11 @@ abstract class BatchRequest with _$BatchRequest {
     int? branchId,
     int? courseId,
     int? subjectId,
+    int? retainStudents,
     String? batchStatus,
     dynamic feeAmount,
     dynamic admissionFees,
-    @JsonKey(name: 'trainers[]') List<int?>? trainers,
+    @JsonKey(name: 'trainers[]') dynamic trainers,
     @JsonKey(name: 'days[]') List<String>? days,
   }) = _BatchRequest;
 

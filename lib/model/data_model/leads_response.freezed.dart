@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'leads_response.dart';
 
@@ -391,6 +391,7 @@ class _$_Leads implements _Leads {
   List<Lead>? get data {
     final value = _data;
     if (value == null) return null;
+    if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -864,6 +865,7 @@ class _$_Lead implements _Lead {
   List<FollowUp>? get followUps {
     final value = _followUps;
     if (value == null) return null;
+    if (_followUps is EqualUnmodifiableListView) return _followUps;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -1598,6 +1600,7 @@ class _$_AssignedTo implements _AssignedTo {
   List<Branch>? get branches {
     final value = _branches;
     if (value == null) return null;
+    if (_branches is EqualUnmodifiableListView) return _branches;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }

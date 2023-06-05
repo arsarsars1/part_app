@@ -5,6 +5,7 @@ import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/manager/manager_page.dart';
+import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
 class DefaultValues {
@@ -85,7 +86,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Attendance',
-      route: '/attendance',
+      route: '/attendance-batch-list',
       asset: Assets.attendance,
       color: Color(0xFF2B32B2),
     ),
@@ -103,7 +104,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Today\'s Classes',
-      route: '/students',
+      route: TodaysClasses.route,
       asset: Assets.todays,
       color: Color(0xFFE100FF),
     ),

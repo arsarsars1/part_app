@@ -89,6 +89,8 @@ class ApiClient {
 
       if (!formData) {
         log(json.encode(data));
+      } else {
+        log(json.encode(data));
       }
 
       print('********** API CALL ***********');
@@ -134,7 +136,47 @@ class ApiClient {
       }
       return _handleResponse(response);
     } catch (e) {
-      print(e);
+      log(e.toString());
+    }
+  }
+
+  Future delete({required String queryPath, String? baseUrl}) async {
+    var path = _baseUrl + queryPath;
+
+    String? bearerToken = Database().getToken();
+    if (kDebugMode) {
+      print('DELETE Path => $path');
+      print(bearerToken);
+    }
+
+    // check for internet connectivity
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      controller?.add(600);
+      return null;
+    }
+    try {
+      var response = await _dio.delete(
+        baseUrl ?? path,
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status != null && status < 500;
+          },
+          headers: {
+            'MOBILE-APP-TOKEN': _token,
+            'Authorization': 'Bearer $bearerToken',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+
+      log(json.encode(response.data));
+      return _handleResponse(
+        response,
+      );
+    } catch (e) {
+      return e;
     }
   }
 

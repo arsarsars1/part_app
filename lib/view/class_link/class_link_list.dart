@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/class_link/class_link_view.dart';
+import 'package:part_app/view/class_link/edit_class_link.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/constants/app_colors.dart';
@@ -28,6 +28,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  bool reset = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +57,14 @@ class _ClassLinkListState extends State<ClassLinkList> {
                 onSelect: (value) {
                   setState(() {
                     branchId = value;
+                    batchController.text = "";
+                    reset = true;
                   });
                   batchCubit?.getBatchesByStatus(
                     branchId: branchId,
                     clean: true,
-                    branchSearch: true,
+                    branchSearch: false,
+                    status: 'ongoing',
                   );
                 },
               ),
@@ -80,6 +84,10 @@ class _ClassLinkListState extends State<ClassLinkList> {
                         onSelect: (value) {
                           batch = value;
                           batchController.text = value.name;
+                          reset = false;
+                          if (date != null) {
+                            batchCubit?.getClassLink(batch?.id, date!);
+                          }
                         },
                       ),
                     );
@@ -110,37 +118,12 @@ class _ClassLinkListState extends State<ClassLinkList> {
               ),
               CommonField(
                 controller: dateController,
-                title: 'From Date *',
+                title: 'Select Date *',
                 hint: 'Select the date',
                 suffixIcon: const Padding(
                   padding: EdgeInsets.only(right: 32),
                   child: Icon(
-                    Icons.arrow_drop_down,
-                    size: 24,
-                    color: Colors.white24,
-                  ),
-                ),
-                disabled: true,
-                onTap: () {
-                  datePicker();
-                },
-                onChange: (value) {},
-                validator: (value) {
-                  return value.isEmpty ? 'Please select the date.' : null;
-                },
-                onSubmit: (value) {},
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                controller: dateController,
-                title: 'To Date *',
-                hint: 'Select the date',
-                suffixIcon: const Padding(
-                  padding: EdgeInsets.only(right: 32),
-                  child: Icon(
-                    Icons.arrow_drop_down,
+                    Icons.calendar_month,
                     size: 24,
                     color: Colors.white24,
                   ),
@@ -157,16 +140,19 @@ class _ClassLinkListState extends State<ClassLinkList> {
               ),
               const Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Text('Online Classes Scheduled For The Selected\nDates'),
+                child: Text('Online Classes Scheduled For The Selected Date'),
               ),
               BlocBuilder<BatchCubit, BatchState>(
                 builder: (context, state) {
-                  if (branchId == null || batch == null || date == null) {
+                  if (branchId == null ||
+                      batch == null ||
+                      date == null ||
+                      reset == true) {
                     return const Center(
                       child: Padding(
-                        padding: EdgeInsets.all(64.0),
+                        padding: EdgeInsets.all(30.0),
                         child: Text(
-                          'Please select batch, branch to show the class links',
+                          'Please select branch, batch and date to show the class links',
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -175,7 +161,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                       batchCubit!.classLinks!.isEmpty) {
                     return const Center(
                       child: Padding(
-                        padding: EdgeInsets.all(64.0),
+                        padding: EdgeInsets.all(30.0),
                         child: Text(
                           'No matching results found.',
                         ),
@@ -187,7 +173,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: batchCubit?.classLinks?.length ?? 0,
                     itemBuilder: (context, index) {
-                      ClassLink classLink = batchCubit!.classLinks![0];
+                      ClassLink classLink = batchCubit!.classLinks![index];
                       return Container(
                         decoration: BoxDecoration(
                           color: AppColors.liteDark,
@@ -203,7 +189,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    classLink.batchDate?.toDateString() ??
+                                    classLink.classDate?.toDateString() ??
                                         'N/A',
                                     style: Theme.of(context)
                                         .textTheme
@@ -211,6 +197,29 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                         ?.copyWith(
                                           color: AppColors.primaryColor,
                                         ),
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Text(
+                                    '${classLink.branchName}, ${classLink.batchName}, ${classLink.courseName}, ${classLink.subjectName}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(),
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Text(
+                                    '${classLink.classDate?.formattedDay2()} ${classLink.startTime?.toAmPM()}-${classLink.endTime?.toAmPM()}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(),
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
                                   ),
                                   Text(
                                     classLink.link ?? 'N/A',
@@ -225,18 +234,20 @@ class _ClassLinkListState extends State<ClassLinkList> {
                               ),
                             ),
                             Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 RoundButton(
                                   onTap: () {
+                                    batchCubit?.tempClass = classLink;
                                     Navigator.pushNamed(
                                       context,
-                                      ClassLinkView.route,
+                                      EditClassLink.route,
                                       arguments: true,
                                     );
                                   },
                                 ),
-                                const SizedBox(
-                                  height: 16,
+                                SizedBox(
+                                  height: 35.h,
                                 ),
                                 RoundButton(
                                   onTap: () {
@@ -252,9 +263,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                             children: [
                                               const Text('Date: '),
                                               Text(
-                                                classLink.batchDate
-                                                        ?.toDateString() ??
-                                                    'N/A',
+                                                "${classLink.classDate?.toDateString()}",
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyText1
@@ -265,13 +274,51 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                               ),
                                             ],
                                           ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              const Text('Time: '),
+                                              Text(
+                                                "${classLink.startTime?.toAmPM()} - ${classLink.endTime?.toAmPM()}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1
+                                                    ?.copyWith(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                            "${classLink.branchName}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                ?.copyWith(),
+                                          ),
+                                          Text(
+                                            "${classLink.batchName}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                ?.copyWith(),
+                                          ),
+                                          Text(
+                                            "${classLink.courseName}, ${classLink.subjectName}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                ?.copyWith(),
+                                          ),
                                           const SizedBox(
                                             height: 32,
                                           ),
                                         ],
                                       ),
                                       onTap: () {
-                                        batchCubit?.removeClassLint(
+                                        batchCubit?.removeClassLink(
                                           classLink.batchId,
                                           classLink.id,
                                         );
