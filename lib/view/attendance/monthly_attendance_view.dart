@@ -145,6 +145,7 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                                 setState(() {
                                   finalDate = null;
                                   dateController.clear();
+                                  cubit.reset();
                                   batch = value;
                                   batchController.text = value.name;
                                 });
