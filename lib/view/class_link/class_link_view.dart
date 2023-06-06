@@ -194,15 +194,12 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                           for (var element in batch!.days) {
                             batchDays?.add(element.split(" ")[0]);
                           }
-                          // batchCubit.getClassLink(batch?.id, DateTime.now());
                           await batchCubit.getClassLink(
                               batch?.id, DateTime.now());
-                          // _scrollController.animateTo(
-                          //     _scrollController.position.maxScrollExtent + 300,
-                          //     duration: const Duration(
-                          //       milliseconds: 2,
-                          //     ),
-                          //     curve: Curves.easeInOut);
+                          setState(() {
+                            date = null;
+                            selectedclass = null;
+                          });
                         },
                       ),
                     );
