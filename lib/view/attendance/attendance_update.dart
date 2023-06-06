@@ -301,7 +301,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                               .conductedClassId,
                                                           conductedClassStudentId:
                                                               selectedStudent
-                                                                  ?.studentDetailId);
+                                                                  ?.id);
                                                     },
                                                   ).show();
                                                 },
