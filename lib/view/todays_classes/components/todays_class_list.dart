@@ -143,7 +143,7 @@ class _TodaysClassListState extends State<TodaysClassList> {
                   children: [
                     Flexible(
                       child: Text(
-                        '${startTime12Hour} . - ${endTime12Hour}',
+                        '${startTime12Hour} - ${endTime12Hour}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

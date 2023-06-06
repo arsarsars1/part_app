@@ -5,9 +5,9 @@ import 'package:part_app/model/service/api.dart';
 class ClassesTodayService {
   final _client = ApiClient();
 
-  Future<ClassesToday?> getClassesToday() async {
+  Future<ClassesToday?> getClassesToday({required String date}) async {
     try {
-      var response = await _client.get(queryPath: '/admin/batches/daily-classes/2023-06-04');
+      var response = await _client.get(queryPath: '/admin/batches/daily-classes/$date');
       return classesTodayFromJson(jsonEncode(response));
     } catch (e) {
       return null;

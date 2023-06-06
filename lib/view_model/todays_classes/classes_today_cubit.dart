@@ -17,9 +17,9 @@ class ClassesTodayCubit extends Cubit<ClassesTodayState> {
     _classes?.clear();
   }
 
-  Future getClassesToday() async {
+  Future getClassesToday({required String date}) async {
     emit(FetchingClassesToday());
-    ClassesToday? response = await _classesTodayService.getClassesToday();
+    ClassesToday? response = await _classesTodayService.getClassesToday(date: date,);
 
     if (response?.classes != null) {
       _classes = response?.classes?? [];
