@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
-import 'package:part_app/model/data_model/attendence_add_request.dart';
 import 'package:part_app/model/data_model/attendence_taken.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
-import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/attendance/attendance_add.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/attendance/attendance_cubit.dart';
@@ -136,16 +133,19 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                     ),
                               ),
                               SizedBox(height: 10.h),
-                              Text(
-                                "Trainer - ${batch?.trainersString}",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1
-                                    ?.copyWith(
-                                        fontSize: 12.sp,
-                                        color: AppColors.primaryColor),
+                              SizedBox(
+                                width: 180.w,
+                                child: Text(
+                                  "Trainer - ${batch?.trainersString}",
+                                  maxLines: 5,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                          fontSize: 12.sp,
+                                          color: AppColors.primaryColor),
+                                ),
                               ),
                             ],
                           ),
