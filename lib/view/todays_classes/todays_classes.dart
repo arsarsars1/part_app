@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/todays_classes/components/todays_class_list.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -15,16 +16,19 @@ class TodaysClasses extends StatefulWidget {
 }
 
 class _TodaysClassesState extends State<TodaysClasses> {
+
   @override
   void initState() {
     super.initState();
-    context.read<ClassesTodayCubit>().getClassesToday();
   }
 
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<ClassesTodayCubit>();
     DateTime now = DateTime.now();
+    DateFormat apiDateFormat = DateFormat("yyyy-MM-dd");
+    String formattedDateTime = apiDateFormat.format(now);
+    cubit.getClassesToday(date: formattedDateTime);
     String formattedDate = DateFormat('dd/MM/yyyy').format(now);
     return Scaffold(
       appBar: const CommonBar(
@@ -65,7 +69,7 @@ class _TodaysClassesState extends State<TodaysClasses> {
                           return const Padding(
                             padding: EdgeInsets.all(64.0),
                             child: Center(
-                              child: Text('Sorry, No Matching Results Found.'),
+                              child: Text('Sorry, No class is scheduled today.'),
                             ),
                           );
                         }
