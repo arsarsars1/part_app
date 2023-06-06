@@ -178,7 +178,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                       ),
                       SizedBox(height: 5.h),
                       Text(
-                        "Attendence: 4/6",
+                        "Attendence: ${cubit.updatedStudents.length ?? 0} / ${studentCubit.students?.length ?? 0}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
