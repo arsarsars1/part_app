@@ -269,26 +269,132 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                   CommonDialog(
                                                     context: context,
                                                     message:
-                                                        'Are you sure you want to update\nattendence for ${selectedStudent?.studentDetail?.name}',
+                                                        'Are You Sure You Want to Update the\nAttendence For ${selectedStudent?.studentDetail?.name} ?',
                                                     buttonText: 'Ok',
                                                     subColor:
                                                         AppColors.primaryColor,
-                                                    subContent: Text(
-                                                      'Date : ${cubit.conductedDate?.formattedString()} '
-                                                      '\n\nTime : ${batch?.batchDetail?[0].startTime?.toAmPM()} - '
-                                                      '${batch?.batchDetail?[0].endTime?.toAmPM()}'
-                                                      '\n\n${batch?.branchName}'
-                                                      '\n\n${batch?.name}'
-                                                      '\n\n${batch?.courseName}, ${batch?.subjectName}\n\n\n',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyText1
-                                                          ?.copyWith(
-                                                            color: AppColors
-                                                                .primaryColor,
+                                                    subContent: Column(
+                                                      children: [
+                                                        RichText(
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          text: TextSpan(
+                                                            children: [
+                                                              TextSpan(
+                                                                text: 'Date : ',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyText1
+                                                                    ?.copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
+                                                              ),
+                                                              TextSpan(
+                                                                text:
+                                                                    '${cubit.conductedDate?.formattedString()}',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyText1
+                                                                    ?.copyWith(
+                                                                      color: AppColors
+                                                                          .primaryColor,
+                                                                    ),
+                                                              ),
+                                                            ],
                                                           ),
+                                                        ),
+                                                        SizedBox(height: 10.h),
+                                                        RichText(
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          text: TextSpan(
+                                                            children: [
+                                                              TextSpan(
+                                                                text: 'Time : ',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyText1
+                                                                    ?.copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
+                                                              ),
+                                                              TextSpan(
+                                                                text:
+                                                                    '${batch?.batchDetail?[0].startTime?.toAmPM()} - ${batch?.batchDetail?[0].endTime?.toAmPM()}',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyText1
+                                                                    ?.copyWith(
+                                                                      color: AppColors
+                                                                          .primaryColor,
+                                                                    ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 10.h),
+                                                        RichText(
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          text: TextSpan(
+                                                            children: [
+                                                              TextSpan(
+                                                                text:
+                                                                    '${batch?.branchName}',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyText1
+                                                                    ?.copyWith(),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 10.h),
+                                                        RichText(
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          text: TextSpan(
+                                                            children: [
+                                                              TextSpan(
+                                                                text:
+                                                                    '${batch?.name}',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyText1
+                                                                    ?.copyWith(),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 10.h),
+                                                        RichText(
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          text: TextSpan(
+                                                            children: [
+                                                              TextSpan(
+                                                                text:
+                                                                    '${batch?.courseName}, ${batch?.subjectName}\n\n',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyText1
+                                                                    ?.copyWith(),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                     onTap: () {
                                                       Navigator.pop(context);
