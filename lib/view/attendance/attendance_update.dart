@@ -294,7 +294,13 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                       Navigator.pop(context);
                                                       cubit.updateAttendence(
                                                           request: {
-                                                            "is_present": "1"
+                                                            "is_present": cubit
+                                                                    .updatedStudents
+                                                                    .contains(
+                                                                        student
+                                                                            .detailId)
+                                                                ? "1"
+                                                                : "0"
                                                           },
                                                           batchId: cubit.id,
                                                           conductedClassId: cubit
