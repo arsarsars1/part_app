@@ -27,16 +27,17 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
   final EventList<Event> _markedDateMap = EventList<Event>(events: {});
   int currentYear = DateTime.now().year;
   int currentMonth = DateTime.now().month;
+  StudentCubit? studentCubit;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       AttendanceCubit cubit = context.read<AttendanceCubit>();
-      StudentCubit studentCubit = context.read<StudentCubit>();
+      studentCubit = context.read<StudentCubit>();
       await cubit.getClassesOfMonth(
           batchId: cubit.id, date: DateTime(currentYear, currentMonth));
       await cubit.getConductedClassesOfMonth(
           batchId: cubit.id, date: DateTime(currentYear, currentMonth));
-      await studentCubit.getStudents(batchId: cubit.id, clean: true);    
+      await studentCubit?.getStudents(batchId: cubit.id, clean: true);
       _markedDateMap.clear();
       setState(() {
         for (var element in cubit.attendenceClasses ?? []) {
@@ -208,71 +209,78 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                   message:
                                       'This batch does not have class on this day.');
                             } else {
-                              cubit.conductedDate = date;
-                              cubit.conductedClassId =
-                                  events[0].title != "Event 1"
-                                      ? int.parse(events[0].title ?? "0")
-                                      : 0;
-                              if (DateTime.now().compareTo(
-                                      cubit.conductedDate ?? DateTime.now()) <
-                                  0) {
+                              if ((studentCubit?.students?.length ?? 0) == 0) {
                                 Alert(context).show(
-                                    message:
-                                        'Cannot add attendence for a future date.');
+                                    message: 'No students added to this batch');
                               } else {
-                                if (cubit.conductedClassId == 0) {
-                                  await Navigator.pushNamed(
-                                    context,
-                                    AttendanceAdd.route,
-                                  );
-                                  await cubit.getClassesOfMonth(
-                                      batchId: cubit.id,
-                                      date:
-                                          DateTime(currentYear, currentMonth));
-                                  await cubit.getConductedClassesOfMonth(
-                                      batchId: cubit.id,
-                                      date:
-                                          DateTime(currentYear, currentMonth));
-                                  _markedDateMap.clear();
-                                  setState(() {
-                                    for (var element
-                                        in cubit.attendenceClasses ?? []) {
-                                      int flag = 0;
-                                      int conductedClassId = 0;
-                                      for (var element1
-                                          in cubit.conductedClasses ?? []) {
-                                        if (element.date ==
-                                            element1.conductedOn) {
-                                          flag = 1;
-                                          conductedClassId = element1.id;
-                                          break;
-                                        }
-                                      }
-                                      _markedDateMap.add(
-                                        element.date ?? DateTime.now(),
-                                        Event(
-                                          date: element.date ?? DateTime.now(),
-                                          title: conductedClassId == 0
-                                              ? 'Event 1'
-                                              : '$conductedClassId',
-                                          dot: Container(
-                                            margin: const EdgeInsets.symmetric(
-                                                horizontal: 1.0),
-                                            color: flag == 1
-                                                ? Colors.green
-                                                : Colors.red,
-                                            height: 5.0,
-                                            width: 5.0,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  });
+                                cubit.conductedDate = date;
+                                cubit.conductedClassId =
+                                    events[0].title != "Event 1"
+                                        ? int.parse(events[0].title ?? "0")
+                                        : 0;
+                                if (DateTime.now().compareTo(
+                                        cubit.conductedDate ?? DateTime.now()) <
+                                    0) {
+                                  Alert(context).show(
+                                      message:
+                                          'Cannot add attendence for a future date.');
                                 } else {
-                                  Navigator.pushNamed(
-                                    context,
-                                    AttendanceUpdate.route,
-                                  );
+                                  if (cubit.conductedClassId == 0) {
+                                    await Navigator.pushNamed(
+                                      context,
+                                      AttendanceAdd.route,
+                                    );
+                                    await cubit.getClassesOfMonth(
+                                        batchId: cubit.id,
+                                        date: DateTime(
+                                            currentYear, currentMonth));
+                                    await cubit.getConductedClassesOfMonth(
+                                        batchId: cubit.id,
+                                        date: DateTime(
+                                            currentYear, currentMonth));
+                                    _markedDateMap.clear();
+                                    setState(() {
+                                      for (var element
+                                          in cubit.attendenceClasses ?? []) {
+                                        int flag = 0;
+                                        int conductedClassId = 0;
+                                        for (var element1
+                                            in cubit.conductedClasses ?? []) {
+                                          if (element.date ==
+                                              element1.conductedOn) {
+                                            flag = 1;
+                                            conductedClassId = element1.id;
+                                            break;
+                                          }
+                                        }
+                                        _markedDateMap.add(
+                                          element.date ?? DateTime.now(),
+                                          Event(
+                                            date:
+                                                element.date ?? DateTime.now(),
+                                            title: conductedClassId == 0
+                                                ? 'Event 1'
+                                                : '$conductedClassId',
+                                            dot: Container(
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 1.0),
+                                              color: flag == 1
+                                                  ? Colors.green
+                                                  : Colors.red,
+                                              height: 5.0,
+                                              width: 5.0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    });
+                                  } else {
+                                    Navigator.pushNamed(
+                                      context,
+                                      AttendanceUpdate.route,
+                                    );
+                                  }
                                 }
                               }
                             }
