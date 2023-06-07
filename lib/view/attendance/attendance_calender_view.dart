@@ -211,7 +211,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                             } else {
                               if ((studentCubit?.students?.length ?? 0) == 0) {
                                 Alert(context).show(
-                                    message: 'No students added to this batch');
+                                    message: 'No students Added to Batch');
                               } else {
                                 cubit.conductedDate = date;
                                 cubit.conductedClassId =
