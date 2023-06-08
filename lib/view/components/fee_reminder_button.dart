@@ -1,0 +1,67 @@
+import 'package:flutter/material.dart';
+import 'package:part_app/view/constants/constant.dart';
+
+class FeeReminderButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+  final Color? color;
+  final double? margin;
+
+  const FeeReminderButton({
+    Key? key,
+    required this.title,
+    required this.onTap,
+    this.color,
+    this.margin,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: color ?? AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(45),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        margin: EdgeInsets.symmetric(
+          horizontal: margin ?? 16.0,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 12,
+                  ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Row(
+              children: [
+                const Icon(
+                  Icons.check,
+                  size: 24,
+                  color: Colors.white,
+                ),
+                const Icon(
+                  Icons.check,
+                  size: 24,
+                  color: Colors.white,
+                ),
+                const Icon(
+                  Icons.check,
+                  size: 24,
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
