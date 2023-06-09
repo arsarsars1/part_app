@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_carousel/classes/event.dart';
-import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/attendence_add_request.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
@@ -147,16 +145,19 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                                     ),
                               ),
                               SizedBox(height: 10.h),
-                              Text(
-                                "Trainer - ${batch?.trainersString}",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1
-                                    ?.copyWith(
-                                        fontSize: 12.sp,
-                                        color: AppColors.primaryColor),
+                              SizedBox(
+                                width: 180.w,
+                                child: Text(
+                                  "Trainer - ${batch?.trainersString}",
+                                  maxLines: 5,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                          fontSize: 12.sp,
+                                          color: AppColors.primaryColor),
+                                ),
                               ),
                             ],
                           ),
