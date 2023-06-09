@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/attendence_taken.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
-import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
@@ -199,11 +198,11 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                         builder: (context, state) {
                           return ListView.builder(
                             shrinkWrap: true,
-                            itemCount: studentCubit.students?.length,
+                            itemCount: cubit.attendenceTaken.length,
                             controller: scrollController,
                             itemBuilder: (context, index) {
-                              StudentModel student =
-                                  studentCubit.students![index];
+                              AttendanceDetails student =
+                                  cubit.attendenceTaken[index];
                               return Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: EdgeInsets.symmetric(vertical: 8.w),
@@ -222,16 +221,18 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                       child: Row(
                                         children: [
                                           UserImage(
-                                            profilePic: student.profilePic != ""
+                                            profilePic: student.studentDetail
+                                                        ?.profilePic !=
+                                                    ""
                                                 ? '${F.baseUrl}'
                                                     '/admin/images/trainer/'
-                                                    '${student.id}/${student.profilePic}'
+                                                    '${student.id}/${student.studentDetail?.profilePic}'
                                                 : '',
                                           ),
                                           SizedBox(width: 16.w),
                                           Expanded(
                                             child: Text(
-                                              '${student.name}',
+                                              '${student.studentDetail?.name}',
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                             ),
@@ -253,15 +254,18 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                               child: CupertinoSwitch(
                                                 trackColor: AppColors.grey500,
                                                 value: cubit.updatedStudents
-                                                    .contains(student.detailId),
+                                                    .contains(student
+                                                        .studentDetailId),
                                                 onChanged: (value) {
                                                   cubit.updateStudent(
-                                                      student.detailId ?? 0);
+                                                      student.studentDetailId ??
+                                                          0);
                                                   for (AttendanceDetails i
                                                       in cubit
                                                           .attendenceTaken) {
                                                     if (i.studentDetail?.id ==
-                                                        student.detailId) {
+                                                        student
+                                                            .studentDetailId) {
                                                       selectedStudent = i;
                                                       break;
                                                     }
@@ -404,7 +408,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                     .updatedStudents
                                                                     .contains(
                                                                         student
-                                                                            .detailId)
+                                                                            .studentDetailId)
                                                                 ? "1"
                                                                 : "0"
                                                           },
