@@ -55,7 +55,7 @@ class _SessionDialog extends StatelessWidget {
           children: [
             Text(
               'Session Expired, Please login again.',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(),
             ),
             const SizedBox(
               height: 16,

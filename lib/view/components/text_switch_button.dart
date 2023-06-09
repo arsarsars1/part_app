@@ -47,7 +47,7 @@ class _TextSwitchButtonState extends State<TextSwitchButton> {
                 Text(
                   widget.title,
                   maxLines: 2,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                   overflow: TextOverflow.ellipsis,
                 ),
                 if (widget.subTitle != null)
@@ -58,7 +58,7 @@ class _TextSwitchButtonState extends State<TextSwitchButton> {
                   Text(
                     widget.subTitle ?? '',
                     maxLines: 2,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: AppColors.primaryColor,
                           fontSize: 12,
                         ),

@@ -119,7 +119,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                                         overflow: TextOverflow.ellipsis,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -131,7 +131,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                                         "${batch?.branchName}",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(
                                               color: AppColors.primaryColor,
                                             ),
@@ -176,7 +176,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                               '${batch?.courseName}, ${batch?.subjectName}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyLarge
                                   ?.copyWith(),
                             ),
                             const SizedBox(
@@ -191,7 +191,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                                   '${batch?.days[index]}',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       ?.copyWith(
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -205,7 +205,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                                 'Admission Fees: ₹${batch?.admissionFee.toString().currencyFormat()}/-',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(),
                               ),
                             ),
@@ -218,7 +218,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                                 'Fees: ₹${batch?.fee.toString().currencyFormat()}/-',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(),
                               ),
                             ),
@@ -253,7 +253,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                                       'Reschedule',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText1
+                                          .bodyLarge
                                           ?.copyWith(
                                             fontSize: 12,
                                           ),
@@ -289,7 +289,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                                       'Cancel',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText1
+                                          .bodyLarge
                                           ?.copyWith(
                                             fontSize: 12,
                                           ),

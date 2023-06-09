@@ -103,16 +103,16 @@ class _MembershipState extends State<Membership> {
                   Text(
                     'Select Your Membership Plan',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          fontSize: 16.sm,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 16.sp,
                         ),
                   ),
                   const SizedBox(
                     height: 28,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(
                         Icons.check_circle_outline_outlined,
                         color: Colors.white,
@@ -127,9 +127,9 @@ class _MembershipState extends State<Membership> {
                   SizedBox(
                     height: 20.h,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(
                         Icons.check_circle_outline_outlined,
                         color: Colors.white,

@@ -37,21 +37,21 @@ class _TermsCheckBoxState extends State<TermsCheckBox> {
               children: [
                 TextSpan(
                   text: 'By clicking, I Accept The ',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(),
                 ),
                 TextSpan(
                   text: 'Terms & Conditions ',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: AppColors.primaryColor,
                       ),
                 ),
                 TextSpan(
                   text: 'And ',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(),
                 ),
                 TextSpan(
                   text: '\nPrivacy Policy',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: AppColors.primaryColor,
                       ),
                 ),

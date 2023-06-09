@@ -117,7 +117,7 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                                 e.title ?? '',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: Colors.white,
                                     ),
@@ -149,7 +149,7 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                                     textAlign: TextAlign.center,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyLarge
                                         ?.copyWith(
                                           color: AppColors.primaryColor,
                                         ),

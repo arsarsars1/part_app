@@ -92,7 +92,7 @@ class _TrainerPickerState extends State<TrainerPicker> {
                     children: [
                       Text(
                         'Select Trainer',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                       ),
@@ -170,7 +170,7 @@ class _TrainerPickerState extends State<TrainerPicker> {
                                               trainer.trainerName ?? 'NA',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1
+                                                  .bodyLarge
                                                   ?.copyWith(
                                                     color:
                                                         AppColors.primaryColor,

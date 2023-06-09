@@ -59,8 +59,8 @@ class DashboardIcons extends StatelessWidget {
                     item.title,
                     textAlign: TextAlign.center,
                     maxLines: 2,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          fontSize: 12.sm,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 12.sp,
                         ),
                   ),
                 ],

@@ -58,7 +58,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1
+                      .bodyLarge
                       ?.copyWith(fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(

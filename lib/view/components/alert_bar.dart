@@ -24,7 +24,7 @@ class AlertBar {
           Flexible(
             child: Text(
               message!,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.white,
                     fontSize: 14,
                   ),

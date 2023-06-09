@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
@@ -91,7 +93,7 @@ class _TrainerPageState extends State<TrainerPage> {
                         children: [
                           Text(
                             'Branch',
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           const SizedBox(
                             height: 8,
@@ -112,7 +114,7 @@ class _TrainerPageState extends State<TrainerPage> {
                                   'All',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       ?.copyWith(
                                         color: Colors.white,
                                       ),
@@ -125,7 +127,7 @@ class _TrainerPageState extends State<TrainerPage> {
                                     e.title ?? '',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyLarge
                                         ?.copyWith(
                                           color: Colors.white,
                                         ),
@@ -138,10 +140,12 @@ class _TrainerPageState extends State<TrainerPage> {
                                 setState(() {
                                   branchId = null;
                                   selectedItem = value;
-                                  if(query != null){
-                                    cubit.searchTrainers(branchId, query: query);
+                                  if (query != null) {
+                                    cubit.searchTrainers(branchId,
+                                        query: query);
                                   } else {
-                                    cubit.getActiveInactiveTrainers(active: true);
+                                    cubit.getActiveInactiveTrainers(
+                                        active: true);
                                   }
                                 });
                               } else {
@@ -229,9 +233,11 @@ class _TrainerPageState extends State<TrainerPage> {
                             ),
                           );
                         }
-                        if(state is TrainerCreated){
-                          context.read<TrainerCubit>().getActiveInactiveTrainers(
-                              branchId: branchId, active: true);
+                        if (state is TrainerCreated) {
+                          context
+                              .read<TrainerCubit>()
+                              .getActiveInactiveTrainers(
+                                  branchId: branchId, active: true);
                         }
                         // ignore: prefer_is_empty
                         if (cubit.trainers?.length == 0) {
@@ -256,14 +262,19 @@ class _TrainerPageState extends State<TrainerPage> {
                                 );
                             await Navigator.pushNamed(
                                 context, TrainerDetails.route);
-                            // ignore: use_build_context_synchronously
-                            if(temp != null){
-                              context.read<TrainerCubit>()
-                                  .getActiveInactiveTrainers(branchId: branchId,
-                                  active: temp == "Active Trainers" ? true : false);
+                            if (temp != null) {
+                              context
+                                  .read<TrainerCubit>()
+                                  .getActiveInactiveTrainers(
+                                      branchId: branchId,
+                                      active: temp == "Active Trainers"
+                                          ? true
+                                          : false);
                             } else {
-                              context.read<TrainerCubit>()
-                                  .getActiveInactiveTrainers(branchId: branchId, active: true);
+                              context
+                                  .read<TrainerCubit>()
+                                  .getActiveInactiveTrainers(
+                                      branchId: branchId, active: true);
                             }
                           },
                         );

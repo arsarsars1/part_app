@@ -18,7 +18,7 @@ class TrainerService {
         jsonEncode(response),
       );
       return trainerResponse;
-    } on Exception catch (e) {
+    } on Exception {
       return null;
     }
   }
@@ -40,7 +40,7 @@ class TrainerService {
         jsonEncode(response),
       );
       return trainerResponse;
-    } on Exception catch (e) {
+    } on Exception {
       return null;
     }
   }
@@ -53,7 +53,7 @@ class TrainerService {
         jsonEncode(response),
       );
       return trainerResponse;
-    } on Exception catch (e) {
+    } on Exception {
       return null;
     }
   }
@@ -74,7 +74,7 @@ class TrainerService {
         jsonEncode(response),
       );
       return trainerResponse.trainers;
-    } on Exception catch (e) {
+    } on Exception {
       return null;
     }
   }
@@ -141,7 +141,7 @@ class TrainerService {
       );
 
       return commonFromJson(jsonEncode(map));
-    } on Exception catch (e) {
+    } on Exception {
       return null;
     }
   }

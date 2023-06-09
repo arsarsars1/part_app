@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:month_year_picker/month_year_picker.dart';
@@ -81,7 +83,7 @@ class _AppState extends State<App> {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: MediaQuery(
-          data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
+          data: MediaQueryData.fromView(WidgetsBinding.instance.window),
           child: ScreenUtilInit(
             designSize: const Size(360, 800),
             child: const SplashScreen(),

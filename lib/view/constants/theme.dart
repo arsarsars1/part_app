@@ -79,31 +79,31 @@ class AppTheme {
         ),
       ),
       textTheme: TextTheme(
-        bodyText1: GoogleFonts.nunitoSans().copyWith(
+        bodyLarge: GoogleFonts.nunitoSans().copyWith(
           color: primaryText,
           fontSize: 14,
         ),
-        bodyText2: GoogleFonts.nunitoSans().copyWith(
+        bodyMedium: GoogleFonts.nunitoSans().copyWith(
           color: primaryText,
           fontSize: 14,
         ),
-        headline1: GoogleFonts.nunitoSans().copyWith(
+        displayLarge: GoogleFonts.nunitoSans().copyWith(
           color: primaryText,
           fontWeight: FontWeight.bold,
-          fontSize: 32.sm,
+          fontSize: 32.sp,
         ),
-        headline3: GoogleFonts.nunitoSans().copyWith(
+        displaySmall: GoogleFonts.nunitoSans().copyWith(
           color: primaryText,
-          fontSize: 20.sm,
+          fontSize: 20.sp,
         ),
-        headline4: GoogleFonts.nunitoSans().copyWith(
+        headlineMedium: GoogleFonts.nunitoSans().copyWith(
           color: AppColors.grey900,
-          fontSize: 20.sm,
+          fontSize: 20.sp,
         ),
-        headline5: GoogleFonts.nunitoSans().copyWith(
+        headlineSmall: GoogleFonts.nunitoSans().copyWith(
           color: AppColors.grey900,
           fontWeight: FontWeight.w700,
-          fontSize: 16.sm,
+          fontSize: 16.sp,
         ),
       ),
     );

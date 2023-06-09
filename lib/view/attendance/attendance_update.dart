@@ -75,7 +75,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                         "${batch?.name}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontSize: 15.sp,
                             fontWeight: FontWeight.bold,
                             color: AppColors.primaryColor),
@@ -88,7 +88,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -98,7 +98,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       fontSize: 12.sp,
                                       color: AppColors.primaryColor,
                                     ),
@@ -110,7 +110,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                         "${batch?.branchName}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 12.sp,
                             ),
                       ),
@@ -127,7 +127,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       fontSize: 12.sp,
                                     ),
@@ -141,7 +141,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       ?.copyWith(
                                           fontSize: 12.sp,
                                           color: AppColors.primaryColor),
@@ -156,7 +156,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                 '${cubit.conductedDate?.toDay()}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: AppColors.textColor,
                                       fontSize: 16,
@@ -166,7 +166,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                 '${cubit.conductedDate?.toDDMMMYYY()}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: AppColors.textColor,
                                       fontSize: 16,
@@ -178,10 +178,10 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                       ),
                       SizedBox(height: 5.h),
                       Text(
-                        "Attendence: ${cubit.updatedStudents.length ?? 0} / ${studentCubit.students?.length ?? 0}",
+                        "Attendence: ${cubit.updatedStudents.length} / ${studentCubit.students?.length ?? 0}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 12.sp,
                             ),
                       ),
@@ -190,7 +190,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                         "Note: You can update each student's attendence from this page for the following batch on the selected date.",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 12.sp,
                             ),
                       ),
@@ -285,7 +285,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(
                                                                       fontWeight:
                                                                           FontWeight
@@ -298,7 +298,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(
                                                                       color: AppColors
                                                                           .primaryColor,
@@ -318,7 +318,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(
                                                                       fontWeight:
                                                                           FontWeight
@@ -331,7 +331,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(
                                                                       color: AppColors
                                                                           .primaryColor,
@@ -352,7 +352,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(),
                                                               ),
                                                             ],
@@ -370,7 +370,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(),
                                                               ),
                                                             ],
@@ -388,7 +388,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(),
                                                               ),
                                                             ],

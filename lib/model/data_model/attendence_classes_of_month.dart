@@ -2,6 +2,8 @@
 //
 //     final attendenceClassesOfMonth = attendenceClassesOfMonthFromJson(jsonString);
 
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'dart:convert';

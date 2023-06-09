@@ -23,14 +23,14 @@ class HomeBar extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: 'part',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          fontSize: 48.sm,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 48.sp,
                         ),
                   ),
                   TextSpan(
                     text: 'app.in',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          fontSize: 24.sm,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 24.sp,
                         ),
                   ),
                 ],
@@ -102,9 +102,9 @@ class HomeBar extends StatelessWidget {
           child: Text(
             cubit.user?.adminDetail?.academy?.academyName ?? 'N/A',
             maxLines: 2,
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: AppColors.primaryColor,
-                  fontSize: 16.sm,
+                  fontSize: 16.sp,
                 ),
           ),
         ),

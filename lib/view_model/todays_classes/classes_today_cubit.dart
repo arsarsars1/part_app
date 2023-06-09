@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:part_app/model/data_model/ClassesToday.dart';
+import 'package:part_app/model/data_model/classes_today.dart';
 import 'package:part_app/model/service/admin/classes_today_service.dart';
 
 import '../cubits.dart';

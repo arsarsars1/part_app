@@ -203,7 +203,7 @@ class _LeadsState extends State<Leads> {
                 children: [
                   Text(
                     'Add New Lead',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Colors.black,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -238,7 +238,7 @@ class _LeadsState extends State<Leads> {
                 children: [
                   Text(
                     'Today\'s Follow Up',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Colors.black,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -269,7 +269,7 @@ class _LeadsState extends State<Leads> {
               children: [
                 Text(
                   'All Leads',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: Colors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -299,7 +299,7 @@ class _LeadsState extends State<Leads> {
               children: [
                 Text(
                   'Tips & Ideas',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: Colors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,

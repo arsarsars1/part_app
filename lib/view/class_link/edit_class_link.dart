@@ -116,7 +116,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                           padding: EdgeInsets.only(left: 16.w),
                           child: Text(
                             'Branch *',
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                         const SizedBox(
@@ -137,7 +137,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                                 '${tempClass?.branchName}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(),
                               ),
                               GestureDetector(
@@ -214,7 +214,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                           padding: EdgeInsets.only(left: 16.w),
                           child: Text(
                             'Batch *',
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                         const SizedBox(
@@ -235,7 +235,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                                 '${tempClass?.batchName}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(),
                               ),
                               GestureDetector(
@@ -330,7 +330,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                           padding: EdgeInsets.only(left: 16.w),
                           child: Text(
                             'Date *',
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                         const SizedBox(
@@ -351,7 +351,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                                 '${date?.toDateString() ?? tempClass?.classDate?.toDateString()}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(),
                               ),
                               GestureDetector(
@@ -479,7 +479,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                             'No class selected',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.copyWith(),
                           ),
                         ],
@@ -499,7 +499,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                             "${date?.formattedDay2() ?? tempClass?.classDate?.formattedDay2()} ${selectedclass?.startTime.toAmPM() ?? tempClass?.startTime?.toAmPM()} - ${selectedclass?.endTime.toAmPM() ?? tempClass?.endTime?.toAmPM()}",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.copyWith(),
                           ),
                           GestureDetector(

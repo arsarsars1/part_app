@@ -31,7 +31,7 @@ class LoadingView extends StatelessWidget {
             Text(
               message ?? 'Loading...',
               style:
-                  Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 16),
+                  Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 16),
             )
           ],
         ),

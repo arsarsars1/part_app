@@ -2,6 +2,8 @@
 //
 //     final trainerResponse = trainerResponseFromJson(jsonString);
 
+// ignore_for_file: invalid_annotation_target
+
 import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';

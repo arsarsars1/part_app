@@ -90,9 +90,9 @@ class _BranchDetailsState extends State<BranchDetails> {
                                       : 'Deactivated',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       ?.copyWith(
-                                        fontSize: 12.sm,
+                                        fontSize: 12.sp,
                                         color: branch?.isActive == 1
                                             ? Colors.white
                                             : AppColors.primaryColor,
@@ -135,7 +135,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                       ),
                       Text(
                         'Address:',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               color: AppColors.primaryColor,
                             ),
                       ),
@@ -168,7 +168,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                     children: [
                       Text(
                         'Assigned Branch Manager:',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               color: AppColors.primaryColor,
                             ),
                       ),

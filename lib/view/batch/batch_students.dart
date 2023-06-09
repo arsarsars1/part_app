@@ -113,7 +113,7 @@ class _BatchStudentsState extends State<BatchStudents> {
                                           'Monthly',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyText1
+                                              .bodyLarge
                                               ?.copyWith(
                                                 color: AppColors.primaryColor,
                                               ),
@@ -122,7 +122,7 @@ class _BatchStudentsState extends State<BatchStudents> {
                                           'Class Based',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyText1
+                                              .bodyLarge
                                               ?.copyWith(
                                                 color: AppColors.green,
                                               ),
