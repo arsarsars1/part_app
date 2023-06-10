@@ -73,7 +73,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        context.read<BatchCubit>().getBatchesByStatus(
+        context.read<AttendanceCubit>().getBatchesByStatus(
               branchId: context.read<BatchCubit>().batchModel?.branchId,
               status: context.read<BatchCubit>().tempStatus,
               clean: true,
@@ -83,8 +83,16 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        appBar: const CommonBar(
+        appBar: CommonBar(
           title: 'Class Attendence',
+          onPressed: () {
+            context.read<AttendanceCubit>().getBatchesByStatus(
+                  branchId: context.read<BatchCubit>().batchModel?.branchId,
+                  status: context.read<BatchCubit>().tempStatus,
+                  clean: true,
+                );
+            Navigator.pop(context);
+          },
         ),
         body: Column(
           children: [
