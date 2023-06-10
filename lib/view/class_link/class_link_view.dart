@@ -4,7 +4,6 @@ import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/class_picker.dart';
-import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
 import 'package:part_app/view/components/alert_box.dart';
@@ -235,7 +234,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                     padding: EdgeInsets.only(left: 16.w),
                     child: Text(
                       'Date *',
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                   const SizedBox(
@@ -257,7 +256,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                 'Select the date',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: AppColors.grey700,
                                     ),
@@ -266,7 +265,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                 '${date?.toDateString()}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: AppColors.grey400,
                                     ),
@@ -308,7 +307,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                             'No class selected',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.copyWith(),
                           ),
                         ],
@@ -328,7 +327,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                             "${date?.formattedDay2()} ${selectedclass?.startTime.toAmPM()} - ${selectedclass?.endTime.toAmPM()}",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.copyWith(),
                           ),
                           GestureDetector(
@@ -454,7 +453,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                             'N/A',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(
                                               color: AppColors.primaryColor,
                                             ),
@@ -466,7 +465,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                         '${classLink.branchName}, ${classLink.batchName}, ${classLink.courseName}, ${classLink.subjectName}',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(),
                                       ),
                                       SizedBox(
@@ -476,7 +475,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                         '${classLink.classDate?.formattedDay2()} ${classLink.startTime?.toAmPM()}-${classLink.endTime?.toAmPM()}',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(),
                                       ),
                                       SizedBox(
@@ -486,7 +485,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                         classLink.link ?? 'N/A',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(
                                               color: AppColors.defaultBlue,
                                             ),
@@ -528,7 +527,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                                     "${classLink.classDate?.toDateString()}",
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText1
+                                                        .bodyLarge
                                                         ?.copyWith(
                                                           color: AppColors
                                                               .primaryColor,
@@ -545,7 +544,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                                     "${classLink.startTime?.toAmPM()} - ${classLink.endTime?.toAmPM()}",
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText1
+                                                        .bodyLarge
                                                         ?.copyWith(
                                                           color: AppColors
                                                               .primaryColor,
@@ -557,21 +556,21 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                                 "${classLink.branchName}",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
+                                                    .bodyLarge
                                                     ?.copyWith(),
                                               ),
                                               Text(
                                                 "${classLink.batchName}",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
+                                                    .bodyLarge
                                                     ?.copyWith(),
                                               ),
                                               Text(
                                                 "${classLink.courseName}, ${classLink.subjectName}",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
+                                                    .bodyLarge
                                                     ?.copyWith(),
                                               ),
                                               const SizedBox(

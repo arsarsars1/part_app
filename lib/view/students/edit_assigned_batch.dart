@@ -92,7 +92,7 @@ class _EditAssignedBatchState extends State<EditAssignedBatch> {
                   Center(
                     child: Text(
                       cubit.student?.studentDetail?[0].name ?? 'Not Available',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             color: AppColors.primaryColor,
                             fontWeight: FontWeight.bold,
                           ),
@@ -101,7 +101,7 @@ class _EditAssignedBatchState extends State<EditAssignedBatch> {
                   Center(
                     child: Text(
                       batch?.name ?? 'NA',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                     ),
@@ -125,7 +125,7 @@ class _EditAssignedBatchState extends State<EditAssignedBatch> {
                         child: Text(
                           batch?.days[index] ?? '',
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(),
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(),
                         ),
                       );
                     },

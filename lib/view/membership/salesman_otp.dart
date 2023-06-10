@@ -65,7 +65,7 @@ class _SalesManOTPState extends State<SalesManOTP> {
                                 text: ' +91${cubit.salesManNumber}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       fontSize: 16,
                                       color: AppColors.primaryColor,

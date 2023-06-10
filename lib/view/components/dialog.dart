@@ -122,28 +122,28 @@ class Logout extends StatelessWidget {
                           children: <TextSpan>[
                             TextSpan(
                               text: 'Do You Want To Deactivate',
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             TextSpan(
                               text:
                                   "${message.substring(startIndex + start.length, middleIndex)}\n",
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2
+                                  .bodyMedium
                                   ?.copyWith(
                                     fontWeight: FontWeight.w900,
                                   ),
                             ),
                             TextSpan(
                               text: 'From',
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             TextSpan(
                               text:
                                   "${message.substring(middleIndex + middle.length, endIndex)} ?",
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2
+                                  .bodyMedium
                                   ?.copyWith(
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -153,7 +153,7 @@ class Logout extends StatelessWidget {
                       )
                     : Text(
                         message,
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyMedium,
                         textAlign: TextAlign.center,
                       ),
                 SizedBox(
@@ -162,7 +162,7 @@ class Logout extends StatelessWidget {
                 if (subMessage != null)
                   Text(
                     subMessage!,
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w700,
                           color: subColor ?? Colors.white,
                         ),

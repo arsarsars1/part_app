@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -33,7 +35,7 @@ class TrainerCubit extends Cubit<TrainerState> {
 
   List<Trainer> get filteredTrainers => _filteredTrainers;
 
-  bool _isActive = true;
+  final bool _isActive = true;
 
   TrainerResponse? tempResponse;
 
@@ -89,7 +91,6 @@ class TrainerCubit extends Cubit<TrainerState> {
   }
 
   Future getTrainers({bool nextPage = false}) async {
-    String? arg = "";
     emit(FetchingTrainers());
     TrainerResponse? response = await _trainerService.getTrainers();
     tempResponse = response;
@@ -113,7 +114,6 @@ class TrainerCubit extends Cubit<TrainerState> {
       bool nextPage = false,
       active = false,
       clean = false}) async {
-    String? arg = "";
     emit(FetchingTrainers());
     TrainerResponse? response = active
         ? await _trainerService.getActiveTrainers(

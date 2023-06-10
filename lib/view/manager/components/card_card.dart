@@ -41,7 +41,7 @@ class ManagerCard extends StatelessWidget {
                       Text(
                         '${manager.managerDetail?[0].name}',
                         maxLines: 1,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 16,
                             ),
                         overflow: TextOverflow.ellipsis,
@@ -63,7 +63,7 @@ class ManagerCard extends StatelessWidget {
                             branch?.branchName ?? 'Branch Not Allocated',
                             maxLines: 1,
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: active
                                           ? AppColors.primaryColor
                                           : AppColors.grey700,
@@ -144,7 +144,7 @@ class ManagerCard extends StatelessWidget {
                     ? 'Deactivated'
                     : 'Active',
                 maxLines: 1,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: manager.managerDetail?[0].isActive == 0
                           ? AppColors.primaryColor
                           : null,

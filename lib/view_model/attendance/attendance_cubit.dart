@@ -18,10 +18,10 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   AttendanceCubit() : super(AttendanceInitial());
   final _attendanceService = AttendanceService();
 
-  List<Attendance> _attendance = [];
-  List<Days> _days = [];
-  List<BatchModel> _batches = [];
-  List<AttendanceDetails> _attendenceTaken = [];
+  final List<Attendance> _attendance = [];
+  final List<Days> _days = [];
+  final List<BatchModel> _batches = [];
+  final List<AttendanceDetails> _attendenceTaken = [];
 
   Set<int> selectedStudents = {};
   Set<int> updatedStudents = {};

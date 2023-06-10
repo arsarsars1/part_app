@@ -43,7 +43,7 @@ class _WhatsappCheckButtonState extends State<WhatsappCheckButton> {
                 child: Text(
                   'Is The Above Number Your Whatsapp Number?',
                   maxLines: 2,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

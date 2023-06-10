@@ -87,7 +87,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                         "${batch?.name}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontSize: 15.sp,
                             fontWeight: FontWeight.bold,
                             color: AppColors.primaryColor),
@@ -100,7 +100,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -110,7 +110,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       fontSize: 12.sp,
                                       color: AppColors.primaryColor,
                                     ),
@@ -122,7 +122,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                         "${batch?.branchName}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 12.sp,
                             ),
                       ),
@@ -139,7 +139,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       fontSize: 12.sp,
                                     ),
@@ -153,7 +153,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       ?.copyWith(
                                           fontSize: 12.sp,
                                           color: AppColors.primaryColor),
@@ -168,7 +168,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                                 '${cubit.conductedDate?.toDay()}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: AppColors.textColor,
                                       fontSize: 16,
@@ -178,7 +178,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                                 '${cubit.conductedDate?.toDDMMMYYY()}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: AppColors.textColor,
                                       fontSize: 16,

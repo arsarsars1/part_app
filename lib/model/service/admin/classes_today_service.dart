@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:part_app/model/data_model/ClassesToday.dart';
+import 'package:part_app/model/data_model/classes_today.dart';
 import 'package:part_app/model/service/api.dart';
 
 class ClassesTodayService {

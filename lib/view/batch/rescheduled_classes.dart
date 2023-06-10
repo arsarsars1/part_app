@@ -136,7 +136,7 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                                     'Rescheduled From',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyLarge
                                         ?.copyWith(
                                           color: AppColors.primaryColor,
                                         ),
@@ -202,7 +202,7 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                                               textAlign: TextAlign.center,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1
+                                                  .bodyLarge
                                                   ?.copyWith(
                                                     color:
                                                         AppColors.primaryColor,
@@ -219,7 +219,7 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                                               textAlign: TextAlign.center,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1
+                                                  .bodyLarge
                                                   ?.copyWith(
                                                     color:
                                                         AppColors.primaryColor,

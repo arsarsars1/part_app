@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -236,7 +237,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await _authService.logout();
     } catch (e) {
-      // TODO should we force logout the user ???
+      log("$e");
     }
     await Database().clearForLogout();
     emit(UserNotAvailable());

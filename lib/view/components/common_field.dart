@@ -88,7 +88,7 @@ class CommonField extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(
               height: 8,
@@ -119,7 +119,7 @@ class CommonField extends StatelessWidget {
                                 e.title ?? '',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: Colors.white,
                                     ),
@@ -161,7 +161,7 @@ class CommonField extends StatelessWidget {
                       required bool isFocused,
                     }) =>
                         const SizedBox(),
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: textColor,
                           letterSpacing: letterSpacing,
                         ),

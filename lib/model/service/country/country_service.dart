@@ -14,7 +14,6 @@ class CountryService {
       var response = await _apiClient.get(
         queryPath: '/countries',
       );
-      var data = json.encode(response);
       return countriesFromJson(json.encode(response));
     } on DioError catch (e) {
       throw Exception(e);
@@ -26,7 +25,6 @@ class CountryService {
       var response = await _apiClient.get(
         queryPath: '/country/$countryId/states',
       );
-      var data = json.encode(response);
       return districtFromJson(json.encode(response));
     } on DioError catch (e) {
       throw Exception(e);
@@ -38,7 +36,6 @@ class CountryService {
       var response = await _apiClient.get(
         queryPath: '/state/$stateId/districts',
       );
-      var data = json.encode(response);
       return districtFromJson(json.encode(response));
     } on DioError catch (e) {
       throw Exception(e);
@@ -50,7 +47,6 @@ class CountryService {
       var response = await _apiClient.get(
         queryPath: '/academy-types',
       );
-      var data = json.encode(response);
       return academyTypeFromJson(json.encode(response));
     } on DioError catch (e) {
       throw Exception(e);

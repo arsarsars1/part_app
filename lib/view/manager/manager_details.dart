@@ -96,7 +96,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1
+                      .bodyLarge
                       ?.copyWith(fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
@@ -150,7 +150,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                     children: [
                       Text(
                         'Allocated Branches',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               color: AppColors.primaryColor,
                               fontSize: 12,
                             ),
@@ -182,7 +182,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                                           style: !active
                                               ? Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1
+                                                  .bodyLarge
                                                   ?.copyWith(
                                                     color: AppColors.grey700,
                                                   )
@@ -236,7 +236,7 @@ class _ManagerDetailsState extends State<ManagerDetails> {
                       const Spacer(),
                       Text(
                         'Salary History',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 12,
                             ),
                       ),

@@ -50,7 +50,7 @@ class Button extends StatelessWidget {
         child: Center(
           child: Text(
             title,
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: Colors.white,
                   fontSize: fontSize,
                 ),

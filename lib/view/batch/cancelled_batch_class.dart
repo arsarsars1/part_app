@@ -115,7 +115,7 @@ class CancelledClassesState extends State<CancelledClasses> {
                                 'Cancelled Class',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: AppColors.primaryColor,
                                     ),
@@ -144,7 +144,7 @@ class CancelledClassesState extends State<CancelledClasses> {
                                           textAlign: TextAlign.center,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyText1
+                                              .bodyLarge
                                               ?.copyWith(
                                                 color: AppColors.primaryColor,
                                               ),
@@ -192,7 +192,7 @@ class CancelledClassesState extends State<CancelledClasses> {
                               'Reason : ',
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyLarge
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             Expanded(
@@ -200,7 +200,7 @@ class CancelledClassesState extends State<CancelledClasses> {
                                 '${detail.reason} ',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(),
                               ),
                             ),
@@ -215,7 +215,7 @@ class CancelledClassesState extends State<CancelledClasses> {
                               '${detail.classDate?.toDateString()} ',
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyLarge
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             Text(
@@ -223,7 +223,7 @@ class CancelledClassesState extends State<CancelledClasses> {
                               '${detail.endTime?.toAmPM()}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyLarge
                                   ?.copyWith(),
                             ),
                           ],

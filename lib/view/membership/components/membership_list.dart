@@ -48,7 +48,7 @@ class _MembershipListState extends State<MembershipList> {
                       ),
                       Text(
                         'Membership Plan',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               color: AppColors.primaryColor,
                               fontSize: 13,
                             ),
@@ -65,7 +65,7 @@ class _MembershipListState extends State<MembershipList> {
                                 'Register Upto ${membership.maxNoOfBranches} Branch(s)',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       fontSize: 14,
                                     ),
@@ -77,7 +77,7 @@ class _MembershipListState extends State<MembershipList> {
                                 'Register Upto ${membership.maxNoOfBranches} students',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       fontSize: 14,
                                     ),
@@ -92,7 +92,7 @@ class _MembershipListState extends State<MembershipList> {
                                   '₹ ${membership.amount}/-',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       ?.copyWith(
                                         fontSize: 15,
                                         decoration: TextDecoration.lineThrough,
@@ -104,7 +104,7 @@ class _MembershipListState extends State<MembershipList> {
                                     : '₹ ${membership.finalAmount}/-',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(fontSize: 16),
                               ),
                             ],

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/trainer/trainer_cubit.dart';
-import '../../../model/data_model/ClassesToday.dart';
+import '../../../model/data_model/classes_today.dart';
 
 class TodaysClassList extends StatefulWidget {
   final List<Class> classesList;
@@ -34,7 +33,6 @@ class _TodaysClassListState extends State<TodaysClassList> {
 
   @override
   Widget build(BuildContext context) {
-    var token = 'Bearer ${Database().getToken()}';
     String classStatus = "";
     Color color;
 
@@ -85,7 +83,7 @@ class _TodaysClassListState extends State<TodaysClassList> {
                   child: Text(
                     '${classItem.batchName}',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontSize: 16,
                         ),
                   ),
@@ -100,7 +98,7 @@ class _TodaysClassListState extends State<TodaysClassList> {
                     maxLines: 1,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText1
+                        .bodyLarge
                         ?.copyWith(fontSize: 12),
                   ),
                 ),
@@ -115,7 +113,7 @@ class _TodaysClassListState extends State<TodaysClassList> {
                       child: Text(
                         '${classItem.trainers}',
                         maxLines: 1,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 14,
                               color: AppColors.primaryColor,
                             ),
@@ -126,7 +124,7 @@ class _TodaysClassListState extends State<TodaysClassList> {
                     ),
                     Text(
                       classItem.classLink == "" ? '' : 'Online Class',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: AppColors.yellow,
                             fontSize: 14,
@@ -143,7 +141,7 @@ class _TodaysClassListState extends State<TodaysClassList> {
                   children: [
                     Flexible(
                       child: Text(
-                        '${startTime12Hour} - ${endTime12Hour}',
+                        '$startTime12Hour - $endTime12Hour',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -153,7 +151,7 @@ class _TodaysClassListState extends State<TodaysClassList> {
                     ),
                     Text(
                       classStatus,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             color: color,
                             fontSize: 16,
                           ),

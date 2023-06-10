@@ -70,9 +70,9 @@ class ImagePickerDialog {
                                 'Choose an avatar',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
-                                        fontSize: 18.sm, color: Colors.white70),
+                                        fontSize: 18.sp, color: Colors.white70),
                               ),
                             ),
                             const Divider(
@@ -382,8 +382,8 @@ class _PickerList extends StatelessWidget {
               documents ? 'Upload ID Proof' : 'Change Profile Picture',
               style: Theme.of(context)
                   .textTheme
-                  .bodyText1
-                  ?.copyWith(fontSize: 18.sm, color: Colors.white70),
+                  .bodyLarge
+                  ?.copyWith(fontSize: 18.sp, color: Colors.white70),
             ),
           ),
           const Divider(
@@ -409,7 +409,7 @@ class _PickerList extends StatelessWidget {
                     'Take Photo',
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText1
+                        .bodyLarge
                         ?.copyWith(color: Colors.white70),
                   ),
                 ],
@@ -436,7 +436,7 @@ class _PickerList extends StatelessWidget {
                     'Choose From Phone',
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText1
+                        .bodyLarge
                         ?.copyWith(color: Colors.white70),
                   ),
                 ],
@@ -461,7 +461,7 @@ class _PickerList extends StatelessWidget {
                       'Choose Avatar Profile Picture',
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText1
+                          .bodyLarge
                           ?.copyWith(color: Colors.white70),
                     ),
                   ],

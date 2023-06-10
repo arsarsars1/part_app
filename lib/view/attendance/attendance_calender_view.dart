@@ -115,7 +115,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1
+                              .bodyLarge
                               ?.copyWith(
                                   fontSize: 15.sp,
                                   fontWeight: FontWeight.bold,
@@ -127,7 +127,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontSize: 12.sp,
                                   ),
                         ),
@@ -137,7 +137,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontSize: 12.sp,
                                   ),
                         ),
@@ -148,7 +148,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1
+                              .bodyLarge
                               ?.copyWith(
                                   fontSize: 12.sp,
                                   color: AppColors.primaryColor),
@@ -163,7 +163,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                               '${batch?.days[index]}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyLarge
                                   ?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -177,7 +177,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontSize: 12.sp,
                                   ),
                         ),
@@ -187,7 +187,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontSize: 12.sp,
                                   ),
                         ),

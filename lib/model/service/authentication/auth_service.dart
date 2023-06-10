@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -48,7 +49,7 @@ class AuthService {
         fcmToken = await FirebaseMessaging.instance.getToken();
       } on FirebaseException catch (e) {
         fcmToken = 'Failed to generate token';
-        print(e);
+        log("$e");
       }
       var data = {
         'country_code': countryCode,

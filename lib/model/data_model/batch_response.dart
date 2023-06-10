@@ -2,6 +2,8 @@
 //
 //     final batchResponse = batchResponseFromJson(jsonString);
 
+// ignore_for_file: invalid_annotation_target
+
 import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -112,7 +114,7 @@ abstract class PivotClass with _$PivotClass {
   const factory PivotClass({
     int? studentDetailId,
     int? batchId,
-    dynamic? noOfClasses,
+    dynamic noOfClasses,
     String? feeType,
     int? feeAmount,
     int? admissionFees,

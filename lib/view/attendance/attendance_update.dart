@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/attendence_taken.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
-import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
@@ -75,7 +74,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                         "${batch?.name}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontSize: 15.sp,
                             fontWeight: FontWeight.bold,
                             color: AppColors.primaryColor),
@@ -88,7 +87,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -98,7 +97,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       fontSize: 12.sp,
                                       color: AppColors.primaryColor,
                                     ),
@@ -110,7 +109,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                         "${batch?.branchName}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 12.sp,
                             ),
                       ),
@@ -127,7 +126,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       fontSize: 12.sp,
                                     ),
@@ -141,7 +140,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       ?.copyWith(
                                           fontSize: 12.sp,
                                           color: AppColors.primaryColor),
@@ -156,7 +155,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                 '${cubit.conductedDate?.toDay()}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: AppColors.textColor,
                                       fontSize: 16,
@@ -166,7 +165,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                 '${cubit.conductedDate?.toDDMMMYYY()}',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: AppColors.textColor,
                                       fontSize: 16,
@@ -178,10 +177,10 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                       ),
                       SizedBox(height: 5.h),
                       Text(
-                        "Attendence: ${cubit.updatedStudents.length ?? 0} / ${studentCubit.students?.length ?? 0}",
+                        "Attendence: ${cubit.updatedStudents.length} / ${studentCubit.students?.length ?? 0}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 12.sp,
                             ),
                       ),
@@ -190,7 +189,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                         "Note: You can update each student's attendence from this page for the following batch on the selected date.",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 12.sp,
                             ),
                       ),
@@ -199,11 +198,11 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                         builder: (context, state) {
                           return ListView.builder(
                             shrinkWrap: true,
-                            itemCount: studentCubit.students?.length,
+                            itemCount: cubit.attendenceTaken.length,
                             controller: scrollController,
                             itemBuilder: (context, index) {
-                              StudentModel student =
-                                  studentCubit.students![index];
+                              AttendanceDetails student =
+                                  cubit.attendenceTaken[index];
                               return Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: EdgeInsets.symmetric(vertical: 8.w),
@@ -222,16 +221,18 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                       child: Row(
                                         children: [
                                           UserImage(
-                                            profilePic: student.profilePic != ""
+                                            profilePic: student.studentDetail
+                                                        ?.profilePic !=
+                                                    ""
                                                 ? '${F.baseUrl}'
                                                     '/admin/images/trainer/'
-                                                    '${student.id}/${student.profilePic}'
+                                                    '${student.id}/${student.studentDetail?.profilePic}'
                                                 : '',
                                           ),
                                           SizedBox(width: 16.w),
                                           Expanded(
                                             child: Text(
-                                              '${student.name}',
+                                              '${student.studentDetail?.name}',
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                             ),
@@ -253,15 +254,18 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                               child: CupertinoSwitch(
                                                 trackColor: AppColors.grey500,
                                                 value: cubit.updatedStudents
-                                                    .contains(student.detailId),
+                                                    .contains(student
+                                                        .studentDetailId),
                                                 onChanged: (value) {
                                                   cubit.updateStudent(
-                                                      student.detailId ?? 0);
+                                                      student.studentDetailId ??
+                                                          0);
                                                   for (AttendanceDetails i
                                                       in cubit
                                                           .attendenceTaken) {
                                                     if (i.studentDetail?.id ==
-                                                        student.detailId) {
+                                                        student
+                                                            .studentDetailId) {
                                                       selectedStudent = i;
                                                       break;
                                                     }
@@ -285,7 +289,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(
                                                                       fontWeight:
                                                                           FontWeight
@@ -298,7 +302,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(
                                                                       color: AppColors
                                                                           .primaryColor,
@@ -318,7 +322,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(
                                                                       fontWeight:
                                                                           FontWeight
@@ -331,7 +335,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(
                                                                       color: AppColors
                                                                           .primaryColor,
@@ -352,7 +356,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(),
                                                               ),
                                                             ],
@@ -370,7 +374,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(),
                                                               ),
                                                             ],
@@ -388,7 +392,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .bodyText1
+                                                                    .bodyLarge
                                                                     ?.copyWith(),
                                                               ),
                                                             ],
@@ -404,7 +408,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                                     .updatedStudents
                                                                     .contains(
                                                                         student
-                                                                            .detailId)
+                                                                            .studentDetailId)
                                                                 ? "1"
                                                                 : "0"
                                                           },

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -157,10 +159,10 @@ class _HomeBannerState extends State<HomeBanner> {
                                           Text(
                                             '${fromTime.toTime()} '
                                             'To ${toTime.toTime()}, '
-                                            '${formattedString}',
+                                            '$formattedString',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyText1
+                                                .bodyLarge
                                                 ?.copyWith(
                                                   fontSize: 10,
                                                 ),
