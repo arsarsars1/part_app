@@ -45,6 +45,7 @@ import 'package:part_app/view/students/assign_student_batch.dart';
 import 'package:part_app/view/students/edit_assigned_batch.dart';
 import 'package:part_app/view/students/edit_student.dart';
 import 'package:part_app/view/students/edit_student_batches.dart';
+import 'package:part_app/view/students/student_attendence.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
@@ -377,6 +378,11 @@ class RouteGenerator {
           builder: (_) => const AttendanceCalenderView(),
           settings: settings,
         );
+      case StudentAttendanceCalenderView.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAttendanceCalenderView(),
+          settings: settings,
+        );  
       case MonthlyAttendanceView.route:
         return MaterialPageRoute(
           builder: (_) => const MonthlyAttendanceView(),
