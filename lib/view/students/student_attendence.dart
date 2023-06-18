@@ -202,42 +202,47 @@ class _StudentAttendanceCalenderViewState
                             currentMonth--;
                           }
                         });
-                        await cubit.getClassesOfMonth(
+                        await cubit.getAttendenceOfStudentOfMonth(
+                            studentDetailId:
+                                studentCubit?.student?.studentDetail?[0].id,
                             batchId: cubit.id,
                             date: DateTime(currentYear, currentMonth));
-                        await cubit.getConductedClassesOfMonth(
+                        await cubit.getClassesOfMonth(
                             batchId: cubit.id,
                             date: DateTime(currentYear, currentMonth));
                         _markedDateMap.clear();
                         setState(() {
-                          noOfWeeks = getWeeksInMonth(
-                              DateTime(currentYear, currentMonth));
-                          for (var element in cubit.attendenceClasses ?? []) {
+                          for (var element1
+                              in attendenceCubit.attendenceClasses ?? []) {
                             int flag = 0;
                             int conductedClassId = 0;
-                            for (var element1 in cubit.conductedClasses ?? []) {
-                              if (element.date == element1.conductedOn) {
+                            for (var element in cubit.studentClasses ?? []) {
+                              if (element.conductedClass.conductedOn ==
+                                  element1.date) {
                                 flag = 1;
-                                conductedClassId = element1.id;
+                                conductedClassId = element.id;
                                 break;
                               }
                             }
-                            _markedDateMap.add(
-                              element.date ?? DateTime.now(),
-                              Event(
-                                date: element.date ?? DateTime.now(),
-                                title: conductedClassId == 0
-                                    ? 'Event 1'
-                                    : '$conductedClassId',
-                                dot: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 1.0),
-                                  color: flag == 1 ? Colors.green : Colors.red,
-                                  height: 5.0,
-                                  width: 5.0,
+                            if (element1.date.isBefore(DateTime.now())) {
+                              _markedDateMap.add(
+                                element1.date ?? DateTime.now(),
+                                Event(
+                                  date: element1.date ?? DateTime.now(),
+                                  title: conductedClassId == 0
+                                      ? 'Event 1'
+                                      : '$conductedClassId',
+                                  dot: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 1.0),
+                                    color:
+                                        flag == 1 ? Colors.green : Colors.red,
+                                    height: 5.0,
+                                    width: 5.0,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           }
                         });
                       },
@@ -251,42 +256,47 @@ class _StudentAttendanceCalenderViewState
                             currentMonth++;
                           }
                         });
-                        await cubit.getClassesOfMonth(
+                        await cubit.getAttendenceOfStudentOfMonth(
+                            studentDetailId:
+                                studentCubit?.student?.studentDetail?[0].id,
                             batchId: cubit.id,
                             date: DateTime(currentYear, currentMonth));
-                        await cubit.getConductedClassesOfMonth(
+                        await cubit.getClassesOfMonth(
                             batchId: cubit.id,
                             date: DateTime(currentYear, currentMonth));
                         _markedDateMap.clear();
                         setState(() {
-                          noOfWeeks = getWeeksInMonth(
-                              DateTime(currentYear, currentMonth));
-                          for (var element in cubit.attendenceClasses ?? []) {
+                          for (var element1
+                              in attendenceCubit.attendenceClasses ?? []) {
                             int flag = 0;
                             int conductedClassId = 0;
-                            for (var element1 in cubit.conductedClasses ?? []) {
-                              if (element.date == element1.conductedOn) {
+                            for (var element in cubit.studentClasses ?? []) {
+                              if (element.conductedClass.conductedOn ==
+                                  element1.date) {
                                 flag = 1;
-                                conductedClassId = element1.id;
+                                conductedClassId = element.id;
                                 break;
                               }
                             }
-                            _markedDateMap.add(
-                              element.date ?? DateTime.now(),
-                              Event(
-                                date: element.date ?? DateTime.now(),
-                                title: conductedClassId == 0
-                                    ? 'Event 1'
-                                    : '$conductedClassId',
-                                dot: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 1.0),
-                                  color: flag == 1 ? Colors.green : Colors.red,
-                                  height: 5.0,
-                                  width: 5.0,
+                            if (element1.date.isBefore(DateTime.now())) {
+                              _markedDateMap.add(
+                                element1.date ?? DateTime.now(),
+                                Event(
+                                  date: element1.date ?? DateTime.now(),
+                                  title: conductedClassId == 0
+                                      ? 'Event 1'
+                                      : '$conductedClassId',
+                                  dot: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 1.0),
+                                    color:
+                                        flag == 1 ? Colors.green : Colors.red,
+                                    height: 5.0,
+                                    width: 5.0,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           }
                         });
                       },
