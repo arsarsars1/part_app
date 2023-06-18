@@ -72,14 +72,14 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   'Select The Following Filters To Get The',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   'Fee Details',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               Expanded(
@@ -203,7 +203,6 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                         } else {
                           query = value;
                         }
-
                         doSearch(true);
                       },
                       textInputAction: TextInputAction.search,
@@ -214,7 +213,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     ),
                     Column(
                       children: [
-                        cubit.batchInvoice == null || cubit.batchInvoice.isEmpty
+                        cubit.batchInvoice.isEmpty
                             ? Padding(
                                 padding: const EdgeInsets.all(64),
                                 child: Center(
@@ -229,7 +228,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                               )
                             : ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: cubit.batchInvoice.length ?? 0,
+                                itemCount: cubit.batchInvoice.length,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   Datum studentInvoice =

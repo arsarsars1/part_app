@@ -22,8 +22,7 @@ class FeeListItem extends StatelessWidget {
     Color paymentColor;
     bool showTable;
 
-    List<List<String>> tableData = [
-    ];
+    List<List<String>> tableData = [];
 
     if (student.feeType == 'class') {
       feeType = 'Class Based';
@@ -38,10 +37,7 @@ class FeeListItem extends StatelessWidget {
       paymentText = 'Paid Completely';
       showTable = true;
 
-
       tableData.add([student.payments![0].toString(), 'Row', '0']);
-
-
     } else if (student.paymentStatus == 'partial') {
       paymentColor = AppColors.yellow;
       paymentText = 'Partially Paid';
@@ -52,19 +48,19 @@ class FeeListItem extends StatelessWidget {
       showTable = false;
     }
 
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: 120,
-              height: 20,
+              width: 120.w,
+              height: 20.h,
               child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(20.0),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20.h),
                 ),
                 child: Container(
                   decoration: BoxDecoration(
@@ -74,7 +70,6 @@ class FeeListItem extends StatelessWidget {
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.symmetric(
                 horizontal: 16.w,
                 vertical: 16.h,
@@ -86,60 +81,52 @@ class FeeListItem extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        flex: 3,
-                        child: Row(
-                          children: [
-                            UserImage(
-                              profilePic: student.studentDetail!.profilePic !=
-                                      ""
-                                  ? '${F.baseUrl}'
-                                      '/admin/images/student/'
-                                      '${student.studentDetail!.id}/${student.studentDetail?.profilePic}'
-                                  : '',
-                            ),
-                            SizedBox(width: 16.w),
-                            Expanded(
-                              child: Text(
-                                '${student.studentDetail!.name}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  feeType,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(
-                                        fontSize: 12,
-                                        color: AppColors.primaryColor,
-                                      ),
-                                ),
-                                const SizedBox(
-                                  width: 16,
-                                ),
-                                Text(
-                                  "Class Attended: $presentCount/${student.monthClassesConductedCount}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          UserImage(
+                            profilePic: student.studentDetail!.profilePic != ""
+                                ? '${F.baseUrl}'
+                                    '/admin/images/student/'
+                                    '${student.studentDetail!.id}/${student.studentDetail?.profilePic}'
+                                : '',
+                          ),
+                          SizedBox(width: 16.w),
+                          Text(
+                            '${student.studentDetail?.name}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            feeType,
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: AppColors.primaryColor,
+                                    ),
+                          ),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Text(
+                            "Class Attended: $presentCount/${student.monthClassesConductedCount}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 10.h,
                   ),
                   Column(
                     children: [
@@ -150,14 +137,14 @@ class FeeListItem extends StatelessWidget {
                           Text(
                             '${student.batchName}',
                           ),
-                          const SizedBox(
-                            width: 16,
+                          SizedBox(
+                            width: 16.w,
                           ),
                           Text(
                             "Payment Due in:",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.copyWith(),
                           ),
                         ],
@@ -169,15 +156,15 @@ class FeeListItem extends StatelessWidget {
                           Text(
                             '${student.branchName}',
                           ),
-                          const SizedBox(
-                            width: 10,
+                          SizedBox(
+                            width: 10.w,
                           ),
                           Text(
                             student.paymentDueDate != null
                                 ? '${student.paymentDueDate}'
                                 : 'Not Available',
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: AppColors.primaryColor,
                                     ),
                           ),
@@ -190,14 +177,14 @@ class FeeListItem extends StatelessWidget {
                           Text(
                             '${student.courseName}, ${student.subjectName}',
                           ),
-                          const SizedBox(
-                            width: 10,
+                          SizedBox(
+                            width: 10.w,
                           ),
                           Text(
                             "Payment Status",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.copyWith(),
                           ),
                         ],
@@ -209,228 +196,194 @@ class FeeListItem extends StatelessWidget {
                           const Text(
                             '',
                           ),
-                          const SizedBox(
-                            width: 10,
+                          SizedBox(
+                            width: 10.w,
                           ),
                           Text(
                             paymentText,
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: paymentColor,
                                     ),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 10,
+                      SizedBox(
+                        height: 10.h,
                       ),
                       Text(
                         'Fees : ${student.payableAmount}',
                         textAlign: TextAlign.right,
                         style:
-                            Theme.of(context).textTheme.bodyText1?.copyWith(),
+                            Theme.of(context).textTheme.bodyLarge?.copyWith(),
                       ),
-                      const SizedBox(
-                        height: 10,
+                      SizedBox(
+                        height: 10.h,
                       ),
-
-
-
                       showTable == true
                           ? SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: 150,
-                              child: Center(
-                                child: Column(
-                                  children: [
-
-
-
-
-
-
-
-                                    DataTable(
-                                      headingRowHeight: 25,
-                                      dataRowMinHeight: 25,
-                                      dataRowMaxHeight: 25,
-                                      columnSpacing: 0.0,
-                                      columns: [
-                                        DataColumn(
-                                          label: SizedBox(
+                              height: 120.h,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  DataTable(
+                                    headingRowHeight: 30.h,
+                                    dataRowMinHeight: 30.h,
+                                    dataRowMaxHeight: 30.h,
+                                    columnSpacing: 0.0,
+                                    horizontalMargin: 0.0,
+                                    columns: [
+                                      DataColumn(
+                                        label: SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              4,
+                                          child: CustomPaint(
+                                              painter: DottedBorderPainter(),
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 5.0),
+                                                  child: Text(
+                                                    'Date',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge
+                                                        ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ),
+                                              )),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              4,
+                                          child: CustomPaint(
+                                            painter: DottedBorderPainter(),
+                                            child: Center(
+                                              child: Text(
+                                                'Updated By',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              4,
+                                          child: CustomPaint(
+                                              painter: DottedBorderPainter(),
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 5.0),
+                                                  child: Text(
+                                                    'Amount',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge
+                                                        ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ),
+                                              )),
+                                        ),
+                                      ),
+                                    ],
+                                    rows: tableData.map((row) {
+                                      return DataRow(cells: [
+                                        DataCell(
+                                          SizedBox(
                                             width: MediaQuery.of(context)
-                                                .size
-                                                .width /
-                                                3,
+                                                    .size
+                                                    .width /
+                                                4,
                                             child: CustomPaint(
-                                                painter:
-                                                DottedBorderPainter(),
+                                                painter: DottedBorderPainter(),
                                                 child: Align(
-                                                  alignment: Alignment
-                                                      .centerLeft,
+                                                  alignment:
+                                                      Alignment.centerLeft,
                                                   child: Padding(
                                                     padding:
-                                                    const EdgeInsets
-                                                        .only(
-                                                        left: 5.0),
+                                                        const EdgeInsets.only(
+                                                            left: 5.0),
                                                     child: Text(
-                                                      'Date',
-                                                      style: Theme.of(
-                                                          context)
-                                                          .textTheme
-                                                          .bodyText1
-                                                          ?.copyWith(
-                                                        fontWeight:
-                                                        FontWeight
-                                                            .bold,
-                                                      ),
+                                                      row[0],
                                                     ),
                                                   ),
                                                 )),
                                           ),
                                         ),
-                                        DataColumn(
-                                          label: SizedBox(
+                                        DataCell(
+                                          SizedBox(
                                             width: MediaQuery.of(context)
-                                                .size
-                                                .width /
-                                                3,
+                                                    .size
+                                                    .width /
+                                                4,
                                             child: CustomPaint(
-                                              painter:
-                                              DottedBorderPainter(),
+                                              painter: DottedBorderPainter(),
                                               child: Center(
                                                 child: Text(
-                                                  'Updated By',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1
-                                                      ?.copyWith(
-                                                    fontWeight:
-                                                    FontWeight
-                                                        .bold,
-                                                  ),
+                                                  row[1],
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                        DataColumn(
-                                          label: SizedBox(
+                                        DataCell(
+                                          SizedBox(
                                             width: MediaQuery.of(context)
-                                                .size
-                                                .width /
-                                                3,
+                                                    .size
+                                                    .width /
+                                                4,
                                             child: CustomPaint(
-                                                painter:
-                                                DottedBorderPainter(),
+                                                painter: DottedBorderPainter(),
                                                 child: Align(
-                                                  alignment: Alignment
-                                                      .centerRight,
+                                                  alignment:
+                                                      Alignment.centerRight,
                                                   child: Padding(
                                                     padding:
-                                                    const EdgeInsets
-                                                        .only(
-                                                        right: 5.0),
+                                                        const EdgeInsets.only(
+                                                            right: 5.0),
                                                     child: Text(
-                                                      'Amount',
-                                                      style: Theme.of(
-                                                          context)
-                                                          .textTheme
-                                                          .bodyText1
-                                                          ?.copyWith(
-                                                        fontWeight:
-                                                        FontWeight
-                                                            .bold,
-                                                      ),
+                                                      row[2],
                                                     ),
                                                   ),
                                                 )),
                                           ),
                                         ),
-                                      ],
-                                      rows: tableData.map((row) {
-                                        return DataRow(cells: [
-                                          DataCell(
-                                            SizedBox(
-                                              width:
-                                              MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                                  3,
-                                              child: CustomPaint(
-                                                  painter:
-                                                  DottedBorderPainter(),
-                                                  child: Align(
-                                                    alignment: Alignment
-                                                        .centerLeft,
-                                                    child: Padding(
-                                                      padding:
-                                                      const EdgeInsets
-                                                          .only(
-                                                          left: 5.0),
-                                                      child: Text(
-                                                        row[0],
-                                                      ),
-                                                    ),
-                                                  )),
-                                            ),
-                                          ),
-                                          DataCell(
-                                            SizedBox(
-                                              width:
-                                              MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                                  3,
-                                              child: CustomPaint(
-                                                painter:
-                                                DottedBorderPainter(),
-                                                child: Center(
-                                                  child: Text(
-                                                    row[1],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          DataCell(
-                                            SizedBox(
-                                              width:
-                                              MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                                  3,
-                                              child: CustomPaint(
-                                                  painter:
-                                                  DottedBorderPainter(),
-                                                  child: Align(
-                                                    alignment: Alignment
-                                                        .centerRight,
-                                                    child: Padding(
-                                                      padding:
-                                                      const EdgeInsets
-                                                          .only(
-                                                          right: 5.0),
-                                                      child: Text(
-                                                        row[2],
-                                                      ),
-                                                    ),
-                                                  )),
-                                            ),
-                                          ),
-                                        ]);
-                                      }).toList(),
-                                    ),
-
-
-
-
-
-
-
-
-
-                                    CustomPaint(
+                                      ]);
+                                    }).toList(),
+                                  ),
+                                  SizedBox(
+                                    width: (3 *
+                                            MediaQuery.of(context).size.width) /
+                                        4,
+                                    child: CustomPaint(
                                       painter: DottedBorderPainter(),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -448,7 +401,7 @@ class FeeListItem extends StatelessWidget {
                                               "400.00",
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1
+                                                  .bodyLarge
                                                   ?.copyWith(
                                                       color: AppColors.green),
                                             ),
@@ -456,7 +409,12 @@ class FeeListItem extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    CustomPaint(
+                                  ),
+                                  SizedBox(
+                                    width: (3 *
+                                            MediaQuery.of(context).size.width) /
+                                        4,
+                                    child: CustomPaint(
                                       painter: DottedBorderPainter(),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -474,7 +432,7 @@ class FeeListItem extends StatelessWidget {
                                               "800.00",
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1
+                                                  .bodyLarge
                                                   ?.copyWith(
                                                       color: AppColors
                                                           .primaryColor),
@@ -483,20 +441,15 @@ class FeeListItem extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
                               ),
                             )
-
-
-
-
-
-                          : const SizedBox(
-                              height: 0,
+                          : SizedBox(
+                              height: 0.h,
                             ),
                       FeeReminderButton(
                         title: 'Send Reminder',
