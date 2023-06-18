@@ -28,6 +28,8 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
   int currentYear = DateTime.now().year;
   int currentMonth = DateTime.now().month;
   StudentCubit? studentCubit;
+  int noOfWeeks = 0;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -40,6 +42,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
       await studentCubit?.getStudents(batchId: cubit.id, clean: true);
       _markedDateMap.clear();
       setState(() {
+        noOfWeeks = getWeeksInMonth(DateTime(currentYear, currentMonth));
         for (var element in cubit.attendenceClasses ?? []) {
           int flag = 0;
           int conductedClassId = 0;
@@ -248,6 +251,8 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                             currentYear, currentMonth));
                                     _markedDateMap.clear();
                                     setState(() {
+                                      noOfWeeks = getWeeksInMonth(
+                                          DateTime(currentYear, currentMonth));
                                       for (var element
                                           in cubit.attendenceClasses ?? []) {
                                         int flag = 0;
@@ -314,6 +319,8 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                 date: DateTime(currentYear, currentMonth));
                             _markedDateMap.clear();
                             setState(() {
+                              noOfWeeks = getWeeksInMonth(
+                                  DateTime(currentYear, currentMonth));
                               for (var element
                                   in cubit.attendenceClasses ?? []) {
                                 int flag = 0;
@@ -406,7 +413,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                           ),
                           thisMonthDayBorderColor: Colors.transparent,
                           weekFormat: false, //firstDayOfWeek: 4,
-                          height: 420.0,
+                          height: noOfWeeks > 4 ? 440.h : 380.h,
                           weekdayTextStyle: TextStyle(
                             color: Colors.white,
                             fontSize: 15.sp,
@@ -455,5 +462,20 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
         ),
       ),
     );
+  }
+
+  int getWeeksInMonth(DateTime date) {
+    DateTime firstDayOfMonth = DateTime(date.year, date.month, 1);
+    DateTime lastDayOfMonth = DateTime(date.year, date.month + 1, 0);
+
+    DateTime firstDayOfFirstWeek =
+        firstDayOfMonth.subtract(Duration(days: firstDayOfMonth.weekday - 1));
+    DateTime lastDayOfLastWeek =
+        lastDayOfMonth.add(Duration(days: 7 - lastDayOfMonth.weekday));
+
+    int numberOfWeeks =
+        lastDayOfLastWeek.difference(firstDayOfFirstWeek).inDays ~/ 7;
+
+    return numberOfWeeks;
   }
 }

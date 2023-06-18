@@ -31,7 +31,7 @@ class _StudentAttendanceCalenderViewState
   DateTime? date;
   BatchCubit? batchCubit;
   TextEditingController batchController = TextEditingController();
-  int noOfWeeks = 0;
+  int noOfWeeks = 0, present = 0, absent = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +108,8 @@ class _StudentAttendanceCalenderViewState
                             status: '',
                             branchSearch: true,
                             onSelect: (value) async {
+                              present = 0;
+                              absent = 0;
                               batch = value;
                               batchController.text = value.name;
                               AttendanceCubit cubit =
@@ -123,6 +125,10 @@ class _StudentAttendanceCalenderViewState
                                   date: DateTime(currentYear, currentMonth));
                               _markedDateMap.clear();
                               setState(() {
+                                noOfWeeks = getWeeksInMonth(
+                                    DateTime(currentYear, currentMonth).year,
+                                    DateTime(currentYear, currentMonth).month);
+                                print(noOfWeeks);
                                 for (var element1
                                     in attendenceCubit.attendenceClasses ??
                                         []) {
@@ -130,14 +136,19 @@ class _StudentAttendanceCalenderViewState
                                   int conductedClassId = 0;
                                   for (var element
                                       in cubit.studentClasses ?? []) {
-                                    if (element.conductedClass.conductedOn ==
-                                        element1.date) {
+                                    if (element1.date ==
+                                        element.conductedClass.conductedOn) {
                                       flag = 1;
                                       conductedClassId = element.id;
                                       break;
                                     }
                                   }
                                   if (element1.date.isBefore(DateTime.now())) {
+                                    if (flag == 1) {
+                                      present++;
+                                    } else {
+                                      absent++;
+                                    }
                                     _markedDateMap.add(
                                       element1.date ?? DateTime.now(),
                                       Event(
@@ -193,6 +204,8 @@ class _StudentAttendanceCalenderViewState
                       daysHaveCircularBorder: true,
                       showOnlyCurrentMonthDate: true,
                       onLeftArrowPressed: () async {
+                        present = 0;
+                        absent = 0;
                         AttendanceCubit cubit = context.read<AttendanceCubit>();
                         setState(() {
                           if (currentMonth == 1) {
@@ -212,6 +225,10 @@ class _StudentAttendanceCalenderViewState
                             date: DateTime(currentYear, currentMonth));
                         _markedDateMap.clear();
                         setState(() {
+                          noOfWeeks = getWeeksInMonth(
+                              DateTime(currentYear, currentMonth).year,
+                              DateTime(currentYear, currentMonth).month);
+                          print(noOfWeeks);
                           for (var element1
                               in attendenceCubit.attendenceClasses ?? []) {
                             int flag = 0;
@@ -225,6 +242,11 @@ class _StudentAttendanceCalenderViewState
                               }
                             }
                             if (element1.date.isBefore(DateTime.now())) {
+                              if (flag == 1) {
+                                present++;
+                              } else {
+                                absent++;
+                              }
                               _markedDateMap.add(
                                 element1.date ?? DateTime.now(),
                                 Event(
@@ -247,6 +269,8 @@ class _StudentAttendanceCalenderViewState
                         });
                       },
                       onRightArrowPressed: () async {
+                        present = 0;
+                        absent = 0;
                         AttendanceCubit cubit = context.read<AttendanceCubit>();
                         setState(() {
                           if (currentMonth == 12) {
@@ -266,6 +290,10 @@ class _StudentAttendanceCalenderViewState
                             date: DateTime(currentYear, currentMonth));
                         _markedDateMap.clear();
                         setState(() {
+                          noOfWeeks = getWeeksInMonth(
+                              DateTime(currentYear, currentMonth).year,
+                              DateTime(currentYear, currentMonth).month);
+                          print(noOfWeeks);
                           for (var element1
                               in attendenceCubit.attendenceClasses ?? []) {
                             int flag = 0;
@@ -279,6 +307,11 @@ class _StudentAttendanceCalenderViewState
                               }
                             }
                             if (element1.date.isBefore(DateTime.now())) {
+                              if (flag == 1) {
+                                present++;
+                              } else {
+                                absent++;
+                              }
                               _markedDateMap.add(
                                 element1.date ?? DateTime.now(),
                                 Event(
@@ -309,7 +342,7 @@ class _StudentAttendanceCalenderViewState
                       ),
                       thisMonthDayBorderColor: Colors.transparent,
                       weekFormat: false, //firstDayOfWeek: 4,
-                      height: noOfWeeks > 4 ? 440.h : 380.h,
+                      height: noOfWeeks >= 5 ? 440.h : 380.h,
                       weekdayTextStyle: TextStyle(
                         color: Colors.white,
                         fontSize: 15.sp,
@@ -383,7 +416,7 @@ class _StudentAttendanceCalenderViewState
                                   ),
                             ),
                             Text(
-                              '${attendenceCubit.selectedStudents.length}',
+                              '$present',
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
@@ -416,7 +449,7 @@ class _StudentAttendanceCalenderViewState
                                   ),
                             ),
                             Text(
-                              '${attendenceCubit.selectedStudents.length}',
+                              '$absent',
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
@@ -443,17 +476,16 @@ class _StudentAttendanceCalenderViewState
     );
   }
 
-  int getWeeksInMonth(DateTime date) {
-    DateTime firstDayOfMonth = DateTime(date.year, date.month, 1);
-    DateTime lastDayOfMonth = DateTime(date.year, date.month + 1, 0);
+  int getWeeksInMonth(int year, int month) {
+    DateTime firstDayOfMonth = DateTime(year, month, 1);
+    int numberOfWeeks = 0;
 
-    DateTime firstDayOfFirstWeek =
-        firstDayOfMonth.subtract(Duration(days: firstDayOfMonth.weekday - 1));
-    DateTime lastDayOfLastWeek =
-        lastDayOfMonth.add(Duration(days: 7 - lastDayOfMonth.weekday));
-
-    int numberOfWeeks =
-        lastDayOfLastWeek.difference(firstDayOfFirstWeek).inDays ~/ 7;
+    while (firstDayOfMonth.month == month) {
+      if (firstDayOfMonth.weekday == DateTime.sunday) {
+        numberOfWeeks++;
+      }
+      firstDayOfMonth = firstDayOfMonth.add(const Duration(days: 1));
+    }
 
     return numberOfWeeks;
   }
