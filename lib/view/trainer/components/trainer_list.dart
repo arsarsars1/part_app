@@ -1,9 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -40,8 +41,6 @@ class _TrainerListState extends State<TrainerList> {
 
   @override
   Widget build(BuildContext context) {
-    var token = 'Bearer ${Database().getToken()}';
-
     return ListView.builder(
       shrinkWrap: true,
       itemCount: widget.trainers.length,

@@ -2,6 +2,8 @@
 //
 //     final attendenceTaken = attendenceTakenFromJson(jsonString);
 
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
@@ -34,15 +36,15 @@ class ConductedClassDetails with _$ConductedClassDetails {
     int? batchId,
     String? takenByType,
     int? takenById,
-    dynamic? updatedByType,
-    dynamic? updatedById,
+    dynamic updatedByType,
+    dynamic updatedById,
     DateTime? conductedOn,
     String? startTime,
     String? endTime,
     DateTime? createdAt,
     DateTime? updatedAt,
     TakenBy? takenBy,
-    dynamic? updatedBy,
+    dynamic updatedBy,
     List<AttendanceDetails>? attendances,
   }) = _ConductedClassDetails;
 

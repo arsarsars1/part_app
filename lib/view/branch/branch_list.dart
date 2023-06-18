@@ -85,8 +85,8 @@ class _BranchListState extends State<BranchList> {
                       subTitle: branch.district?.districtName ?? 'N/A',
                       suffix: Text(
                         active ? 'Active' : 'Deactivated',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              fontSize: 12.sm,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: 12.sp,
                               color: active
                                   ? Colors.white
                                   : AppColors.primaryColor,

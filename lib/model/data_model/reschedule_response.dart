@@ -2,6 +2,8 @@
 //
 //     final rescheduleResponse = rescheduleResponseFromJson(jsonString);
 
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
@@ -58,9 +60,9 @@ class RescheduledClass with _$RescheduledClass {
     String? newEndTime,
     String? rescheduledByType,
     int? rescheduledById,
-    dynamic? cancelledDate,
-    dynamic? cancelledStartTime,
-    dynamic? cancelledEndTime,
+    dynamic cancelledDate,
+    dynamic cancelledStartTime,
+    dynamic cancelledEndTime,
   }) = _RescheduledClass;
 
   factory RescheduledClass.fromJson(Map<String, dynamic> json) =>

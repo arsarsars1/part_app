@@ -33,7 +33,7 @@ class _EnableSwitchState extends State<EnableSwitch> {
             child: Text(
               'Disable/Enable Branch',
               maxLines: 2,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
               overflow: TextOverflow.ellipsis,
             ),
           ),

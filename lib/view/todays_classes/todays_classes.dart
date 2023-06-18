@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/todays_classes/components/todays_class_list.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -16,7 +15,6 @@ class TodaysClasses extends StatefulWidget {
 }
 
 class _TodaysClassesState extends State<TodaysClasses> {
-
   @override
   void initState() {
     super.initState();
@@ -47,7 +45,7 @@ class _TodaysClassesState extends State<TodaysClasses> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
                     formattedDate.toString(),
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 SizedBox(
@@ -65,11 +63,12 @@ class _TodaysClassesState extends State<TodaysClasses> {
                             ),
                           );
                         }
-                        if (cubit.classes?.length == 0) {
+                        if ((cubit.classes ?? []).isEmpty) {
                           return const Padding(
                             padding: EdgeInsets.all(64.0),
                             child: Center(
-                              child: Text('Sorry, No class is scheduled today.'),
+                              child:
+                                  Text('Sorry, No class is scheduled today.'),
                             ),
                           );
                         }

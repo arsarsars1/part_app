@@ -37,7 +37,7 @@ class _LeadDetailsState extends State<LeadDetails> {
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
-                .bodyText1
+                .bodyLarge
                 ?.copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(

@@ -6,20 +6,20 @@ part of 'attendence_classes_of_month.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AttendenceClassesOfMonth _$$_AttendenceClassesOfMonthFromJson(
+_$_AttendenceClassDetailsesOfMonth _$$_AttendenceClassDetailsesOfMonthFromJson(
         Map<String, dynamic> json) =>
-    _$_AttendenceClassesOfMonth(
+    _$_AttendenceClassDetailsesOfMonth(
       status: json['status'] as int?,
       classes: (json['classes'] as List<dynamic>?)
-          ?.map((e) => Class.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => ClassDetails.fromJson(e as Map<String, dynamic>))
           .toList(),
       batch: json['batch'] == null
           ? null
           : Batch.fromJson(json['batch'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_AttendenceClassesOfMonthToJson(
-        _$_AttendenceClassesOfMonth instance) =>
+Map<String, dynamic> _$$_AttendenceClassDetailsesOfMonthToJson(
+        _$_AttendenceClassDetailsesOfMonth instance) =>
     <String, dynamic>{
       'status': instance.status,
       'classes': instance.classes,
@@ -220,7 +220,8 @@ Map<String, dynamic> _$$_SubjectToJson(_$_Subject instance) =>
       'is_active': instance.isActive,
     };
 
-_$_Class _$$_ClassFromJson(Map<String, dynamic> json) => _$_Class(
+_$_ClassDetails _$$_ClassDetailsFromJson(Map<String, dynamic> json) =>
+    _$_ClassDetails(
       startTime: json['start_time'] as String?,
       endTime: json['end_time'] as String?,
       date:
@@ -229,7 +230,8 @@ _$_Class _$$_ClassFromJson(Map<String, dynamic> json) => _$_Class(
       conducted: json['conducted'] as bool?,
     );
 
-Map<String, dynamic> _$$_ClassToJson(_$_Class instance) => <String, dynamic>{
+Map<String, dynamic> _$$_ClassDetailsToJson(_$_ClassDetails instance) =>
+    <String, dynamic>{
       'start_time': instance.startTime,
       'end_time': instance.endTime,
       'date': instance.date?.toIso8601String(),

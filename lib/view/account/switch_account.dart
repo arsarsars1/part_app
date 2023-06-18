@@ -50,8 +50,8 @@ class SwitchAccount extends StatelessWidget {
                         Text(
                           cubit.user?.adminDetail?.academy?.academyName ?? '',
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
-                                    fontSize: 16.sm,
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontSize: 16.sp,
                                   ),
                         ),
                         const SizedBox(
@@ -60,8 +60,8 @@ class SwitchAccount extends StatelessWidget {
                         Text(
                           'Administrator',
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
-                                    fontSize: 12.sm,
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontSize: 12.sp,
                                     color: AppColors.primaryColor,
                                   ),
                         ),

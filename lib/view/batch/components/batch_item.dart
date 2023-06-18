@@ -76,7 +76,7 @@ class BatchItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyLarge
                                   ?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -90,7 +90,7 @@ class BatchItem extends StatelessWidget {
                               'Active Students: ${batch.studentCount ?? 0}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyLarge
                                   ?.copyWith(
                                     color: AppColors.primaryColor,
                                   ),
@@ -108,7 +108,7 @@ class BatchItem extends StatelessWidget {
                                 ? branchName
                                 : batch.branchName,
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: AppColors.primaryColor,
                                     ),
                           ),
@@ -130,7 +130,7 @@ class BatchItem extends StatelessWidget {
                 if (enrolled)
                   Text(
                     'Enrolled',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: AppColors.green,
                         ),
                   ),
@@ -160,7 +160,7 @@ class BatchItem extends StatelessWidget {
                       Text(
                         '${batch.courseName}, ${batch.subjectName}',
                         style:
-                            Theme.of(context).textTheme.bodyText1?.copyWith(),
+                            Theme.of(context).textTheme.bodyLarge?.copyWith(),
                       ),
                       const SizedBox(
                         height: 6,
@@ -173,7 +173,7 @@ class BatchItem extends StatelessWidget {
                               'Trainer - ${batch.trainersString}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyLarge
                                   ?.copyWith(
                                     color: AppColors.primaryColor,
                                   ),
@@ -199,7 +199,7 @@ class BatchItem extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Text(
                   batch.days[index],
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 );
@@ -213,7 +213,7 @@ class BatchItem extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Text(
                       'Admission Fees: ₹${batch.admissionFee.toString().currencyFormat()}/-',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(),
                     ),
                   ),
                   if (batch.pivot?.feeType != null)
@@ -229,7 +229,7 @@ class BatchItem extends StatelessWidget {
                                   'Monthly',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       ?.copyWith(
                                         color: AppColors.primaryColor,
                                       ),
@@ -238,7 +238,7 @@ class BatchItem extends StatelessWidget {
                                   'Class Based : ${batch.pivot?.noOfClasses.toString()} Nos.',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       ?.copyWith(
                                           color: AppColors.green,
                                           fontWeight: FontWeight.bold),
@@ -253,7 +253,7 @@ class BatchItem extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Text(
                       'Fees: ₹${batch.fee.toString().currencyFormat()}/-',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(),
                     ),
                   ),
                 ],

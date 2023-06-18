@@ -224,7 +224,7 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                                         'Total Classes Taken: ${cubit.conductedClassCount}',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headline3
+                                            .displaySmall
                                             ?.copyWith(
                                               color: AppColors.textColor,
                                             ),

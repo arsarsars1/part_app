@@ -26,7 +26,7 @@ class _Cancel extends StatelessWidget {
             Text(
               'Are you sure you want to exit the application?',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             SizedBox(
               height: 32.h,

@@ -62,14 +62,14 @@ class AttendanceStudentItem extends StatelessWidget {
                       ? Text(
                           'Monthly',
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     color: AppColors.primaryColor,
                                   ),
                         )
                       : Text(
                           'Class Based',
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     color: AppColors.green,
                                   ),
                         ),
@@ -78,7 +78,7 @@ class AttendanceStudentItem extends StatelessWidget {
                   ),
                   Text(
                     'Attendance: ${student.present}',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: AppColors.textColor,
                         ),
                   ),

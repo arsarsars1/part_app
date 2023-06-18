@@ -6,6 +6,7 @@ import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
 import 'package:part_app/model/data_model/attendence_taken.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
+import 'package:part_app/model/data_model/student_attendence_of_month.dart';
 import 'package:part_app/model/service/api_client.dart';
 
 class AttendanceService {
@@ -68,7 +69,7 @@ class AttendanceService {
     }
   }
 
-  Future<AttendenceClassesOfMonth?> getAttendeceClassesOfMonth(
+  Future<AttendenceClassDetailsesOfMonth?> getAttendeceClassesOfMonth(
       {required int? batchId, required DateTime? date}) async {
     try {
       var response = await _apiClient.get(
@@ -76,7 +77,7 @@ class AttendanceService {
             '/admin/batches/$batchId/monthly-classes/${date?.year}/${date?.month}',
       );
 
-      return attendenceClassesOfMonthFromJson(jsonEncode(response));
+      return attendenceClassDetailsesOfMonthFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }
@@ -91,6 +92,22 @@ class AttendanceService {
       );
 
       return attendenceConductedClassFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<StudentAttendenceOfMonth?> getAttendenceOfStudentOfMonth(
+      {required int? batchId,
+      required int? studentDetailId,
+      required DateTime? date}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/admin/students/$studentDetailId/batch/$batchId/attendance/${date?.year}/${date?.month}',
+      );
+
+      return studentAttendenceOfMonthFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

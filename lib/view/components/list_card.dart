@@ -44,7 +44,7 @@ class ListCard extends StatelessWidget {
                     title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: AppColors.primaryColor,
                         ),
                   ),
@@ -53,8 +53,8 @@ class ListCard extends StatelessWidget {
                   ),
                   Text(
                     subTitle,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          fontSize: 12.sm,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 12.sp,
                         ),
                   ),
                 ],

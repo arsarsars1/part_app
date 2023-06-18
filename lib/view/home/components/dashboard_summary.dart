@@ -34,8 +34,8 @@ class SummaryDashboard extends StatelessWidget {
                     Text(
                       'Total\nStudents',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 12.sm,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 12.sp,
                           ),
                     ),
                   ],
@@ -54,8 +54,8 @@ class SummaryDashboard extends StatelessWidget {
                     Text(
                       'Daily\nCollection',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 12.sm,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 12.sp,
                           ),
                     ),
                   ],
@@ -74,8 +74,8 @@ class SummaryDashboard extends StatelessWidget {
                     Text(
                       'Monthly\nCollection',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 12.sm,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 12.sp,
                           ),
                     ),
                   ],

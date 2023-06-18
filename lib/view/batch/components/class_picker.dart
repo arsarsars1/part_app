@@ -98,7 +98,7 @@ class _ClassPickerState extends State<ClassPicker> {
                         Text(
                           '',
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
                         ),
@@ -161,7 +161,7 @@ class _ClassPickerState extends State<ClassPicker> {
                     children: [
                       Text(
                         'Select A Class',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                       ),
@@ -238,7 +238,7 @@ class _ClassPickerState extends State<ClassPicker> {
                                               "${cubit.classes?[index].startTime} - ${cubit.classes?[index].endTime}",
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1
+                                                  .bodyLarge
                                                   ?.copyWith(),
                                             ),
                                           ],
@@ -249,7 +249,7 @@ class _ClassPickerState extends State<ClassPicker> {
                                                 "Rescheduled from ${cubit.classes?[index].oldDate.toDateString()}",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
+                                                    .bodyLarge
                                                     ?.copyWith(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -260,7 +260,7 @@ class _ClassPickerState extends State<ClassPicker> {
                                                 "Scheduled Class",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
+                                                    .bodyLarge
                                                     ?.copyWith(
                                                       fontWeight:
                                                           FontWeight.bold,

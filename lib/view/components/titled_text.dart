@@ -19,7 +19,7 @@ class TitledText extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: titleColor ?? AppColors.primaryColor,
                   fontSize: 12,
                 ),

@@ -61,7 +61,7 @@ class _ResendOtpState extends State<ResendOtp> {
                   ? 'Didn\'t Get The OTP? Please Resend OTP And Try Again'
                   : 'Didn\'t Get The Otp? Retry In $secondsRemaining Sec',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 16,
                   ),
             ),
@@ -80,7 +80,7 @@ class _ResendOtpState extends State<ResendOtp> {
           child: Center(
             child: Text(
               'Resend OTP',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 16,
                     color: enableResend
                         ? AppColors.primaryColor

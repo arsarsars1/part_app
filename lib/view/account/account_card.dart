@@ -34,8 +34,8 @@ class AccountCard extends StatelessWidget {
           children: [
             Text(
               academyName,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 16.sm,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontSize: 16.sp,
                   ),
             ),
             const SizedBox(
@@ -43,8 +43,8 @@ class AccountCard extends StatelessWidget {
             ),
             Text(
               accountType,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 12.sm,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontSize: 12.sp,
                     color: AppColors.primaryColor,
                   ),
             ),

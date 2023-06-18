@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
@@ -165,7 +167,7 @@ class _ClassTimeState extends State<ClassTime> {
             ),
             child: Text(
               'Add Class Time',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.white54,
                     fontWeight: FontWeight.bold,
                   ),
@@ -175,7 +177,7 @@ class _ClassTimeState extends State<ClassTime> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               'Enter your start time and end time for the class',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.white54,
                   ),
             ),
@@ -211,7 +213,7 @@ class _ClassTimeState extends State<ClassTime> {
                           Text(
                             startTime == null ? 'Start Time' : '$startTime',
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: Colors.white54,
                                     ),
                           ),
@@ -260,7 +262,7 @@ class _ClassTimeState extends State<ClassTime> {
                           Text(
                             endTime == null ? 'End Time' : '$endTime',
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: Colors.white54,
                                     ),
                           ),
@@ -296,7 +298,7 @@ class _ClassTimeState extends State<ClassTime> {
                       ),
                       child: Text(
                         'Cancel',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               color: Colors.white54,
                             ),
                       ),
@@ -330,7 +332,7 @@ class _ClassTimeState extends State<ClassTime> {
                       ),
                       child: Text(
                         'Add',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               color: Colors.white54,
                             ),
                       ),
@@ -398,7 +400,6 @@ class _ClassTimeState extends State<ClassTime> {
         );
 
         if (tempFormat.toDateTime().isBefore(tempFormatStart.toDateTime())) {
-          // ignore: use_build_context_synchronously
           Alert(context).show(
             message: 'Selected end time is before start time.',
           );

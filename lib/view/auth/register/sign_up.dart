@@ -59,7 +59,7 @@ class _SignUpState extends State<SignUp> {
                     child: Text(
                       Strings.signUpWelcomeMessage,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontSize: 16,
                           ),
                     ),
@@ -100,13 +100,13 @@ class _SignUpState extends State<SignUp> {
                     children: [
                       Text(
                         Strings.alreadyMember,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 16,
                             ),
                       ),
                       Text(
                         Strings.loginNow,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: AppColors.primaryColor,
                               fontSize: 16,

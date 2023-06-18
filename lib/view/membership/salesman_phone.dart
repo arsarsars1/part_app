@@ -59,7 +59,7 @@ class _SalesManPhoneState extends State<SalesManPhone> {
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1
+                              .bodyLarge
                               ?.copyWith(fontSize: 16),
                         ),
                       ),

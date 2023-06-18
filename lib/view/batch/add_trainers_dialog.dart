@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/button.dart';
@@ -41,7 +43,7 @@ class _AddTrainersDialogState extends State<AddTrainersDialog> {
             padding: const EdgeInsets.only(left: 16, top: 16),
             child: Text(
               'Select Batch Trainers',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.white,
                   ),
             ),

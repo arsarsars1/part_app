@@ -28,7 +28,7 @@ class LargeButton extends StatelessWidget {
             const Spacer(),
             Text(
               title,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 12,
                   ),
             ),

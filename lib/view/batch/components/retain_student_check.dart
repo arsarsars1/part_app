@@ -43,7 +43,7 @@ class RetainStudentCheckButtonState extends State<RetainStudentCheckButton> {
                 child: Text(
                   'Retain students of batch',
                   maxLines: 2,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

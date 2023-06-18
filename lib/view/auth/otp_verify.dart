@@ -80,7 +80,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                 Center(
                   child: Text(
                     'Enter 6 Digit OTP Sent To Your Phone',
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontSize: 16,
                         ),
                   ),
@@ -88,7 +88,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                 Center(
                   child: Text(
                     context.read<AuthCubit>().phoneNumber,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontSize: 16,
                         ),
                   ),
