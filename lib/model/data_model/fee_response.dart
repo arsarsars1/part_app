@@ -1,0 +1,281 @@
+// To parse this JSON data, do
+//
+//     final feeResponse = feeResponseFromJson(jsonString);
+
+import 'dart:convert';
+
+FeeResponse feeResponseFromJson(String str) => FeeResponse.fromJson(json.decode(str));
+
+String feeResponseToJson(FeeResponse data) => json.encode(data.toJson());
+
+class FeeResponse {
+  int? status;
+  BatchFeeInvoices? batchFeeInvoices;
+
+  FeeResponse({
+    this.status,
+    this.batchFeeInvoices,
+  });
+
+  factory FeeResponse.fromJson(Map<String, dynamic> json) => FeeResponse(
+    status: json["status"],
+    batchFeeInvoices: json["batch_fee_invoices"] == null ? null : BatchFeeInvoices.fromJson(json["batch_fee_invoices"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "status": status,
+    "batch_fee_invoices": batchFeeInvoices?.toJson(),
+  };
+}
+
+class BatchFeeInvoices {
+  int? currentPage;
+  List<Datum>? data;
+  String? firstPageUrl;
+  int? from;
+  dynamic nextPageUrl;
+  String? path;
+  int? perPage;
+  dynamic prevPageUrl;
+  int? to;
+
+  BatchFeeInvoices({
+    this.currentPage,
+    this.data,
+    this.firstPageUrl,
+    this.from,
+    this.nextPageUrl,
+    this.path,
+    this.perPage,
+    this.prevPageUrl,
+    this.to,
+  });
+
+  factory BatchFeeInvoices.fromJson(Map<String, dynamic> json) => BatchFeeInvoices(
+    currentPage: json["current_page"],
+    data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+    firstPageUrl: json["first_page_url"],
+    from: json["from"],
+    nextPageUrl: json["next_page_url"],
+    path: json["path"],
+    perPage: json["per_page"],
+    prevPageUrl: json["prev_page_url"],
+    to: json["to"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "current_page": currentPage,
+    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+    "first_page_url": firstPageUrl,
+    "from": from,
+    "next_page_url": nextPageUrl,
+    "path": path,
+    "per_page": perPage,
+    "prev_page_url": prevPageUrl,
+    "to": to,
+  };
+}
+
+class Datum {
+  int? id;
+  int? studentDetailId;
+  int? academyId;
+  int? branchId;
+  String? branchName;
+  int? batchId;
+  String? batchName;
+  String? courseName;
+  String? subjectName;
+  dynamic paymentDueDate;
+  int? payableAmount;
+  int? reminderCount;
+  int? writtenOffStatus;
+  dynamic writtenOffDate;
+  int? writtenOffAmount;
+  dynamic writtenOffRemarks;
+  dynamic writtenOffByType;
+  dynamic writtenOffById;
+  String? paymentStatus;
+  String? feeType;
+  int? month;
+  int? year;
+  String? currency;
+  String? currencyCode;
+  String? currencySymbol;
+  int? cycle;
+  int? monthClassesConductedCount;
+  int? monthAttendancePresentCount;
+  int? classAttendancePresentCount;
+  dynamic writtenOffBy;
+  StudentDetail? studentDetail;
+  List<dynamic>? payments;
+
+  Datum({
+    this.id,
+    this.studentDetailId,
+    this.academyId,
+    this.branchId,
+    this.branchName,
+    this.batchId,
+    this.batchName,
+    this.courseName,
+    this.subjectName,
+    this.paymentDueDate,
+    this.payableAmount,
+    this.reminderCount,
+    this.writtenOffStatus,
+    this.writtenOffDate,
+    this.writtenOffAmount,
+    this.writtenOffRemarks,
+    this.writtenOffByType,
+    this.writtenOffById,
+    this.paymentStatus,
+    this.feeType,
+    this.month,
+    this.year,
+    this.currency,
+    this.currencyCode,
+    this.currencySymbol,
+    this.cycle,
+    this.monthClassesConductedCount,
+    this.monthAttendancePresentCount,
+    this.classAttendancePresentCount,
+    this.writtenOffBy,
+    this.studentDetail,
+    this.payments,
+  });
+
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+    id: json["id"],
+    studentDetailId: json["student_detail_id"],
+    academyId: json["academy_id"],
+    branchId: json["branch_id"],
+    branchName: json["branch_name"],
+    batchId: json["batch_id"],
+    batchName: json["batch_name"],
+    courseName: json["course_name"],
+    subjectName: json["subject_name"],
+    paymentDueDate: json["payment_due_date"],
+    payableAmount: json["payable_amount"],
+    reminderCount: json["reminder_count"],
+    writtenOffStatus: json["written_off_status"],
+    writtenOffDate: json["written_off_date"],
+    writtenOffAmount: json["written_off_amount"],
+    writtenOffRemarks: json["written_off_remarks"],
+    writtenOffByType: json["written_off_by_type"],
+    writtenOffById: json["written_off_by_id"],
+    paymentStatus: json["payment_status"],
+    feeType: json["fee_type"],
+    month: json["month"],
+    year: json["year"],
+    currency: json["currency"],
+    currencyCode: json["currency_code"],
+    currencySymbol: json["currency_symbol"],
+    cycle: json["cycle"],
+    monthClassesConductedCount: json["month_classes_conducted_count"],
+    monthAttendancePresentCount: json["month_attendance_present_count"],
+    classAttendancePresentCount: json["class_attendance_present_count"],
+    writtenOffBy: json["written_off_by"],
+    studentDetail: json["student_detail"] == null ? null : StudentDetail.fromJson(json["student_detail"]),
+    payments: json["payments"] == null ? [] : List<dynamic>.from(json["payments"]!.map((x) => x)),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "student_detail_id": studentDetailId,
+    "academy_id": academyId,
+    "branch_id": branchId,
+    "branch_name": branchName,
+    "batch_id": batchId,
+    "batch_name": batchName,
+    "course_name": courseName,
+    "subject_name": subjectName,
+    "payment_due_date": paymentDueDate,
+    "payable_amount": payableAmount,
+    "reminder_count": reminderCount,
+    "written_off_status": writtenOffStatus,
+    "written_off_date": writtenOffDate,
+    "written_off_amount": writtenOffAmount,
+    "written_off_remarks": writtenOffRemarks,
+    "written_off_by_type": writtenOffByType,
+    "written_off_by_id": writtenOffById,
+    "payment_status": paymentStatus,
+    "fee_type": feeType,
+    "month": month,
+    "year": year,
+    "currency": currency,
+    "currency_code": currencyCode,
+    "currency_symbol": currencySymbol,
+    "cycle": cycle,
+    "month_classes_conducted_count": monthClassesConductedCount,
+    "month_attendance_present_count": monthAttendancePresentCount,
+    "class_attendance_present_count": classAttendancePresentCount,
+    "written_off_by": writtenOffBy,
+    "student_detail": studentDetail?.toJson(),
+    "payments": payments == null ? [] : List<dynamic>.from(payments!.map((x) => x)),
+  };
+}
+
+class StudentDetail {
+  int? id;
+  String? name;
+  String? parentName;
+  int? userId;
+  int? academyId;
+  String? gender;
+  DateTime? dob;
+  DateTime? doj;
+  String? email;
+  String? whatsappNo;
+  String? address;
+  String? profilePic;
+  int? isActive;
+
+  StudentDetail({
+    this.id,
+    this.name,
+    this.parentName,
+    this.userId,
+    this.academyId,
+    this.gender,
+    this.dob,
+    this.doj,
+    this.email,
+    this.whatsappNo,
+    this.address,
+    this.profilePic,
+    this.isActive,
+  });
+
+  factory StudentDetail.fromJson(Map<String, dynamic> json) => StudentDetail(
+    id: json["id"],
+    name: json["name"],
+    parentName: json["parent_name"],
+    userId: json["user_id"],
+    academyId: json["academy_id"],
+    gender: json["gender"],
+    dob: json["dob"] == null ? null : DateTime.parse(json["dob"]),
+    doj: json["doj"] == null ? null : DateTime.parse(json["doj"]),
+    email: json["email"],
+    whatsappNo: json["whatsapp_no"],
+    address: json["address"],
+    profilePic: json["profile_pic"],
+    isActive: json["is_active"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "parent_name": parentName,
+    "user_id": userId,
+    "academy_id": academyId,
+    "gender": gender,
+    "dob": "${dob!.year.toString().padLeft(4, '0')}-${dob!.month.toString().padLeft(2, '0')}-${dob!.day.toString().padLeft(2, '0')}",
+    "doj": "${doj!.year.toString().padLeft(4, '0')}-${doj!.month.toString().padLeft(2, '0')}-${doj!.day.toString().padLeft(2, '0')}",
+    "email": email,
+    "whatsapp_no": whatsappNo,
+    "address": address,
+    "profile_pic": profilePic,
+    "is_active": isActive,
+  };
+}

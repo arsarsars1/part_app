@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
-import 'package:part_app/model/data_model/student_model.dart';
+import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/fee/components/fee_list_item.dart';
-import 'package:part_app/view/students/add_student.dart';
-import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
-import 'package:part_app/view/students/widgets/student_item.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/view_model/fee/fee_cubit.dart';
+
+import '../../model/data_model/fee_response.dart';
 
 class FeesDetailsView extends StatefulWidget {
   static const route = '/fees';
@@ -28,20 +28,24 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
   String? query;
   BatchModel? batch;
 
-  String? activeStatus;
+  int? year;
+  int? month;
+  DateTime? finalDate = DateTime.now();
+  String? feeType;
 
   TextEditingController batchController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController feeTypeController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<StudentCubit>().clean();
+      context.read<FeeCubit>().clean();
     });
     // Pagination listener
     scrollController.addListener(() {
-      // var nextPageTrigger = 0.60 * scrollController.position.maxScrollExtent;
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         doSearch(false);
@@ -56,12 +60,9 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
       appBar: const CommonBar(
         title: 'Fees Details',
       ),
-      body: BlocBuilder<StudentCubit, StudentState>(
+      body: BlocBuilder<FeeCubit, FeeState>(
         builder: (context, state) {
-          if (state is CreatedStudent || state is UpdatedStudent) {
-            doSearch(true);
-          }
-          var cubit = context.read<StudentCubit>();
+          var cubit = context.read<FeeCubit>();
           return Column(
             children: [
               SizedBox(
@@ -94,43 +95,14 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                           branchId = value;
                         });
                         batchController.clear();
+                        feeTypeController.clear();
+                        dateController.clear();
                         batch = null;
-
-                        if (status != null) {
-                          context.read<BatchCubit>().getBatchesByStatus(
-                                branchId: branchId,
-                                status: status!,
-                                clean: true,
-                              );
-                        }
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CommonField(
-                      disabled: branchId == null,
-                      title: 'Batch Status *',
-                      hint: 'Select Batch Status',
-                      dropDown: true,
-                      dropDownItems: DefaultValues().batchStatus,
-                      onChange: (value) {
-                        status = value.id;
-
-                        context.read<BatchCubit>().getBatchesByStatus(
+                        context.read<BatchCubit>().getBatchesByBranch(
                               branchId: branchId,
-                              status: status!,
                               clean: true,
                             );
-                        batchController.clear();
-                        batch = null;
                       },
-                      validator: (value) {
-                        return value == null
-                            ? 'Please select batch status.'
-                            : null;
-                      },
-                      onSubmit: (value) {},
                     ),
                     const SizedBox(
                       height: 20,
@@ -138,18 +110,18 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     CommonField(
                       controller: batchController,
                       onTap: () {
-                        if (branchId != null && status != null) {
+                        dateController.clear();
+                        feeTypeController.clear();
+                        if (branchId != null) {
                           scaffoldKey.currentState?.showBottomSheet(
                             elevation: 10,
                             backgroundColor: Colors.transparent,
                             (context) => BatchPicker(
                               branchId: branchId!,
-                              status: status!,
+                              status: '',
                               onSelect: (value) {
                                 batch = value;
                                 batchController.text = value.name;
-
-                                doSearch(true);
                                 // setState(() {});
                               },
                             ),
@@ -180,6 +152,42 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                       height: 20,
                     ),
                     CommonField(
+                      controller: feeTypeController,
+                      title: 'Fee Type *',
+                      hint: 'Select Fee Type',
+                      dropDown: true,
+                      dropDownItems: DefaultValues().feeType,
+                      onChange: (value) {
+                        feeType = value.id;
+                        dateController.clear();
+                      },
+                      validator: (value) {
+                        return value == null ? 'Please select Fee Type.' : null;
+                      },
+                      onSubmit: (value) {},
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ScheduleField(
+                      title: 'Month, Year',
+                      hint: 'Select month & year',
+                      dateMonth: true,
+                      onDateSelect: (DateTime value) {
+                        year = value.year;
+                        month = value.month;
+                        finalDate = value;
+                        doSearch(true);
+                      },
+                      time: false,
+                      onlyMonth: true,
+                      selectedDate: finalDate,
+                      controller: dateController,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CommonField(
                       disabled: batch == null,
                       title: 'Search',
                       hint: 'Search By Name or Phone Number',
@@ -206,7 +214,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     ),
                     Column(
                       children: [
-                        cubit.students == null || cubit.students!.isEmpty
+                        cubit.batchInvoice == null || cubit.batchInvoice.isEmpty
                             ? Padding(
                                 padding: const EdgeInsets.all(64),
                                 child: Center(
@@ -221,19 +229,14 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                               )
                             : ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: cubit.students?.length ?? 0,
+                                itemCount: cubit.batchInvoice.length ?? 0,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
-                                  StudentModel student = cubit.students![index];
+                                  Datum studentInvoice =
+                                      cubit.batchInvoice[index];
                                   return FeeListItem(
-                                    student: student,
-                                    onTap: () {
-                                      cubit.studentDetails(student.detailId);
-                                      Navigator.pushNamed(
-                                        context,
-                                        StudentDetails.route,
-                                      );
-                                    },
+                                    student: studentInvoice,
+                                    onTap: () {},
                                   );
                                 },
                               ),
@@ -243,7 +246,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                 ),
               ),
               AnimatedContainer(
-                height: state is FetchingStudents && state.pagination ? 30 : 0,
+                height: state is FetchingFee && state.pagination ? 30 : 0,
                 color: Colors.black,
                 duration: const Duration(
                   milliseconds: 250,
@@ -258,10 +261,13 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
   }
 
   void doSearch(bool clean) {
-    context.read<StudentCubit>().getStudents(
+    context.read<FeeCubit>().getFeeDetails(
+          branchId: branchId,
           batchId: batch?.id,
+          month: month,
+          year: year,
+          feeType: feeType,
           searchQuery: query,
-          activeStatus: activeStatus,
           clean: clean,
         );
   }
