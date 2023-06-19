@@ -5,9 +5,10 @@ class LargeButton extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final Color? color;
+  final double? margin;
 
   const LargeButton(
-      {Key? key, required this.title, required this.onTap, this.color})
+      {Key? key, required this.title, required this.onTap, this.color, this.margin,})
       : super(key: key);
 
   @override
@@ -20,7 +21,7 @@ class LargeButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(45),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        margin: const EdgeInsets.symmetric(horizontal: 16),
+        margin: EdgeInsets.symmetric(horizontal: margin ?? 16.0,),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

@@ -11,6 +11,7 @@ import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
+import 'package:part_app/model/data_model/student_attendence_of_month.dart';
 import '../../model/service/admin/attendance.dart';
 part 'attendance_state.dart';
 
@@ -37,8 +38,9 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   int id = 0;
 
   List<StudentAttendance>? studentAttendanceDetails;
-  List<Class>? attendenceClasses;
+  List<ClassDetails>? attendenceClasses;
   List<ConductedClass>? conductedClasses;
+  List<StudentAttendances>? studentClasses;
   int conductedClassCount = 0;
   DateTime? conductedDate;
   int? conductedClassId;
@@ -236,7 +238,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   }) async {
     _batches.clear();
     emit(FetchingAttendanceBatches(pagination: false));
-    AttendenceClassesOfMonth? response = await _attendanceService
+    AttendenceClassDetailsesOfMonth? response = await _attendanceService
         .getAttendeceClassesOfMonth(batchId: batchId, date: date);
     if (response?.status == 1) {
       attendenceClasses = response?.classes ?? [];
@@ -283,6 +285,23 @@ class AttendanceCubit extends Cubit<AttendanceState> {
       }
     } catch (e) {
       emit(UpdateAttendenceFailed(e.toString()));
+    }
+  }
+
+  /// this method is used to get the attendence of a student in a batch in a particular month
+  Future getAttendenceOfStudentOfMonth({
+    int? batchId,
+    int? studentDetailId,
+    DateTime? date,
+  }) async {
+    _batches.clear();
+    emit(FetchingAttendanceBatches(pagination: false));
+    StudentAttendenceOfMonth? response =
+        await _attendanceService.getAttendenceOfStudentOfMonth(
+            batchId: batchId, studentDetailId: studentDetailId, date: date);
+    if (response?.status == 1) {
+      studentClasses = response?.studentAttendance ?? [];
+      emit(AttendanceBatchesFetched());
     }
   }
 }

@@ -503,9 +503,9 @@ mixin _$RescheduledClass {
   String? get newEndTime => throw _privateConstructorUsedError;
   String? get rescheduledByType => throw _privateConstructorUsedError;
   int? get rescheduledById => throw _privateConstructorUsedError;
-  dynamic? get cancelledDate => throw _privateConstructorUsedError;
-  dynamic? get cancelledStartTime => throw _privateConstructorUsedError;
-  dynamic? get cancelledEndTime => throw _privateConstructorUsedError;
+  dynamic get cancelledDate => throw _privateConstructorUsedError;
+  dynamic get cancelledStartTime => throw _privateConstructorUsedError;
+  dynamic get cancelledEndTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -530,9 +530,9 @@ abstract class $RescheduledClassCopyWith<$Res> {
       String? newEndTime,
       String? rescheduledByType,
       int? rescheduledById,
-      dynamic? cancelledDate,
-      dynamic? cancelledStartTime,
-      dynamic? cancelledEndTime});
+      dynamic cancelledDate,
+      dynamic cancelledStartTime,
+      dynamic cancelledEndTime});
 }
 
 /// @nodoc
@@ -606,15 +606,15 @@ class _$RescheduledClassCopyWithImpl<$Res, $Val extends RescheduledClass>
       cancelledDate: freezed == cancelledDate
           ? _value.cancelledDate
           : cancelledDate // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       cancelledStartTime: freezed == cancelledStartTime
           ? _value.cancelledStartTime
           : cancelledStartTime // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       cancelledEndTime: freezed == cancelledEndTime
           ? _value.cancelledEndTime
           : cancelledEndTime // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
     ) as $Val);
   }
 }
@@ -638,9 +638,9 @@ abstract class _$$_RescheduledClassCopyWith<$Res>
       String? newEndTime,
       String? rescheduledByType,
       int? rescheduledById,
-      dynamic? cancelledDate,
-      dynamic? cancelledStartTime,
-      dynamic? cancelledEndTime});
+      dynamic cancelledDate,
+      dynamic cancelledStartTime,
+      dynamic cancelledEndTime});
 }
 
 /// @nodoc
@@ -712,15 +712,15 @@ class __$$_RescheduledClassCopyWithImpl<$Res>
       cancelledDate: freezed == cancelledDate
           ? _value.cancelledDate
           : cancelledDate // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       cancelledStartTime: freezed == cancelledStartTime
           ? _value.cancelledStartTime
           : cancelledStartTime // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       cancelledEndTime: freezed == cancelledEndTime
           ? _value.cancelledEndTime
           : cancelledEndTime // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
     ));
   }
 }
@@ -768,11 +768,11 @@ class _$_RescheduledClass implements _RescheduledClass {
   @override
   final int? rescheduledById;
   @override
-  final dynamic? cancelledDate;
+  final dynamic cancelledDate;
   @override
-  final dynamic? cancelledStartTime;
+  final dynamic cancelledStartTime;
   @override
-  final dynamic? cancelledEndTime;
+  final dynamic cancelledEndTime;
 
   @override
   String toString() {
@@ -852,9 +852,9 @@ abstract class _RescheduledClass implements RescheduledClass {
       final String? newEndTime,
       final String? rescheduledByType,
       final int? rescheduledById,
-      final dynamic? cancelledDate,
-      final dynamic? cancelledStartTime,
-      final dynamic? cancelledEndTime}) = _$_RescheduledClass;
+      final dynamic cancelledDate,
+      final dynamic cancelledStartTime,
+      final dynamic cancelledEndTime}) = _$_RescheduledClass;
 
   factory _RescheduledClass.fromJson(Map<String, dynamic> json) =
       _$_RescheduledClass.fromJson;
@@ -880,11 +880,11 @@ abstract class _RescheduledClass implements RescheduledClass {
   @override
   int? get rescheduledById;
   @override
-  dynamic? get cancelledDate;
+  dynamic get cancelledDate;
   @override
-  dynamic? get cancelledStartTime;
+  dynamic get cancelledStartTime;
   @override
-  dynamic? get cancelledEndTime;
+  dynamic get cancelledEndTime;
   @override
   @JsonKey(ignore: true)
   _$$_RescheduledClassCopyWith<_$_RescheduledClass> get copyWith =>

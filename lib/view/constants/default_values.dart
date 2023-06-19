@@ -9,6 +9,18 @@ import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
 class DefaultValues {
+  List<DropDownItem> feeType = [
+    const DropDownItem(
+      id: 'monthly',
+      title: 'Monthly',
+      item: 'Monthly',
+    ),
+    const DropDownItem(
+      id: 'class',
+      title: 'Class based',
+      item: 'Class based',
+    ),
+  ];
   List<DropDownItem> genders = [
     const DropDownItem(
       id: 'male',

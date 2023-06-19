@@ -14,39 +14,41 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-AttendenceClassesOfMonth _$AttendenceClassesOfMonthFromJson(
+AttendenceClassDetailsesOfMonth _$AttendenceClassDetailsesOfMonthFromJson(
     Map<String, dynamic> json) {
-  return _AttendenceClassesOfMonth.fromJson(json);
+  return _AttendenceClassDetailsesOfMonth.fromJson(json);
 }
 
 /// @nodoc
-mixin _$AttendenceClassesOfMonth {
+mixin _$AttendenceClassDetailsesOfMonth {
   int? get status => throw _privateConstructorUsedError;
-  List<Class>? get classes => throw _privateConstructorUsedError;
+  List<ClassDetails>? get classes => throw _privateConstructorUsedError;
   Batch? get batch => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AttendenceClassesOfMonthCopyWith<AttendenceClassesOfMonth> get copyWith =>
-      throw _privateConstructorUsedError;
+  $AttendenceClassDetailsesOfMonthCopyWith<AttendenceClassDetailsesOfMonth>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AttendenceClassesOfMonthCopyWith<$Res> {
-  factory $AttendenceClassesOfMonthCopyWith(AttendenceClassesOfMonth value,
-          $Res Function(AttendenceClassesOfMonth) then) =
-      _$AttendenceClassesOfMonthCopyWithImpl<$Res, AttendenceClassesOfMonth>;
+abstract class $AttendenceClassDetailsesOfMonthCopyWith<$Res> {
+  factory $AttendenceClassDetailsesOfMonthCopyWith(
+          AttendenceClassDetailsesOfMonth value,
+          $Res Function(AttendenceClassDetailsesOfMonth) then) =
+      _$AttendenceClassDetailsesOfMonthCopyWithImpl<$Res,
+          AttendenceClassDetailsesOfMonth>;
   @useResult
-  $Res call({int? status, List<Class>? classes, Batch? batch});
+  $Res call({int? status, List<ClassDetails>? classes, Batch? batch});
 
   $BatchCopyWith<$Res>? get batch;
 }
 
 /// @nodoc
-class _$AttendenceClassesOfMonthCopyWithImpl<$Res,
-        $Val extends AttendenceClassesOfMonth>
-    implements $AttendenceClassesOfMonthCopyWith<$Res> {
-  _$AttendenceClassesOfMonthCopyWithImpl(this._value, this._then);
+class _$AttendenceClassDetailsesOfMonthCopyWithImpl<$Res,
+        $Val extends AttendenceClassDetailsesOfMonth>
+    implements $AttendenceClassDetailsesOfMonthCopyWith<$Res> {
+  _$AttendenceClassDetailsesOfMonthCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -68,7 +70,7 @@ class _$AttendenceClassesOfMonthCopyWithImpl<$Res,
       classes: freezed == classes
           ? _value.classes
           : classes // ignore: cast_nullable_to_non_nullable
-              as List<Class>?,
+              as List<ClassDetails>?,
       batch: freezed == batch
           ? _value.batch
           : batch // ignore: cast_nullable_to_non_nullable
@@ -90,27 +92,28 @@ class _$AttendenceClassesOfMonthCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_AttendenceClassesOfMonthCopyWith<$Res>
-    implements $AttendenceClassesOfMonthCopyWith<$Res> {
-  factory _$$_AttendenceClassesOfMonthCopyWith(
-          _$_AttendenceClassesOfMonth value,
-          $Res Function(_$_AttendenceClassesOfMonth) then) =
-      __$$_AttendenceClassesOfMonthCopyWithImpl<$Res>;
+abstract class _$$_AttendenceClassDetailsesOfMonthCopyWith<$Res>
+    implements $AttendenceClassDetailsesOfMonthCopyWith<$Res> {
+  factory _$$_AttendenceClassDetailsesOfMonthCopyWith(
+          _$_AttendenceClassDetailsesOfMonth value,
+          $Res Function(_$_AttendenceClassDetailsesOfMonth) then) =
+      __$$_AttendenceClassDetailsesOfMonthCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? status, List<Class>? classes, Batch? batch});
+  $Res call({int? status, List<ClassDetails>? classes, Batch? batch});
 
   @override
   $BatchCopyWith<$Res>? get batch;
 }
 
 /// @nodoc
-class __$$_AttendenceClassesOfMonthCopyWithImpl<$Res>
-    extends _$AttendenceClassesOfMonthCopyWithImpl<$Res,
-        _$_AttendenceClassesOfMonth>
-    implements _$$_AttendenceClassesOfMonthCopyWith<$Res> {
-  __$$_AttendenceClassesOfMonthCopyWithImpl(_$_AttendenceClassesOfMonth _value,
-      $Res Function(_$_AttendenceClassesOfMonth) _then)
+class __$$_AttendenceClassDetailsesOfMonthCopyWithImpl<$Res>
+    extends _$AttendenceClassDetailsesOfMonthCopyWithImpl<$Res,
+        _$_AttendenceClassDetailsesOfMonth>
+    implements _$$_AttendenceClassDetailsesOfMonthCopyWith<$Res> {
+  __$$_AttendenceClassDetailsesOfMonthCopyWithImpl(
+      _$_AttendenceClassDetailsesOfMonth _value,
+      $Res Function(_$_AttendenceClassDetailsesOfMonth) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -120,7 +123,7 @@ class __$$_AttendenceClassesOfMonthCopyWithImpl<$Res>
     Object? classes = freezed,
     Object? batch = freezed,
   }) {
-    return _then(_$_AttendenceClassesOfMonth(
+    return _then(_$_AttendenceClassDetailsesOfMonth(
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -128,7 +131,7 @@ class __$$_AttendenceClassesOfMonthCopyWithImpl<$Res>
       classes: freezed == classes
           ? _value._classes
           : classes // ignore: cast_nullable_to_non_nullable
-              as List<Class>?,
+              as List<ClassDetails>?,
       batch: freezed == batch
           ? _value.batch
           : batch // ignore: cast_nullable_to_non_nullable
@@ -139,19 +142,21 @@ class __$$_AttendenceClassesOfMonthCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AttendenceClassesOfMonth implements _AttendenceClassesOfMonth {
-  const _$_AttendenceClassesOfMonth(
-      {this.status, final List<Class>? classes, this.batch})
+class _$_AttendenceClassDetailsesOfMonth
+    implements _AttendenceClassDetailsesOfMonth {
+  const _$_AttendenceClassDetailsesOfMonth(
+      {this.status, final List<ClassDetails>? classes, this.batch})
       : _classes = classes;
 
-  factory _$_AttendenceClassesOfMonth.fromJson(Map<String, dynamic> json) =>
-      _$$_AttendenceClassesOfMonthFromJson(json);
+  factory _$_AttendenceClassDetailsesOfMonth.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_AttendenceClassDetailsesOfMonthFromJson(json);
 
   @override
   final int? status;
-  final List<Class>? _classes;
+  final List<ClassDetails>? _classes;
   @override
-  List<Class>? get classes {
+  List<ClassDetails>? get classes {
     final value = _classes;
     if (value == null) return null;
     if (_classes is EqualUnmodifiableListView) return _classes;
@@ -164,14 +169,14 @@ class _$_AttendenceClassesOfMonth implements _AttendenceClassesOfMonth {
 
   @override
   String toString() {
-    return 'AttendenceClassesOfMonth(status: $status, classes: $classes, batch: $batch)';
+    return 'AttendenceClassDetailsesOfMonth(status: $status, classes: $classes, batch: $batch)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AttendenceClassesOfMonth &&
+            other is _$_AttendenceClassDetailsesOfMonth &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._classes, _classes) &&
             (identical(other.batch, batch) || other.batch == batch));
@@ -185,36 +190,39 @@ class _$_AttendenceClassesOfMonth implements _AttendenceClassesOfMonth {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AttendenceClassesOfMonthCopyWith<_$_AttendenceClassesOfMonth>
-      get copyWith => __$$_AttendenceClassesOfMonthCopyWithImpl<
-          _$_AttendenceClassesOfMonth>(this, _$identity);
+  _$$_AttendenceClassDetailsesOfMonthCopyWith<
+          _$_AttendenceClassDetailsesOfMonth>
+      get copyWith => __$$_AttendenceClassDetailsesOfMonthCopyWithImpl<
+          _$_AttendenceClassDetailsesOfMonth>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AttendenceClassesOfMonthToJson(
+    return _$$_AttendenceClassDetailsesOfMonthToJson(
       this,
     );
   }
 }
 
-abstract class _AttendenceClassesOfMonth implements AttendenceClassesOfMonth {
-  const factory _AttendenceClassesOfMonth(
+abstract class _AttendenceClassDetailsesOfMonth
+    implements AttendenceClassDetailsesOfMonth {
+  const factory _AttendenceClassDetailsesOfMonth(
       {final int? status,
-      final List<Class>? classes,
-      final Batch? batch}) = _$_AttendenceClassesOfMonth;
+      final List<ClassDetails>? classes,
+      final Batch? batch}) = _$_AttendenceClassDetailsesOfMonth;
 
-  factory _AttendenceClassesOfMonth.fromJson(Map<String, dynamic> json) =
-      _$_AttendenceClassesOfMonth.fromJson;
+  factory _AttendenceClassDetailsesOfMonth.fromJson(Map<String, dynamic> json) =
+      _$_AttendenceClassDetailsesOfMonth.fromJson;
 
   @override
   int? get status;
   @override
-  List<Class>? get classes;
+  List<ClassDetails>? get classes;
   @override
   Batch? get batch;
   @override
   @JsonKey(ignore: true)
-  _$$_AttendenceClassesOfMonthCopyWith<_$_AttendenceClassesOfMonth>
+  _$$_AttendenceClassDetailsesOfMonthCopyWith<
+          _$_AttendenceClassDetailsesOfMonth>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -2565,12 +2573,12 @@ abstract class _Subject implements Subject {
       throw _privateConstructorUsedError;
 }
 
-Class _$ClassFromJson(Map<String, dynamic> json) {
-  return _Class.fromJson(json);
+ClassDetails _$ClassDetailsFromJson(Map<String, dynamic> json) {
+  return _ClassDetails.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Class {
+mixin _$ClassDetails {
   String? get startTime => throw _privateConstructorUsedError;
   String? get endTime => throw _privateConstructorUsedError;
   DateTime? get date => throw _privateConstructorUsedError;
@@ -2579,13 +2587,15 @@ mixin _$Class {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ClassCopyWith<Class> get copyWith => throw _privateConstructorUsedError;
+  $ClassDetailsCopyWith<ClassDetails> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ClassCopyWith<$Res> {
-  factory $ClassCopyWith(Class value, $Res Function(Class) then) =
-      _$ClassCopyWithImpl<$Res, Class>;
+abstract class $ClassDetailsCopyWith<$Res> {
+  factory $ClassDetailsCopyWith(
+          ClassDetails value, $Res Function(ClassDetails) then) =
+      _$ClassDetailsCopyWithImpl<$Res, ClassDetails>;
   @useResult
   $Res call(
       {String? startTime,
@@ -2596,9 +2606,9 @@ abstract class $ClassCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ClassCopyWithImpl<$Res, $Val extends Class>
-    implements $ClassCopyWith<$Res> {
-  _$ClassCopyWithImpl(this._value, this._then);
+class _$ClassDetailsCopyWithImpl<$Res, $Val extends ClassDetails>
+    implements $ClassDetailsCopyWith<$Res> {
+  _$ClassDetailsCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -2640,9 +2650,11 @@ class _$ClassCopyWithImpl<$Res, $Val extends Class>
 }
 
 /// @nodoc
-abstract class _$$_ClassCopyWith<$Res> implements $ClassCopyWith<$Res> {
-  factory _$$_ClassCopyWith(_$_Class value, $Res Function(_$_Class) then) =
-      __$$_ClassCopyWithImpl<$Res>;
+abstract class _$$_ClassDetailsCopyWith<$Res>
+    implements $ClassDetailsCopyWith<$Res> {
+  factory _$$_ClassDetailsCopyWith(
+          _$_ClassDetails value, $Res Function(_$_ClassDetails) then) =
+      __$$_ClassDetailsCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -2654,9 +2666,11 @@ abstract class _$$_ClassCopyWith<$Res> implements $ClassCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ClassCopyWithImpl<$Res> extends _$ClassCopyWithImpl<$Res, _$_Class>
-    implements _$$_ClassCopyWith<$Res> {
-  __$$_ClassCopyWithImpl(_$_Class _value, $Res Function(_$_Class) _then)
+class __$$_ClassDetailsCopyWithImpl<$Res>
+    extends _$ClassDetailsCopyWithImpl<$Res, _$_ClassDetails>
+    implements _$$_ClassDetailsCopyWith<$Res> {
+  __$$_ClassDetailsCopyWithImpl(
+      _$_ClassDetails _value, $Res Function(_$_ClassDetails) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2668,7 +2682,7 @@ class __$$_ClassCopyWithImpl<$Res> extends _$ClassCopyWithImpl<$Res, _$_Class>
     Object? rescheduled = freezed,
     Object? conducted = freezed,
   }) {
-    return _then(_$_Class(
+    return _then(_$_ClassDetails(
       startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
@@ -2696,16 +2710,16 @@ class __$$_ClassCopyWithImpl<$Res> extends _$ClassCopyWithImpl<$Res, _$_Class>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Class implements _Class {
-  const _$_Class(
+class _$_ClassDetails implements _ClassDetails {
+  const _$_ClassDetails(
       {this.startTime,
       this.endTime,
       this.date,
       this.rescheduled,
       this.conducted});
 
-  factory _$_Class.fromJson(Map<String, dynamic> json) =>
-      _$$_ClassFromJson(json);
+  factory _$_ClassDetails.fromJson(Map<String, dynamic> json) =>
+      _$$_ClassDetailsFromJson(json);
 
   @override
   final String? startTime;
@@ -2720,14 +2734,14 @@ class _$_Class implements _Class {
 
   @override
   String toString() {
-    return 'Class(startTime: $startTime, endTime: $endTime, date: $date, rescheduled: $rescheduled, conducted: $conducted)';
+    return 'ClassDetails(startTime: $startTime, endTime: $endTime, date: $date, rescheduled: $rescheduled, conducted: $conducted)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Class &&
+            other is _$_ClassDetails &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
@@ -2746,26 +2760,27 @@ class _$_Class implements _Class {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ClassCopyWith<_$_Class> get copyWith =>
-      __$$_ClassCopyWithImpl<_$_Class>(this, _$identity);
+  _$$_ClassDetailsCopyWith<_$_ClassDetails> get copyWith =>
+      __$$_ClassDetailsCopyWithImpl<_$_ClassDetails>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ClassToJson(
+    return _$$_ClassDetailsToJson(
       this,
     );
   }
 }
 
-abstract class _Class implements Class {
-  const factory _Class(
+abstract class _ClassDetails implements ClassDetails {
+  const factory _ClassDetails(
       {final String? startTime,
       final String? endTime,
       final DateTime? date,
       final bool? rescheduled,
-      final bool? conducted}) = _$_Class;
+      final bool? conducted}) = _$_ClassDetails;
 
-  factory _Class.fromJson(Map<String, dynamic> json) = _$_Class.fromJson;
+  factory _ClassDetails.fromJson(Map<String, dynamic> json) =
+      _$_ClassDetails.fromJson;
 
   @override
   String? get startTime;
@@ -2779,6 +2794,6 @@ abstract class _Class implements Class {
   bool? get conducted;
   @override
   @JsonKey(ignore: true)
-  _$$_ClassCopyWith<_$_Class> get copyWith =>
+  _$$_ClassDetailsCopyWith<_$_ClassDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
