@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/components/fee_reminder_button.dart';
 import 'package:part_app/view/components/large_button.dart';
 import 'package:part_app/view/components/user_image.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view_model/fee/fee_cubit.dart';
 import '../../../flavors.dart';
 import '../../../model/data_model/fee_response.dart';
 
@@ -24,6 +27,7 @@ class _FeeListItemState extends State<FeeListItem> {
 
   @override
   Widget build(BuildContext context) {
+    var feeCubit = context.read<FeeCubit>();
     int presentCount;
     int fees = widget.student.payableAmount!;
     int totalPayed = 0;
@@ -555,14 +559,79 @@ class _FeeListItemState extends State<FeeListItem> {
                                   : SizedBox(
                                       height: 0.h,
                                     ),
-                              FeeReminderButton(
-                                title: 'Send Reminder',
-                                onTap: () {},
-                                margin: 0,
-                                disabled: paymentText == 'Paid Completely'
-                                    ? true
-                                    : false,
-                                count: widget.student.reminderCount,
+                              BlocConsumer<FeeCubit, FeeState>(
+                                listener: (context, state) {
+                                  if (state is FeeReminderSent) {
+                                    Alert(context).show(message: state.message);
+                                    feeCubit.getFeeDetails(
+                                      branchId: widget.student.branchId,
+                                      batchId: widget.student.batchId,
+                                      month: widget.student.month,
+                                      year: widget.student.year,
+                                      feeType: feeType,
+                                      searchQuery: '',
+                                      clean: true,
+                                    );
+                                  } else if (state is FeeReminderSentFailed) {
+                                    Alert(context).show(message: state.message);
+                                  }
+                                },
+                                builder: (context, state) {
+                                  if (state is FeeReminderSending) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primaryColor,
+                                        borderRadius: BorderRadius.circular(45),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 4),
+                                      margin: const EdgeInsets.symmetric(
+                                        horizontal: 16.0,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Sending',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(
+                                                    fontSize: 12,
+                                                    color: Colors.white),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          SizedBox(
+                                            height: 10.h,
+                                            width: 10.h,
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 1.w,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                  return FeeReminderButton(
+                                    title: 'Send Reminder',
+                                    onTap: paymentText == 'Paid Completely'
+                                        ? () {}
+                                        : () {
+                                            feeCubit.sendReminder(
+                                                batchFeeInvoiceId:
+                                                    widget.student.id);
+                                          },
+                                    margin: 0,
+                                    disabled: paymentText == 'Paid Completely'
+                                        ? true
+                                        : false,
+                                    count: widget.student.reminderCount,
+                                  );
+                                },
                               ),
                               const SizedBox(
                                 height: 10,

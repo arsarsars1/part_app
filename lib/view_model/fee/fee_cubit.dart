@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/fee_response.dart';
 import 'package:part_app/model/service/admin/fee_details_service.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -60,6 +61,22 @@ class FeeCubit extends Cubit<FeeState> {
       }
       batchInvoice = response?.batchFeeInvoices?.data ?? [];
       emit(FeeFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
+  Future sendReminder({required int? batchFeeInvoiceId}) async {
+    emit(FeeReminderSending());
+    try {
+      Common? response =
+          await _feeService.sendReminder(batchFeeInvoiceId: batchFeeInvoiceId);
+      if (response?.status == 1) {
+        emit(FeeReminderSent(response?.message ?? 'Message sent'));
+      } else {
+        emit(FeeReminderSentFailed(
+            response?.message ?? 'Failed to save attendence.'));
+      }
+    } catch (e) {
+      emit(FeeReminderSentFailed('Failed to save attendence.'));
     }
   }
 }

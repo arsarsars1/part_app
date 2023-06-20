@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/fee_response.dart';
 import 'package:part_app/model/service/api_client.dart';
 
@@ -21,6 +22,19 @@ class FeeDetailsService {
           queryPath:
               '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId');
       return feeResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> sendReminder({
+    required int? batchFeeInvoiceId,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath:
+              '/admin/fee-details/batch-fee-invoices/$batchFeeInvoiceId/send-reminder');
+      return commonFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

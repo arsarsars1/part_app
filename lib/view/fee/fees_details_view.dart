@@ -211,36 +211,44 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Column(
-                      children: [
-                        cubit.batchInvoice.isEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.all(64),
-                                child: Center(
-                                  child: Text(
-                                    query == null
-                                        ? 'Add a student to get started'
-                                        : state is StudentsFetched
-                                            ? 'Sorry, No matching results found'
-                                            : 'Select a batch to list the students.',
-                                  ),
-                                ),
-                              )
-                            : ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: cubit.batchInvoice.length,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  Datum studentInvoice =
-                                      cubit.batchInvoice[index];
-                                  return FeeListItem(
-                                    student: studentInvoice,
-                                    onTap: () {},
-                                  );
-                                },
-                              ),
-                      ],
-                    )
+                    state is FetchingFee
+                        ? Padding(
+                            padding: EdgeInsets.only(top: 15.h),
+                            child: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          )
+                        : Column(
+                            children: [
+                              cubit.batchInvoice.isEmpty
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(64),
+                                      child: Center(
+                                        child: Text(
+                                          query == null
+                                              ? 'Add a student to get started'
+                                              : state is StudentsFetched
+                                                  ? 'Sorry, No matching results found'
+                                                  : 'Select a batch to list the students.',
+                                        ),
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: cubit.batchInvoice.length,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        Datum studentInvoice =
+                                            cubit.batchInvoice[index];
+                                        return FeeListItem(
+                                          student: studentInvoice,
+                                          onTap: () {},
+                                        );
+                                      },
+                                    ),
+                            ],
+                          )
                   ],
                 ),
               ),
