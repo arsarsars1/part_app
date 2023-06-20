@@ -622,8 +622,8 @@ class _FeeListItemState extends State<FeeListItem> {
                           ),
                           IconButton(
                             icon: isShrunk
-                                ? Icon(Icons.expand_more)
-                                : Icon(Icons.expand_less),
+                                ? Icon(Icons.expand_less)
+                                : Icon(Icons.expand_more),
                             color: AppColors.textColor,
                             onPressed: () {
                               setState(() {
@@ -743,8 +743,8 @@ class _FeeListItemState extends State<FeeListItem> {
                         ),
                         IconButton(
                           icon: isShrunk
-                              ? Icon(Icons.expand_more)
-                              : Icon(Icons.expand_less),
+                              ? Icon(Icons.expand_less)
+                              : Icon(Icons.expand_more),
                           color: AppColors.textColor,
                           onPressed: () {
                             setState(() {
