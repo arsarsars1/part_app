@@ -33,26 +33,26 @@ class FeeReminderButton extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 12,
                   ),
             ),
             const SizedBox(
               width: 10,
             ),
-            Row(
+            const Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.check,
                   size: 24,
                   color: Colors.white,
                 ),
-                const Icon(
+                Icon(
                   Icons.check,
                   size: 24,
                   color: Colors.white,
                 ),
-                const Icon(
+                Icon(
                   Icons.check,
                   size: 24,
                   color: Colors.white,

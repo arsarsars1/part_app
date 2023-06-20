@@ -128,7 +128,6 @@ class _StudentAttendanceCalenderViewState
                                 noOfWeeks = getWeeksInMonth(
                                     DateTime(currentYear, currentMonth).year,
                                     DateTime(currentYear, currentMonth).month);
-                                print(noOfWeeks);
                                 for (var element1
                                     in attendenceCubit.attendenceClasses ??
                                         []) {
@@ -228,7 +227,6 @@ class _StudentAttendanceCalenderViewState
                           noOfWeeks = getWeeksInMonth(
                               DateTime(currentYear, currentMonth).year,
                               DateTime(currentYear, currentMonth).month);
-                          print(noOfWeeks);
                           for (var element1
                               in attendenceCubit.attendenceClasses ?? []) {
                             int flag = 0;
@@ -293,7 +291,6 @@ class _StudentAttendanceCalenderViewState
                           noOfWeeks = getWeeksInMonth(
                               DateTime(currentYear, currentMonth).year,
                               DateTime(currentYear, currentMonth).month);
-                          print(noOfWeeks);
                           for (var element1
                               in attendenceCubit.attendenceClasses ?? []) {
                             int flag = 0;

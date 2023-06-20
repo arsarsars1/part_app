@@ -11,6 +11,7 @@ class FeeCubit extends Cubit<FeeState> {
   int page = 1;
   String? nextPageUrl = '';
   List<Datum> batchInvoice = [];
+  late Datum student;
 
   void clean() {
     page = 1;
