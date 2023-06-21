@@ -252,14 +252,6 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                   ],
                 ),
               ),
-              AnimatedContainer(
-                height: state is FetchingFee && state.pagination ? 30 : 0,
-                color: Colors.black,
-                duration: const Duration(
-                  milliseconds: 250,
-                ),
-                child: const Center(child: Text('Fetching more items ..')),
-              )
             ],
           );
         },

@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 
-class AddFees extends StatefulWidget {
+class AddOrEditFees extends StatefulWidget {
   static const route = '/fees/add-fees';
-  const AddFees({super.key});
+  const AddOrEditFees({super.key});
 
   @override
-  State<AddFees> createState() => _AddFeesState();
+  State<AddOrEditFees> createState() => _AddOrEditFeesState();
 }
 
-class _AddFeesState extends State<AddFees> {
+class _AddOrEditFeesState extends State<AddOrEditFees> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override

@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/alert.dart';
+import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/components/fee_reminder_button.dart';
 import 'package:part_app/view/components/large_button.dart';
 import 'package:part_app/view/components/user_image.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/fee/components/write_off_fees.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 import '../../../flavors.dart';
 import '../../../model/data_model/fee_response.dart';
@@ -84,6 +87,12 @@ class _FeeListItemState extends State<FeeListItem> {
         }
       }
       payableAmount = fees - totalPayed;
+    } else if (widget.student.paymentStatus == 'pending' &&
+        widget.student.writtenOffStatus == 1) {
+      paymentColor = AppColors.green;
+      paymentText = 'Written Off';
+      dateTextOnShrink = 'Date Date: ${widget.student.paymentDueDate}';
+      showTable = false;
     } else {
       paymentColor = AppColors.primaryColor;
       paymentText = 'Not Paid';
@@ -626,9 +635,11 @@ class _FeeListItemState extends State<FeeListItem> {
                                                     widget.student.id);
                                           },
                                     margin: 0,
-                                    disabled: paymentText == 'Paid Completely'
-                                        ? true
-                                        : false,
+                                    disabled:
+                                        paymentText == 'Paid Completely' ||
+                                                paymentText == 'Written Off'
+                                            ? true
+                                            : false,
                                     count: widget.student.reminderCount,
                                   );
                                 },
@@ -645,11 +656,96 @@ class _FeeListItemState extends State<FeeListItem> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              LargeButton(
-                                title: 'Write Off',
-                                onTap: () {},
-                                color: AppColors.lavender,
-                                margin: 0,
+                              BlocConsumer<FeeCubit, FeeState>(
+                                listener: (context, state) {
+                                  if (state is WrittenOff) {
+                                    Alert(context).show(message: state.message);
+                                    feeCubit.getFeeDetails(
+                                      branchId: widget.student.branchId,
+                                      batchId: widget.student.batchId,
+                                      month: widget.student.month,
+                                      year: widget.student.year,
+                                      feeType: feeType,
+                                      searchQuery: '',
+                                      clean: true,
+                                    );
+                                  } else if (state is WriteOffFailed) {
+                                    Alert(context).show(message: state.message);
+                                  }
+                                },
+                                builder: (context, state) {
+                                  if (state is WritingOff) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColors.lavender,
+                                        borderRadius: BorderRadius.circular(45),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 4),
+                                      margin: const EdgeInsets.symmetric(
+                                        horizontal: 16.0,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Writing Off',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(
+                                                    fontSize: 12,
+                                                    color: Colors.white),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          SizedBox(
+                                            height: 10.h,
+                                            width: 10.h,
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 1.w,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                  return LargeButton(
+                                    title: 'Write Off',
+                                    onTap: () {
+                                      var formKey1 = GlobalKey<FormState>();
+                                      String? reason;
+                                      CommonDialog(
+                                        context: context,
+                                        message:
+                                            'Are You Sure That You Want To Close\nThe Fees For ${DateTime.parse(widget.student.paymentDueDate).toMMMMYYYY()} ?',
+                                        subContent: WriteOffFeesPopUp(
+                                          formKey: formKey1,
+                                          reason: (value) {
+                                            reason = value;
+                                          },
+                                        ),
+                                        onTap: () {
+                                          formKey1.currentState!.save();
+                                          if (formKey1.currentState!
+                                              .validate()) {
+                                            Navigator.pop(context);
+                                            feeCubit.writeOffFees(
+                                              {'written_off_remarks': reason},
+                                              batchFeeInvoiceId:
+                                                  widget.student.id,
+                                            );
+                                          }
+                                        },
+                                      ).show();
+                                    },
+                                    color: AppColors.lavender,
+                                    margin: 0,
+                                  );
+                                },
                               ),
                               const SizedBox(
                                 height: 20,
@@ -765,7 +861,8 @@ class _FeeListItemState extends State<FeeListItem> {
                                   title: '',
                                   onTap: () {},
                                   margin: 0,
-                                  disabled: paymentText == 'Paid Completely'
+                                  disabled: paymentText == 'Paid Completely' ||
+                                          paymentText == 'Written Off'
                                       ? true
                                       : false,
                                   count: widget.student.reminderCount,

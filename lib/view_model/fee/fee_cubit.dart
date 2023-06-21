@@ -79,4 +79,19 @@ class FeeCubit extends Cubit<FeeState> {
       emit(FeeReminderSentFailed('Failed to save attendence.'));
     }
   }
+
+  Future writeOffFees(Map<String, dynamic> request,
+      {required int? batchFeeInvoiceId}) async {
+    emit(WritingOff());
+    Common? response = await _feeService.writeOffFees(
+      request,
+      batchFeeInvoiceId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(WrittenOff(response?.message ?? 'Fees written off'));
+    } else {
+      emit(WriteOffFailed(response?.message ?? 'Failed to reschedule'));
+    }
+  }
 }

@@ -39,4 +39,19 @@ class FeeDetailsService {
       return null;
     }
   }
+
+  Future<Common?> writeOffFees(Map<String, dynamic> request,
+      [int? batchFeesInvoiceId]) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/admin/fee-details/batch-fee-invoices/$batchFeesInvoiceId/write-off',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
 }

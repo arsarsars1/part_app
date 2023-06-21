@@ -31,3 +31,15 @@ class FeeReminderSentFailed extends FeeState {
   final String message;
   FeeReminderSentFailed(this.message);
 }
+
+class WritingOff extends FeeState {}
+
+class WrittenOff extends FeeState {
+  final String message;
+  WrittenOff(this.message);
+}
+
+class WriteOffFailed extends FeeState {
+  final String message;
+  WriteOffFailed(this.message);
+}
