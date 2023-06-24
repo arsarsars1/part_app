@@ -562,21 +562,26 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                               SizedBox(
                                 width: 15.w,
                               ),
-                              Container(
-                                width: 24.w,
-                                height: 24.w,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.black54,
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 2,
+                              GestureDetector(
+                                onTap: () {
+                                  
+                                },
+                                child: Container(
+                                  width: 24.w,
+                                  height: 24.w,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.black54,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
                                   ),
-                                ),
-                                child: const Icon(
-                                  Icons.edit_outlined,
-                                  size: 16,
-                                  color: Colors.white,
+                                  child: const Icon(
+                                    Icons.edit_outlined,
+                                    size: 16,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ],
@@ -660,63 +665,155 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                 ),
                               ),
                             ],
-                            rows: [
-                              DataRow(
-                                cells: [
-                                  DataCell(
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          3.5,
-                                      child: CustomPaint(
-                                          painter: DottedBorderPainter(),
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 5.0),
-                                              child: Text(
-                                                "${payment?.paymentDate?.toDateString()}",
-                                              ),
-                                            ),
-                                          )),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          3.5,
-                                      child: CustomPaint(
+                            rows: (payment?.edits ?? []).map((edit) {
+                              return DataRow(cells: [
+                                DataCell(
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3.5,
+                                    child: CustomPaint(
                                         painter: DottedBorderPainter(),
-                                        child: Center(
-                                          child: Text(
-                                            "${payment?.collectedBy?.name}",
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0),
+                                            child: Text(
+                                              "${edit.previousDate?.toDateString()}",
+                                              style: TextStyle(
+                                                  color: AppColors.grey700,
+                                                  decorationThickness: 2.85,
+                                                  decoration: TextDecoration
+                                                      .lineThrough),
+                                            ),
                                           ),
+                                        )),
+                                  ),
+                                ),
+                                DataCell(
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3.5,
+                                    child: CustomPaint(
+                                      painter: DottedBorderPainter(),
+                                      child: Center(
+                                        child: Text(
+                                          "${edit.editedBy?.name}",
+                                          style: TextStyle(
+                                              color: AppColors.grey700,
+                                              decorationThickness: 2.85,
+                                              decoration:
+                                                  TextDecoration.lineThrough),
                                         ),
                                       ),
                                     ),
                                   ),
-                                  DataCell(
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          3.5,
-                                      child: CustomPaint(
-                                          painter: DottedBorderPainter(),
-                                          child: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 5.0),
-                                              child: Text(
-                                                "${payment?.amount}",
-                                              ),
+                                ),
+                                DataCell(
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3.5,
+                                    child: CustomPaint(
+                                        painter: DottedBorderPainter(),
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 5.0),
+                                            child: Text(
+                                              "${edit.previousAmount}",
+                                              style: TextStyle(
+                                                  color: AppColors.grey700,
+                                                  decorationThickness: 2.85,
+                                                  decoration: TextDecoration
+                                                      .lineThrough),
                                             ),
-                                          )),
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                              ]);
+                            }).toList()
+                              ..add(DataRow(cells: [
+                                DataCell(
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3.5,
+                                    child: CustomPaint(
+                                        painter: DottedBorderPainter(),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0),
+                                            child: Text(
+                                              "${payment?.paymentDate?.toDateString()}",
+                                            ),
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                                DataCell(
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3.5,
+                                    child: CustomPaint(
+                                      painter: DottedBorderPainter(),
+                                      child: Center(
+                                        child: Text(
+                                          "${payment?.collectedBy?.name}",
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ],
-                              )
-                            ],
+                                ),
+                                DataCell(
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3.5,
+                                    child: CustomPaint(
+                                        painter: DottedBorderPainter(),
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 5.0),
+                                            child: Text(
+                                              "${payment?.amount}",
+                                            ),
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                              ])),
                           ),
+                          if (payment?.isEdited == 1)
+                            SizedBox(
+                              height: 30.h,
+                              width:
+                                  (3 * MediaQuery.of(context).size.width) / 3.5,
+                              child: CustomPaint(
+                                painter: DottedBorderPainter(),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5.0),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${payment?.edits?[(payment.edits?.length ?? 0) - 1].reason}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     );

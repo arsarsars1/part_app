@@ -268,7 +268,7 @@ class Payment {
   dynamic deletedByType;
   dynamic deletedById;
   CollectedBy? collectedBy;
-  List<dynamic>? edits;
+  List<Edit>? edits;
 
   Payment({
     this.id,
@@ -309,7 +309,7 @@ class Payment {
             : CollectedBy.fromJson(json["collected_by"]),
         edits: json["edits"] == null
             ? []
-            : List<dynamic>.from(json["edits"]!.map((x) => x)),
+            : List<Edit>.from(json["edits"]!.map((x) => Edit.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -328,7 +328,9 @@ class Payment {
         "deleted_by_type": deletedByType,
         "deleted_by_id": deletedById,
         "collected_by": collectedBy?.toJson(),
-        "edits": edits == null ? [] : List<dynamic>.from(edits!.map((x) => x)),
+        "edits": edits == null
+            ? []
+            : List<dynamic>.from(edits!.map((x) => x.toJson())),
       };
 }
 
@@ -352,6 +354,101 @@ class CollectedBy {
   Map<String, dynamic> toJson() => {
         "name": name,
         "user_id": userId,
+        "id": id,
+      };
+}
+
+class Edit {
+  int? id;
+  int? batchFeePaymentId;
+  int? previousAmount;
+  DateTime? previousDate;
+  int? newAmount;
+  DateTime? newDate;
+  String? reason;
+  String? editedByType;
+  int? editedById;
+  int? isDeleted;
+  dynamic deletedByType;
+  dynamic deletedById;
+  EditedBy? editedBy;
+  dynamic deletedBy;
+
+  Edit({
+    this.id,
+    this.batchFeePaymentId,
+    this.previousAmount,
+    this.previousDate,
+    this.newAmount,
+    this.newDate,
+    this.reason,
+    this.editedByType,
+    this.editedById,
+    this.isDeleted,
+    this.deletedByType,
+    this.deletedById,
+    this.editedBy,
+    this.deletedBy,
+  });
+
+  factory Edit.fromJson(Map<String, dynamic> json) => Edit(
+        id: json["id"],
+        batchFeePaymentId: json["batch_fee_payment_id"],
+        previousAmount: json["previous_amount"],
+        previousDate: json["previous_date"] == null
+            ? null
+            : DateTime.parse(json["previous_date"]),
+        newAmount: json["new_amount"],
+        newDate:
+            json["new_date"] == null ? null : DateTime.parse(json["new_date"]),
+        reason: json["reason"],
+        editedByType: json["edited_by_type"],
+        editedById: json["edited_by_id"],
+        isDeleted: json["is_deleted"],
+        deletedByType: json["deleted_by_type"],
+        deletedById: json["deleted_by_id"],
+        editedBy: json["edited_by"] == null
+            ? null
+            : EditedBy.fromJson(json["edited_by"]),
+        deletedBy: json["deleted_by"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "batch_fee_payment_id": batchFeePaymentId,
+        "previous_amount": previousAmount,
+        "previous_date":
+            "${previousDate!.year.toString().padLeft(4, '0')}-${previousDate!.month.toString().padLeft(2, '0')}-${previousDate!.day.toString().padLeft(2, '0')}",
+        "new_amount": newAmount,
+        "new_date":
+            "${newDate!.year.toString().padLeft(4, '0')}-${newDate!.month.toString().padLeft(2, '0')}-${newDate!.day.toString().padLeft(2, '0')}",
+        "reason": reason,
+        "edited_by_type": editedByType,
+        "edited_by_id": editedById,
+        "is_deleted": isDeleted,
+        "deleted_by_type": deletedByType,
+        "deleted_by_id": deletedById,
+        "edited_by": editedBy?.toJson(),
+        "deleted_by": deletedBy,
+      };
+}
+
+class EditedBy {
+  String? name;
+  int? id;
+
+  EditedBy({
+    this.name,
+    this.id,
+  });
+
+  factory EditedBy.fromJson(Map<String, dynamic> json) => EditedBy(
+        name: json["name"],
+        id: json["id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
         "id": id,
       };
 }

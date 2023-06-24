@@ -101,246 +101,318 @@ class _FeeListItemState extends State<FeeListItem> {
       showTable = false;
     }
 
-    return ListTile(
-      title: isShrunk
-          ? GestureDetector(
-              onTap: widget.onTap,
-              child: Padding(
-                padding: EdgeInsets.all(16.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 120.w,
-                      height: 20.h,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20.h),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: paymentColor,
+    return BlocConsumer<FeeCubit, FeeState>(
+      listener: (context, state) {
+        if (state is WrittenOff) {
+          Alert(context).show(message: state.message);
+          feeCubit.getFeeDetails(
+            branchId: widget.student.branchId,
+            batchId: widget.student.batchId,
+            month: widget.student.month,
+            year: widget.student.year,
+            feeType: feeType,
+            searchQuery: '',
+            clean: true,
+          );
+        } else if (state is WriteOffFailed) {
+          Alert(context).show(message: state.message);
+        }
+        if (state is FeeReminderSent) {
+          Alert(context).show(message: state.message);
+          feeCubit.getFeeDetails(
+            branchId: widget.student.branchId,
+            batchId: widget.student.batchId,
+            month: widget.student.month,
+            year: widget.student.year,
+            feeType: feeType,
+            searchQuery: '',
+            clean: true,
+          );
+        } else if (state is FeeReminderSentFailed) {
+          Alert(context).show(message: state.message);
+        }
+      },
+      builder: (context, state) {
+        if (state is WritingOff) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return ListTile(
+          title: isShrunk
+              ? GestureDetector(
+                  onTap: widget.onTap,
+                  child: Padding(
+                    padding: EdgeInsets.all(16.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 120.w,
+                          height: 20.h,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(20.h),
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: paymentColor,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 16.h,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: AppColors.liteDark,
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 16.h,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: AppColors.liteDark,
+                          ),
+                          child: Column(
                             children: [
                               Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  UserImage(
-                                    profilePic: widget.student.studentDetail!
-                                                .profilePic !=
-                                            ""
-                                        ? '${F.baseUrl}'
-                                            '/admin/images/student/'
-                                            '${widget.student.studentDetail!.id}/${widget.student.studentDetail?.profilePic}'
-                                        : '',
+                                  Row(
+                                    children: [
+                                      UserImage(
+                                        profilePic: widget
+                                                    .student
+                                                    .studentDetail!
+                                                    .profilePic !=
+                                                ""
+                                            ? '${F.baseUrl}'
+                                                '/admin/images/student/'
+                                                '${widget.student.studentDetail!.id}/${widget.student.studentDetail?.profilePic}'
+                                            : '',
+                                      ),
+                                      SizedBox(width: 16.w),
+                                      SizedBox(
+                                        width: 100,
+                                        child: Text(
+                                          '${widget.student.studentDetail?.name}',
+                                          maxLines: 2,
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(width: 16.w),
-                                  SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      '${widget.student.studentDetail?.name}',
-                                      maxLines: 2,
-                                      softWrap: true,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        feeType,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: AppColors.primaryColor,
+                                            ),
+                                      ),
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                      Text(
+                                        "Class Attended: $presentCount/${widget.student.monthClassesConductedCount}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(),
+                                      ),
+                                    ],
                                   ),
                                 ],
+                              ),
+                              SizedBox(
+                                height: 10.h,
                               ),
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    feeType,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: AppColors.primaryColor,
-                                        ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '${widget.student.batchName}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(),
+                                      ),
+                                      SizedBox(
+                                        width: 16.w,
+                                      ),
+                                      Text(
+                                        "Payment Due in:",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(
-                                    width: 16,
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '${widget.student.branchName}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(),
+                                      ),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
+                                      Text(
+                                        widget.student.paymentDueDate != null
+                                            ? '${widget.student.paymentDueDate?.toDateString()}'
+                                            : 'Not Available',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: AppColors.primaryColor,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '${widget.student.courseName}, ${widget.student.subjectName}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(),
+                                      ),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
+                                      Text(
+                                        "Payment Status",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text(
+                                        '',
+                                      ),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
+                                      Text(
+                                        paymentText,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: paymentColor,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
                                   ),
                                   Text(
-                                    "Class Attended: $presentCount/${widget.student.monthClassesConductedCount}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Column(
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '${widget.student.batchName}',
+                                    'Fees : $fees',
+                                    textAlign: TextAlign.right,
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge
                                         ?.copyWith(),
                                   ),
                                   SizedBox(
-                                    width: 16.w,
+                                    height: 10.h,
                                   ),
-                                  Text(
-                                    "Payment Due in:",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '${widget.student.branchName}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Text(
-                                    widget.student.paymentDueDate != null
-                                        ? '${widget.student.paymentDueDate?.toDateString()}'
-                                        : 'Not Available',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: AppColors.primaryColor,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '${widget.student.courseName}, ${widget.student.subjectName}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Text(
-                                    "Payment Status",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    '',
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Text(
-                                    paymentText,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: paymentColor,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              Text(
-                                'Fees : $fees',
-                                textAlign: TextAlign.right,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(),
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              showTable == true
-                                  ? Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        DataTable(
-                                          headingRowHeight: 30.h,
-                                          dataRowMinHeight: 30.h,
-                                          dataRowMaxHeight: 30.h,
-                                          columnSpacing: 0.0,
-                                          horizontalMargin: 0.0,
-                                          columns: [
-                                            DataColumn(
-                                              label: SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    4,
-                                                child: CustomPaint(
-                                                    painter:
-                                                        DottedBorderPainter(),
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 5.0),
+                                  showTable == true
+                                      ? Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            DataTable(
+                                              headingRowHeight: 30.h,
+                                              dataRowMinHeight: 30.h,
+                                              dataRowMaxHeight: 30.h,
+                                              columnSpacing: 0.0,
+                                              horizontalMargin: 0.0,
+                                              columns: [
+                                                DataColumn(
+                                                  label: SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            4,
+                                                    child: CustomPaint(
+                                                        painter:
+                                                            DottedBorderPainter(),
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 5.0),
+                                                            child: Text(
+                                                              'Date',
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyLarge
+                                                                  ?.copyWith(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        )),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            4,
+                                                    child: CustomPaint(
+                                                      painter:
+                                                          DottedBorderPainter(),
+                                                      child: Center(
                                                         child: Text(
-                                                          'Date',
+                                                          'Updated By',
                                                           style:
                                                               Theme.of(context)
                                                                   .textTheme
@@ -352,281 +424,209 @@ class _FeeListItemState extends State<FeeListItem> {
                                                                   ),
                                                         ),
                                                       ),
-                                                    )),
-                                              ),
-                                            ),
-                                            DataColumn(
-                                              label: SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    4,
-                                                child: CustomPaint(
-                                                  painter:
-                                                      DottedBorderPainter(),
-                                                  child: Center(
-                                                    child: Text(
-                                                      'Updated By',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyLarge
-                                                          ?.copyWith(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
                                                     ),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            4,
+                                                    child: CustomPaint(
+                                                        painter:
+                                                            DottedBorderPainter(),
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .centerRight,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    right: 5.0),
+                                                            child: Text(
+                                                              'Amount',
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyLarge
+                                                                  ?.copyWith(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        )),
+                                                  ),
+                                                ),
+                                              ],
+                                              rows: tableData.map((row) {
+                                                return DataRow(cells: [
+                                                  DataCell(
+                                                    SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              4,
+                                                      child: CustomPaint(
+                                                          painter:
+                                                              DottedBorderPainter(),
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .centerLeft,
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left:
+                                                                          5.0),
+                                                              child: Text(
+                                                                row[0],
+                                                              ),
+                                                            ),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                  DataCell(
+                                                    SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              4,
+                                                      child: CustomPaint(
+                                                        painter:
+                                                            DottedBorderPainter(),
+                                                        child: Center(
+                                                          child: Text(
+                                                            row[1],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  DataCell(
+                                                    SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              4,
+                                                      child: CustomPaint(
+                                                          painter:
+                                                              DottedBorderPainter(),
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .centerRight,
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      right:
+                                                                          5.0),
+                                                              child: Text(
+                                                                row[2],
+                                                              ),
+                                                            ),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                ]);
+                                              }).toList(),
+                                            ),
+                                            SizedBox(
+                                              height: 30.h,
+                                              width: (3 *
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width) /
+                                                  4,
+                                              child: CustomPaint(
+                                                painter: DottedBorderPainter(),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 5.0),
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        'Total Amount Paid : ',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge
+                                                            ?.copyWith(),
+                                                      ),
+                                                      Text(
+                                                        "₹ $totalPayed",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge
+                                                            ?.copyWith(
+                                                                color: AppColors
+                                                                    .green),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                            DataColumn(
-                                              label: SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    4,
-                                                child: CustomPaint(
-                                                    painter:
-                                                        DottedBorderPainter(),
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerRight,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                right: 5.0),
-                                                        child: Text(
-                                                          'Amount',
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyLarge
-                                                                  ?.copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
-                                                        ),
+                                            SizedBox(
+                                              height: 30.h,
+                                              width: (3 *
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width) /
+                                                  4,
+                                              child: CustomPaint(
+                                                painter: DottedBorderPainter(),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(horizontal: 5),
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        'Amount Payable : ',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge
+                                                            ?.copyWith(),
                                                       ),
-                                                    )),
+                                                      Text(
+                                                        '₹ $payableAmount',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge
+                                                            ?.copyWith(
+                                                                color: AppColors
+                                                                    .primaryColor),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
                                             ),
                                           ],
-                                          rows: tableData.map((row) {
-                                            return DataRow(cells: [
-                                              DataCell(
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      4,
-                                                  child: CustomPaint(
-                                                      painter:
-                                                          DottedBorderPainter(),
-                                                      child: Align(
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 5.0),
-                                                          child: Text(
-                                                            row[0],
-                                                          ),
-                                                        ),
-                                                      )),
-                                                ),
-                                              ),
-                                              DataCell(
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      4,
-                                                  child: CustomPaint(
-                                                    painter:
-                                                        DottedBorderPainter(),
-                                                    child: Center(
-                                                      child: Text(
-                                                        row[1],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              DataCell(
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      4,
-                                                  child: CustomPaint(
-                                                      painter:
-                                                          DottedBorderPainter(),
-                                                      child: Align(
-                                                        alignment: Alignment
-                                                            .centerRight,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 5.0),
-                                                          child: Text(
-                                                            row[2],
-                                                          ),
-                                                        ),
-                                                      )),
-                                                ),
-                                              ),
-                                            ]);
-                                          }).toList(),
+                                        )
+                                      : SizedBox(
+                                          height: 0.h,
                                         ),
-                                        SizedBox(
-                                          width: (3 *
-                                                  MediaQuery.of(context)
-                                                      .size
-                                                      .width) /
-                                              4,
-                                          child: CustomPaint(
-                                            painter: DottedBorderPainter(),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 5.0),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  Text(
-                                                    'Total Amount Paid : ',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge
-                                                        ?.copyWith(),
-                                                  ),
-                                                  Text(
-                                                    "₹ $totalPayed",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge
-                                                        ?.copyWith(
-                                                            color: AppColors
-                                                                .green),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: (3 *
-                                                  MediaQuery.of(context)
-                                                      .size
-                                                      .width) /
-                                              4,
-                                          child: CustomPaint(
-                                            painter: DottedBorderPainter(),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 5),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  Text(
-                                                    'Amount Payable : ',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge
-                                                        ?.copyWith(),
-                                                  ),
-                                                  Text(
-                                                    '₹ $payableAmount',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge
-                                                        ?.copyWith(
-                                                            color: AppColors
-                                                                .primaryColor),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                      ],
-                                    )
-                                  : SizedBox(
-                                      height: 0.h,
-                                    ),
-                              BlocConsumer<FeeCubit, FeeState>(
-                                listener: (context, state) {
-                                  if (state is FeeReminderSent) {
-                                    Alert(context).show(message: state.message);
-                                    feeCubit.getFeeDetails(
-                                      branchId: widget.student.branchId,
-                                      batchId: widget.student.batchId,
-                                      month: widget.student.month,
-                                      year: widget.student.year,
-                                      feeType: feeType,
-                                      searchQuery: '',
-                                      clean: true,
-                                    );
-                                  } else if (state is FeeReminderSentFailed) {
-                                    Alert(context).show(message: state.message);
-                                  }
-                                },
-                                builder: (context, state) {
-                                  if (state is FeeReminderSending) {
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primaryColor,
-                                        borderRadius: BorderRadius.circular(45),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16, vertical: 4),
-                                      margin: const EdgeInsets.symmetric(
-                                        horizontal: 16.0,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Sending',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                    fontSize: 12,
-                                                    color: Colors.white),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          SizedBox(
-                                            height: 10.h,
-                                            width: 10.h,
-                                            child: CircularProgressIndicator(
-                                              color: Colors.white,
-                                              strokeWidth: 1.w,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                  return FeeReminderButton(
+                                  FeeReminderButton(
                                     title: 'Send Reminder',
                                     onTap: paymentText == 'Paid Completely'
                                         ? () {}
@@ -642,79 +642,20 @@ class _FeeListItemState extends State<FeeListItem> {
                                             ? true
                                             : false,
                                     count: widget.student.reminderCount,
-                                  );
-                                },
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 1,
-                                color: AppColors.hintColor,
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 32),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              BlocConsumer<FeeCubit, FeeState>(
-                                listener: (context, state) {
-                                  if (state is WrittenOff) {
-                                    Alert(context).show(message: state.message);
-                                    feeCubit.getFeeDetails(
-                                      branchId: widget.student.branchId,
-                                      batchId: widget.student.batchId,
-                                      month: widget.student.month,
-                                      year: widget.student.year,
-                                      feeType: feeType,
-                                      searchQuery: '',
-                                      clean: true,
-                                    );
-                                  } else if (state is WriteOffFailed) {
-                                    Alert(context).show(message: state.message);
-                                  }
-                                },
-                                builder: (context, state) {
-                                  if (state is WritingOff) {
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        color: AppColors.lavender,
-                                        borderRadius: BorderRadius.circular(45),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16, vertical: 4),
-                                      margin: const EdgeInsets.symmetric(
-                                        horizontal: 16.0,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Writing Off',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                    fontSize: 12,
-                                                    color: Colors.white),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          SizedBox(
-                                            height: 10.h,
-                                            width: 10.h,
-                                            child: CircularProgressIndicator(
-                                              color: Colors.white,
-                                              strokeWidth: 1.w,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                  return LargeButton(
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    height: 1,
+                                    color: AppColors.hintColor,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 32),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  LargeButton(
                                     title: 'Write Off',
                                     onTap: () {
                                       var formKey1 = GlobalKey<FormState>();
@@ -745,189 +686,191 @@ class _FeeListItemState extends State<FeeListItem> {
                                     },
                                     color: AppColors.lavender,
                                     margin: 0,
-                                  );
-                                },
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  LargeButton(
+                                    title: 'Add Or Edit Fees',
+                                    onTap: () {
+                                      feeCubit.student = widget.student;
+                                      Navigator.pushNamed(
+                                          context, AddOrEditFees.route);
+                                    },
+                                    color: AppColors.defaultBlue,
+                                    margin: 0,
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  LargeButton(
+                                    title: 'Other Payments',
+                                    onTap: () {},
+                                    color: AppColors.defaultBlue,
+                                    margin: 0,
+                                  ),
+                                ],
                               ),
-                              const SizedBox(
-                                height: 20,
+                              SizedBox(
+                                height: 10.h,
                               ),
-                              LargeButton(
-                                title: 'Add Or Edit Fees',
+                              GestureDetector(
                                 onTap: () {
-                                  feeCubit.student = widget.student;
-                                  Navigator.pushNamed(
-                                      context, AddOrEditFees.route);
+                                  setState(() {
+                                    isShrunk = !isShrunk;
+                                  });
                                 },
-                                color: AppColors.defaultBlue,
-                                margin: 0,
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              LargeButton(
-                                title: 'Other Payments',
-                                onTap: () {},
-                                color: AppColors.defaultBlue,
-                                margin: 0,
+                                child: isShrunk
+                                    ? Icon(
+                                        Icons.expand_less,
+                                        color: AppColors.textColor,
+                                      )
+                                    : Icon(
+                                        Icons.expand_more,
+                                        color: AppColors.textColor,
+                                      ),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isShrunk = !isShrunk;
-                              });
-                            },
-                            child: isShrunk
-                                ? Icon(
-                                    Icons.expand_less,
-                                    color: AppColors.textColor,
-                                  )
-                                : Icon(
-                                    Icons.expand_more,
-                                    color: AppColors.textColor,
-                                  ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          : Padding(
-              padding: EdgeInsets.all(16.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 120.w,
-                    height: 20.h,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20.h),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: paymentColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 16.h,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: AppColors.liteDark,
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                UserImage(
-                                  profilePic: widget.student.studentDetail!
-                                              .profilePic !=
-                                          ""
-                                      ? '${F.baseUrl}'
-                                          '/admin/images/student/'
-                                          '${widget.student.studentDetail!.id}/${widget.student.studentDetail?.profilePic}'
-                                      : '',
-                                ),
-                                SizedBox(width: 16.w),
-                                SizedBox(
-                                  width: 100,
-                                  child: Text(
-                                    '${widget.student.studentDetail?.name}',
-                                    maxLines: 2,
-                                    softWrap: true,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                FeeReminderButton(
-                                  title: '',
-                                  onTap: () {},
-                                  margin: 0,
-                                  disabled: paymentText == 'Paid Completely' ||
-                                          paymentText == 'Written Off'
-                                      ? true
-                                      : false,
-                                  count: widget.student.reminderCount,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              dateTextOnShrink,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    color: AppColors.textColor,
-                                  ),
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Text(
-                              paymentText,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    color: paymentColor,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isShrunk = !isShrunk;
-                            });
-                          },
-                          child: isShrunk
-                              ? Icon(
-                                  Icons.expand_less,
-                                  color: AppColors.textColor,
-                                )
-                              : Icon(
-                                  Icons.expand_more,
-                                  color: AppColors.textColor,
-                                ),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
+                )
+              : Padding(
+                  padding: EdgeInsets.all(16.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 120.w,
+                        height: 20.h,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20.h),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: paymentColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 16.h,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: AppColors.liteDark,
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    UserImage(
+                                      profilePic: widget.student.studentDetail!
+                                                  .profilePic !=
+                                              ""
+                                          ? '${F.baseUrl}'
+                                              '/admin/images/student/'
+                                              '${widget.student.studentDetail!.id}/${widget.student.studentDetail?.profilePic}'
+                                          : '',
+                                    ),
+                                    SizedBox(width: 16.w),
+                                    SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        '${widget.student.studentDetail?.name}',
+                                        maxLines: 2,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    FeeReminderButton(
+                                      title: '',
+                                      onTap: () {},
+                                      margin: 0,
+                                      disabled:
+                                          paymentText == 'Paid Completely' ||
+                                                  paymentText == 'Written Off'
+                                              ? true
+                                              : false,
+                                      count: widget.student.reminderCount,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  dateTextOnShrink,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: AppColors.textColor,
+                                      ),
+                                ),
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                Text(
+                                  paymentText,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: paymentColor,
+                                      ),
+                                ),
+                              ],
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isShrunk = !isShrunk;
+                                });
+                              },
+                              child: isShrunk
+                                  ? Icon(
+                                      Icons.expand_less,
+                                      color: AppColors.textColor,
+                                    )
+                                  : Icon(
+                                      Icons.expand_more,
+                                      color: AppColors.textColor,
+                                    ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+        );
+      },
     );
   }
 }
