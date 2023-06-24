@@ -32,6 +32,18 @@ class FeeReminderSentFailed extends FeeState {
   FeeReminderSentFailed(this.message);
 }
 
+class DeletingFees extends FeeState {}
+
+class FeesDeleted extends FeeState {
+  final String message;
+  FeesDeleted(this.message);
+}
+
+class DeleteFeesFailed extends FeeState {
+  final String message;
+  DeleteFeesFailed(this.message);
+}
+
 class WritingOff extends FeeState {}
 
 class WrittenOff extends FeeState {
@@ -42,6 +54,18 @@ class WrittenOff extends FeeState {
 class WriteOffFailed extends FeeState {
   final String message;
   WriteOffFailed(this.message);
+}
+
+class EditingFee extends FeeState {}
+
+class EdittedFee extends FeeState {
+  final String message;
+  EdittedFee(this.message);
+}
+
+class EditFeesFailed extends FeeState {
+  final String message;
+  EditFeesFailed(this.message);
 }
 
 class AddingFees extends FeeState {}

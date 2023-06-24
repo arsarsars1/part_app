@@ -120,7 +120,38 @@ class FeeCubit extends Cubit<FeeState> {
       // await getRescheduledBatches();
       emit(WrittenOff(response?.message ?? 'Fees written off'));
     } else {
-      emit(WriteOffFailed(response?.message ?? 'Failed to reschedule'));
+      emit(WriteOffFailed(response?.message ?? 'Failed to write off'));
+    }
+  }
+
+  Future deleteFees(
+      {required int? batchFeeInvoiceId, required int? paymentId}) async {
+    emit(DeletingFees());
+    Common? response = await _feeService.deleteFees(
+      batchFeeInvoiceId,
+      paymentId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(FeesDeleted(response?.message ?? 'Fees Deleted'));
+    } else {
+      emit(WriteOffFailed(response?.message ?? 'Fees Deletion Failed'));
+    }
+  }
+
+  Future editFees(Map<String, dynamic> request,
+      {required int? batchFeeInvoiceId, required int? paymentId}) async {
+    emit(EditingFee());
+    Common? response = await _feeService.editFees(
+      request,
+      batchFeeInvoiceId,
+      paymentId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(EdittedFee(response?.message ?? 'Fees Editted'));
+    } else {
+      emit(EditFeesFailed(response?.message ?? 'Failed to edit'));
     }
   }
 }

@@ -70,6 +70,34 @@ class FeeDetailsService {
     }
   }
 
+  Future<Common?> editFees(Map<String, dynamic> request,
+      int? batchFeesInvoiceId, int? paymentId) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/admin/fee-details/batch-fee-invoices/$batchFeesInvoiceId/payments/$paymentId',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> deleteFees(int? batchFeesInvoiceId, int? paymentId) async {
+    try {
+      var response = await _client.delete(
+        queryPath:
+            '/admin/fee-details/batch-fee-invoices/$batchFeesInvoiceId/payments/$paymentId',
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<BatchFeeInvoice?> batchFeeInvoiceDetails({
     required int? batchFeeInvoiceId,
   }) async {

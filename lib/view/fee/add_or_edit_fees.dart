@@ -4,6 +4,7 @@ import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/fee/components/edit_fees.dart';
 import 'package:part_app/view/fee/components/fee_list_item.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 
@@ -46,10 +47,19 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
             feeCubit.getBatchInvoice(feeCubit.student.id);
           } else if (state is AddFeesFailed) {
             Alert(context).show(message: state.message);
+          } else if (state is FeesDeleted) {
+            Alert(context).show(message: state.message);
+            feeCubit.getBatchInvoice(feeCubit.student.id);
+          } else if (state is EdittedFee) {
+            Alert(context).show(message: state.message);
+            feeCubit.getBatchInvoice(feeCubit.student.id);
           }
         },
         builder: (context, state) {
-          if (state is AddingFees || state is GettingBatchInvoice) {
+          if (state is AddingFees ||
+              state is GettingBatchInvoice ||
+              state is DeletingFees ||
+              state is EditingFee) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -542,21 +552,29 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Container(
-                                width: 24.w,
-                                height: 24.w,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.black54,
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 2,
+                              GestureDetector(
+                                onTap: () {
+                                  feeCubit.deleteFees(
+                                      batchFeeInvoiceId:
+                                          feeCubit.batchFeeInvoice?.id,
+                                      paymentId: payment?.id);
+                                },
+                                child: Container(
+                                  width: 24.w,
+                                  height: 24.w,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.black54,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
                                   ),
-                                ),
-                                child: const Icon(
-                                  Icons.close,
-                                  size: 16,
-                                  color: Colors.white,
+                                  child: const Icon(
+                                    Icons.close,
+                                    size: 16,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                               SizedBox(
@@ -564,7 +582,33 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  
+                                  var formKey1 = GlobalKey<FormState>();
+                                  String? reason, date, amount;
+                                  CommonDialog(
+                                    context: context,
+                                    message:
+                                        'Are You Sure That You Want To Edit\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                    subContent: EditFees(
+                                      formKey: formKey1,
+                                      reason: (value) => reason = value,
+                                      amount: (value) => amount = value,
+                                      date: (value) => date = value,
+                                    ),
+                                    onTap: () {
+                                      formKey1.currentState!.save();
+                                      if (formKey1.currentState!.validate()) {
+                                        Navigator.pop(context);
+                                        feeCubit.editFees({
+                                          'new_date': date,
+                                          'new_amount': amount,
+                                          'reason': reason
+                                        },
+                                            batchFeeInvoiceId:
+                                                feeCubit.batchFeeInvoice?.id,
+                                            paymentId: payment?.id);
+                                      }
+                                    },
+                                  ).show();
                                 },
                                 child: Container(
                                   width: 24.w,
