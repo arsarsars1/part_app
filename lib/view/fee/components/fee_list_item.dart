@@ -655,41 +655,51 @@ class _FeeListItemState extends State<FeeListItem> {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  LargeButton(
-                                    title: 'Write Off',
-                                    onTap: () {
-                                      var formKey1 = GlobalKey<FormState>();
-                                      String? reason;
-                                      CommonDialog(
-                                        context: context,
-                                        message:
-                                            'Are You Sure That You Want To Close\nThe Fees For ${widget.student.paymentDueDate?.toMMMMYYYY()} ?',
-                                        subContent: WriteOffFeesPopUp(
-                                          formKey: formKey1,
-                                          reason: (value) {
-                                            reason = value;
-                                          },
-                                        ),
-                                        onTap: () {
-                                          formKey1.currentState!.save();
-                                          if (formKey1.currentState!
-                                              .validate()) {
-                                            Navigator.pop(context);
-                                            feeCubit.writeOffFees(
-                                              {'written_off_remarks': reason},
-                                              batchFeeInvoiceId:
-                                                  widget.student.id,
-                                            );
-                                          }
-                                        },
-                                      ).show();
-                                    },
-                                    color: AppColors.lavender,
-                                    margin: 0,
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
+                                  if (widget.student.paymentStatus != "paid")
+                                    if (widget.student.writtenOffStatus != 1)
+                                      Column(
+                                        children: [
+                                          LargeButton(
+                                            title: 'Write Off',
+                                            onTap: () {
+                                              var formKey1 =
+                                                  GlobalKey<FormState>();
+                                              String? reason;
+                                              CommonDialog(
+                                                context: context,
+                                                message:
+                                                    'Are You Sure That You Want To Close\nThe Fees For ${widget.student.paymentDueDate?.toMMMMYYYY()} ?',
+                                                subContent: WriteOffFeesPopUp(
+                                                  formKey: formKey1,
+                                                  reason: (value) {
+                                                    reason = value;
+                                                  },
+                                                ),
+                                                onTap: () {
+                                                  formKey1.currentState!.save();
+                                                  if (formKey1.currentState!
+                                                      .validate()) {
+                                                    Navigator.pop(context);
+                                                    feeCubit.writeOffFees(
+                                                      {
+                                                        'written_off_remarks':
+                                                            reason
+                                                      },
+                                                      batchFeeInvoiceId:
+                                                          widget.student.id,
+                                                    );
+                                                  }
+                                                },
+                                              ).show();
+                                            },
+                                            color: AppColors.lavender,
+                                            margin: 0,
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                        ],
+                                      ),
                                   LargeButton(
                                     title: 'Add Or Edit Fees',
                                     onTap: () {
