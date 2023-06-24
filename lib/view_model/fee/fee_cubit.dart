@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:part_app/model/data_model/batch_fee_invoice.dart';
 import 'package:part_app/model/data_model/common.dart';
-import 'package:part_app/model/data_model/fee_response.dart';
+import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/service/admin/fee_details_service.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -13,12 +14,40 @@ class FeeCubit extends Cubit<FeeState> {
   String? nextPageUrl = '';
   List<Datum> batchInvoice = [];
   late Datum student;
+  late Datum? batchFeeInvoice = Datum();
 
   void clean() {
     page = 1;
     nextPageUrl = '';
     batchInvoice.clear();
     emit(FeeInitial());
+  }
+
+  Future addFees(int? batchInvoiceId, Map<String, dynamic> data) async {
+    try {
+      emit(AddingFees());
+      Common? response = await _feeService.addFees(batchInvoiceId, data);
+
+      if (response?.status == 1) {
+        emit(AddedFees(response?.message ?? 'Fees Added'));
+      } else {
+        emit(AddFeesFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future getBatchInvoice(int? batchInvoiceId) async {
+    emit(GettingBatchInvoice());
+    BatchFeeInvoice? response = await _feeService.batchFeeInvoiceDetails(
+        batchFeeInvoiceId: batchInvoiceId);
+    if (response?.status == 1) {
+      batchFeeInvoice = response?.batchFeeInvoice;
+      emit(GotBatchInvoice());
+    } else {
+      emit(AddFeesFailed('Failed to add link.'));
+    }
   }
 
   Future getFeeDetails({
@@ -44,7 +73,7 @@ class FeeCubit extends Cubit<FeeState> {
       return;
     }
 
-    FeeResponse? response = await _feeService.feeDetails(
+    BatchFeeInvoiceList? response = await _feeService.feeDetails(
       branchId: branchId,
       batchId: batchId,
       month: month,

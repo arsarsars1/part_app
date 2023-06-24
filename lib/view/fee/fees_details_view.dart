@@ -8,7 +8,7 @@ import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 
-import '../../model/data_model/fee_response.dart';
+import '../../model/data_model/batch_fee_invoice_list.dart';
 
 class FeesDetailsView extends StatefulWidget {
   static const route = '/fees';

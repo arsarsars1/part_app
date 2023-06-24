@@ -9,10 +9,11 @@ import 'package:part_app/view/components/fee_reminder_button.dart';
 import 'package:part_app/view/components/large_button.dart';
 import 'package:part_app/view/components/user_image.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/components/write_off_fees.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 import '../../../flavors.dart';
-import '../../../model/data_model/fee_response.dart';
+import '../../../model/data_model/batch_fee_invoice_list.dart';
 
 class FeeListItem extends StatefulWidget {
   final Datum student;
@@ -45,7 +46,7 @@ class _FeeListItemState extends State<FeeListItem> {
 
     if (widget.student.feeType == 'class') {
       feeType = 'Class Based';
-      presentCount = widget.student.classAttendancePresentCount!;
+      presentCount = widget.student.cycleAttendancePresentCount ?? 0;
     } else {
       feeType = 'Monthly';
       presentCount = widget.student.monthAttendancePresentCount!;
@@ -238,7 +239,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                   ),
                                   Text(
                                     widget.student.paymentDueDate != null
-                                        ? '${widget.student.paymentDueDate}'
+                                        ? '${widget.student.paymentDueDate?.toDateString()}'
                                         : 'Not Available',
                                     style: Theme.of(context)
                                         .textTheme
@@ -721,7 +722,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                       CommonDialog(
                                         context: context,
                                         message:
-                                            'Are You Sure That You Want To Close\nThe Fees For ${DateTime.parse(widget.student.paymentDueDate).toMMMMYYYY()} ?',
+                                            'Are You Sure That You Want To Close\nThe Fees For ${widget.student.paymentDueDate?.toMMMMYYYY()} ?',
                                         subContent: WriteOffFeesPopUp(
                                           formKey: formKey1,
                                           reason: (value) {
@@ -752,7 +753,11 @@ class _FeeListItemState extends State<FeeListItem> {
                               ),
                               LargeButton(
                                 title: 'Add Or Edit Fees',
-                                onTap: () {},
+                                onTap: () {
+                                  feeCubit.student = widget.student;
+                                  Navigator.pushNamed(
+                                      context, AddOrEditFees.route);
+                                },
                                 color: AppColors.defaultBlue,
                                 margin: 0,
                               ),

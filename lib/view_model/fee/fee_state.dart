@@ -43,3 +43,24 @@ class WriteOffFailed extends FeeState {
   final String message;
   WriteOffFailed(this.message);
 }
+
+class AddingFees extends FeeState {}
+
+class AddedFees extends FeeState {
+  final String message;
+  AddedFees(this.message);
+}
+
+class AddFeesFailed extends FeeState {
+  final String message;
+  AddFeesFailed(this.message);
+}
+
+class GettingBatchInvoice extends FeeState {}
+
+class GotBatchInvoice extends FeeState {}
+
+class GetBatchInvoiceFailed extends FeeState {
+  final String message;
+  GetBatchInvoiceFailed(this.message);
+}
