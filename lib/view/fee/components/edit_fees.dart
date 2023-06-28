@@ -26,122 +26,88 @@ class EditFeesState extends State<EditFees> {
   TextEditingController dateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: widget.formKey,
-      child: Column(
-        children: [
-          CommonField(
-            title: 'Amount *',
-            hint: 'Enter Amount',
-            maxLines: 1,
-            inputType: TextInputType.number,
-            contentPadding: EdgeInsets.zero,
-            onChange: (value) {
-              widget.amount(value);
-            },
-            validator: (value) {
-              return value.toString().trim().isEmpty
-                  ? 'Please enter the amount'
-                  : null;
-            },
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Date *',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              // Container(
-              //   height: 60.h,
-              //   decoration: BoxDecoration(
-              //     color: AppColors.grey800.withOpacity(.4),
-              //     borderRadius: BorderRadius.circular(4),
-              //   ),
-              //   padding: EdgeInsets.symmetric(horizontal: 25.w),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       date == null
-              //           ? Text(
-              //               'Select the date',
-              //               style:
-              //                   Theme.of(context).textTheme.bodyLarge?.copyWith(
-              //                         color: AppColors.grey600.withOpacity(.6),
-              //                       ),
-              //             )
-              //           : Text(
-              //               '${date?.toDateString()}',
-              //               style:
-              //                   Theme.of(context).textTheme.bodyLarge?.copyWith(
-              //                         color: AppColors.grey400,
-              //                       ),
-              //             ),
-              //       GestureDetector(
-              //         onTap: () async {
-              //           await datePicker();
-              //         },
-              //         child: const Icon(
-              //           Icons.calendar_month,
-              //           size: 24,
-              //           color: Colors.white24,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              TextFormField(
-                controller: dateController,
-                keyboardType: TextInputType.none,
-                onTap: () async {
-                  await datePicker();
-                  dateController.text = date?.toDateString() ?? "";
-                },
-                readOnly: true,
-                validator: (value) {
-                  if (value.toString().isEmpty) {
-                    return 'Please enter date';
-                  } else {
-                    return null;
-                  }
-                },
-                style: TextStyle(color: Colors.white.withOpacity(.7)),
-                textAlign: TextAlign.start,
-                cursorColor: Colors.white,
-                decoration: InputDecoration(
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  suffixIcon: const Icon(
-                    Icons.calendar_month,
-                    size: 24,
-                    color: Colors.white24,
-                  ),
-                  hintText: 'Select the date',
-                  fillColor: AppColors.grey800.withOpacity(.5),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 1.2,
+      child: Form(
+        key: widget.formKey,
+        child: Column(
+          children: [
+            CommonField(
+              title: 'Amount *',
+              hint: 'Enter Amount',
+              maxLines: 1,
+              inputType: TextInputType.number,
+              contentPadding: EdgeInsets.zero,
+              onChange: (value) {
+                widget.amount(value);
+              },
+              validator: (value) {
+                return value.toString().trim().isEmpty
+                    ? 'Please enter the amount'
+                    : null;
+              },
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Date *',
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
-              )
-            ],
-          ),
-          SizedBox(height: 10.h),
-          CommonField(
-            title: 'Remark/Reason For Editing *',
-            hint: 'Enter Remark/Reason',
-            maxLines: 2,
-            contentPadding: EdgeInsets.zero,
-            onChange: (value) {
-              widget.reason(value);
-            },
-            validator: (value) {
-              return value.toString().trim().isEmpty
-                  ? 'Please enter the remark/reason'
-                  : null;
-            },
-          ),
-          const SizedBox(height: 16),
-        ],
+                const SizedBox(
+                  height: 8,
+                ),
+                TextFormField(
+                  controller: dateController,
+                  keyboardType: TextInputType.none,
+                  onTap: () async {
+                    await datePicker();
+                    dateController.text = date?.toDateString() ?? "";
+                  },
+                  readOnly: true,
+                  validator: (value) {
+                    if (value.toString().isEmpty) {
+                      return 'Please enter date';
+                    } else {
+                      return null;
+                    }
+                  },
+                  style: TextStyle(color: Colors.white.withOpacity(.7)),
+                  textAlign: TextAlign.start,
+                  cursorColor: Colors.white,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 15),
+                    suffixIcon: const Icon(
+                      Icons.calendar_month,
+                      size: 24,
+                      color: Colors.white24,
+                    ),
+                    hintText: 'Select the date',
+                    fillColor: AppColors.grey800.withOpacity(.5),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 10.h),
+            CommonField(
+              title: 'Remark/Reason For Editing *',
+              hint: 'Enter Remark/Reason',
+              maxLines: 2,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              onChange: (value) {
+                widget.reason(value);
+              },
+              validator: (value) {
+                return value.toString().trim().isEmpty
+                    ? 'Please enter the remark/reason'
+                    : null;
+              },
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
       ),
     );
   }

@@ -55,7 +55,8 @@ class _FeeListItemState extends State<FeeListItem> {
     if (widget.student.paymentStatus == 'paid') {
       paymentColor = AppColors.green;
       paymentText = 'Paid Completely';
-      dateTextOnShrink = 'Paid On Date: ${widget.student.paymentDueDate}';
+      dateTextOnShrink =
+          'Paid On Date: ${widget.student.paymentDueDate?.toDateString()}';
       showTable = true;
       if (widget.student.payments!.isNotEmpty) {
         for (int i = 0; i < widget.student.payments!.length; i++) {
@@ -73,7 +74,8 @@ class _FeeListItemState extends State<FeeListItem> {
     } else if (widget.student.paymentStatus == 'partial') {
       paymentColor = AppColors.yellow;
       paymentText = 'Partially Paid';
-      dateTextOnShrink = 'Paid On Date: ${widget.student.paymentDueDate}';
+      dateTextOnShrink =
+          'Paid On Date: ${widget.student.paymentDueDate?.toDateString()}';
       showTable = true;
       if (widget.student.payments!.isNotEmpty) {
         for (int i = 0; i < widget.student.payments!.length; i++) {
