@@ -23,6 +23,10 @@ class _RescheduleClassState extends State<RescheduleClass> {
   String? endTime;
   String? startDate;
   String? endDate;
+  TextEditingController startTimeController = TextEditingController();
+  TextEditingController endTimeController = TextEditingController();
+  TextEditingController startDateController = TextEditingController();
+  TextEditingController endDateController = TextEditingController();
   ClassModel? selectedclass;
   var formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -98,9 +102,11 @@ class _RescheduleClassState extends State<RescheduleClass> {
                   children: [
                     Expanded(
                       child: ScheduleField(
+                        controller: startDateController,
                         title: 'From Date',
                         onSelect: (String value) {
                           startDate = value;
+                          startDateController.text = value;
                           setState(() {
                             selectedclass = null;
                           });
@@ -113,9 +119,9 @@ class _RescheduleClassState extends State<RescheduleClass> {
                               batchId: cubit.batchModel?.id,
                               date: startDate,
                               scaffoldKey: scaffoldKey,
-                              onSave: (ClassModel value) {
+                              onSave: (ClassModel value1) {
                                 setState(() {
-                                  selectedclass = value;
+                                  selectedclass = value1;
                                 });
                               },
                             ),
@@ -126,9 +132,11 @@ class _RescheduleClassState extends State<RescheduleClass> {
                     ),
                     Expanded(
                       child: ScheduleField(
+                        controller: endDateController,
                         title: 'To Date',
                         onSelect: (String value) async {
                           endDate = value;
+                          endDateController.text = value;
                           await context
                               .read<BranchCubit>()
                               .getBranchClassesOfDate(
@@ -313,18 +321,22 @@ class _RescheduleClassState extends State<RescheduleClass> {
                   children: [
                     Expanded(
                       child: ScheduleField(
+                        controller: startTimeController,
                         title: 'Start Time',
                         onSelect: (String value) {
                           startTime = value;
+                          startTimeController.text = value;
                         },
                         time: true,
                       ),
                     ),
                     Expanded(
                       child: ScheduleField(
+                        controller: endTimeController,
                         title: 'End Time',
                         onSelect: (String value) {
                           endTime = value;
+                          endTimeController.text = value;
                         },
                         time: true,
                       ),
