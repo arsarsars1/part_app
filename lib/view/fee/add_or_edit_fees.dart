@@ -531,82 +531,83 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                 ),
                               ]);
                             }).toList()
-                              ..add(DataRow(cells: [
-                                DataCell(
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                    child: CustomPaint(
-                                        painter: DottedBorderPainter(),
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 5.0),
+                              ..add(
+                                DataRow(
+                                  cells: [
+                                    DataCell(
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                3.5,
+                                        child: CustomPaint(
+                                            painter: DottedBorderPainter(),
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 5.0),
+                                                child: Text(
+                                                  "${payment?.paymentDate?.toDateString()}",
+                                                ),
+                                              ),
+                                            )),
+                                      ),
+                                    ),
+                                    DataCell(
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                3.5,
+                                        child: CustomPaint(
+                                          painter: DottedBorderPainter(),
+                                          child: Center(
                                             child: Text(
-                                              "${payment?.paymentDate?.toDateString()}",
+                                              "${payment?.collectedBy?.name}",
                                             ),
                                           ),
-                                        )),
-                                  ),
-                                ),
-                                DataCell(
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                    child: CustomPaint(
-                                      painter: DottedBorderPainter(),
-                                      child: Center(
-                                        child: Text(
-                                          "${payment?.collectedBy?.name}",
                                         ),
                                       ),
                                     ),
-                                  ),
+                                    DataCell(
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                3.5,
+                                        child: CustomPaint(
+                                            painter: DottedBorderPainter(),
+                                            child: Align(
+                                              alignment: Alignment.centerRight,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 5.0),
+                                                child: Text(
+                                                  "${payment?.amount}",
+                                                ),
+                                              ),
+                                            )),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                DataCell(
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                    child: CustomPaint(
-                                        painter: DottedBorderPainter(),
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 5.0),
-                                            child: Text(
-                                              "${payment?.amount}",
-                                            ),
-                                          ),
-                                        )),
-                                  ),
-                                ),
-                              ])),
+                              ),
                           ),
                           if (payment?.isEdited == 1)
                             SizedBox(
-                              height: 30.h,
                               width:
                                   (3 * MediaQuery.of(context).size.width) / 3.5,
                               child: CustomPaint(
                                 painter: DottedBorderPainter(),
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5.0),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${payment?.edits?[(payment.edits?.length ?? 0) - 1].reason}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(),
-                                      ),
-                                    ],
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 5.w, vertical: 5.h),
+                                  child: Text(
+                                    "${payment?.edits?[(payment.edits?.length ?? 0) - 1].reason}",
+                                    maxLines: 5,
+                                    softWrap: true,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
                                   ),
                                 ),
                               ),
