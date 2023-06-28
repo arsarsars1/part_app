@@ -23,6 +23,7 @@ class EditFees extends StatefulWidget {
 
 class EditFeesState extends State<EditFees> {
   DateTime? date;
+  TextEditingController dateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -54,44 +55,74 @@ class EditFeesState extends State<EditFees> {
               const SizedBox(
                 height: 8,
               ),
-              Container(
-                height: 60.h,
-                decoration: BoxDecoration(
-                  color: AppColors.grey800.withOpacity(.4),
-                  borderRadius: BorderRadius.circular(4),
+              // Container(
+              //   height: 60.h,
+              //   decoration: BoxDecoration(
+              //     color: AppColors.grey800.withOpacity(.4),
+              //     borderRadius: BorderRadius.circular(4),
+              //   ),
+              //   padding: EdgeInsets.symmetric(horizontal: 25.w),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       date == null
+              //           ? Text(
+              //               'Select the date',
+              //               style:
+              //                   Theme.of(context).textTheme.bodyLarge?.copyWith(
+              //                         color: AppColors.grey600.withOpacity(.6),
+              //                       ),
+              //             )
+              //           : Text(
+              //               '${date?.toDateString()}',
+              //               style:
+              //                   Theme.of(context).textTheme.bodyLarge?.copyWith(
+              //                         color: AppColors.grey400,
+              //                       ),
+              //             ),
+              //       GestureDetector(
+              //         onTap: () async {
+              //           await datePicker();
+              //         },
+              //         child: const Icon(
+              //           Icons.calendar_month,
+              //           size: 24,
+              //           color: Colors.white24,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              TextFormField(
+                controller: dateController,
+                keyboardType: TextInputType.none,
+                onTap: () async {
+                  await datePicker();
+                  dateController.text = date?.toDateString() ?? "";
+                },
+                readOnly: true,
+                validator: (value) {
+                  if (value.toString().isEmpty) {
+                    return 'Please enter date';
+                  } else {
+                    return null;
+                  }
+                },
+                style: TextStyle(color: Colors.white.withOpacity(.7)),
+                textAlign: TextAlign.start,
+                cursorColor: Colors.white,
+                decoration: InputDecoration(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  suffixIcon: const Icon(
+                    Icons.calendar_month,
+                    size: 24,
+                    color: Colors.white24,
+                  ),
+                  hintText: 'Select the date',
+                  fillColor: AppColors.grey800.withOpacity(.5),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 25.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    date == null
-                        ? Text(
-                            'Select the date',
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: AppColors.grey600.withOpacity(.6),
-                                    ),
-                          )
-                        : Text(
-                            '${date?.toDateString()}',
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: AppColors.grey400,
-                                    ),
-                          ),
-                    GestureDetector(
-                      onTap: () async {
-                        await datePicker();
-                      },
-                      child: const Icon(
-                        Icons.calendar_month,
-                        size: 24,
-                        color: Colors.white24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              )
             ],
           ),
           SizedBox(height: 10.h),
@@ -151,6 +182,7 @@ class EditFeesState extends State<EditFees> {
     ).then((value) {
       if (value != null) {
         date = value;
+        dateController.text = value.toDateString();
         widget.date(value.toServerString());
         setState(() {});
       }
