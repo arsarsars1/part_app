@@ -43,6 +43,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
         listener: (context, state) {
           if (state is AddedFees) {
             date = null;
+            dateController.text = "";
             Alert(context).show(message: state.message);
             feeCubit.getBatchInvoice(feeCubit.student.id);
           } else if (state is AddFeesFailed) {
@@ -267,271 +268,6 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                   ],
                 ),
               ),
-              // Container(
-              //   margin: const EdgeInsets.all(16),
-              //   padding: const EdgeInsets.all(16),
-              //   decoration: BoxDecoration(
-              //     color: AppColors.liteDark,
-              //     borderRadius: BorderRadius.circular(4),
-              //   ),
-              //   child: Column(
-              //     children: [
-              //       Row(
-              //         mainAxisAlignment: MainAxisAlignment.end,
-              //         children: [
-              //           Container(
-              //             width: 24.w,
-              //             height: 24.w,
-              //             decoration: BoxDecoration(
-              //               shape: BoxShape.circle,
-              //               color: Colors.black54,
-              //               border: Border.all(
-              //                 color: Colors.white,
-              //                 width: 2,
-              //               ),
-              //             ),
-              //             child: const Icon(
-              //               Icons.close,
-              //               size: 16,
-              //               color: Colors.white,
-              //             ),
-              //           ),
-              //           SizedBox(
-              //             width: 15.w,
-              //           ),
-              //           Container(
-              //             width: 24.w,
-              //             height: 24.w,
-              //             decoration: BoxDecoration(
-              //               shape: BoxShape.circle,
-              //               color: Colors.black54,
-              //               border: Border.all(
-              //                 color: Colors.white,
-              //                 width: 2,
-              //               ),
-              //             ),
-              //             child: const Icon(
-              //               Icons.edit_outlined,
-              //               size: 16,
-              //               color: Colors.white,
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //       SizedBox(
-              //         height: 15.h,
-              //       ),
-              //       Table(
-              //         border: TableBorder.all(
-              //           color: AppColors.grey86,
-              //           width: 0.5,
-              //         ),
-              //         children: [
-              //           TableRow(
-              //             children: [
-              //               TableCell(
-              //                 child: Container(
-              //                   padding: EdgeInsets.only(left: 10.h),
-              //                   height: 30.h,
-              //                   child: Align(
-              //                     alignment: Alignment.centerLeft,
-              //                     child: Text(
-              //                       'Date',
-              //                       style: Theme.of(context)
-              //                           .textTheme
-              //                           .bodyLarge
-              //                           ?.copyWith(
-              //                             fontWeight: FontWeight.bold,
-              //                           ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ),
-              //               TableCell(
-              //                 child: SizedBox(
-              //                   height: 30.h,
-              //                   child: Center(
-              //                     child: Text(
-              //                       'Updated By',
-              //                       style: Theme.of(context)
-              //                           .textTheme
-              //                           .bodyLarge
-              //                           ?.copyWith(
-              //                             fontWeight: FontWeight.bold,
-              //                           ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ),
-              //               TableCell(
-              //                 child: Container(
-              //                   padding: EdgeInsets.only(right: 10.h),
-              //                   height: 30.h,
-              //                   child: Align(
-              //                     alignment: Alignment.centerRight,
-              //                     child: Text(
-              //                       'Amount',
-              //                       style: Theme.of(context)
-              //                           .textTheme
-              //                           .bodyLarge
-              //                           ?.copyWith(
-              //                             fontWeight: FontWeight.bold,
-              //                           ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //           TableRow(
-              //             children: [
-              //               TableCell(
-              //                 child: Container(
-              //                   padding: EdgeInsets.only(left: 10.h),
-              //                   height: 30.h,
-              //                   child: Align(
-              //                     alignment: Alignment.centerLeft,
-              //                     child: Text(
-              //                       '07-08-2023',
-              //                       style: Theme.of(context)
-              //                           .textTheme
-              //                           .bodyLarge
-              //                           ?.copyWith(
-              //                             color: Colors.grey.shade700,
-              //                             decoration: TextDecoration.lineThrough,
-              //                           ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ),
-              //               TableCell(
-              //                 child: SizedBox(
-              //                   height: 30.h,
-              //                   child: Center(
-              //                     child: Text(
-              //                       'Admin',
-              //                       style: Theme.of(context)
-              //                           .textTheme
-              //                           .bodyLarge
-              //                           ?.copyWith(
-              //                             color: Colors.grey.shade700,
-              //                             decoration: TextDecoration.lineThrough,
-              //                           ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ),
-              //               TableCell(
-              //                 child: Container(
-              //                   padding: EdgeInsets.only(right: 10.h),
-              //                   height: 30.h,
-              //                   child: Align(
-              //                     alignment: Alignment.centerRight,
-              //                     child: Text(
-              //                       '₹100.00',
-              //                       style: Theme.of(context)
-              //                           .textTheme
-              //                           .bodyLarge
-              //                           ?.copyWith(
-              //                             color: Colors.grey.shade700,
-              //                             decoration: TextDecoration.lineThrough,
-              //                           ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //           TableRow(
-              //             children: [
-              //               TableCell(
-              //                 child: Container(
-              //                   padding: EdgeInsets.only(left: 10.h),
-              //                   height: 30.h,
-              //                   child: Align(
-              //                     alignment: Alignment.centerLeft,
-              //                     child: Text(
-              //                       '09-08-2023',
-              //                       style: Theme.of(context)
-              //                           .textTheme
-              //                           .bodyLarge
-              //                           ?.copyWith(
-              //                             color: Colors.white,
-              //                           ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ),
-              //               TableCell(
-              //                 child: SizedBox(
-              //                   height: 30.h,
-              //                   child: Center(
-              //                     child: Text(
-              //                       'Admin',
-              //                       style: Theme.of(context)
-              //                           .textTheme
-              //                           .bodyLarge
-              //                           ?.copyWith(
-              //                             color: Colors.white,
-              //                           ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ),
-              //               TableCell(
-              //                 child: Container(
-              //                   padding: EdgeInsets.only(right: 10.h),
-              //                   height: 30.h,
-              //                   child: Align(
-              //                     alignment: Alignment.centerRight,
-              //                     child: Text(
-              //                       '₹200.00',
-              //                       style: Theme.of(context)
-              //                           .textTheme
-              //                           .bodyLarge
-              //                           ?.copyWith(
-              //                             color: Colors.white,
-              //                           ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         ],
-              //       ),
-              //       Table(
-              //         border: TableBorder.all(
-              //           color: AppColors.grey86,
-              //           width: 0.5,
-              //         ),
-              //         children: [
-              //           TableRow(
-              //             children: [
-              //               TableCell(
-              //                 child: Container(
-              //                   padding: EdgeInsets.only(left: 10.h),
-              //                   height: 30.h,
-              //                   child: Align(
-              //                     alignment: Alignment.centerLeft,
-              //                     child: Text(
-              //                       'Clerical Error',
-              //                       style: Theme.of(context)
-              //                           .textTheme
-              //                           .bodyLarge
-              //                           ?.copyWith(),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         ],
-              //       )
-              //     ],
-              //   ),
-              // ),
-
               if ((feeCubit.batchFeeInvoice?.payments ?? []).isNotEmpty)
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
@@ -863,7 +599,6 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                     );
                   },
                 ),
-
               Container(
                 margin: const EdgeInsets.all(16),
                 padding: const EdgeInsets.all(16),
@@ -946,51 +681,40 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                         const SizedBox(
                           height: 8,
                         ),
-                        Container(
-                          height: 60.h,
-                          decoration: BoxDecoration(
-                            color: AppColors.liteDark,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 25.w),
-                          margin: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              date == null
-                                  ? Text(
-                                      'Select the date',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color: AppColors.grey700,
-                                          ),
-                                    )
-                                  : Text(
-                                      '${date?.toDateString()}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color: AppColors.grey400,
-                                          ),
-                                    ),
-                              GestureDetector(
-                                onTap: () async {
-                                  await datePicker();
-                                  dateController.text =
-                                      date?.toDateString() ?? "";
-                                },
-                                child: const Icon(
-                                  Icons.calendar_month,
-                                  size: 24,
-                                  color: Colors.white24,
-                                ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: TextFormField(
+                            controller: dateController,
+                            keyboardType: TextInputType.none,
+                            onTap: () async {
+                              await datePicker();
+                              dateController.text = date?.toDateString() ?? "";
+                            },
+                            readOnly: true,
+                            validator: (value) {
+                              if (value.toString().isEmpty) {
+                                return 'Please enter date';
+                              } else {
+                                return null;
+                              }
+                            },
+                            style:
+                                TextStyle(color: Colors.white.withOpacity(.7)),
+                            textAlign: TextAlign.start,
+                            cursorColor: Colors.white,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 15),
+                              suffixIcon: const Icon(
+                                Icons.calendar_month,
+                                size: 24,
+                                color: Colors.white24,
                               ),
-                            ],
+                              hintText: 'Select the date',
+                              fillColor: AppColors.liteDark,
+                            ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                     Center(
