@@ -31,7 +31,7 @@ class EditFeesState extends State<EditFees> {
         children: [
           CommonField(
             title: 'Amount *',
-            hint: '21',
+            hint: 'Enter Amount',
             maxLines: 1,
             inputType: TextInputType.number,
             contentPadding: EdgeInsets.zero,
@@ -97,7 +97,7 @@ class EditFeesState extends State<EditFees> {
           SizedBox(height: 10.h),
           CommonField(
             title: 'Remark/Reason For Editing *',
-            hint: 'Eg: School Final Exam',
+            hint: 'Enter Remark/Reason',
             maxLines: 2,
             contentPadding: EdgeInsets.zero,
             onChange: (value) {
