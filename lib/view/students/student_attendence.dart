@@ -128,7 +128,6 @@ class _StudentAttendanceCalenderViewState
                                 noOfWeeks = getWeeksInMonth(
                                     DateTime(currentYear, currentMonth).year,
                                     DateTime(currentYear, currentMonth).month);
-                                print(noOfWeeks);
                                 for (var element1
                                     in attendenceCubit.attendenceClasses ??
                                         []) {
@@ -196,13 +195,62 @@ class _StudentAttendanceCalenderViewState
                     },
                   ),
                   Padding(
-                    padding: EdgeInsets.all(15.h),
+                    padding: EdgeInsets.fromLTRB(15.h, 0.h, 15.h, 15.h),
                     child: CalendarCarousel<Event>(
                       childAspectRatio: 1.1,
                       iconColor: Colors.white,
                       todayBorderColor: Colors.transparent,
                       daysHaveCircularBorder: true,
                       showOnlyCurrentMonthDate: true,
+                      headerMargin: const EdgeInsets.all(0),
+                      weekendTextStyle: const TextStyle(
+                        color: Colors.white,
+                      ),
+                      markedDatesMap: _markedDateMap,
+                      daysTextStyle: const TextStyle(
+                        color: Colors.white,
+                      ),
+                      thisMonthDayBorderColor: Colors.transparent,
+                      weekFormat: false, //firstDayOfWeek: 4,
+                      height: noOfWeeks >= 5 ? 400.h : 343.h,
+                      weekdayTextStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+
+                      shouldShowTransform: false,
+                      weekDayFormat: WeekdayFormat.narrow,
+                      headerTextStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      isScrollable: false,
+                      customGridViewPhysics:
+                          const NeverScrollableScrollPhysics(),
+                      markedDateCustomTextStyle: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.blue,
+                      ),
+                      showHeader: true,
+                      todayTextStyle: const TextStyle(
+                        color: Colors.white,
+                      ),
+                      todayButtonColor: Colors.blue,
+                      selectedDayTextStyle: const TextStyle(
+                        color: Colors.white,
+                      ),
+                      prevDaysTextStyle: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                      inactiveDaysTextStyle: const TextStyle(
+                        color: Colors.tealAccent,
+                        fontSize: 16,
+                      ),
+                      onCalendarChanged: (DateTime date) {},
+                      onDayLongPressed: (DateTime date) {},
                       onLeftArrowPressed: () async {
                         present = 0;
                         absent = 0;
@@ -228,7 +276,6 @@ class _StudentAttendanceCalenderViewState
                           noOfWeeks = getWeeksInMonth(
                               DateTime(currentYear, currentMonth).year,
                               DateTime(currentYear, currentMonth).month);
-                          print(noOfWeeks);
                           for (var element1
                               in attendenceCubit.attendenceClasses ?? []) {
                             int flag = 0;
@@ -293,7 +340,6 @@ class _StudentAttendanceCalenderViewState
                           noOfWeeks = getWeeksInMonth(
                               DateTime(currentYear, currentMonth).year,
                               DateTime(currentYear, currentMonth).month);
-                          print(noOfWeeks);
                           for (var element1
                               in attendenceCubit.attendenceClasses ?? []) {
                             int flag = 0;
@@ -333,53 +379,6 @@ class _StudentAttendanceCalenderViewState
                           }
                         });
                       },
-                      weekendTextStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      markedDatesMap: _markedDateMap,
-                      daysTextStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      thisMonthDayBorderColor: Colors.transparent,
-                      weekFormat: false, //firstDayOfWeek: 4,
-                      height: noOfWeeks >= 5 ? 440.h : 380.h,
-                      weekdayTextStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      shouldShowTransform: false,
-                      weekDayFormat: WeekdayFormat.narrow,
-                      headerTextStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      isScrollable: false,
-                      customGridViewPhysics:
-                          const NeverScrollableScrollPhysics(),
-                      markedDateCustomTextStyle: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.blue,
-                      ),
-                      showHeader: true,
-                      todayTextStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      todayButtonColor: Colors.blue,
-                      selectedDayTextStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      prevDaysTextStyle: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                      inactiveDaysTextStyle: const TextStyle(
-                        color: Colors.tealAccent,
-                        fontSize: 16,
-                      ),
-                      onCalendarChanged: (DateTime date) {},
-                      onDayLongPressed: (DateTime date) {},
                     ),
                   ),
                   Text(
@@ -394,7 +393,7 @@ class _StudentAttendanceCalenderViewState
                     height: 20.h,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
                         width: 100.w,
@@ -429,6 +428,7 @@ class _StudentAttendanceCalenderViewState
                           ],
                         ),
                       ),
+                      SizedBox(width: 10.w),
                       Container(
                         width: 100.w,
                         decoration: BoxDecoration(

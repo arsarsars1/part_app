@@ -255,7 +255,7 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
-  Future getBatchesByBranch(int? branchId, {bool clean = false}) async {
+  Future getBatchesByBranch({int? branchId, bool clean = false}) async {
     if (clean) {
       page = 1;
       nextPageUrl = '';

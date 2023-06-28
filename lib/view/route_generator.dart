@@ -24,6 +24,8 @@ import 'package:part_app/view/branch/branch_list.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
+import 'package:part_app/view/fee/add_or_edit_fees.dart';
+import 'package:part_app/view/fee/fees_details_view.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/leads/add_lead.dart';
 import 'package:part_app/view/leads/lead_details.dart';
@@ -382,7 +384,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const StudentAttendanceCalenderView(),
           settings: settings,
-        );  
+        );
       case MonthlyAttendanceView.route:
         return MaterialPageRoute(
           builder: (_) => const MonthlyAttendanceView(),
@@ -398,9 +400,19 @@ class RouteGenerator {
           builder: (_) => const AttendanceAdd(),
           settings: settings,
         );
+      case AddOrEditFees.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddOrEditFees(),
+          settings: settings,
+        );
       case TodaysClasses.route:
         return MaterialPageRoute(
           builder: (_) => const TodaysClasses(),
+          settings: settings,
+        );
+      case FeesDetailsView.route:
+        return MaterialPageRoute(
+          builder: (_) => const FeesDetailsView(),
           settings: settings,
         );
 

@@ -1,0 +1,157 @@
+import 'package:flutter/foundation.dart';
+import 'package:part_app/model/data_model/batch_fee_invoice.dart';
+import 'package:part_app/model/data_model/common.dart';
+import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
+import 'package:part_app/model/service/admin/fee_details_service.dart';
+import 'package:part_app/view_model/cubits.dart';
+
+part 'fee_state.dart';
+
+class FeeCubit extends Cubit<FeeState> {
+  FeeCubit() : super(FeeInitial());
+  final _feeService = FeeDetailsService();
+  int page = 1;
+  String? nextPageUrl = '';
+  List<Datum> batchInvoice = [];
+  late Datum student;
+  late Datum? batchFeeInvoice = Datum();
+
+  void clean() {
+    page = 1;
+    nextPageUrl = '';
+    batchInvoice.clear();
+    emit(FeeInitial());
+  }
+
+  Future addFees(int? batchInvoiceId, Map<String, dynamic> data) async {
+    try {
+      emit(AddingFees());
+      Common? response = await _feeService.addFees(batchInvoiceId, data);
+
+      if (response?.status == 1) {
+        emit(AddedFees(response?.message ?? 'Fees Added'));
+      } else {
+        emit(AddFeesFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future getBatchInvoice(int? batchInvoiceId) async {
+    emit(GettingBatchInvoice());
+    BatchFeeInvoice? response = await _feeService.batchFeeInvoiceDetails(
+        batchFeeInvoiceId: batchInvoiceId);
+    if (response?.status == 1) {
+      batchFeeInvoice = response?.batchFeeInvoice;
+      emit(GotBatchInvoice());
+    } else {
+      emit(AddFeesFailed('Failed to add link.'));
+    }
+  }
+
+  Future getFeeDetails({
+    String? searchQuery,
+    int? branchId,
+    int? batchId,
+    int? month,
+    int? year,
+    String? feeType,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      batchInvoice.clear();
+      emit(FetchingFee());
+    } else {
+      emit(FetchingFee(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(FeeFetched());
+      return;
+    }
+
+    BatchFeeInvoiceList? response = await _feeService.feeDetails(
+      branchId: branchId,
+      batchId: batchId,
+      month: month,
+      year: year,
+      feeType: feeType,
+      searchQuery: searchQuery,
+      pageNo: page,
+    );
+
+    if (response?.status == 1) {
+      nextPageUrl = response?.batchFeeInvoices?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+      batchInvoice = response?.batchFeeInvoices?.data ?? [];
+      emit(FeeFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
+  Future sendReminder({required int? batchFeeInvoiceId}) async {
+    emit(FeeReminderSending());
+    try {
+      Common? response =
+          await _feeService.sendReminder(batchFeeInvoiceId: batchFeeInvoiceId);
+      if (response?.status == 1) {
+        emit(FeeReminderSent(response?.message ?? 'Message sent'));
+      } else {
+        emit(FeeReminderSentFailed(
+            response?.message ?? 'Failed to save attendence.'));
+      }
+    } catch (e) {
+      emit(FeeReminderSentFailed('Failed to save attendence.'));
+    }
+  }
+
+  Future writeOffFees(Map<String, dynamic> request,
+      {required int? batchFeeInvoiceId}) async {
+    emit(WritingOff());
+    Common? response = await _feeService.writeOffFees(
+      request,
+      batchFeeInvoiceId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(WrittenOff(response?.message ?? 'Fees written off'));
+    } else {
+      emit(WriteOffFailed(response?.message ?? 'Failed to write off'));
+    }
+  }
+
+  Future deleteFees(
+      {required int? batchFeeInvoiceId, required int? paymentId}) async {
+    emit(DeletingFees());
+    Common? response = await _feeService.deleteFees(
+      batchFeeInvoiceId,
+      paymentId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(FeesDeleted(response?.message ?? 'Fees Deleted'));
+    } else {
+      emit(WriteOffFailed(response?.message ?? 'Fees Deletion Failed'));
+    }
+  }
+
+  Future editFees(Map<String, dynamic> request,
+      {required int? batchFeeInvoiceId, required int? paymentId}) async {
+    emit(EditingFee());
+    Common? response = await _feeService.editFees(
+      request,
+      batchFeeInvoiceId,
+      paymentId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(EdittedFee(response?.message ?? 'Fees Editted'));
+    } else {
+      emit(EditFeesFailed(response?.message ?? 'Failed to edit'));
+    }
+  }
+}
