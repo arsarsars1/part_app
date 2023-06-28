@@ -242,14 +242,31 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                 : feeCubit.batchFeeInvoice?.paymentStatus ==
                                         "pending"
                                     ? "Not Paid"
-                                    : "Overdue",
+                                    : feeCubit.batchFeeInvoice?.paymentStatus ==
+                                            "partial"
+                                        ? "Partially Paid"
+                                        : "Overdue",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: AppColors.primaryColor,
-                                      fontSize: 11.sp,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(
+                                  color:
+                                      feeCubit.batchFeeInvoice?.paymentStatus ==
+                                              "paid"
+                                          ? AppColors.green
+                                          : feeCubit.batchFeeInvoice
+                                                      ?.paymentStatus ==
+                                                  "pending"
+                                              ? AppColors.primaryColor
+                                              : feeCubit.batchFeeInvoice
+                                                          ?.paymentStatus ==
+                                                      "partial"
+                                                  ? AppColors.yellow
+                                                  : AppColors.primaryColor,
+                                  fontSize: 11.sp,
+                                ),
                           ),
                         ],
                       ),
