@@ -200,15 +200,15 @@ mixin _$ConductedClassDetails {
   int? get batchId => throw _privateConstructorUsedError;
   String? get takenByType => throw _privateConstructorUsedError;
   int? get takenById => throw _privateConstructorUsedError;
-  dynamic? get updatedByType => throw _privateConstructorUsedError;
-  dynamic? get updatedById => throw _privateConstructorUsedError;
+  dynamic get updatedByType => throw _privateConstructorUsedError;
+  dynamic get updatedById => throw _privateConstructorUsedError;
   DateTime? get conductedOn => throw _privateConstructorUsedError;
   String? get startTime => throw _privateConstructorUsedError;
   String? get endTime => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   TakenBy? get takenBy => throw _privateConstructorUsedError;
-  dynamic? get updatedBy => throw _privateConstructorUsedError;
+  dynamic get updatedBy => throw _privateConstructorUsedError;
   List<AttendanceDetails>? get attendances =>
       throw _privateConstructorUsedError;
 
@@ -229,15 +229,15 @@ abstract class $ConductedClassDetailsCopyWith<$Res> {
       int? batchId,
       String? takenByType,
       int? takenById,
-      dynamic? updatedByType,
-      dynamic? updatedById,
+      dynamic updatedByType,
+      dynamic updatedById,
       DateTime? conductedOn,
       String? startTime,
       String? endTime,
       DateTime? createdAt,
       DateTime? updatedAt,
       TakenBy? takenBy,
-      dynamic? updatedBy,
+      dynamic updatedBy,
       List<AttendanceDetails>? attendances});
 
   $TakenByCopyWith<$Res>? get takenBy;
@@ -292,11 +292,11 @@ class _$ConductedClassDetailsCopyWithImpl<$Res,
       updatedByType: freezed == updatedByType
           ? _value.updatedByType
           : updatedByType // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       updatedById: freezed == updatedById
           ? _value.updatedById
           : updatedById // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       conductedOn: freezed == conductedOn
           ? _value.conductedOn
           : conductedOn // ignore: cast_nullable_to_non_nullable
@@ -324,7 +324,7 @@ class _$ConductedClassDetailsCopyWithImpl<$Res,
       updatedBy: freezed == updatedBy
           ? _value.updatedBy
           : updatedBy // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       attendances: freezed == attendances
           ? _value.attendances
           : attendances // ignore: cast_nullable_to_non_nullable
@@ -358,15 +358,15 @@ abstract class _$$_ConductedClassDetailsCopyWith<$Res>
       int? batchId,
       String? takenByType,
       int? takenById,
-      dynamic? updatedByType,
-      dynamic? updatedById,
+      dynamic updatedByType,
+      dynamic updatedById,
       DateTime? conductedOn,
       String? startTime,
       String? endTime,
       DateTime? createdAt,
       DateTime? updatedAt,
       TakenBy? takenBy,
-      dynamic? updatedBy,
+      dynamic updatedBy,
       List<AttendanceDetails>? attendances});
 
   @override
@@ -419,11 +419,11 @@ class __$$_ConductedClassDetailsCopyWithImpl<$Res>
       updatedByType: freezed == updatedByType
           ? _value.updatedByType
           : updatedByType // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       updatedById: freezed == updatedById
           ? _value.updatedById
           : updatedById // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       conductedOn: freezed == conductedOn
           ? _value.conductedOn
           : conductedOn // ignore: cast_nullable_to_non_nullable
@@ -451,7 +451,7 @@ class __$$_ConductedClassDetailsCopyWithImpl<$Res>
       updatedBy: freezed == updatedBy
           ? _value.updatedBy
           : updatedBy // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       attendances: freezed == attendances
           ? _value._attendances
           : attendances // ignore: cast_nullable_to_non_nullable
@@ -493,9 +493,9 @@ class _$_ConductedClassDetails implements _ConductedClassDetails {
   @override
   final int? takenById;
   @override
-  final dynamic? updatedByType;
+  final dynamic updatedByType;
   @override
-  final dynamic? updatedById;
+  final dynamic updatedById;
   @override
   final DateTime? conductedOn;
   @override
@@ -509,7 +509,7 @@ class _$_ConductedClassDetails implements _ConductedClassDetails {
   @override
   final TakenBy? takenBy;
   @override
-  final dynamic? updatedBy;
+  final dynamic updatedBy;
   final List<AttendanceDetails>? _attendances;
   @override
   List<AttendanceDetails>? get attendances {
@@ -595,15 +595,15 @@ abstract class _ConductedClassDetails implements ConductedClassDetails {
       final int? batchId,
       final String? takenByType,
       final int? takenById,
-      final dynamic? updatedByType,
-      final dynamic? updatedById,
+      final dynamic updatedByType,
+      final dynamic updatedById,
       final DateTime? conductedOn,
       final String? startTime,
       final String? endTime,
       final DateTime? createdAt,
       final DateTime? updatedAt,
       final TakenBy? takenBy,
-      final dynamic? updatedBy,
+      final dynamic updatedBy,
       final List<AttendanceDetails>? attendances}) = _$_ConductedClassDetails;
 
   factory _ConductedClassDetails.fromJson(Map<String, dynamic> json) =
@@ -618,9 +618,9 @@ abstract class _ConductedClassDetails implements ConductedClassDetails {
   @override
   int? get takenById;
   @override
-  dynamic? get updatedByType;
+  dynamic get updatedByType;
   @override
-  dynamic? get updatedById;
+  dynamic get updatedById;
   @override
   DateTime? get conductedOn;
   @override
@@ -634,7 +634,7 @@ abstract class _ConductedClassDetails implements ConductedClassDetails {
   @override
   TakenBy? get takenBy;
   @override
-  dynamic? get updatedBy;
+  dynamic get updatedBy;
   @override
   List<AttendanceDetails>? get attendances;
   @override

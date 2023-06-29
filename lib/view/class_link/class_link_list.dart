@@ -193,7 +193,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                         'N/A',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyLarge
                                         ?.copyWith(
                                           color: AppColors.primaryColor,
                                         ),
@@ -205,7 +205,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                     '${classLink.branchName}, ${classLink.batchName}, ${classLink.courseName}, ${classLink.subjectName}',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyLarge
                                         ?.copyWith(),
                                   ),
                                   SizedBox(
@@ -215,7 +215,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                     '${classLink.classDate?.formattedDay2()} ${classLink.startTime?.toAmPM()}-${classLink.endTime?.toAmPM()}',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyLarge
                                         ?.copyWith(),
                                   ),
                                   SizedBox(
@@ -225,7 +225,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                     classLink.link ?? 'N/A',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyLarge
                                         ?.copyWith(
                                           color: AppColors.defaultBlue,
                                         ),
@@ -266,7 +266,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                                 "${classLink.classDate?.toDateString()}",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
+                                                    .bodyLarge
                                                     ?.copyWith(
                                                       color: AppColors
                                                           .primaryColor,
@@ -283,7 +283,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                                 "${classLink.startTime?.toAmPM()} - ${classLink.endTime?.toAmPM()}",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
+                                                    .bodyLarge
                                                     ?.copyWith(
                                                       color: AppColors
                                                           .primaryColor,
@@ -295,21 +295,21 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                             "${classLink.branchName}",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyText1
+                                                .bodyLarge
                                                 ?.copyWith(),
                                           ),
                                           Text(
                                             "${classLink.batchName}",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyText1
+                                                .bodyLarge
                                                 ?.copyWith(),
                                           ),
                                           Text(
                                             "${classLink.courseName}, ${classLink.subjectName}",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyText1
+                                                .bodyLarge
                                                 ?.copyWith(),
                                           ),
                                           const SizedBox(

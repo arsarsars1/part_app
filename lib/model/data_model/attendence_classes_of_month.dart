@@ -1,6 +1,8 @@
 // To parse this JSON data, do
 //
-//     final attendenceClassesOfMonth = attendenceClassesOfMonthFromJson(jsonString);
+//     final attendenceClassDetailsesOfMonth = attendenceClassDetailsesOfMonthFromJson(jsonString);
+
+// ignore_for_file: invalid_annotation_target
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:part_app/model/data_model/models.dart';
@@ -11,22 +13,22 @@ import 'package:part_app/model/data_model/students_response.dart';
 part 'attendence_classes_of_month.freezed.dart';
 part 'attendence_classes_of_month.g.dart';
 
-AttendenceClassesOfMonth attendenceClassesOfMonthFromJson(String str) =>
-    AttendenceClassesOfMonth.fromJson(json.decode(str));
+AttendenceClassDetailsesOfMonth attendenceClassDetailsesOfMonthFromJson(String str) =>
+    AttendenceClassDetailsesOfMonth.fromJson(json.decode(str));
 
-String attendenceClassesOfMonthToJson(AttendenceClassesOfMonth data) =>
+String attendenceClassDetailsesOfMonthToJson(AttendenceClassDetailsesOfMonth data) =>
     json.encode(data.toJson());
 
 @freezed
-class AttendenceClassesOfMonth with _$AttendenceClassesOfMonth {
-  const factory AttendenceClassesOfMonth({
+class AttendenceClassDetailsesOfMonth with _$AttendenceClassDetailsesOfMonth {
+  const factory AttendenceClassDetailsesOfMonth({
     int? status,
-    List<Class>? classes,
+    List<ClassDetails>? classes,
     Batch? batch,
-  }) = _AttendenceClassesOfMonth;
+  }) = _AttendenceClassDetailsesOfMonth;
 
-  factory AttendenceClassesOfMonth.fromJson(Map<String, dynamic> json) =>
-      _$AttendenceClassesOfMonthFromJson(json);
+  factory AttendenceClassDetailsesOfMonth.fromJson(Map<String, dynamic> json) =>
+      _$AttendenceClassDetailsesOfMonthFromJson(json);
 }
 
 @freezed
@@ -173,15 +175,15 @@ class Subject with _$Subject {
 }
 
 @freezed
-class Class with _$Class {
+class ClassDetails with _$ClassDetails {
   @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory Class({
+  const factory ClassDetails({
     String? startTime,
     String? endTime,
     DateTime? date,
     bool? rescheduled,
     bool? conducted,
-  }) = _Class;
+  }) = _ClassDetails;
 
-  factory Class.fromJson(Map<String, dynamic> json) => _$ClassFromJson(json);
+  factory ClassDetails.fromJson(Map<String, dynamic> json) => _$ClassDetailsFromJson(json);
 }

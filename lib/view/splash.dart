@@ -60,26 +60,26 @@ class _SplashScreenState extends State<SplashScreen> {
             text: TextSpan(children: [
               TextSpan(
                 text: 'part',
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontSize: 72,
                     ),
               ),
               TextSpan(
                 text: 'app',
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontSize: 32,
                       color: AppColors.primaryColor,
                     ),
               ),
               TextSpan(
                 text: '.',
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontSize: 32,
                     ),
               ),
               TextSpan(
                 text: 'in',
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontSize: 32,
                       color: const Color(0xFF00D053),
                     ),

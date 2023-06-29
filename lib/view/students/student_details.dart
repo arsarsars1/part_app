@@ -8,6 +8,7 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/students/edit_student.dart';
 import 'package:part_app/view/students/edit_student_batches.dart';
+import 'package:part_app/view/students/student_attendence.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class StudentDetails extends StatefulWidget {
@@ -58,7 +59,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1
+                      .bodyLarge
                       ?.copyWith(fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(
@@ -157,7 +158,12 @@ class _StudentDetailsState extends State<StudentDetails> {
                 ),
                 LargeButton(
                   title: 'Attendances Sheet',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      StudentAttendanceCalenderView.route,
+                    );
+                  },
                   color: const Color(0xFFA29CF4),
                 ),
                 const SizedBox(

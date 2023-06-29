@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:part_app/model/data_base/data_base.dart';
@@ -100,6 +102,7 @@ class PaymentCubit extends Cubit<PaymentState> {
     } catch (e) {
       return null;
     }
+    return null;
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {

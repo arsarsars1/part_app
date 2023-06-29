@@ -24,7 +24,7 @@ abstract class OrderResponse with _$OrderResponse {
     int? amountDue,
     String? currency,
     String? receipt,
-    dynamic? offerId,
+    dynamic offerId,
     String? status,
     int? attempts,
     int? createdAt,

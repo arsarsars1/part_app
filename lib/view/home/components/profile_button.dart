@@ -58,7 +58,7 @@ class ProfileButton extends StatelessWidget {
             height: 14,
             child: Text(
               'View Profile',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
           PopupMenuItem(
@@ -67,7 +67,7 @@ class ProfileButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Text(
               'Switch Account',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
           PopupMenuItem(
@@ -76,7 +76,7 @@ class ProfileButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Text(
               'Membership',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
           PopupMenuItem(
@@ -85,7 +85,7 @@ class ProfileButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Text(
               'Logout',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
         ];

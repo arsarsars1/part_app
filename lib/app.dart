@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:month_year_picker/month_year_picker.dart';
@@ -7,6 +9,7 @@ import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/route_generator.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/view_model/fee/fee_cubit.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
 import 'package:part_app/view_model/todays_classes/classes_today_cubit.dart';
 import 'view_model/attendance/attendance_cubit.dart';
@@ -75,13 +78,16 @@ class _AppState extends State<App> {
         BlocProvider<ClassesTodayCubit>(
           create: (context) => ClassesTodayCubit(),
         ),
+        BlocProvider<FeeCubit>(
+          create: (context) => FeeCubit(),
+        ),
       ],
       child: GestureDetector(
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: MediaQuery(
-          data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
+          data: MediaQueryData.fromView(WidgetsBinding.instance.window),
           child: ScreenUtilInit(
             designSize: const Size(360, 800),
             child: const SplashScreen(),

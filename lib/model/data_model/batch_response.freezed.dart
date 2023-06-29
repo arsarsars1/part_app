@@ -1513,7 +1513,7 @@ PivotClass _$PivotClassFromJson(Map<String, dynamic> json) {
 mixin _$PivotClass {
   int? get studentDetailId => throw _privateConstructorUsedError;
   int? get batchId => throw _privateConstructorUsedError;
-  dynamic? get noOfClasses => throw _privateConstructorUsedError;
+  dynamic get noOfClasses => throw _privateConstructorUsedError;
   String? get feeType => throw _privateConstructorUsedError;
   int? get feeAmount => throw _privateConstructorUsedError;
   int? get admissionFees => throw _privateConstructorUsedError;
@@ -1537,7 +1537,7 @@ abstract class $PivotClassCopyWith<$Res> {
   $Res call(
       {int? studentDetailId,
       int? batchId,
-      dynamic? noOfClasses,
+      dynamic noOfClasses,
       String? feeType,
       int? feeAmount,
       int? admissionFees,
@@ -1583,7 +1583,7 @@ class _$PivotClassCopyWithImpl<$Res, $Val extends PivotClass>
       noOfClasses: freezed == noOfClasses
           ? _value.noOfClasses
           : noOfClasses // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       feeType: freezed == feeType
           ? _value.feeType
           : feeType // ignore: cast_nullable_to_non_nullable
@@ -1627,7 +1627,7 @@ abstract class _$$_PivotClassCopyWith<$Res>
   $Res call(
       {int? studentDetailId,
       int? batchId,
-      dynamic? noOfClasses,
+      dynamic noOfClasses,
       String? feeType,
       int? feeAmount,
       int? admissionFees,
@@ -1671,7 +1671,7 @@ class __$$_PivotClassCopyWithImpl<$Res>
       noOfClasses: freezed == noOfClasses
           ? _value.noOfClasses
           : noOfClasses // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       feeType: freezed == feeType
           ? _value.feeType
           : feeType // ignore: cast_nullable_to_non_nullable
@@ -1728,7 +1728,7 @@ class _$_PivotClass implements _PivotClass {
   @override
   final int? batchId;
   @override
-  final dynamic? noOfClasses;
+  final dynamic noOfClasses;
   @override
   final String? feeType;
   @override
@@ -1805,7 +1805,7 @@ abstract class _PivotClass implements PivotClass {
   const factory _PivotClass(
       {final int? studentDetailId,
       final int? batchId,
-      final dynamic? noOfClasses,
+      final dynamic noOfClasses,
       final String? feeType,
       final int? feeAmount,
       final int? admissionFees,
@@ -1822,7 +1822,7 @@ abstract class _PivotClass implements PivotClass {
   @override
   int? get batchId;
   @override
-  dynamic? get noOfClasses;
+  dynamic get noOfClasses;
   @override
   String? get feeType;
   @override

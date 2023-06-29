@@ -4,7 +4,6 @@ import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/class_picker.dart';
-import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
 import 'package:part_app/view/components/alert_box.dart';
@@ -194,15 +193,12 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                           for (var element in batch!.days) {
                             batchDays?.add(element.split(" ")[0]);
                           }
-                          // batchCubit.getClassLink(batch?.id, DateTime.now());
                           await batchCubit.getClassLink(
                               batch?.id, DateTime.now());
-                          // _scrollController.animateTo(
-                          //     _scrollController.position.maxScrollExtent + 300,
-                          //     duration: const Duration(
-                          //       milliseconds: 2,
-                          //     ),
-                          //     curve: Curves.easeInOut);
+                          setState(() {
+                            date = null;
+                            selectedclass = null;
+                          });
                         },
                       ),
                     );
@@ -231,91 +227,65 @@ class _ClassLinkViewState extends State<ClassLinkView> {
               const SizedBox(
                 height: 20,
               ),
-              date == null
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 16.w),
+                    child: Text(
+                      'Date *',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    height: 60.h,
+                    decoration: BoxDecoration(
+                      color: AppColors.liteDark,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 25.w),
+                    margin: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 16.w),
-                          child: Text(
-                            'Date *',
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Container(
-                          height: 60.h,
-                          decoration: BoxDecoration(
-                            color: AppColors.liteDark,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 25.w),
-                          margin: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
+                        date == null
+                            ? Text(
                                 'Select the date',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
-                                      color: AppColors.grey600,
+                                      color: AppColors.grey700,
+                                    ),
+                              )
+                            : Text(
+                                '${date?.toDateString()}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      color: AppColors.grey400,
                                     ),
                               ),
-                              GestureDetector(
-                                onTap: () async {
-                                  await datePicker();
-                                  dateController.text =
-                                      date?.toDateString() ?? "";
-                                },
-                                child: const Icon(
-                                  Icons.calendar_month,
-                                  size: 24,
-                                  color: Colors.white24,
-                                ),
-                              ),
-                            ],
+                        GestureDetector(
+                          onTap: () async {
+                            await datePicker();
+                            dateController.text = date?.toDateString() ?? "";
+                          },
+                          child: const Icon(
+                            Icons.calendar_month,
+                            size: 24,
+                            color: Colors.white24,
                           ),
                         ),
                       ],
-                    )
-                  : ScheduleField(
-                      title: 'Date *',
-                      hint: 'Select the date',
-                      initialValue: date?.toDateString(),
-                      onSelect: (String value) {
-                        if (branchId == null || batch?.id == null) {
-                          Alert(context)
-                              .show(message: 'Branch or Batch is missing');
-                          return;
-                        }
-                        date = DateTime.parse(value);
-                        setState(() {
-                          selectedclass = null;
-                        });
-                        scaffoldKey.currentState?.showBottomSheet(
-                          enableDrag: false,
-                          elevation: 10,
-                          backgroundColor: Colors.transparent,
-                          (context) => ClassPicker(
-                            branchId: batch?.branchId,
-                            batchId: batch?.id,
-                            date: date?.toServerYMD(),
-                            scaffoldKey: scaffoldKey,
-                            onSave: (ClassModel value) {
-                              setState(() {
-                                dateController.text = date?.toDDMMYYY() ?? "";
-                                selectedclass = value;
-                              });
-                            },
-                          ),
-                        );
-                      },
-                      time: false,
                     ),
+                  ),
+                ],
+              ),
               const Center(
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
@@ -337,7 +307,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                             'No class selected',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.copyWith(),
                           ),
                         ],
@@ -357,7 +327,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                             "${date?.formattedDay2()} ${selectedclass?.startTime.toAmPM()} - ${selectedclass?.endTime.toAmPM()}",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.copyWith(),
                           ),
                           GestureDetector(
@@ -483,7 +453,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                             'N/A',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(
                                               color: AppColors.primaryColor,
                                             ),
@@ -495,7 +465,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                         '${classLink.branchName}, ${classLink.batchName}, ${classLink.courseName}, ${classLink.subjectName}',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(),
                                       ),
                                       SizedBox(
@@ -505,7 +475,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                         '${classLink.classDate?.formattedDay2()} ${classLink.startTime?.toAmPM()}-${classLink.endTime?.toAmPM()}',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(),
                                       ),
                                       SizedBox(
@@ -515,7 +485,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                         classLink.link ?? 'N/A',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(
                                               color: AppColors.defaultBlue,
                                             ),
@@ -557,7 +527,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                                     "${classLink.classDate?.toDateString()}",
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText1
+                                                        .bodyLarge
                                                         ?.copyWith(
                                                           color: AppColors
                                                               .primaryColor,
@@ -574,7 +544,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                                     "${classLink.startTime?.toAmPM()} - ${classLink.endTime?.toAmPM()}",
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText1
+                                                        .bodyLarge
                                                         ?.copyWith(
                                                           color: AppColors
                                                               .primaryColor,
@@ -586,21 +556,21 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                                                 "${classLink.branchName}",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
+                                                    .bodyLarge
                                                     ?.copyWith(),
                                               ),
                                               Text(
                                                 "${classLink.batchName}",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
+                                                    .bodyLarge
                                                     ?.copyWith(),
                                               ),
                                               Text(
                                                 "${classLink.courseName}, ${classLink.subjectName}",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
+                                                    .bodyLarge
                                                     ?.copyWith(),
                                               ),
                                               const SizedBox(

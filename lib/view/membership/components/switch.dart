@@ -42,7 +42,7 @@ class _MembershipSwitchState extends State<MembershipSwitch> {
               child: Center(
                 child: Text(
                   'Free',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: free ? Colors.black : Colors.white,
                       ),
                 ),
@@ -66,7 +66,7 @@ class _MembershipSwitchState extends State<MembershipSwitch> {
               child: Center(
                 child: Text(
                   'Paid',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: Colors.white,
                       ),
                 ),

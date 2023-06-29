@@ -28,7 +28,7 @@ class ManagerService {
       );
 
       return managerResponseFromJson(jsonEncode(map));
-    } on Exception catch (e) {
+    } on Exception {
       return null;
     }
   }
@@ -40,7 +40,7 @@ class ManagerService {
       );
 
       return managerResponseFromJson(jsonEncode(map));
-    } on Exception catch (e) {
+    } on Exception {
       return null;
     }
   }
@@ -53,7 +53,7 @@ class ManagerService {
       );
 
       return commonFromJson(jsonEncode(map));
-    } on Exception catch (e) {
+    } on Exception {
       return null;
     }
   }

@@ -18,13 +18,15 @@ class _TodaysClassesState extends State<TodaysClasses> {
   @override
   void initState() {
     super.initState();
-    context.read<ClassesTodayCubit>().getClassesToday();
   }
 
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<ClassesTodayCubit>();
     DateTime now = DateTime.now();
+    DateFormat apiDateFormat = DateFormat("yyyy-MM-dd");
+    String formattedDateTime = apiDateFormat.format(now);
+    cubit.getClassesToday(date: formattedDateTime);
     String formattedDate = DateFormat('dd/MM/yyyy').format(now);
     return Scaffold(
       appBar: const CommonBar(
@@ -43,7 +45,7 @@ class _TodaysClassesState extends State<TodaysClasses> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
                     formattedDate.toString(),
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 SizedBox(
@@ -61,11 +63,12 @@ class _TodaysClassesState extends State<TodaysClasses> {
                             ),
                           );
                         }
-                        if (cubit.classes?.length == 0) {
+                        if ((cubit.classes ?? []).isEmpty) {
                           return const Padding(
                             padding: EdgeInsets.all(64.0),
                             child: Center(
-                              child: Text('Sorry, No Matching Results Found.'),
+                              child:
+                                  Text('Sorry, No class is scheduled today.'),
                             ),
                           );
                         }

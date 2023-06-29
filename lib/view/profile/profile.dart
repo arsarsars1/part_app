@@ -145,7 +145,7 @@ class _ProfileState extends State<Profile> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       'Is the above number your whatsapp number ?',
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

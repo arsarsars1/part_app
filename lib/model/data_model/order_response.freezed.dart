@@ -27,7 +27,7 @@ mixin _$OrderResponse {
   int? get amountDue => throw _privateConstructorUsedError;
   String? get currency => throw _privateConstructorUsedError;
   String? get receipt => throw _privateConstructorUsedError;
-  dynamic? get offerId => throw _privateConstructorUsedError;
+  dynamic get offerId => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   int? get attempts => throw _privateConstructorUsedError;
   int? get createdAt => throw _privateConstructorUsedError;
@@ -52,7 +52,7 @@ abstract class $OrderResponseCopyWith<$Res> {
       int? amountDue,
       String? currency,
       String? receipt,
-      dynamic? offerId,
+      dynamic offerId,
       String? status,
       int? attempts,
       int? createdAt});
@@ -115,7 +115,7 @@ class _$OrderResponseCopyWithImpl<$Res, $Val extends OrderResponse>
       offerId: freezed == offerId
           ? _value.offerId
           : offerId // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -148,7 +148,7 @@ abstract class _$$_OrderResponseCopyWith<$Res>
       int? amountDue,
       String? currency,
       String? receipt,
-      dynamic? offerId,
+      dynamic offerId,
       String? status,
       int? attempts,
       int? createdAt});
@@ -209,7 +209,7 @@ class __$$_OrderResponseCopyWithImpl<$Res>
       offerId: freezed == offerId
           ? _value.offerId
           : offerId // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -260,7 +260,7 @@ class _$_OrderResponse implements _OrderResponse {
   @override
   final String? receipt;
   @override
-  final dynamic? offerId;
+  final dynamic offerId;
   @override
   final String? status;
   @override
@@ -335,7 +335,7 @@ abstract class _OrderResponse implements OrderResponse {
       final int? amountDue,
       final String? currency,
       final String? receipt,
-      final dynamic? offerId,
+      final dynamic offerId,
       final String? status,
       final int? attempts,
       final int? createdAt}) = _$_OrderResponse;
@@ -358,7 +358,7 @@ abstract class _OrderResponse implements OrderResponse {
   @override
   String? get receipt;
   @override
-  dynamic? get offerId;
+  dynamic get offerId;
   @override
   String? get status;
   @override

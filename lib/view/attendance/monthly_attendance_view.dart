@@ -145,6 +145,7 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                                 setState(() {
                                   finalDate = null;
                                   dateController.clear();
+                                  cubit.reset();
                                   batch = value;
                                   batchController.text = value.name;
                                 });
@@ -223,7 +224,7 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                                         'Total Classes Taken: ${cubit.conductedClassCount}',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headline3
+                                            .displaySmall
                                             ?.copyWith(
                                               color: AppColors.textColor,
                                             ),

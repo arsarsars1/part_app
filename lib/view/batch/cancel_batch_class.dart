@@ -137,7 +137,7 @@ class _RescheduleClassState extends State<CancelClass> {
                                       'Following are the classes\nscheduled on\n',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText1
+                                          .bodyLarge
                                           ?.copyWith(),
                                       textAlign: TextAlign.center,
                                     ),
@@ -146,7 +146,7 @@ class _RescheduleClassState extends State<CancelClass> {
                                           .toEEEDDMMYYY(),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText1
+                                          .bodyLarge
                                           ?.copyWith(
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.primaryColor,
@@ -195,7 +195,7 @@ class _RescheduleClassState extends State<CancelClass> {
                                                     "${branchcubit.classes?[index].startTime} - ${branchcubit.classes?[index].endTime}",
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText1
+                                                        .bodyLarge
                                                         ?.copyWith(),
                                                   ),
                                                   branchcubit.classes?[index]
@@ -206,7 +206,7 @@ class _RescheduleClassState extends State<CancelClass> {
                                                           style:
                                                               Theme.of(context)
                                                                   .textTheme
-                                                                  .bodyText1
+                                                                  .bodyLarge
                                                                   ?.copyWith(
                                                                     fontWeight:
                                                                         FontWeight
@@ -220,7 +220,7 @@ class _RescheduleClassState extends State<CancelClass> {
                                                           style:
                                                               Theme.of(context)
                                                                   .textTheme
-                                                                  .bodyText1
+                                                                  .bodyLarge
                                                                   ?.copyWith(
                                                                     fontWeight:
                                                                         FontWeight

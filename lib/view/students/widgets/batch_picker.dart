@@ -71,7 +71,7 @@ class _BatchPickerState extends State<BatchPicker> {
                     children: [
                       Text(
                         'Select Batch',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                       ),
@@ -145,7 +145,7 @@ class _BatchPickerState extends State<BatchPicker> {
                                         batch.name,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(
                                               fontSize: 15,
                                             ),
@@ -154,7 +154,7 @@ class _BatchPickerState extends State<BatchPicker> {
                                         '${batch.courseName}, ${batch.subjectName}',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(
                                               color: AppColors.primaryColor,
                                             ),

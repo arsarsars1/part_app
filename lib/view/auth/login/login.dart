@@ -64,7 +64,7 @@ class _LoginState extends State<Login> {
                 Center(
                   child: Text(
                     Strings.welcome,
-                    style: Theme.of(context).textTheme.headline1,
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ),
                 const SizedBox(
@@ -73,7 +73,7 @@ class _LoginState extends State<Login> {
                 Center(
                   child: Text(
                     Strings.loginWelcomeMessage,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontSize: 16,
                         ),
                   ),
@@ -105,13 +105,13 @@ class _LoginState extends State<Login> {
                     children: [
                       Text(
                         Strings.notAMember,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 16,
                             ),
                       ),
                       Text(
                         Strings.joinNow,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: AppColors.primaryColor,
                               fontSize: 16,

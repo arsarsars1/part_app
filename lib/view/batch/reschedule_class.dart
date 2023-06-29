@@ -152,14 +152,14 @@ class _RescheduleClassState extends State<RescheduleClass> {
                       Text(
                         'Selected class scheduled on',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                       ),
                       Text(
                         "${DateTime.parse(startDate ?? "").formattedDay2()}, ${DateTime.parse(startDate ?? "").formattedString()}",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: AppColors.primaryColor),
                       ),
@@ -185,7 +185,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
                                   "${selectedclass?.startTime} - ${selectedclass?.endTime}",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       ?.copyWith(),
                                 ),
                               ],
@@ -195,7 +195,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
                                     "Rescheduled from ${selectedclass?.oldDate.toDateString()}",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyLarge
                                         ?.copyWith(
                                           fontWeight: FontWeight.bold,
                                           color: AppColors.yellow,
@@ -205,7 +205,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
                                     "Scheduled Class",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyLarge
                                         ?.copyWith(
                                           fontWeight: FontWeight.bold,
                                           color: AppColors.yellow,
@@ -226,14 +226,14 @@ class _RescheduleClassState extends State<RescheduleClass> {
                       Text(
                         'Following are the classes scheduled on',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                       ),
                       Text(
                         "${DateTime.parse(endDate ?? "").formattedDay2()}, ${DateTime.parse(endDate ?? "").formattedString()}",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: AppColors.primaryColor),
                       ),
@@ -267,7 +267,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
                                         "${singleClass?.batchName}",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1
+                                            .bodyLarge
                                             ?.copyWith(
                                                 fontWeight: FontWeight.bold),
                                       ),
@@ -280,14 +280,14 @@ class _RescheduleClassState extends State<RescheduleClass> {
                                     "${singleClass?.courseName}, ${singleClass?.subjectName}",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyLarge
                                         ?.copyWith(),
                                   ),
                                   Text(
                                     "Trainers- ${singleClass?.trainers}",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyLarge
                                         ?.copyWith(
                                           color: AppColors.primaryColor,
                                         ),
@@ -299,7 +299,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
                                     "${DateTime.parse(endDate ?? "").formattedDay2()} ${singleClass?.startTime} - ${singleClass?.endTime}",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyLarge
                                         ?.copyWith(),
                                   ),
                                 ],
@@ -354,7 +354,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
                             '${selectedclass?.endTime.toAmPM()}',
                             textAlign: TextAlign.center,
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: AppColors.primaryColor,
                                     ),
                           ),
@@ -363,7 +363,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.copyWith(),
                           ),
                           Text(
@@ -372,7 +372,7 @@ class _RescheduleClassState extends State<RescheduleClass> {
                             '${endTime?.toAmPM()} ?',
                             textAlign: TextAlign.center,
                             style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: AppColors.primaryColor,
                                     ),
                           ),

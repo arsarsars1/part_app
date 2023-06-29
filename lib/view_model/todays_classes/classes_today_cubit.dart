@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:part_app/model/data_model/ClassesToday.dart';
+import 'package:part_app/model/data_model/classes_today.dart';
 import 'package:part_app/model/service/admin/classes_today_service.dart';
 
 import '../cubits.dart';
@@ -17,9 +17,9 @@ class ClassesTodayCubit extends Cubit<ClassesTodayState> {
     _classes?.clear();
   }
 
-  Future getClassesToday() async {
+  Future getClassesToday({required String date}) async {
     emit(FetchingClassesToday());
-    ClassesToday? response = await _classesTodayService.getClassesToday();
+    ClassesToday? response = await _classesTodayService.getClassesToday(date: date,);
 
     if (response?.classes != null) {
       _classes = response?.classes?? [];

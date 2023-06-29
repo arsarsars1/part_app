@@ -115,7 +115,7 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
                     Center(
                       child: Text(
                         student,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
@@ -124,7 +124,7 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
                     Center(
                       child: Text(
                         batch?.name ?? 'NA',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                       ),
@@ -150,7 +150,7 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
                             batch?.days[index] ?? '',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.copyWith(),
                           ),
                         );
