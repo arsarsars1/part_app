@@ -100,11 +100,11 @@ class Datum {
   int? payableAmount;
   int? reminderCount;
   int? writtenOffStatus;
-  dynamic writtenOffDate;
+  DateTime? writtenOffDate;
   int? writtenOffAmount;
-  dynamic writtenOffRemarks;
-  dynamic writtenOffByType;
-  dynamic writtenOffById;
+  String? writtenOffRemarks;
+  String? writtenOffByType;
+  int? writtenOffById;
   String? paymentStatus;
   String? feeType;
   int? month;
@@ -118,7 +118,7 @@ class Datum {
   int? cycleAttendancePresentCount;
   int? pendingAmount;
   dynamic totalNoOfClasses;
-  dynamic writtenOffBy;
+  By? writtenOffBy;
   StudentDetail? studentDetail;
   List<Payment>? payments;
   List<PaymentsTotal>? paymentsTotal;
@@ -177,7 +177,9 @@ class Datum {
         payableAmount: json["payable_amount"],
         reminderCount: json["reminder_count"],
         writtenOffStatus: json["written_off_status"],
-        writtenOffDate: json["written_off_date"],
+        writtenOffDate: json["written_off_date"] == null
+            ? null
+            : DateTime.parse(json["written_off_date"]),
         writtenOffAmount: json["written_off_amount"],
         writtenOffRemarks: json["written_off_remarks"],
         writtenOffByType: json["written_off_by_type"],
@@ -195,7 +197,9 @@ class Datum {
         cycleAttendancePresentCount: json["cycle_attendance_present_count"],
         pendingAmount: json["pending_amount"],
         totalNoOfClasses: json["total_no_of_classes"],
-        writtenOffBy: json["written_off_by"],
+        writtenOffBy: json["written_off_by"] == null
+            ? null
+            : By.fromJson(json["written_off_by"]),
         studentDetail: json["student_detail"] == null
             ? null
             : StudentDetail.fromJson(json["student_detail"]),
@@ -224,7 +228,8 @@ class Datum {
         "payable_amount": payableAmount,
         "reminder_count": reminderCount,
         "written_off_status": writtenOffStatus,
-        "written_off_date": writtenOffDate,
+        "written_off_date":
+            "${writtenOffDate!.year.toString().padLeft(4, '0')}-${writtenOffDate!.month.toString().padLeft(2, '0')}-${writtenOffDate!.day.toString().padLeft(2, '0')}",
         "written_off_amount": writtenOffAmount,
         "written_off_remarks": writtenOffRemarks,
         "written_off_by_type": writtenOffByType,
@@ -242,7 +247,7 @@ class Datum {
         "cycle_attendance_present_count": cycleAttendancePresentCount,
         "pending_amount": pendingAmount,
         "total_no_of_classes": totalNoOfClasses,
-        "written_off_by": writtenOffBy,
+        "written_off_by": writtenOffBy?.toJson(),
         "student_detail": studentDetail?.toJson(),
         "payments": payments == null
             ? []
@@ -265,9 +270,10 @@ class Payment {
   dynamic chequeNumber;
   int? isEdited;
   int? isDeleted;
-  dynamic deletedByType;
-  dynamic deletedById;
-  CollectedBy? collectedBy;
+  String? deletedByType;
+  int? deletedById;
+  By? collectedBy;
+  By? deletedBy;
   List<Edit>? edits;
 
   Payment({
@@ -285,6 +291,7 @@ class Payment {
     this.deletedByType,
     this.deletedById,
     this.collectedBy,
+    this.deletedBy,
     this.edits,
   });
 
@@ -306,7 +313,9 @@ class Payment {
         deletedById: json["deleted_by_id"],
         collectedBy: json["collected_by"] == null
             ? null
-            : CollectedBy.fromJson(json["collected_by"]),
+            : By.fromJson(json["collected_by"]),
+        deletedBy:
+            json["deleted_by"] == null ? null : By.fromJson(json["deleted_by"]),
         edits: json["edits"] == null
             ? []
             : List<Edit>.from(json["edits"]!.map((x) => Edit.fromJson(x))),
@@ -328,24 +337,25 @@ class Payment {
         "deleted_by_type": deletedByType,
         "deleted_by_id": deletedById,
         "collected_by": collectedBy?.toJson(),
+        "deleted_by": deletedBy?.toJson(),
         "edits": edits == null
             ? []
             : List<dynamic>.from(edits!.map((x) => x.toJson())),
       };
 }
 
-class CollectedBy {
+class By {
   String? name;
   int? userId;
   int? id;
 
-  CollectedBy({
+  By({
     this.name,
     this.userId,
     this.id,
   });
 
-  factory CollectedBy.fromJson(Map<String, dynamic> json) => CollectedBy(
+  factory By.fromJson(Map<String, dynamic> json) => By(
         name: json["name"],
         userId: json["user_id"],
         id: json["id"],
@@ -369,10 +379,10 @@ class Edit {
   String? editedByType;
   int? editedById;
   int? isDeleted;
-  dynamic deletedByType;
-  dynamic deletedById;
-  EditedBy? editedBy;
-  dynamic deletedBy;
+  String? deletedByType;
+  int? deletedById;
+  TedBy? editedBy;
+  TedBy? deletedBy;
 
   Edit({
     this.id,
@@ -409,8 +419,10 @@ class Edit {
         deletedById: json["deleted_by_id"],
         editedBy: json["edited_by"] == null
             ? null
-            : EditedBy.fromJson(json["edited_by"]),
-        deletedBy: json["deleted_by"],
+            : TedBy.fromJson(json["edited_by"]),
+        deletedBy: json["deleted_by"] == null
+            ? null
+            : TedBy.fromJson(json["deleted_by"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -429,20 +441,20 @@ class Edit {
         "deleted_by_type": deletedByType,
         "deleted_by_id": deletedById,
         "edited_by": editedBy?.toJson(),
-        "deleted_by": deletedBy,
+        "deleted_by": deletedBy?.toJson(),
       };
 }
 
-class EditedBy {
+class TedBy {
   String? name;
   int? id;
 
-  EditedBy({
+  TedBy({
     this.name,
     this.id,
   });
 
-  factory EditedBy.fromJson(Map<String, dynamic> json) => EditedBy(
+  factory TedBy.fromJson(Map<String, dynamic> json) => TedBy(
         name: json["name"],
         id: json["id"],
       );
@@ -457,12 +469,14 @@ class PaymentsTotal {
   int? batchFeeInvoiceId;
   String? total;
   dynamic collectedBy;
+  dynamic deletedBy;
   List<dynamic>? edits;
 
   PaymentsTotal({
     this.batchFeeInvoiceId,
     this.total,
     this.collectedBy,
+    this.deletedBy,
     this.edits,
   });
 
@@ -470,6 +484,7 @@ class PaymentsTotal {
         batchFeeInvoiceId: json["batch_fee_invoice_id"],
         total: json["total"],
         collectedBy: json["collected_by"],
+        deletedBy: json["deleted_by"],
         edits: json["edits"] == null
             ? []
             : List<dynamic>.from(json["edits"]!.map((x) => x)),
@@ -479,6 +494,7 @@ class PaymentsTotal {
         "batch_fee_invoice_id": batchFeeInvoiceId,
         "total": total,
         "collected_by": collectedBy,
+        "deleted_by": deletedBy,
         "edits": edits == null ? [] : List<dynamic>.from(edits!.map((x) => x)),
       };
 }

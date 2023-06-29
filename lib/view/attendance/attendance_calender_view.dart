@@ -203,6 +203,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                   ),
                         ),
                         CalendarCarousel<Event>(
+                          childAspectRatio: 1.1,
                           iconColor: Colors.white,
                           todayBorderColor: Colors.transparent,
                           onDayPressed: (date, events) async {

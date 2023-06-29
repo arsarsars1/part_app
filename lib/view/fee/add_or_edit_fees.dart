@@ -307,10 +307,25 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  feeCubit.deleteFees(
-                                      batchFeeInvoiceId:
-                                          feeCubit.batchFeeInvoice?.id,
-                                      paymentId: payment?.id);
+                                  if (payment?.isDeleted == 1) {
+                                    Alert(context).show(
+                                        message:
+                                            'This payment is already deleted.');
+                                  } else {
+                                    CommonDialog(
+                                      context: context,
+                                      buttonText: 'Yes',
+                                      message:
+                                          'Are You Sure That You Want To Delete\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        feeCubit.deleteFees(
+                                            batchFeeInvoiceId:
+                                                feeCubit.batchFeeInvoice?.id,
+                                            paymentId: payment?.id);
+                                      },
+                                    ).show();
+                                  }
                                 },
                                 child: Container(
                                   width: 24.w,
@@ -335,33 +350,39 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  var formKey1 = GlobalKey<FormState>();
-                                  String? reason, date, amount;
-                                  CommonDialog(
-                                    context: context,
-                                    message:
-                                        'Are You Sure That You Want To Edit\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
-                                    subContent: EditFees(
-                                      formKey: formKey1,
-                                      reason: (value) => reason = value,
-                                      amount: (value) => amount = value,
-                                      date: (value) => date = value,
-                                    ),
-                                    onTap: () {
-                                      formKey1.currentState!.save();
-                                      if (formKey1.currentState!.validate()) {
-                                        Navigator.pop(context);
-                                        feeCubit.editFees({
-                                          'new_date': date,
-                                          'new_amount': amount,
-                                          'reason': reason
-                                        },
-                                            batchFeeInvoiceId:
-                                                feeCubit.batchFeeInvoice?.id,
-                                            paymentId: payment?.id);
-                                      }
-                                    },
-                                  ).show();
+                                  if (payment?.isDeleted == 1) {
+                                    Alert(context).show(
+                                        message:
+                                            'This payment is already deleted.');
+                                  } else {
+                                    var formKey1 = GlobalKey<FormState>();
+                                    String? reason, date, amount;
+                                    CommonDialog(
+                                      context: context,
+                                      message:
+                                          'Are You Sure That You Want To Edit\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                      subContent: EditFees(
+                                        formKey: formKey1,
+                                        reason: (value) => reason = value,
+                                        amount: (value) => amount = value,
+                                        date: (value) => date = value,
+                                      ),
+                                      onTap: () {
+                                        formKey1.currentState!.save();
+                                        if (formKey1.currentState!.validate()) {
+                                          Navigator.pop(context);
+                                          feeCubit.editFees({
+                                            'new_date': date,
+                                            'new_amount': amount,
+                                            'reason': reason
+                                          },
+                                              batchFeeInvoiceId:
+                                                  feeCubit.batchFeeInvoice?.id,
+                                              paymentId: payment?.id);
+                                        }
+                                      },
+                                    ).show();
+                                  }
                                 },
                                 child: Container(
                                   width: 24.w,
@@ -532,63 +553,163 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                               ]);
                             }).toList()
                               ..add(
-                                DataRow(
-                                  cells: [
-                                    DataCell(
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                3.5,
-                                        child: CustomPaint(
-                                            painter: DottedBorderPainter(),
-                                            child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 5.0),
-                                                child: Text(
-                                                  "${payment?.paymentDate?.toDateString()}",
-                                                ),
-                                              ),
-                                            )),
-                                      ),
-                                    ),
-                                    DataCell(
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                3.5,
-                                        child: CustomPaint(
-                                          painter: DottedBorderPainter(),
-                                          child: Center(
-                                            child: Text(
-                                              "${payment?.collectedBy?.name}",
+                                payment?.isDeleted == 1
+                                    ? DataRow(
+                                        cells: [
+                                          DataCell(
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  3.5,
+                                              child: CustomPaint(
+                                                  painter:
+                                                      DottedBorderPainter(),
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 5.0),
+                                                      child: Text(
+                                                        "${payment?.paymentDate?.toDateString()}",
+                                                        style: TextStyle(
+                                                            color: AppColors
+                                                                .grey700,
+                                                            decorationThickness:
+                                                                2.85,
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .lineThrough),
+                                                      ),
+                                                    ),
+                                                  )),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                    DataCell(
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                3.5,
-                                        child: CustomPaint(
-                                            painter: DottedBorderPainter(),
-                                            child: Align(
-                                              alignment: Alignment.centerRight,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 5.0),
-                                                child: Text(
-                                                  "${payment?.amount}",
+                                          DataCell(
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  3.5,
+                                              child: CustomPaint(
+                                                painter: DottedBorderPainter(),
+                                                child: Center(
+                                                  child: Text(
+                                                    "${payment?.collectedBy?.name}",
+                                                    style: TextStyle(
+                                                        color:
+                                                            AppColors.grey700,
+                                                        decorationThickness:
+                                                            2.85,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .lineThrough),
+                                                  ),
                                                 ),
                                               ),
-                                            )),
+                                            ),
+                                          ),
+                                          DataCell(
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  3.5,
+                                              child: CustomPaint(
+                                                  painter:
+                                                      DottedBorderPainter(),
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 5.0),
+                                                      child: Text(
+                                                        "${payment?.amount}",
+                                                        style: TextStyle(
+                                                            color: AppColors
+                                                                .grey700,
+                                                            decorationThickness:
+                                                                2.85,
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .lineThrough),
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : DataRow(
+                                        cells: [
+                                          DataCell(
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  3.5,
+                                              child: CustomPaint(
+                                                  painter:
+                                                      DottedBorderPainter(),
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 5.0),
+                                                      child: Text(
+                                                        "${payment?.paymentDate?.toDateString()}",
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          DataCell(
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  3.5,
+                                              child: CustomPaint(
+                                                painter: DottedBorderPainter(),
+                                                child: Center(
+                                                  child: Text(
+                                                    "${payment?.collectedBy?.name}",
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataCell(
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  3.5,
+                                              child: CustomPaint(
+                                                  painter:
+                                                      DottedBorderPainter(),
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 5.0),
+                                                      child: Text(
+                                                        "${payment?.amount}",
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ),
                               ),
                           ),
                           if (payment?.isEdited == 1)
@@ -602,6 +723,33 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                       horizontal: 5.w, vertical: 5.h),
                                   child: Text(
                                     "${payment?.edits?[(payment.edits?.length ?? 0) - 1].reason}",
+                                    maxLines: 5,
+                                    softWrap: true,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                            color: payment?.isDeleted == 1
+                                                ? AppColors.grey700
+                                                : null,
+                                            decoration: payment?.isDeleted == 1
+                                                ? TextDecoration.lineThrough
+                                                : null),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          if (payment?.isDeleted == 1)
+                            SizedBox(
+                              width:
+                                  (3 * MediaQuery.of(context).size.width) / 3.5,
+                              child: CustomPaint(
+                                painter: DottedBorderPainter(),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 5.w, vertical: 5.h),
+                                  child: Text(
+                                    "Payment has been deleted by ${payment?.deletedBy?.name}",
                                     maxLines: 5,
                                     softWrap: true,
                                     style: Theme.of(context)
