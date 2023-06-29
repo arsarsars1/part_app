@@ -273,6 +273,7 @@ class Payment {
   String? deletedByType;
   int? deletedById;
   By? collectedBy;
+  By? deletedBy;
   List<Edit>? edits;
 
   Payment({
@@ -290,6 +291,7 @@ class Payment {
     this.deletedByType,
     this.deletedById,
     this.collectedBy,
+    this.deletedBy,
     this.edits,
   });
 
@@ -312,6 +314,8 @@ class Payment {
         collectedBy: json["collected_by"] == null
             ? null
             : By.fromJson(json["collected_by"]),
+        deletedBy:
+            json["deleted_by"] == null ? null : By.fromJson(json["deleted_by"]),
         edits: json["edits"] == null
             ? []
             : List<Edit>.from(json["edits"]!.map((x) => Edit.fromJson(x))),
@@ -333,6 +337,7 @@ class Payment {
         "deleted_by_type": deletedByType,
         "deleted_by_id": deletedById,
         "collected_by": collectedBy?.toJson(),
+        "deleted_by": deletedBy?.toJson(),
         "edits": edits == null
             ? []
             : List<dynamic>.from(edits!.map((x) => x.toJson())),
@@ -464,12 +469,14 @@ class PaymentsTotal {
   int? batchFeeInvoiceId;
   String? total;
   dynamic collectedBy;
+  dynamic deletedBy;
   List<dynamic>? edits;
 
   PaymentsTotal({
     this.batchFeeInvoiceId,
     this.total,
     this.collectedBy,
+    this.deletedBy,
     this.edits,
   });
 
@@ -477,6 +484,7 @@ class PaymentsTotal {
         batchFeeInvoiceId: json["batch_fee_invoice_id"],
         total: json["total"],
         collectedBy: json["collected_by"],
+        deletedBy: json["deleted_by"],
         edits: json["edits"] == null
             ? []
             : List<dynamic>.from(json["edits"]!.map((x) => x)),
@@ -486,6 +494,7 @@ class PaymentsTotal {
         "batch_fee_invoice_id": batchFeeInvoiceId,
         "total": total,
         "collected_by": collectedBy,
+        "deleted_by": deletedBy,
         "edits": edits == null ? [] : List<dynamic>.from(edits!.map((x) => x)),
       };
 }

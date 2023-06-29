@@ -307,10 +307,25 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  feeCubit.deleteFees(
-                                      batchFeeInvoiceId:
-                                          feeCubit.batchFeeInvoice?.id,
-                                      paymentId: payment?.id);
+                                  if (payment?.isDeleted == 1) {
+                                    Alert(context).show(
+                                        message:
+                                            'This payment is already deleted.');
+                                  } else {
+                                    CommonDialog(
+                                      context: context,
+                                      buttonText: 'Yes',
+                                      message:
+                                          'Are You Sure That You Want To Delete\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        feeCubit.deleteFees(
+                                            batchFeeInvoiceId:
+                                                feeCubit.batchFeeInvoice?.id,
+                                            paymentId: payment?.id);
+                                      },
+                                    ).show();
+                                  }
                                 },
                                 child: Container(
                                   width: 24.w,
@@ -335,33 +350,39 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  var formKey1 = GlobalKey<FormState>();
-                                  String? reason, date, amount;
-                                  CommonDialog(
-                                    context: context,
-                                    message:
-                                        'Are You Sure That You Want To Edit\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
-                                    subContent: EditFees(
-                                      formKey: formKey1,
-                                      reason: (value) => reason = value,
-                                      amount: (value) => amount = value,
-                                      date: (value) => date = value,
-                                    ),
-                                    onTap: () {
-                                      formKey1.currentState!.save();
-                                      if (formKey1.currentState!.validate()) {
-                                        Navigator.pop(context);
-                                        feeCubit.editFees({
-                                          'new_date': date,
-                                          'new_amount': amount,
-                                          'reason': reason
-                                        },
-                                            batchFeeInvoiceId:
-                                                feeCubit.batchFeeInvoice?.id,
-                                            paymentId: payment?.id);
-                                      }
-                                    },
-                                  ).show();
+                                  if (payment?.isDeleted == 1) {
+                                    Alert(context).show(
+                                        message:
+                                            'This payment is already deleted.');
+                                  } else {
+                                    var formKey1 = GlobalKey<FormState>();
+                                    String? reason, date, amount;
+                                    CommonDialog(
+                                      context: context,
+                                      message:
+                                          'Are You Sure That You Want To Edit\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                      subContent: EditFees(
+                                        formKey: formKey1,
+                                        reason: (value) => reason = value,
+                                        amount: (value) => amount = value,
+                                        date: (value) => date = value,
+                                      ),
+                                      onTap: () {
+                                        formKey1.currentState!.save();
+                                        if (formKey1.currentState!.validate()) {
+                                          Navigator.pop(context);
+                                          feeCubit.editFees({
+                                            'new_date': date,
+                                            'new_amount': amount,
+                                            'reason': reason
+                                          },
+                                              batchFeeInvoiceId:
+                                                  feeCubit.batchFeeInvoice?.id,
+                                              paymentId: payment?.id);
+                                        }
+                                      },
+                                    ).show();
+                                  }
                                 },
                                 child: Container(
                                   width: 24.w,
@@ -707,7 +728,13 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge
-                                        ?.copyWith(),
+                                        ?.copyWith(
+                                            color: payment?.isDeleted == 1
+                                                ? AppColors.grey700
+                                                : null,
+                                            decoration: payment?.isDeleted == 1
+                                                ? TextDecoration.lineThrough
+                                                : null),
                                   ),
                                 ),
                               ),
@@ -722,7 +749,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 5.w, vertical: 5.h),
                                   child: Text(
-                                    "Payment has been deleted ",
+                                    "Payment has been deleted by ${payment?.deletedBy?.name}",
                                     maxLines: 5,
                                     softWrap: true,
                                     style: Theme.of(context)
