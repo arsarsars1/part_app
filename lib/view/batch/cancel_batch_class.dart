@@ -22,6 +22,7 @@ class _RescheduleClassState extends State<CancelClass> {
   var formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   ScrollController scrollController = ScrollController();
+  TextEditingController dateController = TextEditingController();
   int _selectedValue = -1;
   @override
   Widget build(BuildContext context) {
@@ -96,10 +97,12 @@ class _RescheduleClassState extends State<CancelClass> {
                   onTap: () {},
                 ),
                 ScheduleField(
+                  controller: dateController,
                   title: 'Select Date',
                   onSelect: (String value) {
                     setState(() {
                       selectedDate = value;
+                      dateController.text = value;
                     });
                     context.read<BranchCubit>().getBatchClassesOfDate(
                           batchId: '${cubit.batchModel?.id}',
