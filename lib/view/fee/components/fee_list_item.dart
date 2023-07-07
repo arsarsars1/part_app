@@ -34,8 +34,8 @@ class _FeeListItemState extends State<FeeListItem> {
     var feeCubit = context.read<FeeCubit>();
     int presentCount;
     int fees = widget.student.payableAmount!;
-    int totalPayed = 0;
-    int payableAmount = 0;
+    double totalPayed = 0.0;
+    double payableAmount = 0.0;
     String feeType;
     String paymentText;
     String dateTextOnShrink;

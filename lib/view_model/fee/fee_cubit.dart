@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice.dart';
 import 'package:part_app/model/data_model/common.dart';
@@ -73,23 +75,27 @@ class FeeCubit extends Cubit<FeeState> {
       return;
     }
 
-    BatchFeeInvoiceList? response = await _feeService.feeDetails(
-      branchId: branchId,
-      batchId: batchId,
-      month: month,
-      year: year,
-      feeType: feeType,
-      searchQuery: searchQuery,
-      pageNo: page,
-    );
+    try {
+      BatchFeeInvoiceList? response = await _feeService.feeDetails(
+        branchId: branchId,
+        batchId: batchId,
+        month: month,
+        year: year,
+        feeType: feeType,
+        searchQuery: searchQuery,
+        pageNo: page,
+      );
 
-    if (response?.status == 1) {
-      nextPageUrl = response?.batchFeeInvoices?.nextPageUrl;
-      if (nextPageUrl != null) {
-        page++;
+      if (response?.status == 1) {
+        nextPageUrl = response?.batchFeeInvoices?.nextPageUrl;
+        if (nextPageUrl != null) {
+          page++;
+        }
+        batchInvoice = response?.batchFeeInvoices?.data ?? [];
+        emit(FeeFetched(moreItems: nextPageUrl != null));
       }
-      batchInvoice = response?.batchFeeInvoices?.data ?? [];
-      emit(FeeFetched(moreItems: nextPageUrl != null));
+    } catch (e) {
+      log(e.toString());
     }
   }
 

@@ -115,14 +115,18 @@ class CommonField extends StatelessWidget {
                         : dropDownItems?.map((e) {
                             return DropdownMenuItem(
                               value: e,
-                              child: Text(
-                                e.title ?? '',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: Colors.white,
-                                    ),
+                              child: SizedBox(
+                                width: 300,
+                                child: Text(
+                                  e.title ?? '',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: Colors.white,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                ),
                               ),
                             );
                           }).toList(),

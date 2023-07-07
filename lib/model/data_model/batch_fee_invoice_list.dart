@@ -116,7 +116,7 @@ class Datum {
   int? monthClassesConductedCount;
   int? monthAttendancePresentCount;
   int? cycleAttendancePresentCount;
-  int? pendingAmount;
+  double? pendingAmount;
   dynamic totalNoOfClasses;
   By? writtenOffBy;
   StudentDetail? studentDetail;
