@@ -59,3 +59,39 @@ class UpdatingTrainerFailed extends TrainerState {
 
   UpdatingTrainerFailed(this.message);
 }
+
+class FetchingTrainerSalary extends TrainerState {
+  final bool pagination;
+  FetchingTrainerSalary({this.pagination = false});
+}
+
+class TrainerSalaryFetched extends TrainerState {
+  final bool moreItems;
+  TrainerSalaryFetched({this.moreItems = false});
+}
+
+class TrainerSalaryDetailsFailed extends TrainerState {
+  final String message;
+  TrainerSalaryDetailsFailed(this.message);
+}
+
+class FetchingSalaryDetails extends TrainerState {}
+
+class SalaryDetailsFetched extends TrainerState {}
+
+class SalaryDetailsFetchFailed extends TrainerState {
+  final String message;
+  SalaryDetailsFetchFailed(this.message);
+}
+
+class AddingSalary extends TrainerState {}
+
+class AddedSalary extends TrainerState {
+  final String message;
+  AddedSalary(this.message);
+}
+
+class AddSalaryFailed extends TrainerState {
+  final String message;
+  AddSalaryFailed(this.message);
+}

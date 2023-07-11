@@ -4,7 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:part_app/model/data_model/branch_trainer_response.dart';
 import 'package:part_app/model/data_model/common.dart';
+import 'package:part_app/model/data_model/salary_slip.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
+import 'package:part_app/model/data_model/trainer_salary_slip.dart';
 import 'package:part_app/model/service/api.dart';
 
 class TrainerService {
@@ -19,6 +21,20 @@ class TrainerService {
       );
       return trainerResponse;
     } on Exception {
+      return null;
+    }
+  }
+
+  Future<Common?> addSalary(
+      int? slipId, Map<String, dynamic> data) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/admin/salary/trainers/$slipId/payments',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
       return null;
     }
   }
@@ -142,6 +158,35 @@ class TrainerService {
 
       return commonFromJson(jsonEncode(map));
     } on Exception {
+      return null;
+    }
+  }
+
+  Future<TrainerSalarySlip?> salaryDetails({
+    int? branchId,
+    int? month,
+    int? year,
+    required int pageNo,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath: month != null
+              ? '/admin/salary/trainers?branch_id=$branchId&year=$year&month=$month'
+              : '/admin/salary/trainers?branch_id=$branchId&year=$year');
+      return trainerSalarySlipFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<SalarySlip?> salaryPayments({
+    required int? trainerSlipId,
+  }) async {
+    try {
+      var response =
+          await _client.get(queryPath: '/admin/salary/trainers/$trainerSlipId');
+      return salarySlipFromJson(jsonEncode(response));
+    } catch (e) {
       return null;
     }
   }

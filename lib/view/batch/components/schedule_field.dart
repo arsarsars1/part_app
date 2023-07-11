@@ -16,6 +16,8 @@ class ScheduleField extends StatefulWidget {
   final ValueChanged<String>? onSelect;
   final ValueChanged<DateTime>? onDateSelect;
   final bool onlyMonth;
+  final bool month;
+  final bool year;
   final DateTime? selectedDate;
   final TextEditingController? controller;
   // final double padding;
@@ -31,8 +33,11 @@ class ScheduleField extends StatefulWidget {
     required this.time,
     this.onDateSelect,
     this.onlyMonth = false,
+    this.month = false,
+    this.year = false,
     this.selectedDate,
     this.controller,
+
     // this.padding = 0.0,
     // this.margin = 0.0,
   }) : super(key: key);
@@ -69,7 +74,7 @@ class _ScheduleFieldState extends State<ScheduleField> {
         } else {
           if (widget.onlyMonth) {
             DateTime? updated;
-            if(widget.selectedDate != null){
+            if (widget.selectedDate != null) {
               updated = widget.selectedDate;
             } else {
               widget.controller?.text = '';
@@ -98,10 +103,68 @@ class _ScheduleFieldState extends State<ScheduleField> {
               widget.controller?.text =
                   widget.dateMonth ? value.toMMMMYYYY() : value.toDateString();
             });
+          } else if (widget.month) {
+            DateTime? updated;
+            if (widget.selectedDate != null) {
+              updated = widget.selectedDate;
+            } else {
+              widget.controller?.text = '';
+            }
+            await DatePicker.showSimpleDatePicker(
+              context,
+              initialDate: updated ?? DateTime(DateTime.now().year),
+              firstDate: DateTime(DateTime.now().year - 25),
+              lastDate: DateTime(DateTime.now().year + 25),
+              dateFormat: "MMMM",
+              locale: DateTimePickerLocale.en_us,
+              backgroundColor: AppColors.grey800,
+              textColor: AppColors.textColor,
+              looping: false,
+            ).then((value) {
+              if (value == null) {
+                return;
+              }
+              if (widget.onSelect != null) {
+                widget.onSelect!(value.toServerYMD());
+              }
 
-            // monthYearPicker().then((value) {
-            //
-            // });
+              if (widget.onDateSelect != null) {
+                widget.onDateSelect!(value);
+              }
+              widget.controller?.text =
+                  widget.dateMonth ? value.toMMMM() : value.toDateString();
+            });
+          } else if (widget.year) {
+            DateTime? updated;
+            if (widget.selectedDate != null) {
+              updated = widget.selectedDate;
+            } else {
+              widget.controller?.text = '';
+            }
+            await DatePicker.showSimpleDatePicker(
+              context,
+              initialDate: updated ?? DateTime(DateTime.now().year),
+              firstDate: DateTime(DateTime.now().year - 25),
+              lastDate: DateTime(DateTime.now().year + 25),
+              dateFormat: "yyyy",
+              locale: DateTimePickerLocale.en_us,
+              backgroundColor: AppColors.grey800,
+              textColor: AppColors.textColor,
+              looping: false,
+            ).then((value) {
+              if (value == null) {
+                return;
+              }
+              if (widget.onSelect != null) {
+                widget.onSelect!(value.toServerYMD());
+              }
+
+              if (widget.onDateSelect != null) {
+                widget.onDateSelect!(value);
+              }
+              widget.controller?.text =
+                  widget.dateMonth ? value.toYYYY() : value.toDateString();
+            });
           } else {
             datePicker().then((value) {
               widget.controller?.text = value ?? '';
@@ -110,7 +173,10 @@ class _ScheduleFieldState extends State<ScheduleField> {
         }
       },
       controller: widget.controller,
-      padding: const EdgeInsets.only(left: 10),
+      padding: widget.month || widget.year
+          ? const EdgeInsets.symmetric(horizontal: 30)
+          : const EdgeInsets.only(left: 10),
+      // padding: const EdgeInsets.only(left: 10),
       title: widget.title,
       hint: widget.hint ?? hint,
       validator: (value) {
@@ -126,11 +192,20 @@ class _ScheduleFieldState extends State<ScheduleField> {
               color: AppColors.hintColor,
               size: 22,
             )
-          : Icon(
-              Icons.calendar_month_rounded,
-              color: AppColors.hintColor,
-              size: 22,
-            ),
+          : widget.year
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 30),
+                  child: Icon(
+                    Icons.arrow_drop_down,
+                    color: AppColors.hintColor,
+                    size: 22,
+                  ),
+                )
+              : Icon(
+                  Icons.calendar_month_rounded,
+                  color: AppColors.hintColor,
+                  size: 22,
+                ),
       onChange: (value) {},
     );
   }

@@ -9,6 +9,73 @@ import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
 class DefaultValues {
+  List<DropDownItem> months = [
+    const DropDownItem(
+      id: null,
+      title: 'All',
+      item: 'All',
+    ),
+    const DropDownItem(
+      id: 1,
+      title: 'January',
+      item: 'January',
+    ),
+    const DropDownItem(
+      id: 2,
+      title: 'February',
+      item: 'February',
+    ),
+    const DropDownItem(
+      id: 3,
+      title: 'March',
+      item: 'March',
+    ),
+    const DropDownItem(
+      id: 4,
+      title: 'April',
+      item: 'April',
+    ),
+    const DropDownItem(
+      id: 5,
+      title: 'May',
+      item: 'May',
+    ),
+    const DropDownItem(
+      id: 6,
+      title: 'June',
+      item: 'June',
+    ),
+    const DropDownItem(
+      id: 7,
+      title: 'July',
+      item: 'July',
+    ),
+    const DropDownItem(
+      id: 8,
+      title: 'August',
+      item: 'August',
+    ),
+    const DropDownItem(
+      id: 9,
+      title: 'September',
+      item: 'September',
+    ),
+    const DropDownItem(
+      id: 10,
+      title: 'October',
+      item: 'October',
+    ),
+    const DropDownItem(
+      id: 11,
+      title: 'November',
+      item: 'November',
+    ),
+    const DropDownItem(
+      id: 12,
+      title: 'December',
+      item: 'December',
+    ),
+  ];
   List<DropDownItem> feeType = [
     const DropDownItem(
       id: 'monthly',
