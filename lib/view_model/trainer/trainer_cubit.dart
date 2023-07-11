@@ -34,6 +34,13 @@ class TrainerCubit extends Cubit<TrainerState> {
   int? year;
   int? month;
 
+  void clean() {
+    page = 1;
+    nextPageUrl = '';
+    salaryInvoice.clear();
+    emit(TrainerInitial());
+  }
+
   Trainer? _trainer;
   List<Trainer>? _trainers;
 
@@ -425,6 +432,51 @@ class TrainerCubit extends Cubit<TrainerState> {
       }
     } catch (e) {
       return null;
+    }
+  }
+
+  Future closeOffSalary(Map<String, dynamic> request,
+      {required int? slipId}) async {
+    emit(ClosingSalary());
+    Common? response = await _trainerService.closeOffFees(
+      request,
+      slipId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(ClosedSalary(response?.message ?? 'Salary Closed'));
+    } else {
+      emit(CloseSalaryFailed(response?.message ?? 'Failed to close salary'));
+    }
+  }
+
+  Future deleteSalary({required int? slipId, required int? paymentId}) async {
+    emit(DeletingSalary());
+    Common? response = await _trainerService.deleteSalary(
+      slipId,
+      paymentId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(DeletedSalary(response?.message ?? 'Salary Deleted'));
+    } else {
+      emit(DeleteSalaryFailed(response?.message ?? 'Salary Deletion Failed'));
+    }
+  }
+
+  Future editSalary(Map<String, dynamic> request,
+      {required int? slipId, required int? paymentId}) async {
+    emit(EditingSalary());
+    Common? response = await _trainerService.editSalary(
+      request,
+      slipId,
+      paymentId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(EditedSalary(response?.message ?? 'Salary Editted'));
+    } else {
+      emit(EditSalaryFailed(response?.message ?? 'Failed to edit'));
     }
   }
 

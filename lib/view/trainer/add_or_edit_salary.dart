@@ -4,6 +4,7 @@ import 'package:part_app/model/data_model/trainer_salary_slip.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/trainer/components/edit_salary.dart';
 import 'package:part_app/view/trainer/components/salary_list_item.dart';
 import 'package:part_app/view_model/trainer/trainer_cubit.dart';
 
@@ -26,7 +27,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
   void initState() {
     trainerCubit = context.read<TrainerCubit>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await trainerCubit.getSalaryInvoice(trainerCubit.trainerSlipDetails?.id);
+      await trainerCubit.getSalaryInvoice(trainerCubit.slipDetails?.id);
     });
     super.initState();
   }
@@ -45,10 +46,25 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
             dateController.text = "";
             Alert(context).show(message: state.message);
             trainerCubit.getSalaryInvoice(trainerCubit.trainerSlipDetails?.id);
+          } else if (state is AddSalaryFailed) {
+            Alert(context).show(message: state.message);
+          } else if (state is DeletedSalary) {
+            Alert(context).show(message: state.message);
+            trainerCubit.getSalaryInvoice(trainerCubit.trainerSlipDetails?.id);
+          } else if (state is DeleteSalaryFailed) {
+            Alert(context).show(message: state.message);
+          } else if (state is EditedSalary) {
+            Alert(context).show(message: state.message);
+            trainerCubit.getSalaryInvoice(trainerCubit.trainerSlipDetails?.id);
+          } else if (state is EditSalaryFailed) {
+            Alert(context).show(message: state.message);
           }
         },
         builder: (context, state) {
-          if (state is AddingSalary || state is FetchingSalaryDetails) {
+          if (state is AddingSalary ||
+              state is FetchingSalaryDetails ||
+              state is DeletingSalary ||
+              state is EditingSalary) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -112,56 +128,6 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                             ),
                           ],
                         ),
-                        // trainerCubit.batchFeeInvoice?.feeType == "monthly"
-                        //     ? RichText(
-                        //         textAlign: TextAlign.center,
-                        //         text: TextSpan(
-                        //           children: [
-                        //             TextSpan(
-                        //               text: 'Payment Due Date: ',
-                        //               style: Theme.of(context)
-                        //                   .textTheme
-                        //                   .bodyLarge
-                        //                   ?.copyWith(),
-                        //             ),
-                        //             TextSpan(
-                        //               text: trainerCubit
-                        //                   .batchFeeInvoice?.paymentDueDate
-                        //                   ?.toDateString(),
-                        //               style: Theme.of(context)
-                        //                   .textTheme
-                        //                   .bodyLarge
-                        //                   ?.copyWith(
-                        //                     color: AppColors.primaryColor,
-                        //                   ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       )
-                        //     : RichText(
-                        //         textAlign: TextAlign.center,
-                        //         text: TextSpan(
-                        //           children: [
-                        //             TextSpan(
-                        //               text: 'Payment Due in: ',
-                        //               style: Theme.of(context)
-                        //                   .textTheme
-                        //                   .bodyLarge
-                        //                   ?.copyWith(),
-                        //             ),
-                        //             TextSpan(
-                        //               text:
-                        //                   '${10 - (trainerCubit.batchFeeInvoice?.monthClassesConductedCount ?? 0)}',
-                        //               style: Theme.of(context)
-                        //                   .textTheme
-                        //                   .bodyLarge
-                        //                   ?.copyWith(
-                        //                     color: AppColors.primaryColor,
-                        //                   ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
                       ],
                     ),
                     SizedBox(
@@ -291,19 +257,19 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                         message:
                                             'This payment is already deleted.');
                                   } else {
-                                    // CommonDialog(
-                                    //   context: context,
-                                    //   buttonText: 'Yes',
-                                    //   message:
-                                    //       'Are You Sure That You Want To Delete\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
-                                    //   onTap: () {
-                                    //     Navigator.pop(context);
-                                    //     trainerCubit.deleteFees(
-                                    //         batchFeeInvoiceId: trainerCubit
-                                    //             .batchFeeInvoice?.id,
-                                    //         paymentId: payment?.id);
-                                    //   },
-                                    // ).show();
+                                    CommonDialog(
+                                      context: context,
+                                      buttonText: 'Yes',
+                                      message:
+                                          'Are You Sure That You Want To Delete\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        trainerCubit.deleteSalary(
+                                            slipId: trainerCubit
+                                                .trainerSlipDetails?.id,
+                                            paymentId: payment?.id);
+                                      },
+                                    ).show();
                                   }
                                 },
                                 child: Container(
@@ -334,33 +300,33 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                         message:
                                             'This payment is already deleted.');
                                   } else {
-                                    // var formKey1 = GlobalKey<FormState>();
-                                    // String? reason, date, amount;
-                                    // CommonDialog(
-                                    //   context: context,
-                                    //   message:
-                                    //       'Are You Sure That You Want To Edit\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
-                                    //   subContent: EditFees(
-                                    //     formKey: formKey1,
-                                    //     reason: (value) => reason = value,
-                                    //     amount: (value) => amount = value,
-                                    //     date: (value) => date = value,
-                                    //   ),
-                                    //   onTap: () {
-                                    //     formKey1.currentState!.save();
-                                    //     if (formKey1.currentState!.validate()) {
-                                    //       Navigator.pop(context);
-                                    //       trainerCubit.editFees({
-                                    //         'new_date': date,
-                                    //         'new_amount': amount,
-                                    //         'reason': reason
-                                    //       },
-                                    //           batchFeeInvoiceId: trainerCubit
-                                    //               .batchFeeInvoice?.id,
-                                    //           paymentId: payment?.id);
-                                    //     }
-                                    //   },
-                                    // ).show();
+                                    var formKey1 = GlobalKey<FormState>();
+                                    String? reason, date, amount;
+                                    CommonDialog(
+                                      context: context,
+                                      message:
+                                          'Are You Sure That You Want To Edit\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                      subContent: EditSalary(
+                                        formKey: formKey1,
+                                        reason: (value) => reason = value,
+                                        amount: (value) => amount = value,
+                                        date: (value) => date = value,
+                                      ),
+                                      onTap: () {
+                                        formKey1.currentState!.save();
+                                        if (formKey1.currentState!.validate()) {
+                                          Navigator.pop(context);
+                                          trainerCubit.editSalary({
+                                            'new_date': date,
+                                            'new_amount': amount,
+                                            'reason': reason
+                                          },
+                                              slipId: trainerCubit
+                                                  .trainerSlipDetails?.id,
+                                              paymentId: payment?.id);
+                                        }
+                                      },
+                                    ).show();
                                   }
                                 },
                                 child: Container(

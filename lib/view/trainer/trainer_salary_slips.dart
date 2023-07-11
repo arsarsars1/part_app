@@ -5,7 +5,6 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/trainer/components/salary_list_item.dart';
 import 'package:part_app/view_model/cubits.dart';
-import 'package:part_app/view_model/fee/fee_cubit.dart';
 
 class TrainerSalarySlips extends StatefulWidget {
   static const route = '/trainer-salary-slips';
@@ -38,7 +37,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<FeeCubit>().clean();
+      context.read<TrainerCubit>().clean();
     });
     // Pagination listener
     scrollController.addListener(() {
@@ -51,15 +50,28 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: const CommonBar(
-        title: 'Salary Payment History',
-      ),
-      body: BlocBuilder<TrainerCubit, TrainerState>(
-        builder: (context, state) {
-          var cubit = context.read<TrainerCubit>();
-          return Column(
+    var trainerCubit = context.read<TrainerCubit>();
+    return BlocConsumer<TrainerCubit, TrainerState>(
+      listener: (context, state) {
+        if (state is AddedSalary) {
+          Alert(context).show(message: state.message);
+          trainerCubit.getSalaryDetails(
+            branchId: branchId,
+            month: month,
+            year: year,
+            clean: true,
+          );
+        } else if (state is AddSalaryFailed) {
+          Alert(context).show(message: state.message);
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          key: scaffoldKey,
+          appBar: const CommonBar(
+            title: 'Salary Payment History',
+          ),
+          body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
@@ -68,7 +80,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  '${cubit.trainer?.trainerDetail?[0].name}',
+                  '${trainerCubit.trainer?.trainerDetail?[0].name}',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
@@ -83,7 +95,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
                       onSelect: (value) {
                         setState(() {
                           branchId = value;
-                          cubit.branchId = value;
+                          trainerCubit.branchId = value;
                         });
                       },
                     ),
@@ -99,8 +111,6 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
                           Alert(context).show(message: "Select a branch");
                         } else {
                           year = value.year;
-                          // month = value.month;
-                          // finalDate = value;
                           doSearch(true);
                         }
                       },
@@ -128,16 +138,13 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
                     const SizedBox(
                       height: 10,
                     ),
-                    state is FetchingTrainerSalary
-                        ? Padding(
-                            padding: EdgeInsets.only(top: 15.h),
-                            child: const Center(
-                              child: CircularProgressIndicator(),
-                            ),
+                    state is FetchingTrainerSalary || state is AddingSalary
+                        ? const Center(
+                            child: CircularProgressIndicator(),
                           )
                         : Column(
                             children: [
-                              cubit.salaryInvoice.isEmpty
+                              trainerCubit.salaryInvoice.isEmpty
                                   ? Padding(
                                       padding: const EdgeInsets.all(64),
                                       child: Center(
@@ -150,12 +157,13 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
                                     )
                                   : ListView.builder(
                                       shrinkWrap: true,
-                                      itemCount: cubit.salaryInvoice.length,
+                                      itemCount:
+                                          trainerCubit.salaryInvoice.length,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       itemBuilder: (context, index) {
                                         Data studentInvoice =
-                                            cubit.salaryInvoice[index];
+                                            trainerCubit.salaryInvoice[index];
                                         return SalaryListItem(
                                           salary: studentInvoice,
                                           onTap: () {},
@@ -168,9 +176,9 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
                 ),
               ),
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

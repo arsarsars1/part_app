@@ -95,3 +95,39 @@ class AddSalaryFailed extends TrainerState {
   final String message;
   AddSalaryFailed(this.message);
 }
+
+class ClosingSalary extends TrainerState {}
+
+class ClosedSalary extends TrainerState {
+  final String message;
+  ClosedSalary(this.message);
+}
+
+class CloseSalaryFailed extends TrainerState {
+  final String message;
+  CloseSalaryFailed(this.message);
+}
+
+class DeletingSalary extends TrainerState {}
+
+class DeletedSalary extends TrainerState {
+  final String message;
+  DeletedSalary(this.message);
+}
+
+class DeleteSalaryFailed extends TrainerState {
+  final String message;
+  DeleteSalaryFailed(this.message);
+}
+
+class EditingSalary extends TrainerState {}
+
+class EditedSalary extends TrainerState {
+  final String message;
+  EditedSalary(this.message);
+}
+
+class EditSalaryFailed extends TrainerState {
+  final String message;
+  EditSalaryFailed(this.message);
+}

@@ -51,9 +51,13 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
           } else if (state is FeesDeleted) {
             Alert(context).show(message: state.message);
             feeCubit.getBatchInvoice(feeCubit.student.id);
+          } else if (state is DeleteFeesFailed) {
+            Alert(context).show(message: state.message);
           } else if (state is EdittedFee) {
             Alert(context).show(message: state.message);
             feeCubit.getBatchInvoice(feeCubit.student.id);
+          } else if (state is EditFeesFailed) {
+            Alert(context).show(message: state.message);
           }
         },
         builder: (context, state) {

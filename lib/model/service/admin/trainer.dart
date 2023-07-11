@@ -25,14 +25,52 @@ class TrainerService {
     }
   }
 
-  Future<Common?> addSalary(
-      int? slipId, Map<String, dynamic> data) async {
+  Future<Common?> addSalary(int? slipId, Map<String, dynamic> data) async {
     try {
       var response = await _client.post(
-        postPath:
-            '/admin/salary/trainers/$slipId/payments',
+        postPath: '/admin/salary/trainers/$slipId/payments',
         data: data,
       );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> closeOffFees(
+      Map<String, dynamic> request, int? slipId) async {
+    try {
+      var response = await _client.post(
+        postPath: '/admin/salary/trainers/$slipId/write-off',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> deleteSalary(int? slipId, int? paymentId) async {
+    try {
+      var response = await _client.delete(
+        queryPath: '/admin/salary/trainers/$slipId/payments/$paymentId',
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> editSalary(
+      Map<String, dynamic> request, int? slipId, int? paymentId) async {
+    try {
+      var response = await _client.post(
+        postPath: '/admin/salary/trainers/$slipId/payments/$paymentId',
+        data: request,
+      );
+
       return commonFromJson(jsonEncode(response));
     } catch (e) {
       return null;
