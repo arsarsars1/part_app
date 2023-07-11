@@ -179,35 +179,44 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                     ),
                           ),
                           Text(
-                            trainerCubit.trainerSlipDetails?.paymentStatus ==
-                                    "paid"
-                                ? "Paid"
-                                : trainerCubit.trainerSlipDetails
+                            trainerCubit.trainerSlipDetails?.writtenOffStatus !=
+                                    1
+                                ? trainerCubit.trainerSlipDetails
                                             ?.paymentStatus ==
-                                        "pending"
-                                    ? "Not Paid"
+                                        "paid"
+                                    ? "Paid"
                                     : trainerCubit.trainerSlipDetails
                                                 ?.paymentStatus ==
-                                            "partial"
-                                        ? "Partially Paid"
-                                        : "Overdue",
+                                            "pending"
+                                        ? "Not Paid"
+                                        : trainerCubit.trainerSlipDetails
+                                                    ?.paymentStatus ==
+                                                "partial"
+                                            ? "Partially Paid"
+                                            : "Overdue"
+                                : "Written off",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style:
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: trainerCubit.trainerSlipDetails
-                                                  ?.paymentStatus ==
-                                              "paid"
-                                          ? AppColors.green
-                                          : trainerCubit.trainerSlipDetails
+                                                  ?.writtenOffStatus !=
+                                              1
+                                          ? trainerCubit.trainerSlipDetails
                                                       ?.paymentStatus ==
-                                                  "pending"
-                                              ? AppColors.primaryColor
+                                                  "paid"
+                                              ? AppColors.green
                                               : trainerCubit.trainerSlipDetails
                                                           ?.paymentStatus ==
-                                                      "partial"
-                                                  ? AppColors.yellow
-                                                  : AppColors.primaryColor,
+                                                      "pending"
+                                                  ? AppColors.primaryColor
+                                                  : trainerCubit
+                                                              .trainerSlipDetails
+                                                              ?.paymentStatus ==
+                                                          "partial"
+                                                      ? AppColors.yellow
+                                                      : AppColors.primaryColor
+                                          : AppColors.green,
                                       fontSize: 11.sp,
                                     ),
                           ),
@@ -252,7 +261,10 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  if (payment?.isDeleted == 1) {
+                                  if (payment?.isDeleted == 1 ||
+                                      trainerCubit.trainerSlipDetails
+                                              ?.writtenOffStatus ==
+                                          1) {
                                     Alert(context).show(
                                         message:
                                             'This payment is already deleted.');
@@ -295,10 +307,13 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  if (payment?.isDeleted == 1) {
+                                  if (payment?.isDeleted == 1 ||
+                                      trainerCubit.trainerSlipDetails
+                                              ?.writtenOffStatus ==
+                                          1) {
                                     Alert(context).show(
                                         message:
-                                            'This payment is already deleted.');
+                                            'This payment is already deleted or written off');
                                   } else {
                                     var formKey1 = GlobalKey<FormState>();
                                     String? reason, date, amount;
@@ -429,73 +444,75 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                               ),
                             ],
                             rows: (payment?.edits ?? []).map((edit) {
-                              return DataRow(cells: [
-                                DataCell(
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                    child: CustomPaint(
-                                        painter: DottedBorderPainter(),
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 5.0),
-                                            child: Text(
-                                              "${edit.previousDate?.toDateString()}",
-                                              style: TextStyle(
-                                                  color: AppColors.grey700,
-                                                  decorationThickness: 2.85,
-                                                  decoration: TextDecoration
-                                                      .lineThrough),
+                              return DataRow(
+                                cells: [
+                                  DataCell(
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          3.5,
+                                      child: CustomPaint(
+                                          painter: DottedBorderPainter(),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 5.0),
+                                              child: Text(
+                                                "${edit.previousDate?.toDateString()}",
+                                                style: TextStyle(
+                                                    color: AppColors.grey700,
+                                                    decorationThickness: 2.85,
+                                                    decoration: TextDecoration
+                                                        .lineThrough),
+                                              ),
                                             ),
-                                          ),
-                                        )),
+                                          )),
+                                    ),
                                   ),
-                                ),
-                                DataCell(
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                    child: CustomPaint(
-                                      painter: DottedBorderPainter(),
-                                      child: Center(
-                                        child: Text(
-                                          "${edit.editedByType}",
-                                          style: TextStyle(
-                                              color: AppColors.grey700,
-                                              decorationThickness: 2.85,
-                                              decoration:
-                                                  TextDecoration.lineThrough),
+                                  DataCell(
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          3.5,
+                                      child: CustomPaint(
+                                        painter: DottedBorderPainter(),
+                                        child: Center(
+                                          child: Text(
+                                            "${edit.editedByType}",
+                                            style: TextStyle(
+                                                color: AppColors.grey700,
+                                                decorationThickness: 2.85,
+                                                decoration:
+                                                    TextDecoration.lineThrough),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                DataCell(
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                    child: CustomPaint(
-                                        painter: DottedBorderPainter(),
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 5.0),
-                                            child: Text(
-                                              "${edit.previousAmount}",
-                                              style: TextStyle(
-                                                  color: AppColors.grey700,
-                                                  decorationThickness: 2.85,
-                                                  decoration: TextDecoration
-                                                      .lineThrough),
+                                  DataCell(
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          3.5,
+                                      child: CustomPaint(
+                                          painter: DottedBorderPainter(),
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 5.0),
+                                              child: Text(
+                                                "${edit.previousAmount}",
+                                                style: TextStyle(
+                                                    color: AppColors.grey700,
+                                                    decorationThickness: 2.85,
+                                                    decoration: TextDecoration
+                                                        .lineThrough),
+                                              ),
                                             ),
-                                          ),
-                                        )),
+                                          )),
+                                    ),
                                   ),
-                                ),
-                              ]);
+                                ],
+                              );
                             }).toList()
                               ..add(
                                 payment?.isDeleted == 1
@@ -748,100 +765,103 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
               SizedBox(
                 height: 15.h,
               ),
-              Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    CommonField(
-                      inputType: const TextInputType.numberWithOptions(),
-                      length: 50,
-                      title: 'Amount Paid *',
-                      hint: 'Enter amount paid',
-                      validator: (value) {
-                        if (value == null || value.toString().isEmpty) {
-                          return 'Please enter fees';
-                        }
-                        return null;
-                      },
-                      onChange: (value) {
-                        amount = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 16.w),
-                          child: Text(
-                            'Date *',
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: TextFormField(
-                            controller: dateController,
-                            keyboardType: TextInputType.none,
-                            onTap: () async {
-                              await datePicker();
-                              dateController.text = date?.toDateString() ?? "";
-                            },
-                            readOnly: true,
-                            validator: (value) {
-                              if (value.toString().isEmpty) {
-                                return 'Please enter date';
-                              } else {
-                                return null;
-                              }
-                            },
-                            style:
-                                TextStyle(color: Colors.white.withOpacity(.7)),
-                            textAlign: TextAlign.start,
-                            cursorColor: Colors.white,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 15),
-                              suffixIcon: const Icon(
-                                Icons.calendar_month,
-                                size: 24,
-                                color: Colors.white24,
-                              ),
-                              hintText: 'Select the date',
-                              fillColor: AppColors.liteDark,
+              if (trainerCubit.trainerSlipDetails?.writtenOffStatus != 1 ||
+                  trainerCubit.trainerSlipDetails?.pendingAmount == "0.00")
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      CommonField(
+                        inputType: const TextInputType.numberWithOptions(),
+                        length: 50,
+                        title: 'Amount Paid *',
+                        hint: 'Enter amount paid',
+                        validator: (value) {
+                          if (value == null || value.toString().isEmpty) {
+                            return 'Please enter fees';
+                          }
+                          return null;
+                        },
+                        onChange: (value) {
+                          amount = value;
+                        },
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 16.w),
+                            child: Text(
+                              'Date *',
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                    Center(
-                      child: SafeArea(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 16.h),
-                          child: Button(
-                            onTap: () {
-                              if (formKey.currentState!.validate()) {
-                                trainerCubit.addSalary(
-                                    trainerCubit.trainerSlipDetails?.id, {
-                                  'amount': amount,
-                                  'payment_method': 'cash',
-                                  'payment_date': date?.toServerString()
-                                });
-                              }
-                            },
-                            title: 'Submit',
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: TextFormField(
+                              controller: dateController,
+                              keyboardType: TextInputType.none,
+                              onTap: () async {
+                                await datePicker();
+                                dateController.text =
+                                    date?.toDateString() ?? "";
+                              },
+                              readOnly: true,
+                              validator: (value) {
+                                if (value.toString().isEmpty) {
+                                  return 'Please enter date';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              style: TextStyle(
+                                  color: Colors.white.withOpacity(.7)),
+                              textAlign: TextAlign.start,
+                              cursorColor: Colors.white,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 15),
+                                suffixIcon: const Icon(
+                                  Icons.calendar_month,
+                                  size: 24,
+                                  color: Colors.white24,
+                                ),
+                                hintText: 'Select the date',
+                                fillColor: AppColors.liteDark,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      Center(
+                        child: SafeArea(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 16.h),
+                            child: Button(
+                              onTap: () {
+                                if (formKey.currentState!.validate()) {
+                                  trainerCubit.addSalary(
+                                      trainerCubit.trainerSlipDetails?.id, {
+                                    'amount': amount,
+                                    'payment_method': 'cash',
+                                    'payment_date': date?.toServerString()
+                                  });
+                                }
+                              },
+                              title: 'Submit',
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
             ],
           );
         },

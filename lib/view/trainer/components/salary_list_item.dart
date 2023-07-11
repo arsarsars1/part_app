@@ -148,25 +148,32 @@ class _FeeListItemState extends State<SalaryListItem> {
                                         ?.copyWith(),
                                   ),
                                   Text(
-                                    widget.salary.paymentStatus == 'paid'
-                                        ? "Completely Paid"
-                                        : widget.salary.paymentStatus ==
-                                                'partial'
-                                            ? "Partial"
-                                            : "Not Paid",
+                                    widget.salary.writtenOffStatus != 1
+                                        ? widget.salary.paymentStatus == 'paid'
+                                            ? "Completely Paid"
+                                            : widget.salary.paymentStatus ==
+                                                    'partial'
+                                                ? "Partial"
+                                                : "Not Paid"
+                                        : "Written Off",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge
                                         ?.copyWith(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 15,
-                                          color: widget.salary.paymentStatus ==
-                                                  'paid'
-                                              ? AppColors.green
-                                              : widget.salary.paymentStatus ==
-                                                      'partial'
-                                                  ? AppColors.yellow
-                                                  : AppColors.disabledColor,
+                                          color: widget.salary
+                                                      .writtenOffStatus !=
+                                                  1
+                                              ? widget.salary.paymentStatus ==
+                                                      'paid'
+                                                  ? AppColors.green
+                                                  : widget.salary
+                                                              .paymentStatus ==
+                                                          'partial'
+                                                      ? AppColors.yellow
+                                                      : AppColors.disabledColor
+                                              : AppColors.green,
                                         ),
                                   ),
                                 ],

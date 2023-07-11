@@ -63,6 +63,16 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
           );
         } else if (state is AddSalaryFailed) {
           Alert(context).show(message: state.message);
+        } else if (state is ClosedSalary) {
+          Alert(context).show(message: state.message);
+          trainerCubit.getSalaryDetails(
+            branchId: branchId,
+            month: month,
+            year: year,
+            clean: true,
+          );
+        } else if (state is CloseSalaryFailed) {
+          Alert(context).show(message: state.message);
         }
       },
       builder: (context, state) {
@@ -138,7 +148,9 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
                     const SizedBox(
                       height: 10,
                     ),
-                    state is FetchingTrainerSalary || state is AddingSalary
+                    state is FetchingTrainerSalary ||
+                            state is AddingSalary ||
+                            state is ClosingSalary
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
