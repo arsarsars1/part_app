@@ -159,7 +159,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                                             ? "Completely Paid"
                                             : widget.salary.paymentStatus ==
                                                     'partial'
-                                                ? "Partial"
+                                                ? "Partially Paid"
                                                 : "Not Paid"
                                         : "Written Off",
                                     style: Theme.of(context)
@@ -230,7 +230,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                                         painter: DottedBorderPainter(),
                                         child: Center(
                                           child: Text(
-                                            'Updated By',
+                                            'Payment Method',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge

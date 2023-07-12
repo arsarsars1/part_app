@@ -3,6 +3,7 @@ import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
+import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/components/fee_list_item.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -98,6 +99,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                         feeTypeController.clear();
                         dateController.clear();
                         batch = null;
+                        feeTypeController.clear();
                         context.read<BatchCubit>().getBatchesByBranch(
                               branchId: branchId,
                               clean: true,
@@ -112,6 +114,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                       onTap: () {
                         dateController.clear();
                         feeTypeController.clear();
+                        feeType = null;
                         if (branchId != null) {
                           scaffoldKey.currentState?.showBottomSheet(
                             elevation: 10,
@@ -243,7 +246,12 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                                             cubit.batchInvoice[index];
                                         return FeeListItem(
                                           student: studentInvoice,
-                                          onTap: () {},
+                                          onTap: () async {
+                                            cubit.student = studentInvoice;
+                                            await Navigator.pushNamed(
+                                                context, AddOrEditFees.route);
+                                            doSearch(true);
+                                          },
                                         );
                                       },
                                     ),
