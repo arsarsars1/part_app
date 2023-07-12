@@ -5,7 +5,6 @@ import 'package:part_app/model/data_model/trainer_salary_slip.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
-import 'package:part_app/view/trainer/add_or_edit_salary.dart';
 import 'package:part_app/view_model/trainer/trainer_cubit.dart';
 
 class SalaryListItem extends StatefulWidget {
@@ -47,11 +46,13 @@ class _FeeListItemState extends State<SalaryListItem> {
                         ),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: widget.salary.paymentStatus == 'paid'
-                                ? AppColors.green
-                                : widget.salary.paymentStatus == 'partial'
-                                    ? AppColors.yellow
-                                    : AppColors.disabledColor,
+                            color: widget.salary.writtenOffStatus != 1
+                                ? widget.salary.paymentStatus == 'paid'
+                                    ? AppColors.green
+                                    : widget.salary.paymentStatus == 'partial'
+                                        ? AppColors.yellow
+                                        : AppColors.primaryColor
+                                : AppColors.green,
                           ),
                         ),
                       ),
@@ -97,13 +98,13 @@ class _FeeListItemState extends State<SalaryListItem> {
                                   ),
                                 ],
                               ),
-                              Text(
-                                "Class Attended: 12/12",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(),
-                              ),
+                              // Text(
+                              //   "Class Attended: 12/12",
+                              //   style: Theme.of(context)
+                              //       .textTheme
+                              //       .bodyLarge
+                              //       ?.copyWith(),
+                              // ),
                             ],
                           ),
                           SizedBox(
@@ -129,13 +130,18 @@ class _FeeListItemState extends State<SalaryListItem> {
                                         .textTheme
                                         .bodyLarge
                                         ?.copyWith(
-                                          color: widget.salary.paymentStatus ==
-                                                  'paid'
-                                              ? AppColors.green
-                                              : widget.salary.paymentStatus ==
-                                                      'partial'
-                                                  ? AppColors.yellow
-                                                  : AppColors.disabledColor,
+                                          color: widget.salary
+                                                      .writtenOffStatus !=
+                                                  1
+                                              ? widget.salary.paymentStatus ==
+                                                      'paid'
+                                                  ? AppColors.green
+                                                  : widget.salary
+                                                              .paymentStatus ==
+                                                          'partial'
+                                                      ? AppColors.yellow
+                                                      : AppColors.primaryColor
+                                              : AppColors.green,
                                         ),
                                   ),
                                   SizedBox(height: 10.h),
@@ -172,7 +178,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                                                               .paymentStatus ==
                                                           'partial'
                                                       ? AppColors.yellow
-                                                      : AppColors.disabledColor
+                                                      : AppColors.primaryColor
                                               : AppColors.green,
                                         ),
                                   ),
@@ -183,191 +189,197 @@ class _FeeListItemState extends State<SalaryListItem> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          DataTable(
-                              headingRowHeight: 30.h,
-                              dataRowMinHeight: 30.h,
-                              dataRowMaxHeight: 30.h,
-                              columnSpacing: 0.0,
-                              horizontalMargin: 0.0,
-                              columns: [
-                                DataColumn(
-                                  label: SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 5,
-                                    child: CustomPaint(
-                                        painter: DottedBorderPainter(),
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 5.0),
-                                            child: Text(
-                                              'Date',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge
-                                                  ?.copyWith(
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                            ),
-                                          ),
-                                        )),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3,
-                                    child: CustomPaint(
-                                      painter: DottedBorderPainter(),
-                                      child: Center(
-                                        child: Text(
-                                          'Updated By',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                fontWeight: FontWeight.bold,
+                          if ((widget.salary.payments ?? []).isNotEmpty)
+                            DataTable(
+                                headingRowHeight: 30.h,
+                                dataRowMinHeight: 30.h,
+                                dataRowMaxHeight: 30.h,
+                                columnSpacing: 0.0,
+                                horizontalMargin: 0.0,
+                                columns: [
+                                  DataColumn(
+                                    label: SizedBox(
+                                      width:
+                                          MediaQuery.of(context).size.width / 5,
+                                      child: CustomPaint(
+                                          painter: DottedBorderPainter(),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 5.0),
+                                              child: Text(
+                                                'Date',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                               ),
+                                            ),
+                                          )),
+                                    ),
+                                  ),
+                                  DataColumn(
+                                    label: SizedBox(
+                                      width:
+                                          MediaQuery.of(context).size.width / 3,
+                                      child: CustomPaint(
+                                        painter: DottedBorderPainter(),
+                                        child: Center(
+                                          child: Text(
+                                            'Updated By',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                DataColumn(
-                                  label: SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 5,
-                                    child: CustomPaint(
-                                        painter: DottedBorderPainter(),
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 5.0),
-                                            child: Text(
-                                              'Amount',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge
-                                                  ?.copyWith(
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                            ),
-                                          ),
-                                        )),
-                                  ),
-                                ),
-                              ],
-                              rows: (widget.salary.payments ?? []).map(
-                                (payment) {
-                                  return DataRow(
-                                    cells: [
-                                      DataCell(
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              5,
-                                          child: CustomPaint(
-                                              painter: DottedBorderPainter(),
-                                              child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 5.0),
-                                                  child: payment.isDeleted != 1
-                                                      ? Text(
-                                                          "${payment.paymentDate?.toDateString()}",
-                                                        )
-                                                      : Text(
-                                                          "${payment.paymentDate?.toDateString()}",
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .grey700,
-                                                              decorationThickness:
-                                                                  2.85,
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .lineThrough),
-                                                        ),
-                                                ),
-                                              )),
-                                        ),
-                                      ),
-                                      DataCell(
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              3,
-                                          child: CustomPaint(
-                                            painter: DottedBorderPainter(),
-                                            child: Center(
-                                              child: payment.isDeleted != 1
-                                                  ? Text(
-                                                      payment.paymentMethod ==
-                                                              "cash"
-                                                          ? "In Hand Payment"
-                                                          : "${payment.paymentMethod}",
-                                                    )
-                                                  : Text(
-                                                      payment.paymentMethod ==
-                                                              "cash"
-                                                          ? "In Hand Payment"
-                                                          : "${payment.paymentMethod}",
-                                                      style: TextStyle(
-                                                          color:
-                                                              AppColors.grey700,
-                                                          decorationThickness:
-                                                              2.85,
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .lineThrough),
+                                  DataColumn(
+                                    label: SizedBox(
+                                      width:
+                                          MediaQuery.of(context).size.width / 5,
+                                      child: CustomPaint(
+                                          painter: DottedBorderPainter(),
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 5.0),
+                                              child: Text(
+                                                'Amount',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
+                                              ),
+                                            ),
+                                          )),
+                                    ),
+                                  ),
+                                ],
+                                rows: (widget.salary.payments ?? []).map(
+                                  (payment) {
+                                    return DataRow(
+                                      cells: [
+                                        DataCell(
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                5,
+                                            child: CustomPaint(
+                                                painter: DottedBorderPainter(),
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 5.0),
+                                                    child:
+                                                        payment.isDeleted != 1
+                                                            ? Text(
+                                                                "${payment.paymentDate?.toDateString()}",
+                                                              )
+                                                            : Text(
+                                                                "${payment.paymentDate?.toDateString()}",
+                                                                style: TextStyle(
+                                                                    color: AppColors
+                                                                        .grey700,
+                                                                    decorationThickness:
+                                                                        2.85,
+                                                                    decoration:
+                                                                        TextDecoration
+                                                                            .lineThrough),
+                                                              ),
+                                                  ),
+                                                )),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                3,
+                                            child: CustomPaint(
+                                              painter: DottedBorderPainter(),
+                                              child: Center(
+                                                child: payment.isDeleted != 1
+                                                    ? Text(
+                                                        payment.paymentMethod ==
+                                                                "cash"
+                                                            ? "In Hand Payment"
+                                                            : "${payment.paymentMethod}",
+                                                      )
+                                                    : Text(
+                                                        payment.paymentMethod ==
+                                                                "cash"
+                                                            ? "In Hand Payment"
+                                                            : "${payment.paymentMethod}",
+                                                        style: TextStyle(
+                                                            color: AppColors
+                                                                .grey700,
+                                                            decorationThickness:
+                                                                2.85,
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .lineThrough),
+                                                      ),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              5,
-                                          child: CustomPaint(
-                                              painter: DottedBorderPainter(),
-                                              child: Align(
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 5.0),
-                                                  child: payment.isDeleted != 1
-                                                      ? Text(
-                                                          "₹ ${payment.amount}",
-                                                        )
-                                                      : Text(
-                                                          "₹ ${payment.amount}",
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .grey700,
-                                                              decorationThickness:
-                                                                  2.85,
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .lineThrough),
-                                                        ),
-                                                ),
-                                              )),
+                                        DataCell(
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                5,
+                                            child: CustomPaint(
+                                                painter: DottedBorderPainter(),
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 5.0),
+                                                    child:
+                                                        payment.isDeleted != 1
+                                                            ? Text(
+                                                                "₹ ${payment.amount}",
+                                                              )
+                                                            : Text(
+                                                                "₹ ${payment.amount}",
+                                                                style: TextStyle(
+                                                                    color: AppColors
+                                                                        .grey700,
+                                                                    decorationThickness:
+                                                                        2.85,
+                                                                    decoration:
+                                                                        TextDecoration
+                                                                            .lineThrough),
+                                                              ),
+                                                  ),
+                                                )),
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ).toList()),
+                                      ],
+                                    );
+                                  },
+                                ).toList()),
                           SizedBox(
                             width: (MediaQuery.of(context).size.width) / 3 +
                                 (2 * (MediaQuery.of(context).size.width) / 5),
@@ -387,17 +399,26 @@ class _FeeListItemState extends State<SalaryListItem> {
                                           ?.copyWith(),
                                     ),
                                     Text(
-                                      "₹ ${widget.salary.paymentsTotal?[0].total}",
+                                      (widget.salary.paymentsTotal ?? [])
+                                              .isNotEmpty
+                                          ? "₹ ${widget.salary.paymentsTotal?[0].total}"
+                                          : "₹ 0.00",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge
                                           ?.copyWith(
-                                            color: widget
-                                                        .salary
-                                                        .paymentsTotal?[0]
-                                                        .total ==
-                                                    widget.salary.salaryAmount
-                                                ? AppColors.green
+                                            color: (widget.salary
+                                                            .paymentsTotal ??
+                                                        [])
+                                                    .isNotEmpty
+                                                ? (widget
+                                                            .salary
+                                                            .paymentsTotal?[0]
+                                                            .total ==
+                                                        widget.salary
+                                                            .salaryAmount)
+                                                    ? AppColors.green
+                                                    : AppColors.primaryColor
                                                 : AppColors.primaryColor,
                                           ),
                                     ),
@@ -465,55 +486,9 @@ class _FeeListItemState extends State<SalaryListItem> {
                                     onTap: () {
                                       CommonDialog(
                                         context: context,
-                                        hasClose: false,
-                                        message: 'Pay Salary Via UPI',
-                                        buttonText: 'Pay',
-                                        subContent: Column(
-                                          children: [
-                                            Text(
-                                              "${widget.salary.trainerDetail?.name}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge
-                                                  ?.copyWith(
-                                                    fontWeight: FontWeight.w700,
-                                                    fontSize: 14,
-                                                  ),
-                                            ),
-                                            SizedBox(height: 10.h),
-                                            Text(
-                                              "${widget.salary.salaryDueDate?.toMMMMYYYY()}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge
-                                                  ?.copyWith(),
-                                            ),
-                                            SizedBox(height: 10.h),
-                                            Text(
-                                              "₹ ${widget.salary.pendingAmount} /-",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge
-                                                  ?.copyWith(
-                                                    fontWeight: FontWeight.w700,
-                                                    fontSize: 14,
-                                                  ),
-                                            ),
-                                            SizedBox(
-                                              height: 20.h,
-                                            ),
-                                          ],
-                                        ),
+                                        message: 'Coming Soon !!!',
                                         onTap: () {
                                           Navigator.pop(context);
-                                          trainerCubit
-                                              .addSalary(widget.salary.id, {
-                                            'amount':
-                                                widget.salary.pendingAmount,
-                                            'payment_method': 'upi',
-                                            'payment_date':
-                                                DateTime.now().toServerString()
-                                          });
                                         },
                                       ).show();
                                     },
@@ -527,11 +502,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                               ),
                           LargeButton(
                             title: 'Add In Hand Salary',
-                            onTap: () {
-                              trainerCubit.slipDetails = widget.salary;
-                              Navigator.pushNamed(
-                                  context, AddOrEditSalary.route);
-                            },
+                            onTap: widget.onTap,
                             color: AppColors.defaultBlue,
                             margin: 0,
                           ),

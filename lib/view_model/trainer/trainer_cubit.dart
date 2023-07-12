@@ -403,7 +403,9 @@ class TrainerCubit extends Cubit<TrainerState> {
           page++;
         }
       }
-      salaryInvoice = response?.salarySlips?.data ?? [];
+      salaryInvoice = (response?.salarySlips?.data ?? []);
+      salaryInvoice.removeWhere((element) =>
+          element.trainerDetail?.name != trainer?.trainerDetail?[0].name);
       emit(TrainerSalaryFetched(moreItems: nextPageUrl != null));
     }
   }

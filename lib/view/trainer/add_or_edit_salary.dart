@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/trainer_salary_slip.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
@@ -84,25 +85,41 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "${trainerCubit.trainerSlipDetails?.trainerDetail?.name}",
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        Row(
+                          children: [
+                            UserImage(
+                              profilePic: trainerCubit.trainerSlipDetails
+                                          ?.trainerDetail?.profilePic !=
+                                      ""
+                                  ? '${F.baseUrl}'
+                                      '/admin/images/student/'
+                                      '${trainerCubit.trainerSlipDetails?.trainerDetail?.id}/${trainerCubit.trainerSlipDetails?.trainerDetail?.profilePic}'
+                                  : '',
+                            ),
+                            SizedBox(width: 16.w),
+                            Text(
+                              "${trainerCubit.trainerSlipDetails?.trainerDetail?.name}",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.sp,
                                   ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "Class Attended: 12/12",
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    fontSize: 11.sp,
-                                  ),
-                        ),
+                        // Text(
+                        //   "Class Attended: 12/12",
+                        //   maxLines: 2,
+                        //   overflow: TextOverflow.ellipsis,
+                        //   style:
+                        //       Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        //             fontSize: 11.sp,
+                        //           ),
+                        // ),
                       ],
                     ),
                     SizedBox(
@@ -217,7 +234,8 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                                       ? AppColors.yellow
                                                       : AppColors.primaryColor
                                           : AppColors.green,
-                                      fontSize: 11.sp,
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w600,
                                     ),
                           ),
                         ],
@@ -273,7 +291,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                       context: context,
                                       buttonText: 'Yes',
                                       message:
-                                          'Are You Sure That You Want To Delete\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                          'Are You Sure That You Want To Delete\nThe Salary Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
                                       onTap: () {
                                         Navigator.pop(context);
                                         trainerCubit.deleteSalary(
@@ -320,7 +338,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                     CommonDialog(
                                       context: context,
                                       message:
-                                          'Are You Sure That You Want To Edit\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                          'Are You Sure That You Want To Edit\nThe Salary Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
                                       subContent: EditSalary(
                                         formKey: formKey1,
                                         reason: (value) => reason = value,

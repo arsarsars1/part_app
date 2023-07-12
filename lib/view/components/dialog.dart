@@ -10,7 +10,6 @@ class CommonDialog {
   final VoidCallback? onCancelTap;
   final VoidCallback? onClose;
   final bool? hasClose;
-  final bool? hasNoCancel;
   final Color? subColor;
   final String? buttonText;
   final Widget? subContent;
@@ -24,7 +23,6 @@ class CommonDialog {
       this.subContent,
       this.onCancelTap,
       this.onClose,
-      this.hasNoCancel,
       this.hasClose,
       required this.onTap});
 
@@ -61,7 +59,6 @@ class Logout extends StatelessWidget {
   final VoidCallback? onCancelTap;
   final VoidCallback? onClose;
   final bool? hasClose;
-  final bool? hasNoCancel;
   final Color? subColor;
   final String? buttonText;
   final Widget? subContent;
@@ -74,7 +71,6 @@ class Logout extends StatelessWidget {
     this.onCancelTap,
     this.onClose,
     this.hasClose = false,
-    this.hasNoCancel = true,
     this.subColor,
     this.buttonText,
     this.subContent,
@@ -179,43 +175,42 @@ class Logout extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    if (hasNoCancel ?? false)
-                      if (isCancel!)
-                        hasClose ?? false
-                            ? Row(
-                                children: [
-                                  Button(
-                                    width: 95.w,
-                                    height: 36.h,
-                                    onTap: onClose ??
-                                        () {
-                                          Navigator.pop(context);
-                                        },
-                                    title: 'No',
-                                    border: true,
-                                  ),
-                                  SizedBox(
-                                    width: 32.w,
-                                  ),
-                                ],
-                              )
-                            : Row(
-                                children: [
-                                  Button(
-                                    width: 95.w,
-                                    height: 36.h,
-                                    onTap: onCancelTap ??
-                                        () {
-                                          Navigator.pop(context);
-                                        },
-                                    title: 'Cancel',
-                                    border: true,
-                                  ),
-                                  SizedBox(
-                                    width: 32.w,
-                                  ),
-                                ],
-                              ),
+                    if (isCancel!)
+                      hasClose ?? false
+                          ? Row(
+                              children: [
+                                Button(
+                                  width: 95.w,
+                                  height: 36.h,
+                                  onTap: onClose ??
+                                      () {
+                                        Navigator.pop(context);
+                                      },
+                                  title: 'No',
+                                  border: true,
+                                ),
+                                SizedBox(
+                                  width: 32.w,
+                                ),
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                Button(
+                                  width: 95.w,
+                                  height: 36.h,
+                                  onTap: onCancelTap ??
+                                      () {
+                                        Navigator.pop(context);
+                                      },
+                                  title: 'Cancel',
+                                  border: true,
+                                ),
+                                SizedBox(
+                                  width: 32.w,
+                                ),
+                              ],
+                            ),
                     Button(
                       width: 95.w,
                       height: 36.h,
