@@ -19,6 +19,7 @@ import 'package:part_app/view/trainer/assigned_batches.dart';
 import 'package:part_app/view/trainer/edit_salary_trainer.dart';
 import 'package:part_app/view/trainer/edit_trainer.dart';
 import 'package:part_app/view/trainer/trainer_branches.dart';
+import 'package:part_app/view/trainer/trainer_salary_slips.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerDetails extends StatefulWidget {
@@ -244,31 +245,38 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                 const SizedBox(
                   height: 8,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.defaultBlue,
-                    borderRadius: BorderRadius.circular(45),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    TrainerSalarySlips.route,
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Spacer(),
-                      Text(
-                        'Salary Details',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontSize: 12,
-                            ),
-                      ),
-                      const Spacer(),
-                      const Icon(
-                        Icons.keyboard_arrow_right,
-                        size: 24,
-                        color: Colors.white,
-                      ),
-                    ],
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.defaultBlue,
+                      borderRadius: BorderRadius.circular(45),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Spacer(),
+                        Text(
+                          'Salary Details',
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontSize: 12,
+                                  ),
+                        ),
+                        const Spacer(),
+                        const Icon(
+                          Icons.keyboard_arrow_right,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Container(

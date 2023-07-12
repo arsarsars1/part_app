@@ -51,6 +51,7 @@ import 'package:part_app/view/students/student_attendence.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
+import 'package:part_app/view/trainer/add_or_edit_salary.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
 import 'package:part_app/view/trainer/assigned_batches.dart';
@@ -59,6 +60,7 @@ import 'package:part_app/view/trainer/edit_trainer.dart';
 import 'package:part_app/view/trainer/salary_details.dart';
 import 'package:part_app/view/trainer/trainer_branches.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
+import 'package:part_app/view/trainer/trainer_salary_slips.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
 import 'attendance/attendance_batch_list.dart';
@@ -415,7 +417,16 @@ class RouteGenerator {
           builder: (_) => const FeesDetailsView(),
           settings: settings,
         );
-
+      case TrainerSalarySlips.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerSalarySlips(),
+          settings: settings,
+        );
+      case AddOrEditSalary.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddOrEditSalary(),
+          settings: settings,
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => const Login(),

@@ -27,8 +27,7 @@ class UserImage extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(4),
         child: profilePic != ""
-            ? CachedImage(profilePic!)
-                .userImage()
+            ? CachedImage(profilePic ?? "").userImage()
             : Padding(
                 padding: const EdgeInsets.all(9.0),
                 child: SvgPicture.asset(
