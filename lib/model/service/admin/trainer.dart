@@ -201,7 +201,7 @@ class TrainerService {
   }
 
   Future<TrainerSalarySlip?> salaryDetails({
-    int? branchId,
+    int? trainerId,
     int? month,
     int? year,
     required int pageNo,
@@ -209,8 +209,8 @@ class TrainerService {
     try {
       var response = await _client.get(
           queryPath: month != null
-              ? '/admin/salary/trainers?branch_id=$branchId&year=$year&month=$month'
-              : '/admin/salary/trainers?branch_id=$branchId&year=$year');
+              ? '/admin/trainers/$trainerId/salary-history?year=$year&month=$month&page=$pageNo'
+              : '/admin/trainers/$trainerId/salary-history?year=$year&page=$pageNo');
       return trainerSalarySlipFromJson(jsonEncode(response));
     } catch (e) {
       return null;

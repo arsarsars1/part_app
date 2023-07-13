@@ -88,7 +88,7 @@ class FeeCubit extends Cubit<FeeState> {
       if (nextPageUrl != null) {
         page++;
       }
-      batchInvoice = response?.batchFeeInvoices?.data ?? [];
+      batchInvoice.addAll(response?.batchFeeInvoices?.data ?? []);
       emit(FeeFetched(moreItems: nextPageUrl != null));
     }
   }

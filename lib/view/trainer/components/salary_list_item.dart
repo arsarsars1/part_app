@@ -74,12 +74,12 @@ class _FeeListItemState extends State<SalaryListItem> {
                               Row(
                                 children: [
                                   UserImage(
-                                    profilePic: widget.salary.trainerDetail!
-                                                .profilePic !=
+                                    profilePic: widget.salary.trainerDetail
+                                                ?.profilePic !=
                                             ""
                                         ? '${F.baseUrl}'
-                                            '/admin/images/student/'
-                                            '${widget.salary.trainerDetail!.id}/${widget.salary.trainerDetail?.profilePic}'
+                                            '/admin/images/trainer/'
+                                            '${widget.salary.trainerDetail?.id}/${widget.salary.trainerDetail?.profilePic}'
                                         : '',
                                   ),
                                   SizedBox(width: 16.w),
@@ -185,6 +185,17 @@ class _FeeListItemState extends State<SalaryListItem> {
                                 ],
                               ),
                             ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Text(
+                            'Salary : ${widget.salary.salaryAmount}',
+                            textAlign: TextAlign.right,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(),
                           ),
                           SizedBox(
                             height: 10.h,
@@ -464,18 +475,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                             ),
                           ),
                           SizedBox(
-                            height: 10.h,
-                          ),
-                          Text(
-                            'Salary : ${widget.salary.salaryAmount}',
-                            textAlign: TextAlign.right,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(),
-                          ),
-                          SizedBox(
-                            height: 10.h,
+                            height: 20.h,
                           ),
                           if (widget.salary.paymentStatus != "paid")
                             if (widget.salary.writtenOffStatus != 1)

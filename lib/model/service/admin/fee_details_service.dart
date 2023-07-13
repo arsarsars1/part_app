@@ -32,11 +32,14 @@ class FeeDetailsService {
     required int pageNo,
   }) async {
     try {
-      // var response = await _client.get(queryPath: '/admin/students/$studentId');
       var response = await _client.get(
-          queryPath: searchQuery == '' || searchQuery == null
-              ? '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId'
-              : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery');
+          queryPath: month == null || year == null
+              ? searchQuery == '' || searchQuery == null
+                  ? '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
+                  : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo'
+              : searchQuery == '' || searchQuery == null
+                  ? '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
+                  : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo');
       return batchFeeInvoiceListFromJson(jsonEncode(response));
     } catch (e) {
       return null;

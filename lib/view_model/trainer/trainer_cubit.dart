@@ -370,7 +370,7 @@ class TrainerCubit extends Cubit<TrainerState> {
   }
 
   Future getSalaryDetails({
-    int? branchId,
+    int? trainerId,
     int? month,
     int? year,
     bool clean = false,
@@ -392,18 +392,17 @@ class TrainerCubit extends Cubit<TrainerState> {
     TrainerSalarySlip? response = await _trainerService.salaryDetails(
       month: month,
       year: year,
-      branchId: branchId,
+      trainerId: trainerId,
       pageNo: page,
     );
 
     if (response?.status == 1) {
-      if (!clean) {
-        nextPageUrl = response?.salarySlips?.nextPageUrl;
-        if (nextPageUrl != null) {
-          page++;
-        }
+      nextPageUrl = response?.salarySlips?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
       }
-      salaryInvoice = (response?.salarySlips?.data ?? []);
+
+      salaryInvoice.addAll(response?.salarySlips?.data ?? []);
       salaryInvoice.removeWhere((element) =>
           element.trainerDetail?.name != trainer?.trainerDetail?[0].name);
       emit(TrainerSalaryFetched(moreItems: nextPageUrl != null));

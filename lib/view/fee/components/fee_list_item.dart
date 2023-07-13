@@ -219,7 +219,9 @@ class _FeeListItemState extends State<FeeListItem> {
                                         width: 10.w,
                                       ),
                                       Text(
-                                        '${widget.student.paymentDueDate?.toDateString()}',
+                                        widget.student.paymentDueDate == null
+                                            ? 'Not Applicable'
+                                            : '${widget.student.paymentDueDate?.toDateString()}',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge
@@ -778,124 +780,136 @@ class _FeeListItemState extends State<FeeListItem> {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 16.h,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: AppColors.liteDark,
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    UserImage(
-                                      profilePic: widget.student.studentDetail!
-                                                  .profilePic !=
-                                              ""
-                                          ? '${F.baseUrl}'
-                                              '/admin/images/student/'
-                                              '${widget.student.studentDetail!.id}/${widget.student.studentDetail?.profilePic}'
-                                          : '',
-                                    ),
-                                    SizedBox(width: 16.w),
-                                    SizedBox(
-                                      width: 100,
-                                      child: Text(
-                                        '${widget.student.studentDetail?.name}',
-                                        maxLines: 2,
-                                        softWrap: true,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isShrunk = !isShrunk;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 16.h,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: AppColors.liteDark,
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      UserImage(
+                                        profilePic: widget
+                                                    .student
+                                                    .studentDetail!
+                                                    .profilePic !=
+                                                ""
+                                            ? '${F.baseUrl}'
+                                                '/admin/images/student/'
+                                                '${widget.student.studentDetail!.id}/${widget.student.studentDetail?.profilePic}'
+                                            : '',
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    FeeReminderButton(
-                                      title: '',
-                                      onTap: () {},
-                                      margin: 0,
-                                      disabled: widget.student.paymentStatus ==
-                                                  'paid' ||
-                                              widget.student.paymentStatus ==
-                                                  'Written Off'
-                                          ? true
-                                          : false,
-                                      count: widget.student.reminderCount,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Due Date: ${widget.student.paymentDueDate?.toDateString()}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        color: AppColors.textColor,
+                                      SizedBox(width: 16.w),
+                                      SizedBox(
+                                        width: 100,
+                                        child: Text(
+                                          '${widget.student.studentDetail?.name}',
+                                          maxLines: 2,
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(),
+                                        ),
                                       ),
-                                ),
-                                Text(
-                                  widget.student.writtenOffStatus != 1
-                                      ? widget.student.paymentStatus == 'paid'
-                                          ? "Completely Paid"
-                                          : widget.student.paymentStatus ==
-                                                  'partial'
-                                              ? "Partially Paid"
-                                              : "Not Paid"
-                                      : "Written Off",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15,
-                                        color: widget
-                                                    .student.writtenOffStatus !=
-                                                1
-                                            ? widget.student.paymentStatus ==
-                                                    'paid'
-                                                ? AppColors.green
-                                                : widget.student
-                                                            .paymentStatus ==
-                                                        'partial'
-                                                    ? AppColors.yellow
-                                                    : AppColors.primaryColor
-                                            : AppColors.green,
-                                      ),
-                                ),
-                              ],
-                            ),
-                            isShrunk
-                                ? Icon(
-                                    Icons.expand_less,
-                                    color: AppColors.textColor,
-                                  )
-                                : Icon(
-                                    Icons.expand_more,
-                                    color: AppColors.textColor,
+                                    ],
                                   ),
-                          ],
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      FeeReminderButton(
+                                        title: '',
+                                        onTap: () {},
+                                        margin: 0,
+                                        disabled: widget.student
+                                                        .paymentStatus ==
+                                                    'paid' ||
+                                                widget.student.paymentStatus ==
+                                                    'Written Off'
+                                            ? true
+                                            : false,
+                                        count: widget.student.reminderCount,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Due Date: ${widget.student.paymentDueDate?.toDateString()}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: AppColors.textColor,
+                                        ),
+                                  ),
+                                  Text(
+                                    widget.student.writtenOffStatus != 1
+                                        ? widget.student.paymentStatus == 'paid'
+                                            ? "Completely Paid"
+                                            : widget.student.paymentStatus ==
+                                                    'partial'
+                                                ? "Partially Paid"
+                                                : "Not Paid"
+                                        : "Written Off",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15,
+                                          color: widget.student
+                                                      .writtenOffStatus !=
+                                                  1
+                                              ? widget.student.paymentStatus ==
+                                                      'paid'
+                                                  ? AppColors.green
+                                                  : widget.student
+                                                              .paymentStatus ==
+                                                          'partial'
+                                                      ? AppColors.yellow
+                                                      : AppColors.primaryColor
+                                              : AppColors.green,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                              isShrunk
+                                  ? Icon(
+                                      Icons.expand_less,
+                                      color: AppColors.textColor,
+                                    )
+                                  : Icon(
+                                      Icons.expand_more,
+                                      color: AppColors.textColor,
+                                    ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

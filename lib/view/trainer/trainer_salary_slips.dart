@@ -57,7 +57,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
         if (state is AddedSalary) {
           Alert(context).show(message: state.message);
           trainerCubit.getSalaryDetails(
-            branchId: branchId,
+            trainerId: branchId,
             month: month,
             year: year,
             clean: true,
@@ -67,7 +67,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
         } else if (state is ClosedSalary) {
           Alert(context).show(message: state.message);
           trainerCubit.getSalaryDetails(
-            branchId: branchId,
+            trainerId: branchId,
             month: month,
             year: year,
             clean: true,
@@ -102,28 +102,13 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
                     const SizedBox(
                       height: 20,
                     ),
-                    BranchField(
-                      onSelect: (value) {
-                        setState(() {
-                          branchId = value;
-                          trainerCubit.branchId = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
                     ScheduleField(
                       title: 'Year',
                       hint: 'Select a year',
                       dateMonth: true,
                       onDateSelect: (DateTime value) {
-                        if (branchId == null) {
-                          Alert(context).show(message: "Select a branch");
-                        } else {
-                          year = value.year;
-                          doSearch(true);
-                        }
+                        year = value.year;
+                        doSearch(true);
                       },
                       time: false,
                       year: true,
@@ -149,48 +134,53 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
                     const SizedBox(
                       height: 10,
                     ),
-                    state is FetchingTrainerSalary ||
-                            state is AddingSalary ||
-                            state is ClosingSalary
-                        ? const Center(
-                            child: CircularProgressIndicator(),
+                    if (state is FetchingTrainerSalary && !state.pagination)
+                      Padding(
+                        padding: EdgeInsets.only(top: 15.h),
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    if (state is AddingSalary || state is ClosingSalary)
+                      Padding(
+                        padding: EdgeInsets.only(top: 15.h),
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    trainerCubit.salaryInvoice.isEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.all(64),
+                            child: Center(
+                              child: Text(
+                                state is TrainerSalaryFetched
+                                    ? 'Sorry, No matching results found'
+                                    : 'Select a date to list the slips.',
+                              ),
+                            ),
                           )
-                        : Column(
-                            children: [
-                              trainerCubit.salaryInvoice.isEmpty
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(64),
-                                      child: Center(
-                                        child: Text(
-                                          state is TrainerSalaryFetched
-                                              ? 'Sorry, No matching results found'
-                                              : 'Select a branch and date to list the slips.',
-                                        ),
-                                      ),
-                                    )
-                                  : ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount:
-                                          trainerCubit.salaryInvoice.length,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        Data studentInvoice =
-                                            trainerCubit.salaryInvoice[index];
-                                        return SalaryListItem(
-                                          salary: studentInvoice,
-                                          onTap: () async {
-                                            trainerCubit.slipDetails =
-                                                studentInvoice;
-                                            await Navigator.pushNamed(
-                                                context, AddOrEditSalary.route);
-                                            doSearch(true);
-                                          },
-                                        );
-                                      },
-                                    ),
-                            ],
-                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: trainerCubit.salaryInvoice.length,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              Data studentInvoice =
+                                  trainerCubit.salaryInvoice[index];
+                              return SalaryListItem(
+                                salary: studentInvoice,
+                                onTap: () async {
+                                  trainerCubit.slipDetails = studentInvoice;
+                                  await Navigator.pushNamed(
+                                      context, AddOrEditSalary.route);
+                                  doSearch(true);
+                                },
+                              );
+                            },
+                          ),
+                    if (state is FetchingTrainerSalary && state.pagination)
+                      const Center(
+                        child: Text('Fetching more items ..'),
+                      )
                   ],
                 ),
               ),
@@ -203,7 +193,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
 
   void doSearch(bool clean) {
     context.read<TrainerCubit>().getSalaryDetails(
-          branchId: branchId,
+          trainerId: context.read<TrainerCubit>().trainer?.trainerDetail?[0].id,
           month: month,
           year: year,
           clean: clean,

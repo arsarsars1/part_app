@@ -92,7 +92,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                           ?.trainerDetail?.profilePic !=
                                       ""
                                   ? '${F.baseUrl}'
-                                      '/admin/images/student/'
+                                      '/admin/images/trainer/'
                                       '${trainerCubit.trainerSlipDetails?.trainerDetail?.id}/${trainerCubit.trainerSlipDetails?.trainerDetail?.profilePic}'
                                   : '',
                             ),
