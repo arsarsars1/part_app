@@ -57,6 +57,8 @@ class FeeCubit extends Cubit<FeeState> {
     int? month,
     int? year,
     String? feeType,
+    int? studentId,
+    String? paymentStatus,
     bool clean = false,
   }) async {
     if (clean) {
@@ -80,6 +82,8 @@ class FeeCubit extends Cubit<FeeState> {
       year: year,
       feeType: feeType,
       searchQuery: searchQuery,
+      studentId: studentId,
+      paymentStatus: paymentStatus,
       pageNo: page,
     );
 
