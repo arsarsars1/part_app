@@ -495,7 +495,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                         painter: DottedBorderPainter(),
                                         child: Center(
                                           child: Text(
-                                            "${edit.editedByType}",
+                                            "${edit.editedBy?.name}",
                                             style: TextStyle(
                                                 color: AppColors.grey700,
                                                 decorationThickness: 2.85,
@@ -729,7 +729,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 5.w, vertical: 5.h),
                                   child: Text(
-                                    "Payment has been deleted by ${payment?.deletedByType}",
+                                    "Payment has been deleted by ${payment?.deletedBy?.name}",
                                     maxLines: 5,
                                     softWrap: true,
                                     style: Theme.of(context)
