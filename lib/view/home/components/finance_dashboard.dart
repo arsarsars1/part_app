@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/trainer/trainer_salary_slips_home.dart';
 
 class FinanceDashboard extends StatelessWidget {
   const FinanceDashboard({Key? key}) : super(key: key);
@@ -23,8 +24,8 @@ class FinanceDashboard extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  height: 90.h,
-                  padding: const EdgeInsets.all(16),
+                  height: 95.h,
+                  padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
                     color: AppColors.primaryColor,
                     borderRadius: BorderRadius.circular(5),
@@ -60,36 +61,43 @@ class FinanceDashboard extends StatelessWidget {
                 width: 16,
               ),
               Expanded(
-                child: Container(
-                  height: 90.h,
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(5),
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        const Color(0xFF0575E6).withOpacity(0.90),
-                        const Color(0xFF640078).withOpacity(0.60),
+                child: GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    TrainerSalarySlipsHome.route,
+                  ),
+                  child: Container(
+                    height: 95.h,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(5),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          const Color(0xFF0575E6).withOpacity(0.90),
+                          const Color(0xFF640078).withOpacity(0.60),
+                        ],
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Trainer Salary'),
+                        SizedBox(
+                          height: 4.h,
+                        ),
+                        Text(
+                          'Pay Salary To Trainers',
+                          textAlign: TextAlign.start,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontSize: 12.sp,
+                                  ),
+                        ),
                       ],
                     ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Trainer Salary'),
-                      SizedBox(
-                        height: 4.h,
-                      ),
-                      Text(
-                        'Pay Salary To Trainers',
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontSize: 12.sp,
-                            ),
-                      ),
-                    ],
                   ),
                 ),
               ),

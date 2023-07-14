@@ -726,7 +726,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 5.w, vertical: 5.h),
                                   child: Text(
-                                    "${payment?.edits?[(payment.edits?.length ?? 0) - 1].reason}",
+                                    "${payment?.edits?[(payment.edits?.length ?? 0) - 1].reason} (Edited by ${payment?.edits?[(payment.edits?.length ?? 0) - 1].editedBy?.name})",
                                     maxLines: 5,
                                     softWrap: true,
                                     style: Theme.of(context)

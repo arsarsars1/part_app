@@ -61,6 +61,7 @@ import 'package:part_app/view/trainer/salary_details.dart';
 import 'package:part_app/view/trainer/trainer_branches.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view/trainer/trainer_salary_slips.dart';
+import 'package:part_app/view/trainer/trainer_salary_slips_home.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
 import 'attendance/attendance_batch_list.dart';
@@ -420,6 +421,11 @@ class RouteGenerator {
       case TrainerSalarySlips.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerSalarySlips(),
+          settings: settings,
+        );
+      case TrainerSalarySlipsHome.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerSalarySlipsHome(),
           settings: settings,
         );
       case AddOrEditSalary.route:

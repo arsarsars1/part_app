@@ -391,92 +391,95 @@ class _FeeListItemState extends State<SalaryListItem> {
                                     );
                                   },
                                 ).toList()),
-                          SizedBox(
-                            width: (MediaQuery.of(context).size.width) / 3 +
-                                (2 * (MediaQuery.of(context).size.width) / 5),
-                            child: CustomPaint(
-                              painter: DottedBorderPainter(),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5.w, vertical: 5.h),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "Total Amount Paid:   ",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
-                                    Text(
-                                      (widget.salary.paymentsTotal ?? [])
-                                              .isNotEmpty
-                                          ? "₹ ${widget.salary.paymentsTotal?[0].total}"
-                                          : "₹ 0.00",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color: (widget.salary
-                                                            .paymentsTotal ??
-                                                        [])
-                                                    .isNotEmpty
-                                                ? (widget
-                                                            .salary
-                                                            .paymentsTotal?[0]
-                                                            .total ==
-                                                        widget.salary
-                                                            .salaryAmount)
-                                                    ? AppColors.green
-                                                    : AppColors.primaryColor
-                                                : AppColors.primaryColor,
-                                          ),
-                                    ),
-                                  ],
+                          if ((widget.salary.payments ?? []).isNotEmpty)
+                            SizedBox(
+                              width: (MediaQuery.of(context).size.width) / 3 +
+                                  (2 * (MediaQuery.of(context).size.width) / 5),
+                              child: CustomPaint(
+                                painter: DottedBorderPainter(),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 5.w, vertical: 5.h),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "Total Amount Paid:   ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(),
+                                      ),
+                                      Text(
+                                        (widget.salary.paymentsTotal ?? [])
+                                                .isNotEmpty
+                                            ? "₹ ${widget.salary.paymentsTotal?[0].total}"
+                                            : "₹ 0.00",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: (widget.salary
+                                                              .paymentsTotal ??
+                                                          [])
+                                                      .isNotEmpty
+                                                  ? (widget
+                                                              .salary
+                                                              .paymentsTotal?[0]
+                                                              .total ==
+                                                          widget.salary
+                                                              .salaryAmount)
+                                                      ? AppColors.green
+                                                      : AppColors.primaryColor
+                                                  : AppColors.primaryColor,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: (MediaQuery.of(context).size.width) / 3 +
-                                (2 * (MediaQuery.of(context).size.width) / 5),
-                            child: CustomPaint(
-                              painter: DottedBorderPainter(),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5.w, vertical: 5.h),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "Amount Payable:   ",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
-                                    Text(
-                                      "₹ ${widget.salary.pendingAmount}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color:
-                                                widget.salary.pendingAmount ==
-                                                        "0"
-                                                    ? AppColors.green
-                                                    : AppColors.primaryColor,
-                                          ),
-                                    ),
-                                  ],
+                          if ((widget.salary.payments ?? []).isNotEmpty)
+                            SizedBox(
+                              width: (MediaQuery.of(context).size.width) / 3 +
+                                  (2 * (MediaQuery.of(context).size.width) / 5),
+                              child: CustomPaint(
+                                painter: DottedBorderPainter(),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 5.w, vertical: 5.h),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "Amount Payable:   ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(),
+                                      ),
+                                      Text(
+                                        "₹ ${widget.salary.pendingAmount}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color:
+                                                  widget.salary.pendingAmount ==
+                                                          "0"
+                                                      ? AppColors.green
+                                                      : AppColors.primaryColor,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
+                          if ((widget.salary.payments ?? []).isNotEmpty)
+                            SizedBox(
+                              height: 20.h,
+                            ),
                           if (widget.salary.paymentStatus != "paid")
                             if (widget.salary.writtenOffStatus != 1)
                               Column(

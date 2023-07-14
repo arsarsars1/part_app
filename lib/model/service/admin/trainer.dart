@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -204,14 +205,25 @@ class TrainerService {
     int? trainerId,
     int? month,
     int? year,
+    int? branchId,
+    String? searchQuery = '',
     required int pageNo,
   }) async {
     try {
-      var response = await _client.get(
-          queryPath: month != null
-              ? '/admin/trainers/$trainerId/salary-history?year=$year&month=$month&page=$pageNo'
-              : '/admin/trainers/$trainerId/salary-history?year=$year&page=$pageNo');
-      return trainerSalarySlipFromJson(jsonEncode(response));
+      log(branchId.toString());
+      if (branchId == null) {
+        var response = await _client.get(
+            queryPath: month != null
+                ? '/admin/trainers/$trainerId/salary-history?year=$year&month=$month&page=$pageNo'
+                : '/admin/trainers/$trainerId/salary-history?year=$year&page=$pageNo');
+        return trainerSalarySlipFromJson(jsonEncode(response));
+      } else {
+        var response = await _client.get(
+            queryPath: month != null
+                ? '/admin/salary/trainers?branch_id=$branchId&year=$year&month=$month&page=$pageNo'
+                : '/admin/salary/trainers?branch_id=$branchId&year=$year&page=$pageNo');
+        return trainerSalarySlipFromJson(jsonEncode(response));
+      }
     } catch (e) {
       return null;
     }

@@ -7,20 +7,21 @@ import 'package:part_app/view/trainer/add_or_edit_salary.dart';
 import 'package:part_app/view/trainer/components/salary_list_item.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class TrainerSalarySlips extends StatefulWidget {
-  static const route = '/trainer-salary-slips';
+class TrainerSalarySlipsHome extends StatefulWidget {
+  static const route = '/trainer-salary-slips-home';
 
-  const TrainerSalarySlips({Key? key}) : super(key: key);
+  const TrainerSalarySlipsHome({Key? key}) : super(key: key);
 
   @override
-  State<TrainerSalarySlips> createState() => _FeesDetailsViewState();
+  State<TrainerSalarySlipsHome> createState() => _FeesDetailsViewState();
 }
 
-class _FeesDetailsViewState extends State<TrainerSalarySlips> {
+class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   String? status;
+  int? branchId;
   String? query;
 
   int? year;
@@ -53,20 +54,10 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
     var trainerCubit = context.read<TrainerCubit>();
     return BlocConsumer<TrainerCubit, TrainerState>(
       listener: (context, state) {
-        if (state is AddedSalary) {
+        if (state is ClosedSalary) {
           Alert(context).show(message: state.message);
           trainerCubit.getSalaryDetails(
-            trainerId: trainerCubit.trainer?.trainerDetail?[0].id,
-            month: month,
-            year: year,
-            clean: true,
-          );
-        } else if (state is AddSalaryFailed) {
-          Alert(context).show(message: state.message);
-        } else if (state is ClosedSalary) {
-          Alert(context).show(message: state.message);
-          trainerCubit.getSalaryDetails(
-            trainerId: trainerCubit.trainer?.trainerDetail?[0].id,
+            trainerId: branchId,
             month: month,
             year: year,
             clean: true,
@@ -79,25 +70,22 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
         return Scaffold(
           key: scaffoldKey,
           appBar: const CommonBar(
-            title: 'Salary Payment History',
+            title: 'Salary Details',
           ),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 5.h,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  '${trainerCubit.trainer?.trainerDetail?[0].name}',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
               Expanded(
                 child: ListView(
                   controller: scrollController,
                   children: [
+                    BranchField(
+                      onSelect: (value) {
+                        setState(() {
+                          branchId = value;
+                        });
+                      },
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -129,6 +117,29 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
                         month = value?.id;
                         doSearch(true);
                       },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CommonField(
+                      title: 'Search',
+                      hint: 'Search By Name or Phone Number',
+                      onChange: (value) {
+                        if (value.isEmpty) {
+                          query = null;
+                          doSearch(true);
+                        }
+                      },
+                      onSubmit: (value) {
+                        if (value.isEmpty) {
+                          query = null;
+                        } else {
+                          query = value;
+                        }
+                        doSearch(true);
+                      },
+                      textInputAction: TextInputAction.search,
+                      prefixIcon: const Icon(Icons.search),
                     ),
                     const SizedBox(
                       height: 10,
@@ -193,6 +204,8 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
   void doSearch(bool clean) {
     context.read<TrainerCubit>().getSalaryDetails(
           trainerId: context.read<TrainerCubit>().trainer?.trainerDetail?[0].id,
+          branchId: branchId,
+          searchQuery: query,
           month: month,
           year: year,
           clean: clean,

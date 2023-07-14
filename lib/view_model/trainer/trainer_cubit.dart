@@ -374,6 +374,8 @@ class TrainerCubit extends Cubit<TrainerState> {
     int? month,
     int? year,
     bool clean = false,
+    String? searchQuery = '',
+    int? branchId,
   }) async {
     if (clean) {
       page = 1;
@@ -394,6 +396,8 @@ class TrainerCubit extends Cubit<TrainerState> {
       year: year,
       trainerId: trainerId,
       pageNo: page,
+      branchId: branchId,
+      searchQuery: searchQuery,
     );
 
     if (response?.status == 1) {
@@ -403,8 +407,10 @@ class TrainerCubit extends Cubit<TrainerState> {
       }
 
       salaryInvoice.addAll(response?.salarySlips?.data ?? []);
-      salaryInvoice.removeWhere((element) =>
-          element.trainerDetail?.name != trainer?.trainerDetail?[0].name);
+      if (branchId == null) {
+        salaryInvoice.removeWhere((element) =>
+            element.trainerDetail?.name != trainer?.trainerDetail?[0].name);
+      }
       emit(TrainerSalaryFetched(moreItems: nextPageUrl != null));
     }
   }
