@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
-import 'package:part_app/view/batch/components/schedule_field.dart';
+import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/fee/add_or_edit_fees.dart';
@@ -8,20 +8,24 @@ import 'package:part_app/view/fee/components/fee_list_item.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 
-class StudentFeeDetails extends StatefulWidget {
-  static const route = '/student-fee-details';
+class StudentAdmissionFeeDetails extends StatefulWidget {
+  static const route = '/student-admission-fee-details';
 
-  const StudentFeeDetails({Key? key}) : super(key: key);
+  const StudentAdmissionFeeDetails({Key? key}) : super(key: key);
 
   @override
-  State<StudentFeeDetails> createState() => _StudentFeeDetailsState();
+  State<StudentAdmissionFeeDetails> createState() =>
+      _StudentAdmissionFeeDetailsState();
 }
 
-class _StudentFeeDetailsState extends State<StudentFeeDetails> {
+class _StudentAdmissionFeeDetailsState
+    extends State<StudentAdmissionFeeDetails> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
+  int? branchId;
   String? query;
+  BatchModel? batch;
 
   int? year;
   String? status = 'all';
@@ -54,14 +58,16 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
-        title: 'Student Fees Details',
+        title: 'Student Admission Fees Details',
       ),
       body: BlocConsumer<FeeCubit, FeeState>(
         listener: (context, state) {
           var cubit = context.read<FeeCubit>();
           if (state is FeeReminderSent) {
             Alert(context).show(message: state.message);
-            cubit.getStudentFeeDetails(
+            cubit.getFeeDetails(
+              branchId: branchId,
+              batchId: batch?.id,
               month: month,
               year: year,
               feeType: feeType,
@@ -72,7 +78,9 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
             Alert(context).show(message: state.message);
           } else if (state is WrittenOff) {
             Alert(context).show(message: state.message);
-            cubit.getStudentFeeDetails(
+            cubit.getFeeDetails(
+              branchId: branchId,
+              batchId: batch?.id,
               month: month,
               year: year,
               feeType: feeType,
@@ -134,44 +142,6 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    if (feeType == 'monthly')
-                      Column(
-                        children: [
-                          ScheduleField(
-                            title: 'Year',
-                            hint: 'Select a year',
-                            dateMonth: true,
-                            onDateSelect: (DateTime value) {
-                              year = value.year;
-                              doSearch(true);
-                            },
-                            time: false,
-                            year: true,
-                            selectedDate: finalDate,
-                            controller: dateController,
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          CommonField(
-                            title: 'Month',
-                            hint: 'Select a month',
-                            dropDown: true,
-                            dropDownItems: DefaultValues().months,
-                            defaultItem: DefaultValues().months.firstWhere(
-                                  (element) =>
-                                      element.title?.toLowerCase() == 'all',
-                                ),
-                            onChange: (value) {
-                              month = value?.id;
-                              doSearch(true);
-                            },
-                          ),
-                        ],
-                      ),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -248,9 +218,7 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
   }
 
   void doSearch(bool clean) {
-    context.read<FeeCubit>().getStudentFeeDetails(
-          month: month,
-          year: year,
+    context.read<FeeCubit>().getAdmissionFeeDetails(
           feeType: feeType,
           searchQuery: query,
           paymentStatus: status,

@@ -26,9 +26,9 @@ class DefaultValues {
       item: 'Not Paid',
     ),
     const DropDownItem(
-      id: 'overdue',
-      title: 'Overdue',
-      item: 'Overdue',
+      id: 'partial',
+      title: 'Partially Paid',
+      item: 'Partially Paid',
     ),
   ];
   List<DropDownItem> months = [

@@ -26,6 +26,7 @@ import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
 import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/fees_details_view.dart';
+import 'package:part_app/view/fee/student_admission_fee_details.dart';
 import 'package:part_app/view/fee/student_fee_details.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/leads/add_lead.dart';
@@ -422,6 +423,11 @@ class RouteGenerator {
       case StudentFeeDetails.route:
         return MaterialPageRoute(
           builder: (_) => const StudentFeeDetails(),
+          settings: settings,
+        );
+      case StudentAdmissionFeeDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAdmissionFeeDetails(),
           settings: settings,
         );
       case TrainerSalarySlips.route:
