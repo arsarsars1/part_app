@@ -89,14 +89,16 @@ class _AddBatchState extends State<AddBatch> {
                       const SizedBox(
                         height: 20,
                       ),
-                      BranchField(onSelect: (value) {
-                        branchId = value;
-                        context.read<BranchCubit>().getBranchTrainers(
-                              branchId: '$branchId',
-                              clean: true,
-                            );
-                        setState(() {});
-                      }),
+                      BranchField(
+                        onSelect: (value) {
+                          branchId = value;
+                          context.read<BranchCubit>().getBranchTrainers(
+                                branchId: '$branchId',
+                                clean: true,
+                              );
+                          setState(() {});
+                        },
+                      ),
                       const SizedBox(
                         height: 20,
                       ),

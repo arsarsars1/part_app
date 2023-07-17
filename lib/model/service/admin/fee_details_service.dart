@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:part_app/model/data_model/batch_fee_invoice.dart';
 import 'package:part_app/model/data_model/common.dart';
@@ -43,6 +44,7 @@ class FeeDetailsService {
                   : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo');
       return batchFeeInvoiceListFromJson(jsonEncode(response));
     } catch (e) {
+      log(e.toString());
       return null;
     }
   }

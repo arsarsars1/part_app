@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice.dart';
 import 'package:part_app/model/data_model/common.dart';
@@ -74,22 +76,27 @@ class FeeCubit extends Cubit<FeeState> {
       return;
     }
 
-    BatchFeeInvoiceList? response = await _feeService.feeDetails(
-      branchId: branchId,
-      batchId: batchId,
-      month: month,
-      year: year,
-      feeType: feeType,
-      searchQuery: searchQuery,
-      pageNo: page,
-    );
+    try {
+      BatchFeeInvoiceList? response = await _feeService.feeDetails(
+        branchId: branchId,
+        batchId: batchId,
+        month: month,
+        year: year,
+        feeType: feeType,
+        searchQuery: searchQuery,
+        pageNo: page,
+      );
 
-    if (response?.status == 1) {
-      nextPageUrl = response?.batchFeeInvoices?.nextPageUrl;
-      if (nextPageUrl != null) {
-        page++;
+      if (response?.status == 1) {
+        nextPageUrl = response?.batchFeeInvoices?.nextPageUrl;
+        if (nextPageUrl != null) {
+          page++;
+        }
+        batchInvoice.addAll(response?.batchFeeInvoices?.data ?? []);
+        emit(FeeFetched(moreItems: nextPageUrl != null));
       }
-      batchInvoice.addAll(response?.batchFeeInvoices?.data ?? []);
+    } catch (e) {
+      log(e.toString());
       emit(FeeFetched(moreItems: nextPageUrl != null));
     }
   }
@@ -139,7 +146,7 @@ class FeeCubit extends Cubit<FeeState> {
     }
   }
 
-   Future getAdmissionFeeDetails({
+  Future getAdmissionFeeDetails({
     String? searchQuery,
     String? feeType,
     int? studentId,

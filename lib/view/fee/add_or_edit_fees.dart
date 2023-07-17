@@ -136,27 +136,33 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "${feeCubit.batchFeeInvoice?.batchName}",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 11.sp,
-                                  ),
+                            SizedBox(
+                              width: 200,
+                              child: Text(
+                                "${feeCubit.batchFeeInvoice?.batchName}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      fontSize: 11.sp,
+                                    ),
+                              ),
                             ),
-                            Text(
-                              "${feeCubit.batchFeeInvoice?.branchName}",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 11.sp,
-                                  ),
+                            SizedBox(
+                              width: 200,
+                              child: Text(
+                                "${feeCubit.batchFeeInvoice?.branchName}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      fontSize: 11.sp,
+                                    ),
+                              ),
                             ),
                             Text(
                               "${feeCubit.batchFeeInvoice?.courseName}, ${feeCubit.batchFeeInvoice?.subjectName}",

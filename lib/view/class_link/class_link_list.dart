@@ -201,12 +201,15 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                   SizedBox(
                                     height: 10.h,
                                   ),
-                                  Text(
-                                    '${classLink.branchName}, ${classLink.batchName}, ${classLink.courseName}, ${classLink.subjectName}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
+                                  SizedBox(
+                                    width: 200,
+                                    child: Text(
+                                      '${classLink.branchName}, ${classLink.batchName}, ${classLink.courseName}, ${classLink.subjectName}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(),
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10.h,
