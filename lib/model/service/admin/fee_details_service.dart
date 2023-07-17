@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:part_app/model/data_model/batch_fee_invoice.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
+import 'package:part_app/model/data_model/fee_detail_history.dart';
 import 'package:part_app/model/service/api_client.dart';
 
 class FeeDetailsService {
@@ -32,11 +33,61 @@ class FeeDetailsService {
     required int pageNo,
   }) async {
     try {
-      // var response = await _client.get(queryPath: '/admin/students/$studentId');
       var response = await _client.get(
-          queryPath:
-              '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId');
+          queryPath: month == null || year == null
+              ? searchQuery == '' || searchQuery == null
+                  ? '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
+                  : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo'
+              : searchQuery == '' || searchQuery == null
+                  ? '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
+                  : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo');
       return batchFeeInvoiceListFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<FeeDetailHistory?> studentFeeDetails({
+    int? month,
+    int? year,
+    String? feeType,
+    String? searchQuery,
+    int? studentId,
+    String? paymentStatus,
+    required int pageNo,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath: feeType == 'monthly'
+              ? month != null
+                  ? paymentStatus != 'all'
+                      ? '/admin/students/$studentId/fee-details/$year/$month?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                      : '/admin/students/$studentId/fee-details/$year/$month?fee_type=$feeType&page=$pageNo'
+                  : paymentStatus != 'all'
+                      ? '/admin/students/$studentId/fee-details/$year?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                      : '/admin/students/$studentId/fee-details/$year?fee_type=$feeType&page=$pageNo'
+              : paymentStatus != 'all'
+                  ? '/admin/students/$studentId/fee-details?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                  : '/admin/students/$studentId/fee-details?fee_type=$feeType&page=$pageNo');
+      return feeDetailHistoryFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<FeeDetailHistory?> admissionFeeDetails({
+    String? feeType,
+    String? searchQuery,
+    int? studentId,
+    String? paymentStatus,
+    required int pageNo,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath: paymentStatus != 'all'
+              ? '/admin/students/$studentId/admission-fee-details?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+              : '/admin/students/$studentId/admission-fee-details?fee_type=$feeType&page=$pageNo');
+      return feeDetailHistoryFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

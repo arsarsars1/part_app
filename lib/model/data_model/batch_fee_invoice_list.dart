@@ -97,14 +97,14 @@ class Datum {
   String? courseName;
   String? subjectName;
   DateTime? paymentDueDate;
-  int? payableAmount;
+  String? payableAmount;
   int? reminderCount;
   int? writtenOffStatus;
-  DateTime? writtenOffDate;
-  int? writtenOffAmount;
-  String? writtenOffRemarks;
-  String? writtenOffByType;
-  int? writtenOffById;
+  dynamic writtenOffDate;
+  String? writtenOffAmount;
+  dynamic writtenOffRemarks;
+  dynamic writtenOffByType;
+  dynamic writtenOffById;
   String? paymentStatus;
   String? feeType;
   int? month;
@@ -116,9 +116,9 @@ class Datum {
   int? monthClassesConductedCount;
   int? monthAttendancePresentCount;
   int? cycleAttendancePresentCount;
-  int? pendingAmount;
+  String? pendingAmount;
   dynamic totalNoOfClasses;
-  By? writtenOffBy;
+  dynamic writtenOffBy;
   StudentDetail? studentDetail;
   List<Payment>? payments;
   List<PaymentsTotal>? paymentsTotal;
@@ -177,9 +177,7 @@ class Datum {
         payableAmount: json["payable_amount"],
         reminderCount: json["reminder_count"],
         writtenOffStatus: json["written_off_status"],
-        writtenOffDate: json["written_off_date"] == null
-            ? null
-            : DateTime.parse(json["written_off_date"]),
+        writtenOffDate: json["written_off_date"],
         writtenOffAmount: json["written_off_amount"],
         writtenOffRemarks: json["written_off_remarks"],
         writtenOffByType: json["written_off_by_type"],
@@ -197,9 +195,7 @@ class Datum {
         cycleAttendancePresentCount: json["cycle_attendance_present_count"],
         pendingAmount: json["pending_amount"],
         totalNoOfClasses: json["total_no_of_classes"],
-        writtenOffBy: json["written_off_by"] == null
-            ? null
-            : By.fromJson(json["written_off_by"]),
+        writtenOffBy: json["written_off_by"],
         studentDetail: json["student_detail"] == null
             ? null
             : StudentDetail.fromJson(json["student_detail"]),
@@ -228,8 +224,7 @@ class Datum {
         "payable_amount": payableAmount,
         "reminder_count": reminderCount,
         "written_off_status": writtenOffStatus,
-        "written_off_date":
-            "${writtenOffDate!.year.toString().padLeft(4, '0')}-${writtenOffDate!.month.toString().padLeft(2, '0')}-${writtenOffDate!.day.toString().padLeft(2, '0')}",
+        "written_off_date": writtenOffDate,
         "written_off_amount": writtenOffAmount,
         "written_off_remarks": writtenOffRemarks,
         "written_off_by_type": writtenOffByType,
@@ -247,7 +242,7 @@ class Datum {
         "cycle_attendance_present_count": cycleAttendancePresentCount,
         "pending_amount": pendingAmount,
         "total_no_of_classes": totalNoOfClasses,
-        "written_off_by": writtenOffBy?.toJson(),
+        "written_off_by": writtenOffBy,
         "student_detail": studentDetail?.toJson(),
         "payments": payments == null
             ? []
@@ -264,7 +259,7 @@ class Payment {
   DateTime? paymentDate;
   String? collectedByType;
   int? collectedById;
-  int? amount;
+  String? amount;
   String? paymentMethod;
   dynamic transactionId;
   dynamic chequeNumber;
@@ -272,8 +267,8 @@ class Payment {
   int? isDeleted;
   String? deletedByType;
   int? deletedById;
-  By? collectedBy;
-  By? deletedBy;
+  TedBy? collectedBy;
+  TedBy? deletedBy;
   List<Edit>? edits;
 
   Payment({
@@ -313,9 +308,10 @@ class Payment {
         deletedById: json["deleted_by_id"],
         collectedBy: json["collected_by"] == null
             ? null
-            : By.fromJson(json["collected_by"]),
-        deletedBy:
-            json["deleted_by"] == null ? null : By.fromJson(json["deleted_by"]),
+            : TedBy.fromJson(json["collected_by"]),
+        deletedBy: json["deleted_by"] == null
+            ? null
+            : TedBy.fromJson(json["deleted_by"]),
         edits: json["edits"] == null
             ? []
             : List<Edit>.from(json["edits"]!.map((x) => Edit.fromJson(x))),
@@ -344,18 +340,18 @@ class Payment {
       };
 }
 
-class By {
+class TedBy {
   String? name;
   int? userId;
   int? id;
 
-  By({
+  TedBy({
     this.name,
     this.userId,
     this.id,
   });
 
-  factory By.fromJson(Map<String, dynamic> json) => By(
+  factory TedBy.fromJson(Map<String, dynamic> json) => TedBy(
         name: json["name"],
         userId: json["user_id"],
         id: json["id"],
@@ -371,18 +367,18 @@ class By {
 class Edit {
   int? id;
   int? batchFeePaymentId;
-  int? previousAmount;
+  String? previousAmount;
   DateTime? previousDate;
-  int? newAmount;
+  String? newAmount;
   DateTime? newDate;
   String? reason;
   String? editedByType;
   int? editedById;
   int? isDeleted;
-  String? deletedByType;
-  int? deletedById;
+  dynamic deletedByType;
+  dynamic deletedById;
   TedBy? editedBy;
-  TedBy? deletedBy;
+  dynamic deletedBy;
 
   Edit({
     this.id,
@@ -420,9 +416,7 @@ class Edit {
         editedBy: json["edited_by"] == null
             ? null
             : TedBy.fromJson(json["edited_by"]),
-        deletedBy: json["deleted_by"] == null
-            ? null
-            : TedBy.fromJson(json["deleted_by"]),
+        deletedBy: json["deleted_by"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -441,27 +435,7 @@ class Edit {
         "deleted_by_type": deletedByType,
         "deleted_by_id": deletedById,
         "edited_by": editedBy?.toJson(),
-        "deleted_by": deletedBy?.toJson(),
-      };
-}
-
-class TedBy {
-  String? name;
-  int? id;
-
-  TedBy({
-    this.name,
-    this.id,
-  });
-
-  factory TedBy.fromJson(Map<String, dynamic> json) => TedBy(
-        name: json["name"],
-        id: json["id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "id": id,
+        "deleted_by": deletedBy,
       };
 }
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
+import 'package:part_app/flavors.dart';
+import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/components/dialog.dart';
@@ -9,11 +10,8 @@ import 'package:part_app/view/components/fee_reminder_button.dart';
 import 'package:part_app/view/components/large_button.dart';
 import 'package:part_app/view/components/user_image.dart';
 import 'package:part_app/view/constants/constant.dart';
-import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/components/write_off_fees.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
-import '../../../flavors.dart';
-import '../../../model/data_model/batch_fee_invoice_list.dart';
 
 class FeeListItem extends StatefulWidget {
   final Datum student;
@@ -32,77 +30,6 @@ class _FeeListItemState extends State<FeeListItem> {
   @override
   Widget build(BuildContext context) {
     var feeCubit = context.read<FeeCubit>();
-    int presentCount;
-    int fees = widget.student.payableAmount!;
-    int totalPayed = 0;
-    int payableAmount = 0;
-    String feeType;
-    String paymentText;
-    String dateTextOnShrink;
-    Color paymentColor;
-    bool showTable;
-
-    List<List<String>> tableData = [];
-
-    if (widget.student.feeType == 'class') {
-      feeType = 'Class Based';
-      presentCount = widget.student.cycleAttendancePresentCount ?? 0;
-    } else {
-      feeType = 'Monthly';
-      presentCount = widget.student.monthAttendancePresentCount!;
-    }
-
-    if (widget.student.paymentStatus == 'paid') {
-      paymentColor = AppColors.green;
-      paymentText = 'Paid Completely';
-      dateTextOnShrink =
-          'Paid On Date: ${widget.student.paymentDueDate?.toDateString()}';
-      showTable = true;
-      if (widget.student.payments!.isNotEmpty) {
-        for (int i = 0; i < widget.student.payments!.length; i++) {
-          DateTime date = widget.student.payments![i].paymentDate!;
-          int payedAmount = widget.student.payments![i].amount!;
-          totalPayed = totalPayed + payedAmount;
-          tableData.add([
-            DateFormat('dd-MM-yyyy').format(date),
-            widget.student.payments![i].collectedBy!.name.toString(),
-            payedAmount.toString()
-          ]);
-        }
-      }
-      payableAmount = fees - totalPayed;
-    } else if (widget.student.paymentStatus == 'partial') {
-      paymentColor = AppColors.yellow;
-      paymentText = 'Partially Paid';
-      dateTextOnShrink =
-          'Paid On Date: ${widget.student.paymentDueDate?.toDateString()}';
-      showTable = true;
-      if (widget.student.payments!.isNotEmpty) {
-        for (int i = 0; i < widget.student.payments!.length; i++) {
-          DateTime date = widget.student.payments![i].paymentDate!;
-          int payedAmount = widget.student.payments![i].amount!;
-          totalPayed = totalPayed + payedAmount;
-          tableData.add([
-            DateFormat('dd-MM-yyyy').format(date),
-            widget.student.payments![i].collectedBy!.name.toString(),
-            payedAmount.toString()
-          ]);
-        }
-      }
-      payableAmount = fees - totalPayed;
-    } else if (widget.student.paymentStatus == 'pending' &&
-        widget.student.writtenOffStatus == 1) {
-      paymentColor = AppColors.green;
-      paymentText = 'Written Off';
-      dateTextOnShrink = 'Date Date: ${widget.student.paymentDueDate}';
-      showTable = false;
-    } else {
-      paymentColor = AppColors.primaryColor;
-      paymentText = 'Not Paid';
-      dateTextOnShrink = 'Date Date: ${widget.student.paymentDueDate}';
-      showTable = false;
-    }
-
     return BlocConsumer<FeeCubit, FeeState>(
       listener: (context, state) {
         if (state is WrittenOff) {
@@ -112,7 +39,7 @@ class _FeeListItemState extends State<FeeListItem> {
             batchId: widget.student.batchId,
             month: widget.student.month,
             year: widget.student.year,
-            feeType: feeType,
+            feeType: widget.student.feeType,
             searchQuery: '',
             clean: true,
           );
@@ -126,7 +53,7 @@ class _FeeListItemState extends State<FeeListItem> {
             batchId: widget.student.batchId,
             month: widget.student.month,
             year: widget.student.year,
-            feeType: feeType,
+            feeType: widget.student.feeType,
             searchQuery: '',
             clean: true,
           );
@@ -143,7 +70,11 @@ class _FeeListItemState extends State<FeeListItem> {
         return ListTile(
           title: isShrunk
               ? GestureDetector(
-                  onTap: widget.onTap,
+                  onTap: () {
+                    setState(() {
+                      isShrunk = !isShrunk;
+                    });
+                  },
                   child: Padding(
                     padding: EdgeInsets.all(16.h),
                     child: Column(
@@ -158,7 +89,14 @@ class _FeeListItemState extends State<FeeListItem> {
                             ),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: paymentColor,
+                                color: widget.student.writtenOffStatus != 1
+                                    ? widget.student.paymentStatus == 'paid'
+                                        ? AppColors.green
+                                        : widget.student.paymentStatus ==
+                                                'partial'
+                                            ? AppColors.yellow
+                                            : AppColors.primaryColor
+                                    : AppColors.green,
                               ),
                             ),
                           ),
@@ -209,28 +147,34 @@ class _FeeListItemState extends State<FeeListItem> {
                                   ),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        feeType,
+                                        widget.student.feeType == 'monthly'
+                                            ? 'Monthly'
+                                            : 'Class Based',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge
                                             ?.copyWith(
-                                              color: AppColors.primaryColor,
+                                              color: widget.student.feeType ==
+                                                      'monthly'
+                                                  ? AppColors.primaryColor
+                                                  : AppColors.green,
                                             ),
                                       ),
                                       const SizedBox(
                                         width: 16,
                                       ),
-                                      Text(
-                                        "Class Attended: $presentCount/${widget.student.monthClassesConductedCount}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(),
-                                      ),
+                                      if (widget.student
+                                              .monthAttendancePresentCount !=
+                                          null)
+                                        Text(
+                                          "Class Attended: ${widget.student.monthAttendancePresentCount}/${widget.student.monthClassesConductedCount}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(),
+                                        ),
                                     ],
                                   ),
                                 ],
@@ -241,8 +185,6 @@ class _FeeListItemState extends State<FeeListItem> {
                               Column(
                                 children: [
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
@@ -266,8 +208,6 @@ class _FeeListItemState extends State<FeeListItem> {
                                     ],
                                   ),
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
@@ -282,21 +222,32 @@ class _FeeListItemState extends State<FeeListItem> {
                                         width: 10.w,
                                       ),
                                       Text(
-                                        widget.student.paymentDueDate != null
-                                            ? '${widget.student.paymentDueDate?.toDateString()}'
-                                            : 'Not Available',
+                                        widget.student.paymentDueDate == null
+                                            ? 'Not Applicable'
+                                            : '${widget.student.paymentDueDate?.toDateString()}',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge
                                             ?.copyWith(
-                                              color: AppColors.primaryColor,
+                                              color: widget.student
+                                                          .writtenOffStatus !=
+                                                      1
+                                                  ? widget.student
+                                                              .paymentStatus ==
+                                                          'paid'
+                                                      ? AppColors.green
+                                                      : widget.student
+                                                                  .paymentStatus ==
+                                                              'partial'
+                                                          ? AppColors.yellow
+                                                          : AppColors
+                                                              .primaryColor
+                                                  : AppColors.green,
                                             ),
                                       ),
                                     ],
                                   ),
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
@@ -311,7 +262,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                         width: 10.w,
                                       ),
                                       Text(
-                                        "Payment Status",
+                                        "Payment Status :",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge
@@ -320,24 +271,39 @@ class _FeeListItemState extends State<FeeListItem> {
                                     ],
                                   ),
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      const Text(
-                                        '',
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
                                       Text(
-                                        paymentText,
+                                        widget.student.writtenOffStatus != 1
+                                            ? widget.student.paymentStatus ==
+                                                    'paid'
+                                                ? "Completely Paid"
+                                                : widget.student
+                                                            .paymentStatus ==
+                                                        'partial'
+                                                    ? "Partially Paid"
+                                                    : "Not Paid"
+                                            : "Written Off",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge
                                             ?.copyWith(
-                                              color: paymentColor,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 15,
+                                              color: widget.student
+                                                          .writtenOffStatus !=
+                                                      1
+                                                  ? widget.student
+                                                              .paymentStatus ==
+                                                          'paid'
+                                                      ? AppColors.green
+                                                      : widget.student
+                                                                  .paymentStatus ==
+                                                              'partial'
+                                                          ? AppColors.yellow
+                                                          : AppColors
+                                                              .primaryColor
+                                                  : AppColors.green,
                                             ),
                                       ),
                                     ],
@@ -346,7 +312,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                     height: 10.h,
                                   ),
                                   Text(
-                                    'Fees : $fees',
+                                    'Fees :  ₹${widget.student.payableAmount}',
                                     textAlign: TextAlign.right,
                                     style: Theme.of(context)
                                         .textTheme
@@ -356,7 +322,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                   SizedBox(
                                     height: 10.h,
                                   ),
-                                  showTable == true
+                                  widget.student.payments != []
                                       ? Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -374,7 +340,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width /
-                                                            4,
+                                                            5,
                                                     child: CustomPaint(
                                                         painter:
                                                             DottedBorderPainter(),
@@ -408,7 +374,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width /
-                                                            4,
+                                                            3,
                                                     child: CustomPaint(
                                                       painter:
                                                           DottedBorderPainter(),
@@ -435,7 +401,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width /
-                                                            4,
+                                                            5,
                                                     child: CustomPaint(
                                                         painter:
                                                             DottedBorderPainter(),
@@ -464,7 +430,9 @@ class _FeeListItemState extends State<FeeListItem> {
                                                   ),
                                                 ),
                                               ],
-                                              rows: tableData.map((row) {
+                                              rows: (widget.student.payments ??
+                                                      [])
+                                                  .map((row) {
                                                 return DataRow(cells: [
                                                   DataCell(
                                                     SizedBox(
@@ -472,7 +440,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width /
-                                                              4,
+                                                              5,
                                                       child: CustomPaint(
                                                           painter:
                                                               DottedBorderPainter(),
@@ -485,9 +453,19 @@ class _FeeListItemState extends State<FeeListItem> {
                                                                           .only(
                                                                       left:
                                                                           5.0),
-                                                              child: Text(
-                                                                row[0],
-                                                              ),
+                                                              child:
+                                                                  row.isDeleted !=
+                                                                          1
+                                                                      ? Text(
+                                                                          "${row.paymentDate?.toDateString()}",
+                                                                        )
+                                                                      : Text(
+                                                                          "${row.paymentDate?.toDateString()}",
+                                                                          style: TextStyle(
+                                                                              color: AppColors.grey700,
+                                                                              decorationThickness: 2.85,
+                                                                              decoration: TextDecoration.lineThrough),
+                                                                        ),
                                                             ),
                                                           )),
                                                     ),
@@ -498,14 +476,26 @@ class _FeeListItemState extends State<FeeListItem> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width /
-                                                              4,
+                                                              3,
                                                       child: CustomPaint(
                                                         painter:
                                                             DottedBorderPainter(),
                                                         child: Center(
-                                                          child: Text(
-                                                            row[1],
-                                                          ),
+                                                          child:
+                                                              row.isDeleted != 1
+                                                                  ? Text(
+                                                                      "${row.collectedBy?.name}",
+                                                                    )
+                                                                  : Text(
+                                                                      "${row.collectedBy?.name}",
+                                                                      style: TextStyle(
+                                                                          color: AppColors
+                                                                              .grey700,
+                                                                          decorationThickness:
+                                                                              2.85,
+                                                                          decoration:
+                                                                              TextDecoration.lineThrough),
+                                                                    ),
                                                         ),
                                                       ),
                                                     ),
@@ -516,7 +506,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width /
-                                                              4,
+                                                              5,
                                                       child: CustomPaint(
                                                           painter:
                                                               DottedBorderPainter(),
@@ -529,9 +519,19 @@ class _FeeListItemState extends State<FeeListItem> {
                                                                           .only(
                                                                       right:
                                                                           5.0),
-                                                              child: Text(
-                                                                row[2],
-                                                              ),
+                                                              child:
+                                                                  row.isDeleted !=
+                                                                          1
+                                                                      ? Text(
+                                                                          "₹ ${row.amount}",
+                                                                        )
+                                                                      : Text(
+                                                                          "₹ ${row.amount}",
+                                                                          style: TextStyle(
+                                                                              color: AppColors.grey700,
+                                                                              decorationThickness: 2.85,
+                                                                              decoration: TextDecoration.lineThrough),
+                                                                        ),
                                                             ),
                                                           )),
                                                     ),
@@ -541,11 +541,15 @@ class _FeeListItemState extends State<FeeListItem> {
                                             ),
                                             SizedBox(
                                               height: 30.h,
-                                              width: (3 *
-                                                      MediaQuery.of(context)
+                                              width: (2 *
+                                                      (MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          5)) +
+                                                  (MediaQuery.of(context)
                                                           .size
-                                                          .width) /
-                                                  4,
+                                                          .width /
+                                                      3),
                                               child: CustomPaint(
                                                 painter: DottedBorderPainter(),
                                                 child: Padding(
@@ -553,9 +557,6 @@ class _FeeListItemState extends State<FeeListItem> {
                                                           .symmetric(
                                                       horizontal: 5.0),
                                                   child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.end,
                                                     children: [
@@ -567,13 +568,29 @@ class _FeeListItemState extends State<FeeListItem> {
                                                             ?.copyWith(),
                                                       ),
                                                       Text(
-                                                        "₹ $totalPayed",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyLarge
-                                                            ?.copyWith(
-                                                                color: AppColors
-                                                                    .green),
+                                                        (widget.student.paymentsTotal ??
+                                                                    [])
+                                                                .isNotEmpty
+                                                            ? "₹ ${widget.student.paymentsTotal?[0].total}"
+                                                            : "₹ 0.00",
+                                                        style:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyLarge
+                                                                ?.copyWith(
+                                                                  color: (widget.student.paymentsTotal ??
+                                                                              [])
+                                                                          .isNotEmpty
+                                                                      ? (widget.student.paymentsTotal?[0].total ==
+                                                                              widget
+                                                                                  .student.payableAmount)
+                                                                          ? AppColors
+                                                                              .green
+                                                                          : AppColors
+                                                                              .primaryColor
+                                                                      : AppColors
+                                                                          .primaryColor,
+                                                                ),
                                                       ),
                                                     ],
                                                   ),
@@ -582,20 +599,21 @@ class _FeeListItemState extends State<FeeListItem> {
                                             ),
                                             SizedBox(
                                               height: 30.h,
-                                              width: (3 *
-                                                      MediaQuery.of(context)
+                                              width: (2 *
+                                                      (MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          5)) +
+                                                  (MediaQuery.of(context)
                                                           .size
-                                                          .width) /
-                                                  4,
+                                                          .width /
+                                                      3),
                                               child: CustomPaint(
                                                 painter: DottedBorderPainter(),
                                                 child: Padding(
                                                   padding: const EdgeInsets
                                                       .symmetric(horizontal: 5),
                                                   child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.end,
                                                     children: [
@@ -607,13 +625,20 @@ class _FeeListItemState extends State<FeeListItem> {
                                                             ?.copyWith(),
                                                       ),
                                                       Text(
-                                                        '₹ $payableAmount',
+                                                        '₹ ${widget.student.pendingAmount}',
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .bodyLarge
                                                             ?.copyWith(
-                                                                color: AppColors
-                                                                    .primaryColor),
+                                                              color: widget
+                                                                          .student
+                                                                          .pendingAmount ==
+                                                                      "0"
+                                                                  ? AppColors
+                                                                      .green
+                                                                  : AppColors
+                                                                      .primaryColor,
+                                                            ),
                                                       ),
                                                     ],
                                                   ),
@@ -630,19 +655,21 @@ class _FeeListItemState extends State<FeeListItem> {
                                         ),
                                   FeeReminderButton(
                                     title: 'Send Reminder',
-                                    onTap: paymentText == 'Paid Completely'
-                                        ? () {}
-                                        : () {
-                                            feeCubit.sendReminder(
-                                                batchFeeInvoiceId:
-                                                    widget.student.id);
-                                          },
+                                    onTap:
+                                        widget.student.paymentStatus == 'paid'
+                                            ? () {}
+                                            : () {
+                                                feeCubit.sendReminder(
+                                                    batchFeeInvoiceId:
+                                                        widget.student.id);
+                                              },
                                     margin: 0,
-                                    disabled:
-                                        paymentText == 'Paid Completely' ||
-                                                paymentText == 'Written Off'
-                                            ? true
-                                            : false,
+                                    disabled: widget.student.paymentStatus ==
+                                                'paid' ||
+                                            widget.student.paymentStatus ==
+                                                'written off'
+                                        ? true
+                                        : false,
                                     count: widget.student.reminderCount,
                                   ),
                                   const SizedBox(
@@ -704,11 +731,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                       ),
                                   LargeButton(
                                     title: 'Add Or Edit Fees',
-                                    onTap: () {
-                                      feeCubit.student = widget.student;
-                                      Navigator.pushNamed(
-                                          context, AddOrEditFees.route);
-                                    },
+                                    onTap: widget.onTap,
                                     color: AppColors.defaultBlue,
                                     margin: 0,
                                   ),
@@ -726,22 +749,15 @@ class _FeeListItemState extends State<FeeListItem> {
                               SizedBox(
                                 height: 10.h,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isShrunk = !isShrunk;
-                                  });
-                                },
-                                child: isShrunk
-                                    ? Icon(
-                                        Icons.expand_less,
-                                        color: AppColors.textColor,
-                                      )
-                                    : Icon(
-                                        Icons.expand_more,
-                                        color: AppColors.textColor,
-                                      ),
-                              ),
+                              isShrunk
+                                  ? Icon(
+                                      Icons.expand_less,
+                                      color: AppColors.textColor,
+                                    )
+                                  : Icon(
+                                      Icons.expand_more,
+                                      color: AppColors.textColor,
+                                    ),
                             ],
                           ),
                         ),
@@ -763,109 +779,138 @@ class _FeeListItemState extends State<FeeListItem> {
                           ),
                           child: Container(
                             decoration: BoxDecoration(
-                              color: paymentColor,
+                              color: widget.student.writtenOffStatus != 1
+                                  ? widget.student.paymentStatus == 'paid'
+                                      ? AppColors.green
+                                      : widget.student.paymentStatus ==
+                                              'partial'
+                                          ? AppColors.yellow
+                                          : AppColors.primaryColor
+                                  : AppColors.green,
                             ),
                           ),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 16.h,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: AppColors.liteDark,
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    UserImage(
-                                      profilePic: widget.student.studentDetail!
-                                                  .profilePic !=
-                                              ""
-                                          ? '${F.baseUrl}'
-                                              '/admin/images/student/'
-                                              '${widget.student.studentDetail!.id}/${widget.student.studentDetail?.profilePic}'
-                                          : '',
-                                    ),
-                                    SizedBox(width: 16.w),
-                                    SizedBox(
-                                      width: 100,
-                                      child: Text(
-                                        '${widget.student.studentDetail?.name}',
-                                        maxLines: 2,
-                                        softWrap: true,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isShrunk = !isShrunk;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 16.h,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: AppColors.liteDark,
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      UserImage(
+                                        profilePic: widget
+                                                    .student
+                                                    .studentDetail!
+                                                    .profilePic !=
+                                                ""
+                                            ? '${F.baseUrl}'
+                                                '/admin/images/student/'
+                                                '${widget.student.studentDetail!.id}/${widget.student.studentDetail?.profilePic}'
+                                            : '',
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    FeeReminderButton(
-                                      title: '',
-                                      onTap: () {},
-                                      margin: 0,
-                                      disabled:
-                                          paymentText == 'Paid Completely' ||
-                                                  paymentText == 'Written Off'
-                                              ? true
-                                              : false,
-                                      count: widget.student.reminderCount,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  dateTextOnShrink,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        color: AppColors.textColor,
+                                      SizedBox(width: 16.w),
+                                      SizedBox(
+                                        width: 100,
+                                        child: Text(
+                                          '${widget.student.studentDetail?.name}',
+                                          maxLines: 2,
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(),
+                                        ),
                                       ),
-                                ),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Text(
-                                  paymentText,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        color: paymentColor,
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      FeeReminderButton(
+                                        title: '',
+                                        onTap: () {},
+                                        margin: 0,
+                                        disabled: widget.student
+                                                        .paymentStatus ==
+                                                    'paid' ||
+                                                widget.student.paymentStatus ==
+                                                    'Written Off'
+                                            ? true
+                                            : false,
+                                        count: widget.student.reminderCount,
                                       ),
-                                ),
-                              ],
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  isShrunk = !isShrunk;
-                                });
-                              },
-                              child: isShrunk
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Due Date: ${widget.student.paymentDueDate?.toDateString()}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: AppColors.textColor,
+                                        ),
+                                  ),
+                                  Text(
+                                    widget.student.writtenOffStatus != 1
+                                        ? widget.student.paymentStatus == 'paid'
+                                            ? "Completely Paid"
+                                            : widget.student.paymentStatus ==
+                                                    'partial'
+                                                ? "Partially Paid"
+                                                : "Not Paid"
+                                        : "Written Off",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15,
+                                          color: widget.student
+                                                      .writtenOffStatus !=
+                                                  1
+                                              ? widget.student.paymentStatus ==
+                                                      'paid'
+                                                  ? AppColors.green
+                                                  : widget.student
+                                                              .paymentStatus ==
+                                                          'partial'
+                                                      ? AppColors.yellow
+                                                      : AppColors.primaryColor
+                                              : AppColors.green,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                              isShrunk
                                   ? Icon(
                                       Icons.expand_less,
                                       color: AppColors.textColor,
@@ -874,8 +919,8 @@ class _FeeListItemState extends State<FeeListItem> {
                                       Icons.expand_more,
                                       color: AppColors.textColor,
                                     ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],

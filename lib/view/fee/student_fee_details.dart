@@ -1,37 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
-import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/components/fee_list_item.dart';
-import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 
-class FeesDetailsView extends StatefulWidget {
-  static const route = '/fees';
+class StudentFeeDetails extends StatefulWidget {
+  static const route = '/student-fee-details';
 
-  const FeesDetailsView({Key? key}) : super(key: key);
+  const StudentFeeDetails({Key? key}) : super(key: key);
 
   @override
-  State<FeesDetailsView> createState() => _FeesDetailsViewState();
+  State<StudentFeeDetails> createState() => _StudentFeeDetailsState();
 }
 
-class _FeesDetailsViewState extends State<FeesDetailsView> {
+class _StudentFeeDetailsState extends State<StudentFeeDetails> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String? status;
-  int? branchId;
   String? query;
-  BatchModel? batch;
 
   int? year;
+  String? status = 'all';
   int? month;
   DateTime? finalDate = DateTime.now();
-  String? feeType;
+  String? feeType = 'monthly';
 
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -58,16 +54,14 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
-        title: 'Fees Details',
+        title: 'Student Fees Details',
       ),
       body: BlocConsumer<FeeCubit, FeeState>(
         listener: (context, state) {
           var cubit = context.read<FeeCubit>();
           if (state is FeeReminderSent) {
             Alert(context).show(message: state.message);
-            cubit.getFeeDetails(
-              branchId: branchId,
-              batchId: batch?.id,
+            cubit.getStudentFeeDetails(
               month: month,
               year: year,
               feeType: feeType,
@@ -78,9 +72,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
             Alert(context).show(message: state.message);
           } else if (state is WrittenOff) {
             Alert(context).show(message: state.message);
-            cubit.getFeeDetails(
-              branchId: branchId,
-              batchId: batch?.id,
+            cubit.getStudentFeeDetails(
               month: month,
               year: year,
               feeType: feeType,
@@ -98,19 +90,18 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
               SizedBox(
                 height: 5.h,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'Select The Following Filters To Get The',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'Fee Details',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Button(
+                      height: 30.h,
+                      onTap: () {},
+                      title: 'Add New Fee',
+                    ),
+                  )
+                ],
               ),
               Expanded(
                 child: ListView(
@@ -119,143 +110,83 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    BranchField(
-                      onSelect: (value) {
-                        setState(() {
-                          branchId = value;
-                        });
-                        batchController.clear();
-                        feeTypeController.clear();
-                        dateController.clear();
-                        batch = null;
-                        feeTypeController.clear();
-                        context.read<BatchCubit>().getBatchesByBranch(
-                              branchId: branchId,
-                              clean: true,
-                            );
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CommonField(
-                      controller: batchController,
-                      onTap: () {
-                        dateController.clear();
-                        feeTypeController.clear();
-                        feeType = null;
-                        if (branchId != null) {
-                          scaffoldKey.currentState?.showBottomSheet(
-                            elevation: 10,
-                            backgroundColor: Colors.transparent,
-                            (context) => BatchPicker(
-                              branchId: branchId!,
-                              status: '',
-                              onSelect: (value) {
-                                batch = value;
-                                batchController.text = value.name;
-                                // setState(() {});
-                              },
-                            ),
-                          );
-                        } else {
-                          Alert(context).show(
-                            message: 'Please select Branch and Status.',
-                          );
-                        }
-                      },
-                      disabled: true,
-                      title: 'Batch *',
-                      hint: 'Select Batch',
-                      onChange: (value) {},
-                      suffixIcon: const Padding(
-                        padding: EdgeInsets.only(right: 32),
-                        child: Icon(
-                          Icons.arrow_drop_down,
-                          size: 24,
-                          color: Colors.white24,
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: TabButton(
+                        onChange: (String value) {
+                          if (value == 'Monthly') {
+                            setState(() {
+                              feeType = 'monthly';
+                              cubit.batchInvoice.clear();
+                              status = 'all';
+                            });
+                          } else {
+                            setState(() {
+                              feeType = 'class';
+                              cubit.batchInvoice.clear();
+                              status = 'all';
+                            });
+                          }
+                        },
+                        options: const [
+                          'Monthly',
+                          'Class Based',
+                        ],
                       ),
-                      validator: (value) {
-                        return value == null ? 'Please select batch.' : null;
-                      },
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 20.h,
                     ),
-                    CommonField(
-                      controller: feeTypeController,
-                      title: 'Fee Type *',
-                      hint: 'Select Fee Type',
-                      dropDown: true,
-                      dropDownItems: DefaultValues().feeType,
-                      onChange: (value) {
-                        if (value.id == 'monthly') {
-                          setState(() {
-                            feeType = value.id;
-                            dateController.clear();
-                          });
-                        } else {
-                          setState(() {
-                            feeType = value.id;
-                            dateController.clear();
-                            month = null;
-                            year = null;
-                          });
-                          doSearch(true);
-                        }
-                      },
-                      validator: (value) {
-                        return value == null ? 'Please select Fee Type.' : null;
-                      },
-                      onSubmit: (value) {},
-                    ),
-                    if (feeType == "monthly")
+                    if (feeType == 'monthly')
                       Column(
                         children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
                           ScheduleField(
-                            title: 'Month, Year',
-                            hint: 'Select month & year',
+                            title: 'Year',
+                            hint: 'Select a year',
                             dateMonth: true,
                             onDateSelect: (DateTime value) {
                               year = value.year;
-                              month = value.month;
-                              finalDate = value;
                               doSearch(true);
                             },
                             time: false,
-                            onlyMonth: true,
+                            year: true,
                             selectedDate: finalDate,
                             controller: dateController,
                           ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          CommonField(
+                            title: 'Month',
+                            hint: 'Select a month',
+                            dropDown: true,
+                            dropDownItems: DefaultValues().months,
+                            defaultItem: DefaultValues().months.firstWhere(
+                                  (element) =>
+                                      element.title?.toLowerCase() == 'all',
+                                ),
+                            onChange: (value) {
+                              month = value?.id;
+                              doSearch(true);
+                            },
+                          ),
                         ],
                       ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 20.h,
                     ),
                     CommonField(
-                      disabled: batch == null,
-                      title: 'Search',
-                      hint: 'Search By Name or Phone Number',
+                      title: 'Payment Status',
+                      hint: 'Select a status',
+                      dropDown: true,
+                      dropDownItems: DefaultValues().paymentStatuses,
+                      defaultItem: DefaultValues().paymentStatuses.firstWhere(
+                            (element) => element.title?.toLowerCase() == 'all',
+                          ),
                       onChange: (value) {
-                        if (value.isEmpty) {
-                          query = null;
-                          doSearch(true);
-                        }
-                      },
-                      onSubmit: (value) {
-                        if (value.isEmpty) {
-                          query = null;
-                        } else {
-                          query = value;
-                        }
+                        status = value?.id;
                         doSearch(true);
                       },
-                      textInputAction: TextInputAction.search,
-                      prefixIcon: const Icon(Icons.search),
                     ),
                     const SizedBox(
                       height: 10,
@@ -317,13 +248,13 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
   }
 
   void doSearch(bool clean) {
-    context.read<FeeCubit>().getFeeDetails(
-          branchId: branchId,
-          batchId: batch?.id,
+    context.read<FeeCubit>().getStudentFeeDetails(
           month: month,
           year: year,
           feeType: feeType,
           searchQuery: query,
+          paymentStatus: status,
+          studentId: context.read<StudentCubit>().student?.studentDetail?[0].id,
           clean: clean,
         );
   }

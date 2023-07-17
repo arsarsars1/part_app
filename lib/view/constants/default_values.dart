@@ -9,6 +9,28 @@ import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
 class DefaultValues {
+  List<DropDownItem> paymentStatuses = [
+    const DropDownItem(
+      id: 'all',
+      title: 'All',
+      item: 'All',
+    ),
+    const DropDownItem(
+      id: 'paid',
+      title: 'Paid Completely',
+      item: 'Paid Completely',
+    ),
+    const DropDownItem(
+      id: 'pending',
+      title: 'Not Paid',
+      item: 'Not Paid',
+    ),
+    const DropDownItem(
+      id: 'partial',
+      title: 'Partially Paid',
+      item: 'Partially Paid',
+    ),
+  ];
   List<DropDownItem> months = [
     const DropDownItem(
       id: null,
