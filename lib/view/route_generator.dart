@@ -21,11 +21,14 @@ import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
+import 'package:part_app/view/calender/calender_events.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
 import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/fees_details_view.dart';
+import 'package:part_app/view/fee/student_admission_fee_details.dart';
+import 'package:part_app/view/fee/student_fee_details.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/leads/add_lead.dart';
 import 'package:part_app/view/leads/lead_details.dart';
@@ -51,6 +54,7 @@ import 'package:part_app/view/students/student_attendence.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
+import 'package:part_app/view/trainer/add_or_edit_salary.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
 import 'package:part_app/view/trainer/assigned_batches.dart';
@@ -59,6 +63,8 @@ import 'package:part_app/view/trainer/edit_trainer.dart';
 import 'package:part_app/view/trainer/salary_details.dart';
 import 'package:part_app/view/trainer/trainer_branches.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
+import 'package:part_app/view/trainer/trainer_salary_slips.dart';
+import 'package:part_app/view/trainer/trainer_salary_slips_home.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
 import 'attendance/attendance_batch_list.dart';
@@ -415,7 +421,36 @@ class RouteGenerator {
           builder: (_) => const FeesDetailsView(),
           settings: settings,
         );
-
+      case StudentFeeDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentFeeDetails(),
+          settings: settings,
+        );
+      case StudentAdmissionFeeDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAdmissionFeeDetails(),
+          settings: settings,
+        );
+      case TrainerSalarySlips.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerSalarySlips(),
+          settings: settings,
+        );
+      case TrainerSalarySlipsHome.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerSalarySlipsHome(),
+          settings: settings,
+        );
+      case AddOrEditSalary.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddOrEditSalary(),
+          settings: settings,
+        );
+      case CalenderEvent.route:
+        return MaterialPageRoute(
+          builder: (_) => const CalenderEvent(),
+          settings: settings,
+        );  
       default:
         return MaterialPageRoute(
           builder: (_) => const Login(),

@@ -37,7 +37,7 @@ class CommonField extends StatelessWidget {
 
   final EdgeInsets? contentPadding;
 
-  const CommonField({
+  const   CommonField({
     Key? key,
     required this.title,
     this.hint,

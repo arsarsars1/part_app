@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:part_app/model/data_model/branch_trainer_response.dart';
 import 'package:part_app/model/data_model/common.dart';
+import 'package:part_app/model/data_model/salary_slip.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
+import 'package:part_app/model/data_model/trainer_salary_slip.dart';
 import 'package:part_app/model/service/api.dart';
 
 class TrainerService {
@@ -19,6 +22,58 @@ class TrainerService {
       );
       return trainerResponse;
     } on Exception {
+      return null;
+    }
+  }
+
+  Future<Common?> addSalary(int? slipId, Map<String, dynamic> data) async {
+    try {
+      var response = await _client.post(
+        postPath: '/admin/salary/trainers/$slipId/payments',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> closeOffFees(
+      Map<String, dynamic> request, int? slipId) async {
+    try {
+      var response = await _client.post(
+        postPath: '/admin/salary/trainers/$slipId/write-off',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> deleteSalary(int? slipId, int? paymentId) async {
+    try {
+      var response = await _client.delete(
+        queryPath: '/admin/salary/trainers/$slipId/payments/$paymentId',
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> editSalary(
+      Map<String, dynamic> request, int? slipId, int? paymentId) async {
+    try {
+      var response = await _client.post(
+        postPath: '/admin/salary/trainers/$slipId/payments/$paymentId',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
       return null;
     }
   }
@@ -142,6 +197,46 @@ class TrainerService {
 
       return commonFromJson(jsonEncode(map));
     } on Exception {
+      return null;
+    }
+  }
+
+  Future<TrainerSalarySlip?> salaryDetails({
+    int? trainerId,
+    int? month,
+    int? year,
+    int? branchId,
+    String? searchQuery = '',
+    required int pageNo,
+  }) async {
+    try {
+      log(branchId.toString());
+      if (branchId == null) {
+        var response = await _client.get(
+            queryPath: month != null
+                ? '/admin/trainers/$trainerId/salary-history?year=$year&month=$month&page=$pageNo'
+                : '/admin/trainers/$trainerId/salary-history?year=$year&page=$pageNo');
+        return trainerSalarySlipFromJson(jsonEncode(response));
+      } else {
+        var response = await _client.get(
+            queryPath: month != null
+                ? '/admin/salary/trainers?branch_id=$branchId&year=$year&month=$month&page=$pageNo'
+                : '/admin/salary/trainers?branch_id=$branchId&year=$year&page=$pageNo');
+        return trainerSalarySlipFromJson(jsonEncode(response));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<SalarySlip?> salaryPayments({
+    required int? trainerSlipId,
+  }) async {
+    try {
+      var response =
+          await _client.get(queryPath: '/admin/salary/trainers/$trainerSlipId');
+      return salarySlipFromJson(jsonEncode(response));
+    } catch (e) {
       return null;
     }
   }

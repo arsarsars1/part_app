@@ -1,33 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
+import 'package:part_app/flavors.dart';
+import 'package:part_app/model/data_model/trainer_salary_slip.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/fee/components/edit_fees.dart';
-import 'package:part_app/view/fee/components/fee_list_item.dart';
-import 'package:part_app/view_model/fee/fee_cubit.dart';
+import 'package:part_app/view/trainer/components/edit_salary.dart';
+import 'package:part_app/view/trainer/components/salary_list_item.dart';
+import 'package:part_app/view_model/trainer/trainer_cubit.dart';
 
-class AddOrEditFees extends StatefulWidget {
-  static const route = '/fees/add-fees';
-  const AddOrEditFees({super.key});
+class AddOrEditSalary extends StatefulWidget {
+  static const route = '/fees/add-salary';
+  const AddOrEditSalary({super.key});
 
   @override
-  State<AddOrEditFees> createState() => _AddOrEditFeesState();
+  State<AddOrEditSalary> createState() => _AddOrEditSalaryState();
 }
 
-class _AddOrEditFeesState extends State<AddOrEditFees> {
+class _AddOrEditSalaryState extends State<AddOrEditSalary> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController dateController = TextEditingController();
   DateTime? date;
   var formKey = GlobalKey<FormState>();
   String? amount;
-  late FeeCubit feeCubit;
+  late TrainerCubit trainerCubit;
   @override
   void initState() {
-    feeCubit = context.read<FeeCubit>();
+    trainerCubit = context.read<TrainerCubit>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await feeCubit.getBatchInvoice(feeCubit.student.id);
+      await trainerCubit.getSalaryInvoice(trainerCubit.slipDetails?.id);
     });
     super.initState();
   }
@@ -37,34 +38,34 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
-        title: 'Edit Fee Details',
+        title: 'Add InHand Salary Payments',
       ),
-      body: BlocConsumer<FeeCubit, FeeState>(
+      body: BlocConsumer<TrainerCubit, TrainerState>(
         listener: (context, state) {
-          if (state is AddedFees) {
+          if (state is AddedSalary) {
             date = null;
             dateController.text = "";
             Alert(context).show(message: state.message);
-            feeCubit.getBatchInvoice(feeCubit.student.id);
-          } else if (state is AddFeesFailed) {
+            trainerCubit.getSalaryInvoice(trainerCubit.trainerSlipDetails?.id);
+          } else if (state is AddSalaryFailed) {
             Alert(context).show(message: state.message);
-          } else if (state is FeesDeleted) {
+          } else if (state is DeletedSalary) {
             Alert(context).show(message: state.message);
-            feeCubit.getBatchInvoice(feeCubit.student.id);
-          } else if (state is DeleteFeesFailed) {
+            trainerCubit.getSalaryInvoice(trainerCubit.trainerSlipDetails?.id);
+          } else if (state is DeleteSalaryFailed) {
             Alert(context).show(message: state.message);
-          } else if (state is EdittedFee) {
+          } else if (state is EditedSalary) {
             Alert(context).show(message: state.message);
-            feeCubit.getBatchInvoice(feeCubit.student.id);
-          } else if (state is EditFeesFailed) {
+            trainerCubit.getSalaryInvoice(trainerCubit.trainerSlipDetails?.id);
+          } else if (state is EditSalaryFailed) {
             Alert(context).show(message: state.message);
           }
         },
         builder: (context, state) {
-          if (state is AddingFees ||
-              state is GettingBatchInvoice ||
-              state is DeletingFees ||
-              state is EditingFee) {
+          if (state is AddingSalary ||
+              state is FetchingSalaryDetails ||
+              state is DeletingSalary ||
+              state is EditingSalary) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -84,46 +85,41 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "${feeCubit.batchFeeInvoice?.studentDetail?.name}",
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        Row(
+                          children: [
+                            UserImage(
+                              profilePic: trainerCubit.trainerSlipDetails
+                                          ?.trainerDetail?.profilePic !=
+                                      ""
+                                  ? '${F.baseUrl}'
+                                      '/admin/images/trainer/'
+                                      '${trainerCubit.trainerSlipDetails?.trainerDetail?.id}/${trainerCubit.trainerSlipDetails?.trainerDetail?.profilePic}'
+                                  : '',
+                            ),
+                            SizedBox(width: 16.w),
+                            Text(
+                              "${trainerCubit.trainerSlipDetails?.trainerDetail?.name}",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.sp,
-                                  ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              feeCubit.batchFeeInvoice?.feeType == "monthly"
-                                  ? "Monthly"
-                                  : "Class Based",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    color: AppColors.green,
-                                    fontSize: 11.sp,
-                                  ),
-                            ),
-                            Text(
-                              "Class Attended: ${feeCubit.batchFeeInvoice?.monthAttendancePresentCount} / ${feeCubit.batchFeeInvoice?.monthClassesConductedCount}",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 11.sp,
                                   ),
                             ),
                           ],
                         ),
+                        // Text(
+                        //   "Class Attended: 12/12",
+                        //   maxLines: 2,
+                        //   overflow: TextOverflow.ellipsis,
+                        //   style:
+                        //       Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        //             fontSize: 11.sp,
+                        //           ),
+                        // ),
                       ],
                     ),
                     SizedBox(
@@ -136,36 +132,8 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              width: 200,
-                              child: Text(
-                                "${feeCubit.batchFeeInvoice?.batchName}",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      fontSize: 11.sp,
-                                    ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 200,
-                              child: Text(
-                                "${feeCubit.batchFeeInvoice?.branchName}",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      fontSize: 11.sp,
-                                    ),
-                              ),
-                            ),
                             Text(
-                              "${feeCubit.batchFeeInvoice?.courseName}, ${feeCubit.batchFeeInvoice?.subjectName}",
+                              "Course and Subject details not found",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
@@ -177,56 +145,6 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                             ),
                           ],
                         ),
-                        feeCubit.batchFeeInvoice?.feeType == "monthly"
-                            ? RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Payment Due Date: ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
-                                    TextSpan(
-                                      text: feeCubit
-                                          .batchFeeInvoice?.paymentDueDate
-                                          ?.toDateString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color: AppColors.primaryColor,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Payment Due in: ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
-                                    TextSpan(
-                                      text:
-                                          '${10 - (feeCubit.batchFeeInvoice?.monthClassesConductedCount ?? 0)}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color: AppColors.primaryColor,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
                       ],
                     ),
                     SizedBox(
@@ -238,6 +156,37 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
+                            "Payment Due In :",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      fontSize: 11.sp,
+                                    ),
+                          ),
+                          Text(
+                            '${trainerCubit.trainerSlipDetails?.salaryDueDate?.toDDMMMYYY()}',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: trainerCubit.trainerSlipDetails
+                                                  ?.paymentStatus ==
+                                              "paid"
+                                          ? AppColors.green
+                                          : trainerCubit.trainerSlipDetails
+                                                      ?.paymentStatus ==
+                                                  "pending"
+                                              ? AppColors.primaryColor
+                                              : trainerCubit.trainerSlipDetails
+                                                          ?.paymentStatus ==
+                                                      "partial"
+                                                  ? AppColors.yellow
+                                                  : AppColors.primaryColor,
+                                      fontSize: 11.sp,
+                                    ),
+                          ),
+                          Text(
                             "Payment Status :",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -247,36 +196,47 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                     ),
                           ),
                           Text(
-                            feeCubit.batchFeeInvoice?.paymentStatus == "paid"
-                                ? "Paid"
-                                : feeCubit.batchFeeInvoice?.paymentStatus ==
-                                        "pending"
-                                    ? "Not Paid"
-                                    : feeCubit.batchFeeInvoice?.paymentStatus ==
-                                            "partial"
-                                        ? "Partially Paid"
-                                        : "Overdue",
+                            trainerCubit.trainerSlipDetails?.writtenOffStatus !=
+                                    1
+                                ? trainerCubit.trainerSlipDetails
+                                            ?.paymentStatus ==
+                                        "paid"
+                                    ? "Paid"
+                                    : trainerCubit.trainerSlipDetails
+                                                ?.paymentStatus ==
+                                            "pending"
+                                        ? "Not Paid"
+                                        : trainerCubit.trainerSlipDetails
+                                                    ?.paymentStatus ==
+                                                "partial"
+                                            ? "Partially Paid"
+                                            : "Overdue"
+                                : "Written off",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(
-                                  color:
-                                      feeCubit.batchFeeInvoice?.paymentStatus ==
-                                              "paid"
-                                          ? AppColors.green
-                                          : feeCubit.batchFeeInvoice
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: trainerCubit.trainerSlipDetails
+                                                  ?.writtenOffStatus !=
+                                              1
+                                          ? trainerCubit.trainerSlipDetails
                                                       ?.paymentStatus ==
-                                                  "pending"
-                                              ? AppColors.primaryColor
-                                              : feeCubit.batchFeeInvoice
+                                                  "paid"
+                                              ? AppColors.green
+                                              : trainerCubit.trainerSlipDetails
                                                           ?.paymentStatus ==
-                                                      "partial"
-                                                  ? AppColors.yellow
-                                                  : AppColors.primaryColor,
-                                  fontSize: 11.sp,
-                                ),
+                                                      "pending"
+                                                  ? AppColors.primaryColor
+                                                  : trainerCubit
+                                                              .trainerSlipDetails
+                                                              ?.paymentStatus ==
+                                                          "partial"
+                                                      ? AppColors.yellow
+                                                      : AppColors.primaryColor
+                                          : AppColors.green,
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                           ),
                         ],
                       ),
@@ -284,25 +244,27 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Text(
-                      "Fees: ₹${feeCubit.batchFeeInvoice?.payableAmount}",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontSize: 12.sp,
-                          ),
+                    Center(
+                      child: Text(
+                        "Salary: ₹ ${trainerCubit.trainerSlipDetails?.salaryAmount}",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: 12.sp,
+                            ),
+                      ),
                     ),
                   ],
                 ),
               ),
-              if ((feeCubit.batchFeeInvoice?.payments ?? []).isNotEmpty)
+              if ((trainerCubit.trainerSlipDetails?.payments ?? []).isNotEmpty)
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: feeCubit.batchFeeInvoice?.payments?.length,
+                  itemCount: trainerCubit.trainerSlipDetails?.payments?.length,
                   itemBuilder: (context, index) {
                     Payment? payment =
-                        feeCubit.batchFeeInvoice?.payments?[index];
+                        trainerCubit.trainerSlipDetails?.payments?[index];
                     return Container(
                       margin: const EdgeInsets.all(16),
                       padding: const EdgeInsets.all(16),
@@ -317,7 +279,10 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  if (payment?.isDeleted == 1) {
+                                  if (payment?.isDeleted == 1 ||
+                                      trainerCubit.trainerSlipDetails
+                                              ?.writtenOffStatus ==
+                                          1) {
                                     Alert(context).show(
                                         message:
                                             'This payment is already deleted.');
@@ -326,12 +291,12 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                       context: context,
                                       buttonText: 'Yes',
                                       message:
-                                          'Are You Sure That You Want To Delete\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                          'Are You Sure That You Want To Delete\nThe Salary Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
                                       onTap: () {
                                         Navigator.pop(context);
-                                        feeCubit.deleteFees(
-                                            batchFeeInvoiceId:
-                                                feeCubit.batchFeeInvoice?.id,
+                                        trainerCubit.deleteSalary(
+                                            slipId: trainerCubit
+                                                .trainerSlipDetails?.id,
                                             paymentId: payment?.id);
                                       },
                                     ).show();
@@ -360,18 +325,21 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  if (payment?.isDeleted == 1) {
+                                  if (payment?.isDeleted == 1 ||
+                                      trainerCubit.trainerSlipDetails
+                                              ?.writtenOffStatus ==
+                                          1) {
                                     Alert(context).show(
                                         message:
-                                            'This payment is already deleted.');
+                                            'This payment is already deleted or written off');
                                   } else {
                                     var formKey1 = GlobalKey<FormState>();
                                     String? reason, date, amount;
                                     CommonDialog(
                                       context: context,
                                       message:
-                                          'Are You Sure That You Want To Edit\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
-                                      subContent: EditFees(
+                                          'Are You Sure That You Want To Edit\nThe Salary Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                      subContent: EditSalary(
                                         formKey: formKey1,
                                         reason: (value) => reason = value,
                                         amount: (value) => amount = value,
@@ -381,13 +349,13 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                         formKey1.currentState!.save();
                                         if (formKey1.currentState!.validate()) {
                                           Navigator.pop(context);
-                                          feeCubit.editFees({
+                                          trainerCubit.editSalary({
                                             'new_date': date,
                                             'new_amount': amount,
                                             'reason': reason
                                           },
-                                              batchFeeInvoiceId:
-                                                  feeCubit.batchFeeInvoice?.id,
+                                              slipId: trainerCubit
+                                                  .trainerSlipDetails?.id,
                                               paymentId: payment?.id);
                                         }
                                       },
@@ -494,73 +462,75 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                               ),
                             ],
                             rows: (payment?.edits ?? []).map((edit) {
-                              return DataRow(cells: [
-                                DataCell(
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                    child: CustomPaint(
-                                        painter: DottedBorderPainter(),
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 5.0),
-                                            child: Text(
-                                              "${edit.previousDate?.toDateString()}",
-                                              style: TextStyle(
-                                                  color: AppColors.grey700,
-                                                  decorationThickness: 2.85,
-                                                  decoration: TextDecoration
-                                                      .lineThrough),
+                              return DataRow(
+                                cells: [
+                                  DataCell(
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          3.5,
+                                      child: CustomPaint(
+                                          painter: DottedBorderPainter(),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 5.0),
+                                              child: Text(
+                                                "${edit.previousDate?.toDateString()}",
+                                                style: TextStyle(
+                                                    color: AppColors.grey700,
+                                                    decorationThickness: 2.85,
+                                                    decoration: TextDecoration
+                                                        .lineThrough),
+                                              ),
                                             ),
-                                          ),
-                                        )),
+                                          )),
+                                    ),
                                   ),
-                                ),
-                                DataCell(
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                    child: CustomPaint(
-                                      painter: DottedBorderPainter(),
-                                      child: Center(
-                                        child: Text(
-                                          "${edit.editedBy?.name}",
-                                          style: TextStyle(
-                                              color: AppColors.grey700,
-                                              decorationThickness: 2.85,
-                                              decoration:
-                                                  TextDecoration.lineThrough),
+                                  DataCell(
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          3.5,
+                                      child: CustomPaint(
+                                        painter: DottedBorderPainter(),
+                                        child: Center(
+                                          child: Text(
+                                            "${edit.editedBy?.name}",
+                                            style: TextStyle(
+                                                color: AppColors.grey700,
+                                                decorationThickness: 2.85,
+                                                decoration:
+                                                    TextDecoration.lineThrough),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                DataCell(
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                    child: CustomPaint(
-                                        painter: DottedBorderPainter(),
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 5.0),
-                                            child: Text(
-                                              "${edit.previousAmount}",
-                                              style: TextStyle(
-                                                  color: AppColors.grey700,
-                                                  decorationThickness: 2.85,
-                                                  decoration: TextDecoration
-                                                      .lineThrough),
+                                  DataCell(
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          3.5,
+                                      child: CustomPaint(
+                                          painter: DottedBorderPainter(),
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 5.0),
+                                              child: Text(
+                                                "${edit.previousAmount}",
+                                                style: TextStyle(
+                                                    color: AppColors.grey700,
+                                                    decorationThickness: 2.85,
+                                                    decoration: TextDecoration
+                                                        .lineThrough),
+                                              ),
                                             ),
-                                          ),
-                                        )),
+                                          )),
+                                    ),
                                   ),
-                                ),
-                              ]);
+                                ],
+                              );
                             }).toList()
                               ..add(
                                 payment?.isDeleted == 1
@@ -732,7 +702,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 5.w, vertical: 5.h),
                                   child: Text(
-                                    "${payment?.edits?[(payment.edits?.length ?? 0) - 1].reason} (Edited by ${payment?.edits?[(payment.edits?.length ?? 0) - 1].editedBy?.name})",
+                                    "${payment?.edits?[(payment.edits?.length ?? 0) - 1].reason}",
                                     maxLines: 5,
                                     softWrap: true,
                                     style: Theme.of(context)
@@ -797,7 +767,8 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                 ?.copyWith(),
                           ),
                           TextSpan(
-                            text: '₹${feeCubit.batchFeeInvoice?.pendingAmount}',
+                            text:
+                                '₹${trainerCubit.trainerSlipDetails?.pendingAmount}',
                             style:
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: AppColors.primaryColor,
@@ -812,109 +783,103 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
               SizedBox(
                 height: 15.h,
               ),
-              Text(
-                'Add New Part Payment',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Colors.white,
-                    ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    CommonField(
-                      inputType: const TextInputType.numberWithOptions(),
-                      length: 50,
-                      title: 'Fees *',
-                      hint: 'Enter Fees',
-                      validator: (value) {
-                        if (value == null || value.toString().isEmpty) {
-                          return 'Please enter fees';
-                        }
-                        return null;
-                      },
-                      onChange: (value) {
-                        amount = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 16.w),
-                          child: Text(
-                            'Date *',
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: TextFormField(
-                            controller: dateController,
-                            keyboardType: TextInputType.none,
-                            onTap: () async {
-                              await datePicker();
-                              dateController.text = date?.toDateString() ?? "";
-                            },
-                            readOnly: true,
-                            validator: (value) {
-                              if (value.toString().isEmpty) {
-                                return 'Please enter date';
-                              } else {
-                                return null;
-                              }
-                            },
-                            style:
-                                TextStyle(color: Colors.white.withOpacity(.7)),
-                            textAlign: TextAlign.start,
-                            cursorColor: Colors.white,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 15),
-                              suffixIcon: const Icon(
-                                Icons.calendar_month,
-                                size: 24,
-                                color: Colors.white24,
-                              ),
-                              hintText: 'Select the date',
-                              fillColor: AppColors.liteDark,
+              if (trainerCubit.trainerSlipDetails?.writtenOffStatus != 1 ||
+                  trainerCubit.trainerSlipDetails?.pendingAmount == "0.00")
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      CommonField(
+                        inputType: const TextInputType.numberWithOptions(),
+                        length: 50,
+                        title: 'Amount Paid *',
+                        hint: 'Enter amount paid',
+                        validator: (value) {
+                          if (value == null || value.toString().isEmpty) {
+                            return 'Please enter fees';
+                          }
+                          return null;
+                        },
+                        onChange: (value) {
+                          amount = value;
+                        },
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 16.w),
+                            child: Text(
+                              'Date *',
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                    Center(
-                      child: SafeArea(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 16.h),
-                          child: Button(
-                            onTap: () {
-                              if (formKey.currentState!.validate()) {
-                                feeCubit.addFees(feeCubit.batchFeeInvoice?.id, {
-                                  'amount': amount,
-                                  'payment_method': 'cash',
-                                  'payment_date': date?.toServerString()
-                                });
-                              }
-                            },
-                            title: 'Submit',
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: TextFormField(
+                              controller: dateController,
+                              keyboardType: TextInputType.none,
+                              onTap: () async {
+                                await datePicker();
+                                dateController.text =
+                                    date?.toDateString() ?? "";
+                              },
+                              readOnly: true,
+                              validator: (value) {
+                                if (value.toString().isEmpty) {
+                                  return 'Please enter date';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              style: TextStyle(
+                                  color: Colors.white.withOpacity(.7)),
+                              textAlign: TextAlign.start,
+                              cursorColor: Colors.white,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 15),
+                                suffixIcon: const Icon(
+                                  Icons.calendar_month,
+                                  size: 24,
+                                  color: Colors.white24,
+                                ),
+                                hintText: 'Select the date',
+                                fillColor: AppColors.liteDark,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      Center(
+                        child: SafeArea(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 16.h),
+                            child: Button(
+                              onTap: () {
+                                if (formKey.currentState!.validate()) {
+                                  trainerCubit.addSalary(
+                                      trainerCubit.trainerSlipDetails?.id, {
+                                    'amount': amount,
+                                    'payment_method': 'cash',
+                                    'payment_date': date?.toServerString()
+                                  });
+                                }
+                              },
+                              title: 'Submit',
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
             ],
           );
         },
