@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/view/calender/calender_view.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/session_alert.dart';
 import 'package:part_app/view/constants/app_colors.dart';
@@ -117,6 +118,8 @@ class _HomeState extends State<Home> {
   Widget getBody() {
     if (currentIndex == 0) {
       return const Dashboard();
+    } else if (currentIndex == 1) {
+      return const CalenderView();
     } else if (currentIndex == 3) {
       return const Leads();
     }

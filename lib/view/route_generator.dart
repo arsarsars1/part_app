@@ -21,6 +21,7 @@ import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
+import 'package:part_app/view/calender/calender_events.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
@@ -445,6 +446,11 @@ class RouteGenerator {
           builder: (_) => const AddOrEditSalary(),
           settings: settings,
         );
+      case CalenderEvent.route:
+        return MaterialPageRoute(
+          builder: (_) => const CalenderEvent(),
+          settings: settings,
+        );  
       default:
         return MaterialPageRoute(
           builder: (_) => const Login(),
