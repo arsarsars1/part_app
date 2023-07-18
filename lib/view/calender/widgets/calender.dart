@@ -5,14 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/calender/calender_events.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class Calender extends StatefulWidget {
+class Calender extends StatelessWidget {
   const Calender({Key? key}) : super(key: key);
 
-  @override
-  State<Calender> createState() => _CalenderState();
-}
-
-class _CalenderState extends State<Calender> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<HomeCubit>();
@@ -24,9 +19,11 @@ class _CalenderState extends State<Calender> {
         todayBorderColor: Colors.transparent,
         onDayPressed: (date, events) async {
           cubit.selectedDate = date;
-          Navigator.pushNamed(
+          print(cubit.selectedDate);
+          // Navigator.pushNamed(context, CalenderEvent.route);
+          Navigator.push(
             context,
-            CalenderEvent.route,
+            MaterialPageRoute(builder: (context) => const CalenderEvent()),
           );
         },
         daysHaveCircularBorder: true,
