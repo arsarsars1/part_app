@@ -95,7 +95,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                         : widget.student.paymentStatus ==
                                                 'partial'
                                             ? AppColors.yellow
-                                            : AppColors.primaryColor
+                                            : AppColors.red
                                     : AppColors.green,
                               ),
                             ),

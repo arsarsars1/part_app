@@ -51,7 +51,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                                     ? AppColors.green
                                     : widget.salary.paymentStatus == 'partial'
                                         ? AppColors.yellow
-                                        : AppColors.primaryColor
+                                        : AppColors.red
                                 : AppColors.green,
                           ),
                         ),
