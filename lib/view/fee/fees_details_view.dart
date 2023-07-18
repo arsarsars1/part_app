@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
@@ -32,7 +33,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
   int? month;
   DateTime? finalDate = DateTime.now();
   String? feeType;
-
+  final _dropDownKey = GlobalKey<FormFieldState>();
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController feeTypeController = TextEditingController();
@@ -128,6 +129,9 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                         feeTypeController.clear();
                         dateController.clear();
                         batch = null;
+                        feeType = null;
+                        _dropDownKey.currentState?.reset();
+                        cubit.batchInvoice.clear();
                         feeTypeController.clear();
                         context.read<BatchCubit>().getBatchesByBranch(
                               branchId: branchId,
@@ -154,6 +158,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                               onSelect: (value) {
                                 batch = value;
                                 batchController.text = value.name;
+                                cubit.batchInvoice.clear();
                                 // setState(() {});
                               },
                             ),
@@ -183,32 +188,74 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     const SizedBox(
                       height: 20,
                     ),
-                    CommonField(
-                      controller: feeTypeController,
-                      title: 'Fee Type *',
-                      hint: 'Select Fee Type',
-                      dropDown: true,
-                      dropDownItems: DefaultValues().feeType,
-                      onChange: (value) {
-                        if (value.id == 'monthly') {
-                          setState(() {
-                            feeType = value.id;
-                            dateController.clear();
-                          });
-                        } else {
-                          setState(() {
-                            feeType = value.id;
-                            dateController.clear();
-                            month = null;
-                            year = null;
-                          });
-                          doSearch(true);
-                        }
-                      },
-                      validator: (value) {
-                        return value == null ? 'Please select Fee Type.' : null;
-                      },
-                      onSubmit: (value) {},
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Fee Type *',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          DropdownButtonFormField<DropDownItem>(
+                            key: _dropDownKey,
+                            validator: (value) {
+                              return value == null
+                                  ? 'Please select Fee Type.'
+                                  : null;
+                            },
+                            hint: Text(
+                              'Select Fee Type',
+                              style: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .hintStyle,
+                            ),
+                            dropdownColor: Theme.of(context)
+                                .inputDecorationTheme
+                                .fillColor,
+                            value: null,
+                            decoration: const InputDecoration(
+                                // contentPadding: padding,
+                                ),
+                            items: DefaultValues().feeType.map((e) {
+                              return DropdownMenuItem(
+                                value: e,
+                                child: Text(
+                                  e.title ?? '',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: Colors.white,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              if (value?.id == 'monthly') {
+                                setState(() {
+                                  feeType = value?.id;
+                                  dateController.clear();
+                                  cubit.batchInvoice.clear();
+                                });
+                              } else {
+                                setState(() {
+                                  feeType = value?.id;
+                                  dateController.clear();
+                                  month = null;
+                                  year = null;
+                                  cubit.batchInvoice.clear();
+                                });
+                                doSearch(true);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                     if (feeType == "monthly")
                       Column(
@@ -224,6 +271,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                               year = value.year;
                               month = value.month;
                               finalDate = value;
+                              cubit.batchInvoice.clear();
                               doSearch(true);
                             },
                             time: false,
