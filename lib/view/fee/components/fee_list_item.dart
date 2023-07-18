@@ -211,12 +211,17 @@ class _FeeListItemState extends State<FeeListItem> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        '${widget.student.branchName}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(),
+                                      SizedBox(
+                                        width: 150.w,
+                                        child: Text(
+                                          '${widget.student.branchName}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
                                       ),
                                       SizedBox(
                                         width: 10.w,
