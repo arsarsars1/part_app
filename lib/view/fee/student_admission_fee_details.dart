@@ -98,19 +98,6 @@ class _StudentAdmissionFeeDetailsState
               SizedBox(
                 height: 5.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Button(
-                      height: 30.h,
-                      onTap: () {},
-                      title: 'Add New Fee',
-                    ),
-                  )
-                ],
-              ),
               Expanded(
                 child: ListView(
                   controller: scrollController,

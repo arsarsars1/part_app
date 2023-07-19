@@ -153,16 +153,6 @@ class _FeeListItemState extends State<FeeListItem> {
                                         .bodyLarge
                                         ?.copyWith(),
                                   ),
-                                  SizedBox(
-                                    width: 16.w,
-                                  ),
-                                  Text(
-                                    "Payment Due in:",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
                                 ],
                               ),
                               Row(
@@ -180,31 +170,6 @@ class _FeeListItemState extends State<FeeListItem> {
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Text(
-                                    widget.student.paymentDueDate == null
-                                        ? 'Not Applicable'
-                                        : '${widget.student.paymentDueDate?.toDateString()}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: widget.student
-                                                      .writtenOffStatus !=
-                                                  1
-                                              ? widget.student.paymentStatus ==
-                                                      'paid'
-                                                  ? AppColors.green
-                                                  : widget.student
-                                                              .paymentStatus ==
-                                                          'partial'
-                                                      ? AppColors.yellow
-                                                      : AppColors.primaryColor
-                                              : AppColors.green,
-                                        ),
                                   ),
                                 ],
                               ),

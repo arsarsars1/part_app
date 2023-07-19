@@ -197,11 +197,11 @@ class _StudentDetailsState extends State<StudentDetails> {
                 const SizedBox(
                   height: 16,
                 ),
-                LargeButton(
-                  title: 'Other Payments',
-                  onTap: () {},
-                  color: AppColors.defaultBlue,
-                ),
+                // LargeButton(
+                //   title: 'Other Payments',
+                //   onTap: () {},
+                //   color: AppColors.defaultBlue,
+                // ),
               ],
             );
           }
