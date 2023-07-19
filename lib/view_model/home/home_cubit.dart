@@ -3,7 +3,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/calender_events_list.dart';
+import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/dashboard.dart';
+import 'package:part_app/model/data_model/notification_list.dart';
 import 'package:part_app/model/service/dashboard/dashboard_service.dart';
 
 part 'home_state.dart';
@@ -30,6 +32,7 @@ class HomeCubit extends Cubit<HomeState> {
   List<TrainersJoined?>? trainersJoined;
   List<Lead?>? followUpLeads;
   List<Lead?>? newLeads;
+  List<NotificationData>? notifications;
 
   Future getDashboard() async {
     emit(DashboardLoading());
@@ -76,6 +79,46 @@ class HomeCubit extends Cubit<HomeState> {
       emit(GotCalenderEvents());
     } else {
       emit(GetCalenderEventsFailed('Failed to get the calender events list'));
+    }
+  }
+
+  Future getNotificationList({
+    bool clean = true,
+  }) async {
+    if (clean) {
+      notifications?.clear();
+      emit(GettingNotifications());
+    } else {
+      emit(GettingNotifications(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(GotNotifications());
+      return;
+    }
+
+    NotificationList? temp = await _service.getNotifications();
+    if (temp?.status == 1) {
+      notifications = temp?.notifications;
+      emit(GotNotifications());
+    } else {
+      emit(GetNotificationsFailed('Failed to get the calender events list'));
+    }
+  }
+
+  Future readNotification(String? notificationId) async {
+    try {
+      emit(ReadingNotification());
+      Common? response = await _service.readNotification(notificationId);
+
+      if (response?.status == 1) {
+        emit(ReadNotification(response?.message ?? 'Notification Read'));
+      } else {
+        emit(ReadNotificationFailed(
+            response?.message ?? 'Failed to read notification'));
+      }
+    } catch (e) {
+      return null;
     }
   }
 }
