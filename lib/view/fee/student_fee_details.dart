@@ -66,6 +66,9 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
               year: year,
               feeType: feeType,
               searchQuery: query,
+              paymentStatus: status,
+              studentId:
+                  context.read<StudentCubit>().student?.studentDetail?[0].id,
               clean: true,
             );
           } else if (state is FeeReminderSentFailed) {
@@ -77,6 +80,9 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
               year: year,
               feeType: feeType,
               searchQuery: query,
+              paymentStatus: status,
+              studentId:
+                  context.read<StudentCubit>().student?.studentDetail?[0].id,
               clean: true,
             );
           } else if (state is WriteOffFailed) {
