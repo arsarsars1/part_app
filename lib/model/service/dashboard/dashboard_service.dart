@@ -41,12 +41,21 @@ class DashboardService {
     }
   }
 
-  Future<Common?> readNotification(
-      String? notificationId) async {
+  Future<Common?> readNotification(String? notificationId) async {
     try {
       var response = await _apiClient.get(
-        queryPath:
-            '/admin/notifications/mark-as-read/5dc376a7-cde9-4f45-a5e0-5d46c40f0361',
+        queryPath: '/admin/notifications/mark-as-read/$notificationId',
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> deleteNotification(String? notificationId) async {
+    try {
+      var response = await _apiClient.delete(
+        queryPath: '/admin/notifications/$notificationId',
       );
       return commonFromJson(jsonEncode(response));
     } catch (e) {

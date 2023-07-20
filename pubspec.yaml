@@ -69,6 +69,7 @@ dependencies:
   flutter_holo_date_picker: ^1.1.0
   # package for showing calender is UI
   flutter_calendar_carousel: ^2.4.2
+  flutter_slidable: ^3.0.0
 
 dev_dependencies:
   flutter_test:

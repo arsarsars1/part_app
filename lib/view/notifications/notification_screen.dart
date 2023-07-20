@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:part_app/model/data_model/notification_list.dart';
 import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/components/common_bar.dart';
@@ -27,11 +28,20 @@ class NotificationScreen extends StatelessWidget {
                 Alert(context).show(message: state.message);
               } else if (state is ReadNotificationFailed) {
                 Alert(context).show(message: state.message);
+              } else if (state is ReadNotification) {
+                Alert(context).show(message: state.message);
+                cubit.getNotificationList(clean: false);
+              } else if (state is DeleteNotificationFailed) {
+                Alert(context).show(message: state.message);
+              } else if (state is DeletedNotification) {
+                Alert(context).show(message: state.message);
+                cubit.getNotificationList(clean: false);
               }
             },
             builder: (context, state) {
               if (state is GettingNotifications ||
-                  state is ReadingNotification) {
+                  state is ReadingNotification ||
+                  state is DeletingNotification) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -47,29 +57,46 @@ class NotificationScreen extends StatelessWidget {
                       onTap: () {
                         cubit.readNotification(notification?.id);
                       },
-                      child: CustomContainerForNotification(
-                        color: notification?.readAt != null
-                            ? AppColors.liteDark.withOpacity(0.5)
-                            : AppColors.liteDark,
-                        widget: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Slidable(
+                        endActionPane: ActionPane(
+                          motion: const ScrollMotion(),
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('${notification?.data?.title}'),
-                                if (notification?.readAt != null)
-                                  Text('${notification?.readAt}'),
-                              ],
-                            ),
-                            SizedBox(height: 10.h),
-                            Text(
-                              '${notification?.data?.message}',
-                              style: TextStyle(
-                                color: AppColors.primaryColor,
-                              ),
+                            SlidableAction(
+                              onPressed: (context) {
+                                cubit.deleteNotification(notification?.id);
+                              },
+                              backgroundColor: AppColors.red,
+                              foregroundColor: AppColors.grey100,
+                              icon: Icons.delete,
+                              label: 'Delete',
                             ),
                           ],
+                        ),
+                        child: CustomContainerForNotification(
+                          color: notification?.readAt != null
+                              ? AppColors.liteDark.withOpacity(0.5)
+                              : AppColors.liteDark,
+                          widget: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('${notification?.data?.title}'),
+                                  Text(
+                                      "${cubit.getTimeDifference(notification?.createdAt ?? DateTime.now())} ago"),
+                                ],
+                              ),
+                              SizedBox(height: 10.h),
+                              Text(
+                                '${notification?.data?.message}',
+                                style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );

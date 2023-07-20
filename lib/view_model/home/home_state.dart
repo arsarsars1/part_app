@@ -44,3 +44,15 @@ class ReadNotificationFailed extends HomeState {
   final String message;
   ReadNotificationFailed(this.message);
 }
+
+class DeletingNotification extends HomeState {}
+
+class DeletedNotification extends HomeState {
+  final String message;
+  DeletedNotification(this.message);
+}
+
+class DeleteNotificationFailed extends HomeState {
+  final String message;
+  DeleteNotificationFailed(this.message);
+}

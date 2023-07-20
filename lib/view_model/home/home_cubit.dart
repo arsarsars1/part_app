@@ -121,4 +121,54 @@ class HomeCubit extends Cubit<HomeState> {
       return null;
     }
   }
+
+  Future deleteNotification(String? notificationId) async {
+    try {
+      emit(DeletingNotification());
+      Common? response = await _service.deleteNotification(notificationId);
+
+      if (response?.status == 1) {
+        emit(DeletedNotification(response?.message ?? 'Notification Deleted'));
+      } else {
+        emit(DeleteNotificationFailed(
+            response?.message ?? 'Failed to delete notification'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  String getTimeDifference(DateTime targetDateTime) {
+    DateTime now = DateTime.now();
+    Duration difference = now.difference(targetDateTime);
+
+    if (difference.isNegative) {
+      return "The target time has already passed.";
+    }
+
+    // int days = difference.inDays;
+    int hours = difference.inHours;
+    int minutes = difference.inMinutes.remainder(60);
+    // int seconds = difference.inSeconds.remainder(60);
+
+    String timeDifference = "";
+
+    // if (days > 0) {
+    //   timeDifference += "${days}d ";
+    // }
+
+    if (hours > 0) {
+      timeDifference += "${hours}h ";
+    }
+
+    if (minutes > 0) {
+      timeDifference += "${minutes}m ";
+    }
+
+    // if (seconds > 0) {
+    //   timeDifference += "${seconds}s ";
+    // }
+
+    return timeDifference.trim();
+  }
 }

@@ -37,7 +37,7 @@ class NotificationData {
     String? notifiableType;
     int? notifiableId;
     Data? data;
-    dynamic readAt;
+    DateTime? readAt;
     DateTime? createdAt;
     DateTime? updatedAt;
 
@@ -64,7 +64,7 @@ class NotificationData {
         notifiableType: json["notifiable_type"],
         notifiableId: json["notifiable_id"],
         data: json["data"] == null ? null : Data.fromJson(json["data"]),
-        readAt: json["read_at"],
+        readAt: json["read_at"] == null ? null : DateTime.parse(json["read_at"]),
         createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
     );
@@ -78,7 +78,7 @@ class NotificationData {
         "notifiable_type": notifiableType,
         "notifiable_id": notifiableId,
         "data": data?.toJson(),
-        "read_at": readAt,
+        "read_at": readAt?.toIso8601String(),
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
     };
