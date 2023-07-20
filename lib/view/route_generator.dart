@@ -42,6 +42,7 @@ import 'package:part_app/view/manager/manager_page.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
+import 'package:part_app/view/notifications/notification_screen.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/students/add_student.dart';
@@ -450,7 +451,12 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const CalenderEvent(),
           settings: settings,
-        );  
+        );
+      case NotificationScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => const NotificationScreen(),
+          settings: settings,
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => const Login(),

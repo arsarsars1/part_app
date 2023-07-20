@@ -19,8 +19,6 @@ class Calender extends StatelessWidget {
         todayBorderColor: Colors.transparent,
         onDayPressed: (date, events) async {
           cubit.selectedDate = date;
-          print(cubit.selectedDate);
-          // Navigator.pushNamed(context, CalenderEvent.route);
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const CalenderEvent()),
