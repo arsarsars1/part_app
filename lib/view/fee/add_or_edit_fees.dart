@@ -178,55 +178,48 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                           ],
                         ),
                         feeCubit.batchFeeInvoice?.feeType == "monthly"
-                            ? RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Payment Due Date: ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
-                                    TextSpan(
-                                      text: feeCubit
-                                          .batchFeeInvoice?.paymentDueDate
-                                          ?.toDateString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color: AppColors.primaryColor,
-                                          ),
-                                    ),
-                                  ],
-                                ),
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Payment Due Date: ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
+                                  ),
+                                  Text(
+                                    "${feeCubit.batchFeeInvoice?.paymentDueDate?.toDateString()}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: AppColors.primaryColor,
+                                        ),
+                                  ),
+                                ],
                               )
-                            : RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Payment Due in: ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
-                                    TextSpan(
-                                      text:
-                                          '${10 - (feeCubit.batchFeeInvoice?.monthClassesConductedCount ?? 0)}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color: AppColors.primaryColor,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Payment Due In: ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
+                                  ),
+                                  Text(
+                                    '${10 - (feeCubit.batchFeeInvoice?.monthClassesConductedCount ?? 0)}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: AppColors.primaryColor,
+                                        ),
+                                  ),
+                                ],
+                              )
                       ],
                     ),
                     SizedBox(
