@@ -581,8 +581,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                 margin: 0,
                                 disabled:
                                     widget.student.paymentStatus == 'paid' ||
-                                            widget.student.paymentStatus ==
-                                                'written off'
+                                            widget.student.writtenOffStatus == 1
                                         ? true
                                         : false,
                                 count: widget.student.reminderCount,
