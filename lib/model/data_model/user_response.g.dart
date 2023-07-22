@@ -43,7 +43,9 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       trainerDetail: (json['trainer_detail'] as List<dynamic>?)
           ?.map((e) => Trainer.fromJson(e as Map<String, dynamic>))
           .toList(),
-      studentDetail: json['student_detail'] as List<dynamic>?,
+      studentDetail: (json['student_detail'] as List<dynamic>?)
+          ?.map((e) => StudentDetail.fromJson(e as Map<String, dynamic>))
+          .toList(),
       managerDetail: json['manager_detail'] as List<dynamic>?,
     );
 

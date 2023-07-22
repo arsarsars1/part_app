@@ -7,6 +7,7 @@
 import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 
 part 'user_response.freezed.dart';
@@ -45,7 +46,7 @@ abstract class User with _$User {
     DateTime? updatedAt,
     Admin? adminDetail,
     List<Trainer>? trainerDetail,
-    List<dynamic>? studentDetail,
+    List<StudentDetail>? studentDetail,
     List<dynamic>? managerDetail,
   }) = _User;
 

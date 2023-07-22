@@ -236,7 +236,7 @@ mixin _$User {
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   Admin? get adminDetail => throw _privateConstructorUsedError;
   List<Trainer>? get trainerDetail => throw _privateConstructorUsedError;
-  List<dynamic>? get studentDetail => throw _privateConstructorUsedError;
+  List<StudentDetail>? get studentDetail => throw _privateConstructorUsedError;
   List<dynamic>? get managerDetail => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -260,7 +260,7 @@ abstract class $UserCopyWith<$Res> {
       DateTime? updatedAt,
       Admin? adminDetail,
       List<Trainer>? trainerDetail,
-      List<dynamic>? studentDetail,
+      List<StudentDetail>? studentDetail,
       List<dynamic>? managerDetail});
 
   $AdminCopyWith<$Res>? get adminDetail;
@@ -336,7 +336,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       studentDetail: freezed == studentDetail
           ? _value.studentDetail
           : studentDetail // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<StudentDetail>?,
       managerDetail: freezed == managerDetail
           ? _value.managerDetail
           : managerDetail // ignore: cast_nullable_to_non_nullable
@@ -374,7 +374,7 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       DateTime? updatedAt,
       Admin? adminDetail,
       List<Trainer>? trainerDetail,
-      List<dynamic>? studentDetail,
+      List<StudentDetail>? studentDetail,
       List<dynamic>? managerDetail});
 
   @override
@@ -447,7 +447,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
       studentDetail: freezed == studentDetail
           ? _value._studentDetail
           : studentDetail // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<StudentDetail>?,
       managerDetail: freezed == managerDetail
           ? _value._managerDetail
           : managerDetail // ignore: cast_nullable_to_non_nullable
@@ -471,7 +471,7 @@ class _$_User implements _User {
       this.updatedAt,
       this.adminDetail,
       final List<Trainer>? trainerDetail,
-      final List<dynamic>? studentDetail,
+      final List<StudentDetail>? studentDetail,
       final List<dynamic>? managerDetail})
       : _trainerDetail = trainerDetail,
         _studentDetail = studentDetail,
@@ -507,9 +507,9 @@ class _$_User implements _User {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<dynamic>? _studentDetail;
+  final List<StudentDetail>? _studentDetail;
   @override
-  List<dynamic>? get studentDetail {
+  List<StudentDetail>? get studentDetail {
     final value = _studentDetail;
     if (value == null) return null;
     if (_studentDetail is EqualUnmodifiableListView) return _studentDetail;
@@ -604,7 +604,7 @@ abstract class _User implements User {
       final DateTime? updatedAt,
       final Admin? adminDetail,
       final List<Trainer>? trainerDetail,
-      final List<dynamic>? studentDetail,
+      final List<StudentDetail>? studentDetail,
       final List<dynamic>? managerDetail}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
@@ -630,7 +630,7 @@ abstract class _User implements User {
   @override
   List<Trainer>? get trainerDetail;
   @override
-  List<dynamic>? get studentDetail;
+  List<StudentDetail>? get studentDetail;
   @override
   List<dynamic>? get managerDetail;
   @override
