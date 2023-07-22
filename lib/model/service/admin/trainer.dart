@@ -214,8 +214,8 @@ class TrainerService {
       if (branchId == null) {
         var response = await _client.get(
             queryPath: month != null
-                ? '/admin/trainers/$trainerId/salary-history?year=$year&month=$month&page=$pageNo'
-                : '/admin/trainers/$trainerId/salary-history?year=$year&page=$pageNo');
+                ? '/admin/trainers/$trainerId/salary-history/$year/$month&page=$pageNo'
+                : '/admin/trainers/$trainerId/salary-history/$year&page=$pageNo');
         return trainerSalarySlipFromJson(jsonEncode(response));
       } else {
         var response = await _client.get(
