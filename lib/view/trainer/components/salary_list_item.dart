@@ -69,6 +69,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                       child: Column(
                         children: [
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
@@ -98,21 +99,6 @@ class _FeeListItemState extends State<SalaryListItem> {
                                   ),
                                 ],
                               ),
-                              // Text(
-                              //   "Class Attended: 12/12",
-                              //   style: Theme.of(context)
-                              //       .textTheme
-                              //       .bodyLarge
-                              //       ?.copyWith(),
-                              // ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -185,6 +171,9 @@ class _FeeListItemState extends State<SalaryListItem> {
                                 ],
                               ),
                             ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
                           ),
                           SizedBox(
                             height: 10.h,
@@ -676,11 +665,11 @@ class _FeeListItemState extends State<SalaryListItem> {
                             children: [
                               UserImage(
                                 profilePic: widget
-                                            .salary.trainerDetail!.profilePic !=
+                                            .salary.trainerDetail?.profilePic !=
                                         ""
                                     ? '${F.baseUrl}'
-                                        '/admin/images/student/'
-                                        '${widget.salary.trainerDetail!.id}/${widget.salary.trainerDetail?.profilePic}'
+                                        '/admin/images/trainer/'
+                                        '${widget.salary.trainerDetail?.id}/${widget.salary.trainerDetail?.profilePic}'
                                     : '',
                               ),
                               SizedBox(width: 16.w),
