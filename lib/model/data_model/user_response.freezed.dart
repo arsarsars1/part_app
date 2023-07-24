@@ -1095,6 +1095,7 @@ mixin _$Academy {
   int? get isActive => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
+  MembershipDetails? get membership => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1125,7 +1126,10 @@ abstract class $AcademyCopyWith<$Res> {
       String? createdFrom,
       int? isActive,
       DateTime? createdAt,
-      DateTime? updatedAt});
+      DateTime? updatedAt,
+      MembershipDetails? membership});
+
+  $MembershipDetailsCopyWith<$Res>? get membership;
 }
 
 /// @nodoc
@@ -1160,6 +1164,7 @@ class _$AcademyCopyWithImpl<$Res, $Val extends Academy>
     Object? isActive = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? membership = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -1238,7 +1243,23 @@ class _$AcademyCopyWithImpl<$Res, $Val extends Academy>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      membership: freezed == membership
+          ? _value.membership
+          : membership // ignore: cast_nullable_to_non_nullable
+              as MembershipDetails?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MembershipDetailsCopyWith<$Res>? get membership {
+    if (_value.membership == null) {
+      return null;
+    }
+
+    return $MembershipDetailsCopyWith<$Res>(_value.membership!, (value) {
+      return _then(_value.copyWith(membership: value) as $Val);
+    });
   }
 }
 
@@ -1268,7 +1289,11 @@ abstract class _$$_AcademyCopyWith<$Res> implements $AcademyCopyWith<$Res> {
       String? createdFrom,
       int? isActive,
       DateTime? createdAt,
-      DateTime? updatedAt});
+      DateTime? updatedAt,
+      MembershipDetails? membership});
+
+  @override
+  $MembershipDetailsCopyWith<$Res>? get membership;
 }
 
 /// @nodoc
@@ -1300,6 +1325,7 @@ class __$$_AcademyCopyWithImpl<$Res>
     Object? isActive = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? membership = freezed,
   }) {
     return _then(_$_Academy(
       id: null == id
@@ -1378,6 +1404,10 @@ class __$$_AcademyCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      membership: freezed == membership
+          ? _value.membership
+          : membership // ignore: cast_nullable_to_non_nullable
+              as MembershipDetails?,
     ));
   }
 }
@@ -1405,7 +1435,8 @@ class _$_Academy implements _Academy {
       this.createdFrom,
       this.isActive,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.membership});
 
   factory _$_Academy.fromJson(Map<String, dynamic> json) =>
       _$$_AcademyFromJson(json);
@@ -1448,10 +1479,12 @@ class _$_Academy implements _Academy {
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
+  @override
+  final MembershipDetails? membership;
 
   @override
   String toString() {
-    return 'Academy(id: $id, academyName: $academyName, countryId: $countryId, userId: $userId, stateId: $stateId, districtId: $districtId, academyTypeId: $academyTypeId, membershipId: $membershipId, subscriptionDateTime: $subscriptionDateTime, paidOnDate: $paidOnDate, validTillDate: $validTillDate, maxNoOfStudents: $maxNoOfStudents, maxNoOfBranches: $maxNoOfBranches, createdBy: $createdBy, updatedBy: $updatedBy, createdFrom: $createdFrom, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Academy(id: $id, academyName: $academyName, countryId: $countryId, userId: $userId, stateId: $stateId, districtId: $districtId, academyTypeId: $academyTypeId, membershipId: $membershipId, subscriptionDateTime: $subscriptionDateTime, paidOnDate: $paidOnDate, validTillDate: $validTillDate, maxNoOfStudents: $maxNoOfStudents, maxNoOfBranches: $maxNoOfBranches, createdBy: $createdBy, updatedBy: $updatedBy, createdFrom: $createdFrom, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt, membership: $membership)';
   }
 
   @override
@@ -1492,7 +1525,9 @@ class _$_Academy implements _Academy {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.membership, membership) ||
+                other.membership == membership));
   }
 
   @JsonKey(ignore: true)
@@ -1517,7 +1552,8 @@ class _$_Academy implements _Academy {
         createdFrom,
         isActive,
         createdAt,
-        updatedAt
+        updatedAt,
+        membership
       ]);
 
   @JsonKey(ignore: true)
@@ -1554,7 +1590,8 @@ abstract class _Academy implements Academy {
       final String? createdFrom,
       final int? isActive,
       final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$_Academy;
+      final DateTime? updatedAt,
+      final MembershipDetails? membership}) = _$_Academy;
 
   factory _Academy.fromJson(Map<String, dynamic> json) = _$_Academy.fromJson;
 
@@ -1597,7 +1634,523 @@ abstract class _Academy implements Academy {
   @override
   DateTime? get updatedAt;
   @override
+  MembershipDetails? get membership;
+  @override
   @JsonKey(ignore: true)
   _$$_AcademyCopyWith<_$_Academy> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+MembershipDetails _$MembershipDetailsFromJson(Map<String, dynamic> json) {
+  return _MembershipDetails.fromJson(json);
+}
+
+/// @nodoc
+mixin _$MembershipDetails {
+  int? get id => throw _privateConstructorUsedError;
+  String? get membershipType => throw _privateConstructorUsedError;
+  int? get countryId => throw _privateConstructorUsedError;
+  String? get period => throw _privateConstructorUsedError;
+  String? get paymentType => throw _privateConstructorUsedError;
+  int? get duration => throw _privateConstructorUsedError;
+  int? get amount => throw _privateConstructorUsedError;
+  int? get maxNoOfStudents => throw _privateConstructorUsedError;
+  int? get maxNoOfBatches => throw _privateConstructorUsedError;
+  int? get maxNoOfBranches => throw _privateConstructorUsedError;
+  int? get isDiscounted => throw _privateConstructorUsedError;
+  dynamic get discountType => throw _privateConstructorUsedError;
+  int? get discountAmount => throw _privateConstructorUsedError;
+  dynamic get discountPercentage => throw _privateConstructorUsedError;
+  int? get sgst => throw _privateConstructorUsedError;
+  int? get cgst => throw _privateConstructorUsedError;
+  int? get finalAmount => throw _privateConstructorUsedError;
+  int? get isActive => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MembershipDetailsCopyWith<MembershipDetails> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MembershipDetailsCopyWith<$Res> {
+  factory $MembershipDetailsCopyWith(
+          MembershipDetails value, $Res Function(MembershipDetails) then) =
+      _$MembershipDetailsCopyWithImpl<$Res, MembershipDetails>;
+  @useResult
+  $Res call(
+      {int? id,
+      String? membershipType,
+      int? countryId,
+      String? period,
+      String? paymentType,
+      int? duration,
+      int? amount,
+      int? maxNoOfStudents,
+      int? maxNoOfBatches,
+      int? maxNoOfBranches,
+      int? isDiscounted,
+      dynamic discountType,
+      int? discountAmount,
+      dynamic discountPercentage,
+      int? sgst,
+      int? cgst,
+      int? finalAmount,
+      int? isActive});
+}
+
+/// @nodoc
+class _$MembershipDetailsCopyWithImpl<$Res, $Val extends MembershipDetails>
+    implements $MembershipDetailsCopyWith<$Res> {
+  _$MembershipDetailsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? membershipType = freezed,
+    Object? countryId = freezed,
+    Object? period = freezed,
+    Object? paymentType = freezed,
+    Object? duration = freezed,
+    Object? amount = freezed,
+    Object? maxNoOfStudents = freezed,
+    Object? maxNoOfBatches = freezed,
+    Object? maxNoOfBranches = freezed,
+    Object? isDiscounted = freezed,
+    Object? discountType = freezed,
+    Object? discountAmount = freezed,
+    Object? discountPercentage = freezed,
+    Object? sgst = freezed,
+    Object? cgst = freezed,
+    Object? finalAmount = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      membershipType: freezed == membershipType
+          ? _value.membershipType
+          : membershipType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      countryId: freezed == countryId
+          ? _value.countryId
+          : countryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      period: freezed == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentType: freezed == paymentType
+          ? _value.paymentType
+          : paymentType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      duration: freezed == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      amount: freezed == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      maxNoOfStudents: freezed == maxNoOfStudents
+          ? _value.maxNoOfStudents
+          : maxNoOfStudents // ignore: cast_nullable_to_non_nullable
+              as int?,
+      maxNoOfBatches: freezed == maxNoOfBatches
+          ? _value.maxNoOfBatches
+          : maxNoOfBatches // ignore: cast_nullable_to_non_nullable
+              as int?,
+      maxNoOfBranches: freezed == maxNoOfBranches
+          ? _value.maxNoOfBranches
+          : maxNoOfBranches // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isDiscounted: freezed == isDiscounted
+          ? _value.isDiscounted
+          : isDiscounted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      discountType: freezed == discountType
+          ? _value.discountType
+          : discountType // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      discountAmount: freezed == discountAmount
+          ? _value.discountAmount
+          : discountAmount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      discountPercentage: freezed == discountPercentage
+          ? _value.discountPercentage
+          : discountPercentage // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      sgst: freezed == sgst
+          ? _value.sgst
+          : sgst // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cgst: freezed == cgst
+          ? _value.cgst
+          : cgst // ignore: cast_nullable_to_non_nullable
+              as int?,
+      finalAmount: freezed == finalAmount
+          ? _value.finalAmount
+          : finalAmount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_MembershipDetailsCopyWith<$Res>
+    implements $MembershipDetailsCopyWith<$Res> {
+  factory _$$_MembershipDetailsCopyWith(_$_MembershipDetails value,
+          $Res Function(_$_MembershipDetails) then) =
+      __$$_MembershipDetailsCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int? id,
+      String? membershipType,
+      int? countryId,
+      String? period,
+      String? paymentType,
+      int? duration,
+      int? amount,
+      int? maxNoOfStudents,
+      int? maxNoOfBatches,
+      int? maxNoOfBranches,
+      int? isDiscounted,
+      dynamic discountType,
+      int? discountAmount,
+      dynamic discountPercentage,
+      int? sgst,
+      int? cgst,
+      int? finalAmount,
+      int? isActive});
+}
+
+/// @nodoc
+class __$$_MembershipDetailsCopyWithImpl<$Res>
+    extends _$MembershipDetailsCopyWithImpl<$Res, _$_MembershipDetails>
+    implements _$$_MembershipDetailsCopyWith<$Res> {
+  __$$_MembershipDetailsCopyWithImpl(
+      _$_MembershipDetails _value, $Res Function(_$_MembershipDetails) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? membershipType = freezed,
+    Object? countryId = freezed,
+    Object? period = freezed,
+    Object? paymentType = freezed,
+    Object? duration = freezed,
+    Object? amount = freezed,
+    Object? maxNoOfStudents = freezed,
+    Object? maxNoOfBatches = freezed,
+    Object? maxNoOfBranches = freezed,
+    Object? isDiscounted = freezed,
+    Object? discountType = freezed,
+    Object? discountAmount = freezed,
+    Object? discountPercentage = freezed,
+    Object? sgst = freezed,
+    Object? cgst = freezed,
+    Object? finalAmount = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_$_MembershipDetails(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      membershipType: freezed == membershipType
+          ? _value.membershipType
+          : membershipType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      countryId: freezed == countryId
+          ? _value.countryId
+          : countryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      period: freezed == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentType: freezed == paymentType
+          ? _value.paymentType
+          : paymentType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      duration: freezed == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      amount: freezed == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      maxNoOfStudents: freezed == maxNoOfStudents
+          ? _value.maxNoOfStudents
+          : maxNoOfStudents // ignore: cast_nullable_to_non_nullable
+              as int?,
+      maxNoOfBatches: freezed == maxNoOfBatches
+          ? _value.maxNoOfBatches
+          : maxNoOfBatches // ignore: cast_nullable_to_non_nullable
+              as int?,
+      maxNoOfBranches: freezed == maxNoOfBranches
+          ? _value.maxNoOfBranches
+          : maxNoOfBranches // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isDiscounted: freezed == isDiscounted
+          ? _value.isDiscounted
+          : isDiscounted // ignore: cast_nullable_to_non_nullable
+              as int?,
+      discountType: freezed == discountType
+          ? _value.discountType
+          : discountType // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      discountAmount: freezed == discountAmount
+          ? _value.discountAmount
+          : discountAmount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      discountPercentage: freezed == discountPercentage
+          ? _value.discountPercentage
+          : discountPercentage // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      sgst: freezed == sgst
+          ? _value.sgst
+          : sgst // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cgst: freezed == cgst
+          ? _value.cgst
+          : cgst // ignore: cast_nullable_to_non_nullable
+              as int?,
+      finalAmount: freezed == finalAmount
+          ? _value.finalAmount
+          : finalAmount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class _$_MembershipDetails implements _MembershipDetails {
+  const _$_MembershipDetails(
+      {this.id,
+      this.membershipType,
+      this.countryId,
+      this.period,
+      this.paymentType,
+      this.duration,
+      this.amount,
+      this.maxNoOfStudents,
+      this.maxNoOfBatches,
+      this.maxNoOfBranches,
+      this.isDiscounted,
+      this.discountType,
+      this.discountAmount,
+      this.discountPercentage,
+      this.sgst,
+      this.cgst,
+      this.finalAmount,
+      this.isActive});
+
+  factory _$_MembershipDetails.fromJson(Map<String, dynamic> json) =>
+      _$$_MembershipDetailsFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? membershipType;
+  @override
+  final int? countryId;
+  @override
+  final String? period;
+  @override
+  final String? paymentType;
+  @override
+  final int? duration;
+  @override
+  final int? amount;
+  @override
+  final int? maxNoOfStudents;
+  @override
+  final int? maxNoOfBatches;
+  @override
+  final int? maxNoOfBranches;
+  @override
+  final int? isDiscounted;
+  @override
+  final dynamic discountType;
+  @override
+  final int? discountAmount;
+  @override
+  final dynamic discountPercentage;
+  @override
+  final int? sgst;
+  @override
+  final int? cgst;
+  @override
+  final int? finalAmount;
+  @override
+  final int? isActive;
+
+  @override
+  String toString() {
+    return 'MembershipDetails(id: $id, membershipType: $membershipType, countryId: $countryId, period: $period, paymentType: $paymentType, duration: $duration, amount: $amount, maxNoOfStudents: $maxNoOfStudents, maxNoOfBatches: $maxNoOfBatches, maxNoOfBranches: $maxNoOfBranches, isDiscounted: $isDiscounted, discountType: $discountType, discountAmount: $discountAmount, discountPercentage: $discountPercentage, sgst: $sgst, cgst: $cgst, finalAmount: $finalAmount, isActive: $isActive)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_MembershipDetails &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.membershipType, membershipType) ||
+                other.membershipType == membershipType) &&
+            (identical(other.countryId, countryId) ||
+                other.countryId == countryId) &&
+            (identical(other.period, period) || other.period == period) &&
+            (identical(other.paymentType, paymentType) ||
+                other.paymentType == paymentType) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.maxNoOfStudents, maxNoOfStudents) ||
+                other.maxNoOfStudents == maxNoOfStudents) &&
+            (identical(other.maxNoOfBatches, maxNoOfBatches) ||
+                other.maxNoOfBatches == maxNoOfBatches) &&
+            (identical(other.maxNoOfBranches, maxNoOfBranches) ||
+                other.maxNoOfBranches == maxNoOfBranches) &&
+            (identical(other.isDiscounted, isDiscounted) ||
+                other.isDiscounted == isDiscounted) &&
+            const DeepCollectionEquality()
+                .equals(other.discountType, discountType) &&
+            (identical(other.discountAmount, discountAmount) ||
+                other.discountAmount == discountAmount) &&
+            const DeepCollectionEquality()
+                .equals(other.discountPercentage, discountPercentage) &&
+            (identical(other.sgst, sgst) || other.sgst == sgst) &&
+            (identical(other.cgst, cgst) || other.cgst == cgst) &&
+            (identical(other.finalAmount, finalAmount) ||
+                other.finalAmount == finalAmount) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      membershipType,
+      countryId,
+      period,
+      paymentType,
+      duration,
+      amount,
+      maxNoOfStudents,
+      maxNoOfBatches,
+      maxNoOfBranches,
+      isDiscounted,
+      const DeepCollectionEquality().hash(discountType),
+      discountAmount,
+      const DeepCollectionEquality().hash(discountPercentage),
+      sgst,
+      cgst,
+      finalAmount,
+      isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MembershipDetailsCopyWith<_$_MembershipDetails> get copyWith =>
+      __$$_MembershipDetailsCopyWithImpl<_$_MembershipDetails>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_MembershipDetailsToJson(
+      this,
+    );
+  }
+}
+
+abstract class _MembershipDetails implements MembershipDetails {
+  const factory _MembershipDetails(
+      {final int? id,
+      final String? membershipType,
+      final int? countryId,
+      final String? period,
+      final String? paymentType,
+      final int? duration,
+      final int? amount,
+      final int? maxNoOfStudents,
+      final int? maxNoOfBatches,
+      final int? maxNoOfBranches,
+      final int? isDiscounted,
+      final dynamic discountType,
+      final int? discountAmount,
+      final dynamic discountPercentage,
+      final int? sgst,
+      final int? cgst,
+      final int? finalAmount,
+      final int? isActive}) = _$_MembershipDetails;
+
+  factory _MembershipDetails.fromJson(Map<String, dynamic> json) =
+      _$_MembershipDetails.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get membershipType;
+  @override
+  int? get countryId;
+  @override
+  String? get period;
+  @override
+  String? get paymentType;
+  @override
+  int? get duration;
+  @override
+  int? get amount;
+  @override
+  int? get maxNoOfStudents;
+  @override
+  int? get maxNoOfBatches;
+  @override
+  int? get maxNoOfBranches;
+  @override
+  int? get isDiscounted;
+  @override
+  dynamic get discountType;
+  @override
+  int? get discountAmount;
+  @override
+  dynamic get discountPercentage;
+  @override
+  int? get sgst;
+  @override
+  int? get cgst;
+  @override
+  int? get finalAmount;
+  @override
+  int? get isActive;
+  @override
+  @JsonKey(ignore: true)
+  _$$_MembershipDetailsCopyWith<_$_MembershipDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }

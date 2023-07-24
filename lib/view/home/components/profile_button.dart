@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/home/components/logout.dart';
-import 'package:part_app/view/membership/membership.dart';
+import 'package:part_app/view/membership/current_membership.dart';
 import 'package:part_app/view/profile/profile.dart';
 
 enum MenuItems { profile, logout, membership, switchAccount }
@@ -21,10 +21,9 @@ class ProfileButton extends StatelessWidget {
             break;
           case MenuItems.logout:
             Logout(context).show();
-
             break;
           case MenuItems.membership:
-            Navigator.pushNamed(context, Membership.route);
+            Navigator.pushNamed(context, CurrentMembership.route);
             break;
           case MenuItems.switchAccount:
             Navigator.pushNamed(context, SwitchAccount.route);
