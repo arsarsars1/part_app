@@ -39,6 +39,7 @@ import 'package:part_app/view/manager/edit_salary.dart';
 import 'package:part_app/view/manager/manager_branches.dart';
 import 'package:part_app/view/manager/manager_details.dart';
 import 'package:part_app/view/manager/manager_page.dart';
+import 'package:part_app/view/membership/current_membership.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
@@ -455,6 +456,11 @@ class RouteGenerator {
       case NotificationScreen.route:
         return MaterialPageRoute(
           builder: (_) => const NotificationScreen(),
+          settings: settings,
+        );
+      case CurrentMembership.route:
+        return MaterialPageRoute(
+          builder: (_) => const CurrentMembership(),
           settings: settings,
         );
       default:

@@ -99,8 +99,37 @@ abstract class Academy with _$Academy {
     int? isActive,
     DateTime? createdAt,
     DateTime? updatedAt,
+    MembershipDetails? membership,
   }) = _Academy;
 
   factory Academy.fromJson(Map<String, dynamic> json) =>
       _$AcademyFromJson(json);
+}
+
+@freezed
+class MembershipDetails with _$MembershipDetails {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory MembershipDetails({
+    int? id,
+    String? membershipType,
+    int? countryId,
+    String? period,
+    String? paymentType,
+    int? duration,
+    int? amount,
+    int? maxNoOfStudents,
+    int? maxNoOfBatches,
+    int? maxNoOfBranches,
+    int? isDiscounted,
+    dynamic discountType,
+    int? discountAmount,
+    dynamic discountPercentage,
+    int? sgst,
+    int? cgst,
+    int? finalAmount,
+    int? isActive,
+  }) = _MembershipDetails;
+
+  factory MembershipDetails.fromJson(Map<String, dynamic> json) =>
+      _$MembershipDetailsFromJson(json);
 }
