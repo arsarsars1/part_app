@@ -15,9 +15,13 @@ class HomeCubit extends Cubit<HomeState> {
 
   final _service = DashboardService();
   List<Banner>? _banner;
-
+  int? _totalStudents;
+  String? _dailyCollection;
+  String? _monthlyCollection;
   List<Banner>? get banner => _banner;
-
+  int? get totalStudents => _totalStudents;
+  String? get dailyCollection => _dailyCollection;
+  String? get monthlyCollection => _monthlyCollection;
   late DateTime selectedDate;
 
   // pagination
@@ -37,8 +41,13 @@ class HomeCubit extends Cubit<HomeState> {
   Future getDashboard() async {
     emit(DashboardLoading());
     var tempDash = await _service.getDashboard();
-    _banner = tempDash?.banners;
-    emit(DashboardLoaded());
+    if (tempDash?.status == 1) {
+      _totalStudents = tempDash?.totalStudents;
+      _dailyCollection = tempDash?.totalPaymentsDaily;
+      _monthlyCollection = tempDash?.totalPaymentsMonthly;
+      _banner = tempDash?.banners;
+      emit(DashboardLoaded());
+    }
   }
 
   Future getCalenderEvents({
