@@ -7,6 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/otp.dart';
+import 'package:part_app/model/data_model/profile_update_request.dart';
 import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api.dart';
@@ -231,6 +232,17 @@ class AuthCubit extends Cubit<AuthState> {
     }
 
     return response?.user;
+  }
+
+  Future updateProfile(ProfileUpdateRequest request) async {
+    emit(UpdatingUser());
+    UserResponse? response = await _authService.updateProfile(request.toJson());
+    if (response?.status == 1) {
+      validateLocalUser();
+      emit(UpdateUserSuccess());
+    } else {
+      emit(UpdateUserFailed(response?.message ?? 'Failed to update'));
+    }
   }
 
   Future logout() async {
