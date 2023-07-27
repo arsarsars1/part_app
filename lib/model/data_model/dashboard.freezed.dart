@@ -22,6 +22,8 @@ Dashboard _$DashboardFromJson(Map<String, dynamic> json) {
 mixin _$Dashboard {
   int? get status => throw _privateConstructorUsedError;
   int? get totalStudents => throw _privateConstructorUsedError;
+  String? get totalPaymentsDaily => throw _privateConstructorUsedError;
+  String? get totalPaymentsMonthly => throw _privateConstructorUsedError;
   List<Banner>? get banners => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +37,12 @@ abstract class $DashboardCopyWith<$Res> {
   factory $DashboardCopyWith(Dashboard value, $Res Function(Dashboard) then) =
       _$DashboardCopyWithImpl<$Res, Dashboard>;
   @useResult
-  $Res call({int? status, int? totalStudents, List<Banner>? banners});
+  $Res call(
+      {int? status,
+      int? totalStudents,
+      String? totalPaymentsDaily,
+      String? totalPaymentsMonthly,
+      List<Banner>? banners});
 }
 
 /// @nodoc
@@ -53,6 +60,8 @@ class _$DashboardCopyWithImpl<$Res, $Val extends Dashboard>
   $Res call({
     Object? status = freezed,
     Object? totalStudents = freezed,
+    Object? totalPaymentsDaily = freezed,
+    Object? totalPaymentsMonthly = freezed,
     Object? banners = freezed,
   }) {
     return _then(_value.copyWith(
@@ -64,6 +73,14 @@ class _$DashboardCopyWithImpl<$Res, $Val extends Dashboard>
           ? _value.totalStudents
           : totalStudents // ignore: cast_nullable_to_non_nullable
               as int?,
+      totalPaymentsDaily: freezed == totalPaymentsDaily
+          ? _value.totalPaymentsDaily
+          : totalPaymentsDaily // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalPaymentsMonthly: freezed == totalPaymentsMonthly
+          ? _value.totalPaymentsMonthly
+          : totalPaymentsMonthly // ignore: cast_nullable_to_non_nullable
+              as String?,
       banners: freezed == banners
           ? _value.banners
           : banners // ignore: cast_nullable_to_non_nullable
@@ -79,7 +96,12 @@ abstract class _$$_DashboardCopyWith<$Res> implements $DashboardCopyWith<$Res> {
       __$$_DashboardCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? status, int? totalStudents, List<Banner>? banners});
+  $Res call(
+      {int? status,
+      int? totalStudents,
+      String? totalPaymentsDaily,
+      String? totalPaymentsMonthly,
+      List<Banner>? banners});
 }
 
 /// @nodoc
@@ -95,6 +117,8 @@ class __$$_DashboardCopyWithImpl<$Res>
   $Res call({
     Object? status = freezed,
     Object? totalStudents = freezed,
+    Object? totalPaymentsDaily = freezed,
+    Object? totalPaymentsMonthly = freezed,
     Object? banners = freezed,
   }) {
     return _then(_$_Dashboard(
@@ -106,6 +130,14 @@ class __$$_DashboardCopyWithImpl<$Res>
           ? _value.totalStudents
           : totalStudents // ignore: cast_nullable_to_non_nullable
               as int?,
+      totalPaymentsDaily: freezed == totalPaymentsDaily
+          ? _value.totalPaymentsDaily
+          : totalPaymentsDaily // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalPaymentsMonthly: freezed == totalPaymentsMonthly
+          ? _value.totalPaymentsMonthly
+          : totalPaymentsMonthly // ignore: cast_nullable_to_non_nullable
+              as String?,
       banners: freezed == banners
           ? _value._banners
           : banners // ignore: cast_nullable_to_non_nullable
@@ -119,7 +151,11 @@ class __$$_DashboardCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$_Dashboard implements _Dashboard {
   const _$_Dashboard(
-      {this.status, this.totalStudents, final List<Banner>? banners})
+      {this.status,
+      this.totalStudents,
+      this.totalPaymentsDaily,
+      this.totalPaymentsMonthly,
+      final List<Banner>? banners})
       : _banners = banners;
 
   factory _$_Dashboard.fromJson(Map<String, dynamic> json) =>
@@ -129,6 +165,10 @@ class _$_Dashboard implements _Dashboard {
   final int? status;
   @override
   final int? totalStudents;
+  @override
+  final String? totalPaymentsDaily;
+  @override
+  final String? totalPaymentsMonthly;
   final List<Banner>? _banners;
   @override
   List<Banner>? get banners {
@@ -141,7 +181,7 @@ class _$_Dashboard implements _Dashboard {
 
   @override
   String toString() {
-    return 'Dashboard(status: $status, totalStudents: $totalStudents, banners: $banners)';
+    return 'Dashboard(status: $status, totalStudents: $totalStudents, totalPaymentsDaily: $totalPaymentsDaily, totalPaymentsMonthly: $totalPaymentsMonthly, banners: $banners)';
   }
 
   @override
@@ -152,12 +192,21 @@ class _$_Dashboard implements _Dashboard {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.totalStudents, totalStudents) ||
                 other.totalStudents == totalStudents) &&
+            (identical(other.totalPaymentsDaily, totalPaymentsDaily) ||
+                other.totalPaymentsDaily == totalPaymentsDaily) &&
+            (identical(other.totalPaymentsMonthly, totalPaymentsMonthly) ||
+                other.totalPaymentsMonthly == totalPaymentsMonthly) &&
             const DeepCollectionEquality().equals(other._banners, _banners));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, status, totalStudents,
+  int get hashCode => Object.hash(
+      runtimeType,
+      status,
+      totalStudents,
+      totalPaymentsDaily,
+      totalPaymentsMonthly,
       const DeepCollectionEquality().hash(_banners));
 
   @JsonKey(ignore: true)
@@ -178,6 +227,8 @@ abstract class _Dashboard implements Dashboard {
   const factory _Dashboard(
       {final int? status,
       final int? totalStudents,
+      final String? totalPaymentsDaily,
+      final String? totalPaymentsMonthly,
       final List<Banner>? banners}) = _$_Dashboard;
 
   factory _Dashboard.fromJson(Map<String, dynamic> json) =
@@ -187,6 +238,10 @@ abstract class _Dashboard implements Dashboard {
   int? get status;
   @override
   int? get totalStudents;
+  @override
+  String? get totalPaymentsDaily;
+  @override
+  String? get totalPaymentsMonthly;
   @override
   List<Banner>? get banners;
   @override

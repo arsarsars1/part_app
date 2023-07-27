@@ -21,6 +21,8 @@ abstract class Dashboard with _$Dashboard {
   const factory Dashboard({
     int? status,
     int? totalStudents,
+    String? totalPaymentsDaily,
+    String? totalPaymentsMonthly,
     List<Banner>? banners,
   }) = _Dashboard;
 

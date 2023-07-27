@@ -9,6 +9,8 @@ part of 'dashboard.dart';
 _$_Dashboard _$$_DashboardFromJson(Map<String, dynamic> json) => _$_Dashboard(
       status: json['status'] as int?,
       totalStudents: json['total_students'] as int?,
+      totalPaymentsDaily: json['total_payments_daily'] as String?,
+      totalPaymentsMonthly: json['total_payments_monthly'] as String?,
       banners: (json['banners'] as List<dynamic>?)
           ?.map((e) => Banner.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -18,6 +20,8 @@ Map<String, dynamic> _$$_DashboardToJson(_$_Dashboard instance) =>
     <String, dynamic>{
       'status': instance.status,
       'total_students': instance.totalStudents,
+      'total_payments_daily': instance.totalPaymentsDaily,
+      'total_payments_monthly': instance.totalPaymentsMonthly,
       'banners': instance.banners,
     };
 
