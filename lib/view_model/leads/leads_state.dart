@@ -15,12 +15,26 @@ class CreateLeadFailed extends LeadsState {
   CreateLeadFailed(this.message);
 }
 
-class FetchingLeads extends LeadsState {}
+class FetchingLeads extends LeadsState {
+  final bool pagination;
+  FetchingLeads({this.pagination = false});
+}
 
-class FetchedLeads extends LeadsState {}
+class FetchedLeads extends LeadsState {
+  final bool moreItems;
+  FetchedLeads({this.moreItems = false});
+}
 
 class FetchingLeadsFailed extends LeadsState {
   final String message;
-
   FetchingLeadsFailed(this.message);
+}
+
+class FetchingLeadStatuses extends LeadsState {}
+
+class FetchedLeadStatuses extends LeadsState {}
+
+class FetchingLeadStatusesFailed extends LeadsState {
+  final String message;
+  FetchingLeadStatusesFailed(this.message);
 }

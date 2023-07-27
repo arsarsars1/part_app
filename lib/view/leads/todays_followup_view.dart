@@ -20,7 +20,7 @@ class _TodayFollowViewState extends State<TodayFollowView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<LeadsCubit>().todayList();
+      context.read<LeadsCubit>().todayLeadsList();
     });
   }
 
@@ -32,6 +32,11 @@ class _TodayFollowViewState extends State<TodayFollowView> {
       body: BlocBuilder<LeadsCubit, LeadsState>(
         buildWhen: (prv, crr) => crr is FetchingLeads || crr is FetchedLeads,
         builder: (context, state) {
+          if (cubit.leads.isEmpty) {
+            return const Center(
+              child: Text('No followups'),
+            );
+          }
           return ListView.builder(
             shrinkWrap: true,
             itemCount: cubit.leads.length,
@@ -39,6 +44,7 @@ class _TodayFollowViewState extends State<TodayFollowView> {
               Lead lead = cubit.leads[index];
               return GestureDetector(
                 onTap: () {
+                  cubit.selectedLead = lead;
                   Navigator.pushNamed(context, LeadDetails.route);
                 },
                 child: Container(

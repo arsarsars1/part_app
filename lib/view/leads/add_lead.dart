@@ -49,295 +49,312 @@ class _AddLeadState extends State<AddLead> {
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
-        enableBack: false,
         title: 'Add Lead',
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'Lead Status *',
-                hint: 'Select status',
-                length: 50,
-                maxLines: 1,
-                dropDown: true,
-                dropDownItems: DefaultValues.leadStatus,
-                textInputAction: TextInputAction.next,
-                onChange: (value) {
-                  status = value.title;
-                },
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please select lead status.'
-                      : null;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'Name *',
-                hint: 'Please enter name',
-                length: 50,
-                maxLines: 1,
-                textInputAction: TextInputAction.next,
-                onChange: (value) {
-                  name = value;
-                },
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please select lead status.'
-                      : null;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'Age',
-                hint: 'Please enter age',
-                length: 2,
-                maxLines: 1,
-                inputType: TextInputType.number,
-                textInputAction: TextInputAction.next,
-                onChange: (value) {
-                  age = value;
-                },
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please enter the age.'
-                      : null;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'Gender',
-                hint: 'Please select gender.',
-                length: 50,
-                maxLines: 1,
-                dropDown: true,
-                dropDownItems: DefaultValues().genders,
-                textInputAction: TextInputAction.next,
-                onChange: (value) {
-                  gender = value.id;
-                },
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please select gender.'
-                      : null;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'Mobile Number *',
-                hint: 'Please enter number',
-                length: 10,
-                maxLines: 1,
-                inputType: TextInputType.phone,
-                textInputAction: TextInputAction.next,
-                onChange: (value) {
-                  mobileNumber = value;
-                  if (value.length >= 10) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  }
-                },
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please enter the phone number.'
-                      : null;
-                },
-              ),
-              WhatsappCheckButton(
-                onChange: (value) {},
-                onNumberChange: (value) {
-                  whatsappNumber = value;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              BranchField(
-                onSelect: (value) {
-                  branchId = value;
-                  batchCubit.getBatchesByStatus(
-                    branchId: branchId,
-                    clean: true,
-                    branchSearch: true,
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'Batch',
-                hint: 'Please select batch',
-                controller: batchController,
-                maxLines: 1,
-                disabled: true,
-                textInputAction: TextInputAction.next,
-                onChange: (value) {},
-                suffixIcon: const Padding(
-                  padding: EdgeInsets.only(right: 32),
-                  child: Icon(
-                    Icons.arrow_drop_down,
-                    size: 24,
-                    color: Colors.white24,
+      body: BlocConsumer<HomeCubit, HomeState>(
+        listener: (context, state) {
+          if (state is CreatedLead) {
+            Alert(context).show(message: 'Lead Created');
+            Navigator.pop(context);
+          }
+          if (state is CreateLeadFailed) {
+            Alert(context).show(message: "Failed to create lead");
+          }
+        },
+        builder: (context, state) {
+          if (state is CreatingLead) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
-                onTap: () {
-                  if (branchId == null) return;
-                  scaffoldKey.currentState?.showBottomSheet(
-                    backgroundColor: Colors.transparent,
-                    (context) => BatchPicker(
-                      branchId: branchId!,
-                      status: '',
-                      branchSearch: true,
-                      onSelect: (value) {
-                        batchId = value;
-                        batchController.text = value.name;
-                      },
-                    ),
-                  );
-                },
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please select batch.'
-                      : null;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'Followup Date',
-                hint: 'Please select date',
-                controller: dateController,
-                length: 50,
-                maxLines: 1,
-                disabled: true,
-                onTap: () {
-                  datePicker();
-                },
-                textInputAction: TextInputAction.next,
-                onChange: (value) {},
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please select date'
-                      : null;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'Followup time',
-                hint: 'Please select time',
-                controller: timeController,
-                onTap: () {
-                  timePicker();
-                },
-                length: 50,
-                maxLines: 1,
-                disabled: true,
-                textInputAction: TextInputAction.next,
-                onChange: (value) {},
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please select time'
-                      : null;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                controller: trainerController,
-                title: 'Assign',
-                hint: 'Please select Trainer or Branch Admin',
-                maxLines: 1,
-                disabled: true,
-                onTap: () {
-                  scaffoldKey.currentState?.showBottomSheet(
-                    elevation: 10,
-                    backgroundColor: Colors.transparent,
-                    (context) => TrainerPicker(
-                      isBatch: true,
-                      multiPicker: false,
-                      batchId: batchId?.id,
-                      selectedTrainers: const [],
-                      onSave: (List<Trainer?> value) {},
-                      onSelect: (TrainerModel? trainer) {
-                        this.trainer = trainer;
-                        trainerController.text = trainer?.trainerName ?? '';
-                      },
-                    ),
-                  );
-                },
-                textInputAction: TextInputAction.next,
-                onChange: (value) {},
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please select trainer'
-                      : null;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                title: 'Comments',
-                hint: 'Enter Comments',
-                maxLines: 5,
-                textInputAction: TextInputAction.next,
-                onChange: (value) {
-                  comments = value;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: Button(
-                  onTap: () {
-                    if (formKey.currentState!.validate()) {
-                      LeadRequest request = LeadRequest(
-                        name: name,
-                        mobileNo: mobileNumber,
-                        whatsappNo: whatsappNumber ?? mobileNumber,
-                        gender: gender,
+                  CommonField(
+                    title: 'Lead Status *',
+                    hint: 'Select status',
+                    length: 50,
+                    maxLines: 1,
+                    dropDown: true,
+                    dropDownItems: DefaultValues.leadStatus,
+                    textInputAction: TextInputAction.next,
+                    onChange: (value) {
+                      status = value.title;
+                    },
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please select lead status.'
+                          : null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Name *',
+                    hint: 'Please enter name',
+                    length: 50,
+                    maxLines: 1,
+                    textInputAction: TextInputAction.next,
+                    onChange: (value) {
+                      name = value;
+                    },
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please select lead status.'
+                          : null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Age',
+                    hint: 'Please enter age',
+                    length: 2,
+                    maxLines: 1,
+                    inputType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
+                    onChange: (value) {
+                      age = value;
+                    },
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please enter the age.'
+                          : null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Gender',
+                    hint: 'Please select gender.',
+                    length: 50,
+                    maxLines: 1,
+                    dropDown: true,
+                    dropDownItems: DefaultValues().genders,
+                    textInputAction: TextInputAction.next,
+                    onChange: (value) {
+                      gender = value.id;
+                    },
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please select gender.'
+                          : null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Mobile Number *',
+                    hint: 'Please enter number',
+                    length: 10,
+                    maxLines: 1,
+                    inputType: TextInputType.phone,
+                    textInputAction: TextInputAction.next,
+                    onChange: (value) {
+                      mobileNumber = value;
+                      if (value.length >= 10) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      }
+                    },
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please enter the phone number.'
+                          : null;
+                    },
+                  ),
+                  WhatsappCheckButton(
+                    onChange: (value) {},
+                    onNumberChange: (value) {
+                      whatsappNumber = value;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  BranchField(
+                    onSelect: (value) {
+                      branchId = value;
+                      batchCubit.getBatchesByStatus(
                         branchId: branchId,
-                        batchId: batchId?.id,
-                        leadStatus: status,
-                        followUpDate: date,
-                        followUpTime: time,
-                        age: age,
-                        followUpComment: comments,
-                        assignedToId: trainer?.detailId,
-                        assignedToType: r'\App\Models\TrainerDetail',
+                        clean: true,
+                        branchSearch: true,
                       );
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Batch',
+                    hint: 'Please select batch',
+                    controller: batchController,
+                    maxLines: 1,
+                    disabled: true,
+                    textInputAction: TextInputAction.next,
+                    onChange: (value) {},
+                    suffixIcon: const Padding(
+                      padding: EdgeInsets.only(right: 32),
+                      child: Icon(
+                        Icons.arrow_drop_down,
+                        size: 24,
+                        color: Colors.white24,
+                      ),
+                    ),
+                    onTap: () {
+                      if (branchId == null) return;
+                      scaffoldKey.currentState?.showBottomSheet(
+                        backgroundColor: Colors.transparent,
+                        (context) => BatchPicker(
+                          branchId: branchId!,
+                          status: '',
+                          branchSearch: true,
+                          onSelect: (value) {
+                            batchId = value;
+                            batchController.text = value.name;
+                          },
+                        ),
+                      );
+                    },
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please select batch.'
+                          : null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Followup Date',
+                    hint: 'Please select date',
+                    controller: dateController,
+                    length: 50,
+                    maxLines: 1,
+                    disabled: true,
+                    onTap: () {
+                      datePicker();
+                    },
+                    textInputAction: TextInputAction.next,
+                    onChange: (value) {},
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please select date'
+                          : null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Followup time',
+                    hint: 'Please select time',
+                    controller: timeController,
+                    onTap: () {
+                      timePicker();
+                    },
+                    length: 50,
+                    maxLines: 1,
+                    disabled: true,
+                    textInputAction: TextInputAction.next,
+                    onChange: (value) {},
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please select time'
+                          : null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    controller: trainerController,
+                    title: 'Assign',
+                    hint: 'Please select Trainer or Branch Admin',
+                    maxLines: 1,
+                    disabled: true,
+                    onTap: () {
+                      scaffoldKey.currentState?.showBottomSheet(
+                        elevation: 10,
+                        backgroundColor: Colors.transparent,
+                        (context) => TrainerPicker(
+                          isBatch: true,
+                          multiPicker: false,
+                          batchId: batchId?.id,
+                          selectedTrainers: const [],
+                          onSave: (List<Trainer?> value) {},
+                          onSelect: (TrainerModel? trainer) {
+                            this.trainer = trainer;
+                            trainerController.text = trainer?.trainerName ?? '';
+                          },
+                        ),
+                      );
+                    },
+                    textInputAction: TextInputAction.next,
+                    onChange: (value) {},
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please select trainer'
+                          : null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    title: 'Comments',
+                    hint: 'Enter Comments',
+                    maxLines: 5,
+                    textInputAction: TextInputAction.next,
+                    onChange: (value) {
+                      comments = value;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Button(
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                          LeadRequest request = LeadRequest(
+                            name: name,
+                            mobileNo: mobileNumber,
+                            whatsappNo: whatsappNumber ?? mobileNumber,
+                            gender: gender,
+                            branchId: branchId,
+                            batchId: batchId?.id,
+                            leadStatus: status,
+                            followUpDate: date,
+                            followUpTime: time,
+                            age: age,
+                            followUpComment: comments,
+                            assignedToId: trainer?.detailId,
+                            assignedToType: r'\App\Models\TrainerDetail',
+                          );
 
-                      context.read<LeadsCubit>().create(request);
-                    }
-                  },
-                  title: 'Add Lead',
-                ),
+                          context.read<LeadsCubit>().create(request);
+                        }
+                      },
+                      title: 'Add Lead',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

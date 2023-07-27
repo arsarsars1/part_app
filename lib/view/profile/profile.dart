@@ -96,9 +96,9 @@ class _ProfileState extends State<Profile> {
                   onEdit: () {},
                   onAvatar: (File value) {},
                   onChange: (File value) {
-                    context
-                        .read<StudentCubit>()
-                        .updateProfilePic(profilePic: value);
+                    // context
+                    //     .read<StudentCubit>()
+                    //     .updateProfilePic(profilePic: value);
                   },
                 ),
               ),

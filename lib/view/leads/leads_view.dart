@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/leads/add_lead.dart';
-import 'package:part_app/view/leads/todays_view.dart';
+import 'package:part_app/view/leads/all_followups_view.dart';
+import 'package:part_app/view/leads/todays_followup_view.dart';
 
 class Leads extends StatefulWidget {
   const Leads({Key? key}) : super(key: key);
@@ -249,34 +250,39 @@ class _LeadsState extends State<Leads> {
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.all(16.r),
-            padding: const EdgeInsets.only(left: 16, right: 16),
-            height: 90.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xFFC6C6C6),
-                  Color(0xFFffffff),
-                  Color(0xFFffffff),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, AllFollowUpView.route);
+            },
+            child: Container(
+              margin: EdgeInsets.all(16.r),
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              height: 90.h,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                gradient: const LinearGradient(
+                  colors: [
+                    Color(0xFFC6C6C6),
+                    Color(0xFFffffff),
+                    Color(0xFFffffff),
+                  ],
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'All Leads',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  Image.asset(Assets.allLeads),
                 ],
               ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'All Leads',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                Image.asset(Assets.allLeads),
-              ],
             ),
           ),
           Container(
