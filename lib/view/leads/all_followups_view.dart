@@ -56,229 +56,235 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
         listener: (context, state) {},
         builder: (context, state) {
           status = cubit.statuses;
-          return Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Column(
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Lead Status *',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      DropdownButtonFormField<DropDownItem>(
+                        key: _dropDownKey,
+                        validator: (value) {
+                          return value == null
+                              ? 'Please select lead status.'
+                              : null;
+                        },
+                        hint: Text(
+                          'Select Lead Status',
+                          style:
+                              Theme.of(context).inputDecorationTheme.hintStyle,
+                        ),
+                        dropdownColor:
+                            Theme.of(context).inputDecorationTheme.fillColor,
+                        value: null,
+                        decoration: const InputDecoration(
+                            // contentPadding: padding,
+                            ),
+                        items: status
+                            ?.map((e) => DropDownItem(
+                                id: e?.slug, title: e?.leadStatus, item: e))
+                            .toList()
+                            .map((e) {
+                          return DropdownMenuItem(
+                            value: e,
+                            child: Text(
+                              e.title ?? '',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            leadStatus = value?.title;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                BranchField(
+                  onSelect: (value) {
+                    setState(() {
+                      branchId = value;
+                    });
+                    batchController.clear();
+                    dateController.clear();
+                    batch = null;
+                    context.read<BatchCubit>().getBatchesByBranch(
+                          branchId: branchId,
+                          clean: true,
+                        );
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonField(
+                  controller: batchController,
+                  onTap: () {
+                    dateController.clear();
+                    if (branchId != null) {
+                      scaffoldKey.currentState?.showBottomSheet(
+                        elevation: 10,
+                        backgroundColor: Colors.transparent,
+                        (context) => BatchPicker(
+                          branchId: branchId ?? 0,
+                          status: '',
+                          onSelect: (value) {
+                            batch = value;
+                            batchController.text = value.name;
+                            // setState(() {});
+                          },
+                        ),
+                      );
+                    } else {
+                      Alert(context).show(
+                        message: 'Please select Branch.',
+                      );
+                    }
+                  },
+                  disabled: true,
+                  title: 'Batch *',
+                  hint: 'Select Batch',
+                  onChange: (value) {},
+                  suffixIcon: const Padding(
+                    padding: EdgeInsets.only(right: 32),
+                    child: Icon(
+                      Icons.arrow_drop_down,
+                      size: 24,
+                      color: Colors.white24,
+                    ),
+                  ),
+                  validator: (value) {
+                    return value == null ? 'Please select batch.' : null;
+                  },
+                ),
+                SizedBox(height: 20.h),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Lead Status *',
-                      style: Theme.of(context).textTheme.bodyLarge,
+                    Padding(
+                      padding: EdgeInsets.only(left: 16.w),
+                      child: Text(
+                        'Date *',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                     ),
                     const SizedBox(
                       height: 8,
                     ),
-                    DropdownButtonFormField<DropDownItem>(
-                      key: _dropDownKey,
-                      validator: (value) {
-                        return value == null
-                            ? 'Please select lead status.'
-                            : null;
-                      },
-                      hint: Text(
-                        'Select Lead Status',
-                        style: Theme.of(context).inputDecorationTheme.hintStyle,
+                    Container(
+                      height: 60.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.liteDark,
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                      dropdownColor:
-                          Theme.of(context).inputDecorationTheme.fillColor,
-                      value: null,
-                      decoration: const InputDecoration(
-                          // contentPadding: padding,
+                      padding: EdgeInsets.symmetric(horizontal: 25.w),
+                      margin: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          date == null
+                              ? Text(
+                                  'Select the date',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: AppColors.grey700,
+                                      ),
+                                )
+                              : Text(
+                                  '${date?.toDateString()}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: AppColors.grey400,
+                                      ),
+                                ),
+                          GestureDetector(
+                            onTap: () async {
+                              await datePicker();
+                              dateController.text = date?.toDateString() ?? "";
+                            },
+                            child: const Icon(
+                              Icons.calendar_month,
+                              size: 24,
+                              color: Colors.white24,
+                            ),
                           ),
-                      items: status
-                          ?.map((e) => DropDownItem(
-                              id: e?.slug, title: e?.leadStatus, item: e))
-                          .toList()
-                          .map((e) {
-                        return DropdownMenuItem(
-                          value: e,
-                          child: Text(
-                            e.title ?? '',
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: Colors.white,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          leadStatus = value?.id;
-                        });
-                      },
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
-              SizedBox(height: 20.h),
-              BranchField(
-                onSelect: (value) {
-                  setState(() {
-                    branchId = value;
-                  });
-                  batchController.clear();
-                  dateController.clear();
-                  batch = null;
-                  context.read<BatchCubit>().getBatchesByBranch(
-                        branchId: branchId,
-                        clean: true,
-                      );
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                controller: batchController,
-                onTap: () {
-                  dateController.clear();
-                  if (branchId != null) {
-                    scaffoldKey.currentState?.showBottomSheet(
-                      elevation: 10,
-                      backgroundColor: Colors.transparent,
-                      (context) => BatchPicker(
-                        branchId: branchId ?? 0,
-                        status: '',
-                        onSelect: (value) {
-                          batch = value;
-                          batchController.text = value.name;
-                          // setState(() {});
-                        },
-                      ),
-                    );
-                  } else {
-                    Alert(context).show(
-                      message: 'Please select Branch.',
-                    );
-                  }
-                },
-                disabled: true,
-                title: 'Batch *',
-                hint: 'Select Batch',
-                onChange: (value) {},
-                suffixIcon: const Padding(
-                  padding: EdgeInsets.only(right: 32),
-                  child: Icon(
-                    Icons.arrow_drop_down,
-                    size: 24,
-                    color: Colors.white24,
-                  ),
-                ),
-                validator: (value) {
-                  return value == null ? 'Please select batch.' : null;
-                },
-              ),
-              SizedBox(height: 20.h),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 16.w),
-                    child: Text(
-                      'Date *',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    height: 60.h,
-                    decoration: BoxDecoration(
-                      color: AppColors.liteDark,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 25.w),
-                    margin: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        date == null
-                            ? Text(
-                                'Select the date',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: AppColors.grey700,
-                                    ),
-                              )
-                            : Text(
-                                '${date?.toDateString()}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: AppColors.grey400,
-                                    ),
-                              ),
-                        GestureDetector(
-                          onTap: () async {
-                            await datePicker();
-                            dateController.text = date?.toDateString() ?? "";
-                          },
-                          child: const Icon(
-                            Icons.calendar_month,
-                            size: 24,
-                            color: Colors.white24,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.h),
-              CommonField(
-                disabled: batch == null,
-                title: 'Search',
-                hint: 'Search By Name or Phone Number',
-                onChange: (value) {
-                  if (value.isEmpty) {
-                    query = null;
+                SizedBox(height: 20.h),
+                CommonField(
+                  disabled: batch == null,
+                  title: 'Search',
+                  hint: 'Search By Name or Phone Number',
+                  onChange: (value) {
+                    if (value.isEmpty) {
+                      query = null;
+                      doSearch(true);
+                    }
+                  },
+                  onSubmit: (value) {
+                    if (value.isEmpty) {
+                      query = null;
+                    } else {
+                      query = value;
+                    }
                     doSearch(true);
-                  }
-                },
-                onSubmit: (value) {
-                  if (value.isEmpty) {
-                    query = null;
-                  } else {
-                    query = value;
-                  }
-                  doSearch(true);
-                },
-                textInputAction: TextInputAction.search,
-                prefixIcon: const Icon(Icons.search),
-              ),
-              SizedBox(height: 20.h),
-              cubit.leads.isEmpty
-                  ? const Center(
-                      child: Text('No followups'),
-                    )
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: cubit.leads.length,
-                      itemBuilder: (context, index) {
-                        Lead lead = cubit.leads[index];
-                        return GestureDetector(
-                          onTap: () {
-                            cubit.selectedLead = lead;
-                            Navigator.pushNamed(context, LeadDetails.route);
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                                color: AppColors.liteDark,
-                                borderRadius: BorderRadius.circular(4)),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
+                  },
+                  textInputAction: TextInputAction.search,
+                  prefixIcon: const Icon(Icons.search),
+                ),
+                SizedBox(height: 20.h),
+                cubit.leads.isEmpty
+                    ? const Center(
+                        child: Text('No followups'),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: cubit.leads.length,
+                        itemBuilder: (context, index) {
+                          Lead lead = cubit.leads[index];
+                          return GestureDetector(
+                            onTap: () {
+                              cubit.selectedLead = lead;
+                              Navigator.pushNamed(context, LeadDetails.route);
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                  color: AppColors.liteDark,
+                                  borderRadius: BorderRadius.circular(4)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
@@ -288,6 +294,8 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                                             .textTheme
                                             .bodyLarge
                                             ?.copyWith(
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.bold,
                                               color: AppColors.primaryColor,
                                             ),
                                       ),
@@ -297,26 +305,42 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                                       Text(
                                         lead.leadStatus ?? '',
                                       ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        'Next Followup on: ${cubit.checkTime(lead.followUps ?? [])?.followUpDate?.toDateString()} @ ${cubit.checkTime(lead.followUps ?? [])?.followUpTime?.toAmPM()}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: cubit
+                                                          .checkTime(
+                                                              lead.followUps ??
+                                                                  [])
+                                                          ?.followUpDate
+                                                          ?.toDateString() ==
+                                                      DateTime.now()
+                                                          .toDateString()
+                                                  ? AppColors.yellow
+                                                  : AppColors.textColor,
+                                            ),
+                                      ),
                                     ],
                                   ),
-                                ),
-                                const Expanded(
-                                  child: Text(
-                                    'Not Interested',
-                                  ),
-                                ),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.white,
-                                  size: 20,
-                                )
-                              ],
+                                  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.white,
+                                    size: 20,
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    )
-            ],
+                          );
+                        },
+                      )
+              ],
+            ),
           );
         },
       ),

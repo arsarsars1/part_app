@@ -285,34 +285,39 @@ class _LeadsState extends State<Leads> {
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.all(16.r),
-            padding: const EdgeInsets.only(left: 16, right: 16),
-            height: 90.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xFFC6C6C6),
-                  Color(0xFFffffff),
-                  Color(0xFFffffff),
+          GestureDetector(
+            onTap: () {
+              Alert(context).show(message: 'Coming soon !!!');
+            },
+            child: Container(
+              margin: EdgeInsets.all(16.r),
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              height: 90.h,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                gradient: const LinearGradient(
+                  colors: [
+                    Color(0xFFC6C6C6),
+                    Color(0xFFffffff),
+                    Color(0xFFffffff),
+                  ],
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Tips & Ideas',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  Image.asset(Assets.tipsIdeas),
                 ],
               ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Tips & Ideas',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                Image.asset(Assets.tipsIdeas),
-              ],
             ),
           ),
         ],

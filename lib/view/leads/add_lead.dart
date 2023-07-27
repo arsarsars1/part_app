@@ -31,6 +31,7 @@ class _AddLeadState extends State<AddLead> {
   BatchModel? batchId;
   String? date;
   String? time;
+  String? email;
   String? assign;
   String? comments;
   TrainerModel? trainer;
@@ -51,7 +52,7 @@ class _AddLeadState extends State<AddLead> {
       appBar: const CommonBar(
         title: 'Add Lead',
       ),
-      body: BlocConsumer<HomeCubit, HomeState>(
+      body: BlocConsumer<LeadsCubit, LeadsState>(
         listener: (context, state) {
           if (state is CreatedLead) {
             Alert(context).show(message: 'Lead Created');
@@ -175,6 +176,29 @@ class _AddLeadState extends State<AddLead> {
                     onChange: (value) {},
                     onNumberChange: (value) {
                       whatsappNumber = value;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonField(
+                    initialValue: email,
+                    inputType: TextInputType.emailAddress,
+                    length: 50,
+                    title: 'Email ID *',
+                    hint: 'Eg: contact@polestar.com',
+                    capitalization: TextCapitalization.none,
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter email';
+                      } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                        return 'Invalid email address.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChange: (value) {
+                      email = value;
                     },
                   ),
                   const SizedBox(
@@ -328,6 +352,7 @@ class _AddLeadState extends State<AddLead> {
                           LeadRequest request = LeadRequest(
                             name: name,
                             mobileNo: mobileNumber,
+                            email: email,
                             whatsappNo: whatsappNumber ?? mobileNumber,
                             gender: gender,
                             branchId: branchId,
@@ -389,9 +414,7 @@ class _AddLeadState extends State<AddLead> {
       },
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(
-        DateTime.now().year - 2,
-      ),
+      firstDate: DateTime.now(),
       lastDate: DateTime(
         DateTime.now().year + 2,
       ),

@@ -115,4 +115,18 @@ class LeadsCubit extends Cubit<LeadsState> {
       emit(FetchingLeadStatusesFailed(e.toString()));
     }
   }
+
+  FollowUp? checkTime(List<FollowUp> test) {
+    FollowUp i;
+    FollowUp? finalFollowUp;
+    int temp = 0;
+    for (i in test) {
+      Duration balance =
+          (i.followUpDate ?? DateTime.now()).difference(DateTime.now());
+      if (temp < balance.inMinutes) {
+        finalFollowUp = i;
+      }
+    }
+    return finalFollowUp;
+  }
 }
