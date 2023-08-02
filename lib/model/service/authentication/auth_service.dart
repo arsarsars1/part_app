@@ -33,7 +33,7 @@ class AuthService {
         data: data,
       );
       return otpFromJson(json.encode(response));
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e);
     }
   }

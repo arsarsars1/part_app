@@ -146,7 +146,7 @@ class TrainerService {
       if (trainerResponse.status == 1) {
         return trainerResponse.trainer;
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (kDebugMode) {
         print(e);
       }

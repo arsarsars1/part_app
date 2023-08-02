@@ -15,7 +15,7 @@ class CountryService {
         queryPath: '/countries',
       );
       return countriesFromJson(json.encode(response));
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e);
     }
   }
@@ -26,7 +26,7 @@ class CountryService {
         queryPath: '/country/$countryId/states',
       );
       return districtFromJson(json.encode(response));
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e);
     }
   }
@@ -37,7 +37,7 @@ class CountryService {
         queryPath: '/state/$stateId/districts',
       );
       return districtFromJson(json.encode(response));
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e);
     }
   }
@@ -48,7 +48,7 @@ class CountryService {
         queryPath: '/academy-types',
       );
       return academyTypeFromJson(json.encode(response));
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception(e);
     }
   }
