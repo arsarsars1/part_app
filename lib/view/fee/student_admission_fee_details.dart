@@ -43,6 +43,12 @@ class _StudentAdmissionFeeDetailsState
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FeeCubit>().clean();
+      context.read<FeeCubit>().getAdmissionFeeDetails(
+          feeType: "monthly",
+          searchQuery: query,
+          paymentStatus: "all",
+          studentId: context.read<StudentCubit>().student?.studentDetail?[0].id,
+          clean: true);
     });
     // Pagination listener
     scrollController.addListener(() {
@@ -111,12 +117,32 @@ class _StudentAdmissionFeeDetailsState
                               cubit.batchInvoice.clear();
                               status = 'all';
                             });
+                            cubit.getAdmissionFeeDetails(
+                                feeType: feeType,
+                                searchQuery: query,
+                                paymentStatus: status,
+                                studentId: context
+                                    .read<StudentCubit>()
+                                    .student
+                                    ?.studentDetail?[0]
+                                    .id,
+                                clean: true);
                           } else {
                             setState(() {
                               feeType = 'class';
                               cubit.batchInvoice.clear();
                               status = 'all';
                             });
+                            cubit.getAdmissionFeeDetails(
+                                feeType: feeType,
+                                searchQuery: query,
+                                paymentStatus: status,
+                                studentId: context
+                                    .read<StudentCubit>()
+                                    .student
+                                    ?.studentDetail?[0]
+                                    .id,
+                                clean: true);
                           }
                         },
                         options: const [

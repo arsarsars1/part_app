@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/components/fee_reminder_button.dart';
 import 'package:part_app/view/components/large_button.dart';
@@ -676,7 +677,10 @@ class _FeeListItemState extends State<FeeListItem> {
                               ),
                               LargeButton(
                                 title: 'Other Payments',
-                                onTap: () {},
+                                onTap: () {
+                                  Alert(context)
+                                      .show(message: "Coming soon !!");
+                                },
                                 color: AppColors.defaultBlue,
                                 margin: 0,
                               ),
