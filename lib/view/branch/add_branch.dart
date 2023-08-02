@@ -107,7 +107,7 @@ class _AddBranchState extends State<AddBranch> {
                 initialValue:
                     widget.addBranch ? null : cubit.branch?.branchName,
                 node: nameFocus,
-                length: 100,
+                length: 40,
                 maxLines: 1,
                 textInputAction: TextInputAction.next,
                 title: 'Enter Branch Name *',

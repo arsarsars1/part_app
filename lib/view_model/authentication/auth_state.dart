@@ -67,6 +67,15 @@ class RegisterFailed extends AuthState {
   RegisterFailed(this.message);
 }
 
+class UpdateUserSuccess extends AuthState {}
+
+class UpdatingUser extends AuthState {}
+
+class UpdateUserFailed extends AuthState {
+  final String message;
+  UpdateUserFailed(this.message);
+}
+
 class ErrorFields extends AuthState {
   final String message;
 

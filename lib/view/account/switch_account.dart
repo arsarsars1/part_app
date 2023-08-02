@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/enums.dart';
+import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/account/account_card.dart';
 import 'package:part_app/view/components/components.dart';
@@ -84,6 +85,24 @@ class SwitchAccount extends StatelessWidget {
                       },
                       accountType: 'Trainer',
                       academyName: trainer.academy?.academyName ?? '',
+                    );
+                  },
+                ),
+              if (cubit.user?.studentDetail != null &&
+                  cubit.user!.studentDetail!.isNotEmpty)
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: cubit.user?.studentDetail?.length,
+                  itemBuilder: (context, index) {
+                    StudentDetail student = cubit.user!.studentDetail![index];
+                    return AccountCard(
+                      onTap: () {
+                        cubit.accountType = AccountType.trainer;
+                        Alert(context).show(message: 'WIP');
+                      },
+                      accountType: 'Student',
+                      academyName: student.academy?.academyName ?? '',
                     );
                   },
                 ),

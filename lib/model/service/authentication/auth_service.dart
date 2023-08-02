@@ -128,4 +128,19 @@ class AuthService {
       return null;
     }
   }
+
+  Future<UserResponse?> updateProfile(Map<String, dynamic> request) async {
+    try {
+      request.removeWhere((key, value) => value == null);
+      var response = await _apiClient.post(
+        postPath: '/admin/update-profile',
+        data: request,
+        formData: true,
+      );
+
+      return userResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
 }

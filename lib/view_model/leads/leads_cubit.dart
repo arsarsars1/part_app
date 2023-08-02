@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
+import 'package:part_app/model/data_model/lead_statuses.dart';
 import 'package:part_app/model/data_model/leads_response.dart';
 import 'package:part_app/model/service/admin/leads.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -13,8 +16,13 @@ class LeadsCubit extends Cubit<LeadsState> {
   final _api = LeadsService();
 
   final List<Lead> _leads = [];
+  int page = 1;
+  String? nextPageUrl = '';
+  List<LeadStatus?>? _statuses = [];
+  Lead? selectedLead;
 
   List<Lead> get leads => _leads;
+  List<LeadStatus?>? get statuses => _statuses;
 
   void create(LeadRequest request) async {
     emit(CreatingLead());
@@ -30,11 +38,11 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  void todayList() async {
+  void todayLeadsList() async {
     emit(FetchingLeads());
     try {
       _leads.clear();
-      LeadsResponse? response = await _api.list();
+      LeadsResponse? response = await _api.todayLeadsList();
       if (response?.status == 0) {
         _leads.addAll(response?.leads?.data ?? []);
         emit(FetchedLeads());
@@ -44,5 +52,81 @@ class LeadsCubit extends Cubit<LeadsState> {
     } on Exception catch (e) {
       emit(FetchingLeadsFailed(e.toString()));
     }
+  }
+
+  Future getLeadsList({
+    String? searchQuery,
+    int? branchId,
+    int? batchId,
+    String? date,
+    String? leadStatus,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _leads.clear();
+      emit(FetchingLeads());
+    } else {
+      emit(FetchingLeads(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(FetchedLeads());
+      return;
+    }
+
+    try {
+      LeadsResponse? response = await _api.getLeadList(
+        branchId: branchId,
+        batchId: batchId,
+        date: date,
+        leadStatus: leadStatus,
+        searchQuery: searchQuery,
+        pageNo: page,
+      );
+
+      if (response?.status == 0) {
+        nextPageUrl = response?.leads?.nextPageUrl;
+        if (nextPageUrl != null) {
+          page++;
+        }
+        _leads.addAll(response?.leads?.data ?? []);
+        emit(FetchedLeads(moreItems: nextPageUrl != null));
+      }
+    } catch (e) {
+      log(e.toString());
+      emit(FetchedLeads(moreItems: nextPageUrl != null));
+    }
+  }
+
+  void getLeadStatuses() async {
+    emit(FetchingLeadStatuses());
+    try {
+      _statuses?.clear();
+      LeadsStatuses? response = await _api.getLeadStatuses();
+      if (response?.status == 0) {
+        _statuses = response?.leadStatuses ?? [];
+        emit(FetchedLeadStatuses());
+      } else {
+        emit(FetchingLeadStatusesFailed('Failed to fetch Leads.'));
+      }
+    } on Exception catch (e) {
+      emit(FetchingLeadStatusesFailed(e.toString()));
+    }
+  }
+
+  FollowUp? checkTime(List<FollowUp> test) {
+    FollowUp i;
+    FollowUp? finalFollowUp;
+    int temp = 0;
+    for (i in test) {
+      Duration balance =
+          (i.followUpDate ?? DateTime.now()).difference(DateTime.now());
+      if (temp < balance.inMinutes) {
+        finalFollowUp = i;
+      }
+    }
+    return finalFollowUp;
   }
 }

@@ -43,7 +43,9 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       trainerDetail: (json['trainer_detail'] as List<dynamic>?)
           ?.map((e) => Trainer.fromJson(e as Map<String, dynamic>))
           .toList(),
-      studentDetail: json['student_detail'] as List<dynamic>?,
+      studentDetail: (json['student_detail'] as List<dynamic>?)
+          ?.map((e) => StudentDetail.fromJson(e as Map<String, dynamic>))
+          .toList(),
       managerDetail: json['manager_detail'] as List<dynamic>?,
     );
 
@@ -132,6 +134,10 @@ _$_Academy _$$_AcademyFromJson(Map<String, dynamic> json) => _$_Academy(
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
+      membership: json['membership'] == null
+          ? null
+          : MembershipDetails.fromJson(
+              json['membership'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_AcademyToJson(_$_Academy instance) =>
@@ -156,4 +162,50 @@ Map<String, dynamic> _$$_AcademyToJson(_$_Academy instance) =>
       'is_active': instance.isActive,
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),
+      'membership': instance.membership,
+    };
+
+_$_MembershipDetails _$$_MembershipDetailsFromJson(Map<String, dynamic> json) =>
+    _$_MembershipDetails(
+      id: json['id'] as int?,
+      membershipType: json['membership_type'] as String?,
+      countryId: json['country_id'] as int?,
+      period: json['period'] as String?,
+      paymentType: json['payment_type'] as String?,
+      duration: json['duration'] as int?,
+      amount: json['amount'] as int?,
+      maxNoOfStudents: json['max_no_of_students'] as int?,
+      maxNoOfBatches: json['max_no_of_batches'] as int?,
+      maxNoOfBranches: json['max_no_of_branches'] as int?,
+      isDiscounted: json['is_discounted'] as int?,
+      discountType: json['discount_type'],
+      discountAmount: json['discount_amount'] as int?,
+      discountPercentage: json['discount_percentage'],
+      sgst: json['sgst'] as int?,
+      cgst: json['cgst'] as int?,
+      finalAmount: json['final_amount'] as int?,
+      isActive: json['is_active'] as int?,
+    );
+
+Map<String, dynamic> _$$_MembershipDetailsToJson(
+        _$_MembershipDetails instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'membership_type': instance.membershipType,
+      'country_id': instance.countryId,
+      'period': instance.period,
+      'payment_type': instance.paymentType,
+      'duration': instance.duration,
+      'amount': instance.amount,
+      'max_no_of_students': instance.maxNoOfStudents,
+      'max_no_of_batches': instance.maxNoOfBatches,
+      'max_no_of_branches': instance.maxNoOfBranches,
+      'is_discounted': instance.isDiscounted,
+      'discount_type': instance.discountType,
+      'discount_amount': instance.discountAmount,
+      'discount_percentage': instance.discountPercentage,
+      'sgst': instance.sgst,
+      'cgst': instance.cgst,
+      'final_amount': instance.finalAmount,
+      'is_active': instance.isActive,
     };

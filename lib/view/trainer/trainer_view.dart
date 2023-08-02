@@ -110,27 +110,35 @@ class _TrainerPageState extends State<TrainerPage> {
                             items: [
                               DropdownMenuItem(
                                 value: const DropDownItem(id: -1),
-                                child: Text(
-                                  'All',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        color: Colors.white,
-                                      ),
-                                ),
-                              ),
-                              ...branchCubit.dropDownBranches().map((e) {
-                                return DropdownMenuItem(
-                                  value: e,
+                                child: SizedBox(
+                                  width: 200.w,
                                   child: Text(
-                                    e.title ?? '',
+                                    'All',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge
                                         ?.copyWith(
                                           color: Colors.white,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
+                                  ),
+                                ),
+                              ),
+                              ...branchCubit.dropDownBranches().map((e) {
+                                return DropdownMenuItem(
+                                  value: e,
+                                  child: SizedBox(
+                                    width: 200.w,
+                                    child: Text(
+                                      e.title ?? '',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            color: Colors.white,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                    ),
                                   ),
                                 );
                               }).toList()

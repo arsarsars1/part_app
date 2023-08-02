@@ -950,6 +950,7 @@ mixin _$StudentDetail {
   int? get isActive => throw _privateConstructorUsedError;
   List<Batch>? get batches => throw _privateConstructorUsedError;
   PivotClass? get pivot => throw _privateConstructorUsedError;
+  Academy? get academy => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -978,9 +979,11 @@ abstract class $StudentDetailCopyWith<$Res> {
       String? profilePic,
       int? isActive,
       List<Batch>? batches,
-      PivotClass? pivot});
+      PivotClass? pivot,
+      Academy? academy});
 
   $PivotClassCopyWith<$Res>? get pivot;
+  $AcademyCopyWith<$Res>? get academy;
 }
 
 /// @nodoc
@@ -1011,6 +1014,7 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
     Object? isActive = freezed,
     Object? batches = freezed,
     Object? pivot = freezed,
+    Object? academy = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -1073,6 +1077,10 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
           ? _value.pivot
           : pivot // ignore: cast_nullable_to_non_nullable
               as PivotClass?,
+      academy: freezed == academy
+          ? _value.academy
+          : academy // ignore: cast_nullable_to_non_nullable
+              as Academy?,
     ) as $Val);
   }
 
@@ -1085,6 +1093,18 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
 
     return $PivotClassCopyWith<$Res>(_value.pivot!, (value) {
       return _then(_value.copyWith(pivot: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AcademyCopyWith<$Res>? get academy {
+    if (_value.academy == null) {
+      return null;
+    }
+
+    return $AcademyCopyWith<$Res>(_value.academy!, (value) {
+      return _then(_value.copyWith(academy: value) as $Val);
     });
   }
 }
@@ -1112,10 +1132,13 @@ abstract class _$$_StudentDetailCopyWith<$Res>
       String? profilePic,
       int? isActive,
       List<Batch>? batches,
-      PivotClass? pivot});
+      PivotClass? pivot,
+      Academy? academy});
 
   @override
   $PivotClassCopyWith<$Res>? get pivot;
+  @override
+  $AcademyCopyWith<$Res>? get academy;
 }
 
 /// @nodoc
@@ -1144,6 +1167,7 @@ class __$$_StudentDetailCopyWithImpl<$Res>
     Object? isActive = freezed,
     Object? batches = freezed,
     Object? pivot = freezed,
+    Object? academy = freezed,
   }) {
     return _then(_$_StudentDetail(
       id: freezed == id
@@ -1206,6 +1230,10 @@ class __$$_StudentDetailCopyWithImpl<$Res>
           ? _value.pivot
           : pivot // ignore: cast_nullable_to_non_nullable
               as PivotClass?,
+      academy: freezed == academy
+          ? _value.academy
+          : academy // ignore: cast_nullable_to_non_nullable
+              as Academy?,
     ));
   }
 }
@@ -1229,7 +1257,8 @@ class _$_StudentDetail implements _StudentDetail {
       this.profilePic,
       this.isActive,
       final List<Batch>? batches,
-      this.pivot})
+      this.pivot,
+      this.academy})
       : _batches = batches;
 
   factory _$_StudentDetail.fromJson(Map<String, dynamic> json) =>
@@ -1273,10 +1302,12 @@ class _$_StudentDetail implements _StudentDetail {
 
   @override
   final PivotClass? pivot;
+  @override
+  final Academy? academy;
 
   @override
   String toString() {
-    return 'StudentDetail(id: $id, name: $name, parentName: $parentName, userId: $userId, academyId: $academyId, gender: $gender, dob: $dob, doj: $doj, email: $email, whatsappNo: $whatsappNo, address: $address, profilePic: $profilePic, isActive: $isActive, batches: $batches, pivot: $pivot)';
+    return 'StudentDetail(id: $id, name: $name, parentName: $parentName, userId: $userId, academyId: $academyId, gender: $gender, dob: $dob, doj: $doj, email: $email, whatsappNo: $whatsappNo, address: $address, profilePic: $profilePic, isActive: $isActive, batches: $batches, pivot: $pivot, academy: $academy)';
   }
 
   @override
@@ -1303,7 +1334,8 @@ class _$_StudentDetail implements _StudentDetail {
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             const DeepCollectionEquality().equals(other._batches, _batches) &&
-            (identical(other.pivot, pivot) || other.pivot == pivot));
+            (identical(other.pivot, pivot) || other.pivot == pivot) &&
+            (identical(other.academy, academy) || other.academy == academy));
   }
 
   @JsonKey(ignore: true)
@@ -1324,7 +1356,8 @@ class _$_StudentDetail implements _StudentDetail {
       profilePic,
       isActive,
       const DeepCollectionEquality().hash(_batches),
-      pivot);
+      pivot,
+      academy);
 
   @JsonKey(ignore: true)
   @override
@@ -1356,7 +1389,8 @@ abstract class _StudentDetail implements StudentDetail {
       final String? profilePic,
       final int? isActive,
       final List<Batch>? batches,
-      final PivotClass? pivot}) = _$_StudentDetail;
+      final PivotClass? pivot,
+      final Academy? academy}) = _$_StudentDetail;
 
   factory _StudentDetail.fromJson(Map<String, dynamic> json) =
       _$_StudentDetail.fromJson;
@@ -1391,6 +1425,8 @@ abstract class _StudentDetail implements StudentDetail {
   List<Batch>? get batches;
   @override
   PivotClass? get pivot;
+  @override
+  Academy? get academy;
   @override
   @JsonKey(ignore: true)
   _$$_StudentDetailCopyWith<_$_StudentDetail> get copyWith =>

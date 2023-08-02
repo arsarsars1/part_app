@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/home/components/logout.dart';
-import 'package:part_app/view/membership/membership.dart';
+import 'package:part_app/view/membership/current_membership.dart';
 import 'package:part_app/view/profile/profile.dart';
+import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 enum MenuItems { profile, logout, membership, switchAccount }
 
-class ProfileButton extends StatelessWidget {
+class ProfileButton extends StatefulWidget {
   const ProfileButton({Key? key}) : super(key: key);
 
   @override
+  State<ProfileButton> createState() => _ProfileButtonState();
+}
+
+class _ProfileButtonState extends State<ProfileButton> {
+  @override
   Widget build(BuildContext context) {
+    User? user = context.read<AuthCubit>().user;
     return PopupMenuButton<MenuItems>(
       onSelected: (MenuItems item) {
         switch (item) {
@@ -21,15 +30,15 @@ class ProfileButton extends StatelessWidget {
             break;
           case MenuItems.logout:
             Logout(context).show();
-
             break;
           case MenuItems.membership:
-            Navigator.pushNamed(context, Membership.route);
+            Navigator.pushNamed(context, CurrentMembership.route);
             break;
           case MenuItems.switchAccount:
             Navigator.pushNamed(context, SwitchAccount.route);
             break;
         }
+        setState(() {});
       },
       splashRadius: 0,
       color: AppColors.liteDark,
@@ -44,9 +53,11 @@ class ProfileButton extends StatelessWidget {
           shape: BoxShape.circle,
           color: AppColors.primaryColor,
         ),
-        child: const CircleAvatar(
+        child: CircleAvatar(
           backgroundImage: NetworkImage(
-            'https://avatars.githubusercontent.com/u/13048367?v=4',
+            user?.adminDetail?.gender == "male"
+                ? "https://dev.partapp.in/images/avatars/avatar-5.png"
+                : "https://dev.partapp.in/images/avatars/avatar-1.png",
           ),
         ),
       ),

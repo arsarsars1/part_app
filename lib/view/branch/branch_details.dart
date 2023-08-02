@@ -79,10 +79,12 @@ class _BranchDetailsState extends State<BranchDetails> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  branch?.branchName ?? '',
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+                                SizedBox(
+                                  width: 200.w,
+                                  child: Text(
+                                    branch?.branchName ?? '',
+                                    maxLines: 10,
+                                  ),
                                 ),
                                 Text(
                                   branch?.isActive == 1
@@ -142,8 +144,12 @@ class _BranchDetailsState extends State<BranchDetails> {
                       const SizedBox(
                         height: 4,
                       ),
-                      Text(
-                        '${branch?.address}, ${branch?.pincode}',
+                      SizedBox(
+                        width: 200.w,
+                        child: Text(
+                          '${branch?.address}, ${branch?.pincode}',
+                          maxLines: 10,
+                        ),
                       ),
                       SizedBox(
                         height: 4.h,

@@ -51,9 +51,13 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
           } else if (state is FeesDeleted) {
             Alert(context).show(message: state.message);
             feeCubit.getBatchInvoice(feeCubit.student.id);
+          } else if (state is DeleteFeesFailed) {
+            Alert(context).show(message: state.message);
           } else if (state is EdittedFee) {
             Alert(context).show(message: state.message);
             feeCubit.getBatchInvoice(feeCubit.student.id);
+          } else if (state is EditFeesFailed) {
+            Alert(context).show(message: state.message);
           }
         },
         builder: (context, state) {
@@ -132,27 +136,33 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "${feeCubit.batchFeeInvoice?.batchName}",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 11.sp,
-                                  ),
+                            SizedBox(
+                              width: 200,
+                              child: Text(
+                                "${feeCubit.batchFeeInvoice?.batchName}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      fontSize: 11.sp,
+                                    ),
+                              ),
                             ),
-                            Text(
-                              "${feeCubit.batchFeeInvoice?.branchName}",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 11.sp,
-                                  ),
+                            SizedBox(
+                              width: 200,
+                              child: Text(
+                                "${feeCubit.batchFeeInvoice?.branchName}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      fontSize: 11.sp,
+                                    ),
+                              ),
                             ),
                             Text(
                               "${feeCubit.batchFeeInvoice?.courseName}, ${feeCubit.batchFeeInvoice?.subjectName}",
@@ -168,55 +178,48 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                           ],
                         ),
                         feeCubit.batchFeeInvoice?.feeType == "monthly"
-                            ? RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Payment Due Date: ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
-                                    TextSpan(
-                                      text: feeCubit
-                                          .batchFeeInvoice?.paymentDueDate
-                                          ?.toDateString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color: AppColors.primaryColor,
-                                          ),
-                                    ),
-                                  ],
-                                ),
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Payment Due Date: ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
+                                  ),
+                                  Text(
+                                    "${feeCubit.batchFeeInvoice?.paymentDueDate?.toDateString()}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: AppColors.primaryColor,
+                                        ),
+                                  ),
+                                ],
                               )
-                            : RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Payment Due in: ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
-                                    TextSpan(
-                                      text:
-                                          '${10 - (feeCubit.batchFeeInvoice?.monthClassesConductedCount ?? 0)}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color: AppColors.primaryColor,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Payment Due In: ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
+                                  ),
+                                  Text(
+                                    '${10 - (feeCubit.batchFeeInvoice?.monthClassesConductedCount ?? 0)}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: AppColors.primaryColor,
+                                        ),
+                                  ),
+                                ],
+                              )
                       ],
                     ),
                     SizedBox(
@@ -237,36 +240,42 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                     ),
                           ),
                           Text(
-                            feeCubit.batchFeeInvoice?.paymentStatus == "paid"
-                                ? "Paid"
-                                : feeCubit.batchFeeInvoice?.paymentStatus ==
-                                        "pending"
-                                    ? "Not Paid"
+                            feeCubit.batchFeeInvoice?.writtenOffStatus == 0
+                                ? feeCubit.batchFeeInvoice?.paymentStatus ==
+                                        "paid"
+                                    ? "Paid"
                                     : feeCubit.batchFeeInvoice?.paymentStatus ==
-                                            "partial"
-                                        ? "Partially Paid"
-                                        : "Overdue",
+                                            "pending"
+                                        ? "Not Paid"
+                                        : feeCubit.batchFeeInvoice
+                                                    ?.paymentStatus ==
+                                                "partial"
+                                            ? "Partially Paid"
+                                            : "Overdue"
+                                : "Written Off",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(
-                                  color:
-                                      feeCubit.batchFeeInvoice?.paymentStatus ==
-                                              "paid"
-                                          ? AppColors.green
-                                          : feeCubit.batchFeeInvoice
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: feeCubit.batchFeeInvoice
+                                                  ?.writtenOffStatus ==
+                                              0
+                                          ? feeCubit.batchFeeInvoice
                                                       ?.paymentStatus ==
-                                                  "pending"
-                                              ? AppColors.primaryColor
+                                                  "paid"
+                                              ? AppColors.green
                                               : feeCubit.batchFeeInvoice
                                                           ?.paymentStatus ==
-                                                      "partial"
-                                                  ? AppColors.yellow
-                                                  : AppColors.primaryColor,
-                                  fontSize: 11.sp,
-                                ),
+                                                      "pending"
+                                                  ? AppColors.primaryColor
+                                                  : feeCubit.batchFeeInvoice
+                                                              ?.paymentStatus ==
+                                                          "partial"
+                                                      ? AppColors.yellow
+                                                      : AppColors.primaryColor
+                                          : AppColors.green,
+                                      fontSize: 11.sp,
+                                    ),
                           ),
                         ],
                       ),
@@ -722,7 +731,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 5.w, vertical: 5.h),
                                   child: Text(
-                                    "${payment?.edits?[(payment.edits?.length ?? 0) - 1].reason}",
+                                    "${payment?.edits?[(payment.edits?.length ?? 0) - 1].reason} (Edited by ${payment?.edits?[(payment.edits?.length ?? 0) - 1].editedBy?.name})",
                                     maxLines: 5,
                                     softWrap: true,
                                     style: Theme.of(context)

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
+import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/components/fee_list_item.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
-
-import '../../model/data_model/batch_fee_invoice_list.dart';
 
 class FeesDetailsView extends StatefulWidget {
   static const route = '/fees';
@@ -32,7 +33,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
   int? month;
   DateTime? finalDate = DateTime.now();
   String? feeType;
-
+  final _dropDownKey = GlobalKey<FormFieldState>();
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController feeTypeController = TextEditingController();
@@ -60,7 +61,37 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
       appBar: const CommonBar(
         title: 'Fees Details',
       ),
-      body: BlocBuilder<FeeCubit, FeeState>(
+      body: BlocConsumer<FeeCubit, FeeState>(
+        listener: (context, state) {
+          var cubit = context.read<FeeCubit>();
+          if (state is FeeReminderSent) {
+            Alert(context).show(message: state.message);
+            cubit.getFeeDetails(
+              branchId: branchId,
+              batchId: batch?.id,
+              month: month,
+              year: year,
+              feeType: feeType,
+              searchQuery: query,
+              clean: true,
+            );
+          } else if (state is FeeReminderSentFailed) {
+            Alert(context).show(message: state.message);
+          } else if (state is WrittenOff) {
+            Alert(context).show(message: state.message);
+            cubit.getFeeDetails(
+              branchId: branchId,
+              batchId: batch?.id,
+              month: month,
+              year: year,
+              feeType: feeType,
+              searchQuery: query,
+              clean: true,
+            );
+          } else if (state is WriteOffFailed) {
+            Alert(context).show(message: state.message);
+          }
+        },
         builder: (context, state) {
           var cubit = context.read<FeeCubit>();
           return Column(
@@ -98,6 +129,10 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                         feeTypeController.clear();
                         dateController.clear();
                         batch = null;
+                        feeType = null;
+                        _dropDownKey.currentState?.reset();
+                        cubit.batchInvoice.clear();
+                        feeTypeController.clear();
                         context.read<BatchCubit>().getBatchesByBranch(
                               branchId: branchId,
                               clean: true,
@@ -112,6 +147,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                       onTap: () {
                         dateController.clear();
                         feeTypeController.clear();
+                        feeType = null;
                         if (branchId != null) {
                           scaffoldKey.currentState?.showBottomSheet(
                             elevation: 10,
@@ -122,6 +158,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                               onSelect: (value) {
                                 batch = value;
                                 batchController.text = value.name;
+                                cubit.batchInvoice.clear();
                                 // setState(() {});
                               },
                             ),
@@ -151,41 +188,101 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     const SizedBox(
                       height: 20,
                     ),
-                    CommonField(
-                      controller: feeTypeController,
-                      title: 'Fee Type *',
-                      hint: 'Select Fee Type',
-                      dropDown: true,
-                      dropDownItems: DefaultValues().feeType,
-                      onChange: (value) {
-                        feeType = value.id;
-                        dateController.clear();
-                      },
-                      validator: (value) {
-                        return value == null ? 'Please select Fee Type.' : null;
-                      },
-                      onSubmit: (value) {},
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Fee Type *',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          DropdownButtonFormField<DropDownItem>(
+                            key: _dropDownKey,
+                            validator: (value) {
+                              return value == null
+                                  ? 'Please select Fee Type.'
+                                  : null;
+                            },
+                            hint: Text(
+                              'Select Fee Type',
+                              style: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .hintStyle,
+                            ),
+                            dropdownColor: Theme.of(context)
+                                .inputDecorationTheme
+                                .fillColor,
+                            value: null,
+                            decoration: const InputDecoration(
+                                // contentPadding: padding,
+                                ),
+                            items: DefaultValues().feeType.map((e) {
+                              return DropdownMenuItem(
+                                value: e,
+                                child: Text(
+                                  e.title ?? '',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: Colors.white,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              if (value?.id == 'monthly') {
+                                setState(() {
+                                  feeType = value?.id;
+                                  dateController.clear();
+                                  cubit.batchInvoice.clear();
+                                });
+                              } else {
+                                setState(() {
+                                  feeType = value?.id;
+                                  dateController.clear();
+                                  month = null;
+                                  year = null;
+                                  cubit.batchInvoice.clear();
+                                });
+                                doSearch(true);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
                     ),
+                    if (feeType == "monthly")
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ScheduleField(
+                            title: 'Month, Year',
+                            hint: 'Select month & year',
+                            dateMonth: true,
+                            onDateSelect: (DateTime value) {
+                              year = value.year;
+                              month = value.month;
+                              finalDate = value;
+                              cubit.batchInvoice.clear();
+                              doSearch(true);
+                            },
+                            time: false,
+                            onlyMonth: true,
+                            selectedDate: finalDate,
+                            controller: dateController,
+                          ),
+                        ],
+                      ),
                     const SizedBox(
                       height: 20,
-                    ),
-                    ScheduleField(
-                      title: 'Month, Year',
-                      hint: 'Select month & year',
-                      dateMonth: true,
-                      onDateSelect: (DateTime value) {
-                        year = value.year;
-                        month = value.month;
-                        finalDate = value;
-                        doSearch(true);
-                      },
-                      time: false,
-                      onlyMonth: true,
-                      selectedDate: finalDate,
-                      controller: dateController,
-                    ),
-                    const SizedBox(
-                      height: 10,
                     ),
                     CommonField(
                       disabled: batch == null,
@@ -211,44 +308,52 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     const SizedBox(
                       height: 10,
                     ),
-                    state is FetchingFee
+                    if (state is FetchingFee && !state.pagination)
+                      Padding(
+                        padding: EdgeInsets.only(top: 15.h),
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    if (state is FeeReminderSending || state is WritingOff)
+                      Padding(
+                        padding: EdgeInsets.only(top: 15.h),
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    cubit.batchInvoice.isEmpty
                         ? Padding(
-                            padding: EdgeInsets.only(top: 15.h),
-                            child: const Center(
-                              child: CircularProgressIndicator(),
+                            padding: const EdgeInsets.all(64),
+                            child: Center(
+                              child: Text(
+                                state is FeeFetched
+                                    ? 'Sorry, No matching results found'
+                                    : 'Select the details from above',
+                              ),
                             ),
                           )
-                        : Column(
-                            children: [
-                              cubit.batchInvoice.isEmpty
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(64),
-                                      child: Center(
-                                        child: Text(
-                                          query == null
-                                              ? 'Add a student to get started'
-                                              : state is StudentsFetched
-                                                  ? 'Sorry, No matching results found'
-                                                  : 'Select a batch to list the students.',
-                                        ),
-                                      ),
-                                    )
-                                  : ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: cubit.batchInvoice.length,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        Datum studentInvoice =
-                                            cubit.batchInvoice[index];
-                                        return FeeListItem(
-                                          student: studentInvoice,
-                                          onTap: () {},
-                                        );
-                                      },
-                                    ),
-                            ],
-                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: cubit.batchInvoice.length,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              Datum studentInvoice = cubit.batchInvoice[index];
+                              return FeeListItem(
+                                student: studentInvoice,
+                                onTap: () async {
+                                  cubit.student = studentInvoice;
+                                  await Navigator.pushNamed(
+                                      context, AddOrEditFees.route);
+                                  doSearch(true);
+                                },
+                              );
+                            },
+                          ),
+                    if (state is FetchingFee && state.pagination)
+                      const Center(
+                        child: Text('Fetching more items ..'),
+                      )
                   ],
                 ),
               ),

@@ -51,24 +51,24 @@ class FeeReminderButton extends StatelessWidget {
                   Icons.check,
                   size: 24,
                   color: (count ?? 0) >= 1
-                      ? Colors.black.withOpacity((disabled ?? false) ? 0.35 : 1)
-                      : Colors.white
+                      ? Colors.white.withOpacity((disabled ?? false) ? 0.35 : 1)
+                      : Colors.black
                           .withOpacity((disabled ?? false) ? 0.35 : 1),
                 ),
                 Icon(
                   Icons.check,
                   size: 24,
                   color: (count ?? 0) >= 2
-                      ? Colors.black.withOpacity((disabled ?? false) ? 0.35 : 1)
-                      : Colors.white
+                      ? Colors.white.withOpacity((disabled ?? false) ? 0.35 : 1)
+                      : Colors.black
                           .withOpacity((disabled ?? false) ? 0.35 : 1),
                 ),
                 Icon(
                   Icons.check,
                   size: 24,
                   color: (count ?? 0) >= 3
-                      ? Colors.black.withOpacity((disabled ?? false) ? 0.35 : 1)
-                      : Colors.white
+                      ? Colors.white.withOpacity((disabled ?? false) ? 0.35 : 1)
+                      : Colors.black
                           .withOpacity((disabled ?? false) ? 0.35 : 1),
                 ),
               ],
