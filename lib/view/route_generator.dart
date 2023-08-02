@@ -25,6 +25,7 @@ import 'package:part_app/view/calender/calender_events.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
+import 'package:part_app/view/fee/add_or_edit_admission_fees.dart';
 import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/fees_details_view.dart';
 import 'package:part_app/view/fee/student_admission_fee_details.dart';
@@ -417,6 +418,11 @@ class RouteGenerator {
       case AddOrEditFees.route:
         return MaterialPageRoute(
           builder: (_) => const AddOrEditFees(),
+          settings: settings,
+        );
+      case AddOrEditAdmissionFees.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddOrEditAdmissionFees(),
           settings: settings,
         );
       case TodaysClasses.route:

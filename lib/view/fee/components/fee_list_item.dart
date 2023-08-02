@@ -14,10 +14,15 @@ import 'package:part_app/view_model/fee/fee_cubit.dart';
 
 class FeeListItem extends StatefulWidget {
   final Datum student;
+  final bool isFromAdmission;
   final VoidCallback onTap;
 
-  const FeeListItem({Key? key, required this.student, required this.onTap})
-      : super(key: key);
+  const FeeListItem({
+    Key? key,
+    this.isFromAdmission = false,
+    required this.student,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   State<FeeListItem> createState() => _FeeListItemState();
@@ -574,9 +579,15 @@ class _FeeListItemState extends State<FeeListItem> {
                                 onTap: widget.student.paymentStatus == 'paid'
                                     ? () {}
                                     : () {
-                                        feeCubit.sendReminder(
-                                            batchFeeInvoiceId:
-                                                widget.student.id);
+                                        if (widget.isFromAdmission) {
+                                          feeCubit.sendReminderForAdmission(
+                                              batchFeeInvoiceId:
+                                                  widget.student.id);
+                                        } else {
+                                          feeCubit.sendReminder(
+                                              batchFeeInvoiceId:
+                                                  widget.student.id);
+                                        }
                                       },
                                 margin: 0,
                                 disabled:
@@ -622,14 +633,26 @@ class _FeeListItemState extends State<FeeListItem> {
                                               if (formKey1.currentState!
                                                   .validate()) {
                                                 Navigator.pop(context);
-                                                feeCubit.writeOffFees(
-                                                  {
-                                                    'written_off_remarks':
-                                                        reason
-                                                  },
-                                                  batchFeeInvoiceId:
-                                                      widget.student.id,
-                                                );
+                                                if (widget.isFromAdmission) {
+                                                  feeCubit
+                                                      .writeOffFeesAdmissionFee(
+                                                    {
+                                                      'written_off_remarks':
+                                                          reason
+                                                    },
+                                                    batchFeeInvoiceId:
+                                                        widget.student.id,
+                                                  );
+                                                } else {
+                                                  feeCubit.writeOffFees(
+                                                    {
+                                                      'written_off_remarks':
+                                                          reason
+                                                    },
+                                                    batchFeeInvoiceId:
+                                                        widget.student.id,
+                                                  );
+                                                }
                                               }
                                             },
                                           ).show();

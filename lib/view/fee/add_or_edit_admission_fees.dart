@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
+import 'package:part_app/model/data_model/admission_fee_invoice.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
@@ -8,15 +8,15 @@ import 'package:part_app/view/fee/components/edit_fees.dart';
 import 'package:part_app/view/fee/components/fee_list_item.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 
-class AddOrEditFees extends StatefulWidget {
-  static const route = '/fees/add-fees';
-  const AddOrEditFees({super.key});
+class AddOrEditAdmissionFees extends StatefulWidget {
+  static const route = '/fees/add-admission-fees';
+  const AddOrEditAdmissionFees({super.key});
 
   @override
-  State<AddOrEditFees> createState() => _AddOrEditFeesState();
+  State<AddOrEditAdmissionFees> createState() => _AddOrEditFeesState();
 }
 
-class _AddOrEditFeesState extends State<AddOrEditFees> {
+class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController dateController = TextEditingController();
   DateTime? date;
@@ -27,7 +27,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
   void initState() {
     feeCubit = context.read<FeeCubit>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await feeCubit.getBatchInvoice(feeCubit.student.id);
+      await feeCubit.getAdmissionInvoice(feeCubit.student.id);
     });
     super.initState();
   }
@@ -37,7 +37,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
-        title: 'Edit Fee Details',
+        title: 'Edit Admission Fee Details',
       ),
       body: BlocConsumer<FeeCubit, FeeState>(
         listener: (context, state) {
@@ -45,17 +45,17 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
             date = null;
             dateController.text = "";
             Alert(context).show(message: state.message);
-            feeCubit.getBatchInvoice(feeCubit.student.id);
+            feeCubit.getAdmissionInvoice(feeCubit.student.id);
           } else if (state is AddFeesFailed) {
             Alert(context).show(message: state.message);
           } else if (state is FeesDeleted) {
             Alert(context).show(message: state.message);
-            feeCubit.getBatchInvoice(feeCubit.student.id);
+            feeCubit.getAdmissionInvoice(feeCubit.student.id);
           } else if (state is DeleteFeesFailed) {
             Alert(context).show(message: state.message);
           } else if (state is EdittedFee) {
             Alert(context).show(message: state.message);
-            feeCubit.getBatchInvoice(feeCubit.student.id);
+            feeCubit.getAdmissionInvoice(feeCubit.student.id);
           } else if (state is EditFeesFailed) {
             Alert(context).show(message: state.message);
           }
@@ -85,7 +85,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "${feeCubit.batchFeeInvoice?.studentDetail?.name}",
+                          "${feeCubit.admissionFeeInvoice?.studentDetail?.name}",
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style:
@@ -94,35 +94,17 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                     fontSize: 12.sp,
                                   ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              feeCubit.batchFeeInvoice?.feeType == "monthly"
-                                  ? "Monthly"
-                                  : "Class Based",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
+                        Text(
+                          feeCubit.admissionFeeInvoice?.feeType == "monthly"
+                              ? "Monthly"
+                              : "Class Based",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     color: AppColors.green,
                                     fontSize: 11.sp,
                                   ),
-                            ),
-                            Text(
-                              "Class Attended: ${feeCubit.batchFeeInvoice?.monthAttendancePresentCount} / ${feeCubit.batchFeeInvoice?.monthClassesConductedCount}",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 11.sp,
-                                  ),
-                            ),
-                          ],
                         ),
                       ],
                     ),
@@ -139,7 +121,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                             SizedBox(
                               width: 200,
                               child: Text(
-                                "${feeCubit.batchFeeInvoice?.batchName}",
+                                "${feeCubit.admissionFeeInvoice?.batchName}",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
@@ -153,7 +135,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                             SizedBox(
                               width: 200,
                               child: Text(
-                                "${feeCubit.batchFeeInvoice?.branchName}",
+                                "${feeCubit.admissionFeeInvoice?.branchName}",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
@@ -165,7 +147,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                               ),
                             ),
                             Text(
-                              "${feeCubit.batchFeeInvoice?.courseName}, ${feeCubit.batchFeeInvoice?.subjectName}",
+                              "${feeCubit.admissionFeeInvoice?.courseName}, ${feeCubit.admissionFeeInvoice?.subjectName}",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
@@ -177,49 +159,6 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                             ),
                           ],
                         ),
-                        feeCubit.batchFeeInvoice?.feeType == "monthly"
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    'Payment Due Date: ',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                  Text(
-                                    "${feeCubit.batchFeeInvoice?.paymentDueDate?.toDateString()}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: AppColors.primaryColor,
-                                        ),
-                                  ),
-                                ],
-                              )
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    'Payment Due In: ',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                  Text(
-                                    '${10 - (feeCubit.batchFeeInvoice?.monthClassesConductedCount ?? 0)}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: AppColors.primaryColor,
-                                        ),
-                                  ),
-                                ],
-                              )
                       ],
                     ),
                     SizedBox(
@@ -240,14 +179,15 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                     ),
                           ),
                           Text(
-                            feeCubit.batchFeeInvoice?.writtenOffStatus == 0
-                                ? feeCubit.batchFeeInvoice?.paymentStatus ==
+                            feeCubit.admissionFeeInvoice?.writtenOffStatus == 0
+                                ? feeCubit.admissionFeeInvoice?.paymentStatus ==
                                         "paid"
                                     ? "Paid"
-                                    : feeCubit.batchFeeInvoice?.paymentStatus ==
+                                    : feeCubit.admissionFeeInvoice
+                                                ?.paymentStatus ==
                                             "pending"
                                         ? "Not Paid"
-                                        : feeCubit.batchFeeInvoice
+                                        : feeCubit.admissionFeeInvoice
                                                     ?.paymentStatus ==
                                                 "partial"
                                             ? "Partially Paid"
@@ -257,18 +197,18 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                             overflow: TextOverflow.ellipsis,
                             style:
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: feeCubit.batchFeeInvoice
+                                      color: feeCubit.admissionFeeInvoice
                                                   ?.writtenOffStatus ==
                                               0
-                                          ? feeCubit.batchFeeInvoice
+                                          ? feeCubit.admissionFeeInvoice
                                                       ?.paymentStatus ==
                                                   "paid"
                                               ? AppColors.green
-                                              : feeCubit.batchFeeInvoice
+                                              : feeCubit.admissionFeeInvoice
                                                           ?.paymentStatus ==
                                                       "pending"
                                                   ? AppColors.primaryColor
-                                                  : feeCubit.batchFeeInvoice
+                                                  : feeCubit.admissionFeeInvoice
                                                               ?.paymentStatus ==
                                                           "partial"
                                                       ? AppColors.yellow
@@ -284,7 +224,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                       height: 10.h,
                     ),
                     Text(
-                      "Fees: ₹${feeCubit.batchFeeInvoice?.payableAmount}",
+                      "Fees: ₹${feeCubit.admissionFeeInvoice?.payableAmount}",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -294,14 +234,14 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                   ],
                 ),
               ),
-              if ((feeCubit.batchFeeInvoice?.payments ?? []).isNotEmpty)
+              if ((feeCubit.admissionFeeInvoice?.payments ?? []).isNotEmpty)
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: feeCubit.batchFeeInvoice?.payments?.length,
+                  itemCount: feeCubit.admissionFeeInvoice?.payments?.length,
                   itemBuilder: (context, index) {
                     Payment? payment =
-                        feeCubit.batchFeeInvoice?.payments?[index];
+                        feeCubit.admissionFeeInvoice?.payments?[index];
                     return Container(
                       margin: const EdgeInsets.all(16),
                       padding: const EdgeInsets.all(16),
@@ -325,12 +265,12 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                       context: context,
                                       buttonText: 'Yes',
                                       message:
-                                          'Are You Sure That You Want To Delete\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                          'Are You Sure That You Want To Delete\nThe Admission Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
                                       onTap: () {
                                         Navigator.pop(context);
-                                        feeCubit.deleteFees(
-                                            batchFeeInvoiceId:
-                                                feeCubit.batchFeeInvoice?.id,
+                                        feeCubit.deleteAdmissionFees(
+                                            admissionFeeInvoiceId: feeCubit
+                                                .admissionFeeInvoice?.id,
                                             paymentId: payment?.id);
                                       },
                                     ).show();
@@ -369,7 +309,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                     CommonDialog(
                                       context: context,
                                       message:
-                                          'Are You Sure That You Want To Edit\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                          'Are You Sure That You Want To Edit\nThe Admission Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
                                       subContent: EditFees(
                                         formKey: formKey1,
                                         reason: (value) => reason = value,
@@ -380,13 +320,13 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                         formKey1.currentState!.save();
                                         if (formKey1.currentState!.validate()) {
                                           Navigator.pop(context);
-                                          feeCubit.editFees({
+                                          feeCubit.editAdmissionFees({
                                             'new_date': date,
                                             'new_amount': amount,
                                             'reason': reason
                                           },
-                                              batchFeeInvoiceId:
-                                                  feeCubit.batchFeeInvoice?.id,
+                                              admissionFeeInvoiceId: feeCubit
+                                                  .admissionFeeInvoice?.id,
                                               paymentId: payment?.id);
                                         }
                                       },
@@ -796,7 +736,8 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                 ?.copyWith(),
                           ),
                           TextSpan(
-                            text: '₹${feeCubit.batchFeeInvoice?.pendingAmount}',
+                            text:
+                                '₹${feeCubit.admissionFeeInvoice?.pendingAmount}',
                             style:
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: AppColors.primaryColor,
@@ -828,11 +769,11 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                     CommonField(
                       inputType: const TextInputType.numberWithOptions(),
                       length: 50,
-                      title: 'Fees *',
-                      hint: 'Enter Fees',
+                      title: 'Admission Fees *',
+                      hint: 'Enter admission Fees',
                       validator: (value) {
                         if (value == null || value.toString().isEmpty) {
-                          return 'Please enter fees';
+                          return 'Please enter admission fees';
                         }
                         return null;
                       },
@@ -899,7 +840,8 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                           child: Button(
                             onTap: () {
                               if (formKey.currentState!.validate()) {
-                                feeCubit.addFees(feeCubit.batchFeeInvoice?.id, {
+                                feeCubit.addFeesForAdmission(
+                                    feeCubit.admissionFeeInvoice?.id, {
                                   'amount': amount,
                                   'payment_method': 'cash',
                                   'payment_date': date?.toServerString()

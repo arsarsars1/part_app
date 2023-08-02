@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
+import 'package:part_app/model/data_model/admission_fee_invoice.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
@@ -18,6 +19,8 @@ class FeeCubit extends Cubit<FeeState> {
   List<Datum> batchInvoice = [];
   late Datum student;
   late Datum? batchFeeInvoice = Datum();
+  late AdmissionFeeInvoiceClass? admissionFeeInvoice =
+      AdmissionFeeInvoiceClass();
 
   void clean() {
     page = 1;
@@ -41,12 +44,41 @@ class FeeCubit extends Cubit<FeeState> {
     }
   }
 
+  Future addFeesForAdmission(
+      int? batchInvoiceId, Map<String, dynamic> data) async {
+    try {
+      emit(AddingFees());
+      Common? response =
+          await _feeService.addFeesForAdmission(batchInvoiceId, data);
+
+      if (response?.status == 1) {
+        emit(AddedFees(response?.message ?? 'Fees Added'));
+      } else {
+        emit(AddFeesFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future getBatchInvoice(int? batchInvoiceId) async {
     emit(GettingBatchInvoice());
     BatchFeeInvoice? response = await _feeService.batchFeeInvoiceDetails(
         batchFeeInvoiceId: batchInvoiceId);
     if (response?.status == 1) {
       batchFeeInvoice = response?.batchFeeInvoice;
+      emit(GotBatchInvoice());
+    } else {
+      emit(AddFeesFailed('Failed to add link.'));
+    }
+  }
+
+  Future getAdmissionInvoice(int? batchInvoiceId) async {
+    emit(GettingBatchInvoice());
+    AdmissionFeeInvoice? response = await _feeService
+        .admissionFeeInvoiceDetails(batchFeeInvoiceId: batchInvoiceId);
+    if (response?.status == 1) {
+      admissionFeeInvoice = response?.admissionFeeInvoice;
       emit(GotBatchInvoice());
     } else {
       emit(AddFeesFailed('Failed to add link.'));
@@ -201,10 +233,41 @@ class FeeCubit extends Cubit<FeeState> {
     }
   }
 
+  Future sendReminderForAdmission({required int? batchFeeInvoiceId}) async {
+    emit(FeeReminderSending());
+    try {
+      Common? response = await _feeService.sendReminderForAdmission(
+          batchFeeInvoiceId: batchFeeInvoiceId);
+      if (response?.status == 1) {
+        emit(FeeReminderSent(response?.message ?? 'Message sent'));
+      } else {
+        emit(FeeReminderSentFailed(
+            response?.message ?? 'Failed to save attendence.'));
+      }
+    } catch (e) {
+      emit(FeeReminderSentFailed('Failed to save attendence.'));
+    }
+  }
+
   Future writeOffFees(Map<String, dynamic> request,
       {required int? batchFeeInvoiceId}) async {
     emit(WritingOff());
     Common? response = await _feeService.writeOffFees(
+      request,
+      batchFeeInvoiceId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(WrittenOff(response?.message ?? 'Fees written off'));
+    } else {
+      emit(WriteOffFailed(response?.message ?? 'Failed to write off'));
+    }
+  }
+
+  Future writeOffFeesAdmissionFee(Map<String, dynamic> request,
+      {required int? batchFeeInvoiceId}) async {
+    emit(WritingOff());
+    Common? response = await _feeService.writeOffFeesForAdmission(
       request,
       batchFeeInvoiceId,
     );
@@ -227,7 +290,22 @@ class FeeCubit extends Cubit<FeeState> {
       // await getRescheduledBatches();
       emit(FeesDeleted(response?.message ?? 'Fees Deleted'));
     } else {
-      emit(WriteOffFailed(response?.message ?? 'Fees Deletion Failed'));
+      emit(DeleteFeesFailed(response?.message ?? 'Fees Deletion Failed'));
+    }
+  }
+
+  Future deleteAdmissionFees(
+      {required int? admissionFeeInvoiceId, required int? paymentId}) async {
+    emit(DeletingFees());
+    Common? response = await _feeService.deleteAdmissionFees(
+      admissionFeeInvoiceId,
+      paymentId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(FeesDeleted(response?.message ?? 'Fees Deleted'));
+    } else {
+      emit(DeleteFeesFailed(response?.message ?? 'Fees Deletion Failed'));
     }
   }
 
@@ -237,6 +315,22 @@ class FeeCubit extends Cubit<FeeState> {
     Common? response = await _feeService.editFees(
       request,
       batchFeeInvoiceId,
+      paymentId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(EdittedFee(response?.message ?? 'Fees Editted'));
+    } else {
+      emit(EditFeesFailed(response?.message ?? 'Failed to edit'));
+    }
+  }
+
+  Future editAdmissionFees(Map<String, dynamic> request,
+      {required int? admissionFeeInvoiceId, required int? paymentId}) async {
+    emit(EditingFee());
+    Common? response = await _feeService.editAdmissionFees(
+      request,
+      admissionFeeInvoiceId,
       paymentId,
     );
     if (response?.status == 1) {

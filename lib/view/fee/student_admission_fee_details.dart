@@ -3,7 +3,7 @@ import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
-import 'package:part_app/view/fee/add_or_edit_fees.dart';
+import 'package:part_app/view/fee/add_or_edit_admission_fees.dart';
 import 'package:part_app/view/fee/components/fee_list_item.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
@@ -65,28 +65,24 @@ class _StudentAdmissionFeeDetailsState
           var cubit = context.read<FeeCubit>();
           if (state is FeeReminderSent) {
             Alert(context).show(message: state.message);
-            cubit.getFeeDetails(
-              branchId: branchId,
-              batchId: batch?.id,
-              month: month,
-              year: year,
-              feeType: feeType,
-              searchQuery: query,
-              clean: true,
-            );
+            cubit.getAdmissionFeeDetails(
+                feeType: feeType,
+                searchQuery: query,
+                paymentStatus: status,
+                studentId:
+                    context.read<StudentCubit>().student?.studentDetail?[0].id,
+                clean: true);
           } else if (state is FeeReminderSentFailed) {
             Alert(context).show(message: state.message);
           } else if (state is WrittenOff) {
             Alert(context).show(message: state.message);
-            cubit.getFeeDetails(
-              branchId: branchId,
-              batchId: batch?.id,
-              month: month,
-              year: year,
-              feeType: feeType,
-              searchQuery: query,
-              clean: true,
-            );
+            cubit.getAdmissionFeeDetails(
+                feeType: feeType,
+                searchQuery: query,
+                paymentStatus: status,
+                studentId:
+                    context.read<StudentCubit>().student?.studentDetail?[0].id,
+                clean: true);
           } else if (state is WriteOffFailed) {
             Alert(context).show(message: state.message);
           }
@@ -180,11 +176,12 @@ class _StudentAdmissionFeeDetailsState
                             itemBuilder: (context, index) {
                               Datum studentInvoice = cubit.batchInvoice[index];
                               return FeeListItem(
+                                isFromAdmission: true,
                                 student: studentInvoice,
                                 onTap: () async {
                                   cubit.student = studentInvoice;
                                   await Navigator.pushNamed(
-                                      context, AddOrEditFees.route);
+                                      context, AddOrEditAdmissionFees.route);
                                   doSearch(true);
                                 },
                               );

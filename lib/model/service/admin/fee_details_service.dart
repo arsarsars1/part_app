@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:part_app/model/data_model/admission_fee_invoice.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
@@ -16,6 +17,20 @@ class FeeDetailsService {
       var response = await _client.post(
         postPath:
             '/admin/fee-details/batch-fee-invoices/$batchInvoiceId/payments',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> addFeesForAdmission(
+      int? batchInvoiceId, Map<String, dynamic> data) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/admin/fee-details/admission-fee-invoices/$batchInvoiceId/payments',
         data: data,
       );
       return commonFromJson(jsonEncode(response));
@@ -108,12 +123,40 @@ class FeeDetailsService {
     }
   }
 
+  Future<Common?> sendReminderForAdmission({
+    required int? batchFeeInvoiceId,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath:
+              '/admin/fee-details/admission-fee-invoices/$batchFeeInvoiceId/send-reminder');
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> writeOffFees(Map<String, dynamic> request,
       [int? batchFeesInvoiceId]) async {
     try {
       var response = await _client.post(
         postPath:
             '/admin/fee-details/batch-fee-invoices/$batchFeesInvoiceId/write-off',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> writeOffFeesForAdmission(Map<String, dynamic> request,
+      [int? batchFeesInvoiceId]) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/admin/fee-details/admission-fee-invoices/$batchFeesInvoiceId/write-off',
         data: request,
       );
 
@@ -138,11 +181,40 @@ class FeeDetailsService {
     }
   }
 
+  Future<Common?> editAdmissionFees(Map<String, dynamic> request,
+      int? admissionFeeInvoiceId, int? paymentId) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/admin/fee-details/admission-fee-invoices/$admissionFeeInvoiceId/payments/$paymentId',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> deleteFees(int? batchFeesInvoiceId, int? paymentId) async {
     try {
       var response = await _client.delete(
         queryPath:
             '/admin/fee-details/batch-fee-invoices/$batchFeesInvoiceId/payments/$paymentId',
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> deleteAdmissionFees(
+      int? admissionFeeInvoiceId, int? paymentId) async {
+    try {
+      var response = await _client.delete(
+        queryPath:
+            '/admin/fee-details/admission-fee-invoices/$admissionFeeInvoiceId/payments/$paymentId',
       );
 
       return commonFromJson(jsonEncode(response));
@@ -159,6 +231,19 @@ class FeeDetailsService {
           queryPath:
               '/admin/fee-details/batch-fee-invoices/$batchFeeInvoiceId');
       return batchFeeInvoiceFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AdmissionFeeInvoice?> admissionFeeInvoiceDetails({
+    required int? batchFeeInvoiceId,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath:
+              '/admin/fee-details/admission-fee-invoices/$batchFeeInvoiceId');
+      return admissionFeeInvoiceFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }
