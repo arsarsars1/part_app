@@ -57,7 +57,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
         if (state is ClosedSalary) {
           Alert(context).show(message: state.message);
           trainerCubit.getSalaryDetails(
-            trainerId: branchId,
+            branchId: branchId,
             month: month,
             year: year,
             clean: true,
@@ -203,7 +203,6 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
 
   void doSearch(bool clean) {
     context.read<TrainerCubit>().getSalaryDetails(
-          trainerId: context.read<TrainerCubit>().trainer?.trainerDetail?[0].id,
           branchId: branchId,
           searchQuery: query,
           month: month,

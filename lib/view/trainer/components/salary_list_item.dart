@@ -102,35 +102,45 @@ class _FeeListItemState extends State<SalaryListItem> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(
-                                    'Payment Due In:',
-                                    textAlign: TextAlign.right,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                  Text(
-                                    "${widget.salary.salaryDueDate?.toDDMMMYYY()}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: widget.salary
-                                                      .writtenOffStatus !=
-                                                  1
-                                              ? widget.salary.paymentStatus ==
-                                                      'paid'
-                                                  ? AppColors.green
-                                                  : widget.salary
-                                                              .paymentStatus ==
-                                                          'partial'
-                                                      ? AppColors.yellow
-                                                      : AppColors.primaryColor
-                                              : AppColors.green,
+                                  if (widget.salary.writtenOffStatus != 1 &&
+                                      widget.salary.paymentStatus != "paid")
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          'Payment Due In:',
+                                          textAlign: TextAlign.right,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(),
                                         ),
-                                  ),
-                                  SizedBox(height: 10.h),
+                                        Text(
+                                          "${widget.salary.salaryDueDate?.toDDMMMYYY()}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                color: widget.salary
+                                                            .writtenOffStatus !=
+                                                        1
+                                                    ? widget.salary
+                                                                .paymentStatus ==
+                                                            'paid'
+                                                        ? AppColors.green
+                                                        : widget.salary
+                                                                    .paymentStatus ==
+                                                                'partial'
+                                                            ? AppColors.yellow
+                                                            : AppColors
+                                                                .primaryColor
+                                                    : AppColors.green,
+                                              ),
+                                        ),
+                                        SizedBox(height: 10.h),
+                                      ],
+                                    ),
                                   Text(
                                     'Payment Status:',
                                     textAlign: TextAlign.right,
@@ -476,13 +486,8 @@ class _FeeListItemState extends State<SalaryListItem> {
                                   LargeButton(
                                     title: 'Pay Salary Via UPI',
                                     onTap: () {
-                                      CommonDialog(
-                                        context: context,
-                                        message: 'Coming Soon !!!',
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ).show();
+                                      Alert(context)
+                                          .show(message: "Coming soon !!");
                                     },
                                     color: AppColors.primaryColor,
                                     margin: 0,

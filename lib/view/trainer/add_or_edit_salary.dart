@@ -122,7 +122,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            "Payment Due In :",
+                            "Payment Due Date :",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style:
