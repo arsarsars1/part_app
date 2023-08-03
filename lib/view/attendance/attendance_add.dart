@@ -50,7 +50,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
       appBar: CommonBar(
         title: 'Class Attendance',
         onPressed: () {
-          cubit.selectedStudents.clear();
+          cubit.selectedStudents = {};
           cubit.attendance.clear();
           Navigator.pop(context);
         },
