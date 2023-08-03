@@ -294,7 +294,8 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                               AttendenceAddRequest request =
                                   AttendenceAddRequest(
                                 conductedOn:
-                                    cubit.conductedDate ?? DateTime.now(),
+                                    (cubit.conductedDate ?? DateTime.now())
+                                        .toServerYMD(),
                                 startTime:
                                     batch?.batchDetail?[0].startTime ?? "",
                                 endTime: batch?.batchDetail?[0].endTime ?? "",

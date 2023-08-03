@@ -20,7 +20,7 @@ AttendenceAddRequest _$AttendenceAddRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AttendenceAddRequest {
-  DateTime? get conductedOn => throw _privateConstructorUsedError;
+  String? get conductedOn => throw _privateConstructorUsedError;
   String? get startTime => throw _privateConstructorUsedError;
   String? get endTime =>
       throw _privateConstructorUsedError; // Attendance? attendance,
@@ -40,7 +40,7 @@ abstract class $AttendenceAddRequestCopyWith<$Res> {
       _$AttendenceAddRequestCopyWithImpl<$Res, AttendenceAddRequest>;
   @useResult
   $Res call(
-      {DateTime? conductedOn,
+      {String? conductedOn,
       String? startTime,
       String? endTime,
       @JsonKey(name: 'attendance[]') List<String>? attendance});
@@ -69,7 +69,7 @@ class _$AttendenceAddRequestCopyWithImpl<$Res,
       conductedOn: freezed == conductedOn
           ? _value.conductedOn
           : conductedOn // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as String?,
       startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
@@ -95,7 +95,7 @@ abstract class _$$_AttendenceAddRequestCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {DateTime? conductedOn,
+      {String? conductedOn,
       String? startTime,
       String? endTime,
       @JsonKey(name: 'attendance[]') List<String>? attendance});
@@ -121,7 +121,7 @@ class __$$_AttendenceAddRequestCopyWithImpl<$Res>
       conductedOn: freezed == conductedOn
           ? _value.conductedOn
           : conductedOn // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as String?,
       startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
@@ -153,7 +153,7 @@ class _$_AttendenceAddRequest implements _AttendenceAddRequest {
       _$$_AttendenceAddRequestFromJson(json);
 
   @override
-  final DateTime? conductedOn;
+  final String? conductedOn;
   @override
   final String? startTime;
   @override
@@ -212,7 +212,7 @@ class _$_AttendenceAddRequest implements _AttendenceAddRequest {
 
 abstract class _AttendenceAddRequest implements AttendenceAddRequest {
   const factory _AttendenceAddRequest(
-          {final DateTime? conductedOn,
+          {final String? conductedOn,
           final String? startTime,
           final String? endTime,
           @JsonKey(name: 'attendance[]') final List<String>? attendance}) =
@@ -222,7 +222,7 @@ abstract class _AttendenceAddRequest implements AttendenceAddRequest {
       _$_AttendenceAddRequest.fromJson;
 
   @override
-  DateTime? get conductedOn;
+  String? get conductedOn;
   @override
   String? get startTime;
   @override

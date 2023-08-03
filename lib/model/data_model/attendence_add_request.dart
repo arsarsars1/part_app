@@ -20,7 +20,7 @@ String attendenceAddRequestToJson(AttendenceAddRequest data) =>
 class AttendenceAddRequest with _$AttendenceAddRequest {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory AttendenceAddRequest({
-    DateTime? conductedOn,
+    String? conductedOn,
     String? startTime,
     String? endTime,
     // Attendance? attendance,
