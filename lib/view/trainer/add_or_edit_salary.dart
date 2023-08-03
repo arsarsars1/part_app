@@ -245,28 +245,28 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  if (payment?.isDeleted == 1 ||
-                                      trainerCubit.trainerSlipDetails
-                                              ?.writtenOffStatus ==
-                                          1) {
-                                    Alert(context).show(
-                                        message:
-                                            'This payment is already deleted.');
-                                  } else {
-                                    CommonDialog(
-                                      context: context,
-                                      buttonText: 'Yes',
-                                      message:
-                                          'Are You Sure That You Want To Delete\nThe Salary Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                        trainerCubit.deleteSalary(
-                                            slipId: trainerCubit
-                                                .trainerSlipDetails?.id,
-                                            paymentId: payment?.id);
-                                      },
-                                    ).show();
-                                  }
+                                  // if (payment?.isDeleted == 1 ||
+                                  //     trainerCubit.trainerSlipDetails
+                                  //             ?.writtenOffStatus ==
+                                  //         1) {
+                                  //   Alert(context).show(
+                                  //       message:
+                                  //           'This payment is already deleted.');
+                                  // } else {
+                                  CommonDialog(
+                                    context: context,
+                                    buttonText: 'Yes',
+                                    message:
+                                        'Are You Sure That You Want To Delete\nThe Salary Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      trainerCubit.deleteSalary(
+                                          slipId: trainerCubit
+                                              .trainerSlipDetails?.id,
+                                          paymentId: payment?.id);
+                                    },
+                                  ).show();
+                                  // }
                                 },
                                 child: Container(
                                   width: 24.w,
@@ -291,42 +291,42 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  if (payment?.isDeleted == 1 ||
-                                      trainerCubit.trainerSlipDetails
-                                              ?.writtenOffStatus ==
-                                          1) {
-                                    Alert(context).show(
-                                        message:
-                                            'This payment is already deleted or written off');
-                                  } else {
-                                    var formKey1 = GlobalKey<FormState>();
-                                    String? reason, date, amount;
-                                    CommonDialog(
-                                      context: context,
-                                      message:
-                                          'Are You Sure That You Want To Edit\nThe Salary Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
-                                      subContent: EditSalary(
-                                        formKey: formKey1,
-                                        reason: (value) => reason = value,
-                                        amount: (value) => amount = value,
-                                        date: (value) => date = value,
-                                      ),
-                                      onTap: () {
-                                        formKey1.currentState!.save();
-                                        if (formKey1.currentState!.validate()) {
-                                          Navigator.pop(context);
-                                          trainerCubit.editSalary({
-                                            'new_date': date,
-                                            'new_amount': amount,
-                                            'reason': reason
-                                          },
-                                              slipId: trainerCubit
-                                                  .trainerSlipDetails?.id,
-                                              paymentId: payment?.id);
-                                        }
-                                      },
-                                    ).show();
-                                  }
+                                  // if (payment?.isDeleted == 1 ||
+                                  //     trainerCubit.trainerSlipDetails
+                                  //             ?.writtenOffStatus ==
+                                  //         1) {
+                                  //   Alert(context).show(
+                                  //       message:
+                                  //           'This payment is already deleted or written off');
+                                  // } else {
+                                  var formKey1 = GlobalKey<FormState>();
+                                  String? reason, date, amount;
+                                  CommonDialog(
+                                    context: context,
+                                    message:
+                                        'Are You Sure That You Want To Edit\nThe Salary Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
+                                    subContent: EditSalary(
+                                      formKey: formKey1,
+                                      reason: (value) => reason = value,
+                                      amount: (value) => amount = value,
+                                      date: (value) => date = value,
+                                    ),
+                                    onTap: () {
+                                      formKey1.currentState!.save();
+                                      if (formKey1.currentState!.validate()) {
+                                        Navigator.pop(context);
+                                        trainerCubit.editSalary({
+                                          'new_date': date,
+                                          'new_amount': amount,
+                                          'reason': reason
+                                        },
+                                            slipId: trainerCubit
+                                                .trainerSlipDetails?.id,
+                                            paymentId: payment?.id);
+                                      }
+                                    },
+                                  ).show();
+                                  // }
                                 },
                                 child: Container(
                                   width: 24.w,
@@ -749,8 +749,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
               SizedBox(
                 height: 15.h,
               ),
-              if (trainerCubit.trainerSlipDetails?.writtenOffStatus != 1 ||
-                  trainerCubit.trainerSlipDetails?.pendingAmount == "0.00")
+              if (trainerCubit.trainerSlipDetails?.paymentStatus != "paid")
                 Form(
                   key: formKey,
                   child: Column(
