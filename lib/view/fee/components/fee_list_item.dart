@@ -133,7 +133,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                           .monthAttendancePresentCount !=
                                       null)
                                     Text(
-                                      "Class Attended: ${widget.student.monthAttendancePresentCount}/${widget.student.monthClassesConductedCount}",
+                                      "Class Attended: ${widget.student.cycleAttendancePresentCount}/${widget.student.totalNoOfClasses}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge
