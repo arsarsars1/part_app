@@ -126,12 +126,38 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
                               cubit.batchInvoice.clear();
                               status = 'all';
                             });
+                            cubit.getStudentFeeDetails(
+                              month: month,
+                              year: year,
+                              feeType: feeType,
+                              searchQuery: query,
+                              paymentStatus: status,
+                              studentId: context
+                                  .read<StudentCubit>()
+                                  .student
+                                  ?.studentDetail?[0]
+                                  .id,
+                              clean: true,
+                            );
                           } else {
                             setState(() {
                               feeType = 'class';
                               cubit.batchInvoice.clear();
                               status = 'all';
                             });
+                            cubit.getStudentFeeDetails(
+                              month: month,
+                              year: year,
+                              feeType: feeType,
+                              searchQuery: query,
+                              paymentStatus: status,
+                              studentId: context
+                                  .read<StudentCubit>()
+                                  .student
+                                  ?.studentDetail?[0]
+                                  .id,
+                              clean: true,
+                            );
                           }
                         },
                         options: const [
