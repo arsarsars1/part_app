@@ -111,44 +111,10 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                             ),
                           ],
                         ),
-                        // Text(
-                        //   "Class Attended: 12/12",
-                        //   maxLines: 2,
-                        //   overflow: TextOverflow.ellipsis,
-                        //   style:
-                        //       Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        //             fontSize: 11.sp,
-                        //           ),
-                        // ),
                       ],
                     ),
                     SizedBox(
                       height: 15.h,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Course and Subject details not found",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 11.sp,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10.h,
                     ),
                     Align(
                       alignment: Alignment.centerRight,
