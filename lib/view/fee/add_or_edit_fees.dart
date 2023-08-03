@@ -189,7 +189,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                         ?.copyWith(),
                                   ),
                                   Text(
-                                    "${feeCubit.batchFeeInvoice?.paymentDueDate?.toDateString()}",
+                                    "${feeCubit.batchFeeInvoice?.paymentDueDate?.toDDMMMYYY()}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge
