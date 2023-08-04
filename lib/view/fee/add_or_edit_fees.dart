@@ -112,7 +112,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                   ),
                             ),
                             Text(
-                              "Class Attended: ${feeCubit.batchFeeInvoice?.monthAttendancePresentCount} / ${feeCubit.batchFeeInvoice?.monthClassesConductedCount}",
+                              "Class Attended: ${feeCubit.batchFeeInvoice?.cycleAttendancePresentCount} / ${feeCubit.batchFeeInvoice?.totalNoOfClasses}",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
