@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:part_app/view/components/common_bar.dart';
+import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view_model/authentication/auth_cubit.dart';
+import 'package:part_app/view/membership/membership_home.dart';
+import 'package:part_app/view_model/cubits.dart';
 
 class CurrentMembership extends StatelessWidget {
   static const route = '/current-membership';
@@ -18,7 +17,7 @@ class CurrentMembership extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          height: 270.h,
+          height: 300.h,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
@@ -36,13 +35,23 @@ class CurrentMembership extends StatelessWidget {
                     ),
               ),
               SizedBox(height: 10.h),
-              Text(
-                'Expires in ',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.primaryColor,
-                      fontSize: 16.sp,
+              !(cubit.user?.adminDetail?.academy?.validTillDate ??
+                          DateTime.now())
+                      .isBefore(DateTime.now())
+                  ? Text(
+                      'Expires in ${cubit.daysBetween(DateTime.now(), cubit.user?.adminDetail?.academy?.validTillDate ?? DateTime.now())} days',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: AppColors.primaryColor,
+                            fontSize: 16.sp,
+                          ),
+                    )
+                  : Text(
+                      'Expired',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: AppColors.primaryColor,
+                            fontSize: 16.sp,
+                          ),
                     ),
-              ),
               SizedBox(height: 10.h),
               Text(
                 '${cubit.user?.adminDetail?.academy?.membership?.duration} ${cubit.user?.adminDetail?.academy?.membership?.period}',
@@ -109,40 +118,51 @@ class CurrentMembership extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 10.h),
-              Row(
-                children: [
-                  Text(
-                    'Fully Paid Via: ',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 16,
-                        ),
-                  ),
-                  Text(
-                    '',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: AppColors.primaryColor,
-                          fontSize: 16,
-                        ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Text(
+              //       'Fully Paid Via: ',
+              //       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              //             fontSize: 16,
+              //           ),
+              //     ),
+              //     Text(
+              //       '',
+              //       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              //             color: AppColors.primaryColor,
+              //             fontSize: 16,
+              //           ),
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(height: 10.h),
+              // Row(
+              //   children: [
+              //     Text(
+              //       'Inhand Salesman: ',
+              //       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              //             fontSize: 16,
+              //           ),
+              //     ),
+              //     Text(
+              //       '',
+              //       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              //             color: AppColors.primaryColor,
+              //             fontSize: 16,
+              //           ),
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: 10.h),
-              Row(
-                children: [
-                  Text(
-                    'Inhand Salesman: ',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 16,
-                        ),
-                  ),
-                  Text(
-                    '',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: AppColors.primaryColor,
-                          fontSize: 16,
-                        ),
-                  ),
-                ],
+              Align(
+                alignment: Alignment.center,
+                child: Button(
+                  height: 40.h,
+                  onTap: () {
+                    Navigator.pushNamed(context, MembershipHome.route);
+                  },
+                  title: 'Add Plan',
+                ),
               ),
             ],
           ),
