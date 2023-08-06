@@ -9,9 +9,7 @@ part of 'attendence_add_request.dart';
 _$_AttendenceAddRequest _$$_AttendenceAddRequestFromJson(
         Map<String, dynamic> json) =>
     _$_AttendenceAddRequest(
-      conductedOn: json['conducted_on'] == null
-          ? null
-          : DateTime.parse(json['conducted_on'] as String),
+      conductedOn: json['conducted_on'] as String?,
       startTime: json['start_time'] as String?,
       endTime: json['end_time'] as String?,
       attendance: (json['attendance[]'] as List<dynamic>?)
@@ -22,7 +20,7 @@ _$_AttendenceAddRequest _$$_AttendenceAddRequestFromJson(
 Map<String, dynamic> _$$_AttendenceAddRequestToJson(
         _$_AttendenceAddRequest instance) =>
     <String, dynamic>{
-      'conducted_on': instance.conductedOn?.toIso8601String(),
+      'conducted_on': instance.conductedOn,
       'start_time': instance.startTime,
       'end_time': instance.endTime,
       'attendance[]': instance.attendance,
