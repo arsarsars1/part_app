@@ -194,57 +194,52 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
                   }
                 },
               ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: SizedBox(
-          height: 132.h,
-          child: BottomAppBar(
-            color: Colors.black,
-            child: Center(
-              child: Button(
-                onTap: () {
-                  if (formKey.currentState!.validate()) {
-                    context.read<AuthCubit>().branchDetails(
-                          pinCode: pinCode,
-                          branchName: branchName,
-                          address: address,
-                          countryId: countryId!,
-                          districtId: districtId!,
-                          stateId: stateId!,
-                        );
-                  } else {
-                    if (branchName.trim().isEmpty) {
-                      _scrollController.animateTo(
-                        _focusNodes[0].offset.dy,
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeIn,
-                      );
-                      _focusNodes[0].requestFocus();
-                      return;
-                    } else if (address.trim().isEmpty) {
-                      _scrollController.animateTo(
-                        _focusNodes[1].offset.dy,
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeIn,
-                      );
-                      _focusNodes[1].requestFocus();
-                      return;
-                    } else if (pinCode.trim().isEmpty || pinCode.length < 6) {
-                      _scrollController.animateTo(
-                        _focusNodes[2].offset.dy,
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeIn,
-                      );
-                      _focusNodes[2].requestFocus();
-                    }
-                  }
-                },
-                title: 'Sign Up',
+              const SizedBox(
+                height: 20,
               ),
-            ),
+              Center(
+                child: Button(
+                  onTap: () {
+                    if (formKey.currentState!.validate()) {
+                      context.read<AuthCubit>().branchDetails(
+                            pinCode: pinCode,
+                            branchName: branchName,
+                            address: address,
+                            countryId: countryId!,
+                            districtId: districtId!,
+                            stateId: stateId!,
+                          );
+                    } else {
+                      if (branchName.trim().isEmpty) {
+                        _scrollController.animateTo(
+                          _focusNodes[0].offset.dy,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeIn,
+                        );
+                        _focusNodes[0].requestFocus();
+                        return;
+                      } else if (address.trim().isEmpty) {
+                        _scrollController.animateTo(
+                          _focusNodes[1].offset.dy,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeIn,
+                        );
+                        _focusNodes[1].requestFocus();
+                        return;
+                      } else if (pinCode.trim().isEmpty || pinCode.length < 6) {
+                        _scrollController.animateTo(
+                          _focusNodes[2].offset.dy,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeIn,
+                        );
+                        _focusNodes[2].requestFocus();
+                      }
+                    }
+                  },
+                  title: 'Sign Up',
+                ),
+              ),
+            ],
           ),
         ),
       ),

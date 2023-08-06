@@ -223,75 +223,70 @@ class _AddBranchState extends State<AddBranch> {
                   }
                 },
               ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: SizedBox(
-          height: 132.h,
-          child: BottomAppBar(
-            color: Colors.black,
-            child: Center(
-              child: Button(
-                onTap: () {
-                  formKey.currentState?.validate();
-                  formKey.currentState?.save();
-                  if (branchName.trim().isEmpty) {
-                    _scrollController.animateTo(
-                      nameFocus.offset.dy,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeIn,
-                    );
-                    nameFocus.requestFocus();
-                    return;
-                  }
-                  if (address.trim().isEmpty) {
-                    _scrollController.animateTo(
-                      addressFocus.offset.dy,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeIn,
-                    );
-                    addressFocus.requestFocus();
-                    return;
-                  }
-                  if (pinCode.trim().isEmpty || pinCode.length < 6) {
-                    _scrollController.animateTo(
-                      pinFocus.offset.dy,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeIn,
-                    );
-                    pinFocus.requestFocus();
-                    return;
-                  }
-                  if (formKey.currentState!.validate()) {
-                    if (widget.addBranch) {
-                      cubit.addBranch(
-                        stateId: '$stateId',
-                        branchName: branchName,
-                        countryId: '$countryId',
-                        districtId: '$districtId',
-                        location: '',
-                        address: address,
-                        pinCode: pinCode,
-                      );
-                    } else {
-                      cubit.updateBranch(
-                        stateId: '$stateId',
-                        branchName: branchName,
-                        countryId: '$countryId',
-                        districtId: '$districtId',
-                        location: '',
-                        address: address,
-                        pinCode: pinCode,
-                        isActive: selected ? 1 : 0,
-                      );
-                    }
-                  }
-                },
-                title: 'Save',
+              const SizedBox(
+                height: 20,
               ),
-            ),
+              Center(
+                child: Button(
+                  onTap: () {
+                    formKey.currentState?.validate();
+                    formKey.currentState?.save();
+                    if (branchName.trim().isEmpty) {
+                      _scrollController.animateTo(
+                        nameFocus.offset.dy,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeIn,
+                      );
+                      nameFocus.requestFocus();
+                      return;
+                    }
+                    if (address.trim().isEmpty) {
+                      _scrollController.animateTo(
+                        addressFocus.offset.dy,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeIn,
+                      );
+                      addressFocus.requestFocus();
+                      return;
+                    }
+                    if (pinCode.trim().isEmpty || pinCode.length < 6) {
+                      _scrollController.animateTo(
+                        pinFocus.offset.dy,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeIn,
+                      );
+                      pinFocus.requestFocus();
+                      return;
+                    }
+                    if (formKey.currentState!.validate()) {
+                      if (widget.addBranch) {
+                        cubit.addBranch(
+                          stateId: '$stateId',
+                          branchName: branchName,
+                          countryId: '$countryId',
+                          districtId: '$districtId',
+                          location: '',
+                          address: address,
+                          pinCode: pinCode,
+                        );
+                      } else {
+                        cubit.updateBranch(
+                          stateId: '$stateId',
+                          branchName: branchName,
+                          countryId: '$countryId',
+                          districtId: '$districtId',
+                          location: '',
+                          address: address,
+                          pinCode: pinCode,
+                          isActive: selected ? 1 : 0,
+                        );
+                      }
+                    }
+                  },
+                  title: 'Save',
+                ),
+              ),
+            ],
           ),
         ),
       ),

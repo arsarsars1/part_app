@@ -318,62 +318,57 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                               : null;
                         },
                       ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child: Button(
+                          onTap: () {
+                            formKey.currentState!.save();
+                            if (formKey.currentState!.validate()) {
+                              if (cubit.days.isEmpty) {
+                                Alert(context).show(
+                                  message: 'Please select the training days.',
+                                );
+                                return;
+                              } else {
+                                BatchRequest request;
+                                if (branchId == batchModel?.branchId) {
+                                  request = BatchRequest(
+                                    days: cubit.buildDaysList(),
+                                    batchName: batchName,
+                                    batchStatus: batchStatus,
+                                    subjectId: subjectId,
+                                    courseId: courseId,
+                                    feeAmount: fee,
+                                    admissionFees: admissionFee,
+                                  );
+                                } else {
+                                  request = BatchRequest(
+                                    branchId: branchId,
+                                    retainStudents: retainStudent,
+                                    days: cubit.buildDaysList(),
+                                    batchName: batchName,
+                                    batchStatus: batchStatus,
+                                    subjectId: subjectId,
+                                    courseId: courseId,
+                                    feeAmount: fee,
+                                    admissionFees: admissionFee,
+                                  );
+                                }
+
+                                cubit.updateBatch(request);
+                              }
+                            }
+                          },
+                          title: 'Update Batch',
+                        ),
+                      ),
                     ],
                   ),
                 ),
               );
             },
-          ),
-        ),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: SizedBox(
-          height: 132.h,
-          child: BottomAppBar(
-            color: Colors.black,
-            child: Center(
-              child: Button(
-                onTap: () {
-                  formKey.currentState!.save();
-                  if (formKey.currentState!.validate()) {
-                    if (cubit.days.isEmpty) {
-                      Alert(context).show(
-                        message: 'Please select the training days.',
-                      );
-                      return;
-                    } else {
-                      BatchRequest request;
-                      if (branchId == batchModel?.branchId) {
-                        request = BatchRequest(
-                          days: cubit.buildDaysList(),
-                          batchName: batchName,
-                          batchStatus: batchStatus,
-                          subjectId: subjectId,
-                          courseId: courseId,
-                          feeAmount: fee,
-                          admissionFees: admissionFee,
-                        );
-                      } else {
-                        request = BatchRequest(
-                          branchId: branchId,
-                          retainStudents: retainStudent,
-                          days: cubit.buildDaysList(),
-                          batchName: batchName,
-                          batchStatus: batchStatus,
-                          subjectId: subjectId,
-                          courseId: courseId,
-                          feeAmount: fee,
-                          admissionFees: admissionFee,
-                        );
-                      }
-
-                      cubit.updateBatch(request);
-                    }
-                  }
-                },
-                title: 'Update Batch',
-              ),
-            ),
           ),
         ),
       ),
