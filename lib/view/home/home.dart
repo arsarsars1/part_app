@@ -25,15 +25,6 @@ class _HomeState extends State<Home> {
   int currentIndex = 0;
 
   @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<HomeCubit>().getDashboard();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     Color selectedColor = AppColors.primaryColor;
     Color unselectedColor = const Color(0xFF8A8A8A);
