@@ -112,20 +112,21 @@ class _AddTrainerBranchesState extends State<AddTrainerBranches> {
             child: Button(
               onTap: () {
                 if (trainerCubit.selectedBranches.isEmpty) {
-                  return;
+                  Alert(context).show(message: 'Branch selection is mandatory');
+                } else {
+                  TrainerRequest request = trainerCubit.request.copyWith(
+                    branchId:
+                        trainerCubit.selectedBranches.map((e) => '$e').toList(),
+                  );
+
+                  // update the data in cubit
+                  trainerCubit.updateRequest(
+                    request,
+                  );
+
+                  // informs the cubit to create a trainer
+                  trainerCubit.createTrainer();
                 }
-                TrainerRequest request = trainerCubit.request.copyWith(
-                  branchId:
-                      trainerCubit.selectedBranches.map((e) => '$e').toList(),
-                );
-
-                // update the data in cubit
-                trainerCubit.updateRequest(
-                  request,
-                );
-
-                // informs the cubit to create a trainer
-                trainerCubit.createTrainer();
               },
               title: 'Create',
             ),
