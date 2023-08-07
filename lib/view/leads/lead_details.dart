@@ -60,10 +60,10 @@ class _LeadDetailsState extends State<LeadDetails> {
               SizedBox(
                 height: 16.h,
               ),
-              const Launchers(
-                phoneNo: '+',
-                whatsappNo: '',
-                email: '',
+              Launchers(
+                phoneNo: '${cubit.selectedLead?.mobileNo}',
+                whatsappNo: '${cubit.selectedLead?.whatsapp}',
+                email: 'test@test.com',
               ),
               SizedBox(
                 height: 16.h,
@@ -178,12 +178,34 @@ class _LeadDetailsState extends State<LeadDetails> {
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    TitledText(
-                                      title: 'Follow Up Date And Time',
-                                      subText:
-                                          '${followup?.followUpDate?.toDDMMMYYY()}, ${followup?.followUpTime?.toAmPM()}',
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Follow Up Date And Time',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                color: AppColors.primaryColor,
+                                                fontSize: 12,
+                                              ),
+                                        ),
+                                        SizedBox(
+                                          height: 8.h,
+                                        ),
+                                        Text(
+                                            '${followup?.followUpDate?.toDDMMMYYY()}, ${followup?.followUpTime?.toAmPM()}'),
+                                      ],
                                     ),
+                                    // TitledText(
+                                    //   title: 'Follow Up Date And Time',
+                                    //   subText:
+                                    //       '${followup?.followUpDate?.toDDMMMYYY()}, ${followup?.followUpTime?.toAmPM()}',
+                                    // ),
                                     GestureDetector(
                                       onTap: () {},
                                       child: Container(
@@ -206,11 +228,13 @@ class _LeadDetailsState extends State<LeadDetails> {
                                     ),
                                   ],
                                 ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
                                 Row(
                                   children: [
                                     Text(
                                       'Followup Status:  ',
-                                      textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge

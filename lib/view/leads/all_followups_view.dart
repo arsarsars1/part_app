@@ -51,7 +51,13 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
 
     return Scaffold(
       key: scaffoldKey,
-      appBar: const CommonBar(title: 'Leads'),
+      appBar: CommonBar(
+        title: 'Leads',
+        onPressed: () {
+          cubit.leads.clear();
+          Navigator.pop(context);
+        },
+      ),
       body: BlocConsumer<LeadsCubit, LeadsState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -309,7 +315,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                                         height: 8,
                                       ),
                                       Text(
-                                        'Next Followup on: ${cubit.checkTime(lead.followUps ?? [])?.followUpDate?.toDateString()} @ ${cubit.checkTime(lead.followUps ?? [])?.followUpTime?.toAmPM()}',
+                                        'Next Followup on: ${cubit.checkTime(lead.followUps ?? [])?.followUpDate?.toDateString() == DateTime.now().toDateString() ? "Today" : cubit.checkTime(lead.followUps ?? [])?.followUpDate?.toDateString()} @ ${cubit.checkTime(lead.followUps ?? [])?.followUpTime?.toAmPM()}',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge

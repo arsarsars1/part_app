@@ -78,9 +78,9 @@ class _TodayFollowViewState extends State<TodayFollowView> {
                           ],
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Text(
-                          'Not Interested',
+                          lead.assignedTo?.name ?? '',
                         ),
                       ),
                       const Icon(
