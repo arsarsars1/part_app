@@ -11,15 +11,18 @@ class FinanceDashboard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Text('Finance'),
+        SizedBox(
+          height: 12.h,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: const Text('Finance'),
         ),
         SizedBox(
-          height: 8.h,
+          height: 15.h,
         ),
         Container(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Row(
             children: [
               Expanded(

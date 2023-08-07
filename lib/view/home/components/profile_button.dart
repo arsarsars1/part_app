@@ -1,7 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/flavors.dart';
+import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/user_response.dart';
+import 'package:part_app/model/service/api_client.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/home/components/logout.dart';
@@ -21,6 +25,7 @@ class ProfileButton extends StatefulWidget {
 class _ProfileButtonState extends State<ProfileButton> {
   @override
   Widget build(BuildContext context) {
+    var token = 'Bearer ${Database().getToken()}';
     User? user = context.read<AuthCubit>().user;
     return PopupMenuButton<MenuItems>(
       onSelected: (MenuItems item) {
@@ -54,10 +59,17 @@ class _ProfileButtonState extends State<ProfileButton> {
           color: AppColors.primaryColor,
         ),
         child: CircleAvatar(
-          backgroundImage: NetworkImage(
-            user?.adminDetail?.gender == "male"
-                ? "https://dev.partapp.in/images/avatars/avatar-5.png"
-                : "https://dev.partapp.in/images/avatars/avatar-1.png",
+          backgroundImage: CachedNetworkImageProvider(
+            user?.adminDetail?.profilePic != ""
+                ? '${F.baseUrl}/admin/images/profile-pic'
+                    '/${context.read<AuthCubit>().user?.adminDetail?.profilePic}'
+                : user?.adminDetail?.gender == "male"
+                    ? "https://dev.partapp.in/images/avatars/avatar-5.png"
+                    : "https://dev.partapp.in/images/avatars/avatar-1.png",
+            headers: {
+              "Authorization": token,
+              'MOBILE-APP-TOKEN': ApiClient().token,
+            },
           ),
         ),
       ),

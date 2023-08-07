@@ -24,7 +24,7 @@ class SummaryDashboard extends StatelessWidget {
             children: [
               const Text('Overall Summary'),
               SizedBox(
-                height: 8.h,
+                height: 15.h,
               ),
               Container(
                 padding: const EdgeInsets.all(16),
