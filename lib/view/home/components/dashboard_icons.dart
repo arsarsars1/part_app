@@ -1,8 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:part_app/model/data_model/dashboard_item.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view_model/home/home_cubit.dart';
 
 class DashboardIcons extends StatelessWidget {
   const DashboardIcons({Key? key}) : super(key: key);
@@ -21,8 +25,9 @@ class DashboardIcons extends StatelessWidget {
         itemBuilder: (context, index) {
           DashboardItem item = DefaultValues.dashboardItems[index];
           return InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, item.route);
+            onTap: () async {
+              await Navigator.pushNamed(context, item.route);
+              context.read<HomeCubit>().getDashboard();
             },
             child: Container(
               margin: EdgeInsets.all(8.h),
@@ -34,9 +39,12 @@ class DashboardIcons extends StatelessWidget {
               height: 98.h,
               width: 98.w,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   Container(
                     decoration: BoxDecoration(
                       color: item.color,
