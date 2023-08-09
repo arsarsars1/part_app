@@ -519,6 +519,7 @@ mixin _$Lead {
   dynamic get whatsapp => throw _privateConstructorUsedError;
   int? get branchId => throw _privateConstructorUsedError;
   int? get batchId => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   String? get leadStatus => throw _privateConstructorUsedError;
   String? get assignedToType => throw _privateConstructorUsedError;
   int? get assignedToId => throw _privateConstructorUsedError;
@@ -550,6 +551,7 @@ abstract class $LeadCopyWith<$Res> {
       dynamic whatsapp,
       int? branchId,
       int? batchId,
+      String? email,
       String? leadStatus,
       String? assignedToType,
       int? assignedToId,
@@ -588,6 +590,7 @@ class _$LeadCopyWithImpl<$Res, $Val extends Lead>
     Object? whatsapp = freezed,
     Object? branchId = freezed,
     Object? batchId = freezed,
+    Object? email = freezed,
     Object? leadStatus = freezed,
     Object? assignedToType = freezed,
     Object? assignedToId = freezed,
@@ -642,6 +645,10 @@ class _$LeadCopyWithImpl<$Res, $Val extends Lead>
           ? _value.batchId
           : batchId // ignore: cast_nullable_to_non_nullable
               as int?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       leadStatus: freezed == leadStatus
           ? _value.leadStatus
           : leadStatus // ignore: cast_nullable_to_non_nullable
@@ -732,6 +739,7 @@ abstract class _$$_LeadCopyWith<$Res> implements $LeadCopyWith<$Res> {
       dynamic whatsapp,
       int? branchId,
       int? batchId,
+      String? email,
       String? leadStatus,
       String? assignedToType,
       int? assignedToId,
@@ -769,6 +777,7 @@ class __$$_LeadCopyWithImpl<$Res> extends _$LeadCopyWithImpl<$Res, _$_Lead>
     Object? whatsapp = freezed,
     Object? branchId = freezed,
     Object? batchId = freezed,
+    Object? email = freezed,
     Object? leadStatus = freezed,
     Object? assignedToType = freezed,
     Object? assignedToId = freezed,
@@ -823,6 +832,10 @@ class __$$_LeadCopyWithImpl<$Res> extends _$LeadCopyWithImpl<$Res, _$_Lead>
           ? _value.batchId
           : batchId // ignore: cast_nullable_to_non_nullable
               as int?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       leadStatus: freezed == leadStatus
           ? _value.leadStatus
           : leadStatus // ignore: cast_nullable_to_non_nullable
@@ -875,6 +888,7 @@ class _$_Lead implements _Lead {
       this.whatsapp,
       this.branchId,
       this.batchId,
+      this.email,
       this.leadStatus,
       this.assignedToType,
       this.assignedToId,
@@ -910,6 +924,8 @@ class _$_Lead implements _Lead {
   @override
   final int? batchId;
   @override
+  final String? email;
+  @override
   final String? leadStatus;
   @override
   final String? assignedToType;
@@ -935,7 +951,7 @@ class _$_Lead implements _Lead {
 
   @override
   String toString() {
-    return 'Lead(id: $id, academyId: $academyId, name: $name, age: $age, gender: $gender, profilePic: $profilePic, countryCode: $countryCode, mobileNo: $mobileNo, whatsapp: $whatsapp, branchId: $branchId, batchId: $batchId, leadStatus: $leadStatus, assignedToType: $assignedToType, assignedToId: $assignedToId, addedOn: $addedOn, branch: $branch, batch: $batch, assignedTo: $assignedTo, followUps: $followUps)';
+    return 'Lead(id: $id, academyId: $academyId, name: $name, age: $age, gender: $gender, profilePic: $profilePic, countryCode: $countryCode, mobileNo: $mobileNo, whatsapp: $whatsapp, branchId: $branchId, batchId: $batchId, email: $email, leadStatus: $leadStatus, assignedToType: $assignedToType, assignedToId: $assignedToId, addedOn: $addedOn, branch: $branch, batch: $batch, assignedTo: $assignedTo, followUps: $followUps)';
   }
 
   @override
@@ -959,6 +975,7 @@ class _$_Lead implements _Lead {
             (identical(other.branchId, branchId) ||
                 other.branchId == branchId) &&
             (identical(other.batchId, batchId) || other.batchId == batchId) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.leadStatus, leadStatus) ||
                 other.leadStatus == leadStatus) &&
             (identical(other.assignedToType, assignedToType) ||
@@ -989,6 +1006,7 @@ class _$_Lead implements _Lead {
         const DeepCollectionEquality().hash(whatsapp),
         branchId,
         batchId,
+        email,
         leadStatus,
         assignedToType,
         assignedToId,
@@ -1026,6 +1044,7 @@ abstract class _Lead implements Lead {
       final dynamic whatsapp,
       final int? branchId,
       final int? batchId,
+      final String? email,
       final String? leadStatus,
       final String? assignedToType,
       final int? assignedToId,
@@ -1059,6 +1078,8 @@ abstract class _Lead implements Lead {
   int? get branchId;
   @override
   int? get batchId;
+  @override
+  String? get email;
   @override
   String? get leadStatus;
   @override

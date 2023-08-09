@@ -33,6 +33,7 @@ import 'package:part_app/view/fee/student_fee_details.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/leads/add_lead.dart';
 import 'package:part_app/view/leads/all_followups_view.dart';
+import 'package:part_app/view/leads/edit_lead.dart';
 import 'package:part_app/view/leads/lead_details.dart';
 import 'package:part_app/view/leads/todays_followup_view.dart';
 import 'package:part_app/view/manager/add_manager.dart';
@@ -374,6 +375,11 @@ class RouteGenerator {
       case AddLead.route:
         return MaterialPageRoute(
           builder: (_) => const AddLead(),
+          settings: settings,
+        );
+      case EditLead.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditLead(),
           settings: settings,
         );
       case TodayFollowView.route:

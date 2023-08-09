@@ -19,9 +19,9 @@ class LeadsCubit extends Cubit<LeadsState> {
   int page = 1;
   String? nextPageUrl = '';
   List<LeadStatus?>? _statuses = [];
-  Lead? selectedLead;
+  Lead? selectedLead, lead;
 
-  List<Lead> get leads => _leads;
+  List<Lead?> get leads => _leads;
   List<LeadStatus?>? get statuses => _statuses;
 
   void create(LeadRequest request) async {
@@ -116,13 +116,25 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
+  Future getLeadById({required String id}) async {
+    emit(FetchingLead());
+    Lead? temp = await _api.getLeadById(id: id);
+
+    if (temp != null) {
+      lead = temp;
+      emit(FetchedLead());
+    } else {
+      emit(FetchingLeadFailed("Error Fetching the lead"));
+    }
+  }
+
   FollowUp? checkTime(List<FollowUp> test) {
     FollowUp i;
     FollowUp? finalFollowUp;
     int temp = 0;
     for (i in test) {
       Duration balance =
-          (i.followUpDate ?? DateTime.now()).difference(DateTime.now());
+          (DateTime.now()).difference(i.followUpDate ?? DateTime.now());
       if (temp < balance.inMinutes) {
         finalFollowUp = i;
       }

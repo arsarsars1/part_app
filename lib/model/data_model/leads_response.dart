@@ -60,6 +60,7 @@ class Lead with _$Lead {
     dynamic whatsapp,
     int? branchId,
     int? batchId,
+    String? email,
     String? leadStatus,
     String? assignedToType,
     int? assignedToId,

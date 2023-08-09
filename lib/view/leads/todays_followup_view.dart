@@ -41,7 +41,7 @@ class _TodayFollowViewState extends State<TodayFollowView> {
             shrinkWrap: true,
             itemCount: cubit.leads.length,
             itemBuilder: (context, index) {
-              Lead lead = cubit.leads[index];
+              Lead? lead = cubit.leads[index];
               return GestureDetector(
                 onTap: () {
                   cubit.selectedLead = lead;
@@ -61,7 +61,7 @@ class _TodayFollowViewState extends State<TodayFollowView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              lead.name ?? '',
+                              lead?.name ?? '',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge
@@ -73,14 +73,14 @@ class _TodayFollowViewState extends State<TodayFollowView> {
                               height: 8,
                             ),
                             Text(
-                              lead.leadStatus ?? '',
+                              lead?.leadStatus ?? '',
                             ),
                           ],
                         ),
                       ),
                       Expanded(
                         child: Text(
-                          lead.assignedTo?.name ?? '',
+                          lead?.assignedTo?.name ?? '',
                         ),
                       ),
                       const Icon(

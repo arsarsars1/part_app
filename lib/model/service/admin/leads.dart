@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
 import 'package:part_app/model/data_model/lead_statuses.dart';
@@ -35,6 +36,16 @@ class LeadsService {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<Lead?> getLeadById({required String id}) async {
+    try {
+      var response = await _apiClient.get(queryPath: '/admin/leads/$id');
+      return Lead.fromJson(response["lead"]);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return null;
   }
 
   Future<LeadsResponse?> getLeadList({

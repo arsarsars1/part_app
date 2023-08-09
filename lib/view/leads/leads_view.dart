@@ -1,10 +1,11 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/leads/add_lead.dart';
 import 'package:part_app/view/leads/all_followups_view.dart';
 import 'package:part_app/view/leads/todays_followup_view.dart';
+import 'package:part_app/view_model/leads/leads_cubit.dart';
 
 class Leads extends StatefulWidget {
   const Leads({Key? key}) : super(key: key);
@@ -20,168 +21,168 @@ class _LeadsState extends State<Leads> {
       appBar: const CommonBar(
         title: 'Leads',
       ),
-      body: ListView(
-        padding: EdgeInsets.zero,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(
-            height: 0,
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Text('Total Enquiries : 100'),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
-            height: 275,
-            child: Stack(
-              children: [
-                BarChart(
-                  BarChartData(
-                    titlesData: FlTitlesData(show: false),
-                    alignment: BarChartAlignment.start,
-                    barTouchData: BarTouchData(
-                      enabled: false,
-                      touchTooltipData: BarTouchTooltipData(
-                        tooltipBgColor: Colors.transparent,
-                        tooltipPadding: EdgeInsets.zero,
-                        tooltipMargin: 8,
-                        getTooltipItem: (
-                          BarChartGroupData group,
-                          int groupIndex,
-                          BarChartRodData rod,
-                          int rodIndex,
-                        ) {
-                          return BarTooltipItem(
-                            rod.toY.round().toString(),
-                            const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    gridData: FlGridData(
-                      show: false,
-                    ),
-                    barGroups: [
-                      BarChartGroupData(
-                        showingTooltipIndicators: [0, 1, 2, 3],
-                        x: 0,
-                        barsSpace: 35,
-                        barRods: [
-                          BarChartRodData(
-                            toY: 50,
-                            borderRadius: BorderRadius.zero,
-                            width: 35,
-                            color: Colors.orange,
-                          ),
-                          BarChartRodData(
-                            toY: 25,
-                            borderRadius: BorderRadius.zero,
-                            width: 35,
-                            color: Colors.yellow,
-                          ),
-                          BarChartRodData(
-                            toY: 10,
-                            borderRadius: BorderRadius.zero,
-                            width: 35,
-                            color: Colors.green,
-                          ),
-                          BarChartRodData(
-                            toY: 15,
-                            borderRadius: BorderRadius.zero,
-                            width: 35,
-                            color: Colors.blueGrey,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  swapAnimationDuration: const Duration(
-                    milliseconds: 150,
-                  ), // Optional
-                  swapAnimationCurve: Curves.linear, // Optional
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              height: 14,
-                              width: 14,
-                              color: Colors.orange,
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            const Text('Lead')
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              height: 14,
-                              width: 14,
-                              color: Colors.yellow,
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            const Text('Interested')
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              height: 14,
-                              width: 14,
-                              color: Colors.green,
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            const Text('Converted')
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              height: 14,
-                              width: 14,
-                              color: Colors.blueGrey,
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            const Text('Not Interested')
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+          // const SizedBox(
+          //   height: 0,
+          // ),
+          // const Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: 16),
+          //   child: Text('Total Enquiries : 100'),
+          // ),
+          // Container(
+          //   margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+          //   height: 275,
+          //   child: Stack(
+          //     children: [
+          //       BarChart(
+          //         BarChartData(
+          //           titlesData: FlTitlesData(show: false),
+          //           alignment: BarChartAlignment.start,
+          //           barTouchData: BarTouchData(
+          //             enabled: false,
+          //             touchTooltipData: BarTouchTooltipData(
+          //               tooltipBgColor: Colors.transparent,
+          //               tooltipPadding: EdgeInsets.zero,
+          //               tooltipMargin: 8,
+          //               getTooltipItem: (
+          //                 BarChartGroupData group,
+          //                 int groupIndex,
+          //                 BarChartRodData rod,
+          //                 int rodIndex,
+          //               ) {
+          //                 return BarTooltipItem(
+          //                   rod.toY.round().toString(),
+          //                   const TextStyle(
+          //                     color: Colors.white,
+          //                     fontWeight: FontWeight.bold,
+          //                   ),
+          //                 );
+          //               },
+          //             ),
+          //           ),
+          //           gridData: FlGridData(
+          //             show: false,
+          //           ),
+          //           barGroups: [
+          //             BarChartGroupData(
+          //               showingTooltipIndicators: [0, 1, 2, 3],
+          //               x: 0,
+          //               barsSpace: 35,
+          //               barRods: [
+          //                 BarChartRodData(
+          //                   toY: 50,
+          //                   borderRadius: BorderRadius.zero,
+          //                   width: 35,
+          //                   color: Colors.orange,
+          //                 ),
+          //                 BarChartRodData(
+          //                   toY: 25,
+          //                   borderRadius: BorderRadius.zero,
+          //                   width: 35,
+          //                   color: Colors.yellow,
+          //                 ),
+          //                 BarChartRodData(
+          //                   toY: 10,
+          //                   borderRadius: BorderRadius.zero,
+          //                   width: 35,
+          //                   color: Colors.green,
+          //                 ),
+          //                 BarChartRodData(
+          //                   toY: 15,
+          //                   borderRadius: BorderRadius.zero,
+          //                   width: 35,
+          //                   color: Colors.blueGrey,
+          //                 ),
+          //               ],
+          //             ),
+          //           ],
+          //         ),
+          //         swapAnimationDuration: const Duration(
+          //           milliseconds: 150,
+          //         ), // Optional
+          //         swapAnimationCurve: Curves.linear, // Optional
+          //       ),
+          //       Align(
+          //         alignment: Alignment.topRight,
+          //         child: Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           children: [
+          //             Padding(
+          //               padding: const EdgeInsets.symmetric(vertical: 4),
+          //               child: Row(
+          //                 mainAxisSize: MainAxisSize.min,
+          //                 children: [
+          //                   Container(
+          //                     height: 14,
+          //                     width: 14,
+          //                     color: Colors.orange,
+          //                   ),
+          //                   const SizedBox(
+          //                     width: 8,
+          //                   ),
+          //                   const Text('Lead')
+          //                 ],
+          //               ),
+          //             ),
+          //             Padding(
+          //               padding: const EdgeInsets.symmetric(vertical: 4),
+          //               child: Row(
+          //                 mainAxisSize: MainAxisSize.min,
+          //                 children: [
+          //                   Container(
+          //                     height: 14,
+          //                     width: 14,
+          //                     color: Colors.yellow,
+          //                   ),
+          //                   const SizedBox(
+          //                     width: 8,
+          //                   ),
+          //                   const Text('Interested')
+          //                 ],
+          //               ),
+          //             ),
+          //             Padding(
+          //               padding: const EdgeInsets.symmetric(vertical: 4),
+          //               child: Row(
+          //                 mainAxisSize: MainAxisSize.min,
+          //                 children: [
+          //                   Container(
+          //                     height: 14,
+          //                     width: 14,
+          //                     color: Colors.green,
+          //                   ),
+          //                   const SizedBox(
+          //                     width: 8,
+          //                   ),
+          //                   const Text('Converted')
+          //                 ],
+          //               ),
+          //             ),
+          //             Padding(
+          //               padding: const EdgeInsets.symmetric(vertical: 4),
+          //               child: Row(
+          //                 mainAxisSize: MainAxisSize.min,
+          //                 children: [
+          //                   Container(
+          //                     height: 14,
+          //                     width: 14,
+          //                     color: Colors.blueGrey,
+          //                   ),
+          //                   const SizedBox(
+          //                     width: 8,
+          //                   ),
+          //                   const Text('Not Interested')
+          //                 ],
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
           GestureDetector(
             onTap: () => Navigator.pushNamed(context, AddLead.route),
             child: Container(
@@ -217,6 +218,7 @@ class _LeadsState extends State<Leads> {
           ),
           GestureDetector(
             onTap: () {
+              context.read<LeadsCubit>().leads.clear();
               Navigator.pushNamed(context, TodayFollowView.route);
             },
             child: Container(
@@ -252,6 +254,7 @@ class _LeadsState extends State<Leads> {
           ),
           GestureDetector(
             onTap: () {
+              context.read<LeadsCubit>().leads.clear();
               Navigator.pushNamed(context, AllFollowUpView.route);
             },
             child: Container(
