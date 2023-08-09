@@ -7,6 +7,7 @@ import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/home/components/profile_button.dart';
 import 'package:part_app/view/notifications/notification_screen.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
+import 'package:part_app/view_model/home/home_cubit.dart';
 
 class HomeBar extends StatelessWidget {
   const HomeBar({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class HomeBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AuthCubit>();
+    var homeCubit = context.read<HomeCubit>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -74,24 +76,29 @@ class HomeBar extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Container(
-                        height: 12.r,
-                        width: 12.r,
-                        padding: const EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.primaryColor,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Container(),
-                        ),
-                      ),
-                    ),
-                  ),
+                  FutureBuilder(
+                      future: homeCubit.getNotificationList(clean: true),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        return Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              height: 12.r,
+                              width: 12.r,
+                              padding: const EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.primaryColor,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Container(),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
                 ],
               ),
             ),
