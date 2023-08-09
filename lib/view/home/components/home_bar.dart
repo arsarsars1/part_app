@@ -80,24 +80,27 @@ class HomeBar extends StatelessWidget {
                       future: homeCubit.getNotificationList(clean: true),
                       builder: (BuildContext context,
                           AsyncSnapshot<dynamic> snapshot) {
-                        return Positioned.fill(
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Container(
-                              height: 12.r,
-                              width: 12.r,
-                              padding: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.primaryColor,
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: Container(),
+                        if (homeCubit.flag) {
+                          return Positioned.fill(
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                height: 12.r,
+                                width: 12.r,
+                                padding: const EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.primaryColor,
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: Container(),
+                                ),
                               ),
                             ),
-                          ),
-                        );
+                          );
+                        }
+                        return const SizedBox();
                       }),
                 ],
               ),

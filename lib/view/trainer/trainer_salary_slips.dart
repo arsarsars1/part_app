@@ -3,6 +3,7 @@ import 'package:part_app/model/data_model/trainer_salary_slip.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
+import 'package:part_app/view/trainer/add_advance_salary.dart';
 import 'package:part_app/view/trainer/add_or_edit_salary.dart';
 import 'package:part_app/view/trainer/components/salary_list_item.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -89,9 +90,24 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  '${trainerCubit.trainer?.trainerDetail?[0].name}',
-                  style: Theme.of(context).textTheme.bodyLarge,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${trainerCubit.trainer?.trainerDetail?[0].name}',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    Button(
+                      height: 30.h,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          AddAdvanceSalaryPage.route,
+                        );
+                      },
+                      title: 'Add Advance Salary',
+                    ),
+                  ],
                 ),
               ),
               Expanded(

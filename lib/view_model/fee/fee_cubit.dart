@@ -44,6 +44,21 @@ class FeeCubit extends Cubit<FeeState> {
     }
   }
 
+  Future addAdvanceFees(Map<String, dynamic> data) async {
+    try {
+      emit(AddingFees());
+      Common? response = await _feeService.addAdvanceFees(data);
+
+      if (response?.status == 1) {
+        emit(AddedFees(response?.message ?? 'Fees Added'));
+      } else {
+        emit(AddFeesFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future addFeesForAdmission(
       int? batchInvoiceId, Map<String, dynamic> data) async {
     try {
