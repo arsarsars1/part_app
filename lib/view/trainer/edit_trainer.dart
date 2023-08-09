@@ -208,7 +208,7 @@ class _EditTrainerState extends State<EditTrainer> {
                     maxLines: 1,
                     textInputAction: TextInputAction.next,
                     initialValue: trainer?.expertise,
-                    title: 'Area Of Expertise *',
+                    title: 'Area Of Expertise',
                     hint: 'Eg: Hip Hop Dance',
                     onChange: (value) {
                       areaOfExpertise = value;
