@@ -8,9 +8,33 @@ import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/notifications/widgets/custom_container_for_notification.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class NotificationScreen extends StatelessWidget {
+class NotificationScreen extends StatefulWidget {
   static const route = '/notifications';
   const NotificationScreen({super.key});
+
+  @override
+  State<NotificationScreen> createState() => _NotificationScreenState();
+}
+
+class _NotificationScreenState extends State<NotificationScreen> {
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<StudentCubit>().clean();
+    });
+    // Pagination listener
+    scrollController.addListener(() {
+      // var nextPageTrigger = 0.60 * scrollController.position.maxScrollExtent;
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        context.read<HomeCubit>().getNotificationList(clean: false);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +44,7 @@ class NotificationScreen extends StatelessWidget {
         title: 'Notifications',
       ),
       body: FutureBuilder(
-        future: cubit.getNotificationList(clean: false),
+        future: cubit.getNotificationList(clean: true),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           return BlocConsumer<HomeCubit, HomeState>(
             listener: (context, state) {
@@ -49,6 +73,7 @@ class NotificationScreen extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: ListView.builder(
+                  controller: scrollController,
                   itemCount: cubit.notifications?.length,
                   itemBuilder: (context, index) {
                     NotificationData? notification =
