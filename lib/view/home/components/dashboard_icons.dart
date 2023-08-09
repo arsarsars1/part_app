@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:part_app/model/data_model/dashboard_item.dart';
+import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/home/home_cubit.dart';
 
@@ -26,8 +27,12 @@ class DashboardIcons extends StatelessWidget {
           DashboardItem item = DefaultValues.dashboardItems[index];
           return InkWell(
             onTap: () async {
-              await Navigator.pushNamed(context, item.route);
-              context.read<HomeCubit>().getDashboard();
+              if (item.title == 'Branch Manager') {
+                Alert(context).show(message: "Coming soon !!");
+              } else {
+                await Navigator.pushNamed(context, item.route);
+                context.read<HomeCubit>().getDashboard();
+              }
             },
             child: Container(
               margin: EdgeInsets.all(8.h),
