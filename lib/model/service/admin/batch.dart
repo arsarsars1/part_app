@@ -133,6 +133,39 @@ class BatchService {
     }
   }
 
+  Future<BatchResponse?> getStudentBatchesByStatus({
+    int? studentId,
+    String status = 'ongoing',
+    String? search,
+    required int page,
+    bool studentSearch = false,
+  }) async {
+    try {
+      String path = studentId == null
+          ? '/admin/batches/batch-status/$status'
+          : '/admin/students/$studentId/batches/batch-status/$status';
+
+      if (studentSearch) {
+        path = '/admin/students/$studentId/batches';
+      }
+
+      /// append the search text if search query is not null
+      if (search != null) {
+        path += '/search/$search';
+      }
+
+      path += '?page=$page';
+
+      var response = await _apiClient.get(
+        queryPath: path,
+      );
+
+      return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<BatchResponse?> getBatchesByBranch(
       {required int page, required int? branchId}) async {
     try {

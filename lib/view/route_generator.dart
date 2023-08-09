@@ -25,6 +25,7 @@ import 'package:part_app/view/calender/calender_events.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
+import 'package:part_app/view/fee/add_advance_fee.dart';
 import 'package:part_app/view/fee/add_or_edit_admission_fees.dart';
 import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/fees_details_view.dart';
@@ -59,6 +60,7 @@ import 'package:part_app/view/students/student_attendence.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
+import 'package:part_app/view/trainer/add_advance_salary.dart';
 import 'package:part_app/view/trainer/add_or_edit_salary.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
@@ -399,6 +401,16 @@ class RouteGenerator {
       case AttendanceCalenderView.route:
         return MaterialPageRoute(
           builder: (_) => const AttendanceCalenderView(),
+          settings: settings,
+        );
+      case AddAdvanceFeePage.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddAdvanceFeePage(),
+          settings: settings,
+        );
+      case AddAdvanceSalaryPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddAdvanceSalaryPage(),
           settings: settings,
         );
       case StudentAttendanceCalenderView.route:
