@@ -95,6 +95,8 @@ class HomeCubit extends Cubit<HomeState> {
     bool clean = true,
   }) async {
     if (clean) {
+      page = 1;
+      nextPageUrl = '';
       notifications?.clear();
       emit(GettingNotifications());
     } else {
@@ -108,7 +110,11 @@ class HomeCubit extends Cubit<HomeState> {
 
     NotificationList? temp = await _service.getNotifications();
     if (temp?.status == 1) {
-      notifications = temp?.notifications;
+      nextPageUrl = temp?.notifications?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+      notifications = temp?.notifications?.data;
       emit(GotNotifications());
     } else {
       emit(GetNotificationsFailed('Failed to get the calender events list'));
@@ -155,29 +161,49 @@ class HomeCubit extends Cubit<HomeState> {
       return "The target time has already passed.";
     }
 
-    // int days = difference.inDays;
-    int hours = difference.inHours;
-    int minutes = difference.inMinutes.remainder(60);
-    // int seconds = difference.inSeconds.remainder(60);
-
+    int years = difference.inDays ~/ 365;
+    int months = (difference.inDays % 365) ~/ 30;
+    int weeks = (difference.inDays % 365) ~/ 7;
+    int days = difference.inDays % 7;
+    int hours = difference.inHours % 24;
+    int minutes = difference.inMinutes % 60;
+    int seconds = difference.inSeconds % 60;
     String timeDifference = "";
 
-    // if (days > 0) {
-    //   timeDifference += "${days}d ";
-    // }
+    if (years > 0) {
+      timeDifference = "${years}y ";
+      return timeDifference.trim();
+    }
+
+    if (months > 0) {
+      timeDifference = "${months}m ";
+      return timeDifference.trim();
+    }
+
+    if (weeks > 0) {
+      timeDifference = "${weeks}w ";
+      return timeDifference.trim();
+    }
+
+    if (days > 0) {
+      timeDifference = "${days}d ";
+      return timeDifference.trim();
+    }
 
     if (hours > 0) {
-      timeDifference += "${hours}h ";
+      timeDifference = "${hours}h ";
+      return timeDifference.trim();
     }
 
     if (minutes > 0) {
-      timeDifference += "${minutes}m ";
+      timeDifference = "${minutes}m ";
+      return timeDifference.trim();
     }
 
-    // if (seconds > 0) {
-    //   timeDifference += "${seconds}s ";
-    // }
-
+    if (seconds > 0) {
+      timeDifference = "${seconds}s ";
+      return timeDifference.trim();
+    }
     return timeDifference.trim();
   }
 }
