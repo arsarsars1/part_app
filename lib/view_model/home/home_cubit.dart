@@ -37,6 +37,7 @@ class HomeCubit extends Cubit<HomeState> {
   List<Lead?>? followUpLeads;
   List<Lead?>? newLeads;
   List<NotificationData>? notifications;
+  bool flag = false;
 
   Future getDashboard() async {
     emit(DashboardLoading());
@@ -115,6 +116,11 @@ class HomeCubit extends Cubit<HomeState> {
         page++;
       }
       notifications = temp?.notifications?.data;
+      notifications?.forEach((element) {
+        if (element.readAt == null) {
+          flag = true;
+        }
+      });
       emit(GotNotifications());
     } else {
       emit(GetNotificationsFailed('Failed to get the calender events list'));

@@ -114,7 +114,6 @@ class _HomeState extends State<Home> {
     } else if (currentIndex == 3) {
       return const Leads();
     }
-
     return const Center(
       child: Text('WIP'),
     );

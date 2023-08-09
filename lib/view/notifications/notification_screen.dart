@@ -110,7 +110,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 children: [
                                   Text('${notification?.data?.title}'),
                                   Text(
-                                      "${cubit.getTimeDifference(notification?.createdAt ?? DateTime.now())} ago"),
+                                    cubit.getTimeDifference(
+                                                notification?.createdAt ??
+                                                    DateTime.now()) !=
+                                            ""
+                                        ? "${cubit.getTimeDifference(notification?.createdAt ?? DateTime.now())} ago"
+                                        : "Now",
+                                  ),
                                 ],
                               ),
                               SizedBox(height: 10.h),
