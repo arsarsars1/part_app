@@ -129,16 +129,21 @@ class _FeeListItemState extends State<FeeListItem> {
                                   const SizedBox(
                                     width: 16,
                                   ),
-                                  if (widget.student
-                                          .monthAttendancePresentCount !=
-                                      null)
-                                    Text(
-                                      "Class Attended: ${widget.student.cycleAttendancePresentCount}/${widget.student.totalNoOfClasses}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
+                                  widget.student.feeType == "class"
+                                      ? Text(
+                                          "Class Attended: ${widget.student.cycleAttendancePresentCount}/${widget.student.totalNoOfClasses}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(),
+                                        )
+                                      : Text(
+                                          "Class Attended: ${widget.student.monthAttendancePresentCount}/${widget.student.monthClassesConductedCount}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(),
+                                        ),
                                 ],
                               ),
                             ],
