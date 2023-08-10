@@ -37,6 +37,12 @@ class _StudentsViewState extends State<StudentsView> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<StudentCubit>().clean();
+      context.read<StudentCubit>().getStudents(
+            batchId: batch?.id,
+            searchQuery: query,
+            activeStatus: activeStatus,
+            clean: true,
+          );
     });
     // Pagination listener
     scrollController.addListener(() {
