@@ -861,15 +861,36 @@ class _FeeListItemState extends State<FeeListItem> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Due Date: ${widget.student.paymentDueDate?.toDateString()}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: AppColors.textColor,
+                              widget.student.writtenOffStatus != 1 &&
+                                      widget.student.paymentStatus != 'paid'
+                                  ? widget.student.feeType == "monthly"
+                                      ? Text(
+                                          'Due Date: ${widget.student.paymentDueDate?.toDateString()}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                color: AppColors.textColor,
+                                              ),
+                                        )
+                                      : Text(
+                                          'Due in: ${10 - (widget.student.monthClassesConductedCount ?? 0)}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                color: AppColors.textColor,
+                                              ),
+                                        )
+                                  : Text(
+                                      '',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            color: AppColors.textColor,
+                                          ),
                                     ),
-                              ),
                               Text(
                                 widget.student.writtenOffStatus != 1
                                     ? widget.student.paymentStatus == 'paid'
