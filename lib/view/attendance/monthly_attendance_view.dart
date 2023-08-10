@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/attendance_monthly_record.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
-import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/attendance/components/attendance_student_item.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
@@ -64,23 +63,23 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                 child: ListView(
                   controller: scrollController,
                   children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: 16.w,
-                          right: 16.w,
-                          top: 16.h,
-                        ),
-                        child: Button(
-                          height: 30.h,
-                          onTap: () {
-                            Navigator.pushNamed(context, AttendanceCalenderView.route);
-                          },
-                          title: 'Update Attendance',
-                        ),
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.centerRight,
+                    //   child: Padding(
+                    //     padding: EdgeInsets.only(
+                    //       left: 16.w,
+                    //       right: 16.w,
+                    //       top: 16.h,
+                    //     ),
+                    //     child: Button(
+                    //       height: 30.h,
+                    //       onTap: () {
+                    //         Navigator.pushNamed(context, AttendanceCalenderView.route);
+                    //       },
+                    //       title: 'Update Attendance',
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -178,7 +177,6 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                       height: 20,
                     ),
 
-
                     ScheduleField(
                       title: 'Month, Year',
                       hint: 'Select month & year',
@@ -191,7 +189,7 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                       },
                       time: false,
                       onlyMonth: true,
-                      selectedDate : finalDate,
+                      selectedDate: finalDate,
                       controller: dateController,
                     ),
 
@@ -219,7 +217,8 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
                                   Container(
                                     alignment: Alignment.centerRight,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(right: 16.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 16.0),
                                       child: Text(
                                         'Total Classes Taken: ${cubit.conductedClassCount}',
                                         style: Theme.of(context)
