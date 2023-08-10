@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
@@ -26,7 +27,7 @@ class _StudentsViewState extends State<StudentsView> {
   int? branchId;
   String? query;
   BatchModel? batch;
-
+  DropDownItem? selectedItem;
   String? activeStatus;
 
   TextEditingController batchController = TextEditingController();
@@ -56,6 +57,7 @@ class _StudentsViewState extends State<StudentsView> {
 
   @override
   Widget build(BuildContext context) {
+    var branchCubit = context.read<BranchCubit>();
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
@@ -97,21 +99,85 @@ class _StudentsViewState extends State<StudentsView> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    BranchField(
-                      onSelect: (value) {
-                        setState(() {
-                          branchId = value;
-                        });
-                        batchController.clear();
-                        batch = null;
-
-                        if (status != null) {
-                          context.read<BatchCubit>().getBatchesByStatus(
-                                branchId: branchId,
-                                status: status!,
-                                clean: true,
-                              );
-                        }
+                    BlocBuilder<BranchCubit, BranchState>(
+                      builder: (context, state) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Branch',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              DropdownButtonFormField<DropDownItem>(
+                                dropdownColor: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .fillColor,
+                                value:
+                                    selectedItem ?? const DropDownItem(id: -1),
+                                decoration: const InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 30),
+                                ),
+                                items: [
+                                  DropdownMenuItem(
+                                    value: const DropDownItem(id: -1),
+                                    child: SizedBox(
+                                      width: 200.w,
+                                      child: Text(
+                                        'All',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: Colors.white,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                  ...branchCubit.dropDownBranches().map((e) {
+                                    return DropdownMenuItem(
+                                      value: e,
+                                      child: SizedBox(
+                                        width: 200.w,
+                                        child: Text(
+                                          e.title ?? '',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                color: Colors.white,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList()
+                                ],
+                                onChanged: (value) {
+                                  if (value?.id == -1) {
+                                    setState(() {
+                                      branchId = null;
+                                      selectedItem = value;
+                                      doSearch(true);
+                                    });
+                                  } else {
+                                    branchId = value?.id;
+                                    selectedItem = value;
+                                    setState(() {
+                                      doSearch(true);
+                                    });
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        );
                       },
                     ),
                     const SizedBox(
