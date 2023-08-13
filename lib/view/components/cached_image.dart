@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,14 +34,18 @@ class CachedImage {
   }
 
   CachedNetworkImage image() {
+    log(imageUrl);
     return CachedNetworkImage(
       height: height,
       imageUrl: imageUrl,
       fit: fit,
       errorWidget: (context, str, _) {
-        return CachedImage(
-          'https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg',
-        ).image();
+        return Padding(
+          padding: const EdgeInsets.all(9.0),
+          child: SvgPicture.asset(
+            Assets.trainerListIcon,
+          ),
+        );
       },
       httpHeaders: {
         "Authorization": token,
@@ -49,6 +55,7 @@ class CachedImage {
   }
 
   CachedNetworkImage userImage() {
+    log(imageUrl);
     return CachedNetworkImage(
       height: height,
       imageUrl: imageUrl,
