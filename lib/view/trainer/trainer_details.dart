@@ -68,8 +68,13 @@ class _TrainerDetailsState extends State<TrainerDetails> {
               children: [
                 Center(
                   child: ProfilePicture(
-                    imageUrl:
-                        '${F.baseUrl}/admin/images/trainer/${trainer?.id}/${trainer?.profilePic}',
+                    imageUrl: trainer?.profilePic != ""
+                        ? '${F.baseUrl}'
+                            '/admin/images/trainer/'
+                            '${trainer?.trainerDetailId}/${trainer?.profilePic}'
+                        : trainer?.gender == "male"
+                            ? "https://dev.partapp.in/images/avatars/avatar-5.png"
+                            : "https://dev.partapp.in/images/avatars/avatar-1.png",
                     onEdit: () {},
                     onChange: (File value) {
                       cubit.updateProfilePic(profilePic: value);
