@@ -56,3 +56,12 @@ class DeleteNotificationFailed extends HomeState {
   final String message;
   DeleteNotificationFailed(this.message);
 }
+
+class FetchingFAQ extends HomeState {}
+
+class FetchedFAQ extends HomeState {}
+
+class FetchFAQFailed extends HomeState {
+  final String message;
+  FetchFAQFailed(this.message);
+}

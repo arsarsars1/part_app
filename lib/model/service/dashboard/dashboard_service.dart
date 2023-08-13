@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:part_app/model/data_model/FaqList.dart';
 import 'package:part_app/model/data_model/calender_events_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/dashboard.dart';
@@ -30,12 +31,35 @@ class DashboardService {
     }
   }
 
-  Future<NotificationList?> getNotifications() async {
+  Future<NotificationList?> getNotifications({String? page}) async {
     try {
       var response = await _apiClient.get(
-        queryPath: '/admin/notifications',
+        queryPath: '/admin/notifications?page=$page',
       );
       return notificationListFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> sendSupportRequest(Map<String, dynamic> data) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/support',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<List<FaqList?>?> getFAQList({String? page}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/faqs',
+      );
+      return faqListFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

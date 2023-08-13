@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/model/data_model/FaqList.dart';
 import 'package:part_app/model/data_model/calender_events_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/dashboard.dart';
@@ -15,10 +16,12 @@ class HomeCubit extends Cubit<HomeState> {
 
   final _service = DashboardService();
   List<Banner>? _banner;
+  List<FaqList?>? _faqList;
   int? _totalStudents;
   String? _dailyCollection;
   String? _monthlyCollection;
   List<Banner>? get banner => _banner;
+  List<FaqList?>? get faqList => _faqList;
   int? get totalStudents => _totalStudents;
   String? get dailyCollection => _dailyCollection;
   String? get monthlyCollection => _monthlyCollection;
@@ -109,7 +112,8 @@ class HomeCubit extends Cubit<HomeState> {
       return;
     }
 
-    NotificationList? temp = await _service.getNotifications();
+    NotificationList? temp =
+        await _service.getNotifications(page: (page).toString());
     if (temp?.status == 1) {
       nextPageUrl = temp?.notifications?.nextPageUrl;
       if (nextPageUrl != null) {
@@ -211,5 +215,32 @@ class HomeCubit extends Cubit<HomeState> {
       return timeDifference.trim();
     }
     return timeDifference.trim();
+  }
+
+  /// this method is used to get the classes of a batch in a particular month
+  Future getFAQ() async {
+    _faqList?.clear();
+    emit(FetchingFAQ());
+    List<FaqList?>? response = await _service.getFAQList();
+    if ((response ?? []).isNotEmpty) {
+      _faqList = response;
+      emit(FetchedFAQ());
+    } else {
+      emit(FetchFAQFailed("Error fetching the FAQ List"));
+    }
+  }
+
+  Future<int> sendSupportRequest(Map<String, dynamic> data) async {
+    try {
+      Common? response = await _service.sendSupportRequest(data);
+
+      if (response?.status == 1) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      return 0;
+    }
   }
 }
