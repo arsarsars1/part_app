@@ -494,6 +494,7 @@ mixin _$Trainer {
   int? get salaryAmount => throw _privateConstructorUsedError;
   String? get profilePic => throw _privateConstructorUsedError;
   String? get profilePicType => throw _privateConstructorUsedError;
+  int? get trainerDetailId => throw _privateConstructorUsedError;
   int? get isActive => throw _privateConstructorUsedError;
   User? get user => throw _privateConstructorUsedError;
   Academy? get academy => throw _privateConstructorUsedError;
@@ -534,6 +535,7 @@ abstract class $TrainerCopyWith<$Res> {
       int? salaryAmount,
       String? profilePic,
       String? profilePicType,
+      int? trainerDetailId,
       int? isActive,
       User? user,
       Academy? academy,
@@ -578,6 +580,7 @@ class _$TrainerCopyWithImpl<$Res, $Val extends Trainer>
     Object? salaryAmount = freezed,
     Object? profilePic = freezed,
     Object? profilePicType = freezed,
+    Object? trainerDetailId = freezed,
     Object? isActive = freezed,
     Object? user = freezed,
     Object? academy = freezed,
@@ -663,6 +666,10 @@ class _$TrainerCopyWithImpl<$Res, $Val extends Trainer>
           ? _value.profilePicType
           : profilePicType // ignore: cast_nullable_to_non_nullable
               as String?,
+      trainerDetailId: freezed == trainerDetailId
+          ? _value.trainerDetailId
+          : trainerDetailId // ignore: cast_nullable_to_non_nullable
+              as int?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -746,6 +753,7 @@ abstract class _$$_TrainerCopyWith<$Res> implements $TrainerCopyWith<$Res> {
       int? salaryAmount,
       String? profilePic,
       String? profilePicType,
+      int? trainerDetailId,
       int? isActive,
       User? user,
       Academy? academy,
@@ -789,6 +797,7 @@ class __$$_TrainerCopyWithImpl<$Res>
     Object? salaryAmount = freezed,
     Object? profilePic = freezed,
     Object? profilePicType = freezed,
+    Object? trainerDetailId = freezed,
     Object? isActive = freezed,
     Object? user = freezed,
     Object? academy = freezed,
@@ -874,6 +883,10 @@ class __$$_TrainerCopyWithImpl<$Res>
           ? _value.profilePicType
           : profilePicType // ignore: cast_nullable_to_non_nullable
               as String?,
+      trainerDetailId: freezed == trainerDetailId
+          ? _value.trainerDetailId
+          : trainerDetailId // ignore: cast_nullable_to_non_nullable
+              as int?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -930,6 +943,7 @@ class _$_Trainer implements _Trainer {
       this.salaryAmount,
       this.profilePic,
       this.profilePicType,
+      this.trainerDetailId,
       this.isActive,
       this.user,
       this.academy,
@@ -982,6 +996,8 @@ class _$_Trainer implements _Trainer {
   @override
   final String? profilePicType;
   @override
+  final int? trainerDetailId;
+  @override
   final int? isActive;
   @override
   final User? user;
@@ -1015,7 +1031,7 @@ class _$_Trainer implements _Trainer {
 
   @override
   String toString() {
-    return 'Trainer(id: $id, userId: $userId, academyId: $academyId, gender: $gender, dob: $dob, doj: $doj, whatsappNo: $whatsappNo, mobileNo: $mobileNo, countryCode: $countryCode, name: $name, email: $email, upiId: $upiId, salaryType: $salaryType, address: $address, expertise: $expertise, salaryDate: $salaryDate, salaryAmount: $salaryAmount, profilePic: $profilePic, profilePicType: $profilePicType, isActive: $isActive, user: $user, academy: $academy, branches: $branches, document1: $document1, document2: $document2, trainerDetail: $trainerDetail)';
+    return 'Trainer(id: $id, userId: $userId, academyId: $academyId, gender: $gender, dob: $dob, doj: $doj, whatsappNo: $whatsappNo, mobileNo: $mobileNo, countryCode: $countryCode, name: $name, email: $email, upiId: $upiId, salaryType: $salaryType, address: $address, expertise: $expertise, salaryDate: $salaryDate, salaryAmount: $salaryAmount, profilePic: $profilePic, profilePicType: $profilePicType, trainerDetailId: $trainerDetailId, isActive: $isActive, user: $user, academy: $academy, branches: $branches, document1: $document1, document2: $document2, trainerDetail: $trainerDetail)';
   }
 
   @override
@@ -1052,6 +1068,8 @@ class _$_Trainer implements _Trainer {
                 other.profilePic == profilePic) &&
             (identical(other.profilePicType, profilePicType) ||
                 other.profilePicType == profilePicType) &&
+            (identical(other.trainerDetailId, trainerDetailId) ||
+                other.trainerDetailId == trainerDetailId) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             (identical(other.user, user) || other.user == user) &&
@@ -1088,6 +1106,7 @@ class _$_Trainer implements _Trainer {
         salaryAmount,
         profilePic,
         profilePicType,
+        trainerDetailId,
         isActive,
         user,
         academy,
@@ -1132,6 +1151,7 @@ abstract class _Trainer implements Trainer {
       final int? salaryAmount,
       final String? profilePic,
       final String? profilePicType,
+      final int? trainerDetailId,
       final int? isActive,
       final User? user,
       final Academy? academy,
@@ -1180,6 +1200,8 @@ abstract class _Trainer implements Trainer {
   String? get profilePic;
   @override
   String? get profilePicType;
+  @override
+  int? get trainerDetailId;
   @override
   int? get isActive;
   @override

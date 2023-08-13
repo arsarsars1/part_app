@@ -64,6 +64,7 @@ _$_Trainer _$$_TrainerFromJson(Map<String, dynamic> json) => _$_Trainer(
       salaryAmount: json['salary_amount'] as int?,
       profilePic: json['profile_pic'] as String?,
       profilePicType: json['profile_pic_type'] as String?,
+      trainerDetailId: json['trainer_detail_id'] as int?,
       isActive: json['is_active'] as int?,
       user: json['user'] == null
           ? null
@@ -102,6 +103,7 @@ Map<String, dynamic> _$$_TrainerToJson(_$_Trainer instance) =>
       'salary_amount': instance.salaryAmount,
       'profile_pic': instance.profilePic,
       'profile_pic_type': instance.profilePicType,
+      'trainer_detail_id': instance.trainerDetailId,
       'is_active': instance.isActive,
       'user': instance.user,
       'academy': instance.academy,
