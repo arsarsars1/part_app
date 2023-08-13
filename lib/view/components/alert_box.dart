@@ -26,7 +26,7 @@ class AlertBox {
             subMessage: subMessage,
             onTap: onTap ??
                 () {
-                  exit(0);
+                  Navigator.pop(context);
                 },
             buttonText: buttonText,
             subContent: subContent,
