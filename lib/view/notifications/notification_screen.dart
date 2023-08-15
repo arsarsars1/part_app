@@ -63,8 +63,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               }
             },
             builder: (context, state) {
-              if (state is GettingNotifications ||
-                  state is ReadingNotification ||
+              if (state is ReadingNotification ||
                   state is DeletingNotification) {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -72,66 +71,84 @@ class _NotificationScreenState extends State<NotificationScreen> {
               }
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: ListView.builder(
-                  controller: scrollController,
-                  itemCount: cubit.notifications?.length,
-                  itemBuilder: (context, index) {
-                    NotificationData? notification =
-                        cubit.notifications?[index];
-                    return GestureDetector(
-                      onTap: () {
-                        cubit.readNotification(notification?.id);
-                      },
-                      child: Slidable(
-                        endActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          children: [
-                            SlidableAction(
-                              onPressed: (context) {
-                                cubit.deleteNotification(notification?.id);
-                              },
-                              backgroundColor: AppColors.red,
-                              foregroundColor: AppColors.grey100,
-                              icon: Icons.delete,
-                              label: 'Delete',
-                            ),
-                          ],
-                        ),
-                        child: CustomContainerForNotification(
-                          color: notification?.readAt != null
-                              ? AppColors.liteDark.withOpacity(0.5)
-                              : AppColors.liteDark,
-                          widget: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: cubit.notifications?.length,
+                        itemBuilder: (context, index) {
+                          NotificationData? notification =
+                              cubit.notifications?[index];
+                          return GestureDetector(
+                            onTap: () {
+                              cubit.readNotification(notification?.id);
+                            },
+                            child: Slidable(
+                              endActionPane: ActionPane(
+                                motion: const ScrollMotion(),
                                 children: [
-                                  Text('${notification?.data?.title}'),
-                                  Text(
-                                    cubit.getTimeDifference(
-                                                notification?.createdAt ??
-                                                    DateTime.now()) !=
-                                            ""
-                                        ? "${cubit.getTimeDifference(notification?.createdAt ?? DateTime.now())} ago"
-                                        : "Now",
+                                  SlidableAction(
+                                    onPressed: (context) {
+                                      cubit
+                                          .deleteNotification(notification?.id);
+                                    },
+                                    backgroundColor: AppColors.red,
+                                    foregroundColor: AppColors.grey100,
+                                    icon: Icons.delete,
+                                    label: 'Delete',
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10.h),
-                              Text(
-                                '${notification?.data?.message}',
-                                style: TextStyle(
-                                  color: AppColors.primaryColor,
+                              child: CustomContainerForNotification(
+                                color: notification?.readAt != null
+                                    ? AppColors.liteDark.withOpacity(0.5)
+                                    : AppColors.liteDark,
+                                widget: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('${notification?.data?.title}'),
+                                        Text(
+                                          cubit.getTimeDifference(
+                                                      notification?.createdAt ??
+                                                          DateTime.now()) !=
+                                                  ""
+                                              ? "${cubit.getTimeDifference(notification?.createdAt ?? DateTime.now())} ago"
+                                              : "Now",
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 10.h),
+                                    Text(
+                                      '${notification?.data?.message}',
+                                      style: TextStyle(
+                                        color: AppColors.primaryColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
+                    ),
+                    AnimatedContainer(
+                      height: state is GettingNotifications && state.pagination
+                          ? 30
+                          : 0,
+                      color: Colors.black,
+                      duration: const Duration(
+                        milliseconds: 250,
+                      ),
+                      child:
+                          const Center(child: Text('Fetching more items ..')),
+                    )
+                  ],
                 ),
               );
             },
