@@ -119,7 +119,7 @@ class HomeCubit extends Cubit<HomeState> {
       if (nextPageUrl != null) {
         page++;
       }
-      notifications = temp?.notifications?.data;
+      notifications?.addAll(temp?.notifications?.data ?? []);
       notifications?.forEach((element) {
         if (element.readAt == null) {
           flag = true;
