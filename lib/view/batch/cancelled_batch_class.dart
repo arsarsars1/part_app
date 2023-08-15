@@ -59,54 +59,55 @@ class CancelledClassesState extends State<CancelledClasses> {
             }
           },
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 16.w,
-                    right: 16.w,
-                    top: 16.h,
+        body: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 16.w,
+                  right: 16.w,
+                  top: 16.h,
+                ),
+                child: Button(
+                  height: 30.h,
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    CancelClass.route,
                   ),
-                  child: Button(
-                    height: 30.h,
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      CancelClass.route,
-                    ),
-                    title: 'Cancel Class',
-                  ),
+                  title: 'Cancel Class',
                 ),
               ),
-              ScheduleField(
-                title: 'Month, Year',
-                hint: 'Select month & year',
-                initialValue: DateTime.now().toMMMMYYYY(),
-                dateMonth: true,
-                onDateSelect: (DateTime value) {
-                  context.read<BatchCubit>().getCancelledBatches(
-                      month: value.month, year: value.year);
-                },
-                time: false,
-                onlyMonth: true,
-              ),
-              BlocBuilder<BatchCubit, BatchState>(
-                builder: (context, state) {
-                  if (state is CancelledListFetching) {
-                    return const Expanded(child: LoadingView());
-                  }
+            ),
+            ScheduleField(
+              title: 'Month, Year',
+              hint: 'Select month & year',
+              initialValue: DateTime.now().toMMMMYYYY(),
+              dateMonth: true,
+              onDateSelect: (DateTime value) {
+                context
+                    .read<BatchCubit>()
+                    .getCancelledBatches(month: value.month, year: value.year);
+              },
+              time: false,
+              onlyMonth: true,
+            ),
+            BlocBuilder<BatchCubit, BatchState>(
+              builder: (context, state) {
+                if (state is CancelledListFetching) {
+                  return const Expanded(child: LoadingView());
+                }
 
-                  if (cubit.cancelledList!.isEmpty) {
-                    return const Expanded(
-                      child: Center(
-                        child: Text('No classes cancelled.'),
-                      ),
-                    );
-                  }
-                  return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
+                if (cubit.cancelledList!.isEmpty) {
+                  return const Expanded(
+                    child: Center(
+                      child: Text('No classes cancelled.'),
+                    ),
+                  );
+                }
+                return Expanded(
+                  child: ListView.builder(
+                    // physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: cubit.cancelledList!.length,
                     itemBuilder: (context, index) {
@@ -248,11 +249,11 @@ class CancelledClassesState extends State<CancelledClasses> {
                         ),
                       );
                     },
-                  );
-                },
-              ),
-            ],
-          ),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
