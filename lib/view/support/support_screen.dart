@@ -2,7 +2,7 @@
 
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:part_app/model/data_model/FaqList.dart';
+import 'package:part_app/model/data_model/faq_list.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/regex.dart';

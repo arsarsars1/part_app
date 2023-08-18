@@ -235,6 +235,27 @@ class DefaultValues {
     ),
   ];
 
+  static const studentDashboardItems = [
+    DashboardItem(
+      title: 'Batches',
+      route: '/batches',
+      asset: Assets.batches,
+      color: Color(0xFFF7B733),
+    ),
+    DashboardItem(
+      title: 'Fees',
+      route: '/fees',
+      asset: Assets.fee,
+      color: Color(0xFF1D976C),
+    ),
+    DashboardItem(
+      title: 'Attendance',
+      route: '/attendance-batch-list',
+      asset: Assets.attendance,
+      color: Color(0xFF2B32B2),
+    ),
+  ];
+
   static const Map<int, dynamic> defaultTrainingDays = {
     0: 'Sunday',
     1: 'Monday',

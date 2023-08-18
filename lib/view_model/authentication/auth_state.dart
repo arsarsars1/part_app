@@ -30,9 +30,9 @@ class SendingOtpFailed extends AuthState {
 class Authenticating extends AuthState {}
 
 class LoginSuccess extends AuthState {
-  final bool membershipActive;
+  final bool user;
 
-  LoginSuccess(this.membershipActive);
+  LoginSuccess(this.user);
 }
 
 class LoginFailed extends AuthState {

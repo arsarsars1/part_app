@@ -32,6 +32,7 @@ import 'package:part_app/view/fee/fees_details_view.dart';
 import 'package:part_app/view/fee/student_admission_fee_details.dart';
 import 'package:part_app/view/fee/student_fee_details.dart';
 import 'package:part_app/view/home/home.dart';
+import 'package:part_app/view/home/student_app_home.dart';
 import 'package:part_app/view/leads/add_lead.dart';
 import 'package:part_app/view/leads/all_followups_view.dart';
 import 'package:part_app/view/leads/lead_details.dart';
@@ -48,6 +49,7 @@ import 'package:part_app/view/membership/membership_home.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/notifications/notification_screen.dart';
+import 'package:part_app/view/notifications/student_app_notification_screen.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/students/add_student.dart';
@@ -84,6 +86,11 @@ class RouteGenerator {
       case Home.route:
         return MaterialPageRoute(
           builder: (_) => const Home(),
+          settings: settings,
+        );
+      case StudentAppHome.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAppHome(),
           settings: settings,
         );
       case SplashScreen.route:
@@ -486,6 +493,11 @@ class RouteGenerator {
       case NotificationScreen.route:
         return MaterialPageRoute(
           builder: (_) => const NotificationScreen(),
+          settings: settings,
+        );
+      case StudentAppNotificationScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAppNotificationScreen(),
           settings: settings,
         );
       case CurrentMembership.route:

@@ -2,11 +2,13 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_app/model/data_model/FaqList.dart';
+import 'package:part_app/model/data_model/faq_list.dart';
 import 'package:part_app/model/data_model/calender_events_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/dashboard.dart';
 import 'package:part_app/model/data_model/notification_list.dart';
+import 'package:part_app/model/data_model/student_dashboard.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/model/service/dashboard/dashboard_service.dart';
 
 part 'home_state.dart';
@@ -16,12 +18,16 @@ class HomeCubit extends Cubit<HomeState> {
 
   final _service = DashboardService();
   List<Banner>? _banner;
+  StudentDashboard? _studentDashboardItems;
+  List<NotificationData>? _notifications;
   List<FaqList?>? _faqList;
   int? _totalStudents;
   String? _dailyCollection;
   String? _monthlyCollection;
   List<Banner>? get banner => _banner;
   List<FaqList?>? get faqList => _faqList;
+  List<NotificationData?>? get notifications => _notifications;
+  StudentDashboard? get studentDashboardItems => _studentDashboardItems;
   int? get totalStudents => _totalStudents;
   String? get dailyCollection => _dailyCollection;
   String? get monthlyCollection => _monthlyCollection;
@@ -39,7 +45,7 @@ class HomeCubit extends Cubit<HomeState> {
   List<TrainersJoined?>? trainersJoined;
   List<Lead?>? followUpLeads;
   List<Lead?>? newLeads;
-  List<NotificationData>? notifications;
+
   bool flag = false;
 
   Future getDashboard() async {
@@ -50,6 +56,15 @@ class HomeCubit extends Cubit<HomeState> {
       _dailyCollection = tempDash?.totalPaymentsDaily;
       _monthlyCollection = tempDash?.totalPaymentsMonthly;
       _banner = tempDash?.banners;
+      emit(DashboardLoaded());
+    }
+  }
+
+  Future getStudentAppDashboard({int? studentId}) async {
+    emit(DashboardLoading());
+    var tempDash = await _service.getStudentAppDashboard(studentId: studentId);
+    if (tempDash?.status == 1) {
+      _studentDashboardItems = tempDash;
       emit(DashboardLoaded());
     }
   }
@@ -119,15 +134,70 @@ class HomeCubit extends Cubit<HomeState> {
       if (nextPageUrl != null) {
         page++;
       }
-      notifications?.addAll(temp?.notifications?.data ?? []);
-      notifications?.forEach((element) {
+      var items = temp?.notifications?.data ?? [];
+
+      List<NotificationData> tempNotifications = [];
+
+      for (var notification in items) {
+        tempNotifications.add(notification);
+      }
+
+      _notifications?.addAll(tempNotifications);
+      _notifications?.forEach((element) {
         if (element.readAt == null) {
           flag = true;
         }
       });
       emit(GotNotifications());
     } else {
-      emit(GetNotificationsFailed('Failed to get the calender events list'));
+      emit(GetNotificationsFailed('Failed to get the notification list'));
+    }
+  }
+
+  Future getStudentAppNotificationList({
+    int? studentId,
+    bool clean = true,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      notifications?.clear();
+      emit(GettingNotifications());
+    } else {
+      emit(GettingNotifications(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(GotNotifications());
+      return;
+    }
+
+    NotificationList? temp = await _service.getStudentAppNotifications(
+        studentId: studentId, page: (page).toString());
+    if (temp?.status == 1) {
+      nextPageUrl = temp?.notifications?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      var items = temp?.notifications?.data ?? [];
+
+      List<NotificationData> tempNotifications = [];
+
+      for (var notification in items) {
+        tempNotifications.add(notification);
+      }
+
+      _notifications?.addAll(tempNotifications);
+
+      _notifications?.forEach((element) {
+        if (element.readAt == null) {
+          flag = true;
+        }
+      });
+      emit(GotNotifications());
+    } else {
+      emit(GetNotificationsFailed('Failed to get the notification list'));
     }
   }
 
@@ -147,7 +217,55 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  String createTrainerString(List<String>? trainers) {
+    String trainer = '';
+    if (trainers != null && trainers.isNotEmpty) {
+      for (var element in trainers) {
+        trainer += '$element, ';
+      }
+      trainer = trainer.trimRight().removeLast();
+    } else {
+      trainer = 'No Trainer Allocated';
+    }
+    return trainer;
+  }
+
+  Future readStudentAppNotification(
+      int? studentId, String? notificationId) async {
+    try {
+      emit(ReadingNotification());
+      Common? response =
+          await _service.readStudentAppNotification(studentId, notificationId);
+
+      if (response?.status == 1) {
+        emit(ReadNotification(response?.message ?? 'Notification Read'));
+      } else {
+        emit(ReadNotificationFailed(
+            response?.message ?? 'Failed to read notification'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future deleteNotification(String? notificationId) async {
+    try {
+      emit(DeletingNotification());
+      Common? response = await _service.deleteNotification(notificationId);
+
+      if (response?.status == 1) {
+        emit(DeletedNotification(response?.message ?? 'Notification Deleted'));
+      } else {
+        emit(DeleteNotificationFailed(
+            response?.message ?? 'Failed to delete notification'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future deleteStudentAppNotification(
+      int? studentId, String? notificationId) async {
     try {
       emit(DeletingNotification());
       Common? response = await _service.deleteNotification(notificationId);
