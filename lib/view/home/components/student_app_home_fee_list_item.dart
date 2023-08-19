@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/student_dashboard.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/components/fee_reminder_button.dart';
 import 'package:part_app/view/components/user_image.dart';
 import 'package:part_app/view/constants/constant.dart';
 
@@ -712,25 +711,6 @@ class _StudentAppHomeFeeListItemState extends State<StudentAppHomeFeeListItem> {
                                           .bodyLarge
                                           ?.copyWith(),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  FeeReminderButton(
-                                    title: '',
-                                    onTap: () {},
-                                    margin: 0,
-                                    disabled:
-                                        widget.fee?.paymentStatus == 'paid' ||
-                                                widget.fee?.paymentStatus ==
-                                                    'Written Off'
-                                            ? true
-                                            : false,
-                                    count: widget.fee?.reminderCount,
                                   ),
                                 ],
                               ),
