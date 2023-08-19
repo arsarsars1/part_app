@@ -66,6 +66,20 @@ class HomeCubit extends Cubit<HomeState> {
     if (tempDash?.status == 1) {
       _studentDashboardItems = tempDash;
       emit(DashboardLoaded());
+    } else {
+      emit(DashboardLoadingFailed('Unable to load dashboard API'));
+    }
+  }
+
+  Future<StudentDashboard?>? getTempStudentAppDashboard(
+      {int? studentId}) async {
+    emit(DashboardLoading());
+    var tempDash = await _service.getStudentAppDashboard(studentId: studentId);
+    if (tempDash?.status == 1) {
+      _studentDashboardItems = tempDash;
+      return _studentDashboardItems;
+    } else {
+      return null;
     }
   }
 
@@ -142,7 +156,7 @@ class HomeCubit extends Cubit<HomeState> {
         tempNotifications.add(notification);
       }
 
-      _notifications?.addAll(tempNotifications);
+      _notifications = tempNotifications;
       _notifications?.forEach((element) {
         if (element.readAt == null) {
           flag = true;
@@ -188,7 +202,7 @@ class HomeCubit extends Cubit<HomeState> {
         tempNotifications.add(notification);
       }
 
-      _notifications?.addAll(tempNotifications);
+      _notifications = tempNotifications;
 
       _notifications?.forEach((element) {
         if (element.readAt == null) {
@@ -198,6 +212,35 @@ class HomeCubit extends Cubit<HomeState> {
       emit(GotNotifications());
     } else {
       emit(GetNotificationsFailed('Failed to get the notification list'));
+    }
+  }
+
+  Future<List<NotificationData>?> getTempStudentAppNotificationList({
+    int? studentId,
+    bool clean = true,
+  }) async {
+    page = 1;
+    NotificationList? temp = await _service.getStudentAppNotifications(
+        studentId: studentId, page: (page).toString());
+    if (temp?.status == 1) {
+      var items = temp?.notifications?.data ?? [];
+
+      List<NotificationData> tempNotifications = [];
+
+      for (var notification in items) {
+        tempNotifications.add(notification);
+      }
+
+      _notifications?.addAll(tempNotifications);
+
+      _notifications?.forEach((element) {
+        if (element.readAt == null) {
+          flag = true;
+        }
+      });
+      return _notifications;
+    } else {
+      return null;
     }
   }
 

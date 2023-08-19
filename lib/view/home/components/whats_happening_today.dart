@@ -36,9 +36,11 @@ class WhatsHappeningToday extends StatelessWidget {
           height: 15.h,
         ),
         FutureBuilder(
-            future: homeCubit.getStudentAppDashboard(
-                studentId: authCubit.user?.studentDetail?[0].id),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          future: homeCubit.getTempStudentAppDashboard(
+              studentId: authCubit.user?.studentDetail?[0].id),
+          builder: (BuildContext context,
+              AsyncSnapshot<StudentDashboard?> snapshot) {
+            if (snapshot.hasData) {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -98,7 +100,10 @@ class WhatsHappeningToday extends StatelessWidget {
                   );
                 },
               );
-            })
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        )
       ],
     );
   }

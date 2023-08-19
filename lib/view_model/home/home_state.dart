@@ -9,6 +9,11 @@ class DashboardLoading extends HomeState {}
 
 class DashboardLoaded extends HomeState {}
 
+class DashboardLoadingFailed extends HomeState {
+  final String message;
+  DashboardLoadingFailed(this.message);
+}
+
 class GettingCalenderEvents extends HomeState {
   final bool pagination;
   GettingCalenderEvents({this.pagination = false});
