@@ -156,7 +156,10 @@ class HomeCubit extends Cubit<HomeState> {
         tempNotifications.add(notification);
       }
 
-      _notifications = tempNotifications;
+      for (var notification in tempNotifications) {
+        _notifications = [..._notifications ?? [], notification];
+      }
+
       _notifications?.forEach((element) {
         if (element.readAt == null) {
           flag = true;
@@ -196,14 +199,14 @@ class HomeCubit extends Cubit<HomeState> {
 
       var items = temp?.notifications?.data ?? [];
 
-      List<NotificationData> tempNotifications = [];
+      List<NotificationData>? tempNotifications = [];
 
       for (var notification in items) {
         tempNotifications.add(notification);
       }
-
-      _notifications = tempNotifications;
-
+      for (var notification in tempNotifications) {
+        _notifications = [..._notifications ?? [], notification];
+      }
       _notifications?.forEach((element) {
         if (element.readAt == null) {
           flag = true;

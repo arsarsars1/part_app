@@ -45,144 +45,130 @@ class _StudentAppNotificationScreenState
   Widget build(BuildContext context) {
     var cubit = context.read<HomeCubit>();
     return Scaffold(
-        appBar: const CommonBar(
-          title: 'Notifications',
-        ),
-        body: (cubit.notifications ?? []).isNotEmpty
-            ? BlocConsumer<HomeCubit, HomeState>(
-                listener: (context, state) {
-                  if (state is GetNotificationsFailed) {
-                    Alert(context).show(message: state.message);
-                  } else if (state is ReadNotificationFailed) {
-                    Alert(context).show(message: state.message);
-                  } else if (state is ReadNotification) {
-                    Alert(context).show(message: state.message);
-                    cubit.getStudentAppNotificationList(
-                        studentId: authCubit?.user?.studentDetail?[0].id,
-                        clean: true);
-                  } else if (state is DeleteNotificationFailed) {
-                    Alert(context).show(message: state.message);
-                  } else if (state is DeletedNotification) {
-                    Alert(context).show(message: state.message);
-                    cubit.getStudentAppNotificationList(
-                        studentId: authCubit?.user?.studentDetail?[0].id,
-                        clean: true);
-                  }
-                },
-                builder: (context, state) {
-                  if (state is ReadingNotification ||
-                      state is DeletingNotification) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: ListView.builder(
-                            controller: scrollController,
-                            itemCount: cubit.notifications?.length,
-                            itemBuilder: (context, index) {
-                              NotificationData? notification =
-                                  cubit.notifications?[index];
-                              return GestureDetector(
-                                onTap: () {
-                                  cubit.readStudentAppNotification(
-                                      authCubit?.user?.studentDetail?[0].id,
-                                      notification?.id);
-                                },
-                                child: Slidable(
-                                  endActionPane: ActionPane(
-                                    motion: const ScrollMotion(),
+      appBar: const CommonBar(
+        title: 'Notifications',
+      ),
+      body: (cubit.notifications ?? []).isNotEmpty
+          ? BlocConsumer<HomeCubit, HomeState>(
+              listener: (context, state) {
+                if (state is GetNotificationsFailed) {
+                  Alert(context).show(message: state.message);
+                } else if (state is ReadNotificationFailed) {
+                  Alert(context).show(message: state.message);
+                } else if (state is ReadNotification) {
+                  Alert(context).show(message: state.message);
+                  cubit.getStudentAppNotificationList(
+                      studentId: authCubit?.user?.studentDetail?[0].id,
+                      clean: true);
+                } else if (state is DeleteNotificationFailed) {
+                  Alert(context).show(message: state.message);
+                } else if (state is DeletedNotification) {
+                  Alert(context).show(message: state.message);
+                  cubit.getStudentAppNotificationList(
+                      studentId: authCubit?.user?.studentDetail?[0].id,
+                      clean: true);
+                }
+              },
+              builder: (context, state) {
+                if (state is ReadingNotification ||
+                    state is DeletingNotification) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: cubit.notifications?.length,
+                          itemBuilder: (context, index) {
+                            NotificationData? notification =
+                                cubit.notifications?[index];
+                            return GestureDetector(
+                              onTap: () {
+                                cubit.readStudentAppNotification(
+                                    authCubit?.user?.studentDetail?[0].id,
+                                    notification?.id);
+                              },
+                              child: Slidable(
+                                endActionPane: ActionPane(
+                                  motion: const ScrollMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      onPressed: (context) {
+                                        cubit.deleteStudentAppNotification(
+                                            authCubit
+                                                ?.user?.studentDetail?[0].id,
+                                            notification?.id);
+                                      },
+                                      backgroundColor: AppColors.red,
+                                      foregroundColor: AppColors.grey100,
+                                      icon: Icons.delete,
+                                      label: 'Delete',
+                                    ),
+                                  ],
+                                ),
+                                child: CustomContainerForNotification(
+                                  color: notification?.readAt != null
+                                      ? AppColors.liteDark.withOpacity(0.5)
+                                      : AppColors.liteDark,
+                                  widget: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      SlidableAction(
-                                        onPressed: (context) {
-                                          cubit.deleteStudentAppNotification(
-                                              authCubit
-                                                  ?.user?.studentDetail?[0].id,
-                                              notification?.id);
-                                        },
-                                        backgroundColor: AppColors.red,
-                                        foregroundColor: AppColors.grey100,
-                                        icon: Icons.delete,
-                                        label: 'Delete',
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('${notification?.data?.title}'),
+                                          Text(
+                                            cubit.getTimeDifference(notification
+                                                            ?.createdAt ??
+                                                        DateTime.now()) !=
+                                                    ""
+                                                ? "${cubit.getTimeDifference(notification?.createdAt ?? DateTime.now())} ago"
+                                                : "Now",
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10.h),
+                                      Text(
+                                        '${notification?.data?.message}',
+                                        style: TextStyle(
+                                          color: AppColors.primaryColor,
+                                        ),
                                       ),
                                     ],
                                   ),
-                                  child: CustomContainerForNotification(
-                                    color: notification?.readAt != null
-                                        ? AppColors.liteDark.withOpacity(0.5)
-                                        : AppColors.liteDark,
-                                    widget: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                                '${notification?.data?.title}'),
-                                            Text(
-                                              cubit.getTimeDifference(
-                                                          notification
-                                                                  ?.createdAt ??
-                                                              DateTime.now()) !=
-                                                      ""
-                                                  ? "${cubit.getTimeDifference(notification?.createdAt ?? DateTime.now())} ago"
-                                                  : "Now",
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(height: 10.h),
-                                        Text(
-                                          '${notification?.data?.message}',
-                                          style: TextStyle(
-                                            color: AppColors.primaryColor,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            );
+                          },
                         ),
-                        AnimatedContainer(
-                          height:
-                              state is GettingNotifications && state.pagination
-                                  ? 30
-                                  : 0,
-                          color: Colors.black,
-                          duration: const Duration(
-                            milliseconds: 250,
-                          ),
-                          child: const Center(
-                              child: Text('Fetching more items ..')),
-                        )
-                      ],
-                    ),
-                  );
-                },
-              )
-            : const Center(
-                child: Text('No notifications'),
-              )
-        // FutureBuilder(
-        //   future: cubit.getTempStudentAppNotificationList(
-        //       studentId: authCubit?.user?.studentDetail?[0].id, clean: true),
-        //   builder: (context, AsyncSnapshot<List<NotificationData>?> snapshot) {
-        //     if (snapshot.hasData) {
-        //       return ;
-        //     }
-        //     return const Center(
-        //       child: CircularProgressIndicator(),
-        //     );
-        //   },
-        // ),
-        );
+                      ),
+                      AnimatedContainer(
+                        height:
+                            state is GettingNotifications && state.pagination
+                                ? 30
+                                : 0,
+                        color: Colors.black,
+                        duration: const Duration(
+                          milliseconds: 250,
+                        ),
+                        child:
+                            const Center(child: Text('Fetching more items ..')),
+                      )
+                    ],
+                  ),
+                );
+              },
+            )
+          : const Center(
+              child: Text('No notifications'),
+            ),
+    );
   }
 }
