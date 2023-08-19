@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/model/data_model/student_dashboard.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/home/components/student_app_home_fee_list_item.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class WhatsHappeningToday extends StatelessWidget {
@@ -12,36 +13,36 @@ class WhatsHappeningToday extends StatelessWidget {
   Widget build(BuildContext context) {
     var homeCubit = context.read<HomeCubit>();
     var authCubit = context.read<AuthCubit>();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Text(
-            'What\'s Happening Today',
-            style: TextStyle(fontSize: 16.sp),
-          ),
-        ),
-        SizedBox(
-          height: 15.h,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Text(
-            DateTime.now().toDateString(),
-            style: TextStyle(fontSize: 10.sp),
-          ),
-        ),
-        SizedBox(
-          height: 15.h,
-        ),
-        FutureBuilder(
-          future: homeCubit.getTempStudentAppDashboard(
-              studentId: authCubit.user?.studentDetail?[0].id),
-          builder: (BuildContext context,
-              AsyncSnapshot<StudentDashboard?> snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
+    return FutureBuilder(
+      future: homeCubit.getTempStudentAppDashboard(
+          studentId: authCubit.user?.studentDetail?[0].id),
+      builder:
+          (BuildContext context, AsyncSnapshot<StudentDashboard?> snapshot) {
+        if (snapshot.hasData) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Text(
+                  'What\'s Happening Today',
+                  style: TextStyle(fontSize: 16.sp),
+                ),
+              ),
+              SizedBox(
+                height: 15.h,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Text(
+                  DateTime.now().toDateString(),
+                  style: TextStyle(fontSize: 10.sp),
+                ),
+              ),
+              SizedBox(
+                height: 15.h,
+              ),
+              ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: homeCubit.studentDashboardItems?.classes?.length,
@@ -99,12 +100,41 @@ class WhatsHappeningToday extends StatelessWidget {
                     ),
                   );
                 },
-              );
-            }
-            return const Center(child: CircularProgressIndicator());
-          },
-        )
-      ],
+              ),
+              SizedBox(
+                height: 25.h,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Text(
+                  'Pending Fees',
+                  style: TextStyle(fontSize: 16.sp),
+                ),
+              ),
+              SizedBox(
+                height: 15.h,
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount:
+                    homeCubit.studentDashboardItems?.batchFeeInvoices?.length,
+                itemBuilder: (context, index) {
+                  BatchFeeInvoice? feeDetails =
+                      homeCubit.studentDashboardItems?.batchFeeInvoices?[index];
+                  return StudentAppHomeFeeListItem(
+                    fee: feeDetails,
+                    onTap: () {},
+                  );
+                },
+              ),
+            ],
+          );
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

@@ -12,11 +12,12 @@ _$_StudentDashboard _$$_StudentDashboardFromJson(Map<String, dynamic> json) =>
           ?.map((e) => ClassDetails.fromJson(e as Map<String, dynamic>))
           .toList(),
       batchFeeInvoices: (json['batch_fee_invoices'] as List<dynamic>?)
-          ?.map((e) => FeeInvoice.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => BatchFeeInvoice.fromJson(e as Map<String, dynamic>))
           .toList(),
-      admissionFeeInvoice: (json['admission_fee_invoice'] as List<dynamic>?)
-          ?.map((e) => FeeInvoice.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      admissionFeeInvoice: json['admission_fee_invoice'] == null
+          ? null
+          : AdmissionFeeInvoice.fromJson(
+              json['admission_fee_invoice'] as Map<String, dynamic>),
       status: json['status'] as int?,
     );
 
@@ -28,8 +29,9 @@ Map<String, dynamic> _$$_StudentDashboardToJson(_$_StudentDashboard instance) =>
       'status': instance.status,
     };
 
-_$_FeeInvoice _$$_FeeInvoiceFromJson(Map<String, dynamic> json) =>
-    _$_FeeInvoice(
+_$_AdmissionFeeInvoice _$$_AdmissionFeeInvoiceFromJson(
+        Map<String, dynamic> json) =>
+    _$_AdmissionFeeInvoice(
       id: json['id'] as int?,
       studentDetailId: json['student_detail_id'] as int?,
       academyId: json['academy_id'] as int?,
@@ -42,21 +44,18 @@ _$_FeeInvoice _$$_FeeInvoiceFromJson(Map<String, dynamic> json) =>
       payableAmount: json['payable_amount'] as String?,
       reminderCount: json['reminder_count'] as int?,
       writtenOffStatus: json['written_off_status'] as int?,
-      writtenOffDate: json['written_off_date'] == null
-          ? null
-          : DateTime.parse(json['written_off_date'] as String),
+      writtenOffDate: json['written_off_date'],
       writtenOffAmount: json['written_off_amount'] as String?,
-      writtenOffRemarks: json['written_off_remarks'] as String?,
-      writeOffByType: json['write_off_by_type'] as String?,
-      writeOffById: json['write_off_by_id'] as String?,
+      writtenOffRemarks: json['written_off_remarks'],
+      writeOffByType: json['write_off_by_type'],
+      writeOffById: json['write_off_by_id'],
       paymentStatus: json['payment_status'] as String?,
       feeType: json['fee_type'] as String?,
       currency: json['currency'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      writeOffBy: json['write_off_by'] == null
-          ? null
-          : By.fromJson(json['write_off_by'] as Map<String, dynamic>),
+      pendingAmount: json['pending_amount'] as String?,
+      writeOffBy: json['write_off_by'],
       studentDetail: json['student_detail'] == null
           ? null
           : StudentDetail.fromJson(
@@ -66,20 +65,10 @@ _$_FeeInvoice _$$_FeeInvoiceFromJson(Map<String, dynamic> json) =>
       batch: json['batch'] == null
           ? null
           : Batch.fromJson(json['batch'] as Map<String, dynamic>),
-      paymentDueDate: json['payment_due_date'] == null
-          ? null
-          : DateTime.parse(json['payment_due_date'] as String),
-      writtenOffByType: json['written_off_by_type'] as String?,
-      writtenOffById: json['written_off_by_id'] as int?,
-      month: json['month'] as int?,
-      year: json['year'] as int?,
-      cycle: json['cycle'] as int?,
-      writtenOffBy: json['written_off_by'] == null
-          ? null
-          : By.fromJson(json['written_off_by'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_FeeInvoiceToJson(_$_FeeInvoice instance) =>
+Map<String, dynamic> _$$_AdmissionFeeInvoiceToJson(
+        _$_AdmissionFeeInvoice instance) =>
     <String, dynamic>{
       'id': instance.id,
       'student_detail_id': instance.studentDetailId,
@@ -93,7 +82,7 @@ Map<String, dynamic> _$$_FeeInvoiceToJson(_$_FeeInvoice instance) =>
       'payable_amount': instance.payableAmount,
       'reminder_count': instance.reminderCount,
       'written_off_status': instance.writtenOffStatus,
-      'written_off_date': instance.writtenOffDate?.toIso8601String(),
+      'written_off_date': instance.writtenOffDate,
       'written_off_amount': instance.writtenOffAmount,
       'written_off_remarks': instance.writtenOffRemarks,
       'write_off_by_type': instance.writeOffByType,
@@ -103,18 +92,12 @@ Map<String, dynamic> _$$_FeeInvoiceToJson(_$_FeeInvoice instance) =>
       'currency': instance.currency,
       'currency_code': instance.currencyCode,
       'currency_symbol': instance.currencySymbol,
+      'pending_amount': instance.pendingAmount,
       'write_off_by': instance.writeOffBy,
       'student_detail': instance.studentDetail,
       'payments': instance.payments,
       'payments_total': instance.paymentsTotal,
       'batch': instance.batch,
-      'payment_due_date': instance.paymentDueDate?.toIso8601String(),
-      'written_off_by_type': instance.writtenOffByType,
-      'written_off_by_id': instance.writtenOffById,
-      'month': instance.month,
-      'year': instance.year,
-      'cycle': instance.cycle,
-      'written_off_by': instance.writtenOffBy,
     };
 
 _$_Batch _$$_BatchFromJson(Map<String, dynamic> json) => _$_Batch(
@@ -341,15 +324,15 @@ _$_Trainer _$$_TrainerFromJson(Map<String, dynamic> json) => _$_Trainer(
       userId: json['user_id'] as int?,
       academyId: json['academy_id'] as int?,
       gender: json['gender'] as String?,
-      dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String),
+      dob: json['dob'],
       doj: json['doj'] == null ? null : DateTime.parse(json['doj'] as String),
-      whatsappNo: json['whatsapp_no'] as String?,
+      whatsappNo: json['whatsapp_no'],
       email: json['email'] as String?,
-      upiId: json['upi_id'] as String?,
+      upiId: json['upi_id'],
       salaryType: json['salary_type'] as String?,
       salaryDate: json['salary_date'] as int?,
       salaryAmount: json['salary_amount'] as int?,
-      expertise: json['expertise'] as String?,
+      expertise: json['expertise'],
       address: json['address'] as String?,
       profilePic: json['profile_pic'] as String?,
       document1: json['document1'] as String?,
@@ -370,7 +353,7 @@ Map<String, dynamic> _$$_TrainerToJson(_$_Trainer instance) =>
       'user_id': instance.userId,
       'academy_id': instance.academyId,
       'gender': instance.gender,
-      'dob': instance.dob?.toIso8601String(),
+      'dob': instance.dob,
       'doj': instance.doj?.toIso8601String(),
       'whatsapp_no': instance.whatsappNo,
       'email': instance.email,
@@ -392,7 +375,7 @@ _$_StudentDetail _$$_StudentDetailFromJson(Map<String, dynamic> json) =>
     _$_StudentDetail(
       id: json['id'] as int?,
       name: json['name'] as String?,
-      parentName: json['parent_name'] as String?,
+      parentName: json['parent_name'],
       userId: json['user_id'] as int?,
       academyId: json['academy_id'] as int?,
       gender: json['gender'] as String?,
@@ -422,6 +405,93 @@ Map<String, dynamic> _$$_StudentDetailToJson(_$_StudentDetail instance) =>
       'is_active': instance.isActive,
     };
 
+_$_BatchFeeInvoice _$$_BatchFeeInvoiceFromJson(Map<String, dynamic> json) =>
+    _$_BatchFeeInvoice(
+      id: json['id'] as int?,
+      studentDetailId: json['student_detail_id'] as int?,
+      academyId: json['academy_id'] as int?,
+      branchId: json['branch_id'] as int?,
+      branchName: json['branch_name'] as String?,
+      batchId: json['batch_id'] as int?,
+      batchName: json['batch_name'] as String?,
+      courseName: json['course_name'] as String?,
+      subjectName: json['subject_name'] as String?,
+      paymentDueDate: json['payment_due_date'] == null
+          ? null
+          : DateTime.parse(json['payment_due_date'] as String),
+      payableAmount: json['payable_amount'] as String?,
+      reminderCount: json['reminder_count'] as int?,
+      writtenOffStatus: json['written_off_status'] as int?,
+      writtenOffDate: json['written_off_date'],
+      writtenOffAmount: json['written_off_amount'] as String?,
+      writtenOffRemarks: json['written_off_remarks'],
+      writtenOffByType: json['written_off_by_type'],
+      writtenOffById: json['written_off_by_id'],
+      paymentStatus: json['payment_status'] as String?,
+      feeType: json['fee_type'] as String?,
+      month: json['month'] as int?,
+      year: json['year'] as int?,
+      currency: json['currency'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      currencySymbol: json['currency_symbol'] as String?,
+      cycle: json['cycle'] as int?,
+      monthClassesConductedCount: json['month_classes_conducted_count'] as int?,
+      monthAttendancePresentCount:
+          json['month_attendance_present_count'] as int?,
+      cycleAttendancePresentCount:
+          json['cycle_attendance_present_count'] as int?,
+      pendingAmount: json['pending_amount'] as String?,
+      totalNoOfClasses: json['total_no_of_classes'],
+      writtenOffBy: json['written_off_by'],
+      studentDetail: json['student_detail'] == null
+          ? null
+          : StudentDetail.fromJson(
+              json['student_detail'] as Map<String, dynamic>),
+      payments: json['payments'] as List<dynamic>?,
+      batch: json['batch'] == null
+          ? null
+          : Batch.fromJson(json['batch'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$_BatchFeeInvoiceToJson(_$_BatchFeeInvoice instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'student_detail_id': instance.studentDetailId,
+      'academy_id': instance.academyId,
+      'branch_id': instance.branchId,
+      'branch_name': instance.branchName,
+      'batch_id': instance.batchId,
+      'batch_name': instance.batchName,
+      'course_name': instance.courseName,
+      'subject_name': instance.subjectName,
+      'payment_due_date': instance.paymentDueDate?.toIso8601String(),
+      'payable_amount': instance.payableAmount,
+      'reminder_count': instance.reminderCount,
+      'written_off_status': instance.writtenOffStatus,
+      'written_off_date': instance.writtenOffDate,
+      'written_off_amount': instance.writtenOffAmount,
+      'written_off_remarks': instance.writtenOffRemarks,
+      'written_off_by_type': instance.writtenOffByType,
+      'written_off_by_id': instance.writtenOffById,
+      'payment_status': instance.paymentStatus,
+      'fee_type': instance.feeType,
+      'month': instance.month,
+      'year': instance.year,
+      'currency': instance.currency,
+      'currency_code': instance.currencyCode,
+      'currency_symbol': instance.currencySymbol,
+      'cycle': instance.cycle,
+      'month_classes_conducted_count': instance.monthClassesConductedCount,
+      'month_attendance_present_count': instance.monthAttendancePresentCount,
+      'cycle_attendance_present_count': instance.cycleAttendancePresentCount,
+      'pending_amount': instance.pendingAmount,
+      'total_no_of_classes': instance.totalNoOfClasses,
+      'written_off_by': instance.writtenOffBy,
+      'student_detail': instance.studentDetail,
+      'payments': instance.payments,
+      'batch': instance.batch,
+    };
+
 _$_ClassDetails _$$_ClassDetailsFromJson(Map<String, dynamic> json) =>
     _$_ClassDetails(
       status: json['status'] as String?,
@@ -435,7 +505,7 @@ _$_ClassDetails _$$_ClassDetailsFromJson(Map<String, dynamic> json) =>
           ?.map((e) => e as String)
           .toList(),
       rescheduled: json['rescheduled'] as bool?,
-      classLink: json['class_link'] as String?,
+      classLink: json['class_link'],
     );
 
 Map<String, dynamic> _$$_ClassDetailsToJson(_$_ClassDetails instance) =>

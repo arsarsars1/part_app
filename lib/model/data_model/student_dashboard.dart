@@ -7,8 +7,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
-import 'package:part_app/model/data_model/admission_fee_invoice.dart';
-
 part 'student_dashboard.freezed.dart';
 part 'student_dashboard.g.dart';
 
@@ -23,8 +21,8 @@ class StudentDashboard with _$StudentDashboard {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory StudentDashboard({
     List<ClassDetails>? classes,
-    List<FeeInvoice>? batchFeeInvoices,
-    List<FeeInvoice>? admissionFeeInvoice,
+    List<BatchFeeInvoice>? batchFeeInvoices,
+    AdmissionFeeInvoice? admissionFeeInvoice,
     int? status,
   }) = _StudentDashboard;
 
@@ -33,9 +31,9 @@ class StudentDashboard with _$StudentDashboard {
 }
 
 @freezed
-class FeeInvoice with _$FeeInvoice {
+class AdmissionFeeInvoice with _$AdmissionFeeInvoice {
   @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory FeeInvoice({
+  const factory AdmissionFeeInvoice({
     int? id,
     int? studentDetailId,
     int? academyId,
@@ -48,32 +46,26 @@ class FeeInvoice with _$FeeInvoice {
     String? payableAmount,
     int? reminderCount,
     int? writtenOffStatus,
-    DateTime? writtenOffDate,
+    dynamic writtenOffDate,
     String? writtenOffAmount,
-    String? writtenOffRemarks,
-    String? writeOffByType,
-    String? writeOffById,
+    dynamic writtenOffRemarks,
+    dynamic writeOffByType,
+    dynamic writeOffById,
     String? paymentStatus,
     String? feeType,
     String? currency,
     String? currencyCode,
     String? currencySymbol,
-    By? writeOffBy,
+    String? pendingAmount,
+    dynamic writeOffBy,
     StudentDetail? studentDetail,
     List<dynamic>? payments,
     List<dynamic>? paymentsTotal,
     Batch? batch,
-    DateTime? paymentDueDate,
-    String? writtenOffByType,
-    int? writtenOffById,
-    int? month,
-    int? year,
-    int? cycle,
-    By? writtenOffBy,
-  }) = _FeeInvoice;
+  }) = _AdmissionFeeInvoice;
 
-  factory FeeInvoice.fromJson(Map<String, dynamic> json) =>
-      _$FeeInvoiceFromJson(json);
+  factory AdmissionFeeInvoice.fromJson(Map<String, dynamic> json) =>
+      _$AdmissionFeeInvoiceFromJson(json);
 }
 
 @freezed
@@ -244,15 +236,15 @@ class Trainer with _$Trainer {
     int? userId,
     int? academyId,
     String? gender,
-    DateTime? dob,
+    dynamic dob,
     DateTime? doj,
-    String? whatsappNo,
+    dynamic whatsappNo,
     String? email,
-    String? upiId,
+    dynamic upiId,
     String? salaryType,
     int? salaryDate,
     int? salaryAmount,
-    String? expertise,
+    dynamic expertise,
     String? address,
     String? profilePic,
     String? document1,
@@ -272,7 +264,7 @@ class StudentDetail with _$StudentDetail {
   const factory StudentDetail({
     int? id,
     String? name,
-    String? parentName,
+    dynamic parentName,
     int? userId,
     int? academyId,
     String? gender,
@@ -290,6 +282,51 @@ class StudentDetail with _$StudentDetail {
 }
 
 @freezed
+class BatchFeeInvoice with _$BatchFeeInvoice {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory BatchFeeInvoice({
+    int? id,
+    int? studentDetailId,
+    int? academyId,
+    int? branchId,
+    String? branchName,
+    int? batchId,
+    String? batchName,
+    String? courseName,
+    String? subjectName,
+    DateTime? paymentDueDate,
+    String? payableAmount,
+    int? reminderCount,
+    int? writtenOffStatus,
+    dynamic writtenOffDate,
+    String? writtenOffAmount,
+    dynamic writtenOffRemarks,
+    dynamic writtenOffByType,
+    dynamic writtenOffById,
+    String? paymentStatus,
+    String? feeType,
+    int? month,
+    int? year,
+    String? currency,
+    String? currencyCode,
+    String? currencySymbol,
+    int? cycle,
+    int? monthClassesConductedCount,
+    int? monthAttendancePresentCount,
+    int? cycleAttendancePresentCount,
+    String? pendingAmount,
+    dynamic totalNoOfClasses,
+    dynamic writtenOffBy,
+    StudentDetail? studentDetail,
+    List<dynamic>? payments,
+    Batch? batch,
+  }) = _BatchFeeInvoice;
+
+  factory BatchFeeInvoice.fromJson(Map<String, dynamic> json) =>
+      _$BatchFeeInvoiceFromJson(json);
+}
+
+@freezed
 class ClassDetails with _$ClassDetails {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory ClassDetails({
@@ -302,7 +339,7 @@ class ClassDetails with _$ClassDetails {
     String? timezone,
     List<String>? trainers,
     bool? rescheduled,
-    String? classLink,
+    dynamic classLink,
   }) = _ClassDetails;
 
   factory ClassDetails.fromJson(Map<String, dynamic> json) =>

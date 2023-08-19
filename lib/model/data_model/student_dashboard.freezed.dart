@@ -21,8 +21,9 @@ StudentDashboard _$StudentDashboardFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$StudentDashboard {
   List<ClassDetails>? get classes => throw _privateConstructorUsedError;
-  List<FeeInvoice>? get batchFeeInvoices => throw _privateConstructorUsedError;
-  List<FeeInvoice>? get admissionFeeInvoice =>
+  List<BatchFeeInvoice>? get batchFeeInvoices =>
+      throw _privateConstructorUsedError;
+  AdmissionFeeInvoice? get admissionFeeInvoice =>
       throw _privateConstructorUsedError;
   int? get status => throw _privateConstructorUsedError;
 
@@ -40,9 +41,11 @@ abstract class $StudentDashboardCopyWith<$Res> {
   @useResult
   $Res call(
       {List<ClassDetails>? classes,
-      List<FeeInvoice>? batchFeeInvoices,
-      List<FeeInvoice>? admissionFeeInvoice,
+      List<BatchFeeInvoice>? batchFeeInvoices,
+      AdmissionFeeInvoice? admissionFeeInvoice,
       int? status});
+
+  $AdmissionFeeInvoiceCopyWith<$Res>? get admissionFeeInvoice;
 }
 
 /// @nodoc
@@ -71,16 +74,29 @@ class _$StudentDashboardCopyWithImpl<$Res, $Val extends StudentDashboard>
       batchFeeInvoices: freezed == batchFeeInvoices
           ? _value.batchFeeInvoices
           : batchFeeInvoices // ignore: cast_nullable_to_non_nullable
-              as List<FeeInvoice>?,
+              as List<BatchFeeInvoice>?,
       admissionFeeInvoice: freezed == admissionFeeInvoice
           ? _value.admissionFeeInvoice
           : admissionFeeInvoice // ignore: cast_nullable_to_non_nullable
-              as List<FeeInvoice>?,
+              as AdmissionFeeInvoice?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AdmissionFeeInvoiceCopyWith<$Res>? get admissionFeeInvoice {
+    if (_value.admissionFeeInvoice == null) {
+      return null;
+    }
+
+    return $AdmissionFeeInvoiceCopyWith<$Res>(_value.admissionFeeInvoice!,
+        (value) {
+      return _then(_value.copyWith(admissionFeeInvoice: value) as $Val);
+    });
   }
 }
 
@@ -94,9 +110,12 @@ abstract class _$$_StudentDashboardCopyWith<$Res>
   @useResult
   $Res call(
       {List<ClassDetails>? classes,
-      List<FeeInvoice>? batchFeeInvoices,
-      List<FeeInvoice>? admissionFeeInvoice,
+      List<BatchFeeInvoice>? batchFeeInvoices,
+      AdmissionFeeInvoice? admissionFeeInvoice,
       int? status});
+
+  @override
+  $AdmissionFeeInvoiceCopyWith<$Res>? get admissionFeeInvoice;
 }
 
 /// @nodoc
@@ -123,11 +142,11 @@ class __$$_StudentDashboardCopyWithImpl<$Res>
       batchFeeInvoices: freezed == batchFeeInvoices
           ? _value._batchFeeInvoices
           : batchFeeInvoices // ignore: cast_nullable_to_non_nullable
-              as List<FeeInvoice>?,
+              as List<BatchFeeInvoice>?,
       admissionFeeInvoice: freezed == admissionFeeInvoice
-          ? _value._admissionFeeInvoice
+          ? _value.admissionFeeInvoice
           : admissionFeeInvoice // ignore: cast_nullable_to_non_nullable
-              as List<FeeInvoice>?,
+              as AdmissionFeeInvoice?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -142,12 +161,11 @@ class __$$_StudentDashboardCopyWithImpl<$Res>
 class _$_StudentDashboard implements _StudentDashboard {
   const _$_StudentDashboard(
       {final List<ClassDetails>? classes,
-      final List<FeeInvoice>? batchFeeInvoices,
-      final List<FeeInvoice>? admissionFeeInvoice,
+      final List<BatchFeeInvoice>? batchFeeInvoices,
+      this.admissionFeeInvoice,
       this.status})
       : _classes = classes,
-        _batchFeeInvoices = batchFeeInvoices,
-        _admissionFeeInvoice = admissionFeeInvoice;
+        _batchFeeInvoices = batchFeeInvoices;
 
   factory _$_StudentDashboard.fromJson(Map<String, dynamic> json) =>
       _$$_StudentDashboardFromJson(json);
@@ -162,9 +180,9 @@ class _$_StudentDashboard implements _StudentDashboard {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<FeeInvoice>? _batchFeeInvoices;
+  final List<BatchFeeInvoice>? _batchFeeInvoices;
   @override
-  List<FeeInvoice>? get batchFeeInvoices {
+  List<BatchFeeInvoice>? get batchFeeInvoices {
     final value = _batchFeeInvoices;
     if (value == null) return null;
     if (_batchFeeInvoices is EqualUnmodifiableListView)
@@ -173,17 +191,8 @@ class _$_StudentDashboard implements _StudentDashboard {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<FeeInvoice>? _admissionFeeInvoice;
   @override
-  List<FeeInvoice>? get admissionFeeInvoice {
-    final value = _admissionFeeInvoice;
-    if (value == null) return null;
-    if (_admissionFeeInvoice is EqualUnmodifiableListView)
-      return _admissionFeeInvoice;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final AdmissionFeeInvoice? admissionFeeInvoice;
   @override
   final int? status;
 
@@ -200,8 +209,8 @@ class _$_StudentDashboard implements _StudentDashboard {
             const DeepCollectionEquality().equals(other._classes, _classes) &&
             const DeepCollectionEquality()
                 .equals(other._batchFeeInvoices, _batchFeeInvoices) &&
-            const DeepCollectionEquality()
-                .equals(other._admissionFeeInvoice, _admissionFeeInvoice) &&
+            (identical(other.admissionFeeInvoice, admissionFeeInvoice) ||
+                other.admissionFeeInvoice == admissionFeeInvoice) &&
             (identical(other.status, status) || other.status == status));
   }
 
@@ -211,7 +220,7 @@ class _$_StudentDashboard implements _StudentDashboard {
       runtimeType,
       const DeepCollectionEquality().hash(_classes),
       const DeepCollectionEquality().hash(_batchFeeInvoices),
-      const DeepCollectionEquality().hash(_admissionFeeInvoice),
+      admissionFeeInvoice,
       status);
 
   @JsonKey(ignore: true)
@@ -231,8 +240,8 @@ class _$_StudentDashboard implements _StudentDashboard {
 abstract class _StudentDashboard implements StudentDashboard {
   const factory _StudentDashboard(
       {final List<ClassDetails>? classes,
-      final List<FeeInvoice>? batchFeeInvoices,
-      final List<FeeInvoice>? admissionFeeInvoice,
+      final List<BatchFeeInvoice>? batchFeeInvoices,
+      final AdmissionFeeInvoice? admissionFeeInvoice,
       final int? status}) = _$_StudentDashboard;
 
   factory _StudentDashboard.fromJson(Map<String, dynamic> json) =
@@ -241,9 +250,9 @@ abstract class _StudentDashboard implements StudentDashboard {
   @override
   List<ClassDetails>? get classes;
   @override
-  List<FeeInvoice>? get batchFeeInvoices;
+  List<BatchFeeInvoice>? get batchFeeInvoices;
   @override
-  List<FeeInvoice>? get admissionFeeInvoice;
+  AdmissionFeeInvoice? get admissionFeeInvoice;
   @override
   int? get status;
   @override
@@ -252,12 +261,12 @@ abstract class _StudentDashboard implements StudentDashboard {
       throw _privateConstructorUsedError;
 }
 
-FeeInvoice _$FeeInvoiceFromJson(Map<String, dynamic> json) {
-  return _FeeInvoice.fromJson(json);
+AdmissionFeeInvoice _$AdmissionFeeInvoiceFromJson(Map<String, dynamic> json) {
+  return _AdmissionFeeInvoice.fromJson(json);
 }
 
 /// @nodoc
-mixin _$FeeInvoice {
+mixin _$AdmissionFeeInvoice {
   int? get id => throw _privateConstructorUsedError;
   int? get studentDetailId => throw _privateConstructorUsedError;
   int? get academyId => throw _privateConstructorUsedError;
@@ -270,40 +279,34 @@ mixin _$FeeInvoice {
   String? get payableAmount => throw _privateConstructorUsedError;
   int? get reminderCount => throw _privateConstructorUsedError;
   int? get writtenOffStatus => throw _privateConstructorUsedError;
-  DateTime? get writtenOffDate => throw _privateConstructorUsedError;
+  dynamic get writtenOffDate => throw _privateConstructorUsedError;
   String? get writtenOffAmount => throw _privateConstructorUsedError;
-  String? get writtenOffRemarks => throw _privateConstructorUsedError;
-  String? get writeOffByType => throw _privateConstructorUsedError;
-  String? get writeOffById => throw _privateConstructorUsedError;
+  dynamic get writtenOffRemarks => throw _privateConstructorUsedError;
+  dynamic get writeOffByType => throw _privateConstructorUsedError;
+  dynamic get writeOffById => throw _privateConstructorUsedError;
   String? get paymentStatus => throw _privateConstructorUsedError;
   String? get feeType => throw _privateConstructorUsedError;
   String? get currency => throw _privateConstructorUsedError;
   String? get currencyCode => throw _privateConstructorUsedError;
   String? get currencySymbol => throw _privateConstructorUsedError;
-  By? get writeOffBy => throw _privateConstructorUsedError;
+  String? get pendingAmount => throw _privateConstructorUsedError;
+  dynamic get writeOffBy => throw _privateConstructorUsedError;
   StudentDetail? get studentDetail => throw _privateConstructorUsedError;
   List<dynamic>? get payments => throw _privateConstructorUsedError;
   List<dynamic>? get paymentsTotal => throw _privateConstructorUsedError;
   Batch? get batch => throw _privateConstructorUsedError;
-  DateTime? get paymentDueDate => throw _privateConstructorUsedError;
-  String? get writtenOffByType => throw _privateConstructorUsedError;
-  int? get writtenOffById => throw _privateConstructorUsedError;
-  int? get month => throw _privateConstructorUsedError;
-  int? get year => throw _privateConstructorUsedError;
-  int? get cycle => throw _privateConstructorUsedError;
-  By? get writtenOffBy => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $FeeInvoiceCopyWith<FeeInvoice> get copyWith =>
+  $AdmissionFeeInvoiceCopyWith<AdmissionFeeInvoice> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FeeInvoiceCopyWith<$Res> {
-  factory $FeeInvoiceCopyWith(
-          FeeInvoice value, $Res Function(FeeInvoice) then) =
-      _$FeeInvoiceCopyWithImpl<$Res, FeeInvoice>;
+abstract class $AdmissionFeeInvoiceCopyWith<$Res> {
+  factory $AdmissionFeeInvoiceCopyWith(
+          AdmissionFeeInvoice value, $Res Function(AdmissionFeeInvoice) then) =
+      _$AdmissionFeeInvoiceCopyWithImpl<$Res, AdmissionFeeInvoice>;
   @useResult
   $Res call(
       {int? id,
@@ -318,37 +321,31 @@ abstract class $FeeInvoiceCopyWith<$Res> {
       String? payableAmount,
       int? reminderCount,
       int? writtenOffStatus,
-      DateTime? writtenOffDate,
+      dynamic writtenOffDate,
       String? writtenOffAmount,
-      String? writtenOffRemarks,
-      String? writeOffByType,
-      String? writeOffById,
+      dynamic writtenOffRemarks,
+      dynamic writeOffByType,
+      dynamic writeOffById,
       String? paymentStatus,
       String? feeType,
       String? currency,
       String? currencyCode,
       String? currencySymbol,
-      By? writeOffBy,
+      String? pendingAmount,
+      dynamic writeOffBy,
       StudentDetail? studentDetail,
       List<dynamic>? payments,
       List<dynamic>? paymentsTotal,
-      Batch? batch,
-      DateTime? paymentDueDate,
-      String? writtenOffByType,
-      int? writtenOffById,
-      int? month,
-      int? year,
-      int? cycle,
-      By? writtenOffBy});
+      Batch? batch});
 
   $StudentDetailCopyWith<$Res>? get studentDetail;
   $BatchCopyWith<$Res>? get batch;
 }
 
 /// @nodoc
-class _$FeeInvoiceCopyWithImpl<$Res, $Val extends FeeInvoice>
-    implements $FeeInvoiceCopyWith<$Res> {
-  _$FeeInvoiceCopyWithImpl(this._value, this._then);
+class _$AdmissionFeeInvoiceCopyWithImpl<$Res, $Val extends AdmissionFeeInvoice>
+    implements $AdmissionFeeInvoiceCopyWith<$Res> {
+  _$AdmissionFeeInvoiceCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -380,18 +377,12 @@ class _$FeeInvoiceCopyWithImpl<$Res, $Val extends FeeInvoice>
     Object? currency = freezed,
     Object? currencyCode = freezed,
     Object? currencySymbol = freezed,
+    Object? pendingAmount = freezed,
     Object? writeOffBy = freezed,
     Object? studentDetail = freezed,
     Object? payments = freezed,
     Object? paymentsTotal = freezed,
     Object? batch = freezed,
-    Object? paymentDueDate = freezed,
-    Object? writtenOffByType = freezed,
-    Object? writtenOffById = freezed,
-    Object? month = freezed,
-    Object? year = freezed,
-    Object? cycle = freezed,
-    Object? writtenOffBy = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -445,7 +436,7 @@ class _$FeeInvoiceCopyWithImpl<$Res, $Val extends FeeInvoice>
       writtenOffDate: freezed == writtenOffDate
           ? _value.writtenOffDate
           : writtenOffDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as dynamic,
       writtenOffAmount: freezed == writtenOffAmount
           ? _value.writtenOffAmount
           : writtenOffAmount // ignore: cast_nullable_to_non_nullable
@@ -453,15 +444,15 @@ class _$FeeInvoiceCopyWithImpl<$Res, $Val extends FeeInvoice>
       writtenOffRemarks: freezed == writtenOffRemarks
           ? _value.writtenOffRemarks
           : writtenOffRemarks // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       writeOffByType: freezed == writeOffByType
           ? _value.writeOffByType
           : writeOffByType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       writeOffById: freezed == writeOffById
           ? _value.writeOffById
           : writeOffById // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       paymentStatus: freezed == paymentStatus
           ? _value.paymentStatus
           : paymentStatus // ignore: cast_nullable_to_non_nullable
@@ -482,10 +473,14 @@ class _$FeeInvoiceCopyWithImpl<$Res, $Val extends FeeInvoice>
           ? _value.currencySymbol
           : currencySymbol // ignore: cast_nullable_to_non_nullable
               as String?,
+      pendingAmount: freezed == pendingAmount
+          ? _value.pendingAmount
+          : pendingAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
       writeOffBy: freezed == writeOffBy
           ? _value.writeOffBy
           : writeOffBy // ignore: cast_nullable_to_non_nullable
-              as By?,
+              as dynamic,
       studentDetail: freezed == studentDetail
           ? _value.studentDetail
           : studentDetail // ignore: cast_nullable_to_non_nullable
@@ -502,34 +497,6 @@ class _$FeeInvoiceCopyWithImpl<$Res, $Val extends FeeInvoice>
           ? _value.batch
           : batch // ignore: cast_nullable_to_non_nullable
               as Batch?,
-      paymentDueDate: freezed == paymentDueDate
-          ? _value.paymentDueDate
-          : paymentDueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      writtenOffByType: freezed == writtenOffByType
-          ? _value.writtenOffByType
-          : writtenOffByType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      writtenOffById: freezed == writtenOffById
-          ? _value.writtenOffById
-          : writtenOffById // ignore: cast_nullable_to_non_nullable
-              as int?,
-      month: freezed == month
-          ? _value.month
-          : month // ignore: cast_nullable_to_non_nullable
-              as int?,
-      year: freezed == year
-          ? _value.year
-          : year // ignore: cast_nullable_to_non_nullable
-              as int?,
-      cycle: freezed == cycle
-          ? _value.cycle
-          : cycle // ignore: cast_nullable_to_non_nullable
-              as int?,
-      writtenOffBy: freezed == writtenOffBy
-          ? _value.writtenOffBy
-          : writtenOffBy // ignore: cast_nullable_to_non_nullable
-              as By?,
     ) as $Val);
   }
 
@@ -559,11 +526,11 @@ class _$FeeInvoiceCopyWithImpl<$Res, $Val extends FeeInvoice>
 }
 
 /// @nodoc
-abstract class _$$_FeeInvoiceCopyWith<$Res>
-    implements $FeeInvoiceCopyWith<$Res> {
-  factory _$$_FeeInvoiceCopyWith(
-          _$_FeeInvoice value, $Res Function(_$_FeeInvoice) then) =
-      __$$_FeeInvoiceCopyWithImpl<$Res>;
+abstract class _$$_AdmissionFeeInvoiceCopyWith<$Res>
+    implements $AdmissionFeeInvoiceCopyWith<$Res> {
+  factory _$$_AdmissionFeeInvoiceCopyWith(_$_AdmissionFeeInvoice value,
+          $Res Function(_$_AdmissionFeeInvoice) then) =
+      __$$_AdmissionFeeInvoiceCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -579,28 +546,22 @@ abstract class _$$_FeeInvoiceCopyWith<$Res>
       String? payableAmount,
       int? reminderCount,
       int? writtenOffStatus,
-      DateTime? writtenOffDate,
+      dynamic writtenOffDate,
       String? writtenOffAmount,
-      String? writtenOffRemarks,
-      String? writeOffByType,
-      String? writeOffById,
+      dynamic writtenOffRemarks,
+      dynamic writeOffByType,
+      dynamic writeOffById,
       String? paymentStatus,
       String? feeType,
       String? currency,
       String? currencyCode,
       String? currencySymbol,
-      By? writeOffBy,
+      String? pendingAmount,
+      dynamic writeOffBy,
       StudentDetail? studentDetail,
       List<dynamic>? payments,
       List<dynamic>? paymentsTotal,
-      Batch? batch,
-      DateTime? paymentDueDate,
-      String? writtenOffByType,
-      int? writtenOffById,
-      int? month,
-      int? year,
-      int? cycle,
-      By? writtenOffBy});
+      Batch? batch});
 
   @override
   $StudentDetailCopyWith<$Res>? get studentDetail;
@@ -609,11 +570,11 @@ abstract class _$$_FeeInvoiceCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_FeeInvoiceCopyWithImpl<$Res>
-    extends _$FeeInvoiceCopyWithImpl<$Res, _$_FeeInvoice>
-    implements _$$_FeeInvoiceCopyWith<$Res> {
-  __$$_FeeInvoiceCopyWithImpl(
-      _$_FeeInvoice _value, $Res Function(_$_FeeInvoice) _then)
+class __$$_AdmissionFeeInvoiceCopyWithImpl<$Res>
+    extends _$AdmissionFeeInvoiceCopyWithImpl<$Res, _$_AdmissionFeeInvoice>
+    implements _$$_AdmissionFeeInvoiceCopyWith<$Res> {
+  __$$_AdmissionFeeInvoiceCopyWithImpl(_$_AdmissionFeeInvoice _value,
+      $Res Function(_$_AdmissionFeeInvoice) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -641,20 +602,14 @@ class __$$_FeeInvoiceCopyWithImpl<$Res>
     Object? currency = freezed,
     Object? currencyCode = freezed,
     Object? currencySymbol = freezed,
+    Object? pendingAmount = freezed,
     Object? writeOffBy = freezed,
     Object? studentDetail = freezed,
     Object? payments = freezed,
     Object? paymentsTotal = freezed,
     Object? batch = freezed,
-    Object? paymentDueDate = freezed,
-    Object? writtenOffByType = freezed,
-    Object? writtenOffById = freezed,
-    Object? month = freezed,
-    Object? year = freezed,
-    Object? cycle = freezed,
-    Object? writtenOffBy = freezed,
   }) {
-    return _then(_$_FeeInvoice(
+    return _then(_$_AdmissionFeeInvoice(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -706,7 +661,7 @@ class __$$_FeeInvoiceCopyWithImpl<$Res>
       writtenOffDate: freezed == writtenOffDate
           ? _value.writtenOffDate
           : writtenOffDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as dynamic,
       writtenOffAmount: freezed == writtenOffAmount
           ? _value.writtenOffAmount
           : writtenOffAmount // ignore: cast_nullable_to_non_nullable
@@ -714,15 +669,15 @@ class __$$_FeeInvoiceCopyWithImpl<$Res>
       writtenOffRemarks: freezed == writtenOffRemarks
           ? _value.writtenOffRemarks
           : writtenOffRemarks // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       writeOffByType: freezed == writeOffByType
           ? _value.writeOffByType
           : writeOffByType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       writeOffById: freezed == writeOffById
           ? _value.writeOffById
           : writeOffById // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       paymentStatus: freezed == paymentStatus
           ? _value.paymentStatus
           : paymentStatus // ignore: cast_nullable_to_non_nullable
@@ -743,10 +698,14 @@ class __$$_FeeInvoiceCopyWithImpl<$Res>
           ? _value.currencySymbol
           : currencySymbol // ignore: cast_nullable_to_non_nullable
               as String?,
+      pendingAmount: freezed == pendingAmount
+          ? _value.pendingAmount
+          : pendingAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
       writeOffBy: freezed == writeOffBy
           ? _value.writeOffBy
           : writeOffBy // ignore: cast_nullable_to_non_nullable
-              as By?,
+              as dynamic,
       studentDetail: freezed == studentDetail
           ? _value.studentDetail
           : studentDetail // ignore: cast_nullable_to_non_nullable
@@ -763,34 +722,6 @@ class __$$_FeeInvoiceCopyWithImpl<$Res>
           ? _value.batch
           : batch // ignore: cast_nullable_to_non_nullable
               as Batch?,
-      paymentDueDate: freezed == paymentDueDate
-          ? _value.paymentDueDate
-          : paymentDueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      writtenOffByType: freezed == writtenOffByType
-          ? _value.writtenOffByType
-          : writtenOffByType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      writtenOffById: freezed == writtenOffById
-          ? _value.writtenOffById
-          : writtenOffById // ignore: cast_nullable_to_non_nullable
-              as int?,
-      month: freezed == month
-          ? _value.month
-          : month // ignore: cast_nullable_to_non_nullable
-              as int?,
-      year: freezed == year
-          ? _value.year
-          : year // ignore: cast_nullable_to_non_nullable
-              as int?,
-      cycle: freezed == cycle
-          ? _value.cycle
-          : cycle // ignore: cast_nullable_to_non_nullable
-              as int?,
-      writtenOffBy: freezed == writtenOffBy
-          ? _value.writtenOffBy
-          : writtenOffBy // ignore: cast_nullable_to_non_nullable
-              as By?,
     ));
   }
 }
@@ -798,8 +729,8 @@ class __$$_FeeInvoiceCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_FeeInvoice implements _FeeInvoice {
-  const _$_FeeInvoice(
+class _$_AdmissionFeeInvoice implements _AdmissionFeeInvoice {
+  const _$_AdmissionFeeInvoice(
       {this.id,
       this.studentDetailId,
       this.academyId,
@@ -822,23 +753,17 @@ class _$_FeeInvoice implements _FeeInvoice {
       this.currency,
       this.currencyCode,
       this.currencySymbol,
+      this.pendingAmount,
       this.writeOffBy,
       this.studentDetail,
       final List<dynamic>? payments,
       final List<dynamic>? paymentsTotal,
-      this.batch,
-      this.paymentDueDate,
-      this.writtenOffByType,
-      this.writtenOffById,
-      this.month,
-      this.year,
-      this.cycle,
-      this.writtenOffBy})
+      this.batch})
       : _payments = payments,
         _paymentsTotal = paymentsTotal;
 
-  factory _$_FeeInvoice.fromJson(Map<String, dynamic> json) =>
-      _$$_FeeInvoiceFromJson(json);
+  factory _$_AdmissionFeeInvoice.fromJson(Map<String, dynamic> json) =>
+      _$$_AdmissionFeeInvoiceFromJson(json);
 
   @override
   final int? id;
@@ -865,15 +790,15 @@ class _$_FeeInvoice implements _FeeInvoice {
   @override
   final int? writtenOffStatus;
   @override
-  final DateTime? writtenOffDate;
+  final dynamic writtenOffDate;
   @override
   final String? writtenOffAmount;
   @override
-  final String? writtenOffRemarks;
+  final dynamic writtenOffRemarks;
   @override
-  final String? writeOffByType;
+  final dynamic writeOffByType;
   @override
-  final String? writeOffById;
+  final dynamic writeOffById;
   @override
   final String? paymentStatus;
   @override
@@ -885,7 +810,9 @@ class _$_FeeInvoice implements _FeeInvoice {
   @override
   final String? currencySymbol;
   @override
-  final By? writeOffBy;
+  final String? pendingAmount;
+  @override
+  final dynamic writeOffBy;
   @override
   final StudentDetail? studentDetail;
   final List<dynamic>? _payments;
@@ -910,31 +837,17 @@ class _$_FeeInvoice implements _FeeInvoice {
 
   @override
   final Batch? batch;
-  @override
-  final DateTime? paymentDueDate;
-  @override
-  final String? writtenOffByType;
-  @override
-  final int? writtenOffById;
-  @override
-  final int? month;
-  @override
-  final int? year;
-  @override
-  final int? cycle;
-  @override
-  final By? writtenOffBy;
 
   @override
   String toString() {
-    return 'FeeInvoice(id: $id, studentDetailId: $studentDetailId, academyId: $academyId, branchId: $branchId, branchName: $branchName, batchId: $batchId, batchName: $batchName, courseName: $courseName, subjectName: $subjectName, payableAmount: $payableAmount, reminderCount: $reminderCount, writtenOffStatus: $writtenOffStatus, writtenOffDate: $writtenOffDate, writtenOffAmount: $writtenOffAmount, writtenOffRemarks: $writtenOffRemarks, writeOffByType: $writeOffByType, writeOffById: $writeOffById, paymentStatus: $paymentStatus, feeType: $feeType, currency: $currency, currencyCode: $currencyCode, currencySymbol: $currencySymbol, writeOffBy: $writeOffBy, studentDetail: $studentDetail, payments: $payments, paymentsTotal: $paymentsTotal, batch: $batch, paymentDueDate: $paymentDueDate, writtenOffByType: $writtenOffByType, writtenOffById: $writtenOffById, month: $month, year: $year, cycle: $cycle, writtenOffBy: $writtenOffBy)';
+    return 'AdmissionFeeInvoice(id: $id, studentDetailId: $studentDetailId, academyId: $academyId, branchId: $branchId, branchName: $branchName, batchId: $batchId, batchName: $batchName, courseName: $courseName, subjectName: $subjectName, payableAmount: $payableAmount, reminderCount: $reminderCount, writtenOffStatus: $writtenOffStatus, writtenOffDate: $writtenOffDate, writtenOffAmount: $writtenOffAmount, writtenOffRemarks: $writtenOffRemarks, writeOffByType: $writeOffByType, writeOffById: $writeOffById, paymentStatus: $paymentStatus, feeType: $feeType, currency: $currency, currencyCode: $currencyCode, currencySymbol: $currencySymbol, pendingAmount: $pendingAmount, writeOffBy: $writeOffBy, studentDetail: $studentDetail, payments: $payments, paymentsTotal: $paymentsTotal, batch: $batch)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FeeInvoice &&
+            other is _$_AdmissionFeeInvoice &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.studentDetailId, studentDetailId) ||
                 other.studentDetailId == studentDetailId) &&
@@ -957,16 +870,16 @@ class _$_FeeInvoice implements _FeeInvoice {
                 other.reminderCount == reminderCount) &&
             (identical(other.writtenOffStatus, writtenOffStatus) ||
                 other.writtenOffStatus == writtenOffStatus) &&
-            (identical(other.writtenOffDate, writtenOffDate) ||
-                other.writtenOffDate == writtenOffDate) &&
+            const DeepCollectionEquality()
+                .equals(other.writtenOffDate, writtenOffDate) &&
             (identical(other.writtenOffAmount, writtenOffAmount) ||
                 other.writtenOffAmount == writtenOffAmount) &&
-            (identical(other.writtenOffRemarks, writtenOffRemarks) ||
-                other.writtenOffRemarks == writtenOffRemarks) &&
-            (identical(other.writeOffByType, writeOffByType) ||
-                other.writeOffByType == writeOffByType) &&
-            (identical(other.writeOffById, writeOffById) ||
-                other.writeOffById == writeOffById) &&
+            const DeepCollectionEquality()
+                .equals(other.writtenOffRemarks, writtenOffRemarks) &&
+            const DeepCollectionEquality()
+                .equals(other.writeOffByType, writeOffByType) &&
+            const DeepCollectionEquality()
+                .equals(other.writeOffById, writeOffById) &&
             (identical(other.paymentStatus, paymentStatus) ||
                 other.paymentStatus == paymentStatus) &&
             (identical(other.feeType, feeType) || other.feeType == feeType) &&
@@ -976,25 +889,16 @@ class _$_FeeInvoice implements _FeeInvoice {
                 other.currencyCode == currencyCode) &&
             (identical(other.currencySymbol, currencySymbol) ||
                 other.currencySymbol == currencySymbol) &&
-            (identical(other.writeOffBy, writeOffBy) ||
-                other.writeOffBy == writeOffBy) &&
+            (identical(other.pendingAmount, pendingAmount) ||
+                other.pendingAmount == pendingAmount) &&
+            const DeepCollectionEquality()
+                .equals(other.writeOffBy, writeOffBy) &&
             (identical(other.studentDetail, studentDetail) ||
                 other.studentDetail == studentDetail) &&
             const DeepCollectionEquality().equals(other._payments, _payments) &&
             const DeepCollectionEquality()
                 .equals(other._paymentsTotal, _paymentsTotal) &&
-            (identical(other.batch, batch) || other.batch == batch) &&
-            (identical(other.paymentDueDate, paymentDueDate) ||
-                other.paymentDueDate == paymentDueDate) &&
-            (identical(other.writtenOffByType, writtenOffByType) ||
-                other.writtenOffByType == writtenOffByType) &&
-            (identical(other.writtenOffById, writtenOffById) ||
-                other.writtenOffById == writtenOffById) &&
-            (identical(other.month, month) || other.month == month) &&
-            (identical(other.year, year) || other.year == year) &&
-            (identical(other.cycle, cycle) || other.cycle == cycle) &&
-            (identical(other.writtenOffBy, writtenOffBy) ||
-                other.writtenOffBy == writtenOffBy));
+            (identical(other.batch, batch) || other.batch == batch));
   }
 
   @JsonKey(ignore: true)
@@ -1013,46 +917,41 @@ class _$_FeeInvoice implements _FeeInvoice {
         payableAmount,
         reminderCount,
         writtenOffStatus,
-        writtenOffDate,
+        const DeepCollectionEquality().hash(writtenOffDate),
         writtenOffAmount,
-        writtenOffRemarks,
-        writeOffByType,
-        writeOffById,
+        const DeepCollectionEquality().hash(writtenOffRemarks),
+        const DeepCollectionEquality().hash(writeOffByType),
+        const DeepCollectionEquality().hash(writeOffById),
         paymentStatus,
         feeType,
         currency,
         currencyCode,
         currencySymbol,
-        writeOffBy,
+        pendingAmount,
+        const DeepCollectionEquality().hash(writeOffBy),
         studentDetail,
         const DeepCollectionEquality().hash(_payments),
         const DeepCollectionEquality().hash(_paymentsTotal),
-        batch,
-        paymentDueDate,
-        writtenOffByType,
-        writtenOffById,
-        month,
-        year,
-        cycle,
-        writtenOffBy
+        batch
       ]);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FeeInvoiceCopyWith<_$_FeeInvoice> get copyWith =>
-      __$$_FeeInvoiceCopyWithImpl<_$_FeeInvoice>(this, _$identity);
+  _$$_AdmissionFeeInvoiceCopyWith<_$_AdmissionFeeInvoice> get copyWith =>
+      __$$_AdmissionFeeInvoiceCopyWithImpl<_$_AdmissionFeeInvoice>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FeeInvoiceToJson(
+    return _$$_AdmissionFeeInvoiceToJson(
       this,
     );
   }
 }
 
-abstract class _FeeInvoice implements FeeInvoice {
-  const factory _FeeInvoice(
+abstract class _AdmissionFeeInvoice implements AdmissionFeeInvoice {
+  const factory _AdmissionFeeInvoice(
       {final int? id,
       final int? studentDetailId,
       final int? academyId,
@@ -1065,31 +964,25 @@ abstract class _FeeInvoice implements FeeInvoice {
       final String? payableAmount,
       final int? reminderCount,
       final int? writtenOffStatus,
-      final DateTime? writtenOffDate,
+      final dynamic writtenOffDate,
       final String? writtenOffAmount,
-      final String? writtenOffRemarks,
-      final String? writeOffByType,
-      final String? writeOffById,
+      final dynamic writtenOffRemarks,
+      final dynamic writeOffByType,
+      final dynamic writeOffById,
       final String? paymentStatus,
       final String? feeType,
       final String? currency,
       final String? currencyCode,
       final String? currencySymbol,
-      final By? writeOffBy,
+      final String? pendingAmount,
+      final dynamic writeOffBy,
       final StudentDetail? studentDetail,
       final List<dynamic>? payments,
       final List<dynamic>? paymentsTotal,
-      final Batch? batch,
-      final DateTime? paymentDueDate,
-      final String? writtenOffByType,
-      final int? writtenOffById,
-      final int? month,
-      final int? year,
-      final int? cycle,
-      final By? writtenOffBy}) = _$_FeeInvoice;
+      final Batch? batch}) = _$_AdmissionFeeInvoice;
 
-  factory _FeeInvoice.fromJson(Map<String, dynamic> json) =
-      _$_FeeInvoice.fromJson;
+  factory _AdmissionFeeInvoice.fromJson(Map<String, dynamic> json) =
+      _$_AdmissionFeeInvoice.fromJson;
 
   @override
   int? get id;
@@ -1116,15 +1009,15 @@ abstract class _FeeInvoice implements FeeInvoice {
   @override
   int? get writtenOffStatus;
   @override
-  DateTime? get writtenOffDate;
+  dynamic get writtenOffDate;
   @override
   String? get writtenOffAmount;
   @override
-  String? get writtenOffRemarks;
+  dynamic get writtenOffRemarks;
   @override
-  String? get writeOffByType;
+  dynamic get writeOffByType;
   @override
-  String? get writeOffById;
+  dynamic get writeOffById;
   @override
   String? get paymentStatus;
   @override
@@ -1136,7 +1029,9 @@ abstract class _FeeInvoice implements FeeInvoice {
   @override
   String? get currencySymbol;
   @override
-  By? get writeOffBy;
+  String? get pendingAmount;
+  @override
+  dynamic get writeOffBy;
   @override
   StudentDetail? get studentDetail;
   @override
@@ -1146,22 +1041,8 @@ abstract class _FeeInvoice implements FeeInvoice {
   @override
   Batch? get batch;
   @override
-  DateTime? get paymentDueDate;
-  @override
-  String? get writtenOffByType;
-  @override
-  int? get writtenOffById;
-  @override
-  int? get month;
-  @override
-  int? get year;
-  @override
-  int? get cycle;
-  @override
-  By? get writtenOffBy;
-  @override
   @JsonKey(ignore: true)
-  _$$_FeeInvoiceCopyWith<_$_FeeInvoice> get copyWith =>
+  _$$_AdmissionFeeInvoiceCopyWith<_$_AdmissionFeeInvoice> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -3779,15 +3660,15 @@ mixin _$Trainer {
   int? get userId => throw _privateConstructorUsedError;
   int? get academyId => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
-  DateTime? get dob => throw _privateConstructorUsedError;
+  dynamic get dob => throw _privateConstructorUsedError;
   DateTime? get doj => throw _privateConstructorUsedError;
-  String? get whatsappNo => throw _privateConstructorUsedError;
+  dynamic get whatsappNo => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
-  String? get upiId => throw _privateConstructorUsedError;
+  dynamic get upiId => throw _privateConstructorUsedError;
   String? get salaryType => throw _privateConstructorUsedError;
   int? get salaryDate => throw _privateConstructorUsedError;
   int? get salaryAmount => throw _privateConstructorUsedError;
-  String? get expertise => throw _privateConstructorUsedError;
+  dynamic get expertise => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
   String? get profilePic => throw _privateConstructorUsedError;
   String? get document1 => throw _privateConstructorUsedError;
@@ -3812,15 +3693,15 @@ abstract class $TrainerCopyWith<$Res> {
       int? userId,
       int? academyId,
       String? gender,
-      DateTime? dob,
+      dynamic dob,
       DateTime? doj,
-      String? whatsappNo,
+      dynamic whatsappNo,
       String? email,
-      String? upiId,
+      dynamic upiId,
       String? salaryType,
       int? salaryDate,
       int? salaryAmount,
-      String? expertise,
+      dynamic expertise,
       String? address,
       String? profilePic,
       String? document1,
@@ -3891,7 +3772,7 @@ class _$TrainerCopyWithImpl<$Res, $Val extends Trainer>
       dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as dynamic,
       doj: freezed == doj
           ? _value.doj
           : doj // ignore: cast_nullable_to_non_nullable
@@ -3899,7 +3780,7 @@ class _$TrainerCopyWithImpl<$Res, $Val extends Trainer>
       whatsappNo: freezed == whatsappNo
           ? _value.whatsappNo
           : whatsappNo // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -3907,7 +3788,7 @@ class _$TrainerCopyWithImpl<$Res, $Val extends Trainer>
       upiId: freezed == upiId
           ? _value.upiId
           : upiId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       salaryType: freezed == salaryType
           ? _value.salaryType
           : salaryType // ignore: cast_nullable_to_non_nullable
@@ -3923,7 +3804,7 @@ class _$TrainerCopyWithImpl<$Res, $Val extends Trainer>
       expertise: freezed == expertise
           ? _value.expertise
           : expertise // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -3981,15 +3862,15 @@ abstract class _$$_TrainerCopyWith<$Res> implements $TrainerCopyWith<$Res> {
       int? userId,
       int? academyId,
       String? gender,
-      DateTime? dob,
+      dynamic dob,
       DateTime? doj,
-      String? whatsappNo,
+      dynamic whatsappNo,
       String? email,
-      String? upiId,
+      dynamic upiId,
       String? salaryType,
       int? salaryDate,
       int? salaryAmount,
-      String? expertise,
+      dynamic expertise,
       String? address,
       String? profilePic,
       String? document1,
@@ -4058,7 +3939,7 @@ class __$$_TrainerCopyWithImpl<$Res>
       dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as dynamic,
       doj: freezed == doj
           ? _value.doj
           : doj // ignore: cast_nullable_to_non_nullable
@@ -4066,7 +3947,7 @@ class __$$_TrainerCopyWithImpl<$Res>
       whatsappNo: freezed == whatsappNo
           ? _value.whatsappNo
           : whatsappNo // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -4074,7 +3955,7 @@ class __$$_TrainerCopyWithImpl<$Res>
       upiId: freezed == upiId
           ? _value.upiId
           : upiId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       salaryType: freezed == salaryType
           ? _value.salaryType
           : salaryType // ignore: cast_nullable_to_non_nullable
@@ -4090,7 +3971,7 @@ class __$$_TrainerCopyWithImpl<$Res>
       expertise: freezed == expertise
           ? _value.expertise
           : expertise // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -4165,15 +4046,15 @@ class _$_Trainer implements _Trainer {
   @override
   final String? gender;
   @override
-  final DateTime? dob;
+  final dynamic dob;
   @override
   final DateTime? doj;
   @override
-  final String? whatsappNo;
+  final dynamic whatsappNo;
   @override
   final String? email;
   @override
-  final String? upiId;
+  final dynamic upiId;
   @override
   final String? salaryType;
   @override
@@ -4181,7 +4062,7 @@ class _$_Trainer implements _Trainer {
   @override
   final int? salaryAmount;
   @override
-  final String? expertise;
+  final dynamic expertise;
   @override
   final String? address;
   @override
@@ -4220,20 +4101,19 @@ class _$_Trainer implements _Trainer {
             (identical(other.academyId, academyId) ||
                 other.academyId == academyId) &&
             (identical(other.gender, gender) || other.gender == gender) &&
-            (identical(other.dob, dob) || other.dob == dob) &&
+            const DeepCollectionEquality().equals(other.dob, dob) &&
             (identical(other.doj, doj) || other.doj == doj) &&
-            (identical(other.whatsappNo, whatsappNo) ||
-                other.whatsappNo == whatsappNo) &&
+            const DeepCollectionEquality()
+                .equals(other.whatsappNo, whatsappNo) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.upiId, upiId) || other.upiId == upiId) &&
+            const DeepCollectionEquality().equals(other.upiId, upiId) &&
             (identical(other.salaryType, salaryType) ||
                 other.salaryType == salaryType) &&
             (identical(other.salaryDate, salaryDate) ||
                 other.salaryDate == salaryDate) &&
             (identical(other.salaryAmount, salaryAmount) ||
                 other.salaryAmount == salaryAmount) &&
-            (identical(other.expertise, expertise) ||
-                other.expertise == expertise) &&
+            const DeepCollectionEquality().equals(other.expertise, expertise) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.profilePic, profilePic) ||
                 other.profilePic == profilePic) &&
@@ -4256,15 +4136,15 @@ class _$_Trainer implements _Trainer {
         userId,
         academyId,
         gender,
-        dob,
+        const DeepCollectionEquality().hash(dob),
         doj,
-        whatsappNo,
+        const DeepCollectionEquality().hash(whatsappNo),
         email,
-        upiId,
+        const DeepCollectionEquality().hash(upiId),
         salaryType,
         salaryDate,
         salaryAmount,
-        expertise,
+        const DeepCollectionEquality().hash(expertise),
         address,
         profilePic,
         document1,
@@ -4295,15 +4175,15 @@ abstract class _Trainer implements Trainer {
       final int? userId,
       final int? academyId,
       final String? gender,
-      final DateTime? dob,
+      final dynamic dob,
       final DateTime? doj,
-      final String? whatsappNo,
+      final dynamic whatsappNo,
       final String? email,
-      final String? upiId,
+      final dynamic upiId,
       final String? salaryType,
       final int? salaryDate,
       final int? salaryAmount,
-      final String? expertise,
+      final dynamic expertise,
       final String? address,
       final String? profilePic,
       final String? document1,
@@ -4325,15 +4205,15 @@ abstract class _Trainer implements Trainer {
   @override
   String? get gender;
   @override
-  DateTime? get dob;
+  dynamic get dob;
   @override
   DateTime? get doj;
   @override
-  String? get whatsappNo;
+  dynamic get whatsappNo;
   @override
   String? get email;
   @override
-  String? get upiId;
+  dynamic get upiId;
   @override
   String? get salaryType;
   @override
@@ -4341,7 +4221,7 @@ abstract class _Trainer implements Trainer {
   @override
   int? get salaryAmount;
   @override
-  String? get expertise;
+  dynamic get expertise;
   @override
   String? get address;
   @override
@@ -4370,7 +4250,7 @@ StudentDetail _$StudentDetailFromJson(Map<String, dynamic> json) {
 mixin _$StudentDetail {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  String? get parentName => throw _privateConstructorUsedError;
+  dynamic get parentName => throw _privateConstructorUsedError;
   int? get userId => throw _privateConstructorUsedError;
   int? get academyId => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
@@ -4397,7 +4277,7 @@ abstract class $StudentDetailCopyWith<$Res> {
   $Res call(
       {int? id,
       String? name,
-      String? parentName,
+      dynamic parentName,
       int? userId,
       int? academyId,
       String? gender,
@@ -4449,7 +4329,7 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
       parentName: freezed == parentName
           ? _value.parentName
           : parentName // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -4505,7 +4385,7 @@ abstract class _$$_StudentDetailCopyWith<$Res>
   $Res call(
       {int? id,
       String? name,
-      String? parentName,
+      dynamic parentName,
       int? userId,
       int? academyId,
       String? gender,
@@ -4555,7 +4435,7 @@ class __$$_StudentDetailCopyWithImpl<$Res>
       parentName: freezed == parentName
           ? _value.parentName
           : parentName // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -4627,7 +4507,7 @@ class _$_StudentDetail implements _StudentDetail {
   @override
   final String? name;
   @override
-  final String? parentName;
+  final dynamic parentName;
   @override
   final int? userId;
   @override
@@ -4661,8 +4541,8 @@ class _$_StudentDetail implements _StudentDetail {
             other is _$_StudentDetail &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.parentName, parentName) ||
-                other.parentName == parentName) &&
+            const DeepCollectionEquality()
+                .equals(other.parentName, parentName) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.academyId, academyId) ||
                 other.academyId == academyId) &&
@@ -4685,7 +4565,7 @@ class _$_StudentDetail implements _StudentDetail {
       runtimeType,
       id,
       name,
-      parentName,
+      const DeepCollectionEquality().hash(parentName),
       userId,
       academyId,
       gender,
@@ -4715,7 +4595,7 @@ abstract class _StudentDetail implements StudentDetail {
   const factory _StudentDetail(
       {final int? id,
       final String? name,
-      final String? parentName,
+      final dynamic parentName,
       final int? userId,
       final int? academyId,
       final String? gender,
@@ -4735,7 +4615,7 @@ abstract class _StudentDetail implements StudentDetail {
   @override
   String? get name;
   @override
-  String? get parentName;
+  dynamic get parentName;
   @override
   int? get userId;
   @override
@@ -4762,6 +4642,938 @@ abstract class _StudentDetail implements StudentDetail {
       throw _privateConstructorUsedError;
 }
 
+BatchFeeInvoice _$BatchFeeInvoiceFromJson(Map<String, dynamic> json) {
+  return _BatchFeeInvoice.fromJson(json);
+}
+
+/// @nodoc
+mixin _$BatchFeeInvoice {
+  int? get id => throw _privateConstructorUsedError;
+  int? get studentDetailId => throw _privateConstructorUsedError;
+  int? get academyId => throw _privateConstructorUsedError;
+  int? get branchId => throw _privateConstructorUsedError;
+  String? get branchName => throw _privateConstructorUsedError;
+  int? get batchId => throw _privateConstructorUsedError;
+  String? get batchName => throw _privateConstructorUsedError;
+  String? get courseName => throw _privateConstructorUsedError;
+  String? get subjectName => throw _privateConstructorUsedError;
+  DateTime? get paymentDueDate => throw _privateConstructorUsedError;
+  String? get payableAmount => throw _privateConstructorUsedError;
+  int? get reminderCount => throw _privateConstructorUsedError;
+  int? get writtenOffStatus => throw _privateConstructorUsedError;
+  dynamic get writtenOffDate => throw _privateConstructorUsedError;
+  String? get writtenOffAmount => throw _privateConstructorUsedError;
+  dynamic get writtenOffRemarks => throw _privateConstructorUsedError;
+  dynamic get writtenOffByType => throw _privateConstructorUsedError;
+  dynamic get writtenOffById => throw _privateConstructorUsedError;
+  String? get paymentStatus => throw _privateConstructorUsedError;
+  String? get feeType => throw _privateConstructorUsedError;
+  int? get month => throw _privateConstructorUsedError;
+  int? get year => throw _privateConstructorUsedError;
+  String? get currency => throw _privateConstructorUsedError;
+  String? get currencyCode => throw _privateConstructorUsedError;
+  String? get currencySymbol => throw _privateConstructorUsedError;
+  int? get cycle => throw _privateConstructorUsedError;
+  int? get monthClassesConductedCount => throw _privateConstructorUsedError;
+  int? get monthAttendancePresentCount => throw _privateConstructorUsedError;
+  int? get cycleAttendancePresentCount => throw _privateConstructorUsedError;
+  String? get pendingAmount => throw _privateConstructorUsedError;
+  dynamic get totalNoOfClasses => throw _privateConstructorUsedError;
+  dynamic get writtenOffBy => throw _privateConstructorUsedError;
+  StudentDetail? get studentDetail => throw _privateConstructorUsedError;
+  List<dynamic>? get payments => throw _privateConstructorUsedError;
+  Batch? get batch => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $BatchFeeInvoiceCopyWith<BatchFeeInvoice> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BatchFeeInvoiceCopyWith<$Res> {
+  factory $BatchFeeInvoiceCopyWith(
+          BatchFeeInvoice value, $Res Function(BatchFeeInvoice) then) =
+      _$BatchFeeInvoiceCopyWithImpl<$Res, BatchFeeInvoice>;
+  @useResult
+  $Res call(
+      {int? id,
+      int? studentDetailId,
+      int? academyId,
+      int? branchId,
+      String? branchName,
+      int? batchId,
+      String? batchName,
+      String? courseName,
+      String? subjectName,
+      DateTime? paymentDueDate,
+      String? payableAmount,
+      int? reminderCount,
+      int? writtenOffStatus,
+      dynamic writtenOffDate,
+      String? writtenOffAmount,
+      dynamic writtenOffRemarks,
+      dynamic writtenOffByType,
+      dynamic writtenOffById,
+      String? paymentStatus,
+      String? feeType,
+      int? month,
+      int? year,
+      String? currency,
+      String? currencyCode,
+      String? currencySymbol,
+      int? cycle,
+      int? monthClassesConductedCount,
+      int? monthAttendancePresentCount,
+      int? cycleAttendancePresentCount,
+      String? pendingAmount,
+      dynamic totalNoOfClasses,
+      dynamic writtenOffBy,
+      StudentDetail? studentDetail,
+      List<dynamic>? payments,
+      Batch? batch});
+
+  $StudentDetailCopyWith<$Res>? get studentDetail;
+  $BatchCopyWith<$Res>? get batch;
+}
+
+/// @nodoc
+class _$BatchFeeInvoiceCopyWithImpl<$Res, $Val extends BatchFeeInvoice>
+    implements $BatchFeeInvoiceCopyWith<$Res> {
+  _$BatchFeeInvoiceCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? studentDetailId = freezed,
+    Object? academyId = freezed,
+    Object? branchId = freezed,
+    Object? branchName = freezed,
+    Object? batchId = freezed,
+    Object? batchName = freezed,
+    Object? courseName = freezed,
+    Object? subjectName = freezed,
+    Object? paymentDueDate = freezed,
+    Object? payableAmount = freezed,
+    Object? reminderCount = freezed,
+    Object? writtenOffStatus = freezed,
+    Object? writtenOffDate = freezed,
+    Object? writtenOffAmount = freezed,
+    Object? writtenOffRemarks = freezed,
+    Object? writtenOffByType = freezed,
+    Object? writtenOffById = freezed,
+    Object? paymentStatus = freezed,
+    Object? feeType = freezed,
+    Object? month = freezed,
+    Object? year = freezed,
+    Object? currency = freezed,
+    Object? currencyCode = freezed,
+    Object? currencySymbol = freezed,
+    Object? cycle = freezed,
+    Object? monthClassesConductedCount = freezed,
+    Object? monthAttendancePresentCount = freezed,
+    Object? cycleAttendancePresentCount = freezed,
+    Object? pendingAmount = freezed,
+    Object? totalNoOfClasses = freezed,
+    Object? writtenOffBy = freezed,
+    Object? studentDetail = freezed,
+    Object? payments = freezed,
+    Object? batch = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      studentDetailId: freezed == studentDetailId
+          ? _value.studentDetailId
+          : studentDetailId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      academyId: freezed == academyId
+          ? _value.academyId
+          : academyId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      branchId: freezed == branchId
+          ? _value.branchId
+          : branchId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      branchName: freezed == branchName
+          ? _value.branchName
+          : branchName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      batchId: freezed == batchId
+          ? _value.batchId
+          : batchId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      batchName: freezed == batchName
+          ? _value.batchName
+          : batchName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      courseName: freezed == courseName
+          ? _value.courseName
+          : courseName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subjectName: freezed == subjectName
+          ? _value.subjectName
+          : subjectName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentDueDate: freezed == paymentDueDate
+          ? _value.paymentDueDate
+          : paymentDueDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      payableAmount: freezed == payableAmount
+          ? _value.payableAmount
+          : payableAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      reminderCount: freezed == reminderCount
+          ? _value.reminderCount
+          : reminderCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      writtenOffStatus: freezed == writtenOffStatus
+          ? _value.writtenOffStatus
+          : writtenOffStatus // ignore: cast_nullable_to_non_nullable
+              as int?,
+      writtenOffDate: freezed == writtenOffDate
+          ? _value.writtenOffDate
+          : writtenOffDate // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      writtenOffAmount: freezed == writtenOffAmount
+          ? _value.writtenOffAmount
+          : writtenOffAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      writtenOffRemarks: freezed == writtenOffRemarks
+          ? _value.writtenOffRemarks
+          : writtenOffRemarks // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      writtenOffByType: freezed == writtenOffByType
+          ? _value.writtenOffByType
+          : writtenOffByType // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      writtenOffById: freezed == writtenOffById
+          ? _value.writtenOffById
+          : writtenOffById // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      paymentStatus: freezed == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      feeType: freezed == feeType
+          ? _value.feeType
+          : feeType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      month: freezed == month
+          ? _value.month
+          : month // ignore: cast_nullable_to_non_nullable
+              as int?,
+      year: freezed == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int?,
+      currency: freezed == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currencyCode: freezed == currencyCode
+          ? _value.currencyCode
+          : currencyCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currencySymbol: freezed == currencySymbol
+          ? _value.currencySymbol
+          : currencySymbol // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cycle: freezed == cycle
+          ? _value.cycle
+          : cycle // ignore: cast_nullable_to_non_nullable
+              as int?,
+      monthClassesConductedCount: freezed == monthClassesConductedCount
+          ? _value.monthClassesConductedCount
+          : monthClassesConductedCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      monthAttendancePresentCount: freezed == monthAttendancePresentCount
+          ? _value.monthAttendancePresentCount
+          : monthAttendancePresentCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cycleAttendancePresentCount: freezed == cycleAttendancePresentCount
+          ? _value.cycleAttendancePresentCount
+          : cycleAttendancePresentCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pendingAmount: freezed == pendingAmount
+          ? _value.pendingAmount
+          : pendingAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalNoOfClasses: freezed == totalNoOfClasses
+          ? _value.totalNoOfClasses
+          : totalNoOfClasses // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      writtenOffBy: freezed == writtenOffBy
+          ? _value.writtenOffBy
+          : writtenOffBy // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      studentDetail: freezed == studentDetail
+          ? _value.studentDetail
+          : studentDetail // ignore: cast_nullable_to_non_nullable
+              as StudentDetail?,
+      payments: freezed == payments
+          ? _value.payments
+          : payments // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      batch: freezed == batch
+          ? _value.batch
+          : batch // ignore: cast_nullable_to_non_nullable
+              as Batch?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $StudentDetailCopyWith<$Res>? get studentDetail {
+    if (_value.studentDetail == null) {
+      return null;
+    }
+
+    return $StudentDetailCopyWith<$Res>(_value.studentDetail!, (value) {
+      return _then(_value.copyWith(studentDetail: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $BatchCopyWith<$Res>? get batch {
+    if (_value.batch == null) {
+      return null;
+    }
+
+    return $BatchCopyWith<$Res>(_value.batch!, (value) {
+      return _then(_value.copyWith(batch: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_BatchFeeInvoiceCopyWith<$Res>
+    implements $BatchFeeInvoiceCopyWith<$Res> {
+  factory _$$_BatchFeeInvoiceCopyWith(
+          _$_BatchFeeInvoice value, $Res Function(_$_BatchFeeInvoice) then) =
+      __$$_BatchFeeInvoiceCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int? id,
+      int? studentDetailId,
+      int? academyId,
+      int? branchId,
+      String? branchName,
+      int? batchId,
+      String? batchName,
+      String? courseName,
+      String? subjectName,
+      DateTime? paymentDueDate,
+      String? payableAmount,
+      int? reminderCount,
+      int? writtenOffStatus,
+      dynamic writtenOffDate,
+      String? writtenOffAmount,
+      dynamic writtenOffRemarks,
+      dynamic writtenOffByType,
+      dynamic writtenOffById,
+      String? paymentStatus,
+      String? feeType,
+      int? month,
+      int? year,
+      String? currency,
+      String? currencyCode,
+      String? currencySymbol,
+      int? cycle,
+      int? monthClassesConductedCount,
+      int? monthAttendancePresentCount,
+      int? cycleAttendancePresentCount,
+      String? pendingAmount,
+      dynamic totalNoOfClasses,
+      dynamic writtenOffBy,
+      StudentDetail? studentDetail,
+      List<dynamic>? payments,
+      Batch? batch});
+
+  @override
+  $StudentDetailCopyWith<$Res>? get studentDetail;
+  @override
+  $BatchCopyWith<$Res>? get batch;
+}
+
+/// @nodoc
+class __$$_BatchFeeInvoiceCopyWithImpl<$Res>
+    extends _$BatchFeeInvoiceCopyWithImpl<$Res, _$_BatchFeeInvoice>
+    implements _$$_BatchFeeInvoiceCopyWith<$Res> {
+  __$$_BatchFeeInvoiceCopyWithImpl(
+      _$_BatchFeeInvoice _value, $Res Function(_$_BatchFeeInvoice) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? studentDetailId = freezed,
+    Object? academyId = freezed,
+    Object? branchId = freezed,
+    Object? branchName = freezed,
+    Object? batchId = freezed,
+    Object? batchName = freezed,
+    Object? courseName = freezed,
+    Object? subjectName = freezed,
+    Object? paymentDueDate = freezed,
+    Object? payableAmount = freezed,
+    Object? reminderCount = freezed,
+    Object? writtenOffStatus = freezed,
+    Object? writtenOffDate = freezed,
+    Object? writtenOffAmount = freezed,
+    Object? writtenOffRemarks = freezed,
+    Object? writtenOffByType = freezed,
+    Object? writtenOffById = freezed,
+    Object? paymentStatus = freezed,
+    Object? feeType = freezed,
+    Object? month = freezed,
+    Object? year = freezed,
+    Object? currency = freezed,
+    Object? currencyCode = freezed,
+    Object? currencySymbol = freezed,
+    Object? cycle = freezed,
+    Object? monthClassesConductedCount = freezed,
+    Object? monthAttendancePresentCount = freezed,
+    Object? cycleAttendancePresentCount = freezed,
+    Object? pendingAmount = freezed,
+    Object? totalNoOfClasses = freezed,
+    Object? writtenOffBy = freezed,
+    Object? studentDetail = freezed,
+    Object? payments = freezed,
+    Object? batch = freezed,
+  }) {
+    return _then(_$_BatchFeeInvoice(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      studentDetailId: freezed == studentDetailId
+          ? _value.studentDetailId
+          : studentDetailId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      academyId: freezed == academyId
+          ? _value.academyId
+          : academyId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      branchId: freezed == branchId
+          ? _value.branchId
+          : branchId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      branchName: freezed == branchName
+          ? _value.branchName
+          : branchName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      batchId: freezed == batchId
+          ? _value.batchId
+          : batchId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      batchName: freezed == batchName
+          ? _value.batchName
+          : batchName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      courseName: freezed == courseName
+          ? _value.courseName
+          : courseName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subjectName: freezed == subjectName
+          ? _value.subjectName
+          : subjectName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentDueDate: freezed == paymentDueDate
+          ? _value.paymentDueDate
+          : paymentDueDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      payableAmount: freezed == payableAmount
+          ? _value.payableAmount
+          : payableAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      reminderCount: freezed == reminderCount
+          ? _value.reminderCount
+          : reminderCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      writtenOffStatus: freezed == writtenOffStatus
+          ? _value.writtenOffStatus
+          : writtenOffStatus // ignore: cast_nullable_to_non_nullable
+              as int?,
+      writtenOffDate: freezed == writtenOffDate
+          ? _value.writtenOffDate
+          : writtenOffDate // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      writtenOffAmount: freezed == writtenOffAmount
+          ? _value.writtenOffAmount
+          : writtenOffAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      writtenOffRemarks: freezed == writtenOffRemarks
+          ? _value.writtenOffRemarks
+          : writtenOffRemarks // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      writtenOffByType: freezed == writtenOffByType
+          ? _value.writtenOffByType
+          : writtenOffByType // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      writtenOffById: freezed == writtenOffById
+          ? _value.writtenOffById
+          : writtenOffById // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      paymentStatus: freezed == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      feeType: freezed == feeType
+          ? _value.feeType
+          : feeType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      month: freezed == month
+          ? _value.month
+          : month // ignore: cast_nullable_to_non_nullable
+              as int?,
+      year: freezed == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int?,
+      currency: freezed == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currencyCode: freezed == currencyCode
+          ? _value.currencyCode
+          : currencyCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currencySymbol: freezed == currencySymbol
+          ? _value.currencySymbol
+          : currencySymbol // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cycle: freezed == cycle
+          ? _value.cycle
+          : cycle // ignore: cast_nullable_to_non_nullable
+              as int?,
+      monthClassesConductedCount: freezed == monthClassesConductedCount
+          ? _value.monthClassesConductedCount
+          : monthClassesConductedCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      monthAttendancePresentCount: freezed == monthAttendancePresentCount
+          ? _value.monthAttendancePresentCount
+          : monthAttendancePresentCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cycleAttendancePresentCount: freezed == cycleAttendancePresentCount
+          ? _value.cycleAttendancePresentCount
+          : cycleAttendancePresentCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pendingAmount: freezed == pendingAmount
+          ? _value.pendingAmount
+          : pendingAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalNoOfClasses: freezed == totalNoOfClasses
+          ? _value.totalNoOfClasses
+          : totalNoOfClasses // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      writtenOffBy: freezed == writtenOffBy
+          ? _value.writtenOffBy
+          : writtenOffBy // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      studentDetail: freezed == studentDetail
+          ? _value.studentDetail
+          : studentDetail // ignore: cast_nullable_to_non_nullable
+              as StudentDetail?,
+      payments: freezed == payments
+          ? _value._payments
+          : payments // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      batch: freezed == batch
+          ? _value.batch
+          : batch // ignore: cast_nullable_to_non_nullable
+              as Batch?,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class _$_BatchFeeInvoice implements _BatchFeeInvoice {
+  const _$_BatchFeeInvoice(
+      {this.id,
+      this.studentDetailId,
+      this.academyId,
+      this.branchId,
+      this.branchName,
+      this.batchId,
+      this.batchName,
+      this.courseName,
+      this.subjectName,
+      this.paymentDueDate,
+      this.payableAmount,
+      this.reminderCount,
+      this.writtenOffStatus,
+      this.writtenOffDate,
+      this.writtenOffAmount,
+      this.writtenOffRemarks,
+      this.writtenOffByType,
+      this.writtenOffById,
+      this.paymentStatus,
+      this.feeType,
+      this.month,
+      this.year,
+      this.currency,
+      this.currencyCode,
+      this.currencySymbol,
+      this.cycle,
+      this.monthClassesConductedCount,
+      this.monthAttendancePresentCount,
+      this.cycleAttendancePresentCount,
+      this.pendingAmount,
+      this.totalNoOfClasses,
+      this.writtenOffBy,
+      this.studentDetail,
+      final List<dynamic>? payments,
+      this.batch})
+      : _payments = payments;
+
+  factory _$_BatchFeeInvoice.fromJson(Map<String, dynamic> json) =>
+      _$$_BatchFeeInvoiceFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final int? studentDetailId;
+  @override
+  final int? academyId;
+  @override
+  final int? branchId;
+  @override
+  final String? branchName;
+  @override
+  final int? batchId;
+  @override
+  final String? batchName;
+  @override
+  final String? courseName;
+  @override
+  final String? subjectName;
+  @override
+  final DateTime? paymentDueDate;
+  @override
+  final String? payableAmount;
+  @override
+  final int? reminderCount;
+  @override
+  final int? writtenOffStatus;
+  @override
+  final dynamic writtenOffDate;
+  @override
+  final String? writtenOffAmount;
+  @override
+  final dynamic writtenOffRemarks;
+  @override
+  final dynamic writtenOffByType;
+  @override
+  final dynamic writtenOffById;
+  @override
+  final String? paymentStatus;
+  @override
+  final String? feeType;
+  @override
+  final int? month;
+  @override
+  final int? year;
+  @override
+  final String? currency;
+  @override
+  final String? currencyCode;
+  @override
+  final String? currencySymbol;
+  @override
+  final int? cycle;
+  @override
+  final int? monthClassesConductedCount;
+  @override
+  final int? monthAttendancePresentCount;
+  @override
+  final int? cycleAttendancePresentCount;
+  @override
+  final String? pendingAmount;
+  @override
+  final dynamic totalNoOfClasses;
+  @override
+  final dynamic writtenOffBy;
+  @override
+  final StudentDetail? studentDetail;
+  final List<dynamic>? _payments;
+  @override
+  List<dynamic>? get payments {
+    final value = _payments;
+    if (value == null) return null;
+    if (_payments is EqualUnmodifiableListView) return _payments;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final Batch? batch;
+
+  @override
+  String toString() {
+    return 'BatchFeeInvoice(id: $id, studentDetailId: $studentDetailId, academyId: $academyId, branchId: $branchId, branchName: $branchName, batchId: $batchId, batchName: $batchName, courseName: $courseName, subjectName: $subjectName, paymentDueDate: $paymentDueDate, payableAmount: $payableAmount, reminderCount: $reminderCount, writtenOffStatus: $writtenOffStatus, writtenOffDate: $writtenOffDate, writtenOffAmount: $writtenOffAmount, writtenOffRemarks: $writtenOffRemarks, writtenOffByType: $writtenOffByType, writtenOffById: $writtenOffById, paymentStatus: $paymentStatus, feeType: $feeType, month: $month, year: $year, currency: $currency, currencyCode: $currencyCode, currencySymbol: $currencySymbol, cycle: $cycle, monthClassesConductedCount: $monthClassesConductedCount, monthAttendancePresentCount: $monthAttendancePresentCount, cycleAttendancePresentCount: $cycleAttendancePresentCount, pendingAmount: $pendingAmount, totalNoOfClasses: $totalNoOfClasses, writtenOffBy: $writtenOffBy, studentDetail: $studentDetail, payments: $payments, batch: $batch)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_BatchFeeInvoice &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.studentDetailId, studentDetailId) ||
+                other.studentDetailId == studentDetailId) &&
+            (identical(other.academyId, academyId) ||
+                other.academyId == academyId) &&
+            (identical(other.branchId, branchId) ||
+                other.branchId == branchId) &&
+            (identical(other.branchName, branchName) ||
+                other.branchName == branchName) &&
+            (identical(other.batchId, batchId) || other.batchId == batchId) &&
+            (identical(other.batchName, batchName) ||
+                other.batchName == batchName) &&
+            (identical(other.courseName, courseName) ||
+                other.courseName == courseName) &&
+            (identical(other.subjectName, subjectName) ||
+                other.subjectName == subjectName) &&
+            (identical(other.paymentDueDate, paymentDueDate) ||
+                other.paymentDueDate == paymentDueDate) &&
+            (identical(other.payableAmount, payableAmount) ||
+                other.payableAmount == payableAmount) &&
+            (identical(other.reminderCount, reminderCount) ||
+                other.reminderCount == reminderCount) &&
+            (identical(other.writtenOffStatus, writtenOffStatus) ||
+                other.writtenOffStatus == writtenOffStatus) &&
+            const DeepCollectionEquality()
+                .equals(other.writtenOffDate, writtenOffDate) &&
+            (identical(other.writtenOffAmount, writtenOffAmount) ||
+                other.writtenOffAmount == writtenOffAmount) &&
+            const DeepCollectionEquality()
+                .equals(other.writtenOffRemarks, writtenOffRemarks) &&
+            const DeepCollectionEquality()
+                .equals(other.writtenOffByType, writtenOffByType) &&
+            const DeepCollectionEquality()
+                .equals(other.writtenOffById, writtenOffById) &&
+            (identical(other.paymentStatus, paymentStatus) ||
+                other.paymentStatus == paymentStatus) &&
+            (identical(other.feeType, feeType) || other.feeType == feeType) &&
+            (identical(other.month, month) || other.month == month) &&
+            (identical(other.year, year) || other.year == year) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
+            (identical(other.currencyCode, currencyCode) ||
+                other.currencyCode == currencyCode) &&
+            (identical(other.currencySymbol, currencySymbol) ||
+                other.currencySymbol == currencySymbol) &&
+            (identical(other.cycle, cycle) || other.cycle == cycle) &&
+            (identical(other.monthClassesConductedCount,
+                    monthClassesConductedCount) ||
+                other.monthClassesConductedCount ==
+                    monthClassesConductedCount) &&
+            (identical(other.monthAttendancePresentCount,
+                    monthAttendancePresentCount) ||
+                other.monthAttendancePresentCount ==
+                    monthAttendancePresentCount) &&
+            (identical(other.cycleAttendancePresentCount,
+                    cycleAttendancePresentCount) ||
+                other.cycleAttendancePresentCount ==
+                    cycleAttendancePresentCount) &&
+            (identical(other.pendingAmount, pendingAmount) ||
+                other.pendingAmount == pendingAmount) &&
+            const DeepCollectionEquality()
+                .equals(other.totalNoOfClasses, totalNoOfClasses) &&
+            const DeepCollectionEquality()
+                .equals(other.writtenOffBy, writtenOffBy) &&
+            (identical(other.studentDetail, studentDetail) ||
+                other.studentDetail == studentDetail) &&
+            const DeepCollectionEquality().equals(other._payments, _payments) &&
+            (identical(other.batch, batch) || other.batch == batch));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        studentDetailId,
+        academyId,
+        branchId,
+        branchName,
+        batchId,
+        batchName,
+        courseName,
+        subjectName,
+        paymentDueDate,
+        payableAmount,
+        reminderCount,
+        writtenOffStatus,
+        const DeepCollectionEquality().hash(writtenOffDate),
+        writtenOffAmount,
+        const DeepCollectionEquality().hash(writtenOffRemarks),
+        const DeepCollectionEquality().hash(writtenOffByType),
+        const DeepCollectionEquality().hash(writtenOffById),
+        paymentStatus,
+        feeType,
+        month,
+        year,
+        currency,
+        currencyCode,
+        currencySymbol,
+        cycle,
+        monthClassesConductedCount,
+        monthAttendancePresentCount,
+        cycleAttendancePresentCount,
+        pendingAmount,
+        const DeepCollectionEquality().hash(totalNoOfClasses),
+        const DeepCollectionEquality().hash(writtenOffBy),
+        studentDetail,
+        const DeepCollectionEquality().hash(_payments),
+        batch
+      ]);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_BatchFeeInvoiceCopyWith<_$_BatchFeeInvoice> get copyWith =>
+      __$$_BatchFeeInvoiceCopyWithImpl<_$_BatchFeeInvoice>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_BatchFeeInvoiceToJson(
+      this,
+    );
+  }
+}
+
+abstract class _BatchFeeInvoice implements BatchFeeInvoice {
+  const factory _BatchFeeInvoice(
+      {final int? id,
+      final int? studentDetailId,
+      final int? academyId,
+      final int? branchId,
+      final String? branchName,
+      final int? batchId,
+      final String? batchName,
+      final String? courseName,
+      final String? subjectName,
+      final DateTime? paymentDueDate,
+      final String? payableAmount,
+      final int? reminderCount,
+      final int? writtenOffStatus,
+      final dynamic writtenOffDate,
+      final String? writtenOffAmount,
+      final dynamic writtenOffRemarks,
+      final dynamic writtenOffByType,
+      final dynamic writtenOffById,
+      final String? paymentStatus,
+      final String? feeType,
+      final int? month,
+      final int? year,
+      final String? currency,
+      final String? currencyCode,
+      final String? currencySymbol,
+      final int? cycle,
+      final int? monthClassesConductedCount,
+      final int? monthAttendancePresentCount,
+      final int? cycleAttendancePresentCount,
+      final String? pendingAmount,
+      final dynamic totalNoOfClasses,
+      final dynamic writtenOffBy,
+      final StudentDetail? studentDetail,
+      final List<dynamic>? payments,
+      final Batch? batch}) = _$_BatchFeeInvoice;
+
+  factory _BatchFeeInvoice.fromJson(Map<String, dynamic> json) =
+      _$_BatchFeeInvoice.fromJson;
+
+  @override
+  int? get id;
+  @override
+  int? get studentDetailId;
+  @override
+  int? get academyId;
+  @override
+  int? get branchId;
+  @override
+  String? get branchName;
+  @override
+  int? get batchId;
+  @override
+  String? get batchName;
+  @override
+  String? get courseName;
+  @override
+  String? get subjectName;
+  @override
+  DateTime? get paymentDueDate;
+  @override
+  String? get payableAmount;
+  @override
+  int? get reminderCount;
+  @override
+  int? get writtenOffStatus;
+  @override
+  dynamic get writtenOffDate;
+  @override
+  String? get writtenOffAmount;
+  @override
+  dynamic get writtenOffRemarks;
+  @override
+  dynamic get writtenOffByType;
+  @override
+  dynamic get writtenOffById;
+  @override
+  String? get paymentStatus;
+  @override
+  String? get feeType;
+  @override
+  int? get month;
+  @override
+  int? get year;
+  @override
+  String? get currency;
+  @override
+  String? get currencyCode;
+  @override
+  String? get currencySymbol;
+  @override
+  int? get cycle;
+  @override
+  int? get monthClassesConductedCount;
+  @override
+  int? get monthAttendancePresentCount;
+  @override
+  int? get cycleAttendancePresentCount;
+  @override
+  String? get pendingAmount;
+  @override
+  dynamic get totalNoOfClasses;
+  @override
+  dynamic get writtenOffBy;
+  @override
+  StudentDetail? get studentDetail;
+  @override
+  List<dynamic>? get payments;
+  @override
+  Batch? get batch;
+  @override
+  @JsonKey(ignore: true)
+  _$$_BatchFeeInvoiceCopyWith<_$_BatchFeeInvoice> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 ClassDetails _$ClassDetailsFromJson(Map<String, dynamic> json) {
   return _ClassDetails.fromJson(json);
 }
@@ -4777,7 +5589,7 @@ mixin _$ClassDetails {
   String? get timezone => throw _privateConstructorUsedError;
   List<String>? get trainers => throw _privateConstructorUsedError;
   bool? get rescheduled => throw _privateConstructorUsedError;
-  String? get classLink => throw _privateConstructorUsedError;
+  dynamic get classLink => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -4801,7 +5613,7 @@ abstract class $ClassDetailsCopyWith<$Res> {
       String? timezone,
       List<String>? trainers,
       bool? rescheduled,
-      String? classLink});
+      dynamic classLink});
 }
 
 /// @nodoc
@@ -4868,7 +5680,7 @@ class _$ClassDetailsCopyWithImpl<$Res, $Val extends ClassDetails>
       classLink: freezed == classLink
           ? _value.classLink
           : classLink // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
     ) as $Val);
   }
 }
@@ -4891,7 +5703,7 @@ abstract class _$$_ClassDetailsCopyWith<$Res>
       String? timezone,
       List<String>? trainers,
       bool? rescheduled,
-      String? classLink});
+      dynamic classLink});
 }
 
 /// @nodoc
@@ -4956,7 +5768,7 @@ class __$$_ClassDetailsCopyWithImpl<$Res>
       classLink: freezed == classLink
           ? _value.classLink
           : classLink // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
     ));
   }
 }
@@ -5008,7 +5820,7 @@ class _$_ClassDetails implements _ClassDetails {
   @override
   final bool? rescheduled;
   @override
-  final String? classLink;
+  final dynamic classLink;
 
   @override
   String toString() {
@@ -5034,8 +5846,7 @@ class _$_ClassDetails implements _ClassDetails {
             const DeepCollectionEquality().equals(other._trainers, _trainers) &&
             (identical(other.rescheduled, rescheduled) ||
                 other.rescheduled == rescheduled) &&
-            (identical(other.classLink, classLink) ||
-                other.classLink == classLink));
+            const DeepCollectionEquality().equals(other.classLink, classLink));
   }
 
   @JsonKey(ignore: true)
@@ -5051,7 +5862,7 @@ class _$_ClassDetails implements _ClassDetails {
       timezone,
       const DeepCollectionEquality().hash(_trainers),
       rescheduled,
-      classLink);
+      const DeepCollectionEquality().hash(classLink));
 
   @JsonKey(ignore: true)
   @override
@@ -5078,7 +5889,7 @@ abstract class _ClassDetails implements ClassDetails {
       final String? timezone,
       final List<String>? trainers,
       final bool? rescheduled,
-      final String? classLink}) = _$_ClassDetails;
+      final dynamic classLink}) = _$_ClassDetails;
 
   factory _ClassDetails.fromJson(Map<String, dynamic> json) =
       _$_ClassDetails.fromJson;
@@ -5102,7 +5913,7 @@ abstract class _ClassDetails implements ClassDetails {
   @override
   bool? get rescheduled;
   @override
-  String? get classLink;
+  dynamic get classLink;
   @override
   @JsonKey(ignore: true)
   _$$_ClassDetailsCopyWith<_$_ClassDetails> get copyWith =>
