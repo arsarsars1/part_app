@@ -145,88 +145,99 @@ class _StudentAppHomeFeeListItemState extends State<StudentAppHomeFeeListItem> {
                             height: 10.h,
                           ),
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    '${widget.fee?.batchName}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                  if (widget.fee?.writtenOffStatus != 1 &&
-                                      widget.fee?.paymentStatus != 'paid')
-                                    widget.fee?.feeType == "monthly"
-                                        ? Text(
-                                            'Payment Due Date:',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(),
-                                          )
-                                        : Text(
-                                            'Payment Due In:',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(),
-                                          ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
                                   SizedBox(
-                                    width: 150.w,
+                                    width: 100.w,
                                     child: Text(
-                                      '${widget.fee?.branchName}',
+                                      '${widget.fee?.batchName}',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge
-                                          ?.copyWith(
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
+                                          ?.copyWith(),
                                     ),
                                   ),
                                   if (widget.fee?.writtenOffStatus != 1 &&
                                       widget.fee?.paymentStatus != 'paid')
                                     widget.fee?.feeType == "monthly"
-                                        ? Text(
-                                            "${widget.fee?.paymentDueDate?.toDDMMMYYY()}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                  fontSize: 13,
-                                                  color: widget.fee
-                                                              ?.writtenOffStatus !=
-                                                          1
-                                                      ? widget.fee?.paymentStatus ==
-                                                              'paid'
-                                                          ? AppColors.green
-                                                          : widget.fee?.paymentStatus ==
-                                                                  'partial'
-                                                              ? AppColors.yellow
-                                                              : AppColors
-                                                                  .primaryColor
-                                                      : AppColors.green,
-                                                ),
+                                        ? Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                'Payment Due Date:',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                                    ?.copyWith(),
+                                              ),
+                                              Text(
+                                                "${widget.fee?.paymentDueDate?.toDDMMMYYY()}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                                    ?.copyWith(
+                                                      fontSize: 13,
+                                                      color: widget.fee
+                                                                  ?.writtenOffStatus !=
+                                                              1
+                                                          ? widget.fee?.paymentStatus ==
+                                                                  'paid'
+                                                              ? AppColors.green
+                                                              : widget.fee?.paymentStatus ==
+                                                                      'partial'
+                                                                  ? AppColors
+                                                                      .yellow
+                                                                  : AppColors
+                                                                      .primaryColor
+                                                          : AppColors.green,
+                                                    ),
+                                              )
+                                            ],
                                           )
-                                        : Text(
-                                            '${10 - (widget.fee?.monthClassesConductedCount ?? 0)}',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                  color: AppColors.primaryColor,
-                                                ),
+                                        : Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                'Payment Due In:',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                                    ?.copyWith(),
+                                              ),
+                                              Text(
+                                                '${10 - (widget.fee?.monthClassesConductedCount ?? 0)}',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                                    ?.copyWith(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                    ),
+                                              ),
+                                            ],
                                           ),
                                 ],
                               ),
+                              SizedBox(height: 10.h),
+                              SizedBox(
+                                width: 200.w,
+                                child: Text(
+                                  '${widget.fee?.branchName}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                ),
+                              ),
+                              SizedBox(height: 10.h),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,

@@ -28,7 +28,11 @@ class _StudentAppBatchesPageState extends State<StudentAppBatchesPage> {
     // initial call to show the batches
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<BatchCubit>().getStudentAppBatchesByStatus(
-            studentId: context.read<AuthCubit>().user?.studentDetail?[0].id,
+            studentId: context
+                .read<AuthCubit>()
+                .user
+                ?.studentDetail?[context.read<AuthCubit>().studentIndex]
+                .id,
             branchId: branchId,
             status: status,
             clean: true,
@@ -158,7 +162,9 @@ class _StudentAppBatchesPageState extends State<StudentAppBatchesPage> {
                                             studentId: context
                                                 .read<AuthCubit>()
                                                 .user
-                                                ?.studentDetail?[0]
+                                                ?.studentDetail?[context
+                                                    .read<AuthCubit>()
+                                                    .studentIndex]
                                                 .id,
                                             branchId: branchId,
                                             status: status,
@@ -176,7 +182,9 @@ class _StudentAppBatchesPageState extends State<StudentAppBatchesPage> {
                                           studentId: context
                                               .read<AuthCubit>()
                                               .user
-                                              ?.studentDetail?[0]
+                                              ?.studentDetail?[context
+                                                  .read<AuthCubit>()
+                                                  .studentIndex]
                                               .id,
                                           branchId: branchId,
                                           status: status,
@@ -213,7 +221,9 @@ class _StudentAppBatchesPageState extends State<StudentAppBatchesPage> {
                                   studentId: context
                                       .read<AuthCubit>()
                                       .user
-                                      ?.studentDetail?[0]
+                                      ?.studentDetail?[context
+                                          .read<AuthCubit>()
+                                          .studentIndex]
                                       .id,
                                   branchId: branchId,
                                   status: status,

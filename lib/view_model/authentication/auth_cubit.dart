@@ -23,6 +23,7 @@ class AuthCubit extends Cubit<AuthState> {
   String? _countryCode;
   User? _user;
   String? _token;
+  int studentIndex = 0;
 
   String get phoneNumber => '+$_countryCode $_phoneNo';
 

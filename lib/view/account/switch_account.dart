@@ -99,6 +99,7 @@ class SwitchAccount extends StatelessWidget {
                     StudentDetail student = cubit.user!.studentDetail![index];
                     return AccountCard(
                       onTap: () {
+                        cubit.studentIndex = index;
                         cubit.accountType = AccountType.trainer;
                         Navigator.pushNamedAndRemoveUntil(
                           context,

@@ -79,7 +79,7 @@ class StudentAppHomeBar extends StatelessWidget {
                   ),
                   FutureBuilder(
                     future: homeCubit.getStudentAppNotificationList(
-                        studentId: cubit.user?.studentDetail?[0].id,
+                        studentId: cubit.user?.studentDetail?[cubit.studentIndex].id,
                         clean: true),
                     builder: (BuildContext context,
                         AsyncSnapshot<dynamic> snapshot) {
@@ -120,7 +120,7 @@ class StudentAppHomeBar extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(right: 32.w),
           child: Text(
-            cubit.user?.studentDetail?[0].academy?.academyName ?? 'N/A',
+            cubit.user?.studentDetail?[cubit.studentIndex].academy?.academyName ?? 'N/A',
             maxLines: 2,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: AppColors.primaryColor,

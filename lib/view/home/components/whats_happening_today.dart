@@ -15,7 +15,7 @@ class WhatsHappeningToday extends StatelessWidget {
     var authCubit = context.read<AuthCubit>();
     return FutureBuilder(
       future: homeCubit.getTempStudentAppDashboard(
-          studentId: authCubit.user?.studentDetail?[0].id),
+          studentId: authCubit.user?.studentDetail?[authCubit.studentIndex].id),
       builder:
           (BuildContext context, AsyncSnapshot<StudentDashboard?> snapshot) {
         if (snapshot.hasData) {
