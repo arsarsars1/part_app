@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:part_app/model/data_model/dashboard_item.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/home/home_cubit.dart';
 
 class StudentAppDashboardIcons extends StatelessWidget {
@@ -27,7 +28,9 @@ class StudentAppDashboardIcons extends StatelessWidget {
           return InkWell(
             onTap: () async {
               await Navigator.pushNamed(context, item.route);
-              context.read<HomeCubit>().getDashboard();
+              context.read<HomeCubit>().getStudentAppDashboard(
+                  studentId:
+                      context.read<AuthCubit>().user?.studentDetail?[0].id);
             },
             child: Container(
               margin: EdgeInsets.all(8.h),

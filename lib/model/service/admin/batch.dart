@@ -9,6 +9,7 @@ import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
 import 'package:part_app/model/data_model/reschedule_response.dart';
+import 'package:part_app/model/data_model/student_app_batch_response.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api_client.dart';
@@ -128,6 +129,40 @@ class BatchService {
       );
 
       return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<StudentAppBatchResponse?> getStudentAppBatchesByStatus({
+    int? studentId,
+    int? branchId,
+    String status = 'ongoing',
+    String? search,
+    required int page,
+    bool branchSearch = false,
+  }) async {
+    try {
+      String path = branchId == null
+          ? '/students/$studentId/batches'
+          : '/students/$studentId/branches/$branchId/batches';
+
+      if (branchSearch) {
+        path = '/students/$studentId/branches/$branchId/batches';
+      }
+
+      /// append the search text if search query is not null
+      if (search != null) {
+        path += '/search/$search';
+      }
+
+      path += '?page=$page';
+
+      var response = await _apiClient.get(
+        queryPath: path,
+      );
+
+      return studentAppBatchResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

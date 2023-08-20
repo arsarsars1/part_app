@@ -80,6 +80,14 @@ class BranchCubit extends Cubit<BranchState> {
     branches = list ?? [];
   }
 
+  Future getStudentAppBranches({int? studentId}) async {
+    emit(BranchesLoading());
+    List<Branch>? list =
+        await _branchService.getStudentAppBranches(studentId: studentId);
+
+    branches = list ?? [];
+  }
+
   /// Method to get thr details for the specific branch
   /// [ id ] is the branch Id and is required
   Future getBranchById({required String id}) async {

@@ -238,7 +238,7 @@ class DefaultValues {
   static const studentDashboardItems = [
     DashboardItem(
       title: 'Batches',
-      route: '/batches',
+      route: '/student-app-batches',
       asset: Assets.batches,
       color: Color(0xFFF7B733),
     ),
