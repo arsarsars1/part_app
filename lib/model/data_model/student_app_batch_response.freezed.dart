@@ -1662,6 +1662,7 @@ StudentDetail _$StudentDetailFromJson(Map<String, dynamic> json) {
 mixin _$StudentDetail {
   String? get name => throw _privateConstructorUsedError;
   int? get feeAmount => throw _privateConstructorUsedError;
+  String? get feeType => throw _privateConstructorUsedError;
   int? get admissionFees => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1676,7 +1677,8 @@ abstract class $StudentDetailCopyWith<$Res> {
           StudentDetail value, $Res Function(StudentDetail) then) =
       _$StudentDetailCopyWithImpl<$Res, StudentDetail>;
   @useResult
-  $Res call({String? name, int? feeAmount, int? admissionFees});
+  $Res call(
+      {String? name, int? feeAmount, String? feeType, int? admissionFees});
 }
 
 /// @nodoc
@@ -1694,6 +1696,7 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
   $Res call({
     Object? name = freezed,
     Object? feeAmount = freezed,
+    Object? feeType = freezed,
     Object? admissionFees = freezed,
   }) {
     return _then(_value.copyWith(
@@ -1705,6 +1708,10 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
           ? _value.feeAmount
           : feeAmount // ignore: cast_nullable_to_non_nullable
               as int?,
+      feeType: freezed == feeType
+          ? _value.feeType
+          : feeType // ignore: cast_nullable_to_non_nullable
+              as String?,
       admissionFees: freezed == admissionFees
           ? _value.admissionFees
           : admissionFees // ignore: cast_nullable_to_non_nullable
@@ -1721,7 +1728,8 @@ abstract class _$$_StudentDetailCopyWith<$Res>
       __$$_StudentDetailCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? name, int? feeAmount, int? admissionFees});
+  $Res call(
+      {String? name, int? feeAmount, String? feeType, int? admissionFees});
 }
 
 /// @nodoc
@@ -1737,6 +1745,7 @@ class __$$_StudentDetailCopyWithImpl<$Res>
   $Res call({
     Object? name = freezed,
     Object? feeAmount = freezed,
+    Object? feeType = freezed,
     Object? admissionFees = freezed,
   }) {
     return _then(_$_StudentDetail(
@@ -1748,6 +1757,10 @@ class __$$_StudentDetailCopyWithImpl<$Res>
           ? _value.feeAmount
           : feeAmount // ignore: cast_nullable_to_non_nullable
               as int?,
+      feeType: freezed == feeType
+          ? _value.feeType
+          : feeType // ignore: cast_nullable_to_non_nullable
+              as String?,
       admissionFees: freezed == admissionFees
           ? _value.admissionFees
           : admissionFees // ignore: cast_nullable_to_non_nullable
@@ -1760,7 +1773,8 @@ class __$$_StudentDetailCopyWithImpl<$Res>
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$_StudentDetail implements _StudentDetail {
-  const _$_StudentDetail({this.name, this.feeAmount, this.admissionFees});
+  const _$_StudentDetail(
+      {this.name, this.feeAmount, this.feeType, this.admissionFees});
 
   factory _$_StudentDetail.fromJson(Map<String, dynamic> json) =>
       _$$_StudentDetailFromJson(json);
@@ -1770,11 +1784,13 @@ class _$_StudentDetail implements _StudentDetail {
   @override
   final int? feeAmount;
   @override
+  final String? feeType;
+  @override
   final int? admissionFees;
 
   @override
   String toString() {
-    return 'StudentDetail(name: $name, feeAmount: $feeAmount, admissionFees: $admissionFees)';
+    return 'StudentDetail(name: $name, feeAmount: $feeAmount, feeType: $feeType, admissionFees: $admissionFees)';
   }
 
   @override
@@ -1785,13 +1801,15 @@ class _$_StudentDetail implements _StudentDetail {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.feeAmount, feeAmount) ||
                 other.feeAmount == feeAmount) &&
+            (identical(other.feeType, feeType) || other.feeType == feeType) &&
             (identical(other.admissionFees, admissionFees) ||
                 other.admissionFees == admissionFees));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, feeAmount, admissionFees);
+  int get hashCode =>
+      Object.hash(runtimeType, name, feeAmount, feeType, admissionFees);
 
   @JsonKey(ignore: true)
   @override
@@ -1811,6 +1829,7 @@ abstract class _StudentDetail implements StudentDetail {
   const factory _StudentDetail(
       {final String? name,
       final int? feeAmount,
+      final String? feeType,
       final int? admissionFees}) = _$_StudentDetail;
 
   factory _StudentDetail.fromJson(Map<String, dynamic> json) =
@@ -1820,6 +1839,8 @@ abstract class _StudentDetail implements StudentDetail {
   String? get name;
   @override
   int? get feeAmount;
+  @override
+  String? get feeType;
   @override
   int? get admissionFees;
   @override

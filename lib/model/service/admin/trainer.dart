@@ -103,9 +103,8 @@ class TrainerService {
                 : '/admin/branches/$branchId/trainers/?active=0');
 
     try {
-      TrainerResponse trainerResponse = trainerResponseFromJson(
-        jsonEncode(response),
-      );
+      TrainerResponse trainerResponse =
+          trainerResponseFromJson(jsonEncode(response));
       return trainerResponse;
     } on Exception {
       return null;

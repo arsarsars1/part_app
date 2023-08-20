@@ -160,6 +160,7 @@ _$_StudentDetail _$$_StudentDetailFromJson(Map<String, dynamic> json) =>
     _$_StudentDetail(
       name: json['name'] as String?,
       feeAmount: json['fee_amount'] as int?,
+      feeType: json['fee_type'] as String?,
       admissionFees: json['admission_fees'] as int?,
     );
 
@@ -167,6 +168,7 @@ Map<String, dynamic> _$$_StudentDetailToJson(_$_StudentDetail instance) =>
     <String, dynamic>{
       'name': instance.name,
       'fee_amount': instance.feeAmount,
+      'fee_type': instance.feeType,
       'admission_fees': instance.admissionFees,
     };
 

@@ -216,36 +216,36 @@ class StudentAppBatchItem extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(),
                   ),
                 ),
-                // if (batch.pivot?.feeType != null)
-                //   Column(
-                //     children: [
-                //       const SizedBox(
-                //         height: 4,
-                //       ),
-                //       Align(
-                //         alignment: Alignment.centerRight,
-                //         child: batch.pivot?.feeType == "monthly"
-                //             ? Text(
-                //                 'Monthly',
-                //                 style: Theme.of(context)
-                //                     .textTheme
-                //                     .bodyLarge
-                //                     ?.copyWith(
-                //                       color: AppColors.primaryColor,
-                //                     ),
-                //               )
-                //             : Text(
-                //                 'Class Based : ${batch.pivot?.noOfClasses.toString()} Nos.',
-                //                 style: Theme.of(context)
-                //                     .textTheme
-                //                     .bodyLarge
-                //                     ?.copyWith(
-                //                         color: AppColors.green,
-                //                         fontWeight: FontWeight.bold),
-                //               ),
-                //       ),
-                //     ],
-                //   ),
+                if (batch.students?[0].feeType != null)
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: batch.students?[0].feeType == "monthly"
+                            ? Text(
+                                'Monthly',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      color: AppColors.primaryColor,
+                                    ),
+                              )
+                            : Text(
+                                'Class Based :  Nos.',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                        color: AppColors.green,
+                                        fontWeight: FontWeight.bold),
+                              ),
+                      ),
+                    ],
+                  ),
                 const SizedBox(
                   height: 4,
                 ),

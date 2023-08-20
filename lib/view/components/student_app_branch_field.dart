@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -35,9 +36,17 @@ class _StudentAppBranchFieldState extends State<StudentAppBranchField> {
           hint: 'Select Branch',
           dropDown: true,
           defaultItem: branchCubit.initialBranch(
-            widget.initialBranch,
-          ),
-          dropDownItems: branchCubit.dropDownBranches(),
+                widget.initialBranch,
+              ) ??
+              const DropDownItem(id: -1),
+          dropDownItems: [
+            const DropDownItem(
+              id: -1,
+              title: "All",
+              item: "",
+            ),
+            ...branchCubit.dropDownBranches()
+          ],
           onChange: (value) {
             widget.onSelect(value.id);
           },

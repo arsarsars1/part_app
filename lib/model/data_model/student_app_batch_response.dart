@@ -121,6 +121,7 @@ class StudentDetail with _$StudentDetail {
   const factory StudentDetail({
     String? name,
     int? feeAmount,
+    String? feeType,
     int? admissionFees,
   }) = _StudentDetail;
 
