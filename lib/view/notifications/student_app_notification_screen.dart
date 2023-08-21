@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -20,23 +22,25 @@ class StudentAppNotificationScreen extends StatefulWidget {
 class _StudentAppNotificationScreenState
     extends State<StudentAppNotificationScreen> {
   ScrollController scrollController = ScrollController();
-  AuthCubit? authCubit;
 
   @override
   void initState() {
     super.initState();
-    authCubit = context.read<AuthCubit>();
+    AuthCubit authCubit = context.read<AuthCubit>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<StudentCubit>().clean();
       context.read<HomeCubit>().getStudentAppNotificationList(
-          studentId: authCubit?.user?.studentDetail?[0].id, clean: true);
+          studentId: authCubit.user?.studentDetail?[authCubit.studentIndex].id,
+          clean: true);
     });
     // Pagination listener
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         context.read<HomeCubit>().getStudentAppNotificationList(
-            studentId: authCubit?.user?.studentDetail?[0].id, clean: false);
+            studentId:
+                authCubit.user?.studentDetail?[authCubit.studentIndex].id,
+            clean: false);
       }
     });
   }
@@ -44,6 +48,7 @@ class _StudentAppNotificationScreenState
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<HomeCubit>();
+    AuthCubit authCubit = context.read<AuthCubit>();
     return Scaffold(
       appBar: const CommonBar(
         title: 'Notifications',
@@ -58,14 +63,16 @@ class _StudentAppNotificationScreenState
                 } else if (state is ReadNotification) {
                   Alert(context).show(message: state.message);
                   cubit.getStudentAppNotificationList(
-                      studentId: authCubit?.user?.studentDetail?[0].id,
+                      studentId: authCubit
+                          .user?.studentDetail?[authCubit.studentIndex].id,
                       clean: true);
                 } else if (state is DeleteNotificationFailed) {
                   Alert(context).show(message: state.message);
                 } else if (state is DeletedNotification) {
                   Alert(context).show(message: state.message);
                   cubit.getStudentAppNotificationList(
-                      studentId: authCubit?.user?.studentDetail?[0].id,
+                      studentId: authCubit
+                          .user?.studentDetail?[authCubit.studentIndex].id,
                       clean: true);
                 }
               },
@@ -90,7 +97,10 @@ class _StudentAppNotificationScreenState
                             return GestureDetector(
                               onTap: () {
                                 cubit.readStudentAppNotification(
-                                    authCubit?.user?.studentDetail?[0].id,
+                                    authCubit
+                                        .user
+                                        ?.studentDetail?[authCubit.studentIndex]
+                                        .id,
                                     notification?.id);
                               },
                               child: Slidable(
@@ -101,7 +111,10 @@ class _StudentAppNotificationScreenState
                                       onPressed: (context) {
                                         cubit.deleteStudentAppNotification(
                                             authCubit
-                                                ?.user?.studentDetail?[0].id,
+                                                .user
+                                                ?.studentDetail?[
+                                                    authCubit.studentIndex]
+                                                .id,
                                             notification?.id);
                                       },
                                       backgroundColor: AppColors.red,

@@ -27,16 +27,20 @@ class _StudentAppBatchesPageState extends State<StudentAppBatchesPage> {
     super.initState();
     // initial call to show the batches
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<BatchCubit>().getStudentAppBatchesByStatus(
-            studentId: context
-                .read<AuthCubit>()
-                .user
-                ?.studentDetail?[context.read<AuthCubit>().studentIndex]
-                .id,
-            branchId: branchId,
-            status: status,
-            clean: true,
-          );
+      var branchCubit = context.read<BranchCubit>();
+      var authCubit = context.read<AuthCubit>();
+      var batchCubit = context.read<BatchCubit>();
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        branchCubit.getStudentAppBranches(
+          studentId: authCubit.user?.studentDetail?[authCubit.studentIndex].id,
+        );
+        batchCubit.getStudentAppBatchesByStatus(
+          studentId: authCubit.user?.studentDetail?[authCubit.studentIndex].id,
+          branchId: branchId,
+          status: status,
+          clean: true,
+        );
+      });
     });
 
     // Pagination listener
@@ -73,24 +77,6 @@ class _StudentAppBatchesPageState extends State<StudentAppBatchesPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  // StudentAppBranchField(
-                  //   title: 'Select A Branch To List Batches',
-                  //   onSelect: (value) {
-                  //     branchId = value;
-                  //     setState(() {
-                  //       context.read<BatchCubit>().getStudentAppBatchesByStatus(
-                  //             studentId: context
-                  //                 .read<AuthCubit>()
-                  //                 .user
-                  //                 ?.studentDetail?[0]
-                  //                 .id,
-                  //             branchId: branchId,
-                  //             status: status,
-                  //             clean: true,
-                  //           );
-                  //     });
-                  //   },
-                  // ),
                   BlocBuilder<BranchCubit, BranchState>(
                     builder: (context, state) {
                       return Padding(

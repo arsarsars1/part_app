@@ -250,7 +250,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Attendance',
-      route: '/attendance-batch-list',
+      route: '/student-app-attendence-calender-view',
       asset: Assets.attendance,
       color: Color(0xFF2B32B2),
     ),
