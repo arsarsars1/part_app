@@ -51,10 +51,15 @@ class _StudentAppFeeDetailsState extends State<StudentAppFeeDetails> {
   @override
   Widget build(BuildContext context) {
     var authCubit = context.read<AuthCubit>();
+    var feeCubit = context.read<FeeCubit>();
     return Scaffold(
       key: scaffoldKey,
-      appBar: const CommonBar(
+      appBar: CommonBar(
         title: 'Student Fees Details',
+        onPressed: () {
+          feeCubit.invoices.clear();
+          Navigator.pop(context);
+        },
       ),
       body: BlocConsumer<FeeCubit, FeeState>(
         listener: (context, state) {
@@ -237,8 +242,7 @@ class _StudentAppFeeDetailsState extends State<StudentAppFeeDetails> {
                               Invoice invoice = cubit.invoices[index];
                               return StudentAppFeeListItem(
                                 invoice: invoice,
-                                onTap: () async {
-                                },
+                                onTap: () async {},
                               );
                             },
                           ),

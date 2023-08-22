@@ -210,7 +210,7 @@ class FeeCubit extends Cubit<FeeState> {
     if (clean) {
       page = 1;
       nextPageUrl = '';
-      batchInvoice.clear();
+      invoices.clear();
       emit(FetchingFee());
     } else {
       emit(FetchingFee(pagination: true));

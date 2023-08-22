@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:part_app/view/calender/calender_view.dart';
+import 'package:part_app/view/calender/student_app_calender_view.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/session_alert.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/home/dashboard/student_app_dashboard.dart';
 import 'package:part_app/view/splash.dart';
-import 'package:part_app/view/support/support_screen.dart';
+import 'package:part_app/view/support/student_app_support_screen.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class StudentAppHome extends StatefulWidget {
@@ -99,9 +99,9 @@ class _StudentAppHomeState extends State<StudentAppHome> {
     if (currentIndex == 0) {
       return const StudentAppDashboard();
     } else if (currentIndex == 1) {
-      return const CalenderView();
+      return const StudentAppCalenderView();
     } else if (currentIndex == 2) {
-      return const SupportScreen();
+      return const StudentAppSupportScreen();
     }
     return const Center(
       child: Text('WIP'),

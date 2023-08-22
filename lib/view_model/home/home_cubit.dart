@@ -124,6 +124,49 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  Future getStudentAppCalenderEvents({
+    required String date,
+    required int studentId,
+    bool clean = true,
+  }) async {
+    if (clean) {
+      feePayments = null;
+      trainerSalaryPayments?.clear();
+      scheduledClasses?.clear();
+      rescheduledClasses?.clear();
+      studentsJoined?.clear();
+      trainersJoined?.clear();
+      followUpLeads?.clear();
+      newLeads?.clear();
+      emit(GettingCalenderEvents());
+    } else {
+      emit(GettingCalenderEvents(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(GotCalenderEvents());
+      return;
+    }
+
+    CalenderEventsList? temp = await _service.getStudentAppCalenderEvents(
+      date: date,
+      studentId: studentId,
+    );
+    if (temp?.status == 1) {
+      feePayments = temp?.data?.feePayments;
+      trainerSalaryPayments = temp?.data?.trainerSalaryPayments;
+      scheduledClasses = temp?.data?.scheduledClasses;
+      rescheduledClasses = temp?.data?.rescheduledClasses;
+      studentsJoined = temp?.data?.studentsJoined;
+      trainersJoined = temp?.data?.trainersJoined;
+      followUpLeads = temp?.data?.followUpLeads;
+      newLeads = temp?.data?.newLeads;
+      emit(GotCalenderEvents());
+    } else {
+      emit(GetCalenderEventsFailed('Failed to get the calender events list'));
+    }
+  }
+
   Future getNotificationList({
     bool clean = true,
   }) async {
@@ -397,6 +440,20 @@ class HomeCubit extends Cubit<HomeState> {
   Future<int> sendSupportRequest(Map<String, dynamic> data) async {
     try {
       Common? response = await _service.sendSupportRequest(data);
+
+      if (response?.status == 1) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      return 0;
+    }
+  }
+
+   Future<int> sendStudentSupportRequest(Map<String, dynamic> data) async {
+    try {
+      Common? response = await _service.sendStudentSupportRequest(data);
 
       if (response?.status == 1) {
         return 1;
