@@ -8,14 +8,14 @@ import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class SupportScreen extends StatefulWidget {
-  const SupportScreen({Key? key}) : super(key: key);
+class StudentAppSupportScreen extends StatefulWidget {
+  const StudentAppSupportScreen({Key? key}) : super(key: key);
 
   @override
-  State<SupportScreen> createState() => _SupportScreenState();
+  State<StudentAppSupportScreen> createState() => _StudentAppSupportScreenState();
 }
 
-class _SupportScreenState extends State<SupportScreen> {
+class _StudentAppSupportScreenState extends State<StudentAppSupportScreen> {
   String? email, message;
   HomeCubit? cubit;
   var formKey = GlobalKey<FormState>();
@@ -86,7 +86,7 @@ class _SupportScreenState extends State<SupportScreen> {
                 child: Button(
                   onTap: () async {
                     if (formKey.currentState!.validate()) {
-                      int? res = await cubit?.sendSupportRequest({
+                      int? res = await cubit?.sendStudentSupportRequest({
                         'message': message,
                         'email': email,
                       });

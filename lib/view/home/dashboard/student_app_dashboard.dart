@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:part_app/view/home/components/dashboard_icons.dart';
-import 'package:part_app/view/home/components/dashboard_summary.dart';
-import 'package:part_app/view/home/components/finance_dashboard.dart';
 import 'package:part_app/view/home/components/home_banner.dart';
-import 'package:part_app/view/home/components/home_bar.dart';
+import 'package:part_app/view/home/components/student_app_dashboard_icons.dart';
+import 'package:part_app/view/home/components/student_app_home_bar.dart';
+import 'package:part_app/view/home/components/whats_happening_today.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+class StudentAppDashboard extends StatefulWidget {
+  const StudentAppDashboard({Key? key}) : super(key: key);
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<StudentAppDashboard> createState() => _StudentAppDashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _StudentAppDashboardState extends State<StudentAppDashboard> {
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<HomeCubit>().getDashboard();
+      // context.read<HomeCubit>().getStudentAppDashboard(
+      //     studentId: context.read<AuthCubit>().user?.studentDetail?[0].id);
       context.read<HomeCubit>().getFAQ();
     });
   }
@@ -34,7 +34,7 @@ class _DashboardState extends State<Dashboard> {
           children: [
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: HomeBar(),
+              child: StudentAppHomeBar(),
             ),
             Expanded(
               child: ListView(
@@ -46,9 +46,11 @@ class _DashboardState extends State<Dashboard> {
                   SizedBox(
                     height: 10,
                   ),
-                  DashboardIcons(),
-                  SummaryDashboard(),
-                  FinanceDashboard(),
+                  StudentAppDashboardIcons(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  WhatsHappeningToday()
                 ],
               ),
             ),

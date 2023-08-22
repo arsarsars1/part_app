@@ -23,6 +23,7 @@ class AuthCubit extends Cubit<AuthState> {
   String? _countryCode;
   User? _user;
   String? _token;
+  int studentIndex = 0;
 
   String get phoneNumber => '+$_countryCode $_phoneNo';
 
@@ -102,8 +103,7 @@ class AuthCubit extends Cubit<AuthState> {
         await Database().setToken(userResponse);
         await Database().setUser(userResponse);
 
-        emit(LoginSuccess(
-            userResponse.user?.adminDetail?.academy?.membershipId != null));
+        emit(LoginSuccess(userResponse.user != null));
       } else {
         emit(LoginFailed(
             userResponse.message ?? 'Login failed, Please try again'));
@@ -210,7 +210,8 @@ class AuthCubit extends Cubit<AuthState> {
       if (user != null) {
         emit(
           UserAvailable(
-            member: _user?.adminDetail?.academy?.membershipId != null,
+            member: _user?.adminDetail?.academy?.membershipId != null ||
+                _user?.studentDetail != null,
           ),
         );
       } else {

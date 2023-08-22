@@ -7,6 +7,7 @@ import 'package:part_app/view/account/account_card.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/home/home.dart';
+import 'package:part_app/view/home/student_app_home.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 class SwitchAccount extends StatelessWidget {
@@ -98,8 +99,13 @@ class SwitchAccount extends StatelessWidget {
                     StudentDetail student = cubit.user!.studentDetail![index];
                     return AccountCard(
                       onTap: () {
+                        cubit.studentIndex = index;
                         cubit.accountType = AccountType.trainer;
-                        Alert(context).show(message: 'WIP');
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          StudentAppHome.route,
+                          (route) => false,
+                        );
                       },
                       accountType: 'Student',
                       academyName: student.academy?.academyName ?? '',

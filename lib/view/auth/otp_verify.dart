@@ -24,6 +24,7 @@ class _OTPVerifyState extends State<OTPVerify> {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = context.read<AuthCubit>();
     return Scaffold(
       appBar: CommonBar(
         title: widget.login ? 'Login' : 'Academy Registration',
@@ -52,18 +53,28 @@ class _OTPVerifyState extends State<OTPVerify> {
             Alert(context).show(message: state.message);
           }
           if (state is LoginSuccess) {
-            if (state.membershipActive) {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                SwitchAccount.route,
-                (route) => false,
-              );
-            } else {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                Membership.route,
-                (route) => false,
-              );
+            if (state.user) {
+              if (cubit.user?.adminDetail != null) {
+                if (cubit.user?.adminDetail?.academy?.membershipId != null) {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    SwitchAccount.route,
+                    (route) => false,
+                  );
+                } else {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    Membership.route,
+                    (route) => false,
+                  );
+                }
+              } else {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  SwitchAccount.route,
+                  (route) => false,
+                );
+              }
             }
           }
           if (state is RegisterOTPValidated) {

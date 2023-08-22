@@ -86,6 +86,22 @@ class BranchService {
     return null;
   }
 
+  Future<List<Branch>?> getStudentAppBranches({int? studentId}) async {
+    try {
+      var response =
+          await _apiClient.get(queryPath: '/students/$studentId/branches');
+      BranchResponse branchResponse =
+          branchResponseFromJson(jsonEncode(response));
+      if (branchResponse.status == 1 && branchResponse.branches != null) {
+        var list = branchResponse.branches;
+        return list;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return null;
+  }
+
   Future<Branch?> getBranchById({required String id}) async {
     try {
       var response = await _apiClient.get(queryPath: '/admin/branches/$id');

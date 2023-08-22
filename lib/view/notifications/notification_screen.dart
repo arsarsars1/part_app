@@ -54,12 +54,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 Alert(context).show(message: state.message);
               } else if (state is ReadNotification) {
                 Alert(context).show(message: state.message);
-                cubit.getNotificationList(clean: false);
+                cubit.getNotificationList(clean: true);
               } else if (state is DeleteNotificationFailed) {
                 Alert(context).show(message: state.message);
               } else if (state is DeletedNotification) {
                 Alert(context).show(message: state.message);
-                cubit.getNotificationList(clean: false);
+                cubit.getNotificationList(clean: true);
               }
             },
             builder: (context, state) {
