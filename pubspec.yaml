@@ -48,7 +48,7 @@ dependencies:
   # For flavouring the app
   flutter_flavorizr: ^2.1.4
   # url / app launcher
-  url_launcher: ^6.1.6
+  url_launcher: ^6.1.12
   # firebase cloud messaging_service:
   firebase_messaging: ^14.0.3
   # firebase core

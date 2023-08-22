@@ -32,6 +32,7 @@ import 'package:part_app/view/fee/add_or_edit_admission_fees.dart';
 import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/fees_details_view.dart';
 import 'package:part_app/view/fee/student_admission_fee_details.dart';
+import 'package:part_app/view/fee/student_app_fee_details.dart';
 import 'package:part_app/view/fee/student_fee_details.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/home/student_app_home.dart';
@@ -475,6 +476,11 @@ class RouteGenerator {
       case StudentFeeDetails.route:
         return MaterialPageRoute(
           builder: (_) => const StudentFeeDetails(),
+          settings: settings,
+        );
+      case StudentAppFeeDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAppFeeDetails(),
           settings: settings,
         );
       case StudentAdmissionFeeDetails.route:

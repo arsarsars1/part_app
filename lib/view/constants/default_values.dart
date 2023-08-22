@@ -244,7 +244,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Fees',
-      route: '/fees',
+      route: '/student-app-fee-details',
       asset: Assets.fee,
       color: Color(0xFF1D976C),
     ),

@@ -5,6 +5,7 @@ import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/home/components/student_app_home_fee_list_item.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WhatsHappeningToday extends StatelessWidget {
   const WhatsHappeningToday({super.key});
@@ -100,7 +101,25 @@ class WhatsHappeningToday extends StatelessWidget {
                                   ),
                                 ),
                               ],
-                            )
+                            ),
+                            Column(
+                              children: [
+                                SizedBox(height: 10.h),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Click to join  :  ',
+                                      style: TextStyle(fontSize: 11.sp),
+                                    ),
+                                    InkWell(
+                                        child:
+                                            Text('${classDetails?.classLink}'),
+                                        onTap: () => launchUrl(Uri.parse(
+                                            '${classDetails?.classLink}'))),
+                                  ],
+                                )
+                              ],
+                            ),
                           ],
                         ),
                       );
