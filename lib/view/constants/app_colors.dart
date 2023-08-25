@@ -43,5 +43,6 @@ class AppColors {
   static Color defaultBlue = const Color(0xFF41A0F8);
   static Color lavender = const Color(0xFFA29CF4);
   static Color yellow = const Color(0xFFFFFF00);
+  static Color violet = const Color(0xFFA29CF4);
   static Color red = const Color(0xFFFF0000);
 }

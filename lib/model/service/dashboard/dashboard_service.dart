@@ -1,10 +1,11 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:part_app/model/data_model/faq_list.dart';
 import 'package:part_app/model/data_model/calender_events_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/dashboard.dart';
 import 'package:part_app/model/data_model/notification_list.dart';
+import 'package:part_app/model/data_model/student_app_calender_events.dart';
 import 'package:part_app/model/data_model/student_dashboard.dart';
 import 'package:part_app/model/service/api_client.dart';
 
@@ -14,8 +15,8 @@ class DashboardService {
   Future<Dashboard?> getDashboard() async {
     try {
       var response = await _apiClient.get(queryPath: '/admin/dashboard');
-      Dashboard dashboard = dashboardFromJson(json.encode(response));
-      return dashboard;
+      // Dashboard dashboard = dashboardFromJson(jsonEncode(response));
+      return dashboardFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }
@@ -25,10 +26,11 @@ class DashboardService {
     try {
       var response =
           await _apiClient.get(queryPath: '/students/$studentId/dashboard');
-      StudentDashboard dashboard =
-          studentDashboardFromJson(json.encode(response));
-      return dashboard;
+      // StudentDashboard dashboard =
+      //     studentDashboardFromJson(jsonEncode(response));
+      return studentDashboardFromJson(jsonEncode(response));
     } catch (e) {
+      log(e.toString());
       return null;
     }
   }
@@ -44,13 +46,13 @@ class DashboardService {
     }
   }
 
-  Future<CalenderEventsList?> getStudentAppCalenderEvents(
+  Future<StudentAppCalenderEvents?> getStudentAppCalenderEvents(
       {required String date, required int studentId}) async {
     try {
       var response = await _apiClient.get(
         queryPath: '/students/$studentId/calendar/$date',
       );
-      return calenderEventsListFromJson(jsonEncode(response));
+      return studentAppCalenderEventsFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }
@@ -91,10 +93,11 @@ class DashboardService {
     }
   }
 
-  Future<Common?> sendStudentSupportRequest(Map<String, dynamic> data) async {
+  Future<Common?> sendStudentSupportRequest(
+      int studentId, Map<String, dynamic> data) async {
     try {
       var response = await _apiClient.post(
-        postPath: '/student/support',
+        postPath: '/students/$studentId/support',
         data: data,
       );
       return commonFromJson(jsonEncode(response));

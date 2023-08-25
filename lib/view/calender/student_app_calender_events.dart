@@ -8,19 +8,24 @@ import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class CalenderEvent extends StatefulWidget {
-  static const route = '/calender-event';
-  const CalenderEvent({super.key});
+class StudentAppCalenderEvent extends StatefulWidget {
+  static const route = '/student-app-calender-event';
+  const StudentAppCalenderEvent({super.key});
 
   @override
-  State<CalenderEvent> createState() => _CalenderEventState();
+  State<StudentAppCalenderEvent> createState() =>
+      _StudentAppCalenderEventState();
 }
 
-class _CalenderEventState extends State<CalenderEvent> {
+class _StudentAppCalenderEventState extends State<StudentAppCalenderEvent> {
   @override
   void initState() {
     var cubit = context.read<HomeCubit>();
-    cubit.getCalenderEvents(date: cubit.selectedDate.toServerYMD());
+    var authCubit = context.read<AuthCubit>();
+    cubit.getStudentAppCalenderEvents(
+      date: cubit.selectedStudentDate.toServerYMD(),
+      studentId: authCubit.user?.studentDetail?[authCubit.studentIndex].id ?? 0,
+    );
     super.initState();
   }
 
@@ -56,7 +61,7 @@ class _CalenderEventState extends State<CalenderEvent> {
                       Padding(
                         padding: EdgeInsets.only(left: 15.w),
                         child: Text(
-                          cubit.selectedDate.toEEEEDDMMYYY(),
+                          cubit.selectedStudentDate.toEEEEDDMMYYY(),
                           style: TextStyle(
                             color: AppColors.primaryColor,
                           ),

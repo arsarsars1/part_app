@@ -86,16 +86,6 @@ class StudentAppBatchItem extends StatelessWidget {
                           const SizedBox(
                             width: 16,
                           ),
-                          if (!reschedule && !edit)
-                            Text(
-                              'Active Students: ${batch.students?.length ?? 0}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    color: AppColors.primaryColor,
-                                  ),
-                            ),
                         ],
                       ),
                       const SizedBox(

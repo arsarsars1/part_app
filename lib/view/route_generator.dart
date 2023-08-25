@@ -24,6 +24,7 @@ import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
 import 'package:part_app/view/calender/calender_events.dart';
+import 'package:part_app/view/calender/student_app_calender_events.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
@@ -506,6 +507,11 @@ class RouteGenerator {
       case CalenderEvent.route:
         return MaterialPageRoute(
           builder: (_) => const CalenderEvent(),
+          settings: settings,
+        );
+      case StudentAppCalenderEvent.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAppCalenderEvent(),
           settings: settings,
         );
       case NotificationScreen.route:

@@ -2,33 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/calender/student_app_calender_events.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class StudentAppCalender extends StatelessWidget {
+class StudentAppCalender extends StatefulWidget {
   const StudentAppCalender({Key? key}) : super(key: key);
+
+  @override
+  State<StudentAppCalender> createState() => _StudentAppCalenderState();
+}
+
+class _StudentAppCalenderState extends State<StudentAppCalender> {
+  int noOfWeeks = 0;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<HomeCubit>();
-    var authCubit = context.read<AuthCubit>();
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
           Expanded(
             child: CalendarCarousel<Event>(
-              childAspectRatio: 1,
+              childAspectRatio: 1.1,
               iconColor: Colors.white,
               todayBorderColor: Colors.transparent,
               onDayPressed: (date, events) async {
-                cubit.getStudentAppCalenderEvents(
-                  date: date.toServerYMD(),
-                  studentId: authCubit
-                          .user?.studentDetail?[authCubit.studentIndex].id ??
-                      0,
+                cubit.selectedStudentDate = date;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const StudentAppCalenderEvent()),
                 );
               },
+              selectedDateTime: cubit.selectedStudentDate,
+              selectedDayButtonColor: Colors.blue,
               daysHaveCircularBorder: true,
               showOnlyCurrentMonthDate: true,
               onLeftArrowPressed: () async {},
@@ -63,7 +75,7 @@ class StudentAppCalender extends StatelessWidget {
               todayTextStyle: const TextStyle(
                 color: Colors.white,
               ),
-              todayButtonColor: Colors.blue,
+              todayButtonColor: Colors.transparent,
               selectedDayTextStyle: const TextStyle(
                 color: Colors.white,
               ),
@@ -79,7 +91,6 @@ class StudentAppCalender extends StatelessWidget {
               onDayLongPressed: (DateTime date) {},
             ),
           ),
-          SizedBox(height: 15.h)
         ],
       ),
     );
