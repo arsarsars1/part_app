@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/student_app_fee_detail_history.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/user_image.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view_model/cubits.dart';
 
 class StudentAppFeeListItem extends StatefulWidget {
   final Invoice invoice;
@@ -27,6 +29,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
 
   @override
   Widget build(BuildContext context) {
+    var authCubit = context.read<AuthCubit>();
     return ListTile(
       title: isShrunk
           ? GestureDetector(
@@ -81,8 +84,8 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                 .profilePic !=
                                             ""
                                         ? '${F.baseUrl}'
-                                            '/admin/images/student/'
-                                            '${widget.invoice.studentDetail!.id}/${widget.invoice.studentDetail?.profilePic}'
+                                            '/students/${authCubit.user?.studentDetail?[authCubit.studentIndex].id}/images/profile-pic/'
+                                            '${widget.invoice.studentDetail?.profilePic}'
                                         : '',
                                   ),
                                   SizedBox(width: 16.w),
@@ -121,21 +124,14 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                   const SizedBox(
                                     width: 16,
                                   ),
-                                  widget.invoice.feeType == "class"
-                                      ? Text(
-                                          "Class Attended: ${widget.invoice.cycleAttendancePresentCount}/${widget.invoice.totalNoOfClasses}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(),
-                                        )
-                                      : Text(
-                                          "Class Attended: ${widget.invoice.monthAttendancePresentCount}/${widget.invoice.monthClassesConductedCount}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(),
-                                        ),
+                                  if (widget.invoice.feeType == "class")
+                                    Text(
+                                      "Class Attended: ${widget.invoice.cycleAttendancePresentCount}/${widget.invoice.totalNoOfClasses}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(),
+                                    ),
                                 ],
                               ),
                             ],
@@ -158,21 +154,14 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                   ),
                                   if (widget.invoice.writtenOffStatus != 1 &&
                                       widget.invoice.paymentStatus != 'paid')
-                                    widget.invoice.feeType == "monthly"
-                                        ? Text(
-                                            'Payment Due Date:',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(),
-                                          )
-                                        : Text(
-                                            'Payment Due In:',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(),
-                                          ),
+                                    if (widget.invoice.feeType == "monthly")
+                                      Text(
+                                        'Payment Due Date:',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(),
+                                      ),
                                 ],
                               ),
                               Row(
@@ -193,39 +182,30 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                   ),
                                   if (widget.invoice.writtenOffStatus != 1 &&
                                       widget.invoice.paymentStatus != 'paid')
-                                    widget.invoice.feeType == "monthly"
-                                        ? Text(
-                                            "${widget.invoice.paymentDueDate?.toDDMMMYYY()}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                  fontSize: 13,
-                                                  color: widget.invoice
-                                                              .writtenOffStatus !=
-                                                          1
-                                                      ? widget.invoice
+                                    if (widget.invoice.feeType == "monthly")
+                                      Text(
+                                        "${widget.invoice.paymentDueDate?.toDDMMMYYY()}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              fontSize: 13,
+                                              color: widget.invoice
+                                                          .writtenOffStatus !=
+                                                      1
+                                                  ? widget.invoice
+                                                              .paymentStatus ==
+                                                          'paid'
+                                                      ? AppColors.green
+                                                      : widget.invoice
                                                                   .paymentStatus ==
-                                                              'paid'
-                                                          ? AppColors.green
-                                                          : widget.invoice
-                                                                      .paymentStatus ==
-                                                                  'partial'
-                                                              ? AppColors.yellow
-                                                              : AppColors
-                                                                  .primaryColor
-                                                      : AppColors.green,
-                                                ),
-                                          )
-                                        : Text(
-                                            '${10 - (widget.invoice.monthClassesConductedCount ?? 0)}',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                  color: AppColors.primaryColor,
-                                                ),
-                                          ),
+                                                              'partial'
+                                                          ? AppColors.yellow
+                                                          : AppColors
+                                                              .primaryColor
+                                                  : AppColors.green,
+                                            ),
+                                      ),
                                 ],
                               ),
                               Row(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/student_dashboard.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/user_image.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 class StudentAppHomeFeeListItem extends StatefulWidget {
   final BatchFeeInvoice? fee;
@@ -28,6 +30,7 @@ class _StudentAppHomeFeeListItemState extends State<StudentAppHomeFeeListItem> {
 
   @override
   Widget build(BuildContext context) {
+    var authCubit = context.read<AuthCubit>();
     return ListTile(
       title: isShrunk
           ? GestureDetector(
@@ -82,8 +85,8 @@ class _StudentAppHomeFeeListItemState extends State<StudentAppHomeFeeListItem> {
                                                 .profilePic !=
                                             ""
                                         ? '${F.baseUrl}'
-                                            '/admin/images/student/'
-                                            '${widget.fee?.studentDetail!.id}/${widget.fee?.studentDetail?.profilePic}'
+                                            '/students/${authCubit.user?.studentDetail?[authCubit.studentIndex].id}/images/profile-pic/'
+                                            '${widget.fee?.studentDetail?.profilePic}'
                                         : '',
                                   ),
                                   SizedBox(width: 16.w),
@@ -122,21 +125,14 @@ class _StudentAppHomeFeeListItemState extends State<StudentAppHomeFeeListItem> {
                                   const SizedBox(
                                     width: 16,
                                   ),
-                                  widget.fee?.feeType == "class"
-                                      ? Text(
-                                          "Class Attended: ${widget.fee?.cycleAttendancePresentCount}/${widget.fee?.totalNoOfClasses}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(),
-                                        )
-                                      : Text(
-                                          "Class Attended: ${widget.fee?.monthAttendancePresentCount}/${widget.fee?.monthClassesConductedCount}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(),
-                                        ),
+                                  if (widget.fee?.feeType == "class")
+                                    Text(
+                                      "Class Attended: ${widget.fee?.cycleAttendancePresentCount}/${widget.fee?.totalNoOfClasses}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(),
+                                    ),
                                 ],
                               ),
                             ],
@@ -163,65 +159,41 @@ class _StudentAppHomeFeeListItemState extends State<StudentAppHomeFeeListItem> {
                                   ),
                                   if (widget.fee?.writtenOffStatus != 1 &&
                                       widget.fee?.paymentStatus != 'paid')
-                                    widget.fee?.feeType == "monthly"
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                'Payment Due Date:',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge
-                                                    ?.copyWith(),
-                                              ),
-                                              Text(
-                                                "${widget.fee?.paymentDueDate?.toDDMMMYYY()}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge
-                                                    ?.copyWith(
-                                                      fontSize: 13,
-                                                      color: widget.fee
-                                                                  ?.writtenOffStatus !=
-                                                              1
-                                                          ? widget.fee?.paymentStatus ==
-                                                                  'paid'
-                                                              ? AppColors.green
-                                                              : widget.fee?.paymentStatus ==
-                                                                      'partial'
-                                                                  ? AppColors
-                                                                      .yellow
-                                                                  : AppColors
-                                                                      .primaryColor
-                                                          : AppColors.green,
-                                                    ),
-                                              )
-                                            ],
-                                          )
-                                        : Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                'Payment Due In:',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge
-                                                    ?.copyWith(),
-                                              ),
-                                              Text(
-                                                '${10 - (widget.fee?.monthClassesConductedCount ?? 0)}',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge
-                                                    ?.copyWith(
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                    ),
-                                              ),
-                                            ],
+                                    if (widget.fee?.feeType == "monthly")
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            'Payment Due Date:',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(),
                                           ),
+                                          Text(
+                                            "${widget.fee?.paymentDueDate?.toDDMMMYYY()}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(
+                                                  fontSize: 13,
+                                                  color: widget.fee
+                                                              ?.writtenOffStatus !=
+                                                          1
+                                                      ? widget.fee?.paymentStatus ==
+                                                              'paid'
+                                                          ? AppColors.green
+                                                          : widget.fee?.paymentStatus ==
+                                                                  'partial'
+                                                              ? AppColors.yellow
+                                                              : AppColors
+                                                                  .primaryColor
+                                                      : AppColors.green,
+                                                ),
+                                          )
+                                        ],
+                                      ),
                                 ],
                               ),
                               SizedBox(height: 10.h),
@@ -334,7 +306,7 @@ class _StudentAppHomeFeeListItemState extends State<StudentAppHomeFeeListItem> {
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .only(
+                                                                .only(
                                                                 left: 5.0),
                                                         child: Text(
                                                           'Date',
@@ -391,7 +363,7 @@ class _StudentAppHomeFeeListItemState extends State<StudentAppHomeFeeListItem> {
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .only(
+                                                                .only(
                                                                 right: 5.0),
                                                         child: Text(
                                                           'Amount',
@@ -428,7 +400,7 @@ class _StudentAppHomeFeeListItemState extends State<StudentAppHomeFeeListItem> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   left: 5.0),
                                                           child:
                                                               row.isDeleted != 1
@@ -493,7 +465,7 @@ class _StudentAppHomeFeeListItemState extends State<StudentAppHomeFeeListItem> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   right: 5.0),
                                                           child:
                                                               row.isDeleted != 1

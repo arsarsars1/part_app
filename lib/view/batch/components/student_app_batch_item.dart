@@ -225,7 +225,7 @@ class StudentAppBatchItem extends StatelessWidget {
                                     ),
                               )
                             : Text(
-                                'Class Based :  Nos.',
+                                'Class Based : ${batch.students?[0].noOfClasses} Nos.',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge
