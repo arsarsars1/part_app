@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:part_app/model/data_model/calender_events_list.dart';
+import 'package:part_app/model/data_model/student_app_calender_events.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/calender/widgets/custom_container.dart';
 import 'package:part_app/view/components/alert.dart';
@@ -68,455 +68,140 @@ class _StudentAppCalenderEventState extends State<StudentAppCalenderEvent> {
                         ),
                       ),
                       SizedBox(height: 10.w),
-                      CustomContainer(
-                        widget: Row(
-                          children: [
-                            const Text('Today\'s Fee Payment:  '),
-                            Text(
-                              '₹${cubit.feePayments} /-',
-                              style: TextStyle(
-                                color: AppColors.primaryColor,
-                              ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: cubit.classes?.length,
+                        itemBuilder: (context, index) {
+                          Class? tempClass = cubit.classes?[index];
+                          return CustomContainer(
+                            widget: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (tempClass?.rescheduled ?? false)
+                                  Center(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(8.h),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            'Rescheduled from ${DateTime.parse(tempClass?.oldDate).toDDMMYYY()}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.sp,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 10.h),
+                                      ],
+                                    ),
+                                  ),
+                                Text(
+                                  '${tempClass?.batchName}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16.sp,
+                                  ),
+                                ),
+                                SizedBox(height: 10.h),
+                                Text(
+                                  '${tempClass?.branchName}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.sp,
+                                    color: AppColors.primaryColor,
+                                  ),
+                                ),
+                                Text(
+                                  '${tempClass?.courseName}, ${tempClass?.subjectName}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                                SizedBox(height: 10.h),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Trainers - ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.primaryColor,
+                                      ),
+                                    ),
+                                    tempClass?.trainers == ''
+                                        ? Text(
+                                            'No Trainers allocated',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14.sp,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          )
+                                        : Text(
+                                            '${tempClass?.trainers}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14.sp,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                  ],
+                                ),
+                                SizedBox(height: 10.h),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Start Time - ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.green,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${tempClass?.startTime?.toAmPM()}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.green,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'End Time - ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.green,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${tempClass?.endTime?.toAmPM()}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.green,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
-                      Center(
-                        child: Container(
-                          height: 1,
-                          width: 300,
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 15,
-                          ),
-                          color: AppColors.grey700,
-                        ),
-                      )
                     ],
                   ),
-                  if ((cubit.trainerSalaryPayments ?? []).isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Today\'s Salary Payment:  '),
-                        SizedBox(height: 10.w),
-                        ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: cubit.trainerSalaryPayments?.length,
-                            itemBuilder: (context, index) {
-                              TrainerSalaryPayment? trainer =
-                                  cubit.trainerSalaryPayments?[index];
-                              return CustomContainer(
-                                widget: Row(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            '${trainer?.trainerSalarySlip?.trainerDetail?.name}'),
-                                        SizedBox(height: 10.h),
-                                        Text(
-                                          'Paid:    ₹${trainer?.amount} /-',
-                                          style: TextStyle(
-                                            color: AppColors.primaryColor,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }),
-                        Center(
-                          child: Container(
-                            height: 1,
-                            width: 300,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 15,
-                            ),
-                            color: AppColors.grey700,
-                          ),
-                        )
-                      ],
-                    ),
-                  if ((cubit.scheduledClasses ?? []).isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Today\'s Batches:  '),
-                        SizedBox(height: 10.w),
-                        ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: cubit.scheduledClasses?.length,
-                          itemBuilder: (context, index) {
-                            ScheduledClass? batch =
-                                cubit.scheduledClasses?[index];
-                            return CustomContainer(
-                              widget: Row(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text('${batch?.batchName}'),
-                                      SizedBox(height: 10.h),
-                                      Text(
-                                        '${batch?.branchName}',
-                                        style: TextStyle(
-                                          color: AppColors.primaryColor,
-                                        ),
-                                      ),
-                                      SizedBox(height: 10.h),
-                                      Row(
-                                        children: [
-                                          const Text('Schduled For:  '),
-                                          Text(
-                                            '${batch?.startTime?.toAmPM()} - ${batch?.endTime?.toAmPM()}',
-                                            style: TextStyle(
-                                              color: AppColors.primaryColor,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                        Center(
-                          child: Container(
-                            height: 1,
-                            width: 300,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 15,
-                            ),
-                            color: AppColors.grey700,
-                          ),
-                        )
-                      ],
-                    ),
-                  if ((cubit.rescheduledClasses ?? []).isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Rescheduled Batches:  '),
-                        SizedBox(height: 10.w),
-                        ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: cubit.rescheduledClasses?.length,
-                          itemBuilder: (context, index) {
-                            ScheduledClass? batch =
-                                cubit.rescheduledClasses?[index];
-                            return CustomContainer(
-                              widget: Row(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text('${batch?.batchName}'),
-                                      SizedBox(height: 10.h),
-                                      Text(
-                                        '${batch?.branchName}',
-                                        style: TextStyle(
-                                          color: AppColors.primaryColor,
-                                        ),
-                                      ),
-                                      SizedBox(height: 10.h),
-                                      Row(
-                                        children: [
-                                          const Text('Schduled For:  '),
-                                          Text(
-                                            '${batch?.startTime?.toAmPM()} - ${batch?.endTime?.toAmPM()}',
-                                            style: TextStyle(
-                                              color: AppColors.primaryColor,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                        Center(
-                          child: Container(
-                            height: 1,
-                            width: 300,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 15,
-                            ),
-                            color: AppColors.grey700,
-                          ),
-                        )
-                      ],
-                    ),
-                  if ((cubit.studentsJoined ?? []).isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Students Joined:  '),
-                        SizedBox(height: 10.w),
-                        ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: cubit.studentsJoined?.length,
-                            itemBuilder: (context, index) {
-                              StudentsJoined? student =
-                                  cubit.studentsJoined?[index];
-                              return CustomContainer(
-                                widget: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('${student?.name}'),
-                                    if ((student?.batches ?? []).isNotEmpty)
-                                      SizedBox(height: 10.h),
-                                    SizedBox(
-                                      height:
-                                          (35 * (student?.batches ?? []).length)
-                                              .toDouble(),
-                                      child: ListView.builder(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount: student?.batches?.length,
-                                        itemBuilder: (context, index) {
-                                          StudentsJoinedBatch? batch =
-                                              student?.batches?[index];
-                                          return Padding(
-                                            padding:
-                                                EdgeInsets.only(bottom: 10.h),
-                                            child: Text(
-                                              '${batch?.branch?.branchName}, ${batch?.batchName}',
-                                              style: TextStyle(
-                                                color: AppColors.primaryColor,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    )
-                                    // Text(
-                                    //   '${student?.batches?[0].branch?.branchName}, ${student?.email}',
-                                    //   style: TextStyle(
-                                    //     color: AppColors.primaryColor,
-                                    //   ),
-                                    // ),
-                                  ],
-                                ),
-                              );
-                            }),
-                        Center(
-                          child: Container(
-                            height: 1,
-                            width: 300,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 15,
-                            ),
-                            color: AppColors.grey700,
-                          ),
-                        )
-                      ],
-                    ),
-                  if ((cubit.trainersJoined ?? []).isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Trainers Joined:  '),
-                        SizedBox(height: 10.w),
-                        ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: cubit.trainersJoined?.length,
-                            itemBuilder: (context, index) {
-                              TrainersJoined? trainer =
-                                  cubit.trainersJoined?[index];
-                              return CustomContainer(
-                                widget: Row(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('${trainer?.name}'),
-                                        SizedBox(height: 10.h),
-                                        Text(
-                                          '${trainer?.branches?[0].branchName}',
-                                          style: TextStyle(
-                                            color: AppColors.primaryColor,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }),
-                        Center(
-                          child: Container(
-                            height: 1,
-                            width: 300,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 15,
-                            ),
-                            color: AppColors.grey700,
-                          ),
-                        )
-                      ],
-                    ),
-                  if ((cubit.followUpLeads ?? []).isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Today\'s Followups:  '),
-                        SizedBox(height: 10.w),
-                        ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: cubit.followUpLeads?.length,
-                          itemBuilder: (context, index) {
-                            Lead? lead = cubit.followUpLeads?[index];
-                            return ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: lead?.followUps?.length,
-                              itemBuilder: (context, subIndex) {
-                                FollowUp? sublead = lead?.followUps?[subIndex];
-                                return CustomContainer(
-                                  widget: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text('${lead?.name}'),
-                                          Text('${sublead?.followUpStatus}'),
-                                        ],
-                                      ),
-                                      SizedBox(height: 10.h),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                'Assigned To:  ',
-                                              ),
-                                              Text(
-                                                '${lead?.assignedTo?.name}',
-                                                style: TextStyle(
-                                                  color: AppColors.primaryColor,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Text(
-                                            '${lead?.leadStatus}',
-                                            style: TextStyle(
-                                              color: AppColors.primaryColor,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                        Center(
-                          child: Container(
-                            height: 1,
-                            width: 300,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 15,
-                            ),
-                            color: AppColors.grey700,
-                          ),
-                        )
-                      ],
-                    ),
-                  if ((cubit.newLeads ?? []).isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('New Leads Added:  '),
-                        SizedBox(height: 10.w),
-                        ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: cubit.newLeads?.length,
-                          itemBuilder: (context, index) {
-                            Lead? lead = cubit.newLeads?[index];
-                            return CustomContainer(
-                              widget: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('${lead?.name}'),
-                                    ],
-                                  ),
-                                  SizedBox(height: 10.h),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const Text(
-                                            'Assigned To:  ',
-                                          ),
-                                          Text(
-                                            '${lead?.assignedTo?.name}',
-                                            style: TextStyle(
-                                              color: AppColors.primaryColor,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Text(
-                                        '${lead?.leadStatus}',
-                                        style: TextStyle(
-                                          color: AppColors.primaryColor,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                        Center(
-                          child: Container(
-                            height: 1,
-                            width: 300,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 15,
-                            ),
-                            color: AppColors.grey700,
-                          ),
-                        )
-                      ],
-                    ),
                 ],
               ),
             );
