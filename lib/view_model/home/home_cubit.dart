@@ -50,7 +50,9 @@ class HomeCubit extends Cubit<HomeState> {
   List<Lead?>? followUpLeads;
   List<Lead?>? newLeads;
 
-  List<Class?>? classes;
+  List<Class?>? scheduledStudentClasses;
+  List<Class?>? rescheduledStudentClasses;
+  List<Class?>? rescheduledToStudentClasses;
 
   bool flag = false;
 
@@ -122,7 +124,9 @@ class HomeCubit extends Cubit<HomeState> {
     bool clean = true,
   }) async {
     if (clean) {
-      classes?.clear();
+      scheduledStudentClasses?.clear();
+      rescheduledStudentClasses?.clear();
+      rescheduledToStudentClasses?.clear();
       emit(GettingCalenderEvents());
     } else {
       emit(GettingCalenderEvents(pagination: true));
@@ -133,7 +137,9 @@ class HomeCubit extends Cubit<HomeState> {
       studentId: studentId,
     );
     if (temp?.status == 1) {
-      classes = temp?.classes;
+      scheduledStudentClasses = temp?.scheduledClasses;
+      rescheduledStudentClasses = temp?.rescheduledClasses;
+      rescheduledToStudentClasses = temp?.rescheduledFromClasses;
       emit(GotCalenderEvents());
     } else {
       emit(GetCalenderEventsFailed('Failed to get the calender events list'));
@@ -424,9 +430,11 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<int> sendStudentSupportRequest(int studentId, Map<String, dynamic> data) async {
+  Future<int> sendStudentSupportRequest(
+      int studentId, Map<String, dynamic> data) async {
     try {
-      Common? response = await _service.sendStudentSupportRequest(studentId, data);
+      Common? response =
+          await _service.sendStudentSupportRequest(studentId, data);
 
       if (response?.status == 1) {
         return 1;

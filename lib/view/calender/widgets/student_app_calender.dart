@@ -20,6 +20,15 @@ class _StudentAppCalenderState extends State<StudentAppCalender> {
   }
 
   @override
+  void deactivate() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      var cubit = context.read<HomeCubit>();
+      cubit.selectedDate = DateTime.now();
+    });
+    super.deactivate();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var cubit = context.read<HomeCubit>();
     return Padding(

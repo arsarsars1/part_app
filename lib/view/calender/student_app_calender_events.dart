@@ -70,9 +70,10 @@ class _StudentAppCalenderEventState extends State<StudentAppCalenderEvent> {
                       SizedBox(height: 10.w),
                       ListView.builder(
                         shrinkWrap: true,
-                        itemCount: cubit.classes?.length,
+                        itemCount: cubit.scheduledStudentClasses?.length,
                         itemBuilder: (context, index) {
-                          Class? tempClass = cubit.classes?[index];
+                          Class? tempClass =
+                              cubit.scheduledStudentClasses?[index];
                           return CustomContainer(
                             widget: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +90,275 @@ class _StudentAppCalenderEventState extends State<StudentAppCalenderEvent> {
                                             ),
                                           ),
                                           child: Text(
-                                            'Rescheduled from ${DateTime.parse(tempClass?.oldDate).toDDMMYYY()}',
+                                            'Rescheduled from ${tempClass?.oldDate?.toDDMMYYY()}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.sp,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 10.h),
+                                      ],
+                                    ),
+                                  ),
+                                Text(
+                                  '${tempClass?.batchName}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16.sp,
+                                  ),
+                                ),
+                                SizedBox(height: 10.h),
+                                Text(
+                                  '${tempClass?.branchName}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.sp,
+                                    color: AppColors.primaryColor,
+                                  ),
+                                ),
+                                Text(
+                                  '${tempClass?.courseName}, ${tempClass?.subjectName}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                                SizedBox(height: 10.h),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Trainers - ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.primaryColor,
+                                      ),
+                                    ),
+                                    tempClass?.trainers == ''
+                                        ? Text(
+                                            'No Trainers allocated',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14.sp,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          )
+                                        : Text(
+                                            '${tempClass?.trainers}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14.sp,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                  ],
+                                ),
+                                SizedBox(height: 10.h),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Start Time - ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.green,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${tempClass?.startTime?.toAmPM()}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.green,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'End Time - ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.green,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${tempClass?.endTime?.toAmPM()}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.green,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10.w),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: cubit.rescheduledStudentClasses?.length,
+                        itemBuilder: (context, index) {
+                          Class? tempClass =
+                              cubit.rescheduledStudentClasses?[index];
+                          return CustomContainer(
+                            widget: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (tempClass?.rescheduled ?? false)
+                                  Center(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(8.h),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            'Rescheduled from ${tempClass?.oldDate?.toDDMMYYY()}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.sp,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 10.h),
+                                      ],
+                                    ),
+                                  ),
+                                Text(
+                                  '${tempClass?.batchName}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16.sp,
+                                  ),
+                                ),
+                                SizedBox(height: 10.h),
+                                Text(
+                                  '${tempClass?.branchName}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.sp,
+                                    color: AppColors.primaryColor,
+                                  ),
+                                ),
+                                Text(
+                                  '${tempClass?.courseName}, ${tempClass?.subjectName}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                                SizedBox(height: 10.h),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Trainers - ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.primaryColor,
+                                      ),
+                                    ),
+                                    tempClass?.trainers == ''
+                                        ? Text(
+                                            'No Trainers allocated',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14.sp,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          )
+                                        : Text(
+                                            '${tempClass?.trainers}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14.sp,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                  ],
+                                ),
+                                SizedBox(height: 10.h),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Start Time - ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.green,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${tempClass?.startTime?.toAmPM()}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.green,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'End Time - ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.green,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${tempClass?.endTime?.toAmPM()}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: AppColors.green,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10.w),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: cubit.rescheduledToStudentClasses?.length,
+                        itemBuilder: (context, index) {
+                          Class? tempClass =
+                              cubit.rescheduledToStudentClasses?[index];
+                          return CustomContainer(
+                            widget: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (tempClass?.rescheduled ?? false)
+                                  Center(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(8.h),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            'Rescheduled to ${tempClass?.newDate?.toDDMMYYY()}',
                                             style: TextStyle(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 16.sp,
