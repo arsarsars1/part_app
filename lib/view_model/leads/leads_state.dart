@@ -30,6 +30,15 @@ class FetchingLeadsFailed extends LeadsState {
   FetchingLeadsFailed(this.message);
 }
 
+class FetchingLead extends LeadsState {}
+
+class FetchedLead extends LeadsState {}
+
+class FetchingLeadFailed extends LeadsState {
+  final String message;
+  FetchingLeadFailed(this.message);
+}
+
 class FetchingLeadStatuses extends LeadsState {}
 
 class FetchedLeadStatuses extends LeadsState {}

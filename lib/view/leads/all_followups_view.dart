@@ -34,6 +34,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
   String? query;
   BatchModel? batch;
   DateTime? date;
+  TextEditingController branchController = TextEditingController();
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
 
@@ -51,7 +52,13 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
 
     return Scaffold(
       key: scaffoldKey,
-      appBar: const CommonBar(title: 'Leads'),
+      appBar: CommonBar(
+        title: 'Leads',
+        onPressed: () {
+          cubit.leads.clear();
+          Navigator.pop(context);
+        },
+      ),
       body: BlocConsumer<LeadsCubit, LeadsState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -111,6 +118,10 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                         onChanged: (value) {
                           setState(() {
                             leadStatus = value?.title;
+                            branchId = null;
+                            batchController.clear();
+                            date = null;
+                            cubit.leads.clear();
                           });
                         },
                       ),
@@ -124,12 +135,13 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                       branchId = value;
                     });
                     batchController.clear();
-                    dateController.clear();
                     batch = null;
+                    date = null;
                     context.read<BatchCubit>().getBatchesByBranch(
                           branchId: branchId,
                           clean: true,
                         );
+                    cubit.leads.clear();
                   },
                 ),
                 const SizedBox(
@@ -138,7 +150,6 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                 CommonField(
                   controller: batchController,
                   onTap: () {
-                    dateController.clear();
                     if (branchId != null) {
                       scaffoldKey.currentState?.showBottomSheet(
                         elevation: 10,
@@ -149,10 +160,14 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                           onSelect: (value) {
                             batch = value;
                             batchController.text = value.name;
+                            cubit.leads.clear();
                             // setState(() {});
                           },
                         ),
                       );
+                      setState(() {
+                        date = null;
+                      });
                     } else {
                       Alert(context).show(
                         message: 'Please select Branch.',
@@ -223,6 +238,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                             onTap: () async {
                               await datePicker();
                               dateController.text = date?.toDateString() ?? "";
+                              cubit.leads.clear();
                             },
                             child: const Icon(
                               Icons.calendar_month,
@@ -267,10 +283,10 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: cubit.leads.length,
                         itemBuilder: (context, index) {
-                          Lead lead = cubit.leads[index];
+                          Lead? singleLead = cubit.leads[index];
                           return GestureDetector(
                             onTap: () {
-                              cubit.selectedLead = lead;
+                              cubit.selectedLead = singleLead;
                               Navigator.pushNamed(context, LeadDetails.route);
                             },
                             child: Container(
@@ -289,7 +305,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        lead.name ?? '',
+                                        singleLead?.name ?? '',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge
@@ -303,21 +319,21 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                                         height: 8,
                                       ),
                                       Text(
-                                        lead.leadStatus ?? '',
+                                        singleLead?.leadStatus ?? '',
                                       ),
                                       const SizedBox(
                                         height: 8,
                                       ),
                                       Text(
-                                        'Next Followup on: ${cubit.checkTime(lead.followUps ?? [])?.followUpDate?.toDateString()} @ ${cubit.checkTime(lead.followUps ?? [])?.followUpTime?.toAmPM()}',
+                                        'Next Followup on: ${cubit.checkTime(singleLead?.followUps ?? [])?.followUpDate?.toDateString() == DateTime.now().toDateString() ? "Today" : cubit.checkTime(singleLead?.followUps ?? [])?.followUpDate?.toDateString()} @ ${cubit.checkTime(singleLead?.followUps ?? [])?.followUpTime?.toAmPM()}',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge
                                             ?.copyWith(
                                               color: cubit
-                                                          .checkTime(
-                                                              lead.followUps ??
-                                                                  [])
+                                                          .checkTime(singleLead
+                                                                  ?.followUps ??
+                                                              [])
                                                           ?.followUpDate
                                                           ?.toDateString() ==
                                                       DateTime.now()
