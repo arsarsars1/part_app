@@ -172,6 +172,8 @@ class _ProfileState extends State<Profile> {
                 Column(
                   children: [
                     CommonField(
+                      inputType: TextInputType.number,
+                      phoneField: true,
                       title: 'Whatsapp Phone Number *',
                       onChange: (value) {
                         waNumber = value;

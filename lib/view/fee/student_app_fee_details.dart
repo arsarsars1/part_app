@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/student_app_fee_detail_history.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
@@ -22,7 +24,7 @@ class _StudentAppFeeDetailsState extends State<StudentAppFeeDetails> {
 
   String? query;
 
-  int? year;
+  int? year = DateTime.now().year;
   String? status = 'all';
   int? month;
   DateTime? finalDate = DateTime.now();
@@ -38,6 +40,7 @@ class _StudentAppFeeDetailsState extends State<StudentAppFeeDetails> {
     cubit = context.read<AuthCubit>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FeeCubit>().clean();
+      doSearch(false);
     });
     // Pagination listener
     scrollController.addListener(() {
@@ -162,6 +165,7 @@ class _StudentAppFeeDetailsState extends State<StudentAppFeeDetails> {
                             title: 'Year',
                             hint: 'Select a year',
                             dateMonth: true,
+                            initialValue: DateTime.now().year.toString(),
                             onDateSelect: (DateTime value) {
                               year = value.year;
                               doSearch(true);

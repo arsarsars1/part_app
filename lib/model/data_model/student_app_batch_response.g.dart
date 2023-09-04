@@ -162,6 +162,9 @@ _$_StudentDetail _$$_StudentDetailFromJson(Map<String, dynamic> json) =>
       feeAmount: json['fee_amount'] as int?,
       feeType: json['fee_type'] as String?,
       admissionFees: json['admission_fees'] as int?,
+      noOfClasses: json['no_of_classes'] as int?,
+      cycle: json['cycle'] as int?,
+      paymentDueDate: json['payment_due_date'] as int?,
     );
 
 Map<String, dynamic> _$$_StudentDetailToJson(_$_StudentDetail instance) =>
@@ -170,6 +173,9 @@ Map<String, dynamic> _$$_StudentDetailToJson(_$_StudentDetail instance) =>
       'fee_amount': instance.feeAmount,
       'fee_type': instance.feeType,
       'admission_fees': instance.admissionFees,
+      'no_of_classes': instance.noOfClasses,
+      'cycle': instance.cycle,
+      'payment_due_date': instance.paymentDueDate,
     };
 
 _$_Subject _$$_SubjectFromJson(Map<String, dynamic> json) => _$_Subject(

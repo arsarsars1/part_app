@@ -12,7 +12,8 @@ class StudentAppSupportScreen extends StatefulWidget {
   const StudentAppSupportScreen({Key? key}) : super(key: key);
 
   @override
-  State<StudentAppSupportScreen> createState() => _StudentAppSupportScreenState();
+  State<StudentAppSupportScreen> createState() =>
+      _StudentAppSupportScreenState();
 }
 
 class _StudentAppSupportScreenState extends State<StudentAppSupportScreen> {
@@ -30,6 +31,7 @@ class _StudentAppSupportScreenState extends State<StudentAppSupportScreen> {
   @override
   Widget build(BuildContext context) {
     List<FaqList?>? faqList = cubit?.faqList;
+    var authCubit = context.read<AuthCubit>();
     return Scaffold(
       appBar: const CommonBar(
         title: 'Support',
@@ -86,10 +88,14 @@ class _StudentAppSupportScreenState extends State<StudentAppSupportScreen> {
                 child: Button(
                   onTap: () async {
                     if (formKey.currentState!.validate()) {
-                      int? res = await cubit?.sendStudentSupportRequest({
-                        'message': message,
-                        'email': email,
-                      });
+                      int? res = await cubit?.sendStudentSupportRequest(
+                          authCubit.user?.studentDetail?[authCubit.studentIndex]
+                                  .id ??
+                              0,
+                          {
+                            'message': message,
+                            'email': email,
+                          });
                       if (res == 1) {
                         Alert(context).show(message: "Support Request Sent");
                         messageController.text = "";

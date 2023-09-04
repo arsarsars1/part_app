@@ -7,6 +7,7 @@ import 'package:part_app/model/data_model/calender_events_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/dashboard.dart';
 import 'package:part_app/model/data_model/notification_list.dart';
+import 'package:part_app/model/data_model/student_app_calender_events.dart';
 import 'package:part_app/model/data_model/student_dashboard.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/model/service/dashboard/dashboard_service.dart';
@@ -18,7 +19,8 @@ class HomeCubit extends Cubit<HomeState> {
 
   final _service = DashboardService();
   List<Banner>? _banner;
-  StudentDashboard? _studentDashboardItems;
+  List<BatchFeeInvoice?>? studentBatches;
+  List<ClassDetails?>? studentClasses;
   List<NotificationData>? _notifications;
   List<FaqList?>? _faqList;
   int? _totalStudents;
@@ -27,11 +29,13 @@ class HomeCubit extends Cubit<HomeState> {
   List<Banner>? get banner => _banner;
   List<FaqList?>? get faqList => _faqList;
   List<NotificationData?>? get notifications => _notifications;
-  StudentDashboard? get studentDashboardItems => _studentDashboardItems;
+  // List<BatchFeeInvoice?>? get studentBatches => _studentBatches;
+  // List<ClassDetails?>? get studentClasses => _studentClasses;
   int? get totalStudents => _totalStudents;
   String? get dailyCollection => _dailyCollection;
   String? get monthlyCollection => _monthlyCollection;
   late DateTime selectedDate;
+  late DateTime selectedStudentDate = DateTime.now();
 
   // pagination
   int page = 1;
@@ -45,6 +49,10 @@ class HomeCubit extends Cubit<HomeState> {
   List<TrainersJoined?>? trainersJoined;
   List<Lead?>? followUpLeads;
   List<Lead?>? newLeads;
+
+  List<Class?>? scheduledStudentClasses;
+  List<Class?>? rescheduledStudentClasses;
+  List<Class?>? rescheduledToStudentClasses;
 
   bool flag = false;
 
@@ -62,24 +70,15 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future getStudentAppDashboard({int? studentId}) async {
     emit(DashboardLoading());
+    studentBatches?.clear();
+    studentClasses?.clear();
     var tempDash = await _service.getStudentAppDashboard(studentId: studentId);
     if (tempDash?.status == 1) {
-      _studentDashboardItems = tempDash;
+      studentBatches = tempDash?.batchFeeInvoices ?? [];
+      studentClasses = tempDash?.classes ?? [];
       emit(DashboardLoaded());
     } else {
       emit(DashboardLoadingFailed('Unable to load dashboard API'));
-    }
-  }
-
-  Future<StudentDashboard?>? getTempStudentAppDashboard(
-      {int? studentId}) async {
-    emit(DashboardLoading());
-    var tempDash = await _service.getStudentAppDashboard(studentId: studentId);
-    if (tempDash?.status == 1) {
-      _studentDashboardItems = tempDash;
-      return _studentDashboardItems;
-    } else {
-      return null;
     }
   }
 
@@ -99,11 +98,6 @@ class HomeCubit extends Cubit<HomeState> {
       emit(GettingCalenderEvents());
     } else {
       emit(GettingCalenderEvents(pagination: true));
-    }
-
-    if (nextPageUrl == null) {
-      emit(GotCalenderEvents());
-      return;
     }
 
     CalenderEventsList? temp = await _service.getCalenderEvents(
@@ -130,37 +124,22 @@ class HomeCubit extends Cubit<HomeState> {
     bool clean = true,
   }) async {
     if (clean) {
-      feePayments = null;
-      trainerSalaryPayments?.clear();
-      scheduledClasses?.clear();
-      rescheduledClasses?.clear();
-      studentsJoined?.clear();
-      trainersJoined?.clear();
-      followUpLeads?.clear();
-      newLeads?.clear();
+      scheduledStudentClasses?.clear();
+      rescheduledStudentClasses?.clear();
+      rescheduledToStudentClasses?.clear();
       emit(GettingCalenderEvents());
     } else {
       emit(GettingCalenderEvents(pagination: true));
     }
 
-    if (nextPageUrl == null) {
-      emit(GotCalenderEvents());
-      return;
-    }
-
-    CalenderEventsList? temp = await _service.getStudentAppCalenderEvents(
+    StudentAppCalenderEvents? temp = await _service.getStudentAppCalenderEvents(
       date: date,
       studentId: studentId,
     );
     if (temp?.status == 1) {
-      feePayments = temp?.data?.feePayments;
-      trainerSalaryPayments = temp?.data?.trainerSalaryPayments;
-      scheduledClasses = temp?.data?.scheduledClasses;
-      rescheduledClasses = temp?.data?.rescheduledClasses;
-      studentsJoined = temp?.data?.studentsJoined;
-      trainersJoined = temp?.data?.trainersJoined;
-      followUpLeads = temp?.data?.followUpLeads;
-      newLeads = temp?.data?.newLeads;
+      scheduledStudentClasses = temp?.scheduledClasses;
+      rescheduledStudentClasses = temp?.rescheduledClasses;
+      rescheduledToStudentClasses = temp?.rescheduledFromClasses;
       emit(GotCalenderEvents());
     } else {
       emit(GetCalenderEventsFailed('Failed to get the calender events list'));
@@ -451,9 +430,11 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-   Future<int> sendStudentSupportRequest(Map<String, dynamic> data) async {
+  Future<int> sendStudentSupportRequest(
+      int studentId, Map<String, dynamic> data) async {
     try {
-      Common? response = await _service.sendStudentSupportRequest(data);
+      Common? response =
+          await _service.sendStudentSupportRequest(studentId, data);
 
       if (response?.status == 1) {
         return 1;

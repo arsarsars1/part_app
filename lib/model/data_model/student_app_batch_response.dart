@@ -123,6 +123,9 @@ class StudentDetail with _$StudentDetail {
     int? feeAmount,
     String? feeType,
     int? admissionFees,
+    int? noOfClasses,
+    int? cycle,
+    int? paymentDueDate,
   }) = _StudentDetail;
 
   factory StudentDetail.fromJson(Map<String, dynamic> json) =>

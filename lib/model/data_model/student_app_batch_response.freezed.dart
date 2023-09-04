@@ -1664,6 +1664,9 @@ mixin _$StudentDetail {
   int? get feeAmount => throw _privateConstructorUsedError;
   String? get feeType => throw _privateConstructorUsedError;
   int? get admissionFees => throw _privateConstructorUsedError;
+  int? get noOfClasses => throw _privateConstructorUsedError;
+  int? get cycle => throw _privateConstructorUsedError;
+  int? get paymentDueDate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1678,7 +1681,13 @@ abstract class $StudentDetailCopyWith<$Res> {
       _$StudentDetailCopyWithImpl<$Res, StudentDetail>;
   @useResult
   $Res call(
-      {String? name, int? feeAmount, String? feeType, int? admissionFees});
+      {String? name,
+      int? feeAmount,
+      String? feeType,
+      int? admissionFees,
+      int? noOfClasses,
+      int? cycle,
+      int? paymentDueDate});
 }
 
 /// @nodoc
@@ -1698,6 +1707,9 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
     Object? feeAmount = freezed,
     Object? feeType = freezed,
     Object? admissionFees = freezed,
+    Object? noOfClasses = freezed,
+    Object? cycle = freezed,
+    Object? paymentDueDate = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -1716,6 +1728,18 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
           ? _value.admissionFees
           : admissionFees // ignore: cast_nullable_to_non_nullable
               as int?,
+      noOfClasses: freezed == noOfClasses
+          ? _value.noOfClasses
+          : noOfClasses // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cycle: freezed == cycle
+          ? _value.cycle
+          : cycle // ignore: cast_nullable_to_non_nullable
+              as int?,
+      paymentDueDate: freezed == paymentDueDate
+          ? _value.paymentDueDate
+          : paymentDueDate // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -1729,7 +1753,13 @@ abstract class _$$_StudentDetailCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? name, int? feeAmount, String? feeType, int? admissionFees});
+      {String? name,
+      int? feeAmount,
+      String? feeType,
+      int? admissionFees,
+      int? noOfClasses,
+      int? cycle,
+      int? paymentDueDate});
 }
 
 /// @nodoc
@@ -1747,6 +1777,9 @@ class __$$_StudentDetailCopyWithImpl<$Res>
     Object? feeAmount = freezed,
     Object? feeType = freezed,
     Object? admissionFees = freezed,
+    Object? noOfClasses = freezed,
+    Object? cycle = freezed,
+    Object? paymentDueDate = freezed,
   }) {
     return _then(_$_StudentDetail(
       name: freezed == name
@@ -1765,6 +1798,18 @@ class __$$_StudentDetailCopyWithImpl<$Res>
           ? _value.admissionFees
           : admissionFees // ignore: cast_nullable_to_non_nullable
               as int?,
+      noOfClasses: freezed == noOfClasses
+          ? _value.noOfClasses
+          : noOfClasses // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cycle: freezed == cycle
+          ? _value.cycle
+          : cycle // ignore: cast_nullable_to_non_nullable
+              as int?,
+      paymentDueDate: freezed == paymentDueDate
+          ? _value.paymentDueDate
+          : paymentDueDate // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -1774,7 +1819,13 @@ class __$$_StudentDetailCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$_StudentDetail implements _StudentDetail {
   const _$_StudentDetail(
-      {this.name, this.feeAmount, this.feeType, this.admissionFees});
+      {this.name,
+      this.feeAmount,
+      this.feeType,
+      this.admissionFees,
+      this.noOfClasses,
+      this.cycle,
+      this.paymentDueDate});
 
   factory _$_StudentDetail.fromJson(Map<String, dynamic> json) =>
       _$$_StudentDetailFromJson(json);
@@ -1787,10 +1838,16 @@ class _$_StudentDetail implements _StudentDetail {
   final String? feeType;
   @override
   final int? admissionFees;
+  @override
+  final int? noOfClasses;
+  @override
+  final int? cycle;
+  @override
+  final int? paymentDueDate;
 
   @override
   String toString() {
-    return 'StudentDetail(name: $name, feeAmount: $feeAmount, feeType: $feeType, admissionFees: $admissionFees)';
+    return 'StudentDetail(name: $name, feeAmount: $feeAmount, feeType: $feeType, admissionFees: $admissionFees, noOfClasses: $noOfClasses, cycle: $cycle, paymentDueDate: $paymentDueDate)';
   }
 
   @override
@@ -1803,13 +1860,18 @@ class _$_StudentDetail implements _StudentDetail {
                 other.feeAmount == feeAmount) &&
             (identical(other.feeType, feeType) || other.feeType == feeType) &&
             (identical(other.admissionFees, admissionFees) ||
-                other.admissionFees == admissionFees));
+                other.admissionFees == admissionFees) &&
+            (identical(other.noOfClasses, noOfClasses) ||
+                other.noOfClasses == noOfClasses) &&
+            (identical(other.cycle, cycle) || other.cycle == cycle) &&
+            (identical(other.paymentDueDate, paymentDueDate) ||
+                other.paymentDueDate == paymentDueDate));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, name, feeAmount, feeType, admissionFees);
+  int get hashCode => Object.hash(runtimeType, name, feeAmount, feeType,
+      admissionFees, noOfClasses, cycle, paymentDueDate);
 
   @JsonKey(ignore: true)
   @override
@@ -1830,7 +1892,10 @@ abstract class _StudentDetail implements StudentDetail {
       {final String? name,
       final int? feeAmount,
       final String? feeType,
-      final int? admissionFees}) = _$_StudentDetail;
+      final int? admissionFees,
+      final int? noOfClasses,
+      final int? cycle,
+      final int? paymentDueDate}) = _$_StudentDetail;
 
   factory _StudentDetail.fromJson(Map<String, dynamic> json) =
       _$_StudentDetail.fromJson;
@@ -1843,6 +1908,12 @@ abstract class _StudentDetail implements StudentDetail {
   String? get feeType;
   @override
   int? get admissionFees;
+  @override
+  int? get noOfClasses;
+  @override
+  int? get cycle;
+  @override
+  int? get paymentDueDate;
   @override
   @JsonKey(ignore: true)
   _$$_StudentDetailCopyWith<_$_StudentDetail> get copyWith =>

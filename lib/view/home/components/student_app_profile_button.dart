@@ -26,6 +26,7 @@ class _StudentProfileButtonState extends State<StudentProfileButton> {
   Widget build(BuildContext context) {
     var token = 'Bearer ${Database().getToken()}';
     User? user = context.read<AuthCubit>().user;
+    var authCubit = context.read<AuthCubit>();
     return PopupMenuButton<MenuItems>(
       onSelected: (MenuItems item) {
         switch (item) {
@@ -57,9 +58,9 @@ class _StudentProfileButtonState extends State<StudentProfileButton> {
         child: CircleAvatar(
           backgroundImage: CachedNetworkImageProvider(
             user?.studentDetail?[0].profilePic != ""
-                ? '${F.baseUrl}/admin/images/student/${context.read<AuthCubit>().user?.studentDetail?[0].id}'
-                    '/${context.read<AuthCubit>().user?.studentDetail?[0].profilePic}'
-                : user?.studentDetail?[0].gender == "male"
+                ? '${F.baseUrl}/admin/images/student/${authCubit.user?.studentDetail?[authCubit.studentIndex].id}'
+                    '/${authCubit.user?.studentDetail?[authCubit.studentIndex].profilePic}'
+                : user?.studentDetail?[authCubit.studentIndex].gender == "male"
                     ? "https://dev.partapp.in/images/avatars/avatar-5.png"
                     : "https://dev.partapp.in/images/avatars/avatar-1.png",
             headers: {
