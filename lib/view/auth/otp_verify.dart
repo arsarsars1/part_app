@@ -110,6 +110,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                 SizedBox(
                   width: 185.w,
                   child: CommonField(
+                    phoneField: true,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     validator: (value) {
                       if (value == null || value.toString().isEmpty) {

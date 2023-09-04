@@ -129,21 +129,14 @@ class _FeeListItemState extends State<FeeListItem> {
                                   const SizedBox(
                                     width: 16,
                                   ),
-                                  widget.student.feeType == "class"
-                                      ? Text(
-                                          "Class Attended: ${widget.student.cycleAttendancePresentCount}/${widget.student.totalNoOfClasses}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(),
-                                        )
-                                      : Text(
-                                          "Class Attended: ${widget.student.monthAttendancePresentCount}/${widget.student.monthClassesConductedCount}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(),
-                                        ),
+                                  if (widget.student.feeType == "class")
+                                    Text(
+                                      "Class Attended: ${widget.student.cycleAttendancePresentCount}/${widget.student.totalNoOfClasses}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(),
+                                    ),
                                 ],
                               ),
                             ],
@@ -166,21 +159,14 @@ class _FeeListItemState extends State<FeeListItem> {
                                   ),
                                   if (widget.student.writtenOffStatus != 1 &&
                                       widget.student.paymentStatus != 'paid')
-                                    widget.student.feeType == "monthly"
-                                        ? Text(
-                                            'Payment Due Date:',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(),
-                                          )
-                                        : Text(
-                                            'Payment Due In:',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(),
-                                          ),
+                                    if (widget.student.feeType == "monthly")
+                                      Text(
+                                        'Payment Due Date:',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(),
+                                      ),
                                 ],
                               ),
                               Row(
@@ -201,39 +187,30 @@ class _FeeListItemState extends State<FeeListItem> {
                                   ),
                                   if (widget.student.writtenOffStatus != 1 &&
                                       widget.student.paymentStatus != 'paid')
-                                    widget.student.feeType == "monthly"
-                                        ? Text(
-                                            "${widget.student.paymentDueDate?.toDDMMMYYY()}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                  fontSize: 13,
-                                                  color: widget.student
-                                                              .writtenOffStatus !=
-                                                          1
-                                                      ? widget.student
+                                    if (widget.student.feeType == "monthly")
+                                      Text(
+                                        "${widget.student.paymentDueDate?.toDDMMMYYY()}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              fontSize: 13,
+                                              color: widget.student
+                                                          .writtenOffStatus !=
+                                                      1
+                                                  ? widget.student
+                                                              .paymentStatus ==
+                                                          'paid'
+                                                      ? AppColors.green
+                                                      : widget.student
                                                                   .paymentStatus ==
-                                                              'paid'
-                                                          ? AppColors.green
-                                                          : widget.student
-                                                                      .paymentStatus ==
-                                                                  'partial'
-                                                              ? AppColors.yellow
-                                                              : AppColors
-                                                                  .primaryColor
-                                                      : AppColors.green,
-                                                ),
-                                          )
-                                        : Text(
-                                            '${10 - (widget.student.monthClassesConductedCount ?? 0)}',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                  color: AppColors.primaryColor,
-                                                ),
-                                          ),
+                                                              'partial'
+                                                          ? AppColors.yellow
+                                                          : AppColors
+                                                              .primaryColor
+                                                  : AppColors.green,
+                                            ),
+                                      ),
                                 ],
                               ),
                               Row(
@@ -334,7 +311,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .only(
+                                                                .only(
                                                                 left: 5.0),
                                                         child: Text(
                                                           'Date',
@@ -391,7 +368,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .only(
+                                                                .only(
                                                                 right: 5.0),
                                                         child: Text(
                                                           'Amount',
@@ -428,7 +405,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   left: 5.0),
                                                           child:
                                                               row.isDeleted != 1
@@ -493,7 +470,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   right: 5.0),
                                                           child:
                                                               row.isDeleted != 1
@@ -874,7 +851,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                               ),
                                         )
                                       : Text(
-                                          'Due in: ${10 - (widget.student.monthClassesConductedCount ?? 0)}',
+                                          '',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyLarge

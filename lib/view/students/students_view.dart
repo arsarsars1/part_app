@@ -38,6 +38,7 @@ class _StudentsViewState extends State<StudentsView> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<StudentCubit>().clean();
+      context.read<BranchCubit>().getBranches();
       context.read<StudentCubit>().getStudents(
             batchId: batch?.id,
             searchQuery: query,
@@ -255,7 +256,7 @@ class _StudentsViewState extends State<StudentsView> {
                       height: 20,
                     ),
                     CommonField(
-                      disabled: batch == null,
+                      // disabled: batch == null,
                       title: 'Search',
                       hint: 'Search By Name or Phone Number',
                       onChange: (value) {
@@ -265,6 +266,20 @@ class _StudentsViewState extends State<StudentsView> {
                         }
                       },
                       onSubmit: (value) {
+                        if (branchId == null) {
+                          Alert(context)
+                              .show(message: 'Please select a branch');
+                          return;
+                        }
+                        if (batch == null) {
+                          Alert(context).show(message: 'Please select a batch');
+                          return;
+                        }
+                        if (status == null) {
+                          Alert(context)
+                              .show(message: 'Please select a batch status');
+                          return;
+                        }
                         if (value.isEmpty) {
                           query = null;
                         } else {

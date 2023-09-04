@@ -125,6 +125,7 @@ class _StudentAppAttendanceCalenderViewState
                                 .studentDetail![authCubit.studentIndex].id!,
                             status: '',
                             branchSearch: true,
+                            branchId: branchId ?? 0,
                             onSelect: (value) async {
                               present = 0;
                               absent = 0;

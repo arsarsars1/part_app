@@ -7,6 +7,7 @@ import 'package:part_app/view_model/cubits.dart';
 class StudentAppBatchPicker extends StatefulWidget {
   final String status;
   final int studentId;
+  final int branchId;
   final ValueChanged<StudentAppBatchDetail> onSelect;
 
   final bool branchSearch;
@@ -15,6 +16,7 @@ class StudentAppBatchPicker extends StatefulWidget {
     Key? key,
     required this.status,
     required this.studentId,
+    required this.branchId,
     required this.onSelect,
     this.branchSearch = false,
   }) : super(key: key);
@@ -109,8 +111,9 @@ class _StudentAppBatchPickerState extends State<StudentAppBatchPicker> {
                       } else {
                         query = value;
                       }
-                      context.read<BatchCubit>().getStudentBatchesByStatus(
+                      context.read<BatchCubit>().getStudentAppBatchesByStatus(
                             studentId: widget.studentId,
+                            branchId: widget.branchId,
                             status: widget.status,
                             search: query,
                             clean: true,
