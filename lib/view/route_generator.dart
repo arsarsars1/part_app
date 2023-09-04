@@ -3,6 +3,7 @@ import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/attendance/attendance_add.dart';
 import 'package:part_app/view/attendance/attendance_update.dart';
+import 'package:part_app/view/attendance/student_app_attendence_view.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/auth/register/acadmey_details.dart';
@@ -18,19 +19,24 @@ import 'package:part_app/view/batch/cancelled_batch_class.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/batch/rescheduled_classes.dart';
+import 'package:part_app/view/batch/student_app_batch_list.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
 import 'package:part_app/view/calender/calender_events.dart';
+import 'package:part_app/view/calender/student_app_calender_events.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
+import 'package:part_app/view/fee/add_advance_fee.dart';
 import 'package:part_app/view/fee/add_or_edit_admission_fees.dart';
 import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/fees_details_view.dart';
 import 'package:part_app/view/fee/student_admission_fee_details.dart';
+import 'package:part_app/view/fee/student_app_fee_details.dart';
 import 'package:part_app/view/fee/student_fee_details.dart';
 import 'package:part_app/view/home/home.dart';
+import 'package:part_app/view/home/student_app_home.dart';
 import 'package:part_app/view/leads/add_lead.dart';
 import 'package:part_app/view/leads/all_followups_view.dart';
 import 'package:part_app/view/leads/edit_lead.dart';
@@ -48,6 +54,7 @@ import 'package:part_app/view/membership/membership_home.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/notifications/notification_screen.dart';
+import 'package:part_app/view/notifications/student_app_notification_screen.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/students/add_student.dart';
@@ -60,6 +67,7 @@ import 'package:part_app/view/students/student_attendence.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
+import 'package:part_app/view/trainer/add_advance_salary.dart';
 import 'package:part_app/view/trainer/add_or_edit_salary.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/add_trainer_branches.dart';
@@ -83,6 +91,11 @@ class RouteGenerator {
       case Home.route:
         return MaterialPageRoute(
           builder: (_) => const Home(),
+          settings: settings,
+        );
+      case StudentAppHome.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAppHome(),
           settings: settings,
         );
       case SplashScreen.route:
@@ -253,6 +266,11 @@ class RouteGenerator {
           builder: (_) => const BatchesPage(),
           settings: settings,
         );
+      case StudentAppBatchesPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAppBatchesPage(),
+          settings: settings,
+        );
       case AddBatch.route:
         return MaterialPageRoute(
           builder: (_) => const AddBatch(),
@@ -407,9 +425,24 @@ class RouteGenerator {
           builder: (_) => const AttendanceCalenderView(),
           settings: settings,
         );
+      case AddAdvanceFeePage.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddAdvanceFeePage(),
+          settings: settings,
+        );
+      case AddAdvanceSalaryPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddAdvanceSalaryPage(),
+          settings: settings,
+        );
       case StudentAttendanceCalenderView.route:
         return MaterialPageRoute(
           builder: (_) => const StudentAttendanceCalenderView(),
+          settings: settings,
+        );
+      case StudentAppAttendanceCalenderView.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAppAttendanceCalenderView(),
           settings: settings,
         );
       case MonthlyAttendanceView.route:
@@ -452,6 +485,11 @@ class RouteGenerator {
           builder: (_) => const StudentFeeDetails(),
           settings: settings,
         );
+      case StudentAppFeeDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAppFeeDetails(),
+          settings: settings,
+        );
       case StudentAdmissionFeeDetails.route:
         return MaterialPageRoute(
           builder: (_) => const StudentAdmissionFeeDetails(),
@@ -477,9 +515,19 @@ class RouteGenerator {
           builder: (_) => const CalenderEvent(),
           settings: settings,
         );
+      case StudentAppCalenderEvent.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAppCalenderEvent(),
+          settings: settings,
+        );
       case NotificationScreen.route:
         return MaterialPageRoute(
           builder: (_) => const NotificationScreen(),
+          settings: settings,
+        );
+      case StudentAppNotificationScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAppNotificationScreen(),
           settings: settings,
         );
       case CurrentMembership.route:

@@ -10,6 +10,7 @@ import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/home/dashboard/dashboard.dart';
 import 'package:part_app/view/leads/leads_view.dart';
 import 'package:part_app/view/splash.dart';
+import 'package:part_app/view/support/support_screen.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class Home extends StatefulWidget {
@@ -111,10 +112,11 @@ class _HomeState extends State<Home> {
       return const Dashboard();
     } else if (currentIndex == 1) {
       return const CalenderView();
+    } else if (currentIndex == 2) {
+      return const SupportScreen();
     } else if (currentIndex == 3) {
       return const Leads();
     }
-
     return const Center(
       child: Text('WIP'),
     );

@@ -442,6 +442,21 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
   }
 
+  Future addAdvanceFees(Map<String, dynamic> data) async {
+    try {
+      emit(AddingSalary());
+      Common? response = await _trainerService.addAdvanceFees(data);
+
+      if (response?.status == 1) {
+        emit(AddedSalary(response?.message ?? 'Salary Added'));
+      } else {
+        emit(AddSalaryFailed(response?.message ?? 'Failed to add salary.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future closeOffSalary(Map<String, dynamic> request,
       {required int? slipId}) async {
     emit(ClosingSalary());

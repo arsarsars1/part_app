@@ -77,6 +77,7 @@ class _WhatsappCheckButtonState extends State<WhatsappCheckButton> {
         selected
             ? const Offstage()
             : CommonField(
+                phoneField: true,
                 initialValue: widget.initialValue,
                 validator: (value) {
                   if (value == null || value.toString().isEmpty) {

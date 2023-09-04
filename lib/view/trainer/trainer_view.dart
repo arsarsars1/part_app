@@ -72,20 +72,6 @@ class _TrainerPageState extends State<TrainerPage> {
                 ),
                 BlocBuilder<BranchCubit, BranchState>(
                   builder: (context, state) {
-                    // return CommonField(
-                    //   title: 'Branch',
-                    //   hint: 'Select Branch',
-                    //   dropDown: true,
-                    //   dropDownItems: branchCubit.dropDownBranches(),
-                    //   onChange: (value) {
-                    //     branchId = value.id;
-                    //     setState(() {
-                    //       // cubit.searchTrainers(branchId, query: null);
-                    //       cubit.getActiveInactiveTrainers(
-                    //           branchId: branchId, active: true);
-                    //     });
-                    //   },
-                    // );
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(

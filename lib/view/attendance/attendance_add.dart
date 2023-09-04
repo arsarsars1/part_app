@@ -27,6 +27,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
   DropDownItem? selectedItem;
   ScrollController scrollController = ScrollController();
   BatchModel? batch;
+  String? startTime, endTime;
 
   @override
   void initState() {
@@ -72,6 +73,12 @@ class _AttendanceAddState extends State<AttendanceAdd> {
               },
               builder: (context, state) {
                 batch = context.read<BatchCubit>().batchModel;
+                batch?.batchDetail?.forEach((element) {
+                  if (element.day == cubit.conductedDate!.weekday) {
+                    startTime = element.startTime;
+                    endTime = element.endTime;
+                  }
+                });
                 if (state is CreatingAttendance) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -106,7 +113,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                                     ),
                           ),
                           Text(
-                            "${batch?.batchDetail?[0].startTime?.toAmPM()} - ${batch?.batchDetail?[0].endTime?.toAmPM()}",
+                            "${startTime?.toAmPM()} - ${endTime?.toAmPM()}",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style:
@@ -296,9 +303,8 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                                 conductedOn:
                                     (cubit.conductedDate ?? DateTime.now())
                                         .toServerYMD(),
-                                startTime:
-                                    batch?.batchDetail?[0].startTime ?? "",
-                                endTime: batch?.batchDetail?[0].endTime ?? "",
+                                startTime: startTime ?? "",
+                                endTime: endTime ?? "",
                                 attendance: cubit.buildAttendanceList(),
                               );
                               cubit.addAttendence(request, batchId: batch?.id);

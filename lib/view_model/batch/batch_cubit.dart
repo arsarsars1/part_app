@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields
+
 import 'dart:convert';
 import 'dart:developer';
 
@@ -12,7 +14,9 @@ import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/course.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/reschedule_response.dart';
+import 'package:part_app/model/data_model/student_app_batch_response.dart';
 import 'package:part_app/model/data_model/students_response.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/model/service/admin/batch.dart';
 import 'package:part_app/view/constants/default_values.dart';
 
@@ -29,6 +33,7 @@ class BatchCubit extends Cubit<BatchState> {
   bool second = false;
   final List<int?> _selectedTrainers = [];
   List<BatchModel> _batches = [];
+  List<StudentAppBatchDetail> _studentAppBatches = [];
   List<RescheduledClass> _rescheduledList = [];
   List<CancelledClass> _cancelledList = [];
   List<Student>? _students = [];
@@ -55,6 +60,8 @@ class BatchCubit extends Cubit<BatchState> {
   List<int?> get selectedTrainers => _selectedTrainers;
 
   List<BatchModel> get batches => _batches;
+
+  List<StudentAppBatchDetail> get studentAppBatches => _studentAppBatches;
 
   List<BatchModel> get activeBatches =>
       _batches.where((element) => element.active).toList();
@@ -255,6 +262,112 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future getStudentAppBatchesByStatus({
+    int? studentId,
+    int? branchId,
+    String status = 'ongoing',
+    String? search,
+    bool clean = false,
+    bool branchSearch = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _studentAppBatches.clear();
+      emit(FetchingBatches());
+    } else {
+      emit(FetchingBatches(pagination: true));
+    }
+    if (nextPageUrl == null) {
+      emit(BatchesFetched());
+      return;
+    }
+    StudentAppBatchResponse? response =
+        await _batchService.getStudentAppBatchesByStatus(
+      studentId: studentId,
+      branchId: branchId,
+      status: status,
+      search: search,
+      page: page,
+      branchSearch: branchSearch,
+    );
+
+    if (response == null) {
+      emit(BatchNetworkError());
+    } else if (response.status == 1) {
+      _studentAppBatches.addAll(response.batches ?? []);
+      emit(BatchesFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
+  String createTrainerStringFromTrainer(List<Trainer>? trainers) {
+    String trainer = '';
+    if (trainers != null && trainers.isNotEmpty) {
+      for (var element in trainers) {
+        trainer += '${element.name}, ';
+      }
+      trainer = trainer.trimRight().removeLast();
+    } else {
+      trainer = 'No Trainer Allocated';
+    }
+    return trainer;
+  }
+
+  List<String> createDayList(List<StudentAppBatchInDetail>? batch) {
+    List<String> days = [];
+
+    days = batch!.map((e) {
+      String day = DefaultValues.defaultTrainingDays[e.day];
+      return '${day.substring(0, 3)} ${e.startTime?.toAmPM()} - ${e.endTime?.toAmPM()}';
+    }).toList();
+    return days;
+  }
+
+  Future getStudentBatchesByStatus({
+    int? studentId,
+    String status = 'ongoing',
+    String? search,
+    bool clean = false,
+    bool studentSearch = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(FetchingBatches());
+    } else {
+      emit(FetchingBatches(pagination: true));
+    }
+    if (nextPageUrl == null) {
+      emit(BatchesFetched());
+      return;
+    }
+    BatchResponse? response = await _batchService.getBatchesByStatus(
+      branchId: studentId,
+      status: status,
+      search: search,
+      page: page,
+      branchSearch: studentSearch,
+    );
+
+    if (response == null) {
+      emit(BatchNetworkError());
+    } else if (response.status == 1) {
+      nextPageUrl = response.batches?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      var items = response.batches?.data
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
+
+      _batches.addAll(items);
+      emit(BatchesFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
   Future getBatchesByBranch({int? branchId, bool clean = false}) async {
     if (clean) {
       page = 1;
@@ -288,7 +401,7 @@ class BatchCubit extends Cubit<BatchState> {
     var items = await _batchService.getTrainerBatches(trainerId);
     if (items != null && items.isNotEmpty) {
       for (var element in items) {
-        if(element.batchStatus == "ongoing"){
+        if (element.batchStatus == "ongoing") {
           _batches.add(BatchModel.fromEntity(element));
         }
       }

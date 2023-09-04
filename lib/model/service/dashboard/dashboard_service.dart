@@ -1,9 +1,12 @@
 import 'dart:convert';
-
+import 'dart:developer';
+import 'package:part_app/model/data_model/faq_list.dart';
 import 'package:part_app/model/data_model/calender_events_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/dashboard.dart';
 import 'package:part_app/model/data_model/notification_list.dart';
+import 'package:part_app/model/data_model/student_app_calender_events.dart';
+import 'package:part_app/model/data_model/student_dashboard.dart';
 import 'package:part_app/model/service/api_client.dart';
 
 class DashboardService {
@@ -12,9 +15,22 @@ class DashboardService {
   Future<Dashboard?> getDashboard() async {
     try {
       var response = await _apiClient.get(queryPath: '/admin/dashboard');
-      Dashboard dashboard = dashboardFromJson(json.encode(response));
-      return dashboard;
+      // Dashboard dashboard = dashboardFromJson(jsonEncode(response));
+      return dashboardFromJson(jsonEncode(response));
     } catch (e) {
+      return null;
+    }
+  }
+
+  Future<StudentDashboard?> getStudentAppDashboard({int? studentId}) async {
+    try {
+      var response =
+          await _apiClient.get(queryPath: '/students/$studentId/dashboard');
+      // StudentDashboard dashboard =
+      //     studentDashboardFromJson(jsonEncode(response));
+      return studentDashboardFromJson(jsonEncode(response));
+    } catch (e) {
+      log(e.toString());
       return null;
     }
   }
@@ -30,12 +46,72 @@ class DashboardService {
     }
   }
 
-  Future<NotificationList?> getNotifications() async {
+  Future<StudentAppCalenderEvents?> getStudentAppCalenderEvents(
+      {required String date, required int studentId}) async {
     try {
       var response = await _apiClient.get(
-        queryPath: '/admin/notifications',
+        queryPath: '/students/$studentId/calendar/$date',
+      );
+      return studentAppCalenderEventsFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<NotificationList?> getNotifications({String? page}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/notifications?page=$page',
       );
       return notificationListFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<NotificationList?> getStudentAppNotifications(
+      {int? studentId, String? page}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/students/$studentId/notifications?page=$page',
+      );
+      return notificationListFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> sendSupportRequest(Map<String, dynamic> data) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/support',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> sendStudentSupportRequest(
+      int studentId, Map<String, dynamic> data) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/students/$studentId/support',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<List<FaqList?>?> getFAQList({String? page}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/faqs',
+      );
+      return faqListFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }
@@ -52,10 +128,35 @@ class DashboardService {
     }
   }
 
+  Future<Common?> readStudentAppNotification(
+      int? studentId, String? notificationId) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/students/$studentId/notifications/mark-as-read/$notificationId',
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> deleteNotification(String? notificationId) async {
     try {
       var response = await _apiClient.delete(
         queryPath: '/admin/notifications/$notificationId',
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> deleteStudentAppNotification(
+      int? studentId, String? notificationId) async {
+    try {
+      var response = await _apiClient.delete(
+        queryPath: '/students/$studentId/notifications/$notificationId',
       );
       return commonFromJson(jsonEncode(response));
     } catch (e) {

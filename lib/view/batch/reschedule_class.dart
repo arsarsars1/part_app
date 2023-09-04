@@ -106,7 +106,6 @@ class _RescheduleClassState extends State<RescheduleClass> {
                         title: 'From Date',
                         onSelect: (String value) {
                           startDate = value;
-                          startDateController.text = value;
                           setState(() {
                             selectedclass = null;
                           });
@@ -122,6 +121,9 @@ class _RescheduleClassState extends State<RescheduleClass> {
                               onSave: (ClassModel value1) {
                                 setState(() {
                                   selectedclass = value1;
+                                  startDateController.text =
+                                      DateTime.parse(startDate ?? "")
+                                          .toDateString();
                                 });
                               },
                             ),
@@ -350,6 +352,12 @@ class _RescheduleClassState extends State<RescheduleClass> {
                   onTap: () {
                     formKey.currentState?.save();
                     if (!formKey.currentState!.validate()) {
+                      return;
+                    }
+                    if (selectedclass == null) {
+                      Alert(context).show(
+                          message:
+                              "No class is scheduled for the selected date !!");
                       return;
                     }
                     CommonDialog(

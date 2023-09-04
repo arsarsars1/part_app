@@ -6,6 +6,7 @@ import 'package:part_app/model/data_model/batch_fee_invoice.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/data_model/fee_detail_history.dart';
+import 'package:part_app/model/data_model/student_app_fee_detail_history.dart';
 import 'package:part_app/model/service/api_client.dart';
 
 class FeeDetailsService {
@@ -17,6 +18,18 @@ class FeeDetailsService {
       var response = await _client.post(
         postPath:
             '/admin/fee-details/batch-fee-invoices/$batchInvoiceId/payments',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> addAdvanceFees(Map<String, dynamic> data) async {
+    try {
+      var response = await _client.post(
+        postPath: '/admin/fee-details/batch-fee-invoices/advance-payment',
         data: data,
       );
       return commonFromJson(jsonEncode(response));
@@ -87,6 +100,34 @@ class FeeDetailsService {
                   ? '/admin/students/$studentId/fee-details?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
                   : '/admin/students/$studentId/fee-details?fee_type=$feeType&page=$pageNo');
       return feeDetailHistoryFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<StudentAppFeeDetailHistory?> studentAppFeeDetails({
+    int? month,
+    int? year,
+    String? feeType,
+    String? searchQuery,
+    int? studentId,
+    String? paymentStatus,
+    required int pageNo,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath: feeType == 'monthly'
+              ? month != null
+                  ? paymentStatus != 'all'
+                      ? '/students/$studentId/fee-details/batch-fee-invoices?year=$year&month=$month?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                      : '/students/$studentId/fee-details/batch-fee-invoices?year=$year&month=$month?fee_type=$feeType&page=$pageNo'
+                  : paymentStatus != 'all'
+                      ? '/students/$studentId/fee-details/batch-fee-invoices?year=$year&fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                      : '/students/$studentId/fee-details/batch-fee-invoices?year=$year&fee_type=$feeType&page=$pageNo'
+              : paymentStatus != 'all'
+                  ? '/students/$studentId/fee-details/batch-fee-invoices?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                  : '/students/$studentId/fee-details/batch-fee-invoices?fee_type=$feeType&page=$pageNo');
+      return studentAppFeeDetailHistoryFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

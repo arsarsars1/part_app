@@ -68,8 +68,13 @@ class _TrainerDetailsState extends State<TrainerDetails> {
               children: [
                 Center(
                   child: ProfilePicture(
-                    imageUrl:
-                        '${F.baseUrl}/admin/images/trainer/${trainer?.id}/${trainer?.profilePic}',
+                    imageUrl: trainer?.profilePic != ""
+                        ? '${F.baseUrl}'
+                            '/admin/images/trainer/'
+                            '${trainer?.trainerDetailId}/${trainer?.profilePic}'
+                        : trainer?.gender == "male"
+                            ? "https://dev.partapp.in/images/avatars/avatar-5.png"
+                            : "https://dev.partapp.in/images/avatars/avatar-1.png",
                     onEdit: () {},
                     onChange: (File value) {
                       cubit.updateProfilePic(profilePic: value);
@@ -146,7 +151,37 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                             ),
                       ),
                       trainer!.branches!.isEmpty
-                          ? const Text('No Branches Allocated')
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('No Branches Allocated'),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      TrainerBranches.route,
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 24.w,
+                                    height: 24.w,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.black54,
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.edit_outlined,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

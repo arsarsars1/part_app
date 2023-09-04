@@ -67,8 +67,10 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                     borderRadius: BorderRadius.circular(45),
                     child: CachedImage(
                       detail?.profilePic != ""
-                          ? '${F.baseUrl}/admin/images/trainer/${detail?.id}/${detail?.profilePic}'
-                          : 'https://dev.partapp.in/images/avatars/avatar-5.png',
+                          ? '${F.baseUrl}'
+                              '/admin/images/trainer/'
+                              '${e?.trainerDetailId}/${detail?.profilePic}'
+                          : '',
                     ).image(),
                   ),
                 ),

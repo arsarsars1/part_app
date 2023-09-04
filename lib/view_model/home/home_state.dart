@@ -9,6 +9,11 @@ class DashboardLoading extends HomeState {}
 
 class DashboardLoaded extends HomeState {}
 
+class DashboardLoadingFailed extends HomeState {
+  final String message;
+  DashboardLoadingFailed(this.message);
+}
+
 class GettingCalenderEvents extends HomeState {
   final bool pagination;
   GettingCalenderEvents({this.pagination = false});
@@ -55,4 +60,13 @@ class DeletedNotification extends HomeState {
 class DeleteNotificationFailed extends HomeState {
   final String message;
   DeleteNotificationFailed(this.message);
+}
+
+class FetchingFAQ extends HomeState {}
+
+class FetchedFAQ extends HomeState {}
+
+class FetchFAQFailed extends HomeState {
+  final String message;
+  FetchFAQFailed(this.message);
 }

@@ -70,6 +70,7 @@ abstract class Trainer with _$Trainer {
     int? salaryAmount,
     String? profilePic,
     String? profilePicType,
+    int? trainerDetailId,
     int? isActive,
     User? user,
     Academy? academy,

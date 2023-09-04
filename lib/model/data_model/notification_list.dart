@@ -2,116 +2,82 @@
 //
 //     final notificationList = notificationListFromJson(jsonString);
 
+// ignore_for_file: invalid_annotation_target
+
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
-NotificationList notificationListFromJson(String str) => NotificationList.fromJson(json.decode(str));
+part 'notification_list.freezed.dart';
+part 'notification_list.g.dart';
 
-String notificationListToJson(NotificationList data) => json.encode(data.toJson());
+NotificationList notificationListFromJson(String str) =>
+    NotificationList.fromJson(json.decode(str));
 
-class NotificationList {
-    int? status;
-    List<NotificationData>? notifications;
+String notificationListToJson(NotificationList data) =>
+    json.encode(data.toJson());
 
-    NotificationList({
-        this.status,
-        this.notifications,
-    });
+@freezed
+class NotificationList with _$NotificationList {
+  const factory NotificationList({
+    int? status,
+    Notifications? notifications,
+  }) = _NotificationList;
 
-    factory NotificationList.fromJson(Map<String, dynamic> json) => NotificationList(
-        status: json["status"],
-        notifications: json["notifications"] == null ? [] : List<NotificationData>.from(json["notifications"]!.map((x) => NotificationData.fromJson(x))),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "status": status,
-        "notifications": notifications == null ? [] : List<dynamic>.from(notifications!.map((x) => x.toJson())),
-    };
+  factory NotificationList.fromJson(Map<String, dynamic> json) =>
+      _$NotificationListFromJson(json);
 }
 
-class NotificationData {
-    String? id;
-    String? screen;
-    String? entityType;
-    int? entityId;
-    String? type;
-    String? notifiableType;
-    int? notifiableId;
-    Data? data;
-    DateTime? readAt;
-    DateTime? createdAt;
-    DateTime? updatedAt;
+@freezed
+class Notifications with _$Notifications {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory Notifications({
+    int? currentPage,
+    List<NotificationData>? data,
+    String? firstPageUrl,
+    int? from,
+    String? nextPageUrl,
+    String? path,
+    int? perPage,
+    dynamic prevPageUrl,
+    int? to,
+  }) = _Notifications;
 
-    NotificationData({
-        this.id,
-        this.screen,
-        this.entityType,
-        this.entityId,
-        this.type,
-        this.notifiableType,
-        this.notifiableId,
-        this.data,
-        this.readAt,
-        this.createdAt,
-        this.updatedAt,
-    });
-
-    factory NotificationData.fromJson(Map<String, dynamic> json) => NotificationData(
-        id: json["id"],
-        screen: json["screen"],
-        entityType: json["entity_type"],
-        entityId: json["entity_id"],
-        type: json["type"],
-        notifiableType: json["notifiable_type"],
-        notifiableId: json["notifiable_id"],
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
-        readAt: json["read_at"] == null ? null : DateTime.parse(json["read_at"]),
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "screen": screen,
-        "entity_type": entityType,
-        "entity_id": entityId,
-        "type": type,
-        "notifiable_type": notifiableType,
-        "notifiable_id": notifiableId,
-        "data": data?.toJson(),
-        "read_at": readAt?.toIso8601String(),
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-    };
+  factory Notifications.fromJson(Map<String, dynamic> json) =>
+      _$NotificationsFromJson(json);
 }
 
-class Data {
-    String? title;
-    String? message;
-    String? screen;
-    String? entityType;
-    int? entityId;
+@freezed
+class NotificationData with _$NotificationData {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory NotificationData({
+    String? id,
+    String? screen,
+    String? entityType,
+    int? entityId,
+    String? type,
+    String? notifiableType,
+    int? notifiableId,
+    Data? data,
+    DateTime? addedOn,
+    dynamic readAt,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) = _NotificationData;
 
-    Data({
-        this.title,
-        this.message,
-        this.screen,
-        this.entityType,
-        this.entityId,
-    });
+  factory NotificationData.fromJson(Map<String, dynamic> json) =>
+      _$NotificationDataFromJson(json);
+}
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
-        title: json["title"],
-        message: json["message"],
-        screen: json["screen"],
-        entityType: json["entity_type"],
-        entityId: json["entity_id"],
-    );
+@freezed
+class Data with _$Data {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory Data({
+    String? title,
+    String? message,
+    String? screen,
+    String? entityType,
+    int? entityId,
+  }) = _Data;
 
-    Map<String, dynamic> toJson() => {
-        "title": title,
-        "message": message,
-        "screen": screen,
-        "entity_type": entityType,
-        "entity_id": entityId,
-    };
+  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
 }

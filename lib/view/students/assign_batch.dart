@@ -76,7 +76,7 @@ class _AssignBatchState extends State<AssignBatch> {
                     context.read<BatchCubit>().getBatchesByStatus(
                           branchId: value,
                           clean: true,
-                          branchSearch: true,
+                          branchSearch: false,
                         );
                   },
                 ),
@@ -94,7 +94,7 @@ class _AssignBatchState extends State<AssignBatch> {
                             branchId: branchId,
                             search: null,
                             clean: true,
-                            branchSearch: true,
+                            branchSearch: false,
                           );
                     }
                   },

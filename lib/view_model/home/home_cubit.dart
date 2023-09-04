@@ -2,10 +2,14 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/model/data_model/faq_list.dart';
 import 'package:part_app/model/data_model/calender_events_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/dashboard.dart';
 import 'package:part_app/model/data_model/notification_list.dart';
+import 'package:part_app/model/data_model/student_app_calender_events.dart';
+import 'package:part_app/model/data_model/student_dashboard.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/model/service/dashboard/dashboard_service.dart';
 
 part 'home_state.dart';
@@ -15,14 +19,23 @@ class HomeCubit extends Cubit<HomeState> {
 
   final _service = DashboardService();
   List<Banner>? _banner;
+  List<BatchFeeInvoice?>? studentBatches;
+  List<ClassDetails?>? studentClasses;
+  List<NotificationData>? _notifications;
+  List<FaqList?>? _faqList;
   int? _totalStudents;
   String? _dailyCollection;
   String? _monthlyCollection;
   List<Banner>? get banner => _banner;
+  List<FaqList?>? get faqList => _faqList;
+  List<NotificationData?>? get notifications => _notifications;
+  // List<BatchFeeInvoice?>? get studentBatches => _studentBatches;
+  // List<ClassDetails?>? get studentClasses => _studentClasses;
   int? get totalStudents => _totalStudents;
   String? get dailyCollection => _dailyCollection;
   String? get monthlyCollection => _monthlyCollection;
   late DateTime selectedDate;
+  late DateTime selectedStudentDate = DateTime.now();
 
   // pagination
   int page = 1;
@@ -36,7 +49,12 @@ class HomeCubit extends Cubit<HomeState> {
   List<TrainersJoined?>? trainersJoined;
   List<Lead?>? followUpLeads;
   List<Lead?>? newLeads;
-  List<NotificationData>? notifications;
+
+  List<Class?>? scheduledStudentClasses;
+  List<Class?>? rescheduledStudentClasses;
+  List<Class?>? rescheduledToStudentClasses;
+
+  bool flag = false;
 
   Future getDashboard() async {
     emit(DashboardLoading());
@@ -47,6 +65,20 @@ class HomeCubit extends Cubit<HomeState> {
       _monthlyCollection = tempDash?.totalPaymentsMonthly;
       _banner = tempDash?.banners;
       emit(DashboardLoaded());
+    }
+  }
+
+  Future getStudentAppDashboard({int? studentId}) async {
+    emit(DashboardLoading());
+    studentBatches?.clear();
+    studentClasses?.clear();
+    var tempDash = await _service.getStudentAppDashboard(studentId: studentId);
+    if (tempDash?.status == 1) {
+      studentBatches = tempDash?.batchFeeInvoices ?? [];
+      studentClasses = tempDash?.classes ?? [];
+      emit(DashboardLoaded());
+    } else {
+      emit(DashboardLoadingFailed('Unable to load dashboard API'));
     }
   }
 
@@ -68,11 +100,6 @@ class HomeCubit extends Cubit<HomeState> {
       emit(GettingCalenderEvents(pagination: true));
     }
 
-    if (nextPageUrl == null) {
-      emit(GotCalenderEvents());
-      return;
-    }
-
     CalenderEventsList? temp = await _service.getCalenderEvents(
       date: date,
     );
@@ -91,10 +118,40 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  Future getStudentAppCalenderEvents({
+    required String date,
+    required int studentId,
+    bool clean = true,
+  }) async {
+    if (clean) {
+      scheduledStudentClasses?.clear();
+      rescheduledStudentClasses?.clear();
+      rescheduledToStudentClasses?.clear();
+      emit(GettingCalenderEvents());
+    } else {
+      emit(GettingCalenderEvents(pagination: true));
+    }
+
+    StudentAppCalenderEvents? temp = await _service.getStudentAppCalenderEvents(
+      date: date,
+      studentId: studentId,
+    );
+    if (temp?.status == 1) {
+      scheduledStudentClasses = temp?.scheduledClasses;
+      rescheduledStudentClasses = temp?.rescheduledClasses;
+      rescheduledToStudentClasses = temp?.rescheduledFromClasses;
+      emit(GotCalenderEvents());
+    } else {
+      emit(GetCalenderEventsFailed('Failed to get the calender events list'));
+    }
+  }
+
   Future getNotificationList({
     bool clean = true,
   }) async {
     if (clean) {
+      page = 1;
+      nextPageUrl = '';
       notifications?.clear();
       emit(GettingNotifications());
     } else {
@@ -106,12 +163,109 @@ class HomeCubit extends Cubit<HomeState> {
       return;
     }
 
-    NotificationList? temp = await _service.getNotifications();
+    NotificationList? temp =
+        await _service.getNotifications(page: (page).toString());
     if (temp?.status == 1) {
-      notifications = temp?.notifications;
+      nextPageUrl = temp?.notifications?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+      var items = temp?.notifications?.data ?? [];
+
+      List<NotificationData> tempNotifications = [];
+
+      for (var notification in items) {
+        tempNotifications.add(notification);
+      }
+
+      for (var notification in tempNotifications) {
+        _notifications = [..._notifications ?? [], notification];
+      }
+
+      _notifications?.forEach((element) {
+        if (element.readAt == null) {
+          flag = true;
+        }
+      });
       emit(GotNotifications());
     } else {
-      emit(GetNotificationsFailed('Failed to get the calender events list'));
+      emit(GetNotificationsFailed('Failed to get the notification list'));
+    }
+  }
+
+  Future getStudentAppNotificationList({
+    int? studentId,
+    bool clean = true,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      notifications?.clear();
+      emit(GettingNotifications());
+    } else {
+      emit(GettingNotifications(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(GotNotifications());
+      return;
+    }
+
+    NotificationList? temp = await _service.getStudentAppNotifications(
+        studentId: studentId, page: (page).toString());
+    if (temp?.status == 1) {
+      nextPageUrl = temp?.notifications?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      var items = temp?.notifications?.data ?? [];
+
+      List<NotificationData>? tempNotifications = [];
+
+      for (var notification in items) {
+        tempNotifications.add(notification);
+      }
+      for (var notification in tempNotifications) {
+        _notifications = [..._notifications ?? [], notification];
+      }
+      _notifications?.forEach((element) {
+        if (element.readAt == null) {
+          flag = true;
+        }
+      });
+      emit(GotNotifications());
+    } else {
+      emit(GetNotificationsFailed('Failed to get the notification list'));
+    }
+  }
+
+  Future<List<NotificationData>?> getTempStudentAppNotificationList({
+    int? studentId,
+    bool clean = true,
+  }) async {
+    page = 1;
+    NotificationList? temp = await _service.getStudentAppNotifications(
+        studentId: studentId, page: (page).toString());
+    if (temp?.status == 1) {
+      var items = temp?.notifications?.data ?? [];
+
+      List<NotificationData> tempNotifications = [];
+
+      for (var notification in items) {
+        tempNotifications.add(notification);
+      }
+
+      _notifications?.addAll(tempNotifications);
+
+      _notifications?.forEach((element) {
+        if (element.readAt == null) {
+          flag = true;
+        }
+      });
+      return _notifications;
+    } else {
+      return null;
     }
   }
 
@@ -119,6 +273,37 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       emit(ReadingNotification());
       Common? response = await _service.readNotification(notificationId);
+
+      if (response?.status == 1) {
+        emit(ReadNotification(response?.message ?? 'Notification Read'));
+      } else {
+        emit(ReadNotificationFailed(
+            response?.message ?? 'Failed to read notification'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  String createTrainerString(List<String>? trainers) {
+    String trainer = '';
+    if (trainers != null && trainers.isNotEmpty) {
+      for (var element in trainers) {
+        trainer += '$element, ';
+      }
+      trainer = trainer.trimRight().removeLast();
+    } else {
+      trainer = 'No Trainer Allocated';
+    }
+    return trainer;
+  }
+
+  Future readStudentAppNotification(
+      int? studentId, String? notificationId) async {
+    try {
+      emit(ReadingNotification());
+      Common? response =
+          await _service.readStudentAppNotification(studentId, notificationId);
 
       if (response?.status == 1) {
         emit(ReadNotification(response?.message ?? 'Notification Read'));
@@ -147,6 +332,23 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  Future deleteStudentAppNotification(
+      int? studentId, String? notificationId) async {
+    try {
+      emit(DeletingNotification());
+      Common? response = await _service.deleteNotification(notificationId);
+
+      if (response?.status == 1) {
+        emit(DeletedNotification(response?.message ?? 'Notification Deleted'));
+      } else {
+        emit(DeleteNotificationFailed(
+            response?.message ?? 'Failed to delete notification'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   String getTimeDifference(DateTime targetDateTime) {
     DateTime now = DateTime.now();
     Duration difference = now.difference(targetDateTime);
@@ -155,29 +357,92 @@ class HomeCubit extends Cubit<HomeState> {
       return "The target time has already passed.";
     }
 
-    // int days = difference.inDays;
-    int hours = difference.inHours;
-    int minutes = difference.inMinutes.remainder(60);
-    // int seconds = difference.inSeconds.remainder(60);
-
+    int years = difference.inDays ~/ 365;
+    int months = (difference.inDays % 365) ~/ 30;
+    int weeks = (difference.inDays % 365) ~/ 7;
+    int days = difference.inDays % 7;
+    int hours = difference.inHours % 24;
+    int minutes = difference.inMinutes % 60;
+    int seconds = difference.inSeconds % 60;
     String timeDifference = "";
 
-    // if (days > 0) {
-    //   timeDifference += "${days}d ";
-    // }
+    if (years > 0) {
+      timeDifference = "${years}y ";
+      return timeDifference.trim();
+    }
+
+    if (months > 0) {
+      timeDifference = "${months}m ";
+      return timeDifference.trim();
+    }
+
+    if (weeks > 0) {
+      timeDifference = "${weeks}w ";
+      return timeDifference.trim();
+    }
+
+    if (days > 0) {
+      timeDifference = "${days}d ";
+      return timeDifference.trim();
+    }
 
     if (hours > 0) {
-      timeDifference += "${hours}h ";
+      timeDifference = "${hours}h ";
+      return timeDifference.trim();
     }
 
     if (minutes > 0) {
-      timeDifference += "${minutes}m ";
+      timeDifference = "${minutes}m ";
+      return timeDifference.trim();
     }
 
-    // if (seconds > 0) {
-    //   timeDifference += "${seconds}s ";
-    // }
-
+    if (seconds > 0) {
+      timeDifference = "${seconds}s ";
+      return timeDifference.trim();
+    }
     return timeDifference.trim();
+  }
+
+  /// this method is used to get the classes of a batch in a particular month
+  Future getFAQ() async {
+    _faqList?.clear();
+    emit(FetchingFAQ());
+    List<FaqList?>? response = await _service.getFAQList();
+    if ((response ?? []).isNotEmpty) {
+      _faqList = response;
+      emit(FetchedFAQ());
+    } else {
+      emit(FetchFAQFailed("Error fetching the FAQ List"));
+    }
+  }
+
+  Future<int> sendSupportRequest(Map<String, dynamic> data) async {
+    try {
+      Common? response = await _service.sendSupportRequest(data);
+
+      if (response?.status == 1) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  Future<int> sendStudentSupportRequest(
+      int studentId, Map<String, dynamic> data) async {
+    try {
+      Common? response =
+          await _service.sendStudentSupportRequest(studentId, data);
+
+      if (response?.status == 1) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      return 0;
+    }
   }
 }

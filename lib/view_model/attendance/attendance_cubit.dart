@@ -246,6 +246,25 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }
   }
 
+  Future getStudentAppClassesOfMonth({
+    int? batchId,
+    DateTime? date,
+    int? studentId,
+  }) async {
+    _batches.clear();
+    emit(FetchingAttendanceBatches(pagination: false));
+    AttendenceClassDetailsesOfMonth? response =
+        await _attendanceService.getStudentAppAttendeceClassesOfMonth(
+      batchId: batchId,
+      date: date,
+      studentId: studentId,
+    );
+    if (response?.status == 1) {
+      attendenceClasses = response?.classes ?? [];
+      emit(AttendanceBatchesFetched());
+    }
+  }
+
   /// this method is used to get the classes of a batch in a particular month
   Future getConductedClassesOfMonth({
     int? batchId,
@@ -298,6 +317,22 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     emit(FetchingAttendanceBatches(pagination: false));
     StudentAttendenceOfMonth? response =
         await _attendanceService.getAttendenceOfStudentOfMonth(
+            batchId: batchId, studentDetailId: studentDetailId, date: date);
+    if (response?.status == 1) {
+      studentClasses = response?.studentAttendance ?? [];
+      emit(AttendanceBatchesFetched());
+    }
+  }
+
+  Future getStudentAppAttendenceOfStudentOfMonth({
+    int? batchId,
+    int? studentDetailId,
+    DateTime? date,
+  }) async {
+    _batches.clear();
+    emit(FetchingAttendanceBatches(pagination: false));
+    StudentAttendenceOfMonth? response =
+        await _attendanceService.getStudentAppAttendenceOfStudentOfMonth(
             batchId: batchId, studentDetailId: studentDetailId, date: date);
     if (response?.status == 1) {
       studentClasses = response?.studentAttendance ?? [];

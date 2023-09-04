@@ -111,17 +111,18 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                     fontSize: 11.sp,
                                   ),
                             ),
-                            Text(
-                              "Class Attended: ${feeCubit.batchFeeInvoice?.cycleAttendancePresentCount} / ${feeCubit.batchFeeInvoice?.totalNoOfClasses}",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 11.sp,
-                                  ),
-                            ),
+                            if (feeCubit.batchFeeInvoice?.feeType == "class")
+                              Text(
+                                "Class Attended: ${feeCubit.batchFeeInvoice?.cycleAttendancePresentCount} / ${feeCubit.batchFeeInvoice?.totalNoOfClasses}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      fontSize: 11.sp,
+                                    ),
+                              ),
                           ],
                         ),
                       ],
@@ -177,49 +178,28 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                             ),
                           ],
                         ),
-                        feeCubit.batchFeeInvoice?.feeType == "monthly"
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    'Payment Due Date: ',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                  Text(
-                                    "${feeCubit.batchFeeInvoice?.paymentDueDate?.toDDMMMYYY()}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: AppColors.primaryColor,
-                                        ),
-                                  ),
-                                ],
-                              )
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    'Payment Due In: ',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                  Text(
-                                    '${10 - (feeCubit.batchFeeInvoice?.monthClassesConductedCount ?? 0)}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: AppColors.primaryColor,
-                                        ),
-                                  ),
-                                ],
-                              )
+                        if (feeCubit.batchFeeInvoice?.feeType == "monthly")
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                'Payment Due Date: ',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(),
+                              ),
+                              Text(
+                                "${feeCubit.batchFeeInvoice?.paymentDueDate?.toDDMMMYYY()}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      color: AppColors.primaryColor,
+                                    ),
+                              ),
+                            ],
+                          )
                       ],
                     ),
                     SizedBox(

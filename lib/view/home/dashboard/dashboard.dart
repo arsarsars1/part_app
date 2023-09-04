@@ -20,6 +20,7 @@ class _DashboardState extends State<Dashboard> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<HomeCubit>().getDashboard();
+      context.read<HomeCubit>().getFAQ();
     });
   }
 
