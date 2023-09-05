@@ -71,19 +71,19 @@ class WhatsHappeningToday extends StatelessWidget {
                               children: [
                                 Text(
                                   '${classDetails?.batchName}',
-                                  style: TextStyle(fontSize: 14.sp),
+                                  style: TextStyle(fontSize: 16.sp),
                                 ),
                                 SizedBox(height: 10.h),
                                 Text(
                                   '${classDetails?.branchName}',
-                                  style: TextStyle(fontSize: 11.sp),
+                                  style: TextStyle(fontSize: 10.sp),
                                 ),
                                 SizedBox(height: 10.h),
                                 Text(
                                   homeCubit.createTrainerString(
                                       classDetails?.trainers),
                                   style: TextStyle(
-                                      fontSize: 11.sp,
+                                      fontSize: 12.sp,
                                       color: AppColors.primaryColor),
                                 ),
                                 SizedBox(height: 10.h),
@@ -100,7 +100,7 @@ class WhatsHappeningToday extends StatelessWidget {
                                           ? 'Upnext'
                                           : 'Completed',
                                       style: TextStyle(
-                                        fontSize: 15.sp,
+                                        fontSize: 16.sp,
                                         fontWeight: FontWeight.bold,
                                         color:
                                             classDetails?.status == 'upcoming'
