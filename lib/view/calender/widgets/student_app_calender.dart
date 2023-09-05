@@ -13,40 +13,28 @@ class StudentAppCalender extends StatefulWidget {
 }
 
 class _StudentAppCalenderState extends State<StudentAppCalender> {
-  int noOfWeeks = 0;
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void deactivate() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      var cubit = context.read<HomeCubit>();
-      cubit.selectedDate = DateTime.now();
-    });
-    super.deactivate();
-  }
-
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<HomeCubit>();
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
+            // flex: 4,
             child: CalendarCarousel<Event>(
               childAspectRatio: 1.1,
               iconColor: Colors.white,
               todayBorderColor: Colors.transparent,
               onDayPressed: (date, events) async {
                 cubit.selectedStudentDate = date;
-                Navigator.push(
+                await Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const StudentAppCalenderEvent()),
                 );
+                setState(() {});
               },
               selectedDateTime: cubit.selectedStudentDate,
               selectedDayButtonColor: Colors.blue,
@@ -100,6 +88,16 @@ class _StudentAppCalenderState extends State<StudentAppCalender> {
               onDayLongPressed: (DateTime date) {},
             ),
           ),
+          // Expanded(
+          //   flex: 2,
+          //   child: ListView.builder(
+          //     shrinkWrap: true,
+          //     itemCount: 55,
+          //     itemBuilder: (context, index) {
+          //       return const Text('data');
+          //     },
+          //   ),
+          // )
         ],
       ),
     );
