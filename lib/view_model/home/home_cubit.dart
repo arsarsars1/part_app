@@ -34,7 +34,7 @@ class HomeCubit extends Cubit<HomeState> {
   int? get totalStudents => _totalStudents;
   String? get dailyCollection => _dailyCollection;
   String? get monthlyCollection => _monthlyCollection;
-  late DateTime selectedDate;
+  DateTime selectedDate = DateTime.now();
   late DateTime selectedStudentDate = DateTime.now();
 
   // pagination
@@ -53,7 +53,7 @@ class HomeCubit extends Cubit<HomeState> {
   List<Class?>? scheduledStudentClasses;
   List<Class?>? rescheduledStudentClasses;
   List<Class?>? rescheduledToStudentClasses;
-
+  List<Class?>? cancelledStudentClasses;
   bool flag = false;
 
   Future getDashboard() async {
@@ -140,6 +140,8 @@ class HomeCubit extends Cubit<HomeState> {
       scheduledStudentClasses = temp?.scheduledClasses;
       rescheduledStudentClasses = temp?.rescheduledClasses;
       rescheduledToStudentClasses = temp?.rescheduledFromClasses;
+      cancelledStudentClasses = temp?.cancelledClasses;
+
       emit(GotCalenderEvents());
     } else {
       emit(GetCalenderEventsFailed('Failed to get the calender events list'));
