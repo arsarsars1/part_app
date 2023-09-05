@@ -136,7 +136,9 @@ class _StudentAttendanceCalenderViewState
                                   for (var element
                                       in cubit.studentClasses ?? []) {
                                     if (element1.date ==
-                                        element.conductedClass.conductedOn) {
+                                            element
+                                                .conductedClass.conductedOn &&
+                                        element.isPresent == 1) {
                                       flag = 1;
                                       conductedClassId = element.id;
                                       break;
