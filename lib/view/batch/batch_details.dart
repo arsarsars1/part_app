@@ -43,13 +43,16 @@ class _BatchDetailsState extends State<BatchDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var batchCubit = context.read<BatchCubit>();
     return WillPopScope(
       onWillPop: () async {
-        context.read<BatchCubit>().getBatchesByStatus(
-              branchId: batch?.branchId,
-              status: context.read<BatchCubit>().tempStatus,
-              clean: true,
-            );
+        if (batchCubit.isFromBatch) {
+          batchCubit.getBatchesByStatus(
+            branchId: batch?.branchId,
+            status: context.read<BatchCubit>().tempStatus,
+            clean: true,
+          );
+        }
         Navigator.pop(context);
         return true;
       },
@@ -58,11 +61,13 @@ class _BatchDetailsState extends State<BatchDetails> {
         appBar: CommonBar(
           title: 'Batch Details',
           onPressed: () {
-            context.read<BatchCubit>().getBatchesByStatus(
-                  branchId: batch?.branchId,
-                  status: context.read<BatchCubit>().tempStatus,
-                  clean: true,
-                );
+            if (batchCubit.isFromBatch) {
+              batchCubit.getBatchesByStatus(
+                branchId: batch?.branchId,
+                status: context.read<BatchCubit>().tempStatus,
+                clean: true,
+              );
+            }
             Navigator.pop(context);
           },
         ),

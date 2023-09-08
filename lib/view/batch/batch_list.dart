@@ -160,13 +160,13 @@ class _BatchesPageState extends State<BatchesPage> {
                                 if (state is BatchNetworkError) {
                                   AlertBox.showErrorAlert(context);
                                 }
-                                if(state is CreatedBatch){
+                                if (state is CreatedBatch) {
                                   context.read<BatchCubit>().getBatchesByStatus(
-                                    branchId: branchId,
-                                    status: status,
-                                    search: query,
-                                    clean: true,
-                                  );
+                                        branchId: branchId,
+                                        status: status,
+                                        search: query,
+                                        clean: true,
+                                      );
                                 }
                                 if (state is FetchingBatches) {
                                   return const Padding(
@@ -197,6 +197,8 @@ class _BatchesPageState extends State<BatchesPage> {
                                     return BatchItem(
                                       batch: batch,
                                       onTap: () {
+                                        context.read<BatchCubit>().isFromBatch =
+                                            true;
                                         context
                                             .read<BatchCubit>()
                                             .getBatch(batchId: '${batch.id}');

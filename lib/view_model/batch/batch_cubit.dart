@@ -31,6 +31,7 @@ class BatchCubit extends Cubit<BatchState> {
   List<Course>? _courses;
   List<Course>? _subjects;
   bool second = false;
+  bool isFromBatch = true;
   final List<int?> _selectedTrainers = [];
   List<BatchModel> _batches = [];
   List<StudentAppBatchDetail> _studentAppBatches = [];

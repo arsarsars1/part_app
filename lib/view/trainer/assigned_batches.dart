@@ -29,6 +29,7 @@ class _AssignedBatchesState extends State<AssignedBatches> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<TrainerCubit>();
+    var batchCubit = context.read<BatchCubit>();
     Trainer? trainer = cubit.trainer?.trainerDetail![0];
     return Scaffold(
       appBar: const CommonBar(title: 'Assigned Batches'),
@@ -43,7 +44,6 @@ class _AssignedBatchesState extends State<AssignedBatches> {
             BlocBuilder<BatchCubit, BatchState>(
               buildWhen: (prv, crr) => crr is BatchesFetched,
               builder: (context, state) {
-                var batchCubit = context.read<BatchCubit>();
                 if (batchCubit.batches.isEmpty) {
                   return const Center(
                     child: Padding(
@@ -61,14 +61,14 @@ class _AssignedBatchesState extends State<AssignedBatches> {
                     return BatchItem(
                       hideTrainer: true,
                       batch: batch,
-                      onTap: () {
-                        context
-                            .read<BatchCubit>()
-                            .getBatch(batchId: '${batch.id}');
+                      onTap: () async {
+                        batchCubit.getBatch(batchId: '${batch.id}');
+                        batchCubit.isFromBatch = false;
                         context
                             .read<BranchCubit>()
                             .getBranchTrainers(branchId: '${batch.branchId}');
-                        Navigator.pushNamed(context, BatchDetails.route);
+                        await Navigator.pushNamed(context, BatchDetails.route);
+                        batchCubit.isFromBatch = true;
                       },
                     );
                   },
