@@ -60,7 +60,7 @@ class SwitchAccount extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          'Administrator',
+                          '${cubit.user?.name}, Administrator',
                           style:
                               Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontSize: 12.sp,
@@ -84,7 +84,7 @@ class SwitchAccount extends StatelessWidget {
                         cubit.accountType = AccountType.trainer;
                         Alert(context).show(message: 'WIP');
                       },
-                      accountType: 'Trainer',
+                      accountType: '${trainer.name}, Trainer',
                       academyName: trainer.academy?.academyName ?? '',
                     );
                   },
@@ -107,7 +107,7 @@ class SwitchAccount extends StatelessWidget {
                           (route) => false,
                         );
                       },
-                      accountType: 'Student',
+                      accountType: '${student.name}, Student',
                       academyName: student.academy?.academyName ?? '',
                     );
                   },
