@@ -105,8 +105,9 @@ class _HomeBannerState extends State<HomeBanner> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 141.h,
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      height: 165.h,
                       child: PageView.builder(
                         controller: bannerPageController,
                         onPageChanged: (int pageIndex) {
