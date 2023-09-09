@@ -262,31 +262,18 @@ class _StudentsViewState extends State<StudentsView> {
                       onChange: (value) {
                         if (value.isEmpty) {
                           query = null;
+                        } else {
+                          query = value;
                           doSearch(true);
                         }
                       },
                       onSubmit: (value) {
-                        if (branchId == null) {
-                          Alert(context)
-                              .show(message: 'Please select a branch');
-                          return;
-                        }
-                        if (batch == null) {
-                          Alert(context).show(message: 'Please select a batch');
-                          return;
-                        }
-                        if (status == null) {
-                          Alert(context)
-                              .show(message: 'Please select a batch status');
-                          return;
-                        }
                         if (value.isEmpty) {
                           query = null;
                         } else {
                           query = value;
+                          doSearch(true);
                         }
-
-                        doSearch(true);
                       },
                       textInputAction: TextInputAction.search,
                       prefixIcon: const Icon(Icons.search),

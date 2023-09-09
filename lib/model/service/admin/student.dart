@@ -70,9 +70,9 @@ class StudentService {
     try {
       String path = '';
 
-      if (searchQuery == null && batchId == null) {
+      if (batchId == null) {
         path = '/admin/students';
-      } else if (batchId != null) {
+      } else {
         path = '/admin/batches/$batchId/students';
       }
       if (activeStatus != null) {
