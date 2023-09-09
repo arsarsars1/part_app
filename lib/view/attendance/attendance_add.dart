@@ -77,6 +77,9 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                   if (element.day == cubit.conductedDate!.weekday) {
                     startTime = element.startTime;
                     endTime = element.endTime;
+                  } else {
+                    startTime = cubit.selectedClass?.startTime;
+                    endTime = cubit.selectedClass?.endTime;
                   }
                 });
                 if (state is CreatingAttendance) {

@@ -211,6 +211,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                 context.read<AttendanceCubit>();
                             int flag = 0;
                             for (var element in cubit.attendenceClasses ?? []) {
+                              cubit.selectedClass = element;
                               if (date == element.date) {
                                 flag = 1;
                                 break;
