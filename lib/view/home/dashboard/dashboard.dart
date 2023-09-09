@@ -49,6 +49,9 @@ class _DashboardState extends State<Dashboard> {
                   DashboardIcons(),
                   SummaryDashboard(),
                   FinanceDashboard(),
+                  SizedBox(
+                    height: 10,
+                  ),
                 ],
               ),
             ),
