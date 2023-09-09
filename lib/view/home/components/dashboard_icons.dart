@@ -20,8 +20,7 @@ class DashboardIcons extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-        ),
+            crossAxisCount: 3, childAspectRatio: 0.9),
         itemCount: DefaultValues.dashboardItems.length,
         itemBuilder: (context, index) {
           DashboardItem item = DefaultValues.dashboardItems[index];
@@ -41,15 +40,11 @@ class DashboardIcons extends StatelessWidget {
                 color: AppColors.liteDark,
                 borderRadius: BorderRadius.circular(5),
               ),
-              height: 98.h,
-              width: 98.w,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 10.h,
-                  ),
+                  const Spacer(),
                   Container(
                     decoration: BoxDecoration(
                       color: item.color,
@@ -68,13 +63,16 @@ class DashboardIcons extends StatelessWidget {
                   SizedBox(
                     height: 4.h,
                   ),
-                  Text(
-                    item.title,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 12.sp,
-                        ),
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      item.title,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 12.sp,
+                          ),
+                    ),
                   ),
                 ],
               ),

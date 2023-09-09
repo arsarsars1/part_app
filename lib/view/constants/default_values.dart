@@ -123,8 +123,8 @@ class DefaultValues {
     ),
     const DropDownItem(
       id: 'other',
-      title: 'other',
-      item: 'other',
+      title: 'Other',
+      item: 'Other',
     ),
   ];
   List<DropDownItem> batchStatus = [
@@ -212,7 +212,7 @@ class DefaultValues {
     DashboardItem(
       title: 'Class Link',
       route: ClassLinkView.route,
-      asset: Assets.todays,
+      asset: Assets.classLink,
       color: Color(0xFFE100FF),
     ),
     DashboardItem(
