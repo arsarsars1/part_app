@@ -1,5 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TermsCheckBox extends StatefulWidget {
   final ValueChanged<bool> onChange;
@@ -44,6 +46,12 @@ class _TermsCheckBoxState extends State<TermsCheckBox> {
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: AppColors.primaryColor,
                       ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      launchUrl(
+                        Uri.parse(''),
+                      );
+                    },
                 ),
                 TextSpan(
                   text: 'And ',
@@ -54,6 +62,12 @@ class _TermsCheckBoxState extends State<TermsCheckBox> {
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: AppColors.primaryColor,
                       ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      launchUrl(
+                        Uri.parse('https://www.partapp.in/privacy-policy.html'),
+                      );
+                    },
                 ),
               ],
             ),
