@@ -41,6 +41,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   List<ClassDetails>? attendenceClasses;
   List<ConductedClass>? conductedClasses;
   List<StudentAttendances>? studentClasses;
+  ClassDetails? selectedClass;
   int conductedClassCount = 0;
   DateTime? conductedDate;
   int? conductedClassId;
