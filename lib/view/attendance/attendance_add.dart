@@ -322,42 +322,6 @@ class _AttendanceAddState extends State<AttendanceAdd> {
               },
             ),
           ),
-          // AttendanceAddListItem(
-          //   students: studentCubit.students ?? [],
-          //   onSelect: (StudentModel student) async {},
-          // )
-          // BlocBuilder<StudentCubit, StudentState>(
-          //   builder: (context, state) {
-          //     if (state is FetchingTrainers) {
-          //       return const Padding(
-          //         padding: EdgeInsets.all(64.0),
-          //         child: Center(
-          //           child: CircularProgressIndicator(),
-          //         ),
-          //       );
-          //     }
-
-          //     // ignore: prefer_is_empty
-          //     if (studentCubit.students?.length == 0) {
-          //       return Padding(
-          //         padding: const EdgeInsets.all(64.0),
-          //         child: Center(
-          //           child: Text(
-          //             query == null
-          //                 ? selectedItem == null
-          //                     ? 'Add a trainer to get started'
-          //                     : 'No active trainers'
-          //                 : 'Sorry, No Matching Results Found.',
-          //           ),
-          //         ),
-          //       );
-          //     }
-          //     return AttendanceAddListItem(
-          //       students: studentCubit.students ?? [],
-          //       onSelect: (StudentModel student) async {},
-          //     );
-          //   },
-          // ),
         ],
       ),
     );

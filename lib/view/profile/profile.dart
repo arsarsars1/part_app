@@ -172,6 +172,7 @@ class _ProfileState extends State<Profile> {
                 Column(
                   children: [
                     CommonField(
+                      length: 10,
                       inputType: TextInputType.number,
                       phoneField: true,
                       title: 'Whatsapp Phone Number *',
