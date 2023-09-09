@@ -60,7 +60,7 @@ class SwitchAccount extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          '${cubit.user?.name}, Administrator',
+                          '${cubit.user?.adminDetail?.name}, Administrator',
                           style:
                               Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontSize: 12.sp,
