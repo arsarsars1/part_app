@@ -44,7 +44,7 @@ class DashboardIcons extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Expanded(child: SizedBox()),
+                  const Spacer(),
                   Container(
                     decoration: BoxDecoration(
                       color: item.color,
