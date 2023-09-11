@@ -218,8 +218,9 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                                 .fillColor,
                             value: null,
                             decoration: const InputDecoration(
-                                // contentPadding: padding,
-                                ),
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 32),
+                            ),
                             items: DefaultValues().feeType.map((e) {
                               return DropdownMenuItem(
                                 value: e,

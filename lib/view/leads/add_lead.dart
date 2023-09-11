@@ -79,6 +79,7 @@ class _AddLeadState extends State<AddLead> {
                   CommonField(
                     title: 'Lead Status *',
                     hint: 'Select status',
+                    
                     length: 50,
                     maxLines: 1,
                     dropDown: true,
@@ -334,6 +335,7 @@ class _AddLeadState extends State<AddLead> {
                     height: 20,
                   ),
                   CommonField(
+                    verticalPadding: 10,
                     title: 'Comments',
                     hint: 'Enter Comments',
                     maxLines: 5,

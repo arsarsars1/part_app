@@ -220,6 +220,7 @@ class _EditTrainerState extends State<EditTrainer> {
                   CommonField(
                     initialValue: trainer?.address,
                     length: 300,
+                    verticalPadding: 10,
                     maxLines: 3,
                     title: 'Address *',
                     textInputAction: TextInputAction.newline,

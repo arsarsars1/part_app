@@ -202,6 +202,7 @@ class _AddTrainerState extends State<AddTrainer> {
                 CommonField(
                   length: 300,
                   maxLines: 3,
+                  verticalPadding: 10,
                   title: 'Address *',
                   textInputAction: TextInputAction.newline,
                   hint: 'Enter Communication Address',

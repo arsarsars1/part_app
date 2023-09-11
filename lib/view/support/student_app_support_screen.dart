@@ -70,6 +70,7 @@ class _StudentAppSupportScreenState extends State<StudentAppSupportScreen> {
                 controller: messageController,
                 hint: 'Please enter a mesaage',
                 maxLines: 3,
+                verticalPadding: 10,
                 inputType: TextInputType.multiline,
                 textInputAction: TextInputAction.next,
                 onChange: (value) {

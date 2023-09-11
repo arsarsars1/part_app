@@ -104,6 +104,7 @@ class _AddBranchRegisterState extends State<AddBranchRegister> {
               ),
               CommonField(
                 length: 300,
+                verticalPadding: 10,
                 textInputAction: TextInputAction.newline,
                 capitalization: TextCapitalization.words,
                 title: 'Address *',

@@ -279,6 +279,7 @@ class _EditStudentState extends State<EditStudent> {
                 initialValue: details?.address,
                 length: 300,
                 maxLines: 3,
+                verticalPadding: 10,
                 title: 'Address *',
                 textInputAction: TextInputAction.newline,
                 hint: 'Enter Communication Address',
