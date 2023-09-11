@@ -79,6 +79,9 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                         height: 8,
                       ),
                       DropdownButtonFormField<DropDownItem>(
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 32),
+                        ),
                         key: _dropDownKey,
                         validator: (value) {
                           return value == null
@@ -93,9 +96,6 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                         dropdownColor:
                             Theme.of(context).inputDecorationTheme.fillColor,
                         value: null,
-                        decoration: const InputDecoration(
-                            // contentPadding: padding,
-                            ),
                         items: status
                             ?.map((e) => DropDownItem(
                                 id: e?.slug, title: e?.leadStatus, item: e))
@@ -205,7 +205,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                       height: 8,
                     ),
                     Container(
-                      height: 60.h,
+                      height: 48,
                       decoration: BoxDecoration(
                         color: AppColors.liteDark,
                         borderRadius: BorderRadius.circular(4),

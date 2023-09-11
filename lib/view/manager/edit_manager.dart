@@ -207,6 +207,7 @@ class _EditManagerState extends State<EditManager> {
                   CommonField(
                     length: 300,
                     maxLines: 3,
+                    verticalPadding: 10,
                     initialValue: manager?.address,
                     title: 'Address *',
                     textInputAction: TextInputAction.newline,

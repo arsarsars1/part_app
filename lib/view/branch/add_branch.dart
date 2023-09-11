@@ -128,6 +128,7 @@ class _AddBranchState extends State<AddBranch> {
                 initialValue: widget.addBranch ? null : cubit.branch?.address,
                 node: addressFocus,
                 length: 300,
+                verticalPadding: 10,
                 title: 'Address *',
                 textInputAction: TextInputAction.newline,
                 hint: 'Eg: Kowdiar, C-10, Jawahar Nagar \nTrivandrum',

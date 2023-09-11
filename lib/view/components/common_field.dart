@@ -31,6 +31,7 @@ class CommonField extends StatelessWidget {
   final ValueChanged<String>? onSubmit;
   final bool showInfo;
   final String toolTipMessage;
+  final double verticalPadding;
 
   final Icon? prefixIcon;
   final TextCapitalization capitalization;
@@ -70,6 +71,7 @@ class CommonField extends StatelessWidget {
     this.showInfo = false,
     this.capitalization = TextCapitalization.sentences,
     this.toolTipMessage = 'Info not available.',
+    this.verticalPadding = 0,
   }) : super(key: key);
 
   @override
@@ -107,8 +109,8 @@ class CommonField extends StatelessWidget {
                     dropdownColor:
                         Theme.of(context).inputDecorationTheme.fillColor,
                     value: selectedItem ?? defaultItem,
-                    decoration: InputDecoration(
-                      contentPadding: padding,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 32),
                     ),
                     items: disabled
                         ? null
@@ -175,7 +177,8 @@ class CommonField extends StatelessWidget {
                     cursorColor: Colors.white,
                     textCapitalization: capitalization,
                     decoration: InputDecoration(
-                      contentPadding: padding,
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 32, vertical: verticalPadding),
                       suffixIcon: suffixIcon,
                       prefixIcon: prefixIcon,
                       hintText: hint,

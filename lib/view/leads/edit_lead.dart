@@ -350,6 +350,7 @@ class _EditLeadState extends State<EditLead> {
                   ),
                   CommonField(
                     title: 'Comments',
+                    verticalPadding: 10,
                     hint: 'Enter Comments',
                     initialValue:
                         cubit.selectedLead?.followUps?[0].followUpComment,

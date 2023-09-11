@@ -241,7 +241,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                     height: 8,
                   ),
                   Container(
-                    height: 60.h,
+                    height:48,
                     decoration: BoxDecoration(
                       color: AppColors.liteDark,
                       borderRadius: BorderRadius.circular(4),

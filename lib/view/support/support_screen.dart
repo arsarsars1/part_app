@@ -66,7 +66,8 @@ class _SupportScreenState extends State<SupportScreen> {
               CommonField(
                 title: 'Message',
                 controller: messageController,
-                hint: 'Please enter a mesaage',
+                hint: 'Please enter a message',
+                verticalPadding: 10,
                 maxLines: 3,
                 inputType: TextInputType.multiline,
                 textInputAction: TextInputAction.next,

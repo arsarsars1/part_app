@@ -258,6 +258,7 @@ class _AddStudentState extends State<AddStudent> {
                 height: 20,
               ),
               CommonField(
+                verticalPadding: 10,
                 initialValue: address,
                 length: 300,
                 maxLines: 3,

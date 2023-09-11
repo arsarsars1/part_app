@@ -122,7 +122,7 @@ class _StudentsViewState extends State<StudentsView> {
                                     selectedItem ?? const DropDownItem(id: -1),
                                 decoration: const InputDecoration(
                                   contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 30),
+                                      EdgeInsets.symmetric(horizontal: 32),
                                 ),
                                 items: [
                                   DropdownMenuItem(

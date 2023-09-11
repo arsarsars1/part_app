@@ -212,6 +212,7 @@ class _AddManagerState extends State<AddManager> {
                 CommonField(
                   length: 300,
                   maxLines: 3,
+                  verticalPadding: 10,
                   title: 'Address *',
                   hint: 'Enter Communication Address',
                   textInputAction: TextInputAction.newline,
