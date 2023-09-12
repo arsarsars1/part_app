@@ -10,6 +10,8 @@ import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view_model/batch/batch_cubit.dart';
 
+import '../../../model/data_base/data_base.dart';
+
 class TrainingDays extends StatelessWidget {
   final bool edit;
 
@@ -45,7 +47,7 @@ class TrainingDays extends StatelessWidget {
                         .isNotEmpty;
 
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         Days? days;
                         var items = cubit.days
                             .where((element) => element.day == data.key)
@@ -75,12 +77,19 @@ class TrainingDays extends StatelessWidget {
                           ).show();
                           return;
                         }
+
+                        Database database = Database();
+                        String? startTime =
+                            await database.getPreviousClassStartTime();
+                        String? endTime =
+                            await database.getPreviousClassEndTime();
+
                         showDialog(
                           context: context,
                           builder: (context) {
                             return ClassTime(
-                              start: days?.startTime,
-                              end: days?.endTime,
+                              start: startTime ?? days?.startTime,
+                              end: endTime ?? days?.endTime,
                               day: data.key,
                               startTime: (TimeOfDay value) {},
                               endTime: (TimeOfDay value) {},
@@ -193,6 +202,7 @@ class _ClassTimeState extends State<ClassTime> {
                       timePicker(true).then((value) {
                         setState(() {
                           startTime = value;
+                          Database().setPreviousClassStartTime(value!);
                         });
                       });
                     },
@@ -242,6 +252,7 @@ class _ClassTimeState extends State<ClassTime> {
                       timePicker(false).then((value) {
                         setState(() {
                           endTime = value;
+                          Database().setPreviousClassEndTime(value!);
                         });
                       });
                     },
