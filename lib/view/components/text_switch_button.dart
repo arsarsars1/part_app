@@ -38,7 +38,7 @@ class _TextSwitchButtonState extends State<TextSwitchButton> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
-          flex: 5,
+          flex: 8,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: widget.horizontalPadding),
             child: Column(
@@ -47,7 +47,10 @@ class _TextSwitchButtonState extends State<TextSwitchButton> {
                 Text(
                   widget.title,
                   maxLines: 2,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                 ),
                 if (widget.subTitle != null)
@@ -69,14 +72,15 @@ class _TextSwitchButtonState extends State<TextSwitchButton> {
           ),
         ),
         Expanded(
-          flex: 1,
+          flex: 2,
           child: Container(
-            height: 25.0,
+            // height: 35.0,
             padding: const EdgeInsets.only(right: 16),
             child: FittedBox(
               fit: BoxFit.contain,
               child: CupertinoSwitch(
-                thumbColor: AppColors.liteDark,
+                thumbColor: AppColors.grey100,
+                // widget.selected ? AppColors.grey900 : AppColors.grey100,
                 trackColor: AppColors.grey500,
                 activeColor: AppColors.green,
                 value: widget.selected,
