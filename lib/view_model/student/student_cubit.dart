@@ -28,6 +28,7 @@ class StudentCubit extends Cubit<StudentState> {
   Student? _student;
   Student? tempStudent;
   bool second = false;
+  int? activeStudentsCount;
 
   Student? get student => _student;
 
@@ -211,7 +212,7 @@ class StudentCubit extends Cubit<StudentState> {
       }
 
       var items = response?.students?.data ?? [];
-
+      activeStudentsCount = response?.activeStudentsCount;
       List<StudentModel> tempStudents = [];
 
       for (var student in items) {

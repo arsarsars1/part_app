@@ -9,6 +9,7 @@ part of 'students_response.dart';
 _$_StudentsResponse _$$_StudentsResponseFromJson(Map<String, dynamic> json) =>
     _$_StudentsResponse(
       status: json['status'] as int?,
+      activeStudentsCount: json['active_students_count'] as int?,
       students: json['students'] == null
           ? null
           : Students.fromJson(json['students'] as Map<String, dynamic>),
@@ -17,6 +18,7 @@ _$_StudentsResponse _$$_StudentsResponseFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_StudentsResponseToJson(_$_StudentsResponse instance) =>
     <String, dynamic>{
       'status': instance.status,
+      'active_students_count': instance.activeStudentsCount,
       'students': instance.students,
     };
 

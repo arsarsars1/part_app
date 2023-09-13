@@ -64,7 +64,7 @@ class _BatchStudentsState extends State<BatchStudents> {
                 Padding(
                   padding: const EdgeInsets.only(left: 16, top: 16),
                   child: Text(
-                      '$studentText : ${studentCubit.students?.length ?? 0}'),
+                      '$studentText : ${studentCubit.activeStudentsCount}'),
                 ),
                 ListView.builder(
                   shrinkWrap: true,
