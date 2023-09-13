@@ -19,7 +19,11 @@ class _StudentAppDashboardState extends State<StudentAppDashboard> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<HomeCubit>().getStudentAppDashboard(
-          studentId: context.read<AuthCubit>().user?.studentDetail?[0].id);
+          studentId: context
+              .read<AuthCubit>()
+              .user
+              ?.studentDetail?[context.read<AuthCubit>().studentIndex]
+              .id);
       context.read<HomeCubit>().getFAQ();
     });
   }
