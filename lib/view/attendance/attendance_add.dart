@@ -40,6 +40,18 @@ class _AttendanceAddState extends State<AttendanceAdd> {
             clean: true,
           );
       setState(() {});
+      // Pagination listener
+      scrollController.addListener(() async {
+        // var nextPageTrigger = 0.60 * scrollController.position.maxScrollExtent;
+        if (scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent) {
+          await context.read<StudentCubit>().getStudents(
+                batchId: context.read<AttendanceCubit>().id,
+                clean: false,
+              );
+          setState(() {});
+        }
+      });
     });
   }
 
@@ -51,6 +63,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
       appBar: CommonBar(
         title: 'Class Attendance',
         onPressed: () {
+          studentCubit.students?.clear();
           cubit.selectedStudents = {};
           cubit.attendance.clear();
           Navigator.pop(context);
@@ -204,7 +217,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                         return ListView.builder(
                           shrinkWrap: true,
                           itemCount: studentCubit.students?.length,
-                          controller: scrollController,
+                          physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             StudentModel student =
                                 studentCubit.students![index];
@@ -274,6 +287,22 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                           },
                         );
                       }),
+                      BlocBuilder<StudentCubit, StudentState>(
+                        builder: (context, state) {
+                          return AnimatedContainer(
+                            height:
+                                state is FetchingStudents && state.pagination
+                                    ? 30
+                                    : 0,
+                            color: Colors.black,
+                            duration: const Duration(
+                              milliseconds: 250,
+                            ),
+                            child: const Center(
+                                child: Text('Fetching more items ..')),
+                          );
+                        },
+                      ),
                       SizedBox(height: 20.h),
                       Center(
                         child: SafeArea(
