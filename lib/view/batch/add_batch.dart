@@ -249,7 +249,7 @@ class _AddBatchState extends State<AddBatch> {
                       Center(
                         child: SafeArea(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 32),
+                            padding: const EdgeInsets.only(top: 20, bottom: 15),
                             child: Button(
                               onTap: () {
                                 if (formKey.currentState!.validate()) {

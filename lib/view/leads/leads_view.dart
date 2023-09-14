@@ -21,8 +21,7 @@ class _LeadsState extends State<Leads> {
       appBar: const CommonBar(
         title: 'Leads',
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
         children: [
           // const SizedBox(
           //   height: 0,

@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:month_year_picker/month_year_picker.dart';
@@ -102,11 +103,12 @@ class _AppState extends State<App> {
                 theme: AppTheme.lightTheme,
                 home: child,
                 builder: (context, widget) {
-                  return MediaQuery(
+                  Widget w = MediaQuery(
                     ///Setting font does not change with system font size
                     data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
                     child: widget!,
                   );
+                  return DevicePreview.appBuilder(context, w);
                 },
                 onGenerateRoute: RouteGenerator.generateRoute,
               );

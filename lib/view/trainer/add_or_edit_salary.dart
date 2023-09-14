@@ -825,7 +825,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                       Center(
                         child: SafeArea(
                           child: Padding(
-                            padding: EdgeInsets.only(top: 16.h),
+                            padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
                             child: Button(
                               onTap: () {
                                 if (formKey.currentState!.validate()) {
