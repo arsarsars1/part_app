@@ -109,7 +109,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                                           CrossAxisAlignment.end,
                                       children: [
                                         Text(
-                                          'Payment Due In:',
+                                          'Payment Due Date:',
                                           textAlign: TextAlign.right,
                                           style: Theme.of(context)
                                               .textTheme
@@ -699,10 +699,11 @@ class _FeeListItemState extends State<SalaryListItem> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Payment Due In: ",
+                                    "Payment Due Date: ",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge
