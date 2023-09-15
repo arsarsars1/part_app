@@ -26,7 +26,6 @@ dependencies:
   cached_network_image: ^3.2.2
   connectivity_plus: ^4.0.1
   cupertino_icons: ^1.0.2
-  device_preview: ^1.1.0
   dio: ^5.1.2
   equatable: ^2.0.5
   expandable: ^5.0.1
@@ -49,7 +48,7 @@ dependencies:
   google_fonts: ^4.0.4
   hive_flutter: ^1.1.0
   image_picker: ^0.8.6
-  intl: ^0.18.0
+  intl: ^0.18.1
   json_annotation: ^4.7.0
   lottie: ^2.3.2
   path_provider: ^2.0.14
