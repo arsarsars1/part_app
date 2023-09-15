@@ -79,12 +79,15 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
                 child: ListView(
                   controller: scrollController,
                   children: [
-                    BranchField(
-                      onSelect: (value) {
-                        setState(() {
-                          branchId = value;
-                        });
-                      },
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: BranchField(
+                        onSelect: (value) {
+                          setState(() {
+                            branchId = value;
+                          });
+                        },
+                      ),
                     ),
                     const SizedBox(
                       height: 20,

@@ -117,7 +117,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                                               ?.copyWith(),
                                         ),
                                         Text(
-                                          "${widget.salary.salaryDueDate?.toDDMMMYYY()}",
+                                          "${widget.salary.salaryDueDate?.toDDMMYYY()}",
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyLarge
@@ -183,11 +183,9 @@ class _FeeListItemState extends State<SalaryListItem> {
                             ],
                           ),
                           SizedBox(
-                            height: 10.h,
+                            height: 20.h,
                           ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
+                          
                           Text(
                             'Salary : ${widget.salary.salaryAmount}',
                             textAlign: TextAlign.right,

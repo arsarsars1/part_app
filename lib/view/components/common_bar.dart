@@ -51,9 +51,10 @@ class CommonBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Logo(),
               ),
             const Spacer(),
-            const SizedBox(
-              width: 48,
-            )
+            if (enableBack || Navigator.canPop(context))
+              const SizedBox(
+                width: 48,
+              )
           ],
         ),
       ),

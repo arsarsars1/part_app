@@ -80,6 +80,9 @@ class _BatchesPageState extends State<BatchesPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   BranchField(
                     title: 'Select A Branch To List Batches',
                     onSelect: (value) {

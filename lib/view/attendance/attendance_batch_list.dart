@@ -67,7 +67,7 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
                     alignment: Alignment.centerRight,
                     child: Padding(
                       padding: EdgeInsets.only(
-                          left: 16.w, right: 16.w, top: 16.h, bottom: 16.h),
+                          left: 16.w, right: 16.w, top: 16.h, bottom: 20.h),
                       child: Button(
                         height: 30.h,
                         width: 185.w,

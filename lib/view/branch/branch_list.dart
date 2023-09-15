@@ -36,7 +36,7 @@ class _BranchListState extends State<BranchList> {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8),
             child: Align(
               alignment: Alignment.centerRight,
               child: Button(
@@ -51,6 +51,9 @@ class _BranchListState extends State<BranchList> {
                 title: 'Add New Branch',
               ),
             ),
+          ),
+          SizedBox(
+            height: 12.h,
           ),
           BlocBuilder<BranchCubit, BranchState>(
             builder: (context, state) {

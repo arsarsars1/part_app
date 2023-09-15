@@ -35,7 +35,7 @@ class DashboardIcons extends StatelessWidget {
             },
             child: Container(
               margin: EdgeInsets.all(8.h),
-              padding: EdgeInsets.all(16.h),
+              padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
                 color: AppColors.liteDark,
                 borderRadius: BorderRadius.circular(5),
