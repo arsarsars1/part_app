@@ -48,8 +48,7 @@ class _HomeBannerState extends State<HomeBanner> {
                 authCubit.user?.adminDetail?.academy!.academyTypeId;
           }
           for (int i = 0; i < cubit.banner!.length; i++) {
-            if (cubit.banner![i].isActive == 1 &&
-                adminAcademyTypeId == cubit.banner![i].academyTypeId) {
+            if (cubit.banner![i].isActive == 1) {
               activeBanners.add(cubit.banner![i]);
             }
           }
