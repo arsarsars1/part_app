@@ -165,7 +165,7 @@ class _StudentAppAttendanceCalenderViewState
                                     if (element1.date ==
                                             element
                                                 .conductedClass.conductedOn &&
-                                        element.ispresent == 1) {
+                                        element.isPresent == 1) {
                                       flag = 1;
                                       conductedClassId = element.id;
                                       break;
@@ -450,7 +450,7 @@ class _StudentAppAttendanceCalenderViewState
                                   ),
                             ),
                             Text(
-                              '$present',
+                              '${attendenceCubit.pre}',
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
@@ -484,7 +484,7 @@ class _StudentAppAttendanceCalenderViewState
                                   ),
                             ),
                             Text(
-                              '$absent',
+                              '${attendenceCubit.abs}',
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme

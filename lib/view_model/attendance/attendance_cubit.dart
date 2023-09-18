@@ -45,6 +45,8 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   int conductedClassCount = 0;
   DateTime? conductedDate;
   int? conductedClassId;
+  int pre = 0;
+  int abs = 0;
 
   void addOrRemoveStudent(int studentId) {
     if (selectedStudents.contains(studentId)) {
@@ -321,6 +323,8 @@ class AttendanceCubit extends Cubit<AttendanceState> {
             batchId: batchId, studentDetailId: studentDetailId, date: date);
     if (response?.status == 1) {
       studentClasses = response?.studentAttendance ?? [];
+      pre = response?.presentCount ?? 0;
+      abs = response?.absentCount ?? 0;
       emit(AttendanceBatchesFetched());
     }
   }
@@ -337,6 +341,8 @@ class AttendanceCubit extends Cubit<AttendanceState> {
             batchId: batchId, studentDetailId: studentDetailId, date: date);
     if (response?.status == 1) {
       studentClasses = response?.studentAttendance ?? [];
+      pre = response?.presentCount ?? 0;
+      abs = response?.absentCount ?? 0;
       emit(AttendanceBatchesFetched());
     }
   }
