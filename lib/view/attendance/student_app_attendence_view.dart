@@ -450,7 +450,7 @@ class _StudentAppAttendanceCalenderViewState
                                   ),
                             ),
                             Text(
-                              '$present',
+                              '${attendenceCubit.pre}',
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
@@ -484,7 +484,7 @@ class _StudentAppAttendanceCalenderViewState
                                   ),
                             ),
                             Text(
-                              '$absent',
+                              '${attendenceCubit.abs}',
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme

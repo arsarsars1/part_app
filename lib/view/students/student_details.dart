@@ -159,7 +159,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                   height: 16,
                 ),
                 LargeButton(
-                  title: 'Attendances Sheet',
+                  title: 'Attendence Sheet',
                   onTap: () {
                     Navigator.pushNamed(
                       context,
