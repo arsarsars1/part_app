@@ -165,7 +165,7 @@ class _StudentAppAttendanceCalenderViewState
                                     if (element1.date ==
                                             element
                                                 .conductedClass.conductedOn &&
-                                        element.ispresent == 1) {
+                                        element.isPresent == 1) {
                                       flag = 1;
                                       conductedClassId = element.id;
                                       break;
