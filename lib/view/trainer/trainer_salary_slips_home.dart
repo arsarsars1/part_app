@@ -41,9 +41,9 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
       context.read<TrainerCubit>().clean();
     });
     // Pagination listener
-    scrollController.position.isScrollingNotifier.addListener(() async {
-      // var nextPageTrigger = 0.60 * scrollController.position.maxScrollExtent;
-      if (!scrollController.position.isScrollingNotifier.value) {
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
         doSearch(false);
       }
     });
