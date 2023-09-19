@@ -28,17 +28,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = context.read<AuthCubit>();
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is NetworkError) {
           AlertBox.showErrorAlert(context);
         } else if (state is UserAvailable) {
           if (state.member) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              SwitchAccount.route,
-              (route) => false,
+            cubit.navigateToDashboard(cubit.user?.adminDetail?.academy, cubit.user?.trainerDetail, cubit.user?.studentDetail, context
             );
+           
           } else {
             Navigator.pushReplacementNamed(
               context,
