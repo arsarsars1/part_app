@@ -15,6 +15,9 @@ import 'package:part_app/model/service/api.dart';
 import '../../model/data_model/students_response.dart';
 import '../../model/data_model/trainer_response.dart';
 import '../../view/account/switch_account.dart';
+import '../../view/components/alert.dart';
+import '../../view/home/home.dart';
+import '../../view/home/student_app_home.dart';
 
 part 'auth_state.dart';
 
@@ -268,51 +271,47 @@ class AuthCubit extends Cubit<AuthState> {
 
   void navigateToDashboard(Academy? academy, List<Trainer>? trainerList,
       List<StudentDetail>? studentsList, BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      SwitchAccount.route,
-      (route) => false,
-    );
-    // int numberOfItems = 0;
-    //  var cubit = context.read<AuthCubit>();
-    // AccountType accountType = AccountType.admin;
-    // if (academy != null) numberOfItems++;
+   
+    int numberOfItems = 0;
+     var cubit = context.read<AuthCubit>();
+    AccountType accountType = AccountType.admin;
+    if (academy != null) numberOfItems++;
 
-    // if (trainerList != null && trainerList.isNotEmpty) {
-    //   numberOfItems += trainerList.length;
-    //   accountType = AccountType.trainer;
-    // }
-    // if (studentsList != null && studentsList.isNotEmpty) {
-    //   numberOfItems += studentsList.length;
-    //   accountType = AccountType.student;
-    // }
-    // if (numberOfItems > 1) {
-    //   Navigator.pushNamedAndRemoveUntil(
-    //     context,
-    //     SwitchAccount.route,
-    //     (route) => false,
-    //   );
-    // } else {
-    //   if (accountType == AccountType.admin){
-    //     cubit.accountType = AccountType.admin;
-    //     Navigator.pushNamedAndRemoveUntil(
-    //                     context,
-    //                     Home.route,
-    //                     (route) => false,
-    //                   );
-    //   } else if (accountType == AccountType.trainer) {
-    //     cubit.accountType = AccountType.trainer;
-    //     Alert(context).show(message: 'WIP');
-    //   }
-    //   else {
-    //     cubit.studentIndex = 0;
-    //     cubit.accountType = AccountType.trainer;
-    //     Navigator.pushNamedAndRemoveUntil(
-    //       context,
-    //       StudentAppHome.route,
-    //       (route) => false,
-    //     );
-    //   }
-    // }
+    if (trainerList != null && trainerList.isNotEmpty) {
+      numberOfItems += trainerList.length;
+      accountType = AccountType.trainer;
+    }
+    if (studentsList != null && studentsList.isNotEmpty) {
+      numberOfItems += studentsList.length;
+      accountType = AccountType.student;
+    }
+    if (numberOfItems > 1) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        SwitchAccount.route,
+        (route) => false,
+      );
+    } else {
+      if (accountType == AccountType.admin){
+        cubit.accountType = AccountType.admin;
+        Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        Home.route,
+                        (route) => false,
+                      );
+      } else if (accountType == AccountType.trainer) {
+        cubit.accountType = AccountType.trainer;
+        Alert(context).show(message: 'WIP');
+      }
+      else {
+        cubit.studentIndex = 0;
+        cubit.accountType = AccountType.student;
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          StudentAppHome.route,
+          (route) => false,
+        );
+      }
+    }
   }
 }
