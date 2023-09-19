@@ -31,12 +31,12 @@ class _BatchDetailsState extends State<BatchDetails> {
   void initState() {
     super.initState();
 
-    // Pagination listener
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        doSearch(clean: false);
-      }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      scrollController.position.isScrollingNotifier.addListener(() async {
+        if (!scrollController.position.isScrollingNotifier.value) {
+          doSearch(clean: false);
+        }
+      });
     });
   }
 
