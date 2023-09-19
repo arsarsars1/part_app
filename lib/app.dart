@@ -31,7 +31,6 @@ class _AppState extends State<App> {
     stream = ApiClient().controller?.stream;
 
     super.initState();
-    
   }
 
   @override
@@ -108,6 +107,7 @@ class _AppState extends State<App> {
                 theme: AppTheme.lightTheme,
                 home: child,
                 builder: (context, widget) {
+                  AuthService().addFirebaseListener(context);
                   return MediaQuery(
                     ///Setting font does not change with system font size
                     data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

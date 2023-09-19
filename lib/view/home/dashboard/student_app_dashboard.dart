@@ -27,7 +27,6 @@ class _StudentAppDashboardState extends State<StudentAppDashboard> {
               ?.studentDetail?[context.read<AuthCubit>().studentIndex]
               .id);
       context.read<HomeCubit>().getFAQ();
-      AuthService().addFirebaseListener(context);
     });
   }
 

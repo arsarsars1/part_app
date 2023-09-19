@@ -155,6 +155,16 @@ class AuthService {
         context.read<NotificationCubit>().emitNotificationNew();
         NotificationList? list =
             await context.read<HomeCubit>().getNotificationList(clean: true);
+
+        if (context.mounted) {
+          context.read<NotificationCubit>().notificationList = list;
+        }
+      } else if (message.data['notifiable_id'] == '110') {
+        context.read<NotificationCubit>().emitNotificationNew();
+        NotificationList? list = await context
+            .read<HomeCubit>()
+            .getStudentAppNotificationList(studentId:context.read<AuthCubit>().user?.studentDetail?[context.read<AuthCubit>().studentIndex].id ,clean: true);
+
         if (context.mounted) {
           context.read<NotificationCubit>().notificationList = list;
         }
