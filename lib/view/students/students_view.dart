@@ -47,10 +47,9 @@ class _StudentsViewState extends State<StudentsView> {
           );
     });
     // Pagination listener
-    scrollController.addListener(() {
+    scrollController.position.isScrollingNotifier.addListener(() async {
       // var nextPageTrigger = 0.60 * scrollController.position.maxScrollExtent;
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (!scrollController.position.isScrollingNotifier.value) {
         doSearch(false);
       }
     });

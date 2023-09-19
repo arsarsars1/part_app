@@ -36,10 +36,9 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
     });
 
     // Pagination listener
-    scrollController.addListener(() {
+    scrollController.position.isScrollingNotifier.addListener(() async {
       // var nextPageTrigger = 0.60 * scrollController.position.maxScrollExtent;
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (!scrollController.position.isScrollingNotifier.value) {
         context.read<AttendanceCubit>().getBatchesByStatus(
               branchId: branchId,
               search: query,

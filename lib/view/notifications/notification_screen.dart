@@ -27,10 +27,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
       context.read<StudentCubit>().clean();
     });
     // Pagination listener
-    scrollController.addListener(() {
+    scrollController.position.isScrollingNotifier.addListener(() async {
       // var nextPageTrigger = 0.60 * scrollController.position.maxScrollExtent;
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (!scrollController.position.isScrollingNotifier.value) {
         context.read<HomeCubit>().getNotificationList(clean: false);
       }
     });

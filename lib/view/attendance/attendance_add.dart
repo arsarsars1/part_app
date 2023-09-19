@@ -41,10 +41,9 @@ class _AttendanceAddState extends State<AttendanceAdd> {
           );
       setState(() {});
       // Pagination listener
-      scrollController.addListener(() async {
+      scrollController.position.isScrollingNotifier.addListener(() async {
         // var nextPageTrigger = 0.60 * scrollController.position.maxScrollExtent;
-        if (scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent) {
+        if (!scrollController.position.isScrollingNotifier.value) {
           await context.read<StudentCubit>().getStudents(
                 batchId: context.read<AttendanceCubit>().id,
                 clean: false,
