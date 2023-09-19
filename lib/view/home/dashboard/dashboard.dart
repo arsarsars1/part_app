@@ -6,7 +6,6 @@ import 'package:part_app/view/home/components/home_banner.dart';
 import 'package:part_app/view/home/components/home_bar.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-import '../../../model/service/authentication/auth_service.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);

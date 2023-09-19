@@ -29,9 +29,9 @@ class _TrainerListState extends State<TrainerList> {
   @override
   void initState() {
     // Pagination listener
-    scrollController.position.isScrollingNotifier.addListener(() async {
-      // var nextPageTrigger = 0.60 * scrollController.position.maxScrollExtent;
-      if (!scrollController.position.isScrollingNotifier.value) {
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
         context.read<TrainerCubit>().getRestOfTheTrainers(nextPage: true);
       }
     });

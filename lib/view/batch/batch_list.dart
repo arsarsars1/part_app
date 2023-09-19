@@ -35,9 +35,9 @@ class _BatchesPageState extends State<BatchesPage> {
     });
 
     // Pagination listener
-    scrollController.position.isScrollingNotifier.addListener(() async {
-        // var nextPageTrigger = 0.60 * scrollController.position.maxScrollExtent;
-        if (!scrollController.position.isScrollingNotifier.value) {
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
         context.read<BatchCubit>().getBatchesByStatus(
               status: status,
               branchId: branchId,
