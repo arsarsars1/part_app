@@ -8,6 +8,8 @@ import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/notifications/widgets/custom_container_for_notification.dart';
 import 'package:part_app/view_model/cubits.dart';
 
+import '../../view_model/notification/cubit/notification_cubit.dart';
+
 class NotificationScreen extends StatefulWidget {
   static const route = '/notifications';
   const NotificationScreen({super.key});
@@ -38,6 +40,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<HomeCubit>();
+    var notificationCubit = context.read<NotificationCubit>();
     return Scaffold(
       appBar: const CommonBar(
         title: 'Notifications',
@@ -80,8 +83,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           NotificationData? notification =
                               cubit.notifications?[index];
                           return GestureDetector(
-                            onTap: () {
-                              cubit.readNotification(notification?.id);
+                            onTap: () async {
+                              //if notification is read, bagde is refreshed
+                              final isSuccess = await cubit
+                                  .readNotification(notification?.id);
+                              if (isSuccess) {
+                                notificationCubit
+                                    .refreshBadge(notification?.id);
+                              }
                             },
                             child: Slidable(
                               endActionPane: ActionPane(

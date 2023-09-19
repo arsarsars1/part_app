@@ -148,7 +148,7 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future getNotificationList({
+  Future<NotificationList?> getNotificationList({
     bool clean = true,
   }) async {
     if (clean) {
@@ -162,7 +162,6 @@ class HomeCubit extends Cubit<HomeState> {
 
     if (nextPageUrl == null) {
       emit(GotNotifications());
-      return;
     }
 
     NotificationList? temp =
@@ -193,6 +192,7 @@ class HomeCubit extends Cubit<HomeState> {
     } else {
       emit(GetNotificationsFailed('Failed to get the notification list'));
     }
+    return temp;
   }
 
   Future getStudentAppNotificationList({
@@ -271,19 +271,21 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future readNotification(String? notificationId) async {
+  Future<bool> readNotification(String? notificationId) async {
     try {
       emit(ReadingNotification());
       Common? response = await _service.readNotification(notificationId);
 
       if (response?.status == 1) {
         emit(ReadNotification(response?.message ?? 'Notification Read'));
+        return true;
       } else {
         emit(ReadNotificationFailed(
             response?.message ?? 'Failed to read notification'));
+            return false;
       }
     } catch (e) {
-      return null;
+      return false;
     }
   }
 
@@ -299,22 +301,24 @@ class HomeCubit extends Cubit<HomeState> {
     }
     return trainer;
   }
-
-  Future readStudentAppNotification(
+///todo
+  Future<bool> readStudentAppNotification(
       int? studentId, String? notificationId) async {
     try {
       emit(ReadingNotification());
+
       Common? response =
           await _service.readStudentAppNotification(studentId, notificationId);
-
       if (response?.status == 1) {
         emit(ReadNotification(response?.message ?? 'Notification Read'));
+        return true;
       } else {
         emit(ReadNotificationFailed(
             response?.message ?? 'Failed to read notification'));
+        return false;
       }
     } catch (e) {
-      return null;
+      return false;
     }
   }
 

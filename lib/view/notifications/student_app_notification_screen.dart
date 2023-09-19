@@ -10,6 +10,8 @@ import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/notifications/widgets/custom_container_for_notification.dart';
 import 'package:part_app/view_model/cubits.dart';
 
+import '../../view_model/notification/cubit/notification_cubit.dart';
+
 class StudentAppNotificationScreen extends StatefulWidget {
   static const route = '/student-app-notifications';
   const StudentAppNotificationScreen({super.key});
@@ -48,6 +50,7 @@ class _StudentAppNotificationScreenState
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<HomeCubit>();
+    var notificationCubit = context.read<NotificationCubit>();
     AuthCubit authCubit = context.read<AuthCubit>();
     return Scaffold(
       appBar: const CommonBar(
@@ -95,13 +98,20 @@ class _StudentAppNotificationScreenState
                             NotificationData? notification =
                                 cubit.notifications?[index];
                             return GestureDetector(
-                              onTap: () {
-                                cubit.readStudentAppNotification(
-                                    authCubit
-                                        .user
-                                        ?.studentDetail?[authCubit.studentIndex]
-                                        .id,
-                                    notification?.id);
+                              onTap: () async {
+                                //if notification is read, badge is refreshed
+                                final isSuccess =
+                                    await cubit.readStudentAppNotification(
+                                        authCubit
+                                            .user
+                                            ?.studentDetail?[
+                                                authCubit.studentIndex]
+                                            .id,
+                                        notification?.id);
+                                if (isSuccess) {
+                                  notificationCubit
+                                      .refreshBadge(notification?.id);
+                                }
                               },
                               child: Slidable(
                                 endActionPane: ActionPane(

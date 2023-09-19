@@ -4,11 +4,16 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/otp.dart';
 import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api_client.dart';
+import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/view_model/notification/cubit/notification_cubit.dart';
+
+import '../../data_model/notification_list.dart';
 
 class AuthService {
   final _apiClient = ApiClient();
@@ -101,7 +106,6 @@ class AuthService {
         postPath: '/register',
         data: registerRequest.copyWith(firebaseToken: fcmToken).toJson(),
       );
-
       return userResponseFromJson(json.encode(response));
     } catch (e) {
       return null;
@@ -142,5 +146,36 @@ class AuthService {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<void> addFirebaseListener(BuildContext context) async {
+    await FirebaseMessaging.instance.getToken();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      if (message.data['notifiable_type'] == 'App\\Models\\AdminDetail') {
+        context.read<NotificationCubit>().emitNotificationNew();
+        NotificationList? list =
+            await context.read<HomeCubit>().getNotificationList(clean: true);
+
+        if (context.mounted) {
+          context.read<NotificationCubit>().notificationList = list;
+        }
+      } else if (message.data['notifiable_type'] ==
+          'App\\Models\\StudentDetail') {
+        context.read<NotificationCubit>().emitNotificationNew();
+        NotificationList? list = await context
+            .read<HomeCubit>()
+            .getStudentAppNotificationList(
+                studentId: context
+                    .read<AuthCubit>()
+                    .user
+                    ?.studentDetail?[context.read<AuthCubit>().studentIndex]
+                    .id,
+                clean: true);
+
+        if (context.mounted) {
+          context.read<NotificationCubit>().notificationList = list;
+        }
+      }
+    });
   }
 }

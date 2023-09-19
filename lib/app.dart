@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:month_year_picker/month_year_picker.dart';
@@ -11,6 +12,7 @@ import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
+import 'package:part_app/view_model/notification/cubit/notification_cubit.dart';
 import 'package:part_app/view_model/todays_classes/classes_today_cubit.dart';
 import 'view_model/attendance/attendance_cubit.dart';
 
@@ -82,6 +84,9 @@ class _AppState extends State<App> {
         BlocProvider<FeeCubit>(
           create: (context) => FeeCubit(),
         ),
+        BlocProvider<NotificationCubit>(
+          create: (context) => NotificationCubit(),
+        ),
       ],
       child: GestureDetector(
         onTap: () {
@@ -102,6 +107,7 @@ class _AppState extends State<App> {
                 theme: AppTheme.lightTheme,
                 home: child,
                 builder: (context, widget) {
+                  AuthService().addFirebaseListener(context);
                   return MediaQuery(
                     ///Setting font does not change with system font size
                     data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
