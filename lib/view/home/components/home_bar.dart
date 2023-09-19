@@ -9,6 +9,9 @@ import 'package:part_app/view/notifications/notification_screen.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/home/home_cubit.dart';
 
+import '../../../model/data_model/notification_list.dart';
+import '../../../view_model/notification/cubit/notification_cubit.dart';
+
 class HomeBar extends StatelessWidget {
   const HomeBar({Key? key}) : super(key: key);
 
@@ -16,6 +19,11 @@ class HomeBar extends StatelessWidget {
   Widget build(BuildContext context) {
     var cubit = context.read<AuthCubit>();
     var homeCubit = context.read<HomeCubit>();
+    var notificationCubit = context.read<NotificationCubit>();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      NotificationList? list = await homeCubit.getNotificationList(clean: true);
+      notificationCubit.emitNotificationBadge(list);
+    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -76,32 +84,31 @@ class HomeBar extends StatelessWidget {
                       ),
                     ),
                   ),
-                  FutureBuilder(
-                      future: homeCubit.getNotificationList(clean: true),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<dynamic> snapshot) {
-                        if (homeCubit.flag) {
-                          return Positioned.fill(
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: Container(
-                                height: 12.r,
-                                width: 12.r,
-                                padding: const EdgeInsets.all(2),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColors.primaryColor,
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: Container(),
-                                ),
-                              ),
-                            ),
-                          );
-                        }
+                  BlocBuilder<NotificationCubit, NotificationState>(
+                    builder: (context, state) {
+                      if (state is NotificationInitial) {
                         return const SizedBox();
-                      }),
+                      }
+                      return Positioned.fill(
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            height: 12.r,
+                            width: 12.r,
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.primaryColor,
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Container(),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

@@ -30,7 +30,7 @@ dependencies:
   equatable: ^2.0.5
   expandable: ^5.0.1
   firebase_core: ^2.1.1
-  firebase_messaging: ^14.0.3
+  firebase_messaging: ^14.6.7
   firebase_remote_config: ^4.2.2
   fl_chart: ^0.62.0
   flutter:

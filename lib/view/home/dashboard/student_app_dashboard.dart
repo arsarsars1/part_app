@@ -5,6 +5,8 @@ import 'package:part_app/view/home/components/student_app_home_bar.dart';
 import 'package:part_app/view/home/components/whats_happening_today.dart';
 import 'package:part_app/view_model/cubits.dart';
 
+import '../../../model/service/authentication/auth_service.dart';
+
 class StudentAppDashboard extends StatefulWidget {
   const StudentAppDashboard({Key? key}) : super(key: key);
 
@@ -25,6 +27,7 @@ class _StudentAppDashboardState extends State<StudentAppDashboard> {
               ?.studentDetail?[context.read<AuthCubit>().studentIndex]
               .id);
       context.read<HomeCubit>().getFAQ();
+      AuthService().addFirebaseListener(context);
     });
   }
 
