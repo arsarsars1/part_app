@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/constants/app_colors.dart';

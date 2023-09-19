@@ -33,24 +33,6 @@ class _AttendanceAddState extends State<AttendanceAdd> {
   void initState() {
     super.initState();
 
-    // get the trainers list
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-    //   await context.read<StudentCubit>().getStudents(
-    //         batchId: context.read<AttendanceCubit>().id,
-    //         clean: true,
-    //       );
-    //   setState(() {});
-    //   // Pagination listener
-    //   scrollController.position.isScrollingNotifier.addListener(() async {
-    //     if (!scrollController.position.isScrollingNotifier.value) {
-    //       await context.read<StudentCubit>().getStudents(
-    //             batchId: context.read<AttendanceCubit>().id,
-    //             clean: false,
-    //           );
-    //       setState(() {});
-    //     }
-    //   });
-    // });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       scrollController.position.isScrollingNotifier.addListener(() async {
         if (!scrollController.position.isScrollingNotifier.value) {
