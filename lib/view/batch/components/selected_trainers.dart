@@ -69,7 +69,7 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                       detail?.profilePic != ""
                           ? '${F.baseUrl}'
                               '/admin/images/trainer/'
-                              '${e?.trainerDetailId}/${detail?.profilePic}'
+                              '${detail?.id}/${detail?.profilePic}'
                           : '',
                     ).image(),
                   ),
