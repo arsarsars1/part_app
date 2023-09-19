@@ -151,7 +151,7 @@ class AuthService {
   Future<void> addFirebaseListener(BuildContext context) async {
     await FirebaseMessaging.instance.getToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      if (message.data['notifiable_id'] == '10') {
+      if (message.data['notifiable_type'] == 'App\\Models\\AdminDetail') {
         context.read<NotificationCubit>().emitNotificationNew();
         NotificationList? list =
             await context.read<HomeCubit>().getNotificationList(clean: true);
@@ -159,11 +159,18 @@ class AuthService {
         if (context.mounted) {
           context.read<NotificationCubit>().notificationList = list;
         }
-      } else if (message.data['notifiable_id'] == '110') {
+      } else if (message.data['notifiable_type'] ==
+          'App\\Models\\StudentDetail') {
         context.read<NotificationCubit>().emitNotificationNew();
         NotificationList? list = await context
             .read<HomeCubit>()
-            .getStudentAppNotificationList(studentId:context.read<AuthCubit>().user?.studentDetail?[context.read<AuthCubit>().studentIndex].id ,clean: true);
+            .getStudentAppNotificationList(
+                studentId: context
+                    .read<AuthCubit>()
+                    .user
+                    ?.studentDetail?[context.read<AuthCubit>().studentIndex]
+                    .id,
+                clean: true);
 
         if (context.mounted) {
           context.read<NotificationCubit>().notificationList = list;

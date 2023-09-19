@@ -25,7 +25,6 @@ class _HomeBannerState extends State<HomeBanner> {
   late Timer timer;
   bool isButtonVisible = false;
   bool _initialized = false;
-  var tempBanner;
   var activeBanners = [];
   late DateTime fromTime = DateTime.now();
   late DateTime toTime = DateTime.now();
@@ -113,23 +112,25 @@ class _HomeBannerState extends State<HomeBanner> {
                           controller: bannerPageController,
                           onPageChanged: (int pageIndex) {
                             setState(() {
-                              isButtonVisible =
-                                  tempBanner!.extUrl!.isEmpty ? false : true;
-                              fromTime = tempBanner!.startTime;
-                              toTime = tempBanner!.endTime;
-                              formattedString = toTime.formattedString();
                               currentPage = pageIndex;
+                              isButtonVisible =
+                                  (activeBanners[pageIndex]?.extUrl?.isEmpty ??
+                                          true)
+                                      ? false
+                                      : true;
+                              fromTime = activeBanners[pageIndex]!.startTime;
+                              toTime = activeBanners[pageIndex]!.endTime;
+                              formattedString = toTime.formattedString();
                             });
                           },
                           itemCount: activeBanners.length,
                           itemBuilder: (context, index) {
                             var banner = activeBanners[index];
-                            tempBanner = banner;
                             return Container(
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: NetworkImage(banner!.imageUrl!),
+                                  image: NetworkImage(banner.imageUrl),
                                 ),
                               ),
                               child: Align(
@@ -180,9 +181,10 @@ class _HomeBannerState extends State<HomeBanner> {
                                           width: 97.w,
                                           fontSize: 10.sp,
                                           onTap: () async {
-                                            var url = banner.extUrl!.isEmpty
-                                                ? 'https://partapp.in/'
-                                                : banner.extUrl!;
+                                            var url =
+                                                (banner.extUrl?.isEmpty ?? true)
+                                                    ? 'https://partapp.in/'
+                                                    : banner.extUrl!;
                                             final uri = Uri.parse(url);
                                             if (await canLaunchUrl(uri)) {
                                               await launchUrl(uri);
