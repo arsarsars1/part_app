@@ -27,8 +27,11 @@ class StudentAppDashboardIcons extends StatelessWidget {
             onTap: () async {
               await Navigator.pushNamed(context, item.route);
               context.read<HomeCubit>().getStudentAppDashboard(
-                  studentId:
-                      context.read<AuthCubit>().user?.studentDetail?[0].id);
+                  studentId: context
+                      .read<AuthCubit>()
+                      .user
+                      ?.studentDetail?[context.read<AuthCubit>().studentIndex]
+                      .id);
             },
             child: Container(
               margin: EdgeInsets.all(8.h),
