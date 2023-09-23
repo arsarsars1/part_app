@@ -406,7 +406,11 @@ class _ClassTimeState extends State<ClassTime> {
           alwaysUse24HourFormat: false,
         );
         final tempFormatStart = localizations.formatTimeOfDay(
-          startTimeOfDay!,
+          startTimeOfDay ??
+              TimeOfDay(
+                hour: int.parse(startTime!.substring(0, 2)),
+                minute: int.parse(startTime!.substring(3, 5)),
+              ),
           alwaysUse24HourFormat: false,
         );
 
