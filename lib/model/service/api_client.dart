@@ -90,7 +90,7 @@ class ApiClient {
       if (!formData) {
         log(json.encode(data));
       } else {
-        log(json.encode(data));
+        // log(json.encode(data));
       }
 
       print('********** API CALL ***********');
