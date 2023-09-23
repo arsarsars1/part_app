@@ -10,10 +10,6 @@ import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/attendance/attendance_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-import '../../model/data_model/attendence_classes_conducted.dart';
-import '../../model/data_model/attendence_classes_of_month.dart' as attendance;
-import 'components/attendance_class_pick.dart';
-
 class AttendanceCalenderView extends StatefulWidget {
   static const route = '/batch-calender-view';
 
@@ -51,8 +47,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
           int flag = 0;
           int conductedClassId = 0;
           for (var element1 in cubit.conductedClasses ?? []) {
-            if (element.date == element1.conductedOn &&
-                element.startTime == element1.startTime.substring(0, 5)) {
+            if (element.date == element1.conductedOn) {
               flag = 1;
               conductedClassId = element1.id;
               break;
@@ -69,7 +64,6 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                 height: 5.0,
                 width: 5.0,
               ),
-              flag: flag,
             ),
           );
         }
@@ -93,7 +87,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
       child: Scaffold(
         key: scaffoldKey,
         appBar: CommonBar(
-          title: 'Class Attendance',
+          title: 'Class Attendence',
           onPressed: () {
             context.read<AttendanceCubit>().getBatchesByStatus(
                   branchId: context.read<BatchCubit>().batchModel?.branchId,
@@ -216,8 +210,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                             AttendanceCubit cubit =
                                 context.read<AttendanceCubit>();
                             int flag = 0;
-                            for (attendance.ClassDetails element
-                                in cubit.attendenceClasses ?? []) {
+                            for (var element in cubit.attendenceClasses ?? []) {
                               cubit.selectedClass = element;
                               if (date == element.date) {
                                 flag = 1;
@@ -234,11 +227,10 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                     message: 'No students Added to Batch');
                               } else {
                                 cubit.conductedDate = date;
-                                cubit.conductedClassIdList = List.generate(
-                                    events.length,
-                                    (index) => events[index].title != "Event 1"
-                                        ? int.parse(events[index].title ?? "0")
-                                        : 0);
+                                cubit.conductedClassId =
+                                    events[0].title != "Event 1"
+                                        ? int.parse(events[0].title ?? "0")
+                                        : 0;
                                 if (DateTime.now().compareTo(
                                         cubit.conductedDate ?? DateTime.now()) <
                                     0) {
@@ -246,16 +238,11 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                       message:
                                           'Cannot add attendence for a future date.');
                                 } else {
-                                  cubit.dropdownSelectedIndex = 0;
-                                  if (events.length > 1) {
-                                    cubit.isFromRescheduledClass = true;
-                                    scaffoldKey.currentState?.showBottomSheet(
-                                        elevation: 10,
-                                        backgroundColor: Colors.transparent,
-                                        (context) => AttendanceClassPicker(
-                                              date: date,
-                                              eventList: events,
-                                            ));
+                                  if (cubit.conductedClassId == 0) {
+                                    await Navigator.pushNamed(
+                                      context,
+                                      AttendanceAdd.route,
+                                    );
                                     await cubit.getClassesOfMonth(
                                         batchId: cubit.id,
                                         date: DateTime(
@@ -275,10 +262,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                         for (var element1
                                             in cubit.conductedClasses ?? []) {
                                           if (element.date ==
-                                                  element1.conductedOn &&
-                                              element.startTime ==
-                                                  element1.startTime
-                                                      .substring(0, 5)) {
+                                              element1.conductedOn) {
                                             flag = 1;
                                             conductedClassId = element1.id;
                                             break;
@@ -302,75 +286,15 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                               height: 5.0,
                                               width: 5.0,
                                             ),
-                                            flag: flag,
                                           ),
                                         );
                                       }
                                     });
                                   } else {
-                                    cubit.isFromRescheduledClass = false;
-                                    if (cubit.conductedClassIdList[0] == 0) {
-                                      await Navigator.pushNamed(
-                                        context,
-                                        AttendanceAdd.route,
-                                      );
-                                      await cubit.getClassesOfMonth(
-                                          batchId: cubit.id,
-                                          date: DateTime(
-                                              currentYear, currentMonth));
-                                      await cubit.getConductedClassesOfMonth(
-                                          batchId: cubit.id,
-                                          date: DateTime(
-                                              currentYear, currentMonth));
-                                      _markedDateMap.clear();
-                                      setState(() {
-                                        noOfWeeks = getWeeksInMonth(DateTime(
-                                            currentYear, currentMonth));
-                                        for (var element
-                                            in cubit.attendenceClasses ?? []) {
-                                          int flag = 0;
-                                          int conductedClassId = 0;
-                                          for (var element1
-                                              in cubit.conductedClasses ?? []) {
-                                            if (element.date ==
-                                                    element1.conductedOn &&
-                                                element.startTime ==
-                                                    element1.startTime
-                                                        .substring(0, 5)) {
-                                              flag = 1;
-                                              conductedClassId = element1.id;
-                                              break;
-                                            }
-                                          }
-                                          _markedDateMap.add(
-                                            element.date ?? DateTime.now(),
-                                            Event(
-                                              date: element.date ??
-                                                  DateTime.now(),
-                                              title: conductedClassId == 0
-                                                  ? 'Event 1'
-                                                  : '$conductedClassId',
-                                              dot: Container(
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 1.0),
-                                                color: flag == 1
-                                                    ? Colors.green
-                                                    : Colors.red,
-                                                height: 5.0,
-                                                width: 5.0,
-                                              ),
-                                              flag: flag,
-                                            ),
-                                          );
-                                        }
-                                      });
-                                    } else {
-                                      Navigator.pushNamed(
-                                        context,
-                                        AttendanceUpdate.route,
-                                      );
-                                    }
+                                    Navigator.pushNamed(
+                                      context,
+                                      AttendanceUpdate.route,
+                                    );
                                   }
                                 }
                               }
@@ -405,9 +329,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                 int conductedClassId = 0;
                                 for (var element1
                                     in cubit.conductedClasses ?? []) {
-                                  if (element.date == element1.conductedOn &&
-                                      element.startTime ==
-                                          element1.startTime.substring(0, 5)) {
+                                  if (element.date == element1.conductedOn) {
                                     flag = 1;
                                     conductedClassId = element1.id;
                                     break;
@@ -428,7 +350,6 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                       height: 5.0,
                                       width: 5.0,
                                     ),
-                                    flag: flag,
                                   ),
                                 );
                               }
@@ -453,15 +374,13 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                 date: DateTime(currentYear, currentMonth));
                             _markedDateMap.clear();
                             setState(() {
-                              for (attendance.ClassDetails element
+                              for (var element
                                   in cubit.attendenceClasses ?? []) {
                                 int flag = 0;
                                 int conductedClassId = 0;
-                                for (ConductedClass element1
+                                for (var element1
                                     in cubit.conductedClasses ?? []) {
-                                  if (element.date == element1.conductedOn &&
-                                      element.startTime ==
-                                          element1.startTime.substring(0, 5)) {
+                                  if (element.date == element1.conductedOn) {
                                     flag = 1;
                                     conductedClassId = element1.id;
                                     break;
@@ -482,7 +401,6 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                       height: 5.0,
                                       width: 5.0,
                                     ),
-                                    flag: flag,
                                   ),
                                 );
                               }

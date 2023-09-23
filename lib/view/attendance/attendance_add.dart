@@ -77,22 +77,15 @@ class _AttendanceAddState extends State<AttendanceAdd> {
               },
               builder: (context, state) {
                 batch = context.read<BatchCubit>().batchModel;
-                if (!cubit.isFromRescheduledClass) {
-                  batch?.batchDetail?.forEach((element) {
-                    if (element.day == cubit.conductedDate!.weekday) {
-                      startTime = element.startTime;
-                      endTime = element.endTime;
-                    } else {
-                      startTime = cubit.selectedClass?.startTime;
-                      endTime = cubit.selectedClass?.endTime;
-                    }
-                  });
-                } else {
-                  startTime = cubit.selectedClass?.startTime;
-                  endTime = cubit.selectedClass?.endTime;
-                 
-                }
-
+                batch?.batchDetail?.forEach((element) {
+                  if (element.day == cubit.conductedDate!.weekday) {
+                    startTime = element.startTime;
+                    endTime = element.endTime;
+                  } else {
+                    startTime = cubit.selectedClass?.startTime;
+                    endTime = cubit.selectedClass?.endTime;
+                  }
+                });
                 if (state is CreatingAttendance) {
                   return const Center(
                     child: CircularProgressIndicator(),

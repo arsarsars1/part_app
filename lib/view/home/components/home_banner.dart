@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
@@ -127,82 +126,78 @@ class _HomeBannerState extends State<HomeBanner> {
                           itemCount: activeBanners.length,
                           itemBuilder: (context, index) {
                             var banner = activeBanners[index];
-                            return CachedNetworkImage(
-                              imageUrl: banner?.imageUrl ?? '',
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover)),
-                                child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              5,
-                                            ),
-                                            color: Colors.black.withOpacity(
-                                              0.44,
-                                            ),
+                            return Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(banner.imageUrl),
+                                ),
+                              ),
+                              child: Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            5,
                                           ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text(
-                                                banner.description ?? '',
-                                              ),
-                                              Text(
-                                                '${fromTime.toTime()} '
-                                                'To ${toTime.toTime()}, '
-                                                '$formattedString',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge
-                                                    ?.copyWith(
-                                                      fontSize: 10,
-                                                    ),
-                                              ),
-                                            ],
+                                          color: Colors.black.withOpacity(
+                                            0.44,
                                           ),
                                         ),
-                                        if (isButtonVisible)
-                                          Button(
-                                            backgroundColor:
-                                                AppColors.defaultBlue,
-                                            height: 22.h,
-                                            width: 97.w,
-                                            fontSize: 10.sp,
-                                            onTap: () async {
-                                              var url =
-                                                  (banner.extUrl?.isEmpty ??
-                                                          true)
-                                                      ? 'https://partapp.in/'
-                                                      : (banner.extUrl ?? '');
-                                              final uri = Uri.parse(url);
-                                              if (await canLaunchUrl(uri)) {
-                                                await launchUrl(uri);
-                                              } else {
-                                                throw 'Could not launch $url';
-                                              }
-                                            },
-                                            title: (banner.extUrlButtonText
-                                                        ?.isEmpty ??
-                                                    true)
-                                                ? 'Register Now'
-                                                : banner.extUrlButtonText!,
-                                          ),
-                                      ],
-                                    ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              banner.description ?? '',
+                                            ),
+                                            Text(
+                                              '${fromTime.toTime()} '
+                                              'To ${toTime.toTime()}, '
+                                              '$formattedString',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge
+                                                  ?.copyWith(
+                                                    fontSize: 10,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      if (isButtonVisible)
+                                        Button(
+                                          backgroundColor:
+                                              AppColors.defaultBlue,
+                                          height: 22.h,
+                                          width: 97.w,
+                                          fontSize: 10.sp,
+                                          onTap: () async {
+                                            var url =
+                                                (banner.extUrl?.isEmpty ?? true)
+                                                    ? 'https://partapp.in/'
+                                                    : banner.extUrl!;
+                                            final uri = Uri.parse(url);
+                                            if (await canLaunchUrl(uri)) {
+                                              await launchUrl(uri);
+                                            } else {
+                                              throw 'Could not launch $url';
+                                            }
+                                          },
+                                          title:
+                                              banner.extUrlButtonText!.isEmpty
+                                                  ? 'Register Now'
+                                                  : banner.extUrlButtonText!,
+                                        ),
+                                    ],
                                   ),
                                 ),
                               ),

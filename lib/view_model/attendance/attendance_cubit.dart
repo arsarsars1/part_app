@@ -44,11 +44,9 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   ClassDetails? selectedClass;
   int conductedClassCount = 0;
   DateTime? conductedDate;
-  List<int> conductedClassIdList = [];
+  int? conductedClassId;
   int pre = 0;
   int abs = 0;
-  bool isFromRescheduledClass = false;
-  int dropdownSelectedIndex = 0;
 
   void addOrRemoveStudent(int studentId) {
     if (selectedStudents.contains(studentId)) {
