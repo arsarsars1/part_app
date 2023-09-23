@@ -28,19 +28,6 @@ class _BatchDetailsState extends State<BatchDetails> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      scrollController.position.isScrollingNotifier.addListener(() async {
-        if (!scrollController.position.isScrollingNotifier.value) {
-          doSearch(clean: false);
-        }
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     var batchCubit = context.read<BatchCubit>();
     return WillPopScope(
@@ -97,273 +84,282 @@ class _BatchDetailsState extends State<BatchDetails> {
                       child: Text(state.message),
                     );
                   }
-                  return ListView(
-                    controller: scrollController,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.all(16),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: AppColors.liteDark,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                  return NotificationListener<ScrollNotification>(
+                    onNotification: (scrollNotification) {
+                      if (scrollNotification is ScrollEndNotification) {
+                        doSearch(clean: false);
+                      }
+                      return false;
+                    },
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppColors.liteDark,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${batch?.name}",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${batch?.name}",
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          Text(
+                                            "${batch?.branchName}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(
+                                                  color: AppColors.primaryColor,
+                                                ),
+                                          ),
+                                        ],
                                       ),
-                                      const SizedBox(
-                                        height: 4,
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          EditBatchDetails.route,
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 24.w,
+                                        height: 24.w,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.black54,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2,
+                                          ),
+                                        ),
+                                        child: const Icon(
+                                          Icons.edit_outlined,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                      Text(
-                                        "${batch?.branchName}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(
-                                              color: AppColors.primaryColor,
-                                            ),
-                                      ),
-                                    ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  '${batch?.courseName}, ${batch?.subjectName}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(),
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return Text(
+                                      '${batch?.days[index]}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    );
+                                  },
+                                  itemCount: batch?.days.length ?? 0,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    'Admission Fees: ₹${batch?.admissionFee.toString().currencyFormat()}/-',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
                                   ),
                                 ),
                                 const SizedBox(
-                                  width: 8,
+                                  height: 4,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    'Fees: ₹${batch?.fee.toString().currencyFormat()}/-',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                GestureDetector(
+                                  onTap: () => Navigator.pushNamed(
+                                    context,
+                                    RescheduleClass.route,
+                                  ),
+                                  child: Container(
+                                    height: 34.h,
+                                    width: 158.w,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.defaultBlue,
+                                      borderRadius: BorderRadius.circular(45),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 4),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Spacer(),
+                                        Text(
+                                          'Reschedule',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                fontSize: 12,
+                                              ),
+                                        ),
+                                        const Spacer(),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 16,
                                 ),
                                 GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      EditBatchDetails.route,
-                                    );
-                                  },
+                                  onTap: () => Navigator.pushNamed(
+                                    context,
+                                    CancelClass.route,
+                                  ),
                                   child: Container(
-                                    width: 24.w,
-                                    height: 24.w,
+                                    height: 34.h,
+                                    width: 158.w,
                                     decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.black54,
-                                      border: Border.all(
-                                        color: Colors.white,
-                                        width: 2,
-                                      ),
+                                      color: AppColors.primaryColor,
+                                      borderRadius: BorderRadius.circular(45),
                                     ),
-                                    child: const Icon(
-                                      Icons.edit_outlined,
-                                      size: 16,
-                                      color: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 4),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Spacer(),
+                                        Text(
+                                          'Cancel',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                fontSize: 12,
+                                              ),
+                                        ),
+                                        const Spacer(),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 4,
+                          ),
+                          Container(
+                            width: double.maxFinite,
+                            margin: const EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppColors.liteDark,
+                              borderRadius: BorderRadius.circular(4),
                             ),
-                            Text(
-                              '${batch?.courseName}, ${batch?.subjectName}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            ListView.builder(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Text(
-                                  '${batch?.days[index]}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                );
-                              },
-                              itemCount: batch?.days.length ?? 0,
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                'Admission Fees: ₹${batch?.admissionFee.toString().currencyFormat()}/-',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                'Fees: ₹${batch?.fee.toString().currencyFormat()}/-',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              onTap: () => Navigator.pushNamed(
-                                context,
-                                RescheduleClass.route,
-                              ),
-                              child: Container(
-                                height: 34.h,
-                                width: 158.w,
-                                decoration: BoxDecoration(
-                                  color: AppColors.defaultBlue,
-                                  borderRadius: BorderRadius.circular(45),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Batch Trainers'),
+                                const SizedBox(
+                                  height: 16,
                                 ),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 4),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Spacer(),
-                                    Text(
-                                      'Reschedule',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontSize: 12,
-                                          ),
-                                    ),
-                                    const Spacer(),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            GestureDetector(
-                              onTap: () => Navigator.pushNamed(
-                                context,
-                                CancelClass.route,
-                              ),
-                              child: Container(
-                                height: 34.h,
-                                width: 158.w,
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  borderRadius: BorderRadius.circular(45),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 4),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Spacer(),
-                                    Text(
-                                      'Cancel',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontSize: 12,
-                                          ),
-                                    ),
-                                    const Spacer(),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: double.maxFinite,
-                        margin: const EdgeInsets.all(16),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: AppColors.liteDark,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Batch Trainers'),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            SelectedTrainers(
-                              batchDetails: true,
-                              branchId: batch?.branchId,
-                              scaffoldKey: scaffoldKey,
-                              trainers: batch?.trainers,
-                              selectedTrainers: (List<Trainer?> value) {
-                                var trainerList =
-                                    value.map((e) => e?.id).toList();
-                                if (value.isEmpty) {
-                                  BatchRequest request = const BatchRequest(
-                                    trainers: "",
-                                  );
-                                  context
-                                      .read<BatchCubit>()
-                                      .updateBatch(request);
-                                } else {
-                                  BatchRequest request = BatchRequest(
-                                    trainers: context
-                                        .read<BranchCubit>()
-                                        .trainers
-                                        ?.where(
-                                            (element) => trainerList.contains(
+                                SelectedTrainers(
+                                  batchDetails: true,
+                                  branchId: batch?.branchId,
+                                  scaffoldKey: scaffoldKey,
+                                  trainers: batch?.trainers,
+                                  selectedTrainers: (List<Trainer?> value) {
+                                    var trainerList =
+                                        value.map((e) => e?.id).toList();
+                                    if (value.isEmpty) {
+                                      BatchRequest request = const BatchRequest(
+                                        trainers: "",
+                                      );
+                                      context
+                                          .read<BatchCubit>()
+                                          .updateBatch(request);
+                                    } else {
+                                      BatchRequest request = BatchRequest(
+                                        trainers: context
+                                            .read<BranchCubit>()
+                                            .trainers
+                                            ?.where((element) =>
+                                                trainerList.contains(
                                                   element.id,
                                                 ))
-                                        .map((e) => e.trainerDetail?[0].id)
-                                        .toList(),
-                                  );
-                                  context
-                                      .read<BatchCubit>()
-                                      .updateBatch(request);
-                                }
-                              },
-                            )
-                          ],
-                        ),
+                                            .map((e) => e.trainerDetail?[0].id)
+                                            .toList(),
+                                      );
+                                      context
+                                          .read<BatchCubit>()
+                                          .updateBatch(request);
+                                    }
+                                  },
+                                )
+                              ],
+                            ),
+                          ),
+                          BatchStudents(
+                            onChange: (bool value) {
+                              isActive = value;
+                              doSearch();
+                            },
+                          ),
+                        ],
                       ),
-                      BatchStudents(
-                        onChange: (bool value) {
-                          isActive = value;
-                          doSearch();
-                        },
-                      ),
-                    ],
+                    ),
                   );
                 },
               ),
