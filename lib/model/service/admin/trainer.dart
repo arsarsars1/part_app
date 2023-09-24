@@ -193,7 +193,6 @@ class TrainerService {
         data: data,
         formData: true,
       );
-      print(response.toString());
       return commonFromJson(jsonEncode(response));
     } catch (e) {
       return null;
