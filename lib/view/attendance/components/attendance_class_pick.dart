@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/model/extensions.dart';
 
+import '../../../model/data_model/event_model.dart';
 import '../../../view_model/attendance/attendance_cubit.dart';
 import '../attendance_add.dart';
 import '../attendance_update.dart';
 
 class AttendanceClassPicker extends StatefulWidget {
   final DateTime date;
-  final List<Event>? eventList;
+  final List<EventModel>? eventList;
 
   const AttendanceClassPicker({
     Key? key,
@@ -138,7 +138,6 @@ class _AttendanceClassPickerState extends State<AttendanceClassPicker> {
               ),
               Button(
                   onTap: () {
-                    
                     cubit.selectedClass =
                         classList?[cubit.dropdownSelectedIndex];
                     if (widget.eventList == null) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
@@ -12,6 +11,7 @@ import 'package:part_app/view_model/cubits.dart';
 
 import '../../model/data_model/attendence_classes_conducted.dart';
 import '../../model/data_model/attendence_classes_of_month.dart' as attendance;
+import '../../model/data_model/event_model.dart';
 import 'components/attendance_class_pick.dart';
 
 class AttendanceCalenderView extends StatefulWidget {
@@ -28,7 +28,8 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
   ScrollController scrollController = ScrollController();
   BatchModel? batch;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  final EventList<Event> _markedDateMap = EventList<Event>(events: {});
+  final EventList<EventModel> _markedDateMap =
+      EventList<EventModel>(events: {});
   int currentYear = DateTime.now().year;
   int currentMonth = DateTime.now().month;
   StudentCubit? studentCubit;
@@ -60,7 +61,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
           }
           _markedDateMap.add(
             element.date ?? DateTime.now(),
-            Event(
+            EventModel(
               date: element.date ?? DateTime.now(),
               title: conductedClassId == 0 ? 'Event 1' : '$conductedClassId',
               dot: Container(
@@ -208,7 +209,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                     fontSize: 12.sp,
                                   ),
                         ),
-                        CalendarCarousel<Event>(
+                        CalendarCarousel<EventModel>(
                           childAspectRatio: 1.1,
                           iconColor: Colors.white,
                           todayBorderColor: Colors.transparent,
@@ -286,7 +287,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                         }
                                         _markedDateMap.add(
                                           element.date ?? DateTime.now(),
-                                          Event(
+                                          EventModel(
                                             date:
                                                 element.date ?? DateTime.now(),
                                             title: conductedClassId == 0
@@ -344,7 +345,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                           }
                                           _markedDateMap.add(
                                             element.date ?? DateTime.now(),
-                                            Event(
+                                            EventModel(
                                               date: element.date ??
                                                   DateTime.now(),
                                               title: conductedClassId == 0
@@ -415,7 +416,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                 }
                                 _markedDateMap.add(
                                   element.date ?? DateTime.now(),
-                                  Event(
+                                  EventModel(
                                     date: element.date ?? DateTime.now(),
                                     title: conductedClassId == 0
                                         ? 'Event 1'
@@ -469,7 +470,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                 }
                                 _markedDateMap.add(
                                   element.date ?? DateTime.now(),
-                                  Event(
+                                  EventModel(
                                     date: element.date ?? DateTime.now(),
                                     title: conductedClassId == 0
                                         ? 'Event 1'
