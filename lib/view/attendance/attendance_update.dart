@@ -32,7 +32,9 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       AttendanceCubit cubit = context.read<AttendanceCubit>();
       await cubit.getAttendenceTaken(
-          batchId: cubit.id, conductedClassId: cubit.conductedClassId);
+          batchId: cubit.id,
+          conductedClassId:
+              cubit.conductedClassIdList[cubit.dropdownSelectedIndex]);
       setState(() {});
     });
   }
@@ -60,12 +62,18 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
               },
               builder: (context, state) {
                 batch = context.read<BatchCubit>().batchModel;
-                batch?.batchDetail?.forEach((element) {
-                  if (element.day == cubit.conductedDate!.weekday) {
-                    startTime = element.startTime;
-                    endTime = element.endTime;
-                  }
-                });
+                if (!cubit.isFromRescheduledClass) {
+                  batch?.batchDetail?.forEach((element) {
+                    if (element.day == cubit.conductedDate!.weekday) {
+                      startTime = element.startTime;
+                      endTime = element.endTime;
+                    }
+                  });
+                } else {
+                  startTime = cubit.selectedClass?.startTime;
+                  endTime = cubit.selectedClass?.endTime;
+                }
+
                 if (state is UpdatingAttendence) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -421,7 +429,9 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                           },
                                                           batchId: cubit.id,
                                                           conductedClassId: cubit
-                                                              .conductedClassId,
+                                                                  .conductedClassIdList[
+                                                              cubit
+                                                                  .dropdownSelectedIndex],
                                                           conductedClassStudentId:
                                                               selectedStudent
                                                                   ?.id);

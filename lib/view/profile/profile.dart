@@ -46,11 +46,15 @@ class _ProfileState extends State<Profile> {
       User? user = context.read<AuthCubit>().user;
       dobController.text = user?.adminDetail?.dob?.toDateString() ?? '';
     });
+    selected =
+        context.read<AuthCubit>().user?.adminDetail?.whatsappNo?.isEmpty ??
+            false;
   }
 
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AuthCubit>();
+
     return Scaffold(
       appBar: const CommonBar(
         title: 'Admin Profile Details',
@@ -72,6 +76,7 @@ class _ProfileState extends State<Profile> {
             child: CircularProgressIndicator(),
           );
         }
+
         return Form(
           key: formKey,
           child: ListView(
@@ -176,6 +181,11 @@ class _ProfileState extends State<Profile> {
                       inputType: TextInputType.number,
                       phoneField: true,
                       title: 'Whatsapp Phone Number *',
+                      initialValue: context
+                          .read<AuthCubit>()
+                          .user
+                          ?.adminDetail
+                          ?.whatsappNo,
                       onChange: (value) {
                         waNumber = value;
                       },
@@ -307,7 +317,7 @@ class _ProfileState extends State<Profile> {
                     name: name,
                     email: email,
                     gender: gender,
-                    whatsappNo: waNumber,
+                    whatsappNo: selected ? null : waNumber,
                     academyName: academyName,
                     dob: dob,
                   );
