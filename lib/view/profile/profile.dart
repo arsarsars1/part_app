@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
+import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/profile_update_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/extensions.dart';
@@ -54,10 +55,11 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AuthCubit>();
-
+     print('acount type ${cubit.accountType}');
+    bool isStudent = cubit.accountType == AccountType.student;
     return Scaffold(
-      appBar: const CommonBar(
-        title: 'Admin Profile Details',
+      appBar: CommonBar(
+        title: isStudent ? 'Profile Details' : 'Admin Profile Details',
       ),
       body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
         if (state is UpdateUserSuccess) {

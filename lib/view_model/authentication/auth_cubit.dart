@@ -271,9 +271,8 @@ class AuthCubit extends Cubit<AuthState> {
 
   void navigateToDashboard(Academy? academy, List<Trainer>? trainerList,
       List<StudentDetail>? studentsList, BuildContext context) {
-   
     int numberOfItems = 0;
-     var cubit = context.read<AuthCubit>();
+    var cubit = context.read<AuthCubit>();
     AccountType accountType = AccountType.admin;
     if (academy != null) numberOfItems++;
 
@@ -292,18 +291,19 @@ class AuthCubit extends Cubit<AuthState> {
         (route) => false,
       );
     } else {
-      if (accountType == AccountType.admin){
+      print('acount type $accountType');
+      if (accountType == AccountType.admin) {
         cubit.accountType = AccountType.admin;
+        print('acount type ${cubit.accountType}');
         Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        Home.route,
-                        (route) => false,
-                      );
+          context,
+          Home.route,
+          (route) => false,
+        );
       } else if (accountType == AccountType.trainer) {
         cubit.accountType = AccountType.trainer;
         Alert(context).show(message: 'WIP');
-      }
-      else {
+      } else {
         cubit.studentIndex = 0;
         cubit.accountType = AccountType.student;
         Navigator.pushNamedAndRemoveUntil(
