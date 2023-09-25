@@ -148,7 +148,7 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<NotificationList?> getNotificationList({
+  Future getNotificationList({
     bool clean = true,
   }) async {
     if (clean) {
@@ -162,6 +162,7 @@ class HomeCubit extends Cubit<HomeState> {
 
     if (nextPageUrl == null) {
       emit(GotNotifications());
+      return;
     }
 
     NotificationList? temp =
@@ -282,7 +283,7 @@ class HomeCubit extends Cubit<HomeState> {
       } else {
         emit(ReadNotificationFailed(
             response?.message ?? 'Failed to read notification'));
-            return false;
+        return false;
       }
     } catch (e) {
       return false;
@@ -301,7 +302,8 @@ class HomeCubit extends Cubit<HomeState> {
     }
     return trainer;
   }
-///todo
+
+  ///todo
   Future<bool> readStudentAppNotification(
       int? studentId, String? notificationId) async {
     try {
