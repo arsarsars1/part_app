@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/auth/components/resend_otp.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/components/components.dart';
@@ -56,11 +55,11 @@ class _OTPVerifyState extends State<OTPVerify> {
             if (state.user) {
               if (cubit.user?.adminDetail != null) {
                 if (cubit.user?.adminDetail?.academy?.membershipId != null) {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    SwitchAccount.route,
-                    (route) => false,
-                  );
+                  cubit.navigateToDashboard(
+                      cubit.user?.adminDetail?.academy,
+                      cubit.user?.trainerDetail,
+                      cubit.user?.studentDetail,
+                      context);
                 } else {
                   Navigator.pushNamedAndRemoveUntil(
                     context,
@@ -69,11 +68,11 @@ class _OTPVerifyState extends State<OTPVerify> {
                   );
                 }
               } else {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  SwitchAccount.route,
-                  (route) => false,
-                );
+                cubit.navigateToDashboard(
+                    cubit.user?.adminDetail?.academy,
+                    cubit.user?.trainerDetail,
+                    cubit.user?.studentDetail,
+                    context);
               }
             }
           }
