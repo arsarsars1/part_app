@@ -38,14 +38,6 @@ class _StudentAppAttendanceCalenderViewState
   int noOfWeeks = 0, present = 0, absent = 0;
 
   @override
-  void initState() {
-    // var branchCubit = context.read<BranchCubit>();
-    // var authCubit = context.read<AuthCubit>();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     batchCubit = context.read<BatchCubit>();
     studentCubit = context.read<StudentCubit>();

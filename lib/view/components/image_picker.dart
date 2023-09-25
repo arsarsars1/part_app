@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -88,7 +90,6 @@ class ImagePickerDialog {
                                             await getImageFileFromAssets(
                                                 'avatar-1.png');
                                         onSelect(file);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: SizedBox(
@@ -108,7 +109,6 @@ class ImagePickerDialog {
                                             await getImageFileFromAssets(
                                                 'avatar-2.png');
                                         onSelect(file);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: SizedBox(
@@ -128,7 +128,6 @@ class ImagePickerDialog {
                                             await getImageFileFromAssets(
                                                 'avatar-3.png');
                                         onSelect(file);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: SizedBox(
@@ -152,7 +151,6 @@ class ImagePickerDialog {
                                             await getImageFileFromAssets(
                                                 'avatar-4.png');
                                         onSelect(file);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: SizedBox(
@@ -172,7 +170,6 @@ class ImagePickerDialog {
                                             await getImageFileFromAssets(
                                                 'avatar-5.png');
                                         onSelect(file);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: SizedBox(
@@ -192,7 +189,6 @@ class ImagePickerDialog {
                                             await getImageFileFromAssets(
                                                 'avatar-6.png');
                                         onSelect(file);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: SizedBox(
@@ -216,7 +212,6 @@ class ImagePickerDialog {
                                             await getImageFileFromAssets(
                                                 'avatar-7.png');
                                         onSelect(file);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: SizedBox(
@@ -236,7 +231,6 @@ class ImagePickerDialog {
                                             await getImageFileFromAssets(
                                                 'avatar-8.png');
                                         onSelect(file);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: SizedBox(
@@ -256,7 +250,6 @@ class ImagePickerDialog {
                                             await getImageFileFromAssets(
                                                 'avatar-9.png');
                                         onSelect(file);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: SizedBox(
@@ -280,7 +273,6 @@ class ImagePickerDialog {
                                             await getImageFileFromAssets(
                                                 'avatar-10.png');
                                         onSelect(file);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: SizedBox(
@@ -300,7 +292,6 @@ class ImagePickerDialog {
                                             await getImageFileFromAssets(
                                                 'avatar-11.png');
                                         onSelect(file);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: SizedBox(
@@ -320,7 +311,6 @@ class ImagePickerDialog {
                                             await getImageFileFromAssets(
                                                 'avatar-12.png');
                                         onSelect(file);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.pop(context);
                                       },
                                       child: SizedBox(

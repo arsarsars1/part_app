@@ -21,7 +21,11 @@ class _StudentAppBranchFieldState extends State<StudentAppBranchField> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<BranchCubit>().getStudentAppBranches(
-          studentId: context.read<AuthCubit>().user?.studentDetail?[0].id);
+          studentId: context
+              .read<AuthCubit>()
+              .user
+              ?.studentDetail?[context.read<AuthCubit>().studentIndex]
+              .id);
     });
   }
 
