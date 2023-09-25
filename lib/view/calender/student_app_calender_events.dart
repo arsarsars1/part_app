@@ -52,7 +52,8 @@ class _StudentAppCalenderEventState extends State<StudentAppCalenderEvent> {
             }
             if ((cubit.scheduledStudentClasses ?? []).isEmpty &&
                 (cubit.rescheduledStudentClasses ?? []).isEmpty &&
-                (cubit.rescheduledToStudentClasses ?? []).isEmpty) {
+                (cubit.rescheduledToStudentClasses ?? []).isEmpty &&
+                (cubit.cancelledStudentClasses ?? []).isEmpty) {
               return const Center(
                 child: Text(
                     'There is no calendar information available for this date'),
@@ -77,6 +78,7 @@ class _StudentAppCalenderEventState extends State<StudentAppCalenderEvent> {
                         SizedBox(height: 10.w),
                         ListView.builder(
                           shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: cubit.scheduledStudentClasses?.length,
                           itemBuilder: (context, index) {
                             Class? tempClass =
@@ -211,6 +213,7 @@ class _StudentAppCalenderEventState extends State<StudentAppCalenderEvent> {
                         SizedBox(height: 10.w),
                         ListView.builder(
                           shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: cubit.rescheduledStudentClasses?.length,
                           itemBuilder: (context, index) {
                             Class? tempClass =
@@ -345,6 +348,7 @@ class _StudentAppCalenderEventState extends State<StudentAppCalenderEvent> {
                         SizedBox(height: 10.w),
                         ListView.builder(
                           shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: cubit.rescheduledToStudentClasses?.length,
                           itemBuilder: (context, index) {
                             Class? tempClass =
@@ -377,6 +381,140 @@ class _StudentAppCalenderEventState extends State<StudentAppCalenderEvent> {
                                         ],
                                       ),
                                     ),
+                                  Text(
+                                    '${tempClass?.batchName}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  Text(
+                                    '${tempClass?.branchName}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp,
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${tempClass?.courseName}, ${tempClass?.subjectName}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Trainers - ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14.sp,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                      ),
+                                      tempClass?.trainers == ''
+                                          ? Text(
+                                              'No Trainers allocated',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.sp,
+                                                color: AppColors.primaryColor,
+                                              ),
+                                            )
+                                          : Text(
+                                              '${tempClass?.trainers}',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.sp,
+                                                color: AppColors.primaryColor,
+                                              ),
+                                            ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Start Time - ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14.sp,
+                                          color: AppColors.green,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${tempClass?.startTime?.toAmPM()}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14.sp,
+                                          color: AppColors.green,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'End Time - ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14.sp,
+                                          color: AppColors.green,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${tempClass?.endTime?.toAmPM()}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14.sp,
+                                          color: AppColors.green,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(height: 10.w),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: cubit.cancelledStudentClasses?.length,
+                          itemBuilder: (context, index) {
+                            Class? tempClass =
+                                cubit.cancelledStudentClasses?[index];
+                            return CustomContainer(
+                              widget: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(8.h),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            'Class Cancelled',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.sp,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 10.h),
+                                      ],
+                                    ),
+                                  ),
                                   Text(
                                     '${tempClass?.batchName}',
                                     style: TextStyle(
