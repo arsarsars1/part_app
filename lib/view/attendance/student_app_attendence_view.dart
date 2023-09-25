@@ -46,6 +46,8 @@ class _StudentAppAttendanceCalenderViewState
     // var branchCubit = context.read<BranchCubit>();
     return WillPopScope(
       onWillPop: () async {
+        attendenceCubit.pre = 0;
+        attendenceCubit.abs = 0;
         Navigator.pop(context);
         return true;
       },
@@ -54,6 +56,8 @@ class _StudentAppAttendanceCalenderViewState
         appBar: CommonBar(
           title: 'Attendence',
           onPressed: () {
+            attendenceCubit.pre = 0;
+            attendenceCubit.abs = 0;
             Navigator.pop(context);
           },
         ),
