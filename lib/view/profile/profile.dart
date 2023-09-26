@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/profile_update_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
@@ -44,22 +43,47 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      User? user = context.read<AuthCubit>().user;
-      dobController.text = user?.adminDetail?.dob?.toDateString() ?? '';
+      var cubit = context.read<AuthCubit>();
+      User? user = cubit.user;
+      dobController.text = cubit.accountType == AccountType.admin
+          ? (user?.adminDetail?.dob?.toDateString() ?? '')
+          : (cubit.user?.studentDetail?[cubit.studentIndex].dob
+                  ?.toDateString() ??
+              '');
     });
     selected =
         context.read<AuthCubit>().user?.adminDetail?.whatsappNo?.isEmpty ??
             false;
+    if (context.read<AuthCubit>().accountType == AccountType.student) {
+      final academyId = context
+          .read<AuthCubit>()
+          .user
+          ?.studentDetail?[context.read<AuthCubit>().studentIndex]
+          .academy
+          ?.academyTypeId;
+      academyType = academyId != null
+          ? context
+              .read<CountryCubit>()
+              .academyTypes
+              .firstWhere((element) => element.id == academyId)
+              .title
+          : null;
+
+      gender = context
+          .read<AuthCubit>()
+          .user
+          ?.studentDetail?[context.read<AuthCubit>().studentIndex]
+          .gender;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AuthCubit>();
-     print('acount type ${cubit.accountType}');
-    bool isStudent = cubit.accountType == AccountType.student;
+    bool isAdmin = cubit.accountType == AccountType.admin;
     return Scaffold(
       appBar: CommonBar(
-        title: isStudent ? 'Profile Details' : 'Admin Profile Details',
+        title: isAdmin ? 'Admin Profile Details' : 'Profile Details',
       ),
       body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
         if (state is UpdateUserSuccess) {
@@ -88,18 +112,7 @@ class _ProfileState extends State<Profile> {
               ),
               Center(
                 child: ProfilePicture(
-                  imageUrl: context
-                              .read<AuthCubit>()
-                              .user
-                              ?.adminDetail
-                              ?.profilePic !=
-                          ""
-                      ? '${F.baseUrl}/admin/images/admin/${context.read<AuthCubit>().user?.adminDetail?.id}'
-                          '/${context.read<AuthCubit>().user?.adminDetail?.profilePic}'
-                      : context.read<AuthCubit>().user?.adminDetail?.gender ==
-                              "male"
-                          ? "https://dev.partapp.in/images/avatars/avatar-5.png"
-                          : "https://dev.partapp.in/images/avatars/avatar-1.png",
+                  imageUrl: cubit.getUserProfilePic(),
                   onEdit: () {},
                   onAvatar: (File value) {},
                   onChange: (File value) {
@@ -113,7 +126,7 @@ class _ProfileState extends State<Profile> {
                 height: 16.h,
               ),
               CommonField(
-                initialValue: context.read<AuthCubit>().user?.mobileNo,
+                initialValue: cubit.user?.mobileNo,
                 suffixIcon: const Icon(
                   Icons.check_circle_outline_outlined,
                   color: Colors.greenAccent,
@@ -183,11 +196,10 @@ class _ProfileState extends State<Profile> {
                       inputType: TextInputType.number,
                       phoneField: true,
                       title: 'Whatsapp Phone Number *',
-                      initialValue: context
-                          .read<AuthCubit>()
-                          .user
-                          ?.adminDetail
-                          ?.whatsappNo,
+                      initialValue: isAdmin
+                          ? cubit.user?.adminDetail?.whatsappNo
+                          : cubit.user?.studentDetail?[cubit.studentIndex]
+                              .whatsappNo,
                       onChange: (value) {
                         waNumber = value;
                       },
@@ -199,7 +211,9 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
               CommonField(
-                initialValue: context.read<AuthCubit>().user?.adminDetail?.name,
+                initialValue: isAdmin
+                    ? cubit.user?.adminDetail?.name
+                    : cubit.user?.studentDetail?[cubit.studentIndex].name,
                 title: 'Enter you name *',
                 hint: 'Name',
                 onChange: (value) {
@@ -210,8 +224,9 @@ class _ProfileState extends State<Profile> {
                 height: 20,
               ),
               CommonField(
-                initialValue:
-                    context.read<AuthCubit>().user?.adminDetail?.email,
+                initialValue: isAdmin
+                    ? cubit.user?.adminDetail?.email
+                    : cubit.user?.studentDetail?[cubit.studentIndex].email,
                 title: 'Enter Email *',
                 hint: 'Eg: contact@polestar.com',
                 onChange: (value) {
@@ -232,37 +247,45 @@ class _ProfileState extends State<Profile> {
               const SizedBox(
                 height: 20,
               ),
-              CommonField(
-                defaultItem:
-                    context.read<AuthCubit>().user?.adminDetail?.gender != null
-                        ? DefaultValues().genders.firstWhere((element) =>
-                            element.title?.toLowerCase() ==
-                            context
-                                .read<AuthCubit>()
-                                .user
-                                ?.adminDetail
-                                ?.gender
-                                ?.toLowerCase())
-                        : null,
-                title: 'Gender *',
-                onChange: (value) {
-                  gender = value?.title;
-                },
-                hint: 'Select Gender',
-                dropDown: true,
-                dropDownItems: DefaultValues().genders,
-              ),
+              gender == null
+                  ? CommonField(
+                      defaultItem: cubit.user?.adminDetail?.gender != null
+                          ? DefaultValues().genders.firstWhere((element) =>
+                              element.title?.toLowerCase() ==
+                              context
+                                  .read<AuthCubit>()
+                                  .user
+                                  ?.adminDetail
+                                  ?.gender
+                                  ?.toLowerCase())
+                          : null,
+                      title: 'Gender *',
+                      onChange: (value) {
+                        gender = value?.title;
+                      },
+                      hint: 'Select Gender',
+                      dropDown: true,
+                      dropDownItems: DefaultValues().genders,
+                    )
+                  : CommonField(
+                      disabled: true,
+                      initialValue: gender,
+                      title: 'Gender',
+                      hint: 'male',
+                      onChange: (value) {
+                        // email = value;
+                      },
+                    ),
               const SizedBox(
                 height: 20,
               ),
               CommonField(
-                initialValue: context
-                    .read<AuthCubit>()
-                    .user
-                    ?.adminDetail
-                    ?.academy
-                    ?.academyName,
-                title: 'Academy Name *',
+                enabled: isAdmin,
+                initialValue: isAdmin
+                    ? cubit.user?.adminDetail?.academy?.academyName
+                    : cubit.user?.studentDetail?[cubit.studentIndex].academy
+                        ?.academyName,
+                title: isAdmin ? 'Academy Name *' : 'Academy Name',
                 hint: 'Enter the academy name',
                 onChange: (value) {
                   academyName = value;
@@ -271,32 +294,40 @@ class _ProfileState extends State<Profile> {
               const SizedBox(
                 height: 20,
               ),
-              CommonField(
-                title: 'Academy Type *',
-                defaultItem: context
-                            .read<AuthCubit>()
-                            .user
-                            ?.adminDetail
-                            ?.academy
-                            ?.academyTypeId !=
-                        null
-                    ? context.read<CountryCubit>().academyTypes.firstWhere(
-                        (element) =>
-                            element.id ==
-                            context
-                                .read<AuthCubit>()
-                                .user
-                                ?.adminDetail
-                                ?.academy
-                                ?.academyTypeId)
-                    : null,
-                onChange: (value) {
-                  academyType = value?.title;
-                },
-                hint: 'Select Academy Type',
-                dropDown: true,
-                dropDownItems: context.read<CountryCubit>().academyTypes,
-              ),
+              academyType == null
+                  ? CommonField(
+                      title: 'Academy Type *',
+                      defaultItem:
+                          cubit.user?.adminDetail?.academy?.academyTypeId !=
+                                  null
+                              ? context
+                                  .read<CountryCubit>()
+                                  .academyTypes
+                                  .firstWhere((element) =>
+                                      element.id ==
+                                      context
+                                          .read<AuthCubit>()
+                                          .user
+                                          ?.adminDetail
+                                          ?.academy
+                                          ?.academyTypeId)
+                              : null,
+                      onChange: (value) {
+                        academyType = value?.title;
+                      },
+                      hint: 'Select Academy Type',
+                      dropDown: true,
+                      dropDownItems: context.read<CountryCubit>().academyTypes,
+                    )
+                  : CommonField(
+                      initialValue: academyType,
+                      disabled: true,
+                      title: 'Academy Type',
+                      hint: 'Enter the academy name',
+                      onChange: (value) {
+                        // academyName = value;
+                      },
+                    ),
             ],
           ),
         );
@@ -309,9 +340,8 @@ class _ProfileState extends State<Profile> {
             child: Button(
               onTap: () {
                 if (formKey.currentState!.validate()) {
-                  if (!RegExp(emailRegex).hasMatch(email ??
-                      context.read<AuthCubit>().user?.adminDetail?.email ??
-                      "")) {
+                  if (!RegExp(emailRegex).hasMatch(
+                      email ?? cubit.user?.adminDetail?.email ?? "")) {
                     Alert(context).show(message: 'Error enter a valid email');
                     return;
                   }

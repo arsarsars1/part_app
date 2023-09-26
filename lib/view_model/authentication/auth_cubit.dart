@@ -12,6 +12,7 @@ import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api.dart';
 
+import '../../flavors.dart';
 import '../../model/data_model/students_response.dart';
 import '../../model/data_model/trainer_response.dart';
 import '../../view/account/switch_account.dart';
@@ -40,11 +41,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   User? get user => _user;
 
-  AccountType? _accountType;
-
-  AccountType? get accountType => _accountType;
-
-  set accountType(AccountType? type) => _accountType;
+  AccountType? accountType;
 
   /// METHOD TO GENERATE THE OTP FOR LOGIN
   ///
@@ -272,9 +269,10 @@ class AuthCubit extends Cubit<AuthState> {
   void navigateToDashboard(Academy? academy, List<Trainer>? trainerList,
       List<StudentDetail>? studentsList, BuildContext context) {
     int numberOfItems = 0;
-    var cubit = context.read<AuthCubit>();
-    AccountType accountType = AccountType.admin;
-    if (academy != null) numberOfItems++;
+    if (academy != null) {
+      numberOfItems++;
+      accountType = AccountType.admin;
+    }
 
     if (trainerList != null && trainerList.isNotEmpty) {
       numberOfItems += trainerList.length;
@@ -291,21 +289,16 @@ class AuthCubit extends Cubit<AuthState> {
         (route) => false,
       );
     } else {
-      print('acount type $accountType');
       if (accountType == AccountType.admin) {
-        cubit.accountType = AccountType.admin;
-        print('acount type ${cubit.accountType}');
         Navigator.pushNamedAndRemoveUntil(
           context,
           Home.route,
           (route) => false,
         );
       } else if (accountType == AccountType.trainer) {
-        cubit.accountType = AccountType.trainer;
         Alert(context).show(message: 'WIP');
       } else {
-        cubit.studentIndex = 0;
-        cubit.accountType = AccountType.student;
+        studentIndex = 0;
         Navigator.pushNamedAndRemoveUntil(
           context,
           StudentAppHome.route,
@@ -313,5 +306,38 @@ class AuthCubit extends Cubit<AuthState> {
         );
       }
     }
+  }
+
+  String getUserProfilePic() {
+    String url = '';
+    if (accountType == AccountType.admin) {
+      if (user?.adminDetail?.profilePic?.isNotEmpty ?? false) {
+        url = '${F.baseUrl}/admin/images/admin/${user?.adminDetail?.id}'
+            '/${user?.adminDetail?.profilePic}';
+      } else if (user?.adminDetail?.gender == "male") {
+        url = "https://dev.partapp.in/images/avatars/avatar-5.png";
+      } else {
+        url = "https://dev.partapp.in/images/avatars/avatar-1.png";
+      }
+    } else if (accountType == AccountType.student) {
+      if (user?.adminDetail?.profilePic?.isNotEmpty ?? false) {
+        url = '${F.baseUrl}/admin/images/admin/${user?.adminDetail?.id}'
+            '/${user?.adminDetail?.profilePic}';
+      } else if (user?.adminDetail?.gender == "male") {
+        url = "https://dev.partapp.in/images/avatars/avatar-5.png";
+      } else {
+        url = "https://dev.partapp.in/images/avatars/avatar-1.png";
+      }
+    } else {}
+    if (user?.studentDetail?[studentIndex].profilePic?.isNotEmpty ?? false) {
+      url =
+          '${F.baseUrl}/admin/images/student/${user?.studentDetail?[studentIndex].id}'
+          '/${user?.studentDetail?[studentIndex].profilePic}';
+    } else if (user?.studentDetail?[studentIndex].gender == "male") {
+      url = "https://dev.partapp.in/images/avatars/avatar-5.png";
+    } else {
+      url = "https://dev.partapp.in/images/avatars/avatar-1.png";
+    }
+    return url;
   }
 }
