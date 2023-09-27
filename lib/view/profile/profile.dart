@@ -12,6 +12,9 @@ import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
+
+import '../../flavors.dart';
 
 class Profile extends StatefulWidget {
   static const route = '/profile';
@@ -30,6 +33,7 @@ class _ProfileState extends State<Profile> {
   String? waNumber;
   String? academyName;
   String? academyType;
+  String? mobileNo;
   bool selected = true;
   TextEditingController dobController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -51,9 +55,18 @@ class _ProfileState extends State<Profile> {
                   ?.toDateString() ??
               '');
     });
-    selected =
-        context.read<AuthCubit>().user?.adminDetail?.whatsappNo?.isEmpty ??
-            false;
+    var cubit = context.read<AuthCubit>();
+    selected = (context
+                .read<AuthCubit>()
+                .user
+                ?.adminDetail
+                ?.whatsappNo
+                ?.isEmpty ??
+            true) ||
+        (context.read<AuthCubit>().user?.mobileNo ==
+            (cubit.accountType == AccountType.admin
+                ? cubit.user?.adminDetail?.whatsappNo
+                : cubit.user?.studentDetail?[cubit.studentIndex].whatsappNo));
     if (context.read<AuthCubit>().accountType == AccountType.student) {
       final academyId = context
           .read<AuthCubit>()
@@ -111,14 +124,32 @@ class _ProfileState extends State<Profile> {
                 height: 15.h,
               ),
               Center(
-                child: ProfilePicture(
-                  imageUrl: cubit.getUserProfilePic(),
-                  onEdit: () {},
-                  onAvatar: (File value) {},
-                  onChange: (File value) {
-                    // context
-                    //     .read<StudentCubit>()
-                    //     .updateProfilePic(profilePic: value);
+                child: BlocBuilder<ProfileCubit, ProfileState>(
+                  builder: (context, state) {
+                    String url = '';
+                    if (state is ProfileInitial) {
+                      url = cubit.getUserProfilePic();
+                    } else if (state is ProfileLoaded && isAdmin) {
+                      url = '${F.baseUrl}/admin/images/profile-pic'
+                          '/${state.profilePic}';
+                    } else if (state is ProfileLoaded && !isAdmin) {
+                      url =
+                          '${F.baseUrl}/students/${cubit.user?.studentDetail?[cubit.studentIndex].id}/images/profile-pic/${state.profilePic}';
+                    }
+                    return ProfilePicture(
+                      imageUrl: url,
+                      onEdit: () {},
+                      onAvatar: (File value) {},
+                      onChange: (File value) {
+                        cubit.updateProfilePic(
+                            profilePic: value,
+                            studentId: isAdmin
+                                ? null
+                                : cubit.user?.studentDetail?[cubit.studentIndex]
+                                    .id,
+                            context: context);
+                      },
+                    );
                   },
                 ),
               ),
@@ -132,10 +163,11 @@ class _ProfileState extends State<Profile> {
                   color: Colors.greenAccent,
                 ),
                 fillColor: AppColors.disabledColor,
-                disabled: true,
                 textColor: Colors.black,
                 title: 'Your Phone Number *',
-                onChange: (value) {},
+                onChange: (value) {
+                  mobileNo = value;
+                },
               ),
               SizedBox(
                 height: 16.h,
@@ -144,7 +176,20 @@ class _ProfileState extends State<Profile> {
                 child: Button(
                   width: 200.w,
                   height: 30.h,
-                  onTap: () {},
+                  onTap: () {
+                    if (formKey.currentState!.validate()) {
+                      ProfileUpdateRequest request = ProfileUpdateRequest(
+                        mobileNo: mobileNo,
+                        countryCode: '91',
+                      );
+                      cubit.updateProfile(
+                          request,
+                          isAdmin
+                              ? null
+                              : cubit
+                                  .user?.studentDetail?[cubit.studentIndex].id);
+                    }
+                  },
                   title: 'Change Phone Number',
                 ),
               ),
@@ -349,11 +394,15 @@ class _ProfileState extends State<Profile> {
                     name: name,
                     email: email,
                     gender: gender,
-                    whatsappNo: selected ? null : waNumber,
+                    whatsappNo: selected ? cubit.user?.mobileNo : waNumber,
                     academyName: academyName,
                     dob: dob,
                   );
-                  cubit.updateProfile(request);
+                  cubit.updateProfile(
+                      request,
+                      isAdmin
+                          ? null
+                          : cubit.user?.studentDetail?[cubit.studentIndex].id);
                 }
               },
               title: 'Update',

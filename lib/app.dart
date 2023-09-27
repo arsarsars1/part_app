@@ -12,6 +12,7 @@ import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
 import 'package:part_app/view_model/notification/cubit/notification_cubit.dart';
+import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 import 'package:part_app/view_model/todays_classes/classes_today_cubit.dart';
 import 'view_model/attendance/attendance_cubit.dart';
 
@@ -85,6 +86,9 @@ class _AppState extends State<App> {
         ),
         BlocProvider<NotificationCubit>(
           create: (context) => NotificationCubit(),
+        ),
+        BlocProvider<ProfileCubit>(
+          create: (context) => ProfileCubit(),
         ),
       ],
       child: GestureDetector(

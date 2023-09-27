@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -19,6 +21,8 @@ import '../../view/account/switch_account.dart';
 import '../../view/components/alert.dart';
 import '../../view/home/home.dart';
 import '../../view/home/student_app_home.dart';
+import '../profile_pic/cubit/profile_cubit.dart';
+import '../utils.dart';
 
 part 'auth_state.dart';
 
@@ -239,12 +243,40 @@ class AuthCubit extends Cubit<AuthState> {
     return response?.user;
   }
 
-  Future updateProfile(ProfileUpdateRequest request) async {
+  Future updateProfile(ProfileUpdateRequest request, int? studentId) async {
     emit(UpdatingUser());
-    UserResponse? response = await _authService.updateProfile(request.toJson());
+    UserResponse? response = studentId == null
+        ? await _authService.updateProfile(request.toJson())
+        : await _authService.updateStudentProfile(request.toJson(), studentId);
     if (response?.status == 1) {
       validateLocalUser();
       emit(UpdateUserSuccess());
+    } else {
+      emit(UpdateUserFailed(response?.message ?? 'Failed to update'));
+    }
+  }
+
+  Future updateProfilePic(
+      {BuildContext? context, required File profilePic, int? studentId}) async {
+    // emit(UpdatingUser());
+    MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
+    Map<String, dynamic> request = {
+      'profile_pic': picFile,
+    };
+    UserResponse? response = studentId == null
+        ? await _authService.updateProfile(request)
+        : await _authService.updateStudentProfile(request, studentId);
+
+    if (response?.status == 1 && context != null && context.mounted) {
+      Alert(context).show(message: 'User Profile Updated');
+      String url = '';
+      if (response?.user?.adminDetail?.profilePic?.isNotEmpty ?? false) {
+        url = response!.user!.adminDetail!.profilePic!;
+      } else if (response?.user?.studentDetail?.first.profilePic?.isNotEmpty ??
+          false) {
+        url = response?.user?.studentDetail?.first.profilePic ?? '';
+      }
+      context.read<ProfileCubit>().emitProfileLoaded(url);
     } else {
       emit(UpdateUserFailed(response?.message ?? 'Failed to update'));
     }
@@ -312,7 +344,7 @@ class AuthCubit extends Cubit<AuthState> {
     String url = '';
     if (accountType == AccountType.admin) {
       if (user?.adminDetail?.profilePic?.isNotEmpty ?? false) {
-        url = '${F.baseUrl}/admin/images/admin/${user?.adminDetail?.id}'
+        url = '${F.baseUrl}/admin/images/profile-pic'
             '/${user?.adminDetail?.profilePic}';
       } else if (user?.adminDetail?.gender == "male") {
         url = "https://dev.partapp.in/images/avatars/avatar-5.png";
@@ -321,22 +353,14 @@ class AuthCubit extends Cubit<AuthState> {
       }
     } else if (accountType == AccountType.student) {
       if (user?.adminDetail?.profilePic?.isNotEmpty ?? false) {
-        url = '${F.baseUrl}/admin/images/admin/${user?.adminDetail?.id}'
-            '/${user?.adminDetail?.profilePic}';
+        url =
+            '${F.baseUrl}/admin/images/student/${user?.studentDetail?[studentIndex].id}'
+            '/${user?.studentDetail?[studentIndex].profilePic}';
       } else if (user?.adminDetail?.gender == "male") {
         url = "https://dev.partapp.in/images/avatars/avatar-5.png";
       } else {
         url = "https://dev.partapp.in/images/avatars/avatar-1.png";
       }
-    } else {}
-    if (user?.studentDetail?[studentIndex].profilePic?.isNotEmpty ?? false) {
-      url =
-          '${F.baseUrl}/admin/images/student/${user?.studentDetail?[studentIndex].id}'
-          '/${user?.studentDetail?[studentIndex].profilePic}';
-    } else if (user?.studentDetail?[studentIndex].gender == "male") {
-      url = "https://dev.partapp.in/images/avatars/avatar-5.png";
-    } else {
-      url = "https://dev.partapp.in/images/avatars/avatar-1.png";
     }
     return url;
   }

@@ -12,6 +12,7 @@ import 'package:part_app/view/home/components/logout.dart';
 import 'package:part_app/view/membership/current_membership.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
+import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 
 enum MenuItems { profile, logout, membership, switchAccount }
 
@@ -58,19 +59,30 @@ class _ProfileButtonState extends State<ProfileButton> {
           shape: BoxShape.circle,
           color: AppColors.primaryColor,
         ),
-        child: CircleAvatar(
-          backgroundImage: CachedNetworkImageProvider(
-            user?.adminDetail?.profilePic != ""
-                ? '${F.baseUrl}/admin/images/profile-pic'
-                    '/${context.read<AuthCubit>().user?.adminDetail?.profilePic}'
-                : user?.adminDetail?.gender == "male"
-                    ? "https://dev.partapp.in/images/avatars/avatar-5.png"
-                    : "https://dev.partapp.in/images/avatars/avatar-1.png",
-            headers: {
-              "Authorization": token,
-              'MOBILE-APP-TOKEN': ApiClient().token,
-            },
-          ),
+        child: BlocBuilder<ProfileCubit, ProfileState>(
+          builder: (context, state) {
+            var url = '';
+            if (state is ProfileInitial) {
+              url = user?.adminDetail?.profilePic != ""
+                  ? '${F.baseUrl}/admin/images/profile-pic'
+                      '/${context.read<AuthCubit>().user?.adminDetail?.profilePic}'
+                  : user?.adminDetail?.gender == "male"
+                      ? "https://dev.partapp.in/images/avatars/avatar-5.png"
+                      : "https://dev.partapp.in/images/avatars/avatar-1.png";
+            } else if (state is ProfileLoaded) {
+              url = '${F.baseUrl}/admin/images/profile-pic'
+                  '/${state.profilePic}';
+            }
+            return CircleAvatar(
+              backgroundImage: CachedNetworkImageProvider(
+                url,
+                headers: {
+                  "Authorization": token,
+                  'MOBILE-APP-TOKEN': ApiClient().token,
+                },
+              ),
+            );
+          },
         ),
       ),
       itemBuilder: (context) {

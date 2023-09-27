@@ -3,6 +3,8 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
 
+import '../../../view_model/profile_pic/cubit/profile_cubit.dart';
+
 class _Logout extends StatelessWidget {
   const _Logout({Key? key}) : super(key: key);
 
@@ -50,6 +52,7 @@ class _Logout extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                     context.read<AuthCubit>().logout();
+                    context.read<ProfileCubit>().emitProfileInitial();
                   },
                   title: 'Yes',
                 ),
