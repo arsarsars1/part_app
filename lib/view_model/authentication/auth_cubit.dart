@@ -352,9 +352,9 @@ class AuthCubit extends Cubit<AuthState> {
         url = "https://dev.partapp.in/images/avatars/avatar-1.png";
       }
     } else if (accountType == AccountType.student) {
-      if (user?.adminDetail?.profilePic?.isNotEmpty ?? false) {
+      if (user?.studentDetail?[studentIndex].profilePic?.isNotEmpty ?? false) {
         url =
-            '${F.baseUrl}/admin/images/student/${user?.studentDetail?[studentIndex].id}'
+            '${F.baseUrl}/students/${user?.studentDetail?[studentIndex].id}/images/profile-pic'
             '/${user?.studentDetail?[studentIndex].profilePic}';
       } else if (user?.adminDetail?.gender == "male") {
         url = "https://dev.partapp.in/images/avatars/avatar-5.png";
