@@ -250,7 +250,55 @@ class AuthCubit extends Cubit<AuthState> {
         : await _authService.updateStudentProfile(request.toJson(), studentId);
     if (response?.status == 1) {
       validateLocalUser();
-      emit(UpdateUserSuccess());
+
+      if (studentId == null) {
+        emit(
+          UpdateUserSuccess(
+            user: user!.copyWith(
+              mobileNo: request.mobileNo ?? user!.mobileNo,
+              adminDetail: user!.adminDetail!.copyWith(
+                name: request.name ?? user!.adminDetail!.name,
+                email: request.email ?? user!.adminDetail!.email,
+                gender: request.gender ?? user!.adminDetail!.gender,
+                whatsappNo: request.whatsappNo ?? user!.adminDetail!.whatsappNo,
+                dob: (request.dob != null
+                    ? DateTime.parse(request.dob!)
+                    : user!.adminDetail!.dob),
+                academy: user!.adminDetail!.academy!.copyWith(
+                  academyName: request.academyName ??
+                      user!.adminDetail!.academy!.academyName,
+                ),
+              ),
+            ),
+          ),
+        );
+      } else {
+        final studentList = user!.studentDetail!.toList();
+        final student =
+            studentList.firstWhere((element) => element.id == studentId);
+        final newStudent = student.copyWith(
+          name: request.name ?? student.name,
+          email: request.email ?? student.email,
+          gender: request.gender ?? student.gender,
+          whatsappNo: request.whatsappNo ?? student.whatsappNo,
+          dob: (request.dob != null
+              ? DateTime.parse(request.dob!)
+              : student.dob),
+          academy: student.academy!.copyWith(
+            academyName: request.academyName ?? student.academy!.academyName,
+          ),
+        );
+        studentList.insert(studentList.indexOf(student), newStudent);
+        studentList.remove(student);
+
+        emit(
+          UpdateUserSuccess(
+            user: user!.copyWith(
+                mobileNo: request.mobileNo ?? user!.mobileNo,
+                studentDetail: studentList),
+          ),
+        );
+      }
     } else {
       emit(UpdateUserFailed(response?.message ?? 'Failed to update'));
     }
@@ -363,5 +411,9 @@ class AuthCubit extends Cubit<AuthState> {
       }
     }
     return url;
+  }
+
+  updateUser(User? user) {
+    _user = user;
   }
 }

@@ -10,7 +10,6 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/constants/regex.dart';
-import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 
@@ -87,6 +86,16 @@ class _ProfileState extends State<Profile> {
           .user
           ?.studentDetail?[context.read<AuthCubit>().studentIndex]
           .gender;
+    } else if (context.read<AuthCubit>().accountType == AccountType.admin) {
+      final academyId =
+          context.read<AuthCubit>().user?.adminDetail?.academy?.academyTypeId;
+      academyType = academyId != null
+          ? context
+              .read<CountryCubit>()
+              .academyTypes
+              .firstWhere((element) => element.id == academyId)
+              .title
+          : null;
     }
   }
 
@@ -101,11 +110,12 @@ class _ProfileState extends State<Profile> {
       body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
         if (state is UpdateUserSuccess) {
           Alert(context).show(message: 'User Profile Updated');
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            SplashScreen.route,
-            (route) => false,
-          );
+          // Navigator.pushNamedAndRemoveUntil(
+          //   context,
+          //   SplashScreen.route,
+          //   (route) => false,
+          // );
+          context.read<AuthCubit>().updateUser(state.user);
         } else if (state is UpdateUserFailed) {
           Alert(context).show(message: state.message);
         }
@@ -203,7 +213,7 @@ class _ProfileState extends State<Profile> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
-                        'Is the above number your whatsapp number ?',
+                        'Is The Above Number Your Whatsapp Number?',
                         style: Theme.of(context).textTheme.bodyLarge,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -385,8 +395,17 @@ class _ProfileState extends State<Profile> {
             child: Button(
               onTap: () {
                 if (formKey.currentState!.validate()) {
-                  if (!RegExp(emailRegex).hasMatch(
-                      email ?? cubit.user?.adminDetail?.email ?? "")) {
+                  if (isAdmin &&
+                      !RegExp(emailRegex).hasMatch(
+                          email ?? cubit.user?.adminDetail?.email ?? "")) {
+                    Alert(context).show(message: 'Error enter a valid email');
+                    return;
+                  }
+                  if (!isAdmin &&
+                      !RegExp(emailRegex).hasMatch(email ??
+                          cubit
+                              .user?.studentDetail?[cubit.studentIndex].email ??
+                          "")) {
                     Alert(context).show(message: 'Error enter a valid email');
                     return;
                   }
