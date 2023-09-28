@@ -12,6 +12,8 @@ import 'package:part_app/view/home/components/logout.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
+import '../../../view_model/profile_pic/cubit/profile_cubit.dart';
+
 enum MenuItems { profile, logout, switchAccount }
 
 class StudentProfileButton extends StatefulWidget {
@@ -55,19 +57,31 @@ class _StudentProfileButtonState extends State<StudentProfileButton> {
           shape: BoxShape.circle,
           color: AppColors.primaryColor,
         ),
-        child: CircleAvatar(
-          backgroundImage: CachedNetworkImageProvider(
-            user?.studentDetail?[0].profilePic != ""
-                ? '${F.baseUrl}/admin/images/student/${authCubit.user?.studentDetail?[authCubit.studentIndex].id}'
-                    '/${authCubit.user?.studentDetail?[authCubit.studentIndex].profilePic}'
-                : user?.studentDetail?[authCubit.studentIndex].gender == "male"
-                    ? "https://dev.partapp.in/images/avatars/avatar-5.png"
-                    : "https://dev.partapp.in/images/avatars/avatar-1.png",
-            headers: {
-              "Authorization": token,
-              'MOBILE-APP-TOKEN': ApiClient().token,
-            },
-          ),
+        child: BlocBuilder<ProfileCubit, ProfileState>(
+          builder: (context, state) {
+            var url = '';
+            if (state is ProfileInitial) {
+              url = user?.studentDetail?[authCubit.studentIndex].profilePic !=
+                      ""
+                  ? '${F.baseUrl}/students/${authCubit.user?.studentDetail?[authCubit.studentIndex].id}/images/profile-pic/${authCubit.user?.studentDetail?.first.profilePic}'
+                  : user?.studentDetail?[authCubit.studentIndex].gender ==
+                          "male"
+                      ? "https://dev.partapp.in/images/avatars/avatar-5.png"
+                      : "https://dev.partapp.in/images/avatars/avatar-1.png";
+            } else if (state is ProfileLoaded) {
+              url =
+                  '${F.baseUrl}/students/${authCubit.user?.studentDetail?[authCubit.studentIndex].id}/images/profile-pic/${state.profilePic}';
+            }
+            return CircleAvatar(
+              backgroundImage: CachedNetworkImageProvider(
+                url,
+                headers: {
+                  "Authorization": token,
+                  'MOBILE-APP-TOKEN': ApiClient().token,
+                },
+              ),
+            );
+          },
         ),
       ),
       itemBuilder: (context) {

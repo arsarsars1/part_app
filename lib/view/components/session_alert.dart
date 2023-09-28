@@ -3,6 +3,8 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
 
+import '../../view_model/profile_pic/cubit/profile_cubit.dart';
+
 class SessionAlert {
   static final SessionAlert _sessionAlert = SessionAlert._internal();
 
@@ -30,6 +32,7 @@ class SessionAlert {
               _alertShown = false;
               Navigator.pop(context);
               context.read<AuthCubit>().logout();
+              context.read<ProfileCubit>().emitProfileInitial();
             },
           ),
         ),

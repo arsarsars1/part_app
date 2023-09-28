@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -12,12 +14,15 @@ import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api.dart';
 
+import '../../flavors.dart';
 import '../../model/data_model/students_response.dart';
 import '../../model/data_model/trainer_response.dart';
 import '../../view/account/switch_account.dart';
 import '../../view/components/alert.dart';
 import '../../view/home/home.dart';
 import '../../view/home/student_app_home.dart';
+import '../profile_pic/cubit/profile_cubit.dart';
+import '../utils.dart';
 
 part 'auth_state.dart';
 
@@ -40,11 +45,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   User? get user => _user;
 
-  AccountType? _accountType;
-
-  AccountType? get accountType => _accountType;
-
-  set accountType(AccountType? type) => _accountType;
+  AccountType? accountType;
 
   /// METHOD TO GENERATE THE OTP FOR LOGIN
   ///
@@ -242,12 +243,88 @@ class AuthCubit extends Cubit<AuthState> {
     return response?.user;
   }
 
-  Future updateProfile(ProfileUpdateRequest request) async {
+  Future updateProfile(ProfileUpdateRequest request, int? studentId) async {
     emit(UpdatingUser());
-    UserResponse? response = await _authService.updateProfile(request.toJson());
+    UserResponse? response = studentId == null
+        ? await _authService.updateProfile(request.toJson())
+        : await _authService.updateStudentProfile(request.toJson(), studentId);
     if (response?.status == 1) {
       validateLocalUser();
-      emit(UpdateUserSuccess());
+
+      if (studentId == null) {
+        emit(
+          UpdateUserSuccess(
+            user: user!.copyWith(
+              mobileNo: request.mobileNo ?? user!.mobileNo,
+              adminDetail: user!.adminDetail!.copyWith(
+                name: request.name ?? user!.adminDetail!.name,
+                email: request.email ?? user!.adminDetail!.email,
+                gender: request.gender ?? user!.adminDetail!.gender,
+                whatsappNo: request.whatsappNo ?? user!.adminDetail!.whatsappNo,
+                dob: (request.dob != null
+                    ? DateTime.parse(request.dob!)
+                    : user!.adminDetail!.dob),
+                academy: user!.adminDetail!.academy!.copyWith(
+                  academyName: request.academyName ??
+                      user!.adminDetail!.academy!.academyName,
+                ),
+              ),
+            ),
+          ),
+        );
+      } else {
+        final studentList = user!.studentDetail!.toList();
+        final student =
+            studentList.firstWhere((element) => element.id == studentId);
+        final newStudent = student.copyWith(
+          name: request.name ?? student.name,
+          email: request.email ?? student.email,
+          gender: request.gender ?? student.gender,
+          whatsappNo: request.whatsappNo ?? student.whatsappNo,
+          dob: (request.dob != null
+              ? DateTime.parse(request.dob!)
+              : student.dob),
+          academy: student.academy!.copyWith(
+            academyName: request.academyName ?? student.academy!.academyName,
+          ),
+        );
+        studentList.insert(studentList.indexOf(student), newStudent);
+        studentList.remove(student);
+
+        emit(
+          UpdateUserSuccess(
+            user: user!.copyWith(
+                mobileNo: request.mobileNo ?? user!.mobileNo,
+                studentDetail: studentList),
+          ),
+        );
+      }
+    } else {
+      emit(UpdateUserFailed(response?.message ?? 'Failed to update'));
+    }
+  }
+
+  Future updateProfilePic(
+      {BuildContext? context, required File profilePic, int? studentId}) async {
+    // emit(UpdatingUser());
+    MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
+    Map<String, dynamic> request = {
+      'profile_pic': picFile,
+    };
+    UserResponse? response = studentId == null
+        ? await _authService.updateProfile(request)
+        : await _authService.updateStudentProfile(request, studentId);
+
+    if (response?.status == 1 && context != null && context.mounted) {
+      Alert(context).show(message: 'User Profile Updated');
+      String url = '';
+      if (response?.user?.adminDetail?.profilePic?.isNotEmpty ?? false) {
+        url = response!.user!.adminDetail!.profilePic!;
+      } else if (response?.user?.studentDetail?.first.profilePic?.isNotEmpty ??
+          false) {
+        url = response?.user?.studentDetail?.first.profilePic ?? '';
+      }
+      context.read<ProfileCubit>().emitProfileLoaded(url);
     } else {
       emit(UpdateUserFailed(response?.message ?? 'Failed to update'));
     }
@@ -271,11 +348,11 @@ class AuthCubit extends Cubit<AuthState> {
 
   void navigateToDashboard(Academy? academy, List<Trainer>? trainerList,
       List<StudentDetail>? studentsList, BuildContext context) {
-   
     int numberOfItems = 0;
-     var cubit = context.read<AuthCubit>();
-    AccountType accountType = AccountType.admin;
-    if (academy != null) numberOfItems++;
+    if (academy != null) {
+      numberOfItems++;
+      accountType = AccountType.admin;
+    }
 
     if (trainerList != null && trainerList.isNotEmpty) {
       numberOfItems += trainerList.length;
@@ -292,20 +369,16 @@ class AuthCubit extends Cubit<AuthState> {
         (route) => false,
       );
     } else {
-      if (accountType == AccountType.admin){
-        cubit.accountType = AccountType.admin;
+      if (accountType == AccountType.admin) {
         Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        Home.route,
-                        (route) => false,
-                      );
+          context,
+          Home.route,
+          (route) => false,
+        );
       } else if (accountType == AccountType.trainer) {
-        cubit.accountType = AccountType.trainer;
         Alert(context).show(message: 'WIP');
-      }
-      else {
-        cubit.studentIndex = 0;
-        cubit.accountType = AccountType.student;
+      } else {
+        studentIndex = 0;
         Navigator.pushNamedAndRemoveUntil(
           context,
           StudentAppHome.route,
@@ -313,5 +386,34 @@ class AuthCubit extends Cubit<AuthState> {
         );
       }
     }
+  }
+
+  String getUserProfilePic() {
+    String url = '';
+    if (accountType == AccountType.admin) {
+      if (user?.adminDetail?.profilePic?.isNotEmpty ?? false) {
+        url = '${F.baseUrl}/admin/images/profile-pic'
+            '/${user?.adminDetail?.profilePic}';
+      } else if (user?.adminDetail?.gender == "male") {
+        url = "https://dev.partapp.in/images/avatars/avatar-5.png";
+      } else {
+        url = "https://dev.partapp.in/images/avatars/avatar-1.png";
+      }
+    } else if (accountType == AccountType.student) {
+      if (user?.studentDetail?[studentIndex].profilePic?.isNotEmpty ?? false) {
+        url =
+            '${F.baseUrl}/students/${user?.studentDetail?[studentIndex].id}/images/profile-pic'
+            '/${user?.studentDetail?[studentIndex].profilePic}';
+      } else if (user?.adminDetail?.gender == "male") {
+        url = "https://dev.partapp.in/images/avatars/avatar-5.png";
+      } else {
+        url = "https://dev.partapp.in/images/avatars/avatar-1.png";
+      }
+    }
+    return url;
+  }
+
+  updateUser(User? user) {
+    _user = user;
   }
 }

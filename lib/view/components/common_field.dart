@@ -32,11 +32,12 @@ class CommonField extends StatelessWidget {
   final bool showInfo;
   final String toolTipMessage;
   final double verticalPadding;
-
+  
   final Icon? prefixIcon;
   final TextCapitalization capitalization;
 
   final EdgeInsets? contentPadding;
+  final bool enabled;
 
   const CommonField({
     Key? key,
@@ -71,7 +72,7 @@ class CommonField extends StatelessWidget {
     this.showInfo = false,
     this.capitalization = TextCapitalization.sentences,
     this.toolTipMessage = 'Info not available.',
-    this.verticalPadding = 0,
+    this.verticalPadding = 0, this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -140,6 +141,7 @@ class CommonField extends StatelessWidget {
                   )
                 : TextFormField(
                     focusNode: node,
+                    enabled: enabled,
                     maxLength: length,
                     controller: controller,
                     onTap: onTap,

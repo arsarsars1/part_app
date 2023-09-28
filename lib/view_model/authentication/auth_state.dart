@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'auth_cubit.dart';
 
 @immutable
@@ -67,7 +68,13 @@ class RegisterFailed extends AuthState {
   RegisterFailed(this.message);
 }
 
-class UpdateUserSuccess extends AuthState {}
+class UpdateUserSuccess extends AuthState {
+  final User user;
+  UpdateUserSuccess({
+   required this.user,
+  });
+  
+}
 
 class UpdatingUser extends AuthState {}
 

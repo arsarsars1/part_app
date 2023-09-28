@@ -148,6 +148,22 @@ class AuthService {
     }
   }
 
+  Future<UserResponse?> updateStudentProfile(
+      Map<String, dynamic> request, int studentId) async {
+    try {
+      request.removeWhere((key, value) => value == null);
+      var response = await _apiClient.post(
+        postPath: '/students/$studentId/update-profile',
+        data: request,
+        formData: true,
+      );
+
+      return userResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<void> addFirebaseListener(BuildContext context) async {
     await FirebaseMessaging.instance.getToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
