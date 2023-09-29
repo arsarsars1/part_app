@@ -26,25 +26,15 @@ class SelectedTrainers extends StatefulWidget {
 }
 
 class _SelectedTrainersState extends State<SelectedTrainers> {
-  List<Trainer?> selectedTrainers = [];
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.trainers != null) {
-      selectedTrainers.addAll(widget.trainers!);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width / 6.5;
     return Wrap(
       alignment: WrapAlignment.start,
       children: [
-        ...selectedTrainers.map(
+        ...?widget.trainers?.map(
           (e) {
-            var detail = e?.trainerDetail?[0] ?? e;
+            var detail = e.trainerDetail?[0] ?? e;
             return Column(
               children: [
                 Container(
@@ -66,10 +56,10 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(45),
                     child: CachedImage(
-                      detail?.profilePic != ""
+                      detail.profilePic != ""
                           ? '${F.baseUrl}'
                               '/admin/images/trainer/'
-                              '${detail?.id}/${detail?.profilePic}'
+                              '${detail.id}/${detail.profilePic}'
                           : '',
                     ).image(),
                   ),
@@ -80,7 +70,7 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                 SizedBox(
                   width: width,
                   child: Text(
-                    '${detail?.name}',
+                    '${detail.name}',
                     textAlign: TextAlign.center,
                     maxLines: 2,
                   ),
@@ -93,11 +83,12 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
           onTap: () {
             List<int?> trainers = [];
             if (widget.batchDetails) {
-              trainers = selectedTrainers.map((e) => e?.userId).toList();
+              trainers = widget.trainers?.map((e) => e.userId).toList() ?? [];
             } else {
-              trainers = selectedTrainers
-                  .map((e) => e?.trainerDetail?[0].userId)
-                  .toList();
+              trainers = widget.trainers
+                      ?.map((e) => e.trainerDetail?[0].userId)
+                      .toList() ??
+                  [];
             }
 
             if (widget.branchId == null) return;
@@ -112,9 +103,9 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                     value,
                   );
 
-                  setState(() {
-                    selectedTrainers = value;
-                  });
+                  // setState(() {
+                  //   widget.trainers = value;
+                  // });
                 },
               ),
             );
