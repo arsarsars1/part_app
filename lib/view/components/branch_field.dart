@@ -34,7 +34,7 @@ class _BranchFieldState extends State<BranchField> {
           hint: 'Select Branch',
           dropDown: true,
           defaultItem: branchCubit.initialBranch(
-            widget.initialBranch,
+            branchCubit.firstBranch.id,
           ),
           dropDownItems: branchCubit.dropDownBranches(),
           onChange: (value) {
