@@ -72,18 +72,8 @@ class _BatchesPageState extends State<BatchesPage> {
                       child: Button(
                         height: 30.h,
                         onTap: () {
-                          context
-                              .read<TrainerCubit>()
-                              .getActiveInactiveTrainers(active: true);
-                          if ((context.read<TrainerCubit>().trainers ?? [])
-                              .isEmpty) {
-                            Alert(context).show(
-                                message:
-                                    'Please add a trainer to the academy before adding a batch');
-                          } else {
-                            cubit.days.clear();
-                            Navigator.pushNamed(context, AddBatch.route);
-                          }
+                          cubit.days.clear();
+                          Navigator.pushNamed(context, AddBatch.route);
                         },
                         title: 'Add New Batch',
                       ),
