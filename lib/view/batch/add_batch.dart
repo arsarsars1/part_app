@@ -239,8 +239,10 @@ class _AddBatchState extends State<AddBatch> {
                               branchId: branchId,
                               scaffoldKey: scaffoldKey,
                               selectedTrainers: (List<Trainer?> value) {
-                                selectedTrainers =
-                                    value.map((e) => e?.id).toList();
+                                setState(() {
+                                  selectedTrainers =
+                                      value.map((e) => e?.id).toList();
+                                });
                               },
                             )
                           ],
