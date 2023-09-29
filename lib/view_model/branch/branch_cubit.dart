@@ -21,6 +21,7 @@ class BranchCubit extends Cubit<BranchState> {
   final List<Trainer> _trainers = [];
   List<ClassModel> _classes = [];
   List<ClassModel> _newClasses = [];
+  late Branch firstBranch;
 
   Branch? _branch;
 
@@ -76,7 +77,7 @@ class BranchCubit extends Cubit<BranchState> {
   Future getBranches() async {
     emit(BranchesLoading());
     List<Branch>? list = await _branchService.getBranches();
-
+    firstBranch = (list ?? [])[0];
     branches = list ?? [];
   }
 
