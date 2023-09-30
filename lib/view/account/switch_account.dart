@@ -10,6 +10,8 @@ import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/home/student_app_home.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
+import '../../model/data_base/data_base.dart';
+
 class SwitchAccount extends StatelessWidget {
   static const route = '/switch-account';
 
@@ -18,6 +20,7 @@ class SwitchAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AuthCubit>();
+    Database database = Database();
     return Scaffold(
       appBar: const CommonBar(
         title: 'Select Your Academy',
@@ -33,6 +36,8 @@ class SwitchAccount extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       cubit.accountType = AccountType.admin;
+                      database.setUserType('admin');
+
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         Home.route,
@@ -84,6 +89,7 @@ class SwitchAccount extends StatelessWidget {
                       return AccountCard(
                         onTap: () {
                           cubit.accountType = AccountType.trainer;
+                           database.setUserType('trainer');
                           Alert(context).show(message: 'WIP');
                         },
                         accountType: '${trainer.name}, Trainer',
@@ -103,6 +109,7 @@ class SwitchAccount extends StatelessWidget {
                         onTap: () {
                           cubit.studentIndex = index;
                           cubit.accountType = AccountType.student;
+                           database.setUserType('student');
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             StudentAppHome.route,
