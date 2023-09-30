@@ -346,23 +346,36 @@ class AuthCubit extends Cubit<AuthState> {
     emit(UserNotAvailable());
   }
 
-  void navigateToDashboard(Academy? academy, List<Trainer>? trainerList,
-      List<StudentDetail>? studentsList, BuildContext context) {
+  Future<void> navigateToDashboard(Academy? academy, List<Trainer>? trainerList,
+      List<StudentDetail>? studentsList, BuildContext context) async {
     int numberOfItems = 0;
-    if (academy != null) {
-      numberOfItems++;
-      accountType = AccountType.admin;
-    }
+    Database database = Database();
+    String? userType = await database.getUserType();
 
-    if (trainerList != null && trainerList.isNotEmpty) {
-      numberOfItems += trainerList.length;
-      accountType = AccountType.trainer;
+    if (userType == null) {
+      if (academy != null) {
+        numberOfItems++;
+        accountType = AccountType.admin;
+      }
+
+      if (trainerList != null && trainerList.isNotEmpty) {
+        numberOfItems += trainerList.length;
+        accountType = AccountType.trainer;
+      }
+      if (studentsList != null && studentsList.isNotEmpty) {
+        numberOfItems += studentsList.length;
+        accountType = AccountType.student;
+      }
+    } else {
+      if (userType == 'admin') {
+        accountType = AccountType.admin;
+      } else if (userType == 'trainer') {
+        accountType = AccountType.trainer;
+      } else {
+        accountType = AccountType.student;
+      }
     }
-    if (studentsList != null && studentsList.isNotEmpty) {
-      numberOfItems += studentsList.length;
-      accountType = AccountType.student;
-    }
-    if (numberOfItems > 1) {
+    if (numberOfItems > 1 && userType == null && context.mounted) {
       Navigator.pushNamedAndRemoveUntil(
         context,
         SwitchAccount.route,

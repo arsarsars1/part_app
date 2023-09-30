@@ -14,6 +14,7 @@ class Database {
   static const userData = 'userData';
   static const previousStartTime = 'startTime';
   static const previousEndTime = 'endTime';
+  static const userType = 'userType';
 
   String? getToken() {
     String? tempToken = Hive.box(userBox).get(token);
@@ -63,4 +64,18 @@ class Database {
     String? endDate = await Hive.box(userBox).get(previousEndTime);
     return endDate;
   }
+
+  Future setUserType(String userType) async {
+    await Hive.box(Database.userBox).put(
+      Database.userType,
+      userType,
+    );
+  }
+
+  Future<String?> getUserType() async {
+    String? user = await Hive.box(userBox).get(userType);
+    return user;
+  }
+
+
 }
