@@ -39,6 +39,10 @@ class AuthCubit extends Cubit<AuthState> {
 
   String get phoneNumber => '+$_countryCode $_phoneNo';
 
+  set phoneNumber(phoneNumber)  =>  _phoneNo = phoneNumber;
+
+  set countryCode(countryCode) => _countryCode = countryCode;
+
   RegisterRequest _registerRequest = const RegisterRequest();
 
   String? get token => _token;

@@ -112,7 +112,7 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (_) => OTPVerify(
-              login: settings.arguments as bool,
+              otpRoute: settings.arguments as OTPRoutes,
             ),
             settings: settings,
           );

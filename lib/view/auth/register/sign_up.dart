@@ -43,7 +43,7 @@ class _SignUpState extends State<SignUp> {
           // if the OTP is sent show the User with the verification UI
           else if (state is OTPSent && !state.resend && !state.login) {
             Navigator.pop(context);
-            Navigator.pushNamed(context, OTPVerify.route, arguments: false);
+            Navigator.pushNamed(context, OTPVerify.route, arguments: OTPRoutes.registration);
           }
         },
         child: SafeArea(
