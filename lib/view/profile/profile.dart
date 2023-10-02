@@ -117,7 +117,7 @@ class _ProfileState extends State<Profile> {
             cubit.countryCode = '91';
             Navigator.pushNamed(context, OTPVerify.route,
                 arguments: OTPRoutes.mobileNumberChange);
-            mobileNo = null;
+            
           }
         } else if (state is UpdateUserFailed) {
           Alert(context).show(message: state.message);

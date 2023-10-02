@@ -39,7 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   String get phoneNumber => '+$_countryCode $_phoneNo';
 
-  set phoneNumber(phoneNumber)  =>  _phoneNo = phoneNumber;
+  set phoneNumber(phoneNumber) => _phoneNo = phoneNumber;
 
   set countryCode(countryCode) => _countryCode = countryCode;
 
@@ -247,11 +247,14 @@ class AuthCubit extends Cubit<AuthState> {
     return response?.user;
   }
 
-  Future updateProfile(ProfileUpdateRequest request, int? studentId) async {
+  Future updateProfile(ProfileUpdateRequest request, int? studentId,
+      [String? otp]) async {
     emit(UpdatingUser());
     UserResponse? response = studentId == null
-        ? await _authService.updateProfile(request.toJson())
-        : await _authService.updateStudentProfile(request.toJson(), studentId);
+        ? await _authService
+            .updateProfile(request.toJson()..putIfAbsent('otp', () => otp))
+        : await _authService.updateStudentProfile(
+            request.toJson()..putIfAbsent('otp', () => otp), studentId);
     if (response?.status == 1) {
       validateLocalUser();
 

@@ -29,6 +29,7 @@ class ProfileUpdateRequest with _$ProfileUpdateRequest {
     String? academyName,
     String? dob,
     String? profilePic,
+    
   }) = _ProfileUpdateRequest;
 
   factory ProfileUpdateRequest.fromJson(Map<String, dynamic> json) =>

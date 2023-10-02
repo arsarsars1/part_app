@@ -5,6 +5,9 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/cubits.dart';
 
+import '../../model/data_model/enums.dart';
+import '../../model/data_model/profile_update_request.dart';
+
 enum OTPRoutes { login, registration, mobileNumberChange }
 
 class OTPVerify extends StatefulWidget {
@@ -174,10 +177,23 @@ class _OTPVerifyState extends State<OTPVerify> {
                   if (formKey.currentState!.validate()) {
                     if (widget.otpRoute == OTPRoutes.login) {
                       context.read<AuthCubit>().login(password: password);
-                    } else {
+                    } else if (widget.otpRoute == OTPRoutes.registration){
                       context
                           .read<AuthCubit>()
                           .validateRegisterOTP(otp: password);
+                    } else {
+                      ProfileUpdateRequest request = ProfileUpdateRequest(
+                        mobileNo: cubit.phoneNumber.split(' ')[1],
+                        countryCode: '91',
+                      );
+                      if (cubit.phoneNumber.isNotEmpty) {
+                        cubit.updateProfile(
+                            request,
+                            cubit.accountType == AccountType.admin
+                                ? null
+                                : cubit.user?.studentDetail?[cubit.studentIndex]
+                                    .id, password);
+                      }
                     }
                   }
                 },
