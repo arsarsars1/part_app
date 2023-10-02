@@ -29,24 +29,27 @@ class _BranchFieldState extends State<BranchField> {
     return BlocBuilder<BranchCubit, BranchState>(
       builder: (context, state) {
         var branchCubit = context.read<BranchCubit>();
-        return CommonField(
-          title: widget.title ?? 'Branch *',
-          hint: 'Select Branch',
-          dropDown: true,
-          defaultItem: branchCubit.initialBranch(
-            branchCubit.firstBranch.id,
-          ),
-          dropDownItems: branchCubit.dropDownBranches(),
-          onChange: (value) {
-            widget.onSelect(value.id);
-          },
-          validator: (value) {
-            if (value == null) {
-              return 'Please select branch.';
-            }
-            return null;
-          },
-        );
+        if (state is BranchesLoaded) {
+          return CommonField(
+            title: widget.title ?? 'Branch *',
+            hint: 'Select Branch',
+            dropDown: true,
+            defaultItem: branchCubit.initialBranch(
+              branchCubit.firstBranch.id,
+            ),
+            dropDownItems: branchCubit.dropDownBranches(),
+            onChange: (value) {
+              widget.onSelect(value.id);
+            },
+            validator: (value) {
+              if (value == null) {
+                return 'Please select branch.';
+              }
+              return null;
+            },
+          );
+        }
+        return const SizedBox();
       },
     );
   }

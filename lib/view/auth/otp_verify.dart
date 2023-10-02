@@ -5,12 +5,17 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/cubits.dart';
 
+import '../../model/data_model/enums.dart';
+import '../../model/data_model/profile_update_request.dart';
+
+enum OTPRoutes { login, registration, mobileNumberChange }
+
 class OTPVerify extends StatefulWidget {
   static const route = '/auth/otp';
 
-  final bool login;
+  final OTPRoutes otpRoute;
 
-  const OTPVerify({Key? key, required this.login}) : super(key: key);
+  const OTPVerify({Key? key, required this.otpRoute}) : super(key: key);
 
   @override
   State<OTPVerify> createState() => _OTPVerifyState();
@@ -25,9 +30,15 @@ class _OTPVerifyState extends State<OTPVerify> {
   Widget build(BuildContext context) {
     var cubit = context.read<AuthCubit>();
     return Scaffold(
-      appBar: CommonBar(
-        title: widget.login ? 'Login' : 'Academy Registration',
-      ),
+      appBar: CommonBar(title: () {
+        if (widget.otpRoute == OTPRoutes.login) {
+          return 'Login';
+        } else if (widget.otpRoute == OTPRoutes.registration) {
+          return 'Academy Registration';
+        } else {
+          return 'Verify OTP';
+        }
+      }()),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is Authenticating) {
@@ -143,7 +154,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                     controller.clear();
                     context.read<AuthCubit>().generateOTP(
                           resend: true,
-                          login: widget.login,
+                          login: widget.otpRoute == OTPRoutes.login,
                         );
                   },
                 ),
@@ -164,12 +175,25 @@ class _OTPVerifyState extends State<OTPVerify> {
               child: Button(
                 onTap: () {
                   if (formKey.currentState!.validate()) {
-                    if (widget.login) {
+                    if (widget.otpRoute == OTPRoutes.login) {
                       context.read<AuthCubit>().login(password: password);
-                    } else {
+                    } else if (widget.otpRoute == OTPRoutes.registration){
                       context
                           .read<AuthCubit>()
                           .validateRegisterOTP(otp: password);
+                    } else {
+                      ProfileUpdateRequest request = ProfileUpdateRequest(
+                        mobileNo: cubit.phoneNumber.split(' ')[1],
+                        countryCode: '91',
+                      );
+                      if (cubit.phoneNumber.isNotEmpty) {
+                        cubit.updateProfile(
+                            request,
+                            cubit.accountType == AccountType.admin
+                                ? null
+                                : cubit.user?.studentDetail?[cubit.studentIndex]
+                                    .id, password);
+                      }
                     }
                   }
                 },

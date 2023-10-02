@@ -14,6 +14,7 @@ import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 
 import '../../flavors.dart';
+import '../auth/otp_verify.dart';
 
 class Profile extends StatefulWidget {
   static const route = '/profile';
@@ -110,12 +111,14 @@ class _ProfileState extends State<Profile> {
       body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
         if (state is UpdateUserSuccess) {
           Alert(context).show(message: 'User Profile Updated');
-          // Navigator.pushNamedAndRemoveUntil(
-          //   context,
-          //   SplashScreen.route,
-          //   (route) => false,
-          // );
           context.read<AuthCubit>().updateUser(state.user);
+          if (mobileNo?.isNotEmpty ?? false) {
+            cubit.phoneNumber = mobileNo;
+            cubit.countryCode = '91';
+            Navigator.pushNamed(context, OTPVerify.route,
+                arguments: OTPRoutes.mobileNumberChange);
+            
+          }
         } else if (state is UpdateUserFailed) {
           Alert(context).show(message: state.message);
         }
@@ -192,12 +195,14 @@ class _ProfileState extends State<Profile> {
                         mobileNo: mobileNo,
                         countryCode: '91',
                       );
-                      cubit.updateProfile(
-                          request,
-                          isAdmin
-                              ? null
-                              : cubit
-                                  .user?.studentDetail?[cubit.studentIndex].id);
+                      if (mobileNo?.isNotEmpty ?? false) {
+                        cubit.updateProfile(
+                            request,
+                            isAdmin
+                                ? null
+                                : cubit.user?.studentDetail?[cubit.studentIndex]
+                                    .id);
+                      }
                     }
                   },
                   title: 'Change Phone Number',
