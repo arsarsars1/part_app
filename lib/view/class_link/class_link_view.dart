@@ -37,6 +37,21 @@ class _ClassLinkViewState extends State<ClassLinkView> {
   var formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      var branchCubit = context.read<BranchCubit>();
+      branchId = branchCubit.firstBranch.id;
+      context.read<BatchCubit>().getBatchesByStatus(
+            branchId: branchId,
+            clean: true,
+            branchSearch: false,
+            status: 'ongoing',
+          );
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var batchCubit = context.read<BatchCubit>();
     return Scaffold(
@@ -241,7 +256,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                     height: 8,
                   ),
                   Container(
-                    height:48,
+                    height: 48,
                     decoration: BoxDecoration(
                       color: AppColors.liteDark,
                       borderRadius: BorderRadius.circular(4),
