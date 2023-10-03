@@ -40,10 +40,16 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
 
   @override
   void initState() {
-    super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FeeCubit>().clean();
+      var branchCubit = context.read<BranchCubit>();
+      branchId = branchCubit.firstBranch.id;
+      setState(() {
+        context.read<BatchCubit>().getBatchesByBranch(
+              branchId: branchId,
+              clean: true,
+            );
+      });
     });
     // Pagination listener
     scrollController.addListener(() {
@@ -52,6 +58,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
         doSearch(false);
       }
     });
+    super.initState();
   }
 
   @override

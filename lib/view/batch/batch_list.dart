@@ -28,10 +28,15 @@ class _BatchesPageState extends State<BatchesPage> {
     super.initState();
     // initial call to show the batches
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      /*context.read<BatchCubit>().getBatchesByStatus(
-            status: status,
-            clean: true,
-          );*/
+      var branchCubit = context.read<BranchCubit>();
+      branchId = branchCubit.firstBranch.id;
+      setState(() {
+        context.read<BatchCubit>().getBatchesByStatus(
+              branchId: branchId,
+              status: status,
+              clean: true,
+            );
+      });
     });
 
     // Pagination listener
