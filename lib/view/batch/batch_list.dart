@@ -27,8 +27,9 @@ class _BatchesPageState extends State<BatchesPage> {
   void initState() {
     super.initState();
     // initial call to show the batches
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var branchCubit = context.read<BranchCubit>();
+      await branchCubit.getBranches();
       branchId = branchCubit.firstBranch.id;
       setState(() {
         context.read<BatchCubit>().getBatchesByStatus(
