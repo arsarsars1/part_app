@@ -29,10 +29,15 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
     super.initState();
     // initial call to show the batches
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      /*context.read<AttendanceCubit>().getBatchesByStatus(
-            status: status,
-            clean: true,
-          );*/
+      var branchCubit = context.read<BranchCubit>();
+      AttendanceCubit cubit = context.read<AttendanceCubit>();
+      branchId = branchCubit.firstBranch.id;
+      setState(() {
+        cubit.getBatchesByStatus(
+          branchId: branchId,
+          clean: true,
+        );
+      });
     });
 
     // Pagination listener

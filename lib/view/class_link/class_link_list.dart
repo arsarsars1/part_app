@@ -31,6 +31,21 @@ class _ClassLinkListState extends State<ClassLinkList> {
   bool reset = false;
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      var branchCubit = context.read<BranchCubit>();
+      branchId = branchCubit.firstBranch.id;
+      context.read<BatchCubit>().getBatchesByStatus(
+            branchId: branchId,
+            clean: true,
+            branchSearch: false,
+            status: 'ongoing',
+          );
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     batchCubit = context.read<BatchCubit>();
     return Scaffold(

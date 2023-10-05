@@ -150,12 +150,15 @@ class _FeeListItemState extends State<FeeListItem> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    '${widget.student.batchName}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      '${widget.student.batchName}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(),
+                                    ),
                                   ),
                                   if (widget.student.writtenOffStatus != 1 &&
                                       widget.student.paymentStatus != 'paid')

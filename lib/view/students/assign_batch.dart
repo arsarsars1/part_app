@@ -28,6 +28,13 @@ class _AssignBatchState extends State<AssignBatch> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<BatchCubit>().reset();
+      var branchCubit = context.read<BranchCubit>();
+      branchId = branchCubit.firstBranch.id;
+      context.read<BatchCubit>().getBatchesByStatus(
+            branchId: branchId,
+            clean: true,
+            branchSearch: false,
+          );
     });
     // Pagination listener
     scrollController.addListener(() {
