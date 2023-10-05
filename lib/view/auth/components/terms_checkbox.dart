@@ -49,7 +49,7 @@ class _TermsCheckBoxState extends State<TermsCheckBox> {
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
                       launchUrl(
-                        Uri.parse(''),
+                        Uri.parse('https://www.partapp.in/privacy-policy.html'),
                       );
                     },
                 ),
