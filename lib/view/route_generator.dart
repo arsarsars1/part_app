@@ -84,6 +84,7 @@ import 'package:part_app/view/trainer/trainer_view.dart';
 import 'attendance/attendance_batch_list.dart';
 import 'attendance/monthly_attendance_view.dart';
 import 'membership/subscription_success.dart';
+import 'profile/change_phone.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -533,6 +534,11 @@ class RouteGenerator {
       case CurrentMembership.route:
         return MaterialPageRoute(
           builder: (_) => const CurrentMembership(),
+          settings: settings,
+        );
+        case ChangePhoneScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => const ChangePhoneScreen(),
           settings: settings,
         );
       default:

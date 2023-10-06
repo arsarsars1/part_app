@@ -161,17 +161,17 @@ class _HomeBannerState extends State<HomeBanner> {
                                               Text(
                                                 banner.description ?? '',
                                               ),
-                                              Text(
-                                                '${fromTime.toTime()} '
-                                                'To ${toTime.toTime()}, '
-                                                '$formattedString',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge
-                                                    ?.copyWith(
-                                                      fontSize: 10,
-                                                    ),
-                                              ),
+                                              // Text(
+                                              //   '${fromTime.toTime()} '
+                                              //   'To ${toTime.toTime()}, '
+                                              //   '$formattedString',
+                                              //   style: Theme.of(context)
+                                              //       .textTheme
+                                              //       .bodyLarge
+                                              //       ?.copyWith(
+                                              //         fontSize: 10,
+                                              //       ),
+                                              // ),
                                             ],
                                           ),
                                         ),

@@ -14,7 +14,7 @@ import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 
 import '../../flavors.dart';
-import '../auth/otp_verify.dart';
+import 'change_phone.dart';
 
 class Profile extends StatefulWidget {
   static const route = '/profile';
@@ -33,7 +33,7 @@ class _ProfileState extends State<Profile> {
   String? waNumber;
   String? academyName;
   String? academyType;
-  String? mobileNo;
+
   bool selected = true;
   TextEditingController dobController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -112,13 +112,6 @@ class _ProfileState extends State<Profile> {
         if (state is UpdateUserSuccess) {
           Alert(context).show(message: 'User Profile Updated');
           context.read<AuthCubit>().updateUser(state.user);
-          if (mobileNo?.isNotEmpty ?? false) {
-            cubit.phoneNumber = mobileNo;
-            cubit.countryCode = '91';
-            Navigator.pushNamed(context, OTPVerify.route,
-                arguments: OTPRoutes.mobileNumberChange);
-            
-          }
         } else if (state is UpdateUserFailed) {
           Alert(context).show(message: state.message);
         }
@@ -171,6 +164,7 @@ class _ProfileState extends State<Profile> {
               ),
               CommonField(
                 initialValue: cubit.user?.mobileNo,
+                enabled: false,
                 suffixIcon: const Icon(
                   Icons.check_circle_outline_outlined,
                   color: Colors.greenAccent,
@@ -178,9 +172,7 @@ class _ProfileState extends State<Profile> {
                 fillColor: AppColors.disabledColor,
                 textColor: Colors.black,
                 title: 'Your Phone Number *',
-                onChange: (value) {
-                  mobileNo = value;
-                },
+                onChange: (value) {},
               ),
               SizedBox(
                 height: 16.h,
@@ -190,20 +182,7 @@ class _ProfileState extends State<Profile> {
                   width: 200.w,
                   height: 30.h,
                   onTap: () {
-                    if (formKey.currentState!.validate()) {
-                      ProfileUpdateRequest request = ProfileUpdateRequest(
-                        mobileNo: mobileNo,
-                        countryCode: '91',
-                      );
-                      if (mobileNo?.isNotEmpty ?? false) {
-                        cubit.updateProfile(
-                            request,
-                            isAdmin
-                                ? null
-                                : cubit.user?.studentDetail?[cubit.studentIndex]
-                                    .id);
-                      }
-                    }
+                    Navigator.pushNamed(context, ChangePhoneScreen.route);
                   },
                   title: 'Change Phone Number',
                 ),
