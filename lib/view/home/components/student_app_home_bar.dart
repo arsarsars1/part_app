@@ -22,7 +22,11 @@ class StudentAppHomeBar extends StatelessWidget {
     var notificationCubit = context.read<NotificationCubit>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       NotificationList? list = await homeCubit.getStudentAppNotificationList(
-          studentId: context.read<AuthCubit>().user?.studentDetail?[context.read<AuthCubit>().studentIndex].id,
+          studentId: context
+              .read<AuthCubit>()
+              .user
+              ?.studentDetail?[context.read<AuthCubit>().studentIndex]
+              .id,
           clean: true);
       notificationCubit.emitNotificationBadge(list);
     });
@@ -112,7 +116,6 @@ class StudentAppHomeBar extends StatelessWidget {
                       );
                     },
                   ),
-                  
                 ],
               ),
             ),
@@ -124,16 +127,22 @@ class StudentAppHomeBar extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        Padding(
-          padding: EdgeInsets.only(right: 32.w),
-          child: Text(
-            cubit.user?.studentDetail?[cubit.studentIndex].academy?.academyName ?? 'N/A',
-            maxLines: 2,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: AppColors.primaryColor,
-                  fontSize: 16.sp,
-                ),
-          ),
+        BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            return Padding(
+              padding: EdgeInsets.only(right: 32.w),
+              child: Text(
+                cubit.user?.studentDetail?[cubit.studentIndex].academy
+                        ?.academyName ??
+                    'N/A',
+                maxLines: 2,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: AppColors.primaryColor,
+                      fontSize: 16.sp,
+                    ),
+              ),
+            );
+          },
         ),
         const SizedBox(
           height: 4,
