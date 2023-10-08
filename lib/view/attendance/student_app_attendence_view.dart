@@ -310,7 +310,8 @@ class _StudentAppAttendanceCalenderViewState
                             int conductedClassId = 0;
                             for (var element in cubit.studentClasses ?? []) {
                               if (element.conductedClass.conductedOn ==
-                                  element1.date) {
+                                      element1.date &&
+                                  element.isPresent == 1) {
                                 flag = 1;
                                 conductedClassId = element.id;
                                 break;
@@ -377,7 +378,8 @@ class _StudentAppAttendanceCalenderViewState
                             int conductedClassId = 0;
                             for (var element in cubit.studentClasses ?? []) {
                               if (element.conductedClass.conductedOn ==
-                                  element1.date) {
+                                      element1.date &&
+                                  element.isPresent == 1) {
                                 flag = 1;
                                 conductedClassId = element.id;
                                 break;
