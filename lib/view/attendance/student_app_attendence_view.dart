@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
+import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/student_app_batch_response.dart';
+import 'package:part_app/model/data_model/student_attendence_of_month.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/student_app_branch_field.dart';
 import 'package:part_app/view/students/widgets/student_app_batch_picker.dart';
@@ -151,23 +153,24 @@ class _StudentAppAttendanceCalenderViewState
                                 noOfWeeks = getWeeksInMonth(
                                     DateTime(currentYear, currentMonth).year,
                                     DateTime(currentYear, currentMonth).month);
-                                for (var element1
+                                for (ClassDetails element1
                                     in attendenceCubit.attendenceClasses ??
                                         []) {
                                   int flag = 0;
                                   int conductedClassId = 0;
-                                  for (var element
+                                  for (StudentAttendances element
                                       in cubit.studentClasses ?? []) {
                                     if (element1.date ==
                                             element
-                                                .conductedClass.conductedOn &&
+                                                .conductedClass?.conductedOn &&
                                         element.isPresent == 1) {
                                       flag = 1;
-                                      conductedClassId = element.id;
+                                      conductedClassId = element.id ?? 0;
                                       break;
                                     }
                                   }
-                                  if (element1.date.isBefore(DateTime.now())) {
+                                  if ((element1.date ?? DateTime.now())
+                                      .isBefore(DateTime.now())) {
                                     if (flag == 1) {
                                       present++;
                                     } else {

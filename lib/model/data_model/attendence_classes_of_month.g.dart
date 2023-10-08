@@ -114,7 +114,7 @@ _$_Branch _$$_BranchFromJson(Map<String, dynamic> json) => _$_Branch(
           : Country.fromJson(json['country'] as Map<String, dynamic>),
       state: json['state'] == null
           ? null
-          : State.fromJson(json['state'] as Map<String, dynamic>),
+          : StateDetails.fromJson(json['state'] as Map<String, dynamic>),
       district: json['district'] == null
           ? null
           : District.fromJson(json['district'] as Map<String, dynamic>),
@@ -170,12 +170,14 @@ Map<String, dynamic> _$$_DistrictToJson(_$_District instance) =>
       'district_name': instance.districtName,
     };
 
-_$_State _$$_StateFromJson(Map<String, dynamic> json) => _$_State(
+_$_StateDetails _$$_StateDetailsFromJson(Map<String, dynamic> json) =>
+    _$_StateDetails(
       id: json['id'] as int?,
       stateName: json['state_name'] as String?,
     );
 
-Map<String, dynamic> _$$_StateToJson(_$_State instance) => <String, dynamic>{
+Map<String, dynamic> _$$_StateDetailsToJson(_$_StateDetails instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'state_name': instance.stateName,
     };

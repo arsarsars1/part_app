@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
+import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/data_model/student_attendence_of_month.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/attendance/attendance_cubit.dart';
@@ -57,36 +59,39 @@ class _StudentAttendanceCalenderViewState
       _markedDateMap.clear();
       setState(() {
         noOfWeeks = getWeeksInMonth(DateTime(currentYear, currentMonth));
-        for (var element1 in cubit.attendenceClasses ?? []) {
+        for (ClassDetails element1 in cubit.attendenceClasses ?? []) {
           int flag = 0;
           int conductedClassId = 0;
-          for (var element in cubit.studentClasses ?? []) {
-            if (element1.date == element.conductedClass.conductedOn &&
+          for (StudentAttendances element in cubit.studentClasses ?? []) {
+            if (element1.date == element.conductedClass?.conductedOn &&
                 element.isPresent == 1) {
               flag = 1;
-              conductedClassId = element.id;
+              conductedClassId = element.id ?? 0;
               break;
             }
           }
-          if (element1.date.isBefore(DateTime.now())) {
+          if ((element1.date ?? DateTime.now()).isBefore(DateTime.now())) {
             if (flag == 1) {
               present++;
             } else {
               absent++;
             }
-            _markedDateMap.add(
-              element1.date ?? DateTime.now(),
-              Event(
-                date: element1.date ?? DateTime.now(),
-                title: conductedClassId == 0 ? 'Event 1' : '$conductedClassId',
-                dot: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 1.0),
-                  color: flag == 1 ? Colors.green : Colors.red,
-                  height: 5.0,
-                  width: 5.0,
+            if (element1.conducted == true) {
+              _markedDateMap.add(
+                element1.date ?? DateTime.now(),
+                Event(
+                  date: element1.date ?? DateTime.now(),
+                  title:
+                      conductedClassId == 0 ? 'Event 1' : '$conductedClassId',
+                  dot: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 1.0),
+                    color: flag == 1 ? Colors.green : Colors.red,
+                    height: 5.0,
+                    width: 5.0,
+                  ),
                 ),
-              ),
-            );
+              );
+            }
           }
         }
       });
@@ -193,46 +198,49 @@ class _StudentAttendanceCalenderViewState
                               setState(() {
                                 noOfWeeks = getWeeksInMonth(
                                     DateTime(currentYear, currentMonth));
-                                for (var element1
+                                for (ClassDetails element1
                                     in attendenceCubit.attendenceClasses ??
                                         []) {
                                   int flag = 0;
                                   int conductedClassId = 0;
-                                  for (var element
+                                  for (StudentAttendances element
                                       in cubit.studentClasses ?? []) {
                                     if (element1.date ==
                                             element
-                                                .conductedClass.conductedOn &&
+                                                .conductedClass?.conductedOn &&
                                         element.isPresent == 1) {
                                       flag = 1;
-                                      conductedClassId = element.id;
+                                      conductedClassId = element.id ?? 0;
                                       break;
                                     }
                                   }
-                                  if (element1.date.isBefore(DateTime.now())) {
+                                  if ((element1.date ?? DateTime.now())
+                                      .isBefore(DateTime.now())) {
                                     if (flag == 1) {
                                       present++;
                                     } else {
                                       absent++;
                                     }
-                                    _markedDateMap.add(
-                                      element1.date ?? DateTime.now(),
-                                      Event(
-                                        date: element1.date ?? DateTime.now(),
-                                        title: conductedClassId == 0
-                                            ? 'Event 1'
-                                            : '$conductedClassId',
-                                        dot: Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 1.0),
-                                          color: flag == 1
-                                              ? Colors.green
-                                              : Colors.red,
-                                          height: 5.0,
-                                          width: 5.0,
+                                    if (element1.conducted == true) {
+                                      _markedDateMap.add(
+                                        element1.date ?? DateTime.now(),
+                                        Event(
+                                          date: element1.date ?? DateTime.now(),
+                                          title: conductedClassId == 0
+                                              ? 'Event 1'
+                                              : '$conductedClassId',
+                                          dot: Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 1.0),
+                                            color: flag == 1
+                                                ? Colors.green
+                                                : Colors.red,
+                                            height: 5.0,
+                                            width: 5.0,
+                                          ),
                                         ),
-                                      ),
-                                    );
+                                      );
+                                    }
                                   }
                                 }
                               });
@@ -285,7 +293,6 @@ class _StudentAttendanceCalenderViewState
                         fontSize: 15.sp,
                         fontWeight: FontWeight.bold,
                       ),
-
                       shouldShowTransform: false,
                       weekDayFormat: WeekdayFormat.narrow,
                       headerTextStyle: TextStyle(
@@ -342,41 +349,45 @@ class _StudentAttendanceCalenderViewState
                         setState(() {
                           noOfWeeks = getWeeksInMonth(
                               DateTime(currentYear, currentMonth));
-                          for (var element1
+                          for (ClassDetails element1
                               in attendenceCubit.attendenceClasses ?? []) {
                             int flag = 0;
                             int conductedClassId = 0;
-                            for (var element in cubit.studentClasses ?? []) {
-                              if (element.conductedClass.conductedOn ==
+                            for (StudentAttendances element
+                                in cubit.studentClasses ?? []) {
+                              if (element.conductedClass?.conductedOn ==
                                   element1.date) {
                                 flag = 1;
-                                conductedClassId = element.id;
+                                conductedClassId = element.id ?? 0;
                                 break;
                               }
                             }
-                            if (element1.date.isBefore(DateTime.now())) {
+                            if ((element1.date ?? DateTime.now())
+                                .isBefore(DateTime.now())) {
                               if (flag == 1) {
                                 present++;
                               } else {
                                 absent++;
                               }
-                              _markedDateMap.add(
-                                element1.date ?? DateTime.now(),
-                                Event(
-                                  date: element1.date ?? DateTime.now(),
-                                  title: conductedClassId == 0
-                                      ? 'Event 1'
-                                      : '$conductedClassId',
-                                  dot: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 1.0),
-                                    color:
-                                        flag == 1 ? Colors.green : Colors.red,
-                                    height: 5.0,
-                                    width: 5.0,
+                              if (element1.conducted == true) {
+                                _markedDateMap.add(
+                                  element1.date ?? DateTime.now(),
+                                  Event(
+                                    date: element1.date ?? DateTime.now(),
+                                    title: conductedClassId == 0
+                                        ? 'Event 1'
+                                        : '$conductedClassId',
+                                    dot: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 1.0),
+                                      color:
+                                          flag == 1 ? Colors.green : Colors.red,
+                                      height: 5.0,
+                                      width: 5.0,
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              }
                             }
                           }
                         });
@@ -405,41 +416,45 @@ class _StudentAttendanceCalenderViewState
                         setState(() {
                           noOfWeeks = getWeeksInMonth(
                               DateTime(currentYear, currentMonth));
-                          for (var element1
+                          for (ClassDetails element1
                               in attendenceCubit.attendenceClasses ?? []) {
                             int flag = 0;
                             int conductedClassId = 0;
-                            for (var element in cubit.studentClasses ?? []) {
-                              if (element.conductedClass.conductedOn ==
+                            for (StudentAttendances element
+                                in cubit.studentClasses ?? []) {
+                              if (element.conductedClass?.conductedOn ==
                                   element1.date) {
                                 flag = 1;
-                                conductedClassId = element.id;
+                                conductedClassId = element.id ?? 0;
                                 break;
                               }
                             }
-                            if (element1.date.isBefore(DateTime.now())) {
+                            if ((element1.date ?? DateTime.now())
+                                .isBefore(DateTime.now())) {
                               if (flag == 1) {
                                 present++;
                               } else {
                                 absent++;
                               }
-                              _markedDateMap.add(
-                                element1.date ?? DateTime.now(),
-                                Event(
-                                  date: element1.date ?? DateTime.now(),
-                                  title: conductedClassId == 0
-                                      ? 'Event 1'
-                                      : '$conductedClassId',
-                                  dot: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 1.0),
-                                    color:
-                                        flag == 1 ? Colors.green : Colors.red,
-                                    height: 5.0,
-                                    width: 5.0,
+                              if (element1.conducted == true) {
+                                _markedDateMap.add(
+                                  element1.date ?? DateTime.now(),
+                                  Event(
+                                    date: element1.date ?? DateTime.now(),
+                                    title: conductedClassId == 0
+                                        ? 'Event 1'
+                                        : '$conductedClassId',
+                                    dot: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 1.0),
+                                      color:
+                                          flag == 1 ? Colors.green : Colors.red,
+                                      height: 5.0,
+                                      width: 5.0,
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              }
                             }
                           }
                         });

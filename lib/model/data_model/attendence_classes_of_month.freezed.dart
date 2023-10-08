@@ -1063,7 +1063,7 @@ mixin _$Branch {
   int? get districtId => throw _privateConstructorUsedError;
   int? get countryId => throw _privateConstructorUsedError;
   Country? get country => throw _privateConstructorUsedError;
-  State? get state => throw _privateConstructorUsedError;
+  StateDetails? get state => throw _privateConstructorUsedError;
   District? get district => throw _privateConstructorUsedError;
   Timezone? get timezone => throw _privateConstructorUsedError;
 
@@ -1087,12 +1087,12 @@ abstract class $BranchCopyWith<$Res> {
       int? districtId,
       int? countryId,
       Country? country,
-      State? state,
+      StateDetails? state,
       District? district,
       Timezone? timezone});
 
   $CountryCopyWith<$Res>? get country;
-  $StateCopyWith<$Res>? get state;
+  $StateDetailsCopyWith<$Res>? get state;
   $DistrictCopyWith<$Res>? get district;
   $TimezoneCopyWith<$Res>? get timezone;
 }
@@ -1163,7 +1163,7 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
       state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
-              as State?,
+              as StateDetails?,
       district: freezed == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
@@ -1189,12 +1189,12 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
 
   @override
   @pragma('vm:prefer-inline')
-  $StateCopyWith<$Res>? get state {
+  $StateDetailsCopyWith<$Res>? get state {
     if (_value.state == null) {
       return null;
     }
 
-    return $StateCopyWith<$Res>(_value.state!, (value) {
+    return $StateDetailsCopyWith<$Res>(_value.state!, (value) {
       return _then(_value.copyWith(state: value) as $Val);
     });
   }
@@ -1240,14 +1240,14 @@ abstract class _$$_BranchCopyWith<$Res> implements $BranchCopyWith<$Res> {
       int? districtId,
       int? countryId,
       Country? country,
-      State? state,
+      StateDetails? state,
       District? district,
       Timezone? timezone});
 
   @override
   $CountryCopyWith<$Res>? get country;
   @override
-  $StateCopyWith<$Res>? get state;
+  $StateDetailsCopyWith<$Res>? get state;
   @override
   $DistrictCopyWith<$Res>? get district;
   @override
@@ -1317,7 +1317,7 @@ class __$$_BranchCopyWithImpl<$Res>
       state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
-              as State?,
+              as StateDetails?,
       district: freezed == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
@@ -1370,7 +1370,7 @@ class _$_Branch implements _Branch {
   @override
   final Country? country;
   @override
-  final State? state;
+  final StateDetails? state;
   @override
   final District? district;
   @override
@@ -1448,7 +1448,7 @@ abstract class _Branch implements Branch {
       final int? districtId,
       final int? countryId,
       final Country? country,
-      final State? state,
+      final StateDetails? state,
       final District? district,
       final Timezone? timezone}) = _$_Branch;
 
@@ -1473,7 +1473,7 @@ abstract class _Branch implements Branch {
   @override
   Country? get country;
   @override
-  State? get state;
+  StateDetails? get state;
   @override
   District? get district;
   @override
@@ -1898,32 +1898,34 @@ abstract class _District implements District {
       throw _privateConstructorUsedError;
 }
 
-State _$StateFromJson(Map<String, dynamic> json) {
-  return _State.fromJson(json);
+StateDetails _$StateDetailsFromJson(Map<String, dynamic> json) {
+  return _StateDetails.fromJson(json);
 }
 
 /// @nodoc
-mixin _$State {
+mixin _$StateDetails {
   int? get id => throw _privateConstructorUsedError;
   String? get stateName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $StateCopyWith<State> get copyWith => throw _privateConstructorUsedError;
+  $StateDetailsCopyWith<StateDetails> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StateCopyWith<$Res> {
-  factory $StateCopyWith(State value, $Res Function(State) then) =
-      _$StateCopyWithImpl<$Res, State>;
+abstract class $StateDetailsCopyWith<$Res> {
+  factory $StateDetailsCopyWith(
+          StateDetails value, $Res Function(StateDetails) then) =
+      _$StateDetailsCopyWithImpl<$Res, StateDetails>;
   @useResult
   $Res call({int? id, String? stateName});
 }
 
 /// @nodoc
-class _$StateCopyWithImpl<$Res, $Val extends State>
-    implements $StateCopyWith<$Res> {
-  _$StateCopyWithImpl(this._value, this._then);
+class _$StateDetailsCopyWithImpl<$Res, $Val extends StateDetails>
+    implements $StateDetailsCopyWith<$Res> {
+  _$StateDetailsCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -1950,18 +1952,22 @@ class _$StateCopyWithImpl<$Res, $Val extends State>
 }
 
 /// @nodoc
-abstract class _$$_StateCopyWith<$Res> implements $StateCopyWith<$Res> {
-  factory _$$_StateCopyWith(_$_State value, $Res Function(_$_State) then) =
-      __$$_StateCopyWithImpl<$Res>;
+abstract class _$$_StateDetailsCopyWith<$Res>
+    implements $StateDetailsCopyWith<$Res> {
+  factory _$$_StateDetailsCopyWith(
+          _$_StateDetails value, $Res Function(_$_StateDetails) then) =
+      __$$_StateDetailsCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String? stateName});
 }
 
 /// @nodoc
-class __$$_StateCopyWithImpl<$Res> extends _$StateCopyWithImpl<$Res, _$_State>
-    implements _$$_StateCopyWith<$Res> {
-  __$$_StateCopyWithImpl(_$_State _value, $Res Function(_$_State) _then)
+class __$$_StateDetailsCopyWithImpl<$Res>
+    extends _$StateDetailsCopyWithImpl<$Res, _$_StateDetails>
+    implements _$$_StateDetailsCopyWith<$Res> {
+  __$$_StateDetailsCopyWithImpl(
+      _$_StateDetails _value, $Res Function(_$_StateDetails) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1970,7 +1976,7 @@ class __$$_StateCopyWithImpl<$Res> extends _$StateCopyWithImpl<$Res, _$_State>
     Object? id = freezed,
     Object? stateName = freezed,
   }) {
-    return _then(_$_State(
+    return _then(_$_StateDetails(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1986,11 +1992,11 @@ class __$$_StateCopyWithImpl<$Res> extends _$StateCopyWithImpl<$Res, _$_State>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_State implements _State {
-  const _$_State({this.id, this.stateName});
+class _$_StateDetails implements _StateDetails {
+  const _$_StateDetails({this.id, this.stateName});
 
-  factory _$_State.fromJson(Map<String, dynamic> json) =>
-      _$$_StateFromJson(json);
+  factory _$_StateDetails.fromJson(Map<String, dynamic> json) =>
+      _$$_StateDetailsFromJson(json);
 
   @override
   final int? id;
@@ -1999,14 +2005,14 @@ class _$_State implements _State {
 
   @override
   String toString() {
-    return 'State(id: $id, stateName: $stateName)';
+    return 'StateDetails(id: $id, stateName: $stateName)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_State &&
+            other is _$_StateDetails &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.stateName, stateName) ||
                 other.stateName == stateName));
@@ -2019,21 +2025,23 @@ class _$_State implements _State {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StateCopyWith<_$_State> get copyWith =>
-      __$$_StateCopyWithImpl<_$_State>(this, _$identity);
+  _$$_StateDetailsCopyWith<_$_StateDetails> get copyWith =>
+      __$$_StateDetailsCopyWithImpl<_$_StateDetails>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StateToJson(
+    return _$$_StateDetailsToJson(
       this,
     );
   }
 }
 
-abstract class _State implements State {
-  const factory _State({final int? id, final String? stateName}) = _$_State;
+abstract class _StateDetails implements StateDetails {
+  const factory _StateDetails({final int? id, final String? stateName}) =
+      _$_StateDetails;
 
-  factory _State.fromJson(Map<String, dynamic> json) = _$_State.fromJson;
+  factory _StateDetails.fromJson(Map<String, dynamic> json) =
+      _$_StateDetails.fromJson;
 
   @override
   int? get id;
@@ -2041,7 +2049,7 @@ abstract class _State implements State {
   String? get stateName;
   @override
   @JsonKey(ignore: true)
-  _$$_StateCopyWith<_$_State> get copyWith =>
+  _$$_StateDetailsCopyWith<_$_StateDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

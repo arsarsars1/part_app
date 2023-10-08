@@ -87,7 +87,7 @@ class Branch with _$Branch {
     int? districtId,
     int? countryId,
     Country? country,
-    State? state,
+    StateDetails? state,
     District? district,
     Timezone? timezone,
   }) = _Branch;
@@ -125,14 +125,14 @@ class District with _$District {
 }
 
 @freezed
-class State with _$State {
+class StateDetails with _$StateDetails {
   @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory State({
+  const factory StateDetails({
     int? id,
     String? stateName,
-  }) = _State;
+  }) = _StateDetails;
 
-  factory State.fromJson(Map<String, dynamic> json) => _$StateFromJson(json);
+  factory StateDetails.fromJson(Map<String, dynamic> json) => _$StateDetailsFromJson(json);
 }
 
 @freezed
