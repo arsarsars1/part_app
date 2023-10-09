@@ -119,8 +119,8 @@ class FeeDetailsService {
           queryPath: feeType == 'monthly'
               ? month != null
                   ? paymentStatus != 'all'
-                      ? '/students/$studentId/fee-details/batch-fee-invoices?year=$year&month=$month?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
-                      : '/students/$studentId/fee-details/batch-fee-invoices?year=$year&month=$month?fee_type=$feeType&page=$pageNo'
+                      ? '/students/$studentId/fee-details/batch-fee-invoices?year=$year&month=$month&fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                      : '/students/$studentId/fee-details/batch-fee-invoices?year=$year&month=$month&fee_type=$feeType&page=$pageNo'
                   : paymentStatus != 'all'
                       ? '/students/$studentId/fee-details/batch-fee-invoices?year=$year&fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
                       : '/students/$studentId/fee-details/batch-fee-invoices?year=$year&fee_type=$feeType&page=$pageNo'
