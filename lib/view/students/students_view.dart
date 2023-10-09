@@ -177,76 +177,90 @@ class _StudentsViewState extends State<StudentsView> {
                           );
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      CommonField(
-                        disabled: branchId == null,
-                        title: 'Batch Status *',
-                        hint: 'Select Batch Status',
-                        dropDown: true,
-                        dropDownItems: DefaultValues().batchStatus,
-                        onChange: (value) {
-                          status = value.id;
-
-                          context.read<BatchCubit>().getBatchesByStatus(
-                                branchId: branchId,
-                                status: status!,
-                                clean: true,
-                              );
-                          batchController.clear();
-                          batch = null;
-                        },
-                        validator: (value) {
-                          return value == null
-                              ? 'Please select batch status.'
-                              : null;
-                        },
-                        onSubmit: (value) {},
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      CommonField(
-                        controller: batchController,
-                        onTap: () {
-                          if (branchId != null && status != null) {
-                            scaffoldKey.currentState?.showBottomSheet(
-                              elevation: 10,
-                              backgroundColor: Colors.transparent,
-                              (context) => BatchPicker(
-                                branchId: branchId!,
-                                status: status!,
-                                onSelect: (value) {
-                                  batch = value;
-                                  batchController.text = value.name;
-
-                                  doSearch(true);
-                                  // setState(() {});
-                                },
-                              ),
-                            );
-                          } else {
-                            Alert(context).show(
-                              message: 'Please select Branch and Status.',
-                            );
-                          }
-                        },
-                        disabled: true,
-                        title: 'Batch *',
-                        hint: 'Select Batch',
-                        onChange: (value) {},
-                        suffixIcon: const Padding(
-                          padding: EdgeInsets.only(right: 32),
-                          child: Icon(
-                            Icons.arrow_drop_down,
-                            size: 24,
-                            color: Colors.white24,
-                          ),
+                      Visibility(
+                        visible: branchId != null,
+                        child: const SizedBox(
+                          height: 20,
                         ),
-                        validator: (value) {
-                          return value == null ? 'Please select batch.' : null;
-                        },
+                      ),
+                      Visibility(
+                        visible: branchId != null,
+                        child: CommonField(
+                          disabled: branchId == null,
+                          title: 'Batch Status *',
+                          hint: 'Select Batch Status',
+                          dropDown: true,
+                          dropDownItems: DefaultValues().batchStatus,
+                          onChange: (value) {
+                            status = value.id;
+
+                            context.read<BatchCubit>().getBatchesByStatus(
+                                  branchId: branchId,
+                                  status: status!,
+                                  clean: true,
+                                );
+                            batchController.clear();
+                            batch = null;
+                          },
+                          validator: (value) {
+                            return value == null
+                                ? 'Please select batch status.'
+                                : null;
+                          },
+                          onSubmit: (value) {},
+                        ),
+                      ),
+                      Visibility(
+                        visible: branchId != null,
+                        child: const SizedBox(
+                          height: 20,
+                        ),
+                      ),
+                      Visibility(
+                        visible: branchId != null,
+                        child: CommonField(
+                          controller: batchController,
+                          onTap: () {
+                            if (branchId != null && status != null) {
+                              scaffoldKey.currentState?.showBottomSheet(
+                                elevation: 10,
+                                backgroundColor: Colors.transparent,
+                                (context) => BatchPicker(
+                                  branchId: branchId!,
+                                  status: status!,
+                                  onSelect: (value) {
+                                    batch = value;
+                                    batchController.text = value.name;
+
+                                    doSearch(true);
+                                    // setState(() {});
+                                  },
+                                ),
+                              );
+                            } else {
+                              Alert(context).show(
+                                message: 'Please select Branch and Status.',
+                              );
+                            }
+                          },
+                          disabled: true,
+                          title: 'Batch *',
+                          hint: 'Select Batch',
+                          onChange: (value) {},
+                          suffixIcon: const Padding(
+                            padding: EdgeInsets.only(right: 32),
+                            child: Icon(
+                              Icons.arrow_drop_down,
+                              size: 24,
+                              color: Colors.white24,
+                            ),
+                          ),
+                          validator: (value) {
+                            return value == null
+                                ? 'Please select batch.'
+                                : null;
+                          },
+                        ),
                       ),
                       const SizedBox(
                         height: 20,

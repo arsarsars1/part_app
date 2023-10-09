@@ -377,6 +377,7 @@ class TrainerCubit extends Cubit<TrainerState> {
     String? searchQuery = '',
     int? branchId,
   }) async {
+    
     if (clean) {
       page = 1;
       nextPageUrl = '';

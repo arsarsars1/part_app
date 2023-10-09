@@ -222,17 +222,27 @@ class TrainerService {
   }) async {
     try {
       log(branchId.toString());
+
+      getSearchKeyword() {
+        if (searchQuery != null && searchQuery.isNotEmpty) {
+          return '/search/$searchQuery';
+        } else {
+          return '';
+        }
+      }
+
+
       if (branchId == null) {
         var response = await _client.get(
             queryPath: month != null
-                ? '/admin/trainers/$trainerId/salary-history/$year/$month&page=$pageNo'
-                : '/admin/trainers/$trainerId/salary-history/$year&page=$pageNo');
+                ? '/admin/trainers/$trainerId/salary-history/${getSearchKeyword()}$year/$month&page=$pageNo&search=$searchQuery'
+                : '/admin/trainers/$trainerId/salary-history/${getSearchKeyword()}$year&page=$pageNo&search=$searchQuery');
         return trainerSalarySlipFromJson(jsonEncode(response));
       } else {
         var response = await _client.get(
             queryPath: month != null
-                ? '/admin/salary/trainers?branch_id=$branchId&year=$year&month=$month&page=$pageNo'
-                : '/admin/salary/trainers?branch_id=$branchId&year=$year&page=$pageNo');
+                ? '/admin/salary/trainers?branch_id=$branchId&year=$year&month=$month&page=$pageNo&search=$searchQuery'
+                : '/admin/salary/trainers?branch_id=$branchId&year=$year&page=$pageNo&search=$searchQuery');
         return trainerSalarySlipFromJson(jsonEncode(response));
       }
     } catch (e) {
