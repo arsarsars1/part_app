@@ -40,13 +40,15 @@ class _ClassLinkViewState extends State<ClassLinkView> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var branchCubit = context.read<BranchCubit>();
+      var batchCubit = context.read<BatchCubit>();
+      await branchCubit.getBranches();
       branchId = branchCubit.firstBranch.id;
-      context.read<BatchCubit>().getBatchesByStatus(
-            branchId: branchId,
-            clean: true,
-            branchSearch: false,
-            status: 'ongoing',
-          );
+      batchCubit.getBatchesByStatus(
+        branchId: branchId,
+        clean: true,
+        branchSearch: false,
+        status: 'ongoing',
+      );
     });
     super.initState();
   }
