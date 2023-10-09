@@ -120,16 +120,20 @@ class HomeBar extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        Padding(
-          padding: EdgeInsets.only(right: 32.w),
-          child: Text(
-            cubit.user?.adminDetail?.academy?.academyName ?? 'N/A',
-            maxLines: 2,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: AppColors.primaryColor,
-                  fontSize: 16.sp,
-                ),
-          ),
+        BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            return Padding(
+              padding: EdgeInsets.only(right: 32.w),
+              child: Text(
+                cubit.user?.adminDetail?.academy?.academyName ?? 'N/A',
+                maxLines: 2,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: AppColors.primaryColor,
+                      fontSize: 16.sp,
+                    ),
+              ),
+            );
+          },
         ),
         const SizedBox(
           height: 4,

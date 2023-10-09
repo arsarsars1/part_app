@@ -213,7 +213,7 @@ class DefaultValues {
       title: 'Class Link',
       route: ClassLinkView.route,
       asset: Assets.classLink,
-      color: Color(0xFFE100FF),
+      color: Color.fromARGB(255, 228, 50, 80),
     ),
     DashboardItem(
       title: 'Branch Manager',

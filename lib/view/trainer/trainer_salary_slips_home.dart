@@ -132,8 +132,10 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
                       onChange: (value) {
                         if (value.isEmpty) {
                           query = null;
-                          doSearch(true);
+                        } else {
+                          query = value;
                         }
+                        doSearch(true);
                       },
                       onSubmit: (value) {
                         if (value.isEmpty) {

@@ -222,6 +222,7 @@ class TrainerService {
   }) async {
     try {
       log(branchId.toString());
+
       if (branchId == null) {
         var response = await _client.get(
             queryPath: month != null
@@ -231,8 +232,8 @@ class TrainerService {
       } else {
         var response = await _client.get(
             queryPath: month != null
-                ? '/admin/salary/trainers?branch_id=$branchId&year=$year&month=$month&page=$pageNo'
-                : '/admin/salary/trainers?branch_id=$branchId&year=$year&page=$pageNo');
+                ? '/admin/salary/trainers?branch_id=$branchId&year=$year&month=$month&page=$pageNo&search=${searchQuery ?? ''}'
+                : '/admin/salary/trainers?branch_id=$branchId&year=$year&page=$pageNo&search=${searchQuery ?? ''}');
         return trainerSalarySlipFromJson(jsonEncode(response));
       }
     } catch (e) {
