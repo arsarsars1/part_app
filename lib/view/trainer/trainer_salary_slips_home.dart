@@ -87,6 +87,8 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
                         onSelect: (value) {
                           setState(() {
                             branchId = value;
+                            trainerCubit.salaryInvoice.clear();
+                            dateController.clear();
                           });
                         },
                       ),
