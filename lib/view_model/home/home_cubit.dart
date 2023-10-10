@@ -241,6 +241,7 @@ class HomeCubit extends Cubit<HomeState> {
     } else {
       emit(GetNotificationsFailed('Failed to get the notification list'));
     }
+    return temp;
   }
 
   Future<List<NotificationData>?> getTempStudentAppNotificationList({

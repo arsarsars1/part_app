@@ -20,7 +20,7 @@ class StudentAppHomeBar extends StatelessWidget {
     var cubit = context.read<AuthCubit>();
     var homeCubit = context.read<HomeCubit>();
     var notificationCubit = context.read<NotificationCubit>();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       NotificationList? list = await homeCubit.getStudentAppNotificationList(
           studentId: context
               .read<AuthCubit>()

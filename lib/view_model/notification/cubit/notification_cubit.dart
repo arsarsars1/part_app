@@ -49,7 +49,6 @@ class NotificationCubit extends Cubit<NotificationState> {
           flag = true;
         }
       });
-
       flag ? emit(NotificationBadge()) : emit(NotificationInitial());
     } else {
       emit(NotificationInitial());
