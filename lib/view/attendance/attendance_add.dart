@@ -90,7 +90,6 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                 } else {
                   startTime = cubit.selectedClass?.startTime;
                   endTime = cubit.selectedClass?.endTime;
-                 
                 }
 
                 if (state is CreatingAttendance) {
