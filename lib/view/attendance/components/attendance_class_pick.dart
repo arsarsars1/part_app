@@ -134,7 +134,7 @@ class _AttendanceClassPickerState extends State<AttendanceClassPicker> {
                     separatorBuilder: (context, index) => const SizedBox(
                           height: 10,
                         ),
-                    itemCount: 2),
+                    itemCount: widget.eventList?.length??0),
               ),
               Button(
                   onTap: () {
