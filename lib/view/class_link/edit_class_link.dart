@@ -34,6 +34,7 @@ class _EditClassLinkState extends State<EditClassLink> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
+
   var formKey = GlobalKey<FormState>();
   @override
   void initState() {
@@ -431,12 +432,9 @@ class _EditClassLinkState extends State<EditClassLink> {
                   : ScheduleField(
                       title: 'Date *',
                       hint: 'Select the date',
+                      controller: dateController,
                       onSelect: (String value) {
                         date = DateTime.parse(value);
-                        dateController.text = date?.toDateString() ?? "";
-                        setState(() {
-                          selectedclass = null;
-                        });
                         scaffoldKey.currentState?.showBottomSheet(
                           enableDrag: false,
                           elevation: 10,
@@ -450,8 +448,8 @@ class _EditClassLinkState extends State<EditClassLink> {
                             onSave: (ClassModel value) {
                               setState(() {
                                 dateController.text = date?.toDDMMYYY() ?? "";
-                                selectedclass = value;
-                              });
+                              selectedclass = value;
+});
                             },
                           ),
                         );
