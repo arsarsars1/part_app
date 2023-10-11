@@ -45,8 +45,8 @@ class _StudentBatchPickerState extends State<StudentBatchPicker> {
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<BatchCubit>();
-    return BlocBuilder<BatchCubit, BatchState>(
+    var cubit = context.read<StudentCubit>();
+    return BlocBuilder<StudentCubit, StudentState>(
       builder: (context, state) {
         return Column(
           children: [
