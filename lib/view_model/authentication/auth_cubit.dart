@@ -248,63 +248,70 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future updateProfile(ProfileUpdateRequest request, int? studentId,
-      [String? otp]) async {
-    emit(UpdatingUser());
+      [String? otp, bool isToOtpPage = false]) async {
+    if (!isToOtpPage) {
+      emit(UpdatingUser());
+    }
     UserResponse? response = studentId == null
         ? await _authService
             .updateProfile(request.toJson()..putIfAbsent('otp', () => otp))
         : await _authService.updateStudentProfile(
             request.toJson()..putIfAbsent('otp', () => otp), studentId);
     if (response?.status == 1) {
-      validateLocalUser();
+      if (!isToOtpPage) {
+        validateLocalUser();
 
-      if (studentId == null) {
-        emit(
-          UpdateUserSuccess(
-            user: user!.copyWith(
-              mobileNo: request.mobileNo ?? user!.mobileNo,
-              adminDetail: user!.adminDetail!.copyWith(
-                name: request.name ?? user!.adminDetail!.name,
-                email: request.email ?? user!.adminDetail!.email,
-                gender: request.gender ?? user!.adminDetail!.gender,
-                whatsappNo: request.whatsappNo ?? user!.adminDetail!.whatsappNo,
-                dob: (request.dob != null
-                    ? DateTime.parse(request.dob!)
-                    : user!.adminDetail!.dob),
-                academy: user!.adminDetail!.academy!.copyWith(
-                  academyName: request.academyName ??
-                      user!.adminDetail!.academy!.academyName,
+        if (studentId == null) {
+          emit(
+            UpdateUserSuccess(
+              user: user!.copyWith(
+                mobileNo: request.mobileNo ?? user!.mobileNo,
+                adminDetail: user!.adminDetail!.copyWith(
+                  name: request.name ?? user!.adminDetail!.name,
+                  email: request.email ?? user!.adminDetail!.email,
+                  gender: request.gender ?? user!.adminDetail!.gender,
+                  whatsappNo:
+                      request.whatsappNo ?? user!.adminDetail!.whatsappNo,
+                  dob: (request.dob != null
+                      ? DateTime.parse(request.dob!)
+                      : user!.adminDetail!.dob),
+                  academy: user!.adminDetail!.academy!.copyWith(
+                    academyName: request.academyName ??
+                        user!.adminDetail!.academy!.academyName,
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      } else {
-        final studentList = user!.studentDetail!.toList();
-        final student =
-            studentList.firstWhere((element) => element.id == studentId);
-        final newStudent = student.copyWith(
-          name: request.name ?? student.name,
-          email: request.email ?? student.email,
-          gender: request.gender ?? student.gender,
-          whatsappNo: request.whatsappNo ?? student.whatsappNo,
-          dob: (request.dob != null
-              ? DateTime.parse(request.dob!)
-              : student.dob),
-          academy: student.academy!.copyWith(
-            academyName: request.academyName ?? student.academy!.academyName,
-          ),
-        );
-        studentList.insert(studentList.indexOf(student), newStudent);
-        studentList.remove(student);
+          );
+        } else {
+          final studentList = user!.studentDetail!.toList();
+          final student =
+              studentList.firstWhere((element) => element.id == studentId);
+          final newStudent = student.copyWith(
+            name: request.name ?? student.name,
+            email: request.email ?? student.email,
+            gender: request.gender ?? student.gender,
+            whatsappNo: request.whatsappNo ?? student.whatsappNo,
+            dob: (request.dob != null
+                ? DateTime.parse(request.dob!)
+                : student.dob),
+            academy: student.academy!.copyWith(
+              academyName: request.academyName ?? student.academy!.academyName,
+            ),
+          );
+          studentList.insert(studentList.indexOf(student), newStudent);
+          studentList.remove(student);
 
-        emit(
-          UpdateUserSuccess(
-            user: user!.copyWith(
-                mobileNo: request.mobileNo ?? user!.mobileNo,
-                studentDetail: studentList),
-          ),
-        );
+          emit(
+            UpdateUserSuccess(
+              user: user!.copyWith(
+                  mobileNo: request.mobileNo ?? user!.mobileNo,
+                  studentDetail: studentList),
+            ),
+          );
+        }
+      } else {
+        emit(UpdateOTPSuccess());
       }
     } else {
       emit(UpdateUserFailed(response?.message ?? 'Failed to update'));

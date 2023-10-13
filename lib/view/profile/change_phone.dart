@@ -35,14 +35,15 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
         if (state is UpdateUserSuccess) {
           Alert(context).show(message: 'User Profile Updated');
           context.read<AuthCubit>().updateUser(state.user);
+        } else if (state is UpdateUserFailed) {
+          Alert(context).show(message: state.message);
+        } else if (state is UpdateOTPSuccess) {
           if (mobileNo?.isNotEmpty ?? false) {
             cubit.phoneNumber = mobileNo;
             cubit.countryCode = '91';
             Navigator.pushNamed(context, OTPVerify.route,
                 arguments: OTPRoutes.mobileNumberChange);
           }
-        } else if (state is UpdateUserFailed) {
-          Alert(context).show(message: state.message);
         }
       }, builder: (context, state) {
         if (state is UpdatingUser) {
@@ -90,7 +91,9 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                             isAdmin
                                 ? null
                                 : cubit.user?.studentDetail?[cubit.studentIndex]
-                                    .id);
+                                    .id,
+                            null,
+                            true);
                       }
                     }
                   },
