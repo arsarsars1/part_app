@@ -71,9 +71,12 @@ class RegisterFailed extends AuthState {
 class UpdateUserSuccess extends AuthState {
   final User user;
   UpdateUserSuccess({
-   required this.user,
+    required this.user,
   });
-  
+}
+
+class UpdateOTPSuccess extends AuthState {
+  UpdateOTPSuccess();
 }
 
 class UpdatingUser extends AuthState {}
