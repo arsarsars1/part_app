@@ -19,4 +19,25 @@ class F {
     }
   }
 
+  static String get baseUrl {
+    switch (appFlavor) {
+      case Flavor.dev:
+        return 'https://dev.partapp.in/api';
+      case Flavor.prod:
+        return 'https://partapp.in/api';
+      default:
+        return 'https://partapp.in/api';
+    }
+  }
+
+  static bool get defaultOTP {
+    switch (appFlavor) {
+      case Flavor.dev:
+        return true;
+      case Flavor.prod:
+        return false;
+      default:
+        return false;
+    }
+  }
 }
