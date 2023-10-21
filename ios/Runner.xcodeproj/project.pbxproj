@@ -194,7 +194,7 @@
 		97C146E61CF9000F007C117D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					97C146ED1CF9000F007C117D = {
@@ -252,6 +252,7 @@
 			files = (
 			);
 			inputPaths = (
+				"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}",
 			);
 			name = "Thin Binary";
 			outputPaths = (
@@ -405,7 +406,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6QN6S2QB7V;
+				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -425,7 +426,7 @@
 			baseConfigurationReference = CF2FB5C9D4C8E13D91732BD4 /* devRelease.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -495,7 +496,7 @@
 			baseConfigurationReference = 8482CFB05F124E43691CA7E4 /* devDebug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -568,7 +569,7 @@
 			baseConfigurationReference = 6795481CE54CCA5CA3D7A2B3 /* prodRelease.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -747,7 +748,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6QN6S2QB7V;
+				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -770,7 +771,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6QN6S2QB7V;
+				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -789,7 +790,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 05F40D76689BA5B90DF8BC8A /* Pods-Runner.debug-dev.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 6QN6S2QB7V;
+				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				PRODUCT_NAME = Runner;
 			};
 			name = "Debug-dev";
@@ -798,7 +799,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3F13D1488B3B2352A3194D0B /* Pods-Runner.profile-dev.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 6QN6S2QB7V;
+				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				PRODUCT_NAME = Runner;
 			};
 			name = "Profile-dev";
@@ -807,7 +808,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B2D7D4DDE94090EB79844106 /* Pods-Runner.release-dev.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 6QN6S2QB7V;
+				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				PRODUCT_NAME = Runner;
 			};
 			name = "Release-dev";
@@ -816,7 +817,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 06035C5EC69A38DA7A322579 /* Pods-Runner.debug-prod.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 6QN6S2QB7V;
+				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				PRODUCT_NAME = Runner;
 			};
 			name = "Debug-prod";
@@ -825,7 +826,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B8468A28A2E1C123B9D51A45 /* Pods-Runner.profile-prod.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 6QN6S2QB7V;
+				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				PRODUCT_NAME = Runner;
 			};
 			name = "Profile-prod";
@@ -834,7 +835,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7EE1C933ADD70CE45F2F2007 /* Pods-Runner.release-prod.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 6QN6S2QB7V;
+				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				PRODUCT_NAME = Runner;
 			};
 			name = "Release-prod";
@@ -844,7 +845,7 @@
 			baseConfigurationReference = 2EEA6116D7B634E976A2BF20 /* prodDebug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -917,7 +918,7 @@
 			baseConfigurationReference = 8D8997ADAACCFC83E5F1B508 /* devProfile.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -985,7 +986,7 @@
 			baseConfigurationReference = 26F98B7465C60316C42992EC /* prodProfile.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
