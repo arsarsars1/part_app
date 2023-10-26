@@ -131,7 +131,7 @@ class ApiClient {
         print(
           'STATUS -> Code : ${response.statusCode}, Status : ${response.statusMessage}',
         );
-        log(json.encode(response.data));
+        // log(json.encode(response.data));
         print('**********         ***********');
       }
       return _handleResponse(response);

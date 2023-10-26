@@ -19,7 +19,7 @@ class PaymentCubit extends Cubit<PaymentState> {
 
   final _razorpay = Razorpay();
 
-  final _rPayKey = 'rzp_test_hlqptDWb4W4ZwT';
+  final _rPayKey = 'rzp_live_fWP8ssHYxlXENr';
 
   final _timeOut = 300;
 
