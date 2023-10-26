@@ -22,11 +22,12 @@ class F {
   static String get baseUrl {
     switch (appFlavor) {
       case Flavor.dev:
+        // return 'https://v1.partapp.in/api';
         return 'https://dev.partapp.in/api';
       case Flavor.prod:
-        return 'https://partapp.in/api';
+        return 'https://v1.partapp.in/api';
       default:
-        return 'https://partapp.in/api';
+        return 'https://v1.partapp.in/api';
     }
   }
 

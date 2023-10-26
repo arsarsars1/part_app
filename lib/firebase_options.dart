@@ -66,11 +66,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDuxZJKr36WQe0hEY6ssk___S-Sgoa6Zno',
-    appId: '1:174067683059:ios:1151076e25fb72e9437186',
+    appId: '1:174067683059:ios:22f0dbee88860285437186',
     messagingSenderId: '174067683059',
     projectId: 'partapp-104d6',
     storageBucket: 'partapp-104d6.appspot.com',
-    iosClientId: '174067683059-seoph6sk0u3oaou8bec51u8624ip6vkf.apps.googleusercontent.com',
-    iosBundleId: 'com.partapp.partApp',
+    iosClientId:
+        '174067683059-seoph6sk0u3oaou8bec51u8624ip6vkf.apps.googleusercontent.com',
+    iosBundleId: 'com.partapp.iosx',
   );
 }
