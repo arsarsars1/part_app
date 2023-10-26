@@ -100,7 +100,12 @@ class AuthService {
   Future<UserResponse?> register({
     required RegisterRequest registerRequest,
   }) async {
-    final fcmToken = await FirebaseMessaging.instance.getToken();
+    String? fcmToken;
+    try {
+      fcmToken = await FirebaseMessaging.instance.getToken();
+    } on Exception catch (e) {
+      fcmToken = 'cannot generate fcm token';
+    }
     try {
       var response = await _apiClient.post(
         postPath: '/register',
@@ -165,7 +170,11 @@ class AuthService {
   }
 
   Future<void> addFirebaseListener(BuildContext context) async {
-    await FirebaseMessaging.instance.getToken();
+    try {
+      await FirebaseMessaging.instance.getToken();
+    } on Exception catch (e) {
+      print('cannot generate fcm token');
+    }
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       if (message.data['notifiable_type'] == 'App\\Models\\AdminDetail') {
         context.read<NotificationCubit>().emitNotificationNew();
