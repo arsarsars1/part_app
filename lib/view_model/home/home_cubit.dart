@@ -1,11 +1,11 @@
 // ignore_for_file: unused_field
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/faq_list.dart';
 import 'package:part_app/model/data_model/calender_events_list.dart';
 import 'package:part_app/model/data_model/common.dart';
-import 'package:part_app/model/data_model/dashboard.dart';
+import 'package:part_app/model/data_model/dashboard.dart' as tempbanner;
 import 'package:part_app/model/data_model/notification_list.dart';
 import 'package:part_app/model/data_model/student_app_calender_events.dart';
 import 'package:part_app/model/data_model/student_dashboard.dart';
@@ -18,7 +18,7 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
 
   final _service = DashboardService();
-  List<Banner>? _banner;
+  List<tempbanner.Banner>? _banner;
   List<BatchFeeInvoice?>? studentBatches;
   List<ClassDetails?>? studentClasses;
   List<NotificationData>? _notifications;
@@ -26,7 +26,7 @@ class HomeCubit extends Cubit<HomeState> {
   int? _totalStudents;
   String? _dailyCollection;
   String? _monthlyCollection;
-  List<Banner>? get banner => _banner;
+  List<tempbanner.Banner>? get banner => _banner;
   List<FaqList?>? get faqList => _faqList;
   List<NotificationData?>? get notifications => _notifications;
   // List<BatchFeeInvoice?>? get studentBatches => _studentBatches;
@@ -36,6 +36,10 @@ class HomeCubit extends Cubit<HomeState> {
   String? get monthlyCollection => _monthlyCollection;
   DateTime selectedDate = DateTime.now();
   late DateTime selectedStudentDate = DateTime.now();
+
+  List<GlobalKey> keyCap = List<GlobalKey>.generate(
+      11, (index) => GlobalKey(debugLabel: 'key_$index'),
+      growable: false);
 
   // pagination
   int page = 1;

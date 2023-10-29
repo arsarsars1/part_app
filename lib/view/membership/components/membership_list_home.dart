@@ -76,7 +76,7 @@ class _MembershipListHomeState extends State<MembershipListHome> {
                                 height: 2,
                               ),
                               Text(
-                                'Register Upto ${membership.maxNoOfBranches} students',
+                                'Register Upto ${membership.maxNoOfStudents} students',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge

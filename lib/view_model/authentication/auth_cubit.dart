@@ -198,6 +198,7 @@ class AuthCubit extends Cubit<AuthState> {
       _user = value.user;
       Hive.box(Database.userBox).put(Database.token, value.token);
       Hive.box(Database.userBox).put(Database.userData, jsonEncode(value));
+      Hive.box(Database.userBox).put("Showcase", false);
       emit(RegisterSuccess());
     } else {
       print('hi5');
