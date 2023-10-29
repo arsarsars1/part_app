@@ -85,7 +85,7 @@ class CurrentMembership extends StatelessWidget {
                         ),
                         SizedBox(height: 2.h),
                         Text(
-                          'Register Upto ${cubit.user?.adminDetail?.academy?.membership?.maxNoOfBranches} students',
+                          'Register Upto ${cubit.user?.adminDetail?.academy?.membership?.maxNoOfStudents} students',
                           style:
                               Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontSize: 12,
