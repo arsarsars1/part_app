@@ -79,6 +79,19 @@ class _StudentAppBatchPickerState extends State<StudentAppBatchPicker> {
                       GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
+                          context
+                              .read<BatchCubit>()
+                              .getStudentAppBatchesByStatus(
+                                studentId: context
+                                    .read<AuthCubit>()
+                                    .user
+                                    ?.studentDetail?[
+                                        context.read<AuthCubit>().studentIndex]
+                                    .id,
+                                branchId: widget.branchId,
+                                status: widget.status,
+                                clean: true,
+                              );
                         },
                         child: Container(
                           width: 20.w,
