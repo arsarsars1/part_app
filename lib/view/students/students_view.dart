@@ -272,6 +272,12 @@ class _StudentsViewState extends State<StudentsView> {
                         onChange: (value) {
                           if (value.isEmpty) {
                             query = null;
+                            context.read<StudentCubit>().getStudents(
+                                  batchId: batch?.id,
+                                  searchQuery: query,
+                                  activeStatus: activeStatus,
+                                  clean: true,
+                                );
                           } else {
                             query = value;
                             doSearch(true);
