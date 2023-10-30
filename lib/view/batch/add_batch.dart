@@ -94,11 +94,12 @@ class _AddBatchState extends State<AddBatch> {
                       BranchField(
                         onSelect: (value) {
                           branchId = value;
-                          context.read<BranchCubit>().getBranchTrainers(
-                                branchId: '$branchId',
-                                clean: true,
-                              );
-                          setState(() {});
+                          setState(() {
+                            context.read<BranchCubit>().getBranchTrainers(
+                                  branchId: '$branchId',
+                                  clean: true,
+                                );
+                          });
                         },
                       ),
                       const SizedBox(
