@@ -42,7 +42,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
       var branchCubit = context.read<BranchCubit>();
       var batchCubit = context.read<BatchCubit>();
       await branchCubit.getBranches();
-      branchId = branchCubit.firstBranch.id;
+      branchId = branchCubit.firstBranch?.id;
       batchCubit.getBatchesByStatus(
         branchId: branchId,
         clean: true,

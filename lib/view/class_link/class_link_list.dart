@@ -34,7 +34,7 @@ class _ClassLinkListState extends State<ClassLinkList> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var branchCubit = context.read<BranchCubit>();
-      branchId = branchCubit.firstBranch.id;
+      branchId = branchCubit.firstBranch?.id;
       context.read<BatchCubit>().getBatchesByStatus(
             branchId: branchId,
             clean: true,

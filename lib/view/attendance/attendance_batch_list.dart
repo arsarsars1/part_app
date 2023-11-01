@@ -31,7 +31,7 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var branchCubit = context.read<BranchCubit>();
       AttendanceCubit cubit = context.read<AttendanceCubit>();
-      branchId = branchCubit.firstBranch.id;
+      branchId = branchCubit.firstBranch?.id;
       setState(() {
         cubit.getBatchesByStatus(
           branchId: branchId,

@@ -29,7 +29,7 @@ class _AssignBatchState extends State<AssignBatch> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<BatchCubit>().reset();
       var branchCubit = context.read<BranchCubit>();
-      branchId = branchCubit.firstBranch.id;
+      branchId = branchCubit.firstBranch?.id;
       context.read<BatchCubit>().getBatchesByStatus(
             branchId: branchId,
             clean: true,

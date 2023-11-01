@@ -21,7 +21,7 @@ class BranchCubit extends Cubit<BranchState> {
   final List<Trainer> _trainers = [];
   List<ClassModel> _classes = [];
   List<ClassModel> _newClasses = [];
-  late Branch firstBranch;
+  Branch? firstBranch;
 
   Branch? _branch;
 

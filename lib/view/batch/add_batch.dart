@@ -51,7 +51,13 @@ class _AddBatchState extends State<AddBatch> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<BatchCubit>().getCourses();
       var branchCubit = context.read<BranchCubit>();
-      branchId = branchCubit.firstBranch.id;
+      branchId = branchCubit.firstBranch?.id;
+      setState(() {
+        branchCubit.getBranchTrainers(
+          branchId: '$branchId',
+          clean: true,
+        );
+      });
     });
   }
 
