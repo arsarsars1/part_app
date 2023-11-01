@@ -144,9 +144,16 @@ class PaymentCubit extends Cubit<PaymentState> {
       ),
     );
 
-    _membershipService.updateOrderStatus(
+    // _membershipService.updateOrderStatus(
+    //   orderId: _orderId,
+    //   status: status,
+    // );
+
+    print('payment repsponse failed');
+    membershipCubit.addMemberShip(
+      paymentMethod: 'online',
       orderId: _orderId,
-      status: status,
+      // paymentId: response.paymentId,
     );
   }
 
