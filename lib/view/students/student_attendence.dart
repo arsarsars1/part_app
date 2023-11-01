@@ -40,7 +40,7 @@ class _StudentAttendanceCalenderViewState
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var branchCubit = context.read<BranchCubit>();
       AttendanceCubit cubit = context.read<AttendanceCubit>();
-      branchId = branchCubit.firstBranch.id;
+      branchId = branchCubit.firstBranch?.id;
       await batchCubit?.getBatchesByStatus(
         branchId: branchId,
         clean: true,

@@ -42,7 +42,7 @@ class _MonthlyAttendanceViewState extends State<MonthlyAttendanceView> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<StudentCubit>().clean();
       var branchCubit = context.read<BranchCubit>();
-      branchId = branchCubit.firstBranch.id;
+      branchId = branchCubit.firstBranch?.id;
       finalDate = null;
       dateController.clear();
       setState(() {

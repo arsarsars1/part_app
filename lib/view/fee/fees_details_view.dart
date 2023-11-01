@@ -43,7 +43,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FeeCubit>().clean();
       var branchCubit = context.read<BranchCubit>();
-      branchId = branchCubit.firstBranch.id;
+      branchId = branchCubit.firstBranch?.id;
       setState(() {
         context.read<BatchCubit>().getBatchesByBranch(
               branchId: branchId,

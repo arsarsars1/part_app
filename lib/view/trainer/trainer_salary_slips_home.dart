@@ -40,7 +40,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<TrainerCubit>().clean();
       var branchCubit = context.read<BranchCubit>();
-      branchId = branchCubit.firstBranch.id;
+      branchId = branchCubit.firstBranch?.id;
     });
     // Pagination listener
     scrollController.addListener(() {

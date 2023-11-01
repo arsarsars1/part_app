@@ -30,7 +30,8 @@ class _BatchesPageState extends State<BatchesPage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var branchCubit = context.read<BranchCubit>();
       await branchCubit.getBranches();
-      branchId = branchCubit.firstBranch.id;
+      Future.delayed(const Duration(seconds: 2));
+      branchId = branchCubit.firstBranch?.id;
       setState(() {
         context.read<BatchCubit>().getBatchesByStatus(
               branchId: branchId,
