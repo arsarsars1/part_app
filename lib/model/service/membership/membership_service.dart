@@ -56,31 +56,24 @@ class MembershipService {
         'academy_id': academyId?.toString(),
         'membership_id': membershipID?.toString(),
       };
-      print('exception calleedkkk1');
       if (paymentMethod != null) {
         data.putIfAbsent('payment_type', () => paymentMethod);
       }
-      print('exception calleedkkk2');
       if (salesManOtp != null) {
         data.putIfAbsent('salesman_otp', () => salesManOtp);
       }
-      print('exception calleedkkk3');
       if (orderId != null) {
         data.putIfAbsent('order_id', () => orderId);
       }
-      print('exception calleedkkk4');
       if (paymentId != null) {
         data.putIfAbsent('payment_id', () => paymentId);
       }
-      print('exception calleedkkk5');
       var str = await _apiClient.post(
         postPath: '/add-membership',
         data: data,
       );
-      print('exception calleedkkk6');
       return commonFromJson(jsonEncode(str));
     } on Exception catch (e) {
-      print('exception calleed');
       throw Exception(e);
     }
   }
