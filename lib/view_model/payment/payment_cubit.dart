@@ -149,7 +149,7 @@ class PaymentCubit extends Cubit<PaymentState> {
     //   status: status,
     // );
 
-    print('payment repsponse failed');
+    debugPrint('payment repsponse failed');
     membershipCubit.addMemberShip(
       paymentMethod: 'online',
       orderId: _orderId,

@@ -38,7 +38,7 @@ class HomeCubit extends Cubit<HomeState> {
   late DateTime selectedStudentDate = DateTime.now();
 
   List<GlobalKey> keyCap = List<GlobalKey>.generate(
-      11, (index) => GlobalKey(debugLabel: 'key_$index'),
+      10, (index) => GlobalKey(debugLabel: 'key_$index'),
       growable: false);
 
   // pagination

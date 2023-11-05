@@ -159,11 +159,11 @@ class TrainerService {
       }
     } on DioException catch (e) {
       if (kDebugMode) {
-        print(e);
+        debugPrint(e.toString());
       }
     } on Exception catch (e) {
       if (kDebugMode) {
-        print(e);
+        debugPrint(e.toString());
       }
     }
 

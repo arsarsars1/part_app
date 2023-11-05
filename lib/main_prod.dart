@@ -9,7 +9,7 @@ import 'app.dart';
 import 'flavors.dart';
 
 void main() async {
-  print('main prod called');
+  debugPrint('main prod called');
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await initialize();

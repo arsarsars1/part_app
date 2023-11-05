@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -178,22 +180,22 @@ class AuthCubit extends Cubit<AuthState> {
       stateId: stateId,
       districtId: districtId,
     );
-    print('register started');
+    debugPrint('register started');
     register();
   }
 
   Future register() async {
     emit(RegisteringUser());
-    print('hi1');
+    debugPrint('hi1');
     UserResponse? value = await _authService.register(
       registerRequest: _registerRequest,
     );
-    print('hi2');
+    debugPrint('hi2');
     if (value == null) {
-      print('hi3');
+      debugPrint('hi3');
       emit(NetworkError());
     } else if (value.status == 1) {
-      print('hi4');
+      debugPrint('hi4');
       _token = value.token;
       _user = value.user;
       Hive.box(Database.userBox).put(Database.token, value.token);
@@ -201,7 +203,7 @@ class AuthCubit extends Cubit<AuthState> {
       Hive.box(Database.userBox).put("Showcase", false);
       emit(RegisterSuccess());
     } else {
-      print('hi5');
+      debugPrint('hi5');
       emit(RegisterFailed(value.message ?? ' Failed to register the user'));
     }
   }

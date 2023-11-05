@@ -103,7 +103,7 @@ class AuthService {
     String? fcmToken;
     try {
       fcmToken = await FirebaseMessaging.instance.getToken();
-    } on Exception catch (e) {
+    } on Exception {
       fcmToken = 'cannot generate fcm token';
     }
     try {
@@ -172,8 +172,8 @@ class AuthService {
   Future<void> addFirebaseListener(BuildContext context) async {
     try {
       await FirebaseMessaging.instance.getToken();
-    } on Exception catch (e) {
-      print('cannot generate fcm token');
+    } on Exception {
+      debugPrint('cannot generate fcm token');
     }
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       if (message.data['notifiable_type'] == 'App\\Models\\AdminDetail') {

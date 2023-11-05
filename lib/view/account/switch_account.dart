@@ -78,25 +78,25 @@ class SwitchAccount extends StatelessWidget {
                       ),
                     ),
                   ),
-                if (cubit.user?.trainerDetail != null &&
-                    cubit.user!.trainerDetail!.isNotEmpty)
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: cubit.user?.trainerDetail?.length,
-                    itemBuilder: (context, index) {
-                      Trainer trainer = cubit.user!.trainerDetail![index];
-                      return AccountCard(
-                        onTap: () {
-                          cubit.accountType = AccountType.trainer;
-                           database.setUserType('trainer');
-                          Alert(context).show(message: 'WIP');
-                        },
-                        accountType: '${trainer.name}, Trainer',
-                        academyName: trainer.academy?.academyName ?? '',
-                      );
-                    },
-                  ),
+                // if (cubit.user?.trainerDetail != null &&
+                //     cubit.user!.trainerDetail!.isNotEmpty)
+                //   ListView.builder(
+                //     shrinkWrap: true,
+                //     physics: const NeverScrollableScrollPhysics(),
+                //     itemCount: cubit.user?.trainerDetail?.length,
+                //     itemBuilder: (context, index) {
+                //       Trainer trainer = cubit.user!.trainerDetail![index];
+                //       return AccountCard(
+                //         onTap: () {
+                //           cubit.accountType = AccountType.trainer;
+                //            database.setUserType('trainer');
+                //           Alert(context).show(message: 'WIP');
+                //         },
+                //         accountType: '${trainer.name}, Trainer',
+                //         academyName: trainer.academy?.academyName ?? '',
+                //       );
+                //     },
+                //   ),
                 if (cubit.user?.studentDetail != null &&
                     cubit.user!.studentDetail!.isNotEmpty)
                   ListView.builder(
@@ -109,7 +109,7 @@ class SwitchAccount extends StatelessWidget {
                         onTap: () {
                           cubit.studentIndex = index;
                           cubit.accountType = AccountType.student;
-                           database.setUserType('student');
+                          database.setUserType('student');
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             StudentAppHome.route,

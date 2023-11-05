@@ -33,8 +33,8 @@ class ApiClient {
 
     String? bearerToken = Database().getToken();
     if (kDebugMode) {
-      print('GET Path => $path');
-      print(bearerToken);
+      debugPrint('GET Path => $path');
+      debugPrint(bearerToken);
     }
 
     // check for internet connectivity
@@ -84,8 +84,8 @@ class ApiClient {
     // build the base path for the post request
     String path = _baseUrl + postPath;
     if (kDebugMode) {
-      print('POST METHOD | URL -> $path\n');
-      print('********** POST DATA ***********');
+      debugPrint('POST METHOD | URL -> $path\n');
+      debugPrint('********** POST DATA ***********');
 
       if (!formData) {
         log(json.encode(data));
@@ -93,12 +93,12 @@ class ApiClient {
         // log(json.encode(data));
       }
 
-      print('********** API CALL ***********');
+      debugPrint('********** API CALL ***********');
     }
     String? bearerToken = Database().getToken();
     if (kDebugMode) {
-      print(bearerToken);
-      print('POST Path => $path');
+      debugPrint(bearerToken);
+      debugPrint('POST Path => $path');
     }
 
     // check for internet connectivity
@@ -127,12 +127,12 @@ class ApiClient {
         ),
       );
       if (kDebugMode) {
-        print('********** API END ***********');
-        print(
+        debugPrint('********** API END ***********');
+        debugPrint(
           'STATUS -> Code : ${response.statusCode}, Status : ${response.statusMessage}',
         );
         // log(json.encode(response.data));
-        print('**********         ***********');
+        debugPrint('**********         ***********');
       }
       return _handleResponse(response);
     } catch (e) {
@@ -145,8 +145,8 @@ class ApiClient {
 
     String? bearerToken = Database().getToken();
     if (kDebugMode) {
-      print('DELETE Path => $path');
-      print(bearerToken);
+      debugPrint('DELETE Path => $path');
+      debugPrint(bearerToken);
     }
 
     // check for internet connectivity

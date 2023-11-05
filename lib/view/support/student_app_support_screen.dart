@@ -138,7 +138,7 @@ class _StudentAppSupportScreenState extends State<StudentAppSupportScreen> {
                       color: AppColors.liteDark,
                       child: ExpandablePanel(
                         header: Text(
-                          "${faq?.question} ?",
+                          "${faq?.question}",
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         collapsed: Text(

@@ -53,8 +53,8 @@ class _DashboardIconsState extends State<DashboardIcons> {
       for (int i = 0; i < 9; i++) {
         tempkey.add(context.read<HomeCubit>().keyCap[i]);
       }
-      bool temp = Hive.box(Database.userBox).get("Showcase");
-      if (temp) {
+      bool temp = Hive.box(Database.userBox).get("Showcase") ?? false;
+      if (temp == false) {
         ShowCaseWidget.of(context).startShowCase(tempkey);
       }
     });
