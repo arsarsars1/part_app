@@ -1101,7 +1101,7 @@
 				7624A18FC9BB1270CE8194E5 /* Release-prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Debug-dev";
+			defaultConfigurationName = "Release-prod";
 		};
 		97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */ = {
 			isa = XCConfigurationList;
@@ -1117,7 +1117,7 @@
 				AC8F334F29068646000006E6 /* Release-prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Debug-dev";
+			defaultConfigurationName = "Release-prod";
 		};
 /* End XCConfigurationList section */
 	};

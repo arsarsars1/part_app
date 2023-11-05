@@ -83,7 +83,7 @@ flavorizr:
   flavors:
     dev:
       app:
-        name: "Part App"
+        name: "PartApp"
 
       android:
         applicationId: "com.part_app.android"
@@ -93,7 +93,7 @@ flavorizr:
 
     prod:
       app:
-        name: "Part App"
+        name: "PartApp"
 
       android:
         applicationId: "com.part_app.android"
