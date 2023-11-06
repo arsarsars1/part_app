@@ -189,14 +189,17 @@ class _MembershipState extends State<Membership> {
                       }
 
                       if (cubit.selectedMembership?.paymentType == 'free') {
+                        cubit.receiveNotification = true;
                         cubit.addMemberShip(paymentMethod: null);
                         return;
                       }
 
                       if (!onlinePay) {
+                        cubit.receiveNotification = true;
                         Navigator.pushNamed(context, SalesManPhone.route);
                       }
                       if (onlinePay) {
+                        cubit.receiveNotification = true;
                         context
                             .read<PaymentCubit>()
                             .payment(membership: cubit.selectedMembership!);
