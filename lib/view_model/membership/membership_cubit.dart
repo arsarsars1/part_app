@@ -23,6 +23,8 @@ class MembershipCubit extends Cubit<MembershipState> {
 
   String? _salesManPhoneNo;
 
+  bool receiveNotification = false;
+
   List<Membership> get memberships => _memberships;
 
   List<Membership> get filteredMemberships => _filteredMemberships;

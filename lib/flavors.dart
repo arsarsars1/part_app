@@ -23,7 +23,7 @@ class F {
     switch (appFlavor) {
       case Flavor.dev:
         // return 'https://v1.partapp.in/api';
-        return 'https://dev.partapp.in/api';
+        return 'https://v1.partapp.in/api';
       case Flavor.prod:
         return 'https://v1.partapp.in/api';
       default:

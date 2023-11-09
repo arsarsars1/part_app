@@ -178,27 +178,31 @@ class AuthService {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       if (message.data['notifiable_type'] == 'App\\Models\\AdminDetail') {
         context.read<NotificationCubit>().emitNotificationNew();
-        NotificationList? list =
-            await context.read<HomeCubit>().getNotificationList(clean: true);
+        if (context.read<MembershipCubit>().receiveNotification == true) {
+          NotificationList? list =
+              await context.read<HomeCubit>().getNotificationList(clean: true);
 
-        if (context.mounted) {
-          context.read<NotificationCubit>().notificationList = list;
+          if (context.mounted) {
+            context.read<NotificationCubit>().notificationList = list;
+          }
         }
       } else if (message.data['notifiable_type'] ==
           'App\\Models\\StudentDetail') {
         context.read<NotificationCubit>().emitNotificationNew();
-        NotificationList? list = await context
-            .read<HomeCubit>()
-            .getStudentAppNotificationList(
-                studentId: context
-                    .read<AuthCubit>()
-                    .user
-                    ?.studentDetail?[context.read<AuthCubit>().studentIndex]
-                    .id,
-                clean: true);
+        if (context.read<MembershipCubit>().receiveNotification == true) {
+          NotificationList? list = await context
+              .read<HomeCubit>()
+              .getStudentAppNotificationList(
+                  studentId: context
+                      .read<AuthCubit>()
+                      .user
+                      ?.studentDetail?[context.read<AuthCubit>().studentIndex]
+                      .id,
+                  clean: true);
 
-        if (context.mounted) {
-          context.read<NotificationCubit>().notificationList = list;
+          if (context.mounted) {
+            context.read<NotificationCubit>().notificationList = list;
+          }
         }
       }
     });
