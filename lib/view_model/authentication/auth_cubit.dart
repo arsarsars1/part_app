@@ -141,6 +141,21 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future deleteAccount({String? otp}) async {
+    emit(DeletingAccount());
+    if (otp != null) {
+      Otp otpResponse = await _authService.deleteAccount(
+        otp: otp,
+      );
+
+      if (otpResponse.status == 1) {
+        emit(DeletedAccount());
+      } else {
+        emit(DeleteAccountFailed(message: otpResponse.message));
+      }
+    }
+  }
+
   void updateWANumber(String? number) {
     _registerRequest =
         _registerRequest.copyWith(whatsappNo: number ?? _phoneNo);
@@ -324,6 +339,19 @@ class AuthCubit extends Cubit<AuthState> {
       }
     } else {
       emit(UpdateUserFailed(response?.message ?? 'Failed to update'));
+    }
+  }
+
+  Future sendAccountDeleteOTP() async {
+    emit(SendingOtp());
+    Otp? response = await _authService.generateOTPForDeleteAccount();
+
+    if (response != null && response.status != 1) {
+      emit(SendingOtpFailed(response.message, true));
+    } else if (response == null) {
+      emit(NetworkError());
+    } else {
+      emit(OTPSent(true, login: true));
     }
   }
 

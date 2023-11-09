@@ -35,6 +35,9 @@ import 'package:part_app/view/fee/fees_details_view.dart';
 import 'package:part_app/view/fee/student_admission_fee_details.dart';
 import 'package:part_app/view/fee/student_app_fee_details.dart';
 import 'package:part_app/view/fee/student_fee_details.dart';
+import 'package:part_app/view/home/components/account.dart';
+import 'package:part_app/view/home/components/delete_account.dart';
+import 'package:part_app/view/home/components/student_account.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/home/student_app_home.dart';
 import 'package:part_app/view/leads/add_lead.dart';
@@ -179,6 +182,21 @@ class RouteGenerator {
       case Profile.route:
         return MaterialPageRoute(
           builder: (_) => const Profile(),
+          settings: settings,
+        );
+      case Account.route:
+        return MaterialPageRoute(
+          builder: (_) => const Account(),
+          settings: settings,
+        );
+      case StudentAccount.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAccount(),
+          settings: settings,
+        );
+      case DeleteAccount.route:
+        return MaterialPageRoute(
+          builder: (_) => const DeleteAccount(),
           settings: settings,
         );
       case TrainerPage.route:
@@ -536,7 +554,7 @@ class RouteGenerator {
           builder: (_) => const CurrentMembership(),
           settings: settings,
         );
-        case ChangePhoneScreen.route:
+      case ChangePhoneScreen.route:
         return MaterialPageRoute(
           builder: (_) => const ChangePhoneScreen(),
           settings: settings,

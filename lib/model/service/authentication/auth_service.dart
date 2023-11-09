@@ -43,6 +43,17 @@ class AuthService {
     }
   }
 
+  Future<Otp?> generateOTPForDeleteAccount() async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/delete-otp',
+      );
+      return otpFromJson(json.encode(response));
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
+  }
+
   Future login({
     required String phoneNo,
     required String countryCode,
@@ -88,6 +99,25 @@ class AuthService {
 
       var response = await _apiClient.post(
         postPath: '/register-otp-validate',
+        data: data,
+      );
+
+      return otpFromJson(json.encode(response));
+    } on Exception catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future deleteAccount({
+    required String otp,
+  }) async {
+    try {
+      var data = {
+        'otp': otp,
+      };
+
+      var response = await _apiClient.post(
+        postPath: '/delete',
         data: data,
       );
 

@@ -60,6 +60,15 @@ class RegisterOTPFailed extends AuthState {
 
 class RegisterSuccess extends AuthState {}
 
+class DeletingAccount extends AuthState {}
+
+class DeleteAccountFailed extends AuthState {
+  final String message;
+  DeleteAccountFailed({required this.message});
+}
+
+class DeletedAccount extends AuthState {}
+
 class RegisteringUser extends AuthState {}
 
 class RegisterFailed extends AuthState {
