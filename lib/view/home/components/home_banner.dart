@@ -24,12 +24,12 @@ class _HomeBannerState extends State<HomeBanner> {
   int currentPage = 0;
   int scrollLimit = 0;
   int? adminAcademyTypeId;
-  late Timer timer;
+  Timer? timer;
   bool isButtonVisible = false;
   bool _initialized = false;
   var activeBanners = [];
-  late DateTime fromTime = DateTime.now();
-  late DateTime toTime = DateTime.now();
+  DateTime fromTime = DateTime.now();
+  DateTime toTime = DateTime.now();
   late String formattedString = toTime.formattedString();
 
   @override
@@ -67,7 +67,7 @@ class _HomeBannerState extends State<HomeBanner> {
           _initialized = true;
           startTimer();
         }
-        return activeBanners.isNotEmpty
+                return activeBanners.isNotEmpty
             ? GestureDetector(
                 onLongPressStart: (_) {
                   setState(() {
@@ -110,11 +110,7 @@ class _HomeBannerState extends State<HomeBanner> {
                         ),
                       ),
                     ),
-                    Showcase(
-                      key: context.read<HomeCubit>().keyCap[9],
-                      title: "Banner",
-                      description: "Banner description",
-                      child: Container(
+                    Container(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         height: 165.h,
                         child: ClipRRect(
@@ -223,7 +219,6 @@ class _HomeBannerState extends State<HomeBanner> {
                           ),
                         ),
                       ),
-                    ),
                   ],
                 ),
               )
@@ -248,6 +243,6 @@ class _HomeBannerState extends State<HomeBanner> {
   }
 
   void stopTimer() {
-    timer.cancel();
+    timer?.cancel();
   }
 }
