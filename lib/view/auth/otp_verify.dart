@@ -4,11 +4,12 @@ import 'package:part_app/view/auth/register/wa_validation.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 
 import '../../model/data_model/enums.dart';
 import '../../model/data_model/profile_update_request.dart';
 
-enum OTPRoutes { login, registration, mobileNumberChange }
+enum OTPRoutes { login, registration, mobileNumberChange, deleteAccount }
 
 class OTPVerify extends StatefulWidget {
   static const route = '/auth/otp';
@@ -35,6 +36,8 @@ class _OTPVerifyState extends State<OTPVerify> {
           return 'Login';
         } else if (widget.otpRoute == OTPRoutes.registration) {
           return 'Academy Registration';
+        } else if (widget.otpRoute == OTPRoutes.deleteAccount) {
+          return 'Delete Account';
         } else {
           return 'Verify OTP';
         }
@@ -62,6 +65,21 @@ class _OTPVerifyState extends State<OTPVerify> {
           if (state is RegisterOTPFailed) {
             Alert(context).show(message: state.message);
           }
+
+          if (state is DeletingAccount) {
+            Loader(context).show();
+          }
+
+          if (state is DeleteAccountFailed) {
+            Alert(context).show(message: state.message);
+          }
+
+          if (state is DeletedAccount) {
+            Navigator.pop(context);
+            context.read<AuthCubit>().logout();
+            context.read<ProfileCubit>().emitProfileInitial();
+          }
+
           if (state is LoginSuccess) {
             if (state.user) {
               if (cubit.user?.adminDetail != null) {
@@ -177,7 +195,9 @@ class _OTPVerifyState extends State<OTPVerify> {
                   if (formKey.currentState!.validate()) {
                     if (widget.otpRoute == OTPRoutes.login) {
                       context.read<AuthCubit>().login(password: password);
-                    } else if (widget.otpRoute == OTPRoutes.registration){
+                    } else if (widget.otpRoute == OTPRoutes.deleteAccount) {
+                      context.read<AuthCubit>().deleteAccount(otp: password);
+                    } else if (widget.otpRoute == OTPRoutes.registration) {
                       context
                           .read<AuthCubit>()
                           .validateRegisterOTP(otp: password);
@@ -192,7 +212,8 @@ class _OTPVerifyState extends State<OTPVerify> {
                             cubit.accountType == AccountType.admin
                                 ? null
                                 : cubit.user?.studentDetail?[cubit.studentIndex]
-                                    .id, password);
+                                    .id,
+                            password);
                       }
                     }
                   }

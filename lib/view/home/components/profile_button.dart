@@ -8,13 +8,14 @@ import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api_client.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/home/components/account.dart';
 import 'package:part_app/view/home/components/logout.dart';
 import 'package:part_app/view/membership/current_membership.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 
-enum MenuItems { profile, logout, membership, switchAccount }
+enum MenuItems { profile, account, logout, membership, switchAccount }
 
 class ProfileButton extends StatefulWidget {
   const ProfileButton({Key? key}) : super(key: key);
@@ -33,6 +34,9 @@ class _ProfileButtonState extends State<ProfileButton> {
         switch (item) {
           case MenuItems.profile:
             Navigator.pushNamed(context, Profile.route);
+            break;
+          case MenuItems.account:
+            Navigator.pushNamed(context, Account.route);
             break;
           case MenuItems.logout:
             Logout(context).show();
@@ -93,6 +97,15 @@ class _ProfileButtonState extends State<ProfileButton> {
             height: 14,
             child: Text(
               'View Profile',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ),
+          PopupMenuItem(
+            height: 14,
+            value: MenuItems.account,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Text(
+              'Account',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),

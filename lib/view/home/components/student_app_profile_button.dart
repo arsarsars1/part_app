@@ -9,12 +9,13 @@ import 'package:part_app/model/service/api_client.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/home/components/logout.dart';
+import 'package:part_app/view/home/components/student_account.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 import '../../../view_model/profile_pic/cubit/profile_cubit.dart';
 
-enum MenuItems { profile, logout, switchAccount }
+enum MenuItems { profile, logout, switchAccount, account }
 
 class StudentProfileButton extends StatefulWidget {
   const StudentProfileButton({Key? key}) : super(key: key);
@@ -34,6 +35,9 @@ class _StudentProfileButtonState extends State<StudentProfileButton> {
         switch (item) {
           case MenuItems.profile:
             Navigator.pushNamed(context, Profile.route);
+            break;
+          case MenuItems.account:
+            Navigator.pushNamed(context, StudentAccount.route);
             break;
           case MenuItems.logout:
             Logout(context).show();
