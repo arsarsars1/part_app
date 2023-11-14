@@ -67,7 +67,7 @@ class _HomeBannerState extends State<HomeBanner> {
           _initialized = true;
           startTimer();
         }
-                return activeBanners.isNotEmpty
+        return activeBanners.isNotEmpty
             ? GestureDetector(
                 onLongPressStart: (_) {
                   setState(() {
@@ -110,7 +110,13 @@ class _HomeBannerState extends State<HomeBanner> {
                         ),
                       ),
                     ),
-                    Container(
+                    Showcase(
+                      key: context.read<AuthCubit>().user?.adminDetail == null
+                          ? context.read<HomeCubit>().studentkKeyCap[4]
+                          : context.read<HomeCubit>().keyCap[9],
+                      title: "Banner",
+                      description: "Banner description",
+                      child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         height: 165.h,
                         child: ClipRRect(
@@ -219,6 +225,7 @@ class _HomeBannerState extends State<HomeBanner> {
                           ),
                         ),
                       ),
+                    ),
                   ],
                 ),
               )

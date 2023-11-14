@@ -20,9 +20,6 @@ class DashboardIcons extends StatefulWidget {
 }
 
 class _DashboardIconsState extends State<DashboardIcons> {
-  // List<GlobalKey> keyCap = List<GlobalKey>.generate(
-  //     9, (index) => GlobalKey(debugLabel: 'key_$index'),
-  //     growable: false);
   List<String> titles = [
     'Students',
     'Attendence',

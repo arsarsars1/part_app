@@ -3,12 +3,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/dashboard_item.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:showcaseview/showcaseview.dart';
 
-class StudentAppDashboardIcons extends StatelessWidget {
+class StudentAppDashboardIcons extends StatefulWidget {
   const StudentAppDashboardIcons({Key? key}) : super(key: key);
+
+  @override
+  State<StudentAppDashboardIcons> createState() =>
+      _StudentAppDashboardIconsState();
+}
+
+class _StudentAppDashboardIconsState extends State<StudentAppDashboardIcons> {
+  List<String> titles = ['Attendence', 'Fees', 'Batches'];
+  List<String> descriptions = [
+    'Check and take attendance of each batch and students here.',
+    'Add, Edit, Manage all your Fee related needs here',
+    'See that batch here',
+  ];
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      List<GlobalKey> tempkey = [];
+      for (int i = 0; i < 4; i++) {
+        tempkey.add(context.read<HomeCubit>().studentkKeyCap[i]);
+      }
+      bool temp = Hive.box(Database.userBox).get("Student Showcase") ?? false;
+      if (temp == false) {
+        ShowCaseWidget.of(context).startShowCase(tempkey);
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,59 +54,64 @@ class StudentAppDashboardIcons extends StatelessWidget {
         itemCount: DefaultValues.studentDashboardItems.length,
         itemBuilder: (context, index) {
           DashboardItem item = DefaultValues.studentDashboardItems[index];
-          return InkWell(
-            onTap: () async {
-              await Navigator.pushNamed(context, item.route);
-              context.read<HomeCubit>().getStudentAppDashboard(
-                  studentId: context
-                      .read<AuthCubit>()
-                      .user
-                      ?.studentDetail?[context.read<AuthCubit>().studentIndex]
-                      .id);
-            },
-            child: Container(
-              margin: EdgeInsets.all(8.h),
-              padding: EdgeInsets.all(16.h),
-              decoration: BoxDecoration(
-                color: AppColors.liteDark,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              height: 98.h,
-              width: 98.w,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: item.color,
-                      shape: BoxShape.circle,
+          return Showcase(
+            key: context.read<HomeCubit>().studentkKeyCap[index],
+            title: titles[index],
+            description: descriptions[index],
+            child: InkWell(
+              onTap: () async {
+                await Navigator.pushNamed(context, item.route);
+                context.read<HomeCubit>().getStudentAppDashboard(
+                    studentId: context
+                        .read<AuthCubit>()
+                        .user
+                        ?.studentDetail?[context.read<AuthCubit>().studentIndex]
+                        .id);
+              },
+              child: Container(
+                margin: EdgeInsets.all(8.h),
+                padding: EdgeInsets.all(16.h),
+                decoration: BoxDecoration(
+                  color: AppColors.liteDark,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                height: 98.h,
+                width: 98.w,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 10.h,
                     ),
-                    width: 32.w,
-                    height: 32.h,
-                    child: Center(
-                      child: SvgPicture.asset(
-                        item.asset,
-                        width: 16.h,
-                        height: 16.h,
+                    Container(
+                      decoration: BoxDecoration(
+                        color: item.color,
+                        shape: BoxShape.circle,
+                      ),
+                      width: 32.w,
+                      height: 32.h,
+                      child: Center(
+                        child: SvgPicture.asset(
+                          item.asset,
+                          width: 16.h,
+                          height: 16.h,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 4.h,
-                  ),
-                  Text(
-                    item.title,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 12.sp,
-                        ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    Text(
+                      item.title,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 12.sp,
+                          ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
