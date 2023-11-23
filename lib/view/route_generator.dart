@@ -54,6 +54,7 @@ import 'package:part_app/view/manager/manager_page.dart';
 import 'package:part_app/view/membership/current_membership.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view/membership/membership_home.dart';
+import 'package:part_app/view/membership/membership_home_ios.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/notifications/notification_screen.dart';
@@ -155,6 +156,11 @@ class RouteGenerator {
       case MembershipHome.route:
         return MaterialPageRoute(
           builder: (_) => const MembershipHome(),
+          settings: settings,
+        );
+      case MembershipHomeIos.route:
+        return MaterialPageRoute(
+          builder: (_) => const MembershipHomeIos(),
           settings: settings,
         );
       case SalesManPhone.route:

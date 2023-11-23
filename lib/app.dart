@@ -1,7 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 // import 'package:month_year_picker/month_year_picker.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/service/api.dart';
@@ -10,6 +13,7 @@ import 'package:part_app/view/route_generator.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
+import 'package:part_app/view_model/inapp_purchase/inapp_cubit.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
 import 'package:part_app/view_model/notification/cubit/notification_cubit.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
@@ -29,9 +33,9 @@ class _AppState extends State<App> {
   @override
   void initState() {
     stream = ApiClient().controller?.stream;
-
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +93,9 @@ class _AppState extends State<App> {
         ),
         BlocProvider<ProfileCubit>(
           create: (context) => ProfileCubit(),
+        ),
+        BlocProvider<InappCubit>(
+          create: (context) => InappCubit(),
         ),
       ],
       child: GestureDetector(
