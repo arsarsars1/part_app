@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-
+import 'package:part_app/view_model/membership/membership_cubit.dart';
 
 import '../../model/data_model/purchasable_product.dart';
 import 'inapp.dart';
@@ -11,18 +11,14 @@ import 'inapp.dart';
 part 'inapp_state.dart';
 
 class InappCubit extends Cubit<InappState> {
-
-
   InappCubit() : super(InappLoading());
 
   late StreamSubscription<List<PurchaseDetails>> _subscription;
+  late MembershipCubit membershipCubit;
   List<PurchasableProduct> products = [];
   final iapConnection = IAPConnection.instance;
   PurchasableProduct? _selecedProduct;
-   PurchasableProduct? get selectedProduct => _selecedProduct;
-
-
-  
+  PurchasableProduct? get selectedProduct => _selecedProduct;
 
   Future addMemberShip({
     String? paymentCode,
@@ -59,17 +55,14 @@ class InappCubit extends Cubit<InappState> {
     // }
   }
 
-  
   set selectedProduct(PurchasableProduct? product) {
     _selecedProduct = product;
-    
+
     emit(InappListed(products));
   }
 
-
   void istenToPurchases() {
-    final purchaseUpdated =
-        iapConnection.purchaseStream;
+    final purchaseUpdated = iapConnection.purchaseStream;
     _subscription = purchaseUpdated.listen(
       _onPurchaseUpdate,
       onDone: _updateStreamOnDone,
@@ -86,16 +79,15 @@ class InappCubit extends Cubit<InappState> {
     }
     const ids = <String>{
       'partapp_6m_plan',
-
     };
     final response = await iapConnection.queryProductDetails(ids);
     for (var element in response.notFoundIDs) {
       debugPrint('Purchase $element not found');
     }
-    products = response.productDetails.map((e) => PurchasableProduct(e)).toList();
+    products =
+        response.productDetails.map((e) => PurchasableProduct(e)).toList();
     emit(InappListed(products));
   }
-
 
   Future<void> buy(PurchasableProduct product) async {
     final purchaseParam = PurchaseParam(productDetails: product.productDetails);
@@ -110,14 +102,11 @@ class InappCubit extends Cubit<InappState> {
     }
   }
 
-
-
-Future<void> _onPurchaseUpdate(
+  Future<void> _onPurchaseUpdate(
       List<PurchaseDetails> purchaseDetailsList) async {
     for (var purchaseDetails in purchaseDetailsList) {
       await _handlePurchase(purchaseDetails);
     }
-    
   }
 
   Future<void> _handlePurchase(PurchaseDetails purchaseDetails) async {
@@ -125,9 +114,13 @@ Future<void> _onPurchaseUpdate(
       if (purchaseDetails.productID == 'partapp_6m_plan') {
         //handle what to do when payment is done, verify purchase in server or upload purchases to server
         _verifyPurchase(purchaseDetails);
+        membershipCubit.addMemberShip(
+          paymentMethod: 'Apple Pay',
+          orderId: purchaseDetails.purchaseID,
+          paymentId: purchaseDetails.verificationData.serverVerificationData,
+        );
         // if verification is successful update ui to pro plan
       }
-      
     }
 
     if (purchaseDetails.pendingCompletePurchase) {
@@ -157,7 +150,7 @@ Future<void> _onPurchaseUpdate(
     //   return true;
     // } else {
     //   print('failed request: ${response.statusCode} - ${response.body}');
-      return false;
+    return false;
     // }
   }
 
@@ -172,5 +165,4 @@ Future<void> _onPurchaseUpdate(
   void dispose() {
     _subscription.cancel();
   }
-
 }
