@@ -11,10 +11,10 @@ import 'inapp.dart';
 part 'inapp_state.dart';
 
 class InappCubit extends Cubit<InappState> {
-  InappCubit() : super(InappLoading());
+  InappCubit(this.membershipCubit) : super(InappLoading());
 
   late StreamSubscription<List<PurchaseDetails>> _subscription;
-  late MembershipCubit membershipCubit;
+  MembershipCubit membershipCubit;
   List<PurchasableProduct> products = [];
   final iapConnection = IAPConnection.instance;
   PurchasableProduct? _selecedProduct;
@@ -114,11 +114,6 @@ class InappCubit extends Cubit<InappState> {
       if (purchaseDetails.productID == 'partapp_6m_plan') {
         //handle what to do when payment is done, verify purchase in server or upload purchases to server
         _verifyPurchase(purchaseDetails);
-        membershipCubit.addMemberShip(
-          paymentMethod: 'Apple Pay',
-          orderId: purchaseDetails.purchaseID,
-          paymentId: purchaseDetails.verificationData.serverVerificationData,
-        );
         // if verification is successful update ui to pro plan
       }
     }
@@ -129,6 +124,17 @@ class InappCubit extends Cubit<InappState> {
   }
 
   Future<bool> _verifyPurchase(PurchaseDetails purchaseDetails) async {
+    try {
+      membershipCubit.addMemberShip(
+        paymentMethod: 'Apple Pay',
+        orderId: purchaseDetails.purchaseID,
+        paymentId: purchaseDetails.verificationData.serverVerificationData,
+      );
+      return true;
+    } catch (e) {
+      return false;
+    }
+
     // final url = Uri.parse('http://$serverIp:8080/verifypurchase');
     // const headers = {
     //   'Content-type': 'application/json',
@@ -150,7 +156,7 @@ class InappCubit extends Cubit<InappState> {
     //   return true;
     // } else {
     //   print('failed request: ${response.statusCode} - ${response.body}');
-    return false;
+    // return false;
     // }
   }
 

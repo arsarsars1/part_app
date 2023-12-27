@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 // import 'package:month_year_picker/month_year_picker.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/service/api.dart';
@@ -95,7 +94,7 @@ class _AppState extends State<App> {
           create: (context) => ProfileCubit(),
         ),
         BlocProvider<InappCubit>(
-          create: (context) => InappCubit(),
+          create: (context) => InappCubit(context.read<MembershipCubit>()),
         ),
       ],
       child: GestureDetector(

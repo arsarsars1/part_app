@@ -196,7 +196,7 @@
 		97C146E61CF9000F007C117D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					97C146ED1CF9000F007C117D = {
@@ -408,7 +408,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -418,6 +418,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -753,7 +754,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -763,6 +764,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -779,7 +781,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -789,6 +791,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -802,9 +805,11 @@
 			baseConfigurationReference = 05F40D76689BA5B90DF8BC8A /* Pods-Runner.debug-dev.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				CURRENT_PROJECT_VERSION = "";
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				INFOPLIST_KEY_CFBundleDisplayName = PartApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = Runner;
 			};
@@ -815,9 +820,11 @@
 			baseConfigurationReference = 3F13D1488B3B2352A3194D0B /* Pods-Runner.profile-dev.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				CURRENT_PROJECT_VERSION = "";
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				INFOPLIST_KEY_CFBundleDisplayName = PartApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = Runner;
 			};
@@ -828,9 +835,11 @@
 			baseConfigurationReference = B2D7D4DDE94090EB79844106 /* Pods-Runner.release-dev.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				CURRENT_PROJECT_VERSION = "";
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				INFOPLIST_KEY_CFBundleDisplayName = PartApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = Runner;
 			};
@@ -841,9 +850,11 @@
 			baseConfigurationReference = 06035C5EC69A38DA7A322579 /* Pods-Runner.debug-prod.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				CURRENT_PROJECT_VERSION = "";
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				INFOPLIST_KEY_CFBundleDisplayName = PartApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = Runner;
 			};
@@ -854,9 +865,11 @@
 			baseConfigurationReference = B8468A28A2E1C123B9D51A45 /* Pods-Runner.profile-prod.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				CURRENT_PROJECT_VERSION = "";
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				INFOPLIST_KEY_CFBundleDisplayName = PartApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = Runner;
 			};
@@ -867,9 +880,11 @@
 			baseConfigurationReference = 7EE1C933ADD70CE45F2F2007 /* Pods-Runner.release-prod.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				CURRENT_PROJECT_VERSION = "";
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				INFOPLIST_KEY_CFBundleDisplayName = PartApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = Runner;
 			};

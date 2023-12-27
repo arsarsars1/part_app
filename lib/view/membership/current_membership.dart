@@ -177,7 +177,7 @@ class CurrentMembership extends StatelessWidget {
             child: Button(
               height: 40.h,
               onTap: () {
-                Navigator.pushNamed(context, Platform.isIOS ? MembershipHomeIos.route: MembershipHome.route);
+                Navigator.pushNamed(context, Platform.isAndroid ? MembershipHome.route: MembershipHomeIos.route);
               },
               title: 'Add Plan',
             ),
