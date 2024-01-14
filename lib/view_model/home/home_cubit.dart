@@ -42,7 +42,7 @@ class HomeCubit extends Cubit<HomeState> {
       growable: false);
   List<GlobalKey> studentkKeyCap = List<GlobalKey>.generate(
       5, (index) => GlobalKey(debugLabel: 'student_key_$index'),
-      growable: false);    
+      growable: false);
 
   // pagination
   int page = 1;
