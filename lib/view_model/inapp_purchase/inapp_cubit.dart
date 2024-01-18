@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,35 +61,8 @@ class InappCubit extends Cubit<InappState> {
     emit(InappListed(products));
   }
 
-  void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
-    purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
-      if (purchaseDetails.status == PurchaseStatus.pending) {
-        // _showPendingUI();
-        print("pending");
-      } else {
-        if (purchaseDetails.status == PurchaseStatus.error) {
-          // _handleError(purchaseDetails.error!);
-          print("error");
-        } else if (purchaseDetails.status == PurchaseStatus.purchased ||
-            purchaseDetails.status == PurchaseStatus.restored) {
-          bool valid = await _verifyPurchase(purchaseDetails);
-          if (valid) {
-            // _deliverProduct(purchaseDetails);
-            print("valid");
-          } else {
-            // _handleInvalidPurchase(purchaseDetails);
-            print("invalid");
-          }
-        }
-        if (purchaseDetails.pendingCompletePurchase) {
-          await InAppPurchase.instance.completePurchase(purchaseDetails);
-        }
-      }
-    });
-  }
-
-  void listenToPurchases() {
-    print("listen to purchases");
+  void istenToPurchases() {
+    iapConnection.restorePurchases();
     final purchaseUpdated = iapConnection.purchaseStream;
     _subscription = purchaseUpdated.listen(
       _onPurchaseUpdate,
@@ -101,19 +73,15 @@ class InappCubit extends Cubit<InappState> {
   }
 
   Future<void> loadPurchases() async {
-    print("load purchases");
     final available = await iapConnection.isAvailable();
+
     if (!available) {
       emit(InappNotAvailable());
       return;
     }
     const ids = <String>{
       'partapp_6m_plan',
-      'starterpack',
     };
-
-    print("ids: $ids");
-
     final response = await iapConnection.queryProductDetails(ids);
     for (var element in response.notFoundIDs) {
       debugPrint('Purchase $element not found');
@@ -124,69 +92,37 @@ class InappCubit extends Cubit<InappState> {
   }
 
   Future<void> buy(PurchasableProduct product) async {
-    print("buy");
-
     final purchaseParam = PurchaseParam(productDetails: product.productDetails);
-    switch (product.id) {
-      case 'partapp_6m_plan':
-        print("partapp_6m_plan");
-        await iapConnection.buyConsumable(purchaseParam: purchaseParam);
+    try {
+      switch (product.id) {
+        case 'partapp_6m_plan':
+          await iapConnection.buyConsumable(purchaseParam: purchaseParam);
+          break;
 
-        break;
-      case 'starterpack':
-        print("starterpack");
-        await iapConnection.buyConsumable(purchaseParam: purchaseParam);
-        await iapConnection.completePurchase(PurchaseDetails(
-          purchaseID: Random().nextInt(100).toString(),
-          productID: product.id,
-          status: PurchaseStatus.purchased,
-          transactionDate: "2021-09-09T12:00:00.000Z",
-          verificationData: PurchaseVerificationData(
-            localVerificationData: 'localVerificationData',
-            serverVerificationData: 'serverVerificationData',
-            source: 'source',
-          ),
-        ));
-        //Complete purchase
-        await iapConnection.completePurchase(PurchaseDetails(
-          purchaseID: Random().nextInt(100).toString(),
-          productID: product.id,
-          status: PurchaseStatus.purchased,
-          transactionDate: "2021-09-09T12:00:00.000Z",
-          verificationData: PurchaseVerificationData(
-            localVerificationData: 'localVerificationData',
-            serverVerificationData: 'serverVerificationData',
-            source: 'source',
-          ),
-        ));
-
-        break;
-
-      default:
-        throw ArgumentError.value(
-            product.productDetails, '${product.id} is not a known product');
+        default:
+          throw ArgumentError.value(
+              product.productDetails, '${product.id} is not a known product');
+      }
+    } catch (e) {
+      print('Error buying consumable: $e');
     }
   }
 
   Future<void> _onPurchaseUpdate(
       List<PurchaseDetails> purchaseDetailsList) async {
-    print("purchase update");
     for (var purchaseDetails in purchaseDetailsList) {
       await _handlePurchase(purchaseDetails);
     }
   }
 
   Future<void> _handlePurchase(PurchaseDetails purchaseDetails) async {
-    print('handle purchase');
     if (purchaseDetails.status == PurchaseStatus.purchased) {
-      await iapConnection.completePurchase(purchaseDetails);
-      // if (purchaseDetails.productID == 'partapp_6m_plan') {
-      //   //handle what to do when payment is done, verify purchase in server or upload purchases to server
-      //   _verifyPurchase(purchaseDetails);
-      //   // if verification is successful update ui to pro plan
-      // }
+      if (purchaseDetails.productID == 'partapp_6m_plan') {
+        //handle what to do when payment is done, verify purchase in server or upload purchases to server
+        _verifyPurchase(purchaseDetails);
+        // if verification is successful update ui to pro plan
+      }
     }
-
     if (purchaseDetails.pendingCompletePurchase) {
       await iapConnection.completePurchase(purchaseDetails);
     }
@@ -195,7 +131,7 @@ class InappCubit extends Cubit<InappState> {
   Future<bool> _verifyPurchase(PurchaseDetails purchaseDetails) async {
     try {
       membershipCubit.addMemberShip(
-        paymentMethod: 'applepay',
+        paymentMethod: 'Apple Pay',
         orderId: purchaseDetails.purchaseID,
         paymentId: purchaseDetails.verificationData.serverVerificationData,
       );
@@ -230,14 +166,10 @@ class InappCubit extends Cubit<InappState> {
   }
 
   void _updateStreamOnDone() {
-    print("updateStreamOnDone");
     _subscription.cancel();
   }
 
-  void _updateStreamOnError(dynamic error) {
-    print("updateStreamOnError");
-    //Handle error here
-  }
+  void _updateStreamOnError(dynamic error) {}
 
   void dispose() {
     _subscription.cancel();
