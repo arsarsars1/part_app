@@ -101,9 +101,10 @@ class MembershipCubit extends Cubit<MembershipState> {
     if (userStr != null) {
       try {
         var userResp = userResponseFromJson(userStr);
+        Membership membership = memberships.firstWhere((element) => element.paymentType=='free');
         Common value = await _membershipService.addMembership(
           academyId: userResp.user?.adminDetail?.academy?.id,
-          membershipID: _selectedMembership?.id,
+          membershipID: _selectedMembership?.id ?? membership.id,
           paymentMethod: paymentMethod,
           salesManOtp: paymentCode,
           orderId: orderId,

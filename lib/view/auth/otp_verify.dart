@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:part_app/view/auth/components/resend_otp.dart';
 import 'package:part_app/view/auth/register/wa_validation.dart';
@@ -90,11 +92,21 @@ class _OTPVerifyState extends State<OTPVerify> {
                       cubit.user?.studentDetail,
                       context);
                 } else {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    Membership.route,
-                    (route) => false,
-                  );
+                  /// The Platform condition check which is added below is added to remove the membership for ios
+                  /// This will be removed in the future
+                  if (Platform.isAndroid) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      Membership.route,
+                      (route) => false,
+                    );
+                  } else {
+                    cubit.navigateToDashboard(
+                        cubit.user?.adminDetail?.academy,
+                        cubit.user?.trainerDetail,
+                        cubit.user?.studentDetail,
+                        context);
+                  }
                 }
               } else {
                 cubit.navigateToDashboard(

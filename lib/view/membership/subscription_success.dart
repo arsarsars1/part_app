@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -5,6 +7,7 @@ import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/membership/components/continue_button.dart';
 import 'package:part_app/view/membership/membership.dart';
+import 'package:part_app/view_model/cubits.dart';
 
 class SubscriptionSuccess extends StatelessWidget {
   static const route = '/membership/success';
@@ -36,9 +39,13 @@ class SubscriptionSuccess extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 42.w),
             child: Text(
+              /// The Platform condition check which is added below is added to remove the membership for ios
+              /// This will be removed in the future
               academySuccess
-                  ? 'Congratulations Your Academy Is Successfully Registered With PartApp.\n\n'
-                      'Please continue to select a membership plan'
+                  ? Platform.isAndroid
+                      ? 'Congratulations Your Academy Is Successfully Registered With PartApp.\n\n'
+                          'Please continue to select a membership plan'
+                      : 'Congratulations Your Academy Is Successfully Registered With PartApp.'
                   : 'Subscription Successful',
               textAlign: TextAlign.center,
             ),
@@ -47,12 +54,25 @@ class SubscriptionSuccess extends StatelessWidget {
           ContinueButton(
             onTap: () {
               if (academySuccess) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  Membership.route,
-                  (value) => false,
-                );
-                return;
+              /// The Platform condition check which is added below is added to remove the membership for ios
+              /// This will be removed in the future
+                if (Platform.isAndroid) {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    Membership.route,
+                    (value) => false,
+                  );
+                  return;
+                } else {
+                  context
+                      .read<MembershipCubit>()
+                      .addMemberShip(paymentMethod: null);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    SwitchAccount.route,
+                    (value) => false,
+                  );
+                }
               }
               Navigator.pushNamedAndRemoveUntil(
                 context,
