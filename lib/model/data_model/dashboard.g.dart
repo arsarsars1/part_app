@@ -6,7 +6,8 @@ part of 'dashboard.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Dashboard _$$_DashboardFromJson(Map<String, dynamic> json) => _$_Dashboard(
+_$DashboardImpl _$$DashboardImplFromJson(Map<String, dynamic> json) =>
+    _$DashboardImpl(
       status: json['status'] as int?,
       totalStudents: json['total_students'] as int?,
       totalPaymentsDaily: json['total_payments_daily'] as String?,
@@ -16,7 +17,7 @@ _$_Dashboard _$$_DashboardFromJson(Map<String, dynamic> json) => _$_Dashboard(
           .toList(),
     );
 
-Map<String, dynamic> _$$_DashboardToJson(_$_Dashboard instance) =>
+Map<String, dynamic> _$$DashboardImplToJson(_$DashboardImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'total_students': instance.totalStudents,
@@ -25,7 +26,7 @@ Map<String, dynamic> _$$_DashboardToJson(_$_Dashboard instance) =>
       'banners': instance.banners,
     };
 
-_$_Banner _$$_BannerFromJson(Map<String, dynamic> json) => _$_Banner(
+_$BannerImpl _$$BannerImplFromJson(Map<String, dynamic> json) => _$BannerImpl(
       id: json['id'] as int?,
       description: json['description'] as String?,
       imageUrl: json['image_url'] as String?,
@@ -48,7 +49,8 @@ _$_Banner _$$_BannerFromJson(Map<String, dynamic> json) => _$_Banner(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$_BannerToJson(_$_Banner instance) => <String, dynamic>{
+Map<String, dynamic> _$$BannerImplToJson(_$BannerImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'description': instance.description,
       'image_url': instance.imageUrl,

@@ -162,11 +162,11 @@ class _$TrainerRequestCopyWithImpl<$Res, $Val extends TrainerRequest>
 }
 
 /// @nodoc
-abstract class _$$_TrainerRequestCopyWith<$Res>
+abstract class _$$TrainerRequestImplCopyWith<$Res>
     implements $TrainerRequestCopyWith<$Res> {
-  factory _$$_TrainerRequestCopyWith(
-          _$_TrainerRequest value, $Res Function(_$_TrainerRequest) then) =
-      __$$_TrainerRequestCopyWithImpl<$Res>;
+  factory _$$TrainerRequestImplCopyWith(_$TrainerRequestImpl value,
+          $Res Function(_$TrainerRequestImpl) then) =
+      __$$TrainerRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -188,11 +188,11 @@ abstract class _$$_TrainerRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TrainerRequestCopyWithImpl<$Res>
-    extends _$TrainerRequestCopyWithImpl<$Res, _$_TrainerRequest>
-    implements _$$_TrainerRequestCopyWith<$Res> {
-  __$$_TrainerRequestCopyWithImpl(
-      _$_TrainerRequest _value, $Res Function(_$_TrainerRequest) _then)
+class __$$TrainerRequestImplCopyWithImpl<$Res>
+    extends _$TrainerRequestCopyWithImpl<$Res, _$TrainerRequestImpl>
+    implements _$$TrainerRequestImplCopyWith<$Res> {
+  __$$TrainerRequestImplCopyWithImpl(
+      _$TrainerRequestImpl _value, $Res Function(_$TrainerRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -214,7 +214,7 @@ class __$$_TrainerRequestCopyWithImpl<$Res>
     Object? upiId = freezed,
     Object? address = freezed,
   }) {
-    return _then(_$_TrainerRequest(
+    return _then(_$TrainerRequestImpl(
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -282,8 +282,8 @@ class __$$_TrainerRequestCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_TrainerRequest implements _TrainerRequest {
-  const _$_TrainerRequest(
+class _$TrainerRequestImpl implements _TrainerRequest {
+  const _$TrainerRequestImpl(
       {this.name,
       this.mobileNo,
       this.countryCode,
@@ -300,8 +300,8 @@ class _$_TrainerRequest implements _TrainerRequest {
       this.upiId,
       this.address});
 
-  factory _$_TrainerRequest.fromJson(Map<String, dynamic> json) =>
-      _$$_TrainerRequestFromJson(json);
+  factory _$TrainerRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TrainerRequestImplFromJson(json);
 
   @override
   final String? name;
@@ -341,10 +341,10 @@ class _$_TrainerRequest implements _TrainerRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TrainerRequest &&
+            other is _$TrainerRequestImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.mobileNo, mobileNo) ||
                 other.mobileNo == mobileNo) &&
@@ -392,12 +392,13 @@ class _$_TrainerRequest implements _TrainerRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TrainerRequestCopyWith<_$_TrainerRequest> get copyWith =>
-      __$$_TrainerRequestCopyWithImpl<_$_TrainerRequest>(this, _$identity);
+  _$$TrainerRequestImplCopyWith<_$TrainerRequestImpl> get copyWith =>
+      __$$TrainerRequestImplCopyWithImpl<_$TrainerRequestImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TrainerRequestToJson(
+    return _$$TrainerRequestImplToJson(
       this,
     );
   }
@@ -419,10 +420,10 @@ abstract class _TrainerRequest implements TrainerRequest {
       final String? salaryAmount,
       @JsonKey(name: "branch_id[]") final dynamic branchId,
       final String? upiId,
-      final String? address}) = _$_TrainerRequest;
+      final String? address}) = _$TrainerRequestImpl;
 
   factory _TrainerRequest.fromJson(Map<String, dynamic> json) =
-      _$_TrainerRequest.fromJson;
+      _$TrainerRequestImpl.fromJson;
 
   @override
   String? get name;
@@ -457,6 +458,6 @@ abstract class _TrainerRequest implements TrainerRequest {
   String? get address;
   @override
   @JsonKey(ignore: true)
-  _$$_TrainerRequestCopyWith<_$_TrainerRequest> get copyWith =>
+  _$$TrainerRequestImplCopyWith<_$TrainerRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

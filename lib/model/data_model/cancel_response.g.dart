@@ -6,22 +6,23 @@ part of 'cancel_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CancelResponse _$$_CancelResponseFromJson(Map<String, dynamic> json) =>
-    _$_CancelResponse(
+_$CancelResponseImpl _$$CancelResponseImplFromJson(Map<String, dynamic> json) =>
+    _$CancelResponseImpl(
       status: json['status'] as int?,
       cancelledClasses: (json['cancelled_classes'] as List<dynamic>?)
           ?.map((e) => CancelledClass.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$_CancelResponseToJson(_$_CancelResponse instance) =>
+Map<String, dynamic> _$$CancelResponseImplToJson(
+        _$CancelResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'cancelled_classes': instance.cancelledClasses,
     };
 
-_$_CancelledClass _$$_CancelledClassFromJson(Map<String, dynamic> json) =>
-    _$_CancelledClass(
+_$CancelledClassImpl _$$CancelledClassImplFromJson(Map<String, dynamic> json) =>
+    _$CancelledClassImpl(
       id: json['id'] as int?,
       batchId: json['batch_id'] as int?,
       classDate: json['class_date'] == null
@@ -43,7 +44,8 @@ _$_CancelledClass _$$_CancelledClassFromJson(Map<String, dynamic> json) =>
           : CancelledBy.fromJson(json['cancelled_by'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_CancelledClassToJson(_$_CancelledClass instance) =>
+Map<String, dynamic> _$$CancelledClassImplToJson(
+        _$CancelledClassImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'batch_id': instance.batchId,
@@ -58,8 +60,8 @@ Map<String, dynamic> _$$_CancelledClassToJson(_$_CancelledClass instance) =>
       'cancelled_by': instance.cancelledBy,
     };
 
-_$_CancelledBy _$$_CancelledByFromJson(Map<String, dynamic> json) =>
-    _$_CancelledBy(
+_$CancelledByImpl _$$CancelledByImplFromJson(Map<String, dynamic> json) =>
+    _$CancelledByImpl(
       id: json['id'] as int?,
       name: json['name'] as String?,
       userId: json['user_id'] as int?,
@@ -72,7 +74,7 @@ _$_CancelledBy _$$_CancelledByFromJson(Map<String, dynamic> json) =>
       isActive: json['is_active'] as int?,
     );
 
-Map<String, dynamic> _$$_CancelledByToJson(_$_CancelledBy instance) =>
+Map<String, dynamic> _$$CancelledByImplToJson(_$CancelledByImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

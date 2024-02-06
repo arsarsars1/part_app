@@ -6,8 +6,9 @@ part of 'manager_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ManagerResponse _$$_ManagerResponseFromJson(Map<String, dynamic> json) =>
-    _$_ManagerResponse(
+_$ManagerResponseImpl _$$ManagerResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ManagerResponseImpl(
       status: json['status'] as int,
       managers: json['managers'] == null
           ? null
@@ -17,14 +18,15 @@ _$_ManagerResponse _$$_ManagerResponseFromJson(Map<String, dynamic> json) =>
           : Manager.fromJson(json['manager'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_ManagerResponseToJson(_$_ManagerResponse instance) =>
+Map<String, dynamic> _$$ManagerResponseImplToJson(
+        _$ManagerResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'managers': instance.managers,
       'manager': instance.manager,
     };
 
-_$_Datum _$$_DatumFromJson(Map<String, dynamic> json) => _$_Datum(
+_$DatumImpl _$$DatumImplFromJson(Map<String, dynamic> json) => _$DatumImpl(
       currentPage: json['current_page'] as int?,
       data: (json['data'] as List<dynamic>)
           .map((e) => Manager.fromJson(e as Map<String, dynamic>))
@@ -34,7 +36,8 @@ _$_Datum _$$_DatumFromJson(Map<String, dynamic> json) => _$_Datum(
       to: json['to'] as int?,
     );
 
-Map<String, dynamic> _$$_DatumToJson(_$_Datum instance) => <String, dynamic>{
+Map<String, dynamic> _$$DatumImplToJson(_$DatumImpl instance) =>
+    <String, dynamic>{
       'current_page': instance.currentPage,
       'data': instance.data,
       'from': instance.from,
@@ -42,7 +45,8 @@ Map<String, dynamic> _$$_DatumToJson(_$_Datum instance) => <String, dynamic>{
       'to': instance.to,
     };
 
-_$_Manager _$$_ManagerFromJson(Map<String, dynamic> json) => _$_Manager(
+_$ManagerImpl _$$ManagerImplFromJson(Map<String, dynamic> json) =>
+    _$ManagerImpl(
       id: json['id'] as int,
       userId: json['user_id'] as int?,
       academyId: json['academy_id'] as int?,
@@ -72,7 +76,7 @@ _$_Manager _$$_ManagerFromJson(Map<String, dynamic> json) => _$_Manager(
           .toList(),
     );
 
-Map<String, dynamic> _$$_ManagerToJson(_$_Manager instance) =>
+Map<String, dynamic> _$$ManagerImplToJson(_$ManagerImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'user_id': instance.userId,

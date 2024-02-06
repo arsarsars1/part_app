@@ -189,11 +189,11 @@ class _$StudentRequestCopyWithImpl<$Res, $Val extends StudentRequest>
 }
 
 /// @nodoc
-abstract class _$$_StudentRequestCopyWith<$Res>
+abstract class _$$StudentRequestImplCopyWith<$Res>
     implements $StudentRequestCopyWith<$Res> {
-  factory _$$_StudentRequestCopyWith(
-          _$_StudentRequest value, $Res Function(_$_StudentRequest) then) =
-      __$$_StudentRequestCopyWithImpl<$Res>;
+  factory _$$StudentRequestImplCopyWith(_$StudentRequestImpl value,
+          $Res Function(_$StudentRequestImpl) then) =
+      __$$StudentRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -219,11 +219,11 @@ abstract class _$$_StudentRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_StudentRequestCopyWithImpl<$Res>
-    extends _$StudentRequestCopyWithImpl<$Res, _$_StudentRequest>
-    implements _$$_StudentRequestCopyWith<$Res> {
-  __$$_StudentRequestCopyWithImpl(
-      _$_StudentRequest _value, $Res Function(_$_StudentRequest) _then)
+class __$$StudentRequestImplCopyWithImpl<$Res>
+    extends _$StudentRequestCopyWithImpl<$Res, _$StudentRequestImpl>
+    implements _$$StudentRequestImplCopyWith<$Res> {
+  __$$StudentRequestImplCopyWithImpl(
+      _$StudentRequestImpl _value, $Res Function(_$StudentRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -249,7 +249,7 @@ class __$$_StudentRequestCopyWithImpl<$Res>
     Object? address = freezed,
     Object? parentName = freezed,
   }) {
-    return _then(_$_StudentRequest(
+    return _then(_$StudentRequestImpl(
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -333,8 +333,8 @@ class __$$_StudentRequestCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_StudentRequest implements _StudentRequest {
-  const _$_StudentRequest(
+class _$StudentRequestImpl implements _StudentRequest {
+  const _$StudentRequestImpl(
       {this.name,
       this.mobileNo,
       this.countryCode,
@@ -355,8 +355,8 @@ class _$_StudentRequest implements _StudentRequest {
       this.address,
       this.parentName});
 
-  factory _$_StudentRequest.fromJson(Map<String, dynamic> json) =>
-      _$$_StudentRequestFromJson(json);
+  factory _$StudentRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StudentRequestImplFromJson(json);
 
   @override
   final String? name;
@@ -403,10 +403,10 @@ class _$_StudentRequest implements _StudentRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StudentRequest &&
+            other is _$StudentRequestImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.mobileNo, mobileNo) ||
                 other.mobileNo == mobileNo) &&
@@ -466,12 +466,13 @@ class _$_StudentRequest implements _StudentRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StudentRequestCopyWith<_$_StudentRequest> get copyWith =>
-      __$$_StudentRequestCopyWithImpl<_$_StudentRequest>(this, _$identity);
+  _$$StudentRequestImplCopyWith<_$StudentRequestImpl> get copyWith =>
+      __$$StudentRequestImplCopyWithImpl<_$StudentRequestImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StudentRequestToJson(
+    return _$$StudentRequestImplToJson(
       this,
     );
   }
@@ -497,10 +498,10 @@ abstract class _StudentRequest implements StudentRequest {
       final int? noOfClasses,
       final int? paymentDueDate,
       final String? address,
-      final String? parentName}) = _$_StudentRequest;
+      final String? parentName}) = _$StudentRequestImpl;
 
   factory _StudentRequest.fromJson(Map<String, dynamic> json) =
-      _$_StudentRequest.fromJson;
+      _$StudentRequestImpl.fromJson;
 
   @override
   String? get name;
@@ -542,6 +543,6 @@ abstract class _StudentRequest implements StudentRequest {
   String? get parentName;
   @override
   @JsonKey(ignore: true)
-  _$$_StudentRequestCopyWith<_$_StudentRequest> get copyWith =>
+  _$$StudentRequestImplCopyWith<_$StudentRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

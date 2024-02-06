@@ -71,18 +71,18 @@ class _$OtpCopyWithImpl<$Res, $Val extends Otp> implements $OtpCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_OtpCopyWith<$Res> implements $OtpCopyWith<$Res> {
-  factory _$$_OtpCopyWith(_$_Otp value, $Res Function(_$_Otp) then) =
-      __$$_OtpCopyWithImpl<$Res>;
+abstract class _$$OtpImplCopyWith<$Res> implements $OtpCopyWith<$Res> {
+  factory _$$OtpImplCopyWith(_$OtpImpl value, $Res Function(_$OtpImpl) then) =
+      __$$OtpImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String message, dynamic otp, int? status});
 }
 
 /// @nodoc
-class __$$_OtpCopyWithImpl<$Res> extends _$OtpCopyWithImpl<$Res, _$_Otp>
-    implements _$$_OtpCopyWith<$Res> {
-  __$$_OtpCopyWithImpl(_$_Otp _value, $Res Function(_$_Otp) _then)
+class __$$OtpImplCopyWithImpl<$Res> extends _$OtpCopyWithImpl<$Res, _$OtpImpl>
+    implements _$$OtpImplCopyWith<$Res> {
+  __$$OtpImplCopyWithImpl(_$OtpImpl _value, $Res Function(_$OtpImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +92,7 @@ class __$$_OtpCopyWithImpl<$Res> extends _$OtpCopyWithImpl<$Res, _$_Otp>
     Object? otp = freezed,
     Object? status = freezed,
   }) {
-    return _then(_$_Otp(
+    return _then(_$OtpImpl(
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -112,10 +112,11 @@ class __$$_OtpCopyWithImpl<$Res> extends _$OtpCopyWithImpl<$Res, _$_Otp>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Otp implements _Otp {
-  const _$_Otp({required this.message, this.otp, this.status});
+class _$OtpImpl implements _Otp {
+  const _$OtpImpl({required this.message, this.otp, this.status});
 
-  factory _$_Otp.fromJson(Map<String, dynamic> json) => _$$_OtpFromJson(json);
+  factory _$OtpImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OtpImplFromJson(json);
 
   @override
   final String message;
@@ -130,10 +131,10 @@ class _$_Otp implements _Otp {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Otp &&
+            other is _$OtpImpl &&
             (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality().equals(other.otp, otp) &&
             (identical(other.status, status) || other.status == status));
@@ -147,12 +148,12 @@ class _$_Otp implements _Otp {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OtpCopyWith<_$_Otp> get copyWith =>
-      __$$_OtpCopyWithImpl<_$_Otp>(this, _$identity);
+  _$$OtpImplCopyWith<_$OtpImpl> get copyWith =>
+      __$$OtpImplCopyWithImpl<_$OtpImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OtpToJson(
+    return _$$OtpImplToJson(
       this,
     );
   }
@@ -162,9 +163,9 @@ abstract class _Otp implements Otp {
   const factory _Otp(
       {required final String message,
       final dynamic otp,
-      final int? status}) = _$_Otp;
+      final int? status}) = _$OtpImpl;
 
-  factory _Otp.fromJson(Map<String, dynamic> json) = _$_Otp.fromJson;
+  factory _Otp.fromJson(Map<String, dynamic> json) = _$OtpImpl.fromJson;
 
   @override
   String get message;
@@ -174,5 +175,6 @@ abstract class _Otp implements Otp {
   int? get status;
   @override
   @JsonKey(ignore: true)
-  _$$_OtpCopyWith<_$_Otp> get copyWith => throw _privateConstructorUsedError;
+  _$$OtpImplCopyWith<_$OtpImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -6,8 +6,9 @@ part of 'students_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_StudentsResponse _$$_StudentsResponseFromJson(Map<String, dynamic> json) =>
-    _$_StudentsResponse(
+_$StudentsResponseImpl _$$StudentsResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$StudentsResponseImpl(
       status: json['status'] as int?,
       activeStudentsCount: json['active_students_count'] as int?,
       students: json['students'] == null
@@ -15,14 +16,16 @@ _$_StudentsResponse _$$_StudentsResponseFromJson(Map<String, dynamic> json) =>
           : Students.fromJson(json['students'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_StudentsResponseToJson(_$_StudentsResponse instance) =>
+Map<String, dynamic> _$$StudentsResponseImplToJson(
+        _$StudentsResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'active_students_count': instance.activeStudentsCount,
       'students': instance.students,
     };
 
-_$_Students _$$_StudentsFromJson(Map<String, dynamic> json) => _$_Students(
+_$StudentsImpl _$$StudentsImplFromJson(Map<String, dynamic> json) =>
+    _$StudentsImpl(
       currentPage: json['current_page'] as int?,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => Student.fromJson(e as Map<String, dynamic>))
@@ -35,7 +38,7 @@ _$_Students _$$_StudentsFromJson(Map<String, dynamic> json) => _$_Students(
       to: json['to'] as int?,
     );
 
-Map<String, dynamic> _$$_StudentsToJson(_$_Students instance) =>
+Map<String, dynamic> _$$StudentsImplToJson(_$StudentsImpl instance) =>
     <String, dynamic>{
       'current_page': instance.currentPage,
       'data': instance.data,
@@ -47,8 +50,9 @@ Map<String, dynamic> _$$_StudentsToJson(_$_Students instance) =>
       'to': instance.to,
     };
 
-_$_StudentResponse _$$_StudentResponseFromJson(Map<String, dynamic> json) =>
-    _$_StudentResponse(
+_$StudentResponseImpl _$$StudentResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$StudentResponseImpl(
       status: json['status'] as int?,
       student: json['student'] == null
           ? null
@@ -56,14 +60,16 @@ _$_StudentResponse _$$_StudentResponseFromJson(Map<String, dynamic> json) =>
       message: json['message'] as String?,
     );
 
-Map<String, dynamic> _$$_StudentResponseToJson(_$_StudentResponse instance) =>
+Map<String, dynamic> _$$StudentResponseImplToJson(
+        _$StudentResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'student': instance.student,
       'message': instance.message,
     };
 
-_$_Student _$$_StudentFromJson(Map<String, dynamic> json) => _$_Student(
+_$StudentImpl _$$StudentImplFromJson(Map<String, dynamic> json) =>
+    _$StudentImpl(
       id: json['id'] as int?,
       countryCode: json['country_code'] as String?,
       mobileNo: json['mobile_no'] as String?,
@@ -74,7 +80,7 @@ _$_Student _$$_StudentFromJson(Map<String, dynamic> json) => _$_Student(
           .toList(),
     );
 
-Map<String, dynamic> _$$_StudentToJson(_$_Student instance) =>
+Map<String, dynamic> _$$StudentImplToJson(_$StudentImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'country_code': instance.countryCode,
@@ -84,8 +90,8 @@ Map<String, dynamic> _$$_StudentToJson(_$_Student instance) =>
       'student_detail': instance.studentDetail,
     };
 
-_$_StudentDetail _$$_StudentDetailFromJson(Map<String, dynamic> json) =>
-    _$_StudentDetail(
+_$StudentDetailImpl _$$StudentDetailImplFromJson(Map<String, dynamic> json) =>
+    _$StudentDetailImpl(
       id: json['id'] as int?,
       name: json['name'] as String?,
       parentName: json['parent_name'] as String?,
@@ -110,7 +116,7 @@ _$_StudentDetail _$$_StudentDetailFromJson(Map<String, dynamic> json) =>
           : Academy.fromJson(json['academy'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_StudentDetailToJson(_$_StudentDetail instance) =>
+Map<String, dynamic> _$$StudentDetailImplToJson(_$StudentDetailImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

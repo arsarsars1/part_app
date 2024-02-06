@@ -154,11 +154,11 @@ class _$LeadRequestCopyWithImpl<$Res, $Val extends LeadRequest>
 }
 
 /// @nodoc
-abstract class _$$_LeadRequestCopyWith<$Res>
+abstract class _$$LeadRequestImplCopyWith<$Res>
     implements $LeadRequestCopyWith<$Res> {
-  factory _$$_LeadRequestCopyWith(
-          _$_LeadRequest value, $Res Function(_$_LeadRequest) then) =
-      __$$_LeadRequestCopyWithImpl<$Res>;
+  factory _$$LeadRequestImplCopyWith(
+          _$LeadRequestImpl value, $Res Function(_$LeadRequestImpl) then) =
+      __$$LeadRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -179,11 +179,11 @@ abstract class _$$_LeadRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_LeadRequestCopyWithImpl<$Res>
-    extends _$LeadRequestCopyWithImpl<$Res, _$_LeadRequest>
-    implements _$$_LeadRequestCopyWith<$Res> {
-  __$$_LeadRequestCopyWithImpl(
-      _$_LeadRequest _value, $Res Function(_$_LeadRequest) _then)
+class __$$LeadRequestImplCopyWithImpl<$Res>
+    extends _$LeadRequestCopyWithImpl<$Res, _$LeadRequestImpl>
+    implements _$$LeadRequestImplCopyWith<$Res> {
+  __$$LeadRequestImplCopyWithImpl(
+      _$LeadRequestImpl _value, $Res Function(_$LeadRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -204,7 +204,7 @@ class __$$_LeadRequestCopyWithImpl<$Res>
     Object? assignedToType = freezed,
     Object? followUpComment = freezed,
   }) {
-    return _then(_$_LeadRequest(
+    return _then(_$LeadRequestImpl(
       branchId: freezed == branchId
           ? _value.branchId
           : branchId // ignore: cast_nullable_to_non_nullable
@@ -268,8 +268,8 @@ class __$$_LeadRequestCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_LeadRequest implements _LeadRequest {
-  const _$_LeadRequest(
+class _$LeadRequestImpl implements _LeadRequest {
+  const _$LeadRequestImpl(
       {this.branchId,
       this.batchId,
       this.leadStatus,
@@ -285,8 +285,8 @@ class _$_LeadRequest implements _LeadRequest {
       this.assignedToType,
       this.followUpComment});
 
-  factory _$_LeadRequest.fromJson(Map<String, dynamic> json) =>
-      _$$_LeadRequestFromJson(json);
+  factory _$LeadRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LeadRequestImplFromJson(json);
 
   @override
   final int? branchId;
@@ -323,10 +323,10 @@ class _$_LeadRequest implements _LeadRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LeadRequest &&
+            other is _$LeadRequestImpl &&
             (identical(other.branchId, branchId) ||
                 other.branchId == branchId) &&
             (identical(other.batchId, batchId) || other.batchId == batchId) &&
@@ -374,12 +374,12 @@ class _$_LeadRequest implements _LeadRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LeadRequestCopyWith<_$_LeadRequest> get copyWith =>
-      __$$_LeadRequestCopyWithImpl<_$_LeadRequest>(this, _$identity);
+  _$$LeadRequestImplCopyWith<_$LeadRequestImpl> get copyWith =>
+      __$$LeadRequestImplCopyWithImpl<_$LeadRequestImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LeadRequestToJson(
+    return _$$LeadRequestImplToJson(
       this,
     );
   }
@@ -400,10 +400,10 @@ abstract class _LeadRequest implements LeadRequest {
       final String? followUpTime,
       final int? assignedToId,
       final String? assignedToType,
-      final String? followUpComment}) = _$_LeadRequest;
+      final String? followUpComment}) = _$LeadRequestImpl;
 
   factory _LeadRequest.fromJson(Map<String, dynamic> json) =
-      _$_LeadRequest.fromJson;
+      _$LeadRequestImpl.fromJson;
 
   @override
   int? get branchId;
@@ -435,6 +435,6 @@ abstract class _LeadRequest implements LeadRequest {
   String? get followUpComment;
   @override
   @JsonKey(ignore: true)
-  _$$_LeadRequestCopyWith<_$_LeadRequest> get copyWith =>
+  _$$LeadRequestImplCopyWith<_$LeadRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

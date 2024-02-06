@@ -90,10 +90,11 @@ class _$DashboardCopyWithImpl<$Res, $Val extends Dashboard>
 }
 
 /// @nodoc
-abstract class _$$_DashboardCopyWith<$Res> implements $DashboardCopyWith<$Res> {
-  factory _$$_DashboardCopyWith(
-          _$_Dashboard value, $Res Function(_$_Dashboard) then) =
-      __$$_DashboardCopyWithImpl<$Res>;
+abstract class _$$DashboardImplCopyWith<$Res>
+    implements $DashboardCopyWith<$Res> {
+  factory _$$DashboardImplCopyWith(
+          _$DashboardImpl value, $Res Function(_$DashboardImpl) then) =
+      __$$DashboardImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -105,11 +106,11 @@ abstract class _$$_DashboardCopyWith<$Res> implements $DashboardCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_DashboardCopyWithImpl<$Res>
-    extends _$DashboardCopyWithImpl<$Res, _$_Dashboard>
-    implements _$$_DashboardCopyWith<$Res> {
-  __$$_DashboardCopyWithImpl(
-      _$_Dashboard _value, $Res Function(_$_Dashboard) _then)
+class __$$DashboardImplCopyWithImpl<$Res>
+    extends _$DashboardCopyWithImpl<$Res, _$DashboardImpl>
+    implements _$$DashboardImplCopyWith<$Res> {
+  __$$DashboardImplCopyWithImpl(
+      _$DashboardImpl _value, $Res Function(_$DashboardImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -121,7 +122,7 @@ class __$$_DashboardCopyWithImpl<$Res>
     Object? totalPaymentsMonthly = freezed,
     Object? banners = freezed,
   }) {
-    return _then(_$_Dashboard(
+    return _then(_$DashboardImpl(
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -149,8 +150,8 @@ class __$$_DashboardCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Dashboard implements _Dashboard {
-  const _$_Dashboard(
+class _$DashboardImpl implements _Dashboard {
+  const _$DashboardImpl(
       {this.status,
       this.totalStudents,
       this.totalPaymentsDaily,
@@ -158,8 +159,8 @@ class _$_Dashboard implements _Dashboard {
       final List<Banner>? banners})
       : _banners = banners;
 
-  factory _$_Dashboard.fromJson(Map<String, dynamic> json) =>
-      _$$_DashboardFromJson(json);
+  factory _$DashboardImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DashboardImplFromJson(json);
 
   @override
   final int? status;
@@ -185,10 +186,10 @@ class _$_Dashboard implements _Dashboard {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Dashboard &&
+            other is _$DashboardImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.totalStudents, totalStudents) ||
                 other.totalStudents == totalStudents) &&
@@ -212,12 +213,12 @@ class _$_Dashboard implements _Dashboard {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DashboardCopyWith<_$_Dashboard> get copyWith =>
-      __$$_DashboardCopyWithImpl<_$_Dashboard>(this, _$identity);
+  _$$DashboardImplCopyWith<_$DashboardImpl> get copyWith =>
+      __$$DashboardImplCopyWithImpl<_$DashboardImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DashboardToJson(
+    return _$$DashboardImplToJson(
       this,
     );
   }
@@ -229,10 +230,10 @@ abstract class _Dashboard implements Dashboard {
       final int? totalStudents,
       final String? totalPaymentsDaily,
       final String? totalPaymentsMonthly,
-      final List<Banner>? banners}) = _$_Dashboard;
+      final List<Banner>? banners}) = _$DashboardImpl;
 
   factory _Dashboard.fromJson(Map<String, dynamic> json) =
-      _$_Dashboard.fromJson;
+      _$DashboardImpl.fromJson;
 
   @override
   int? get status;
@@ -246,7 +247,7 @@ abstract class _Dashboard implements Dashboard {
   List<Banner>? get banners;
   @override
   @JsonKey(ignore: true)
-  _$$_DashboardCopyWith<_$_Dashboard> get copyWith =>
+  _$$DashboardImplCopyWith<_$DashboardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -374,9 +375,10 @@ class _$BannerCopyWithImpl<$Res, $Val extends Banner>
 }
 
 /// @nodoc
-abstract class _$$_BannerCopyWith<$Res> implements $BannerCopyWith<$Res> {
-  factory _$$_BannerCopyWith(_$_Banner value, $Res Function(_$_Banner) then) =
-      __$$_BannerCopyWithImpl<$Res>;
+abstract class _$$BannerImplCopyWith<$Res> implements $BannerCopyWith<$Res> {
+  factory _$$BannerImplCopyWith(
+          _$BannerImpl value, $Res Function(_$BannerImpl) then) =
+      __$$BannerImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -395,10 +397,11 @@ abstract class _$$_BannerCopyWith<$Res> implements $BannerCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_BannerCopyWithImpl<$Res>
-    extends _$BannerCopyWithImpl<$Res, _$_Banner>
-    implements _$$_BannerCopyWith<$Res> {
-  __$$_BannerCopyWithImpl(_$_Banner _value, $Res Function(_$_Banner) _then)
+class __$$BannerImplCopyWithImpl<$Res>
+    extends _$BannerCopyWithImpl<$Res, _$BannerImpl>
+    implements _$$BannerImplCopyWith<$Res> {
+  __$$BannerImplCopyWithImpl(
+      _$BannerImpl _value, $Res Function(_$BannerImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -417,7 +420,7 @@ class __$$_BannerCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
-    return _then(_$_Banner(
+    return _then(_$BannerImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -473,8 +476,8 @@ class __$$_BannerCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Banner implements _Banner {
-  const _$_Banner(
+class _$BannerImpl implements _Banner {
+  const _$BannerImpl(
       {this.id,
       this.description,
       this.imageUrl,
@@ -488,8 +491,8 @@ class _$_Banner implements _Banner {
       this.createdAt,
       this.updatedAt});
 
-  factory _$_Banner.fromJson(Map<String, dynamic> json) =>
-      _$$_BannerFromJson(json);
+  factory _$BannerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BannerImplFromJson(json);
 
   @override
   final int? id;
@@ -522,10 +525,10 @@ class _$_Banner implements _Banner {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Banner &&
+            other is _$BannerImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -568,12 +571,12 @@ class _$_Banner implements _Banner {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BannerCopyWith<_$_Banner> get copyWith =>
-      __$$_BannerCopyWithImpl<_$_Banner>(this, _$identity);
+  _$$BannerImplCopyWith<_$BannerImpl> get copyWith =>
+      __$$BannerImplCopyWithImpl<_$BannerImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BannerToJson(
+    return _$$BannerImplToJson(
       this,
     );
   }
@@ -592,9 +595,9 @@ abstract class _Banner implements Banner {
       final int? academyTypeId,
       final int? isActive,
       final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$_Banner;
+      final DateTime? updatedAt}) = _$BannerImpl;
 
-  factory _Banner.fromJson(Map<String, dynamic> json) = _$_Banner.fromJson;
+  factory _Banner.fromJson(Map<String, dynamic> json) = _$BannerImpl.fromJson;
 
   @override
   int? get id;
@@ -622,6 +625,6 @@ abstract class _Banner implements Banner {
   DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
-  _$$_BannerCopyWith<_$_Banner> get copyWith =>
+  _$$BannerImplCopyWith<_$BannerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

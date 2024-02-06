@@ -82,11 +82,11 @@ class _$LeadsResponseCopyWithImpl<$Res, $Val extends LeadsResponse>
 }
 
 /// @nodoc
-abstract class _$$_LeadsResponseCopyWith<$Res>
+abstract class _$$LeadsResponseImplCopyWith<$Res>
     implements $LeadsResponseCopyWith<$Res> {
-  factory _$$_LeadsResponseCopyWith(
-          _$_LeadsResponse value, $Res Function(_$_LeadsResponse) then) =
-      __$$_LeadsResponseCopyWithImpl<$Res>;
+  factory _$$LeadsResponseImplCopyWith(
+          _$LeadsResponseImpl value, $Res Function(_$LeadsResponseImpl) then) =
+      __$$LeadsResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? status, Leads? leads});
@@ -96,11 +96,11 @@ abstract class _$$_LeadsResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_LeadsResponseCopyWithImpl<$Res>
-    extends _$LeadsResponseCopyWithImpl<$Res, _$_LeadsResponse>
-    implements _$$_LeadsResponseCopyWith<$Res> {
-  __$$_LeadsResponseCopyWithImpl(
-      _$_LeadsResponse _value, $Res Function(_$_LeadsResponse) _then)
+class __$$LeadsResponseImplCopyWithImpl<$Res>
+    extends _$LeadsResponseCopyWithImpl<$Res, _$LeadsResponseImpl>
+    implements _$$LeadsResponseImplCopyWith<$Res> {
+  __$$LeadsResponseImplCopyWithImpl(
+      _$LeadsResponseImpl _value, $Res Function(_$LeadsResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -109,7 +109,7 @@ class __$$_LeadsResponseCopyWithImpl<$Res>
     Object? status = freezed,
     Object? leads = freezed,
   }) {
-    return _then(_$_LeadsResponse(
+    return _then(_$LeadsResponseImpl(
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -125,11 +125,11 @@ class __$$_LeadsResponseCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_LeadsResponse implements _LeadsResponse {
-  const _$_LeadsResponse({this.status, this.leads});
+class _$LeadsResponseImpl implements _LeadsResponse {
+  const _$LeadsResponseImpl({this.status, this.leads});
 
-  factory _$_LeadsResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_LeadsResponseFromJson(json);
+  factory _$LeadsResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LeadsResponseImplFromJson(json);
 
   @override
   final int? status;
@@ -142,10 +142,10 @@ class _$_LeadsResponse implements _LeadsResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LeadsResponse &&
+            other is _$LeadsResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.leads, leads) || other.leads == leads));
   }
@@ -157,12 +157,12 @@ class _$_LeadsResponse implements _LeadsResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LeadsResponseCopyWith<_$_LeadsResponse> get copyWith =>
-      __$$_LeadsResponseCopyWithImpl<_$_LeadsResponse>(this, _$identity);
+  _$$LeadsResponseImplCopyWith<_$LeadsResponseImpl> get copyWith =>
+      __$$LeadsResponseImplCopyWithImpl<_$LeadsResponseImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LeadsResponseToJson(
+    return _$$LeadsResponseImplToJson(
       this,
     );
   }
@@ -170,10 +170,10 @@ class _$_LeadsResponse implements _LeadsResponse {
 
 abstract class _LeadsResponse implements LeadsResponse {
   const factory _LeadsResponse({final int? status, final Leads? leads}) =
-      _$_LeadsResponse;
+      _$LeadsResponseImpl;
 
   factory _LeadsResponse.fromJson(Map<String, dynamic> json) =
-      _$_LeadsResponse.fromJson;
+      _$LeadsResponseImpl.fromJson;
 
   @override
   int? get status;
@@ -181,7 +181,7 @@ abstract class _LeadsResponse implements LeadsResponse {
   Leads? get leads;
   @override
   @JsonKey(ignore: true)
-  _$$_LeadsResponseCopyWith<_$_LeadsResponse> get copyWith =>
+  _$$LeadsResponseImplCopyWith<_$LeadsResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -288,9 +288,10 @@ class _$LeadsCopyWithImpl<$Res, $Val extends Leads>
 }
 
 /// @nodoc
-abstract class _$$_LeadsCopyWith<$Res> implements $LeadsCopyWith<$Res> {
-  factory _$$_LeadsCopyWith(_$_Leads value, $Res Function(_$_Leads) then) =
-      __$$_LeadsCopyWithImpl<$Res>;
+abstract class _$$LeadsImplCopyWith<$Res> implements $LeadsCopyWith<$Res> {
+  factory _$$LeadsImplCopyWith(
+          _$LeadsImpl value, $Res Function(_$LeadsImpl) then) =
+      __$$LeadsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -306,9 +307,11 @@ abstract class _$$_LeadsCopyWith<$Res> implements $LeadsCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_LeadsCopyWithImpl<$Res> extends _$LeadsCopyWithImpl<$Res, _$_Leads>
-    implements _$$_LeadsCopyWith<$Res> {
-  __$$_LeadsCopyWithImpl(_$_Leads _value, $Res Function(_$_Leads) _then)
+class __$$LeadsImplCopyWithImpl<$Res>
+    extends _$LeadsCopyWithImpl<$Res, _$LeadsImpl>
+    implements _$$LeadsImplCopyWith<$Res> {
+  __$$LeadsImplCopyWithImpl(
+      _$LeadsImpl _value, $Res Function(_$LeadsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -324,7 +327,7 @@ class __$$_LeadsCopyWithImpl<$Res> extends _$LeadsCopyWithImpl<$Res, _$_Leads>
     Object? prevPageUrl = freezed,
     Object? to = freezed,
   }) {
-    return _then(_$_Leads(
+    return _then(_$LeadsImpl(
       currentPage: freezed == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -368,8 +371,8 @@ class __$$_LeadsCopyWithImpl<$Res> extends _$LeadsCopyWithImpl<$Res, _$_Leads>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Leads implements _Leads {
-  const _$_Leads(
+class _$LeadsImpl implements _Leads {
+  const _$LeadsImpl(
       {this.currentPage,
       final List<Lead>? data,
       this.firstPageUrl,
@@ -381,8 +384,8 @@ class _$_Leads implements _Leads {
       this.to})
       : _data = data;
 
-  factory _$_Leads.fromJson(Map<String, dynamic> json) =>
-      _$$_LeadsFromJson(json);
+  factory _$LeadsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LeadsImplFromJson(json);
 
   @override
   final int? currentPage;
@@ -417,10 +420,10 @@ class _$_Leads implements _Leads {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Leads &&
+            other is _$LeadsImpl &&
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             const DeepCollectionEquality().equals(other._data, _data) &&
@@ -453,12 +456,12 @@ class _$_Leads implements _Leads {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LeadsCopyWith<_$_Leads> get copyWith =>
-      __$$_LeadsCopyWithImpl<_$_Leads>(this, _$identity);
+  _$$LeadsImplCopyWith<_$LeadsImpl> get copyWith =>
+      __$$LeadsImplCopyWithImpl<_$LeadsImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LeadsToJson(
+    return _$$LeadsImplToJson(
       this,
     );
   }
@@ -474,9 +477,9 @@ abstract class _Leads implements Leads {
       final String? path,
       final int? perPage,
       final dynamic prevPageUrl,
-      final int? to}) = _$_Leads;
+      final int? to}) = _$LeadsImpl;
 
-  factory _Leads.fromJson(Map<String, dynamic> json) = _$_Leads.fromJson;
+  factory _Leads.fromJson(Map<String, dynamic> json) = _$LeadsImpl.fromJson;
 
   @override
   int? get currentPage;
@@ -498,7 +501,7 @@ abstract class _Leads implements Leads {
   int? get to;
   @override
   @JsonKey(ignore: true)
-  _$$_LeadsCopyWith<_$_Leads> get copyWith =>
+  _$$LeadsImplCopyWith<_$LeadsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -722,9 +725,10 @@ class _$LeadCopyWithImpl<$Res, $Val extends Lead>
 }
 
 /// @nodoc
-abstract class _$$_LeadCopyWith<$Res> implements $LeadCopyWith<$Res> {
-  factory _$$_LeadCopyWith(_$_Lead value, $Res Function(_$_Lead) then) =
-      __$$_LeadCopyWithImpl<$Res>;
+abstract class _$$LeadImplCopyWith<$Res> implements $LeadCopyWith<$Res> {
+  factory _$$LeadImplCopyWith(
+          _$LeadImpl value, $Res Function(_$LeadImpl) then) =
+      __$$LeadImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -758,9 +762,10 @@ abstract class _$$_LeadCopyWith<$Res> implements $LeadCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_LeadCopyWithImpl<$Res> extends _$LeadCopyWithImpl<$Res, _$_Lead>
-    implements _$$_LeadCopyWith<$Res> {
-  __$$_LeadCopyWithImpl(_$_Lead _value, $Res Function(_$_Lead) _then)
+class __$$LeadImplCopyWithImpl<$Res>
+    extends _$LeadCopyWithImpl<$Res, _$LeadImpl>
+    implements _$$LeadImplCopyWith<$Res> {
+  __$$LeadImplCopyWithImpl(_$LeadImpl _value, $Res Function(_$LeadImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -787,7 +792,7 @@ class __$$_LeadCopyWithImpl<$Res> extends _$LeadCopyWithImpl<$Res, _$_Lead>
     Object? assignedTo = freezed,
     Object? followUps = freezed,
   }) {
-    return _then(_$_Lead(
+    return _then(_$LeadImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -875,8 +880,8 @@ class __$$_LeadCopyWithImpl<$Res> extends _$LeadCopyWithImpl<$Res, _$_Lead>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Lead implements _Lead {
-  const _$_Lead(
+class _$LeadImpl implements _Lead {
+  const _$LeadImpl(
       {this.id,
       this.academyId,
       this.name,
@@ -899,7 +904,8 @@ class _$_Lead implements _Lead {
       final List<FollowUp>? followUps})
       : _followUps = followUps;
 
-  factory _$_Lead.fromJson(Map<String, dynamic> json) => _$$_LeadFromJson(json);
+  factory _$LeadImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LeadImplFromJson(json);
 
   @override
   final int? id;
@@ -955,10 +961,10 @@ class _$_Lead implements _Lead {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Lead &&
+            other is _$LeadImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.academyId, academyId) ||
                 other.academyId == academyId) &&
@@ -1020,12 +1026,12 @@ class _$_Lead implements _Lead {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LeadCopyWith<_$_Lead> get copyWith =>
-      __$$_LeadCopyWithImpl<_$_Lead>(this, _$identity);
+  _$$LeadImplCopyWith<_$LeadImpl> get copyWith =>
+      __$$LeadImplCopyWithImpl<_$LeadImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LeadToJson(
+    return _$$LeadImplToJson(
       this,
     );
   }
@@ -1052,9 +1058,9 @@ abstract class _Lead implements Lead {
       final DatumBranch? branch,
       final Batch? batch,
       final AssignedTo? assignedTo,
-      final List<FollowUp>? followUps}) = _$_Lead;
+      final List<FollowUp>? followUps}) = _$LeadImpl;
 
-  factory _Lead.fromJson(Map<String, dynamic> json) = _$_Lead.fromJson;
+  factory _Lead.fromJson(Map<String, dynamic> json) = _$LeadImpl.fromJson;
 
   @override
   int? get id;
@@ -1098,7 +1104,8 @@ abstract class _Lead implements Lead {
   List<FollowUp>? get followUps;
   @override
   @JsonKey(ignore: true)
-  _$$_LeadCopyWith<_$_Lead> get copyWith => throw _privateConstructorUsedError;
+  _$$LeadImplCopyWith<_$LeadImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 AssignedTo _$AssignedToFromJson(Map<String, dynamic> json) {
@@ -1161,22 +1168,22 @@ class _$AssignedToCopyWithImpl<$Res, $Val extends AssignedTo>
 }
 
 /// @nodoc
-abstract class _$$_AssignedToCopyWith<$Res>
+abstract class _$$AssignedToImplCopyWith<$Res>
     implements $AssignedToCopyWith<$Res> {
-  factory _$$_AssignedToCopyWith(
-          _$_AssignedTo value, $Res Function(_$_AssignedTo) then) =
-      __$$_AssignedToCopyWithImpl<$Res>;
+  factory _$$AssignedToImplCopyWith(
+          _$AssignedToImpl value, $Res Function(_$AssignedToImpl) then) =
+      __$$AssignedToImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String? name, List<BranchElement>? branches});
 }
 
 /// @nodoc
-class __$$_AssignedToCopyWithImpl<$Res>
-    extends _$AssignedToCopyWithImpl<$Res, _$_AssignedTo>
-    implements _$$_AssignedToCopyWith<$Res> {
-  __$$_AssignedToCopyWithImpl(
-      _$_AssignedTo _value, $Res Function(_$_AssignedTo) _then)
+class __$$AssignedToImplCopyWithImpl<$Res>
+    extends _$AssignedToCopyWithImpl<$Res, _$AssignedToImpl>
+    implements _$$AssignedToImplCopyWith<$Res> {
+  __$$AssignedToImplCopyWithImpl(
+      _$AssignedToImpl _value, $Res Function(_$AssignedToImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1186,7 +1193,7 @@ class __$$_AssignedToCopyWithImpl<$Res>
     Object? name = freezed,
     Object? branches = freezed,
   }) {
-    return _then(_$_AssignedTo(
+    return _then(_$AssignedToImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1206,12 +1213,13 @@ class __$$_AssignedToCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_AssignedTo implements _AssignedTo {
-  const _$_AssignedTo({this.id, this.name, final List<BranchElement>? branches})
+class _$AssignedToImpl implements _AssignedTo {
+  const _$AssignedToImpl(
+      {this.id, this.name, final List<BranchElement>? branches})
       : _branches = branches;
 
-  factory _$_AssignedTo.fromJson(Map<String, dynamic> json) =>
-      _$$_AssignedToFromJson(json);
+  factory _$AssignedToImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AssignedToImplFromJson(json);
 
   @override
   final int? id;
@@ -1233,10 +1241,10 @@ class _$_AssignedTo implements _AssignedTo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AssignedTo &&
+            other is _$AssignedToImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._branches, _branches));
@@ -1250,12 +1258,12 @@ class _$_AssignedTo implements _AssignedTo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AssignedToCopyWith<_$_AssignedTo> get copyWith =>
-      __$$_AssignedToCopyWithImpl<_$_AssignedTo>(this, _$identity);
+  _$$AssignedToImplCopyWith<_$AssignedToImpl> get copyWith =>
+      __$$AssignedToImplCopyWithImpl<_$AssignedToImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AssignedToToJson(
+    return _$$AssignedToImplToJson(
       this,
     );
   }
@@ -1265,10 +1273,10 @@ abstract class _AssignedTo implements AssignedTo {
   const factory _AssignedTo(
       {final int? id,
       final String? name,
-      final List<BranchElement>? branches}) = _$_AssignedTo;
+      final List<BranchElement>? branches}) = _$AssignedToImpl;
 
   factory _AssignedTo.fromJson(Map<String, dynamic> json) =
-      _$_AssignedTo.fromJson;
+      _$AssignedToImpl.fromJson;
 
   @override
   int? get id;
@@ -1278,7 +1286,7 @@ abstract class _AssignedTo implements AssignedTo {
   List<BranchElement>? get branches;
   @override
   @JsonKey(ignore: true)
-  _$$_AssignedToCopyWith<_$_AssignedTo> get copyWith =>
+  _$$AssignedToImplCopyWith<_$AssignedToImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1502,11 +1510,11 @@ class _$BranchElementCopyWithImpl<$Res, $Val extends BranchElement>
 }
 
 /// @nodoc
-abstract class _$$_BranchElementCopyWith<$Res>
+abstract class _$$BranchElementImplCopyWith<$Res>
     implements $BranchElementCopyWith<$Res> {
-  factory _$$_BranchElementCopyWith(
-          _$_BranchElement value, $Res Function(_$_BranchElement) then) =
-      __$$_BranchElementCopyWithImpl<$Res>;
+  factory _$$BranchElementImplCopyWith(
+          _$BranchElementImpl value, $Res Function(_$BranchElementImpl) then) =
+      __$$BranchElementImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1540,11 +1548,11 @@ abstract class _$$_BranchElementCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BranchElementCopyWithImpl<$Res>
-    extends _$BranchElementCopyWithImpl<$Res, _$_BranchElement>
-    implements _$$_BranchElementCopyWith<$Res> {
-  __$$_BranchElementCopyWithImpl(
-      _$_BranchElement _value, $Res Function(_$_BranchElement) _then)
+class __$$BranchElementImplCopyWithImpl<$Res>
+    extends _$BranchElementCopyWithImpl<$Res, _$BranchElementImpl>
+    implements _$$BranchElementImplCopyWith<$Res> {
+  __$$BranchElementImplCopyWithImpl(
+      _$BranchElementImpl _value, $Res Function(_$BranchElementImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1567,7 +1575,7 @@ class __$$_BranchElementCopyWithImpl<$Res>
     Object? district = freezed,
     Object? timezone = freezed,
   }) {
-    return _then(_$_BranchElement(
+    return _then(_$BranchElementImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1639,8 +1647,8 @@ class __$$_BranchElementCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_BranchElement implements _BranchElement {
-  const _$_BranchElement(
+class _$BranchElementImpl implements _BranchElement {
+  const _$BranchElementImpl(
       {this.id,
       this.branchName,
       this.academyId,
@@ -1658,8 +1666,8 @@ class _$_BranchElement implements _BranchElement {
       this.district,
       this.timezone});
 
-  factory _$_BranchElement.fromJson(Map<String, dynamic> json) =>
-      _$$_BranchElementFromJson(json);
+  factory _$BranchElementImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BranchElementImplFromJson(json);
 
   @override
   final int? id;
@@ -1700,10 +1708,10 @@ class _$_BranchElement implements _BranchElement {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BranchElement &&
+            other is _$BranchElementImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.branchName, branchName) ||
                 other.branchName == branchName) &&
@@ -1755,12 +1763,12 @@ class _$_BranchElement implements _BranchElement {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BranchElementCopyWith<_$_BranchElement> get copyWith =>
-      __$$_BranchElementCopyWithImpl<_$_BranchElement>(this, _$identity);
+  _$$BranchElementImplCopyWith<_$BranchElementImpl> get copyWith =>
+      __$$BranchElementImplCopyWithImpl<_$BranchElementImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BranchElementToJson(
+    return _$$BranchElementImplToJson(
       this,
     );
   }
@@ -1783,10 +1791,10 @@ abstract class _BranchElement implements BranchElement {
       final Country? country,
       final StateDetail? state,
       final District? district,
-      final Timezone? timezone}) = _$_BranchElement;
+      final Timezone? timezone}) = _$BranchElementImpl;
 
   factory _BranchElement.fromJson(Map<String, dynamic> json) =
-      _$_BranchElement.fromJson;
+      _$BranchElementImpl.fromJson;
 
   @override
   int? get id;
@@ -1822,7 +1830,7 @@ abstract class _BranchElement implements BranchElement {
   Timezone? get timezone;
   @override
   @JsonKey(ignore: true)
-  _$$_BranchElementCopyWith<_$_BranchElement> get copyWith =>
+  _$$BranchElementImplCopyWith<_$BranchElementImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1915,10 +1923,10 @@ class _$CountryCopyWithImpl<$Res, $Val extends Country>
 }
 
 /// @nodoc
-abstract class _$$_CountryCopyWith<$Res> implements $CountryCopyWith<$Res> {
-  factory _$$_CountryCopyWith(
-          _$_Country value, $Res Function(_$_Country) then) =
-      __$$_CountryCopyWithImpl<$Res>;
+abstract class _$$CountryImplCopyWith<$Res> implements $CountryCopyWith<$Res> {
+  factory _$$CountryImplCopyWith(
+          _$CountryImpl value, $Res Function(_$CountryImpl) then) =
+      __$$CountryImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1932,10 +1940,11 @@ abstract class _$$_CountryCopyWith<$Res> implements $CountryCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_CountryCopyWithImpl<$Res>
-    extends _$CountryCopyWithImpl<$Res, _$_Country>
-    implements _$$_CountryCopyWith<$Res> {
-  __$$_CountryCopyWithImpl(_$_Country _value, $Res Function(_$_Country) _then)
+class __$$CountryImplCopyWithImpl<$Res>
+    extends _$CountryCopyWithImpl<$Res, _$CountryImpl>
+    implements _$$CountryImplCopyWith<$Res> {
+  __$$CountryImplCopyWithImpl(
+      _$CountryImpl _value, $Res Function(_$CountryImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1949,7 +1958,7 @@ class __$$_CountryCopyWithImpl<$Res>
     Object? timezone = freezed,
     Object? currencySubUnit = freezed,
   }) {
-    return _then(_$_Country(
+    return _then(_$CountryImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1985,8 +1994,8 @@ class __$$_CountryCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Country implements _Country {
-  const _$_Country(
+class _$CountryImpl implements _Country {
+  const _$CountryImpl(
       {this.id,
       this.name,
       this.currency,
@@ -1995,8 +2004,8 @@ class _$_Country implements _Country {
       this.timezone,
       this.currencySubUnit});
 
-  factory _$_Country.fromJson(Map<String, dynamic> json) =>
-      _$$_CountryFromJson(json);
+  factory _$CountryImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CountryImplFromJson(json);
 
   @override
   final int? id;
@@ -2019,10 +2028,10 @@ class _$_Country implements _Country {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Country &&
+            other is _$CountryImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.currency, currency) ||
@@ -2045,12 +2054,12 @@ class _$_Country implements _Country {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CountryCopyWith<_$_Country> get copyWith =>
-      __$$_CountryCopyWithImpl<_$_Country>(this, _$identity);
+  _$$CountryImplCopyWith<_$CountryImpl> get copyWith =>
+      __$$CountryImplCopyWithImpl<_$CountryImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CountryToJson(
+    return _$$CountryImplToJson(
       this,
     );
   }
@@ -2064,9 +2073,9 @@ abstract class _Country implements Country {
       final String? currencySymbol,
       final String? currencyCode,
       final String? timezone,
-      final String? currencySubUnit}) = _$_Country;
+      final String? currencySubUnit}) = _$CountryImpl;
 
-  factory _Country.fromJson(Map<String, dynamic> json) = _$_Country.fromJson;
+  factory _Country.fromJson(Map<String, dynamic> json) = _$CountryImpl.fromJson;
 
   @override
   int? get id;
@@ -2084,7 +2093,7 @@ abstract class _Country implements Country {
   String? get currencySubUnit;
   @override
   @JsonKey(ignore: true)
-  _$$_CountryCopyWith<_$_Country> get copyWith =>
+  _$$CountryImplCopyWith<_$CountryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2141,21 +2150,22 @@ class _$DistrictCopyWithImpl<$Res, $Val extends District>
 }
 
 /// @nodoc
-abstract class _$$_DistrictCopyWith<$Res> implements $DistrictCopyWith<$Res> {
-  factory _$$_DistrictCopyWith(
-          _$_District value, $Res Function(_$_District) then) =
-      __$$_DistrictCopyWithImpl<$Res>;
+abstract class _$$DistrictImplCopyWith<$Res>
+    implements $DistrictCopyWith<$Res> {
+  factory _$$DistrictImplCopyWith(
+          _$DistrictImpl value, $Res Function(_$DistrictImpl) then) =
+      __$$DistrictImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String? districtName});
 }
 
 /// @nodoc
-class __$$_DistrictCopyWithImpl<$Res>
-    extends _$DistrictCopyWithImpl<$Res, _$_District>
-    implements _$$_DistrictCopyWith<$Res> {
-  __$$_DistrictCopyWithImpl(
-      _$_District _value, $Res Function(_$_District) _then)
+class __$$DistrictImplCopyWithImpl<$Res>
+    extends _$DistrictCopyWithImpl<$Res, _$DistrictImpl>
+    implements _$$DistrictImplCopyWith<$Res> {
+  __$$DistrictImplCopyWithImpl(
+      _$DistrictImpl _value, $Res Function(_$DistrictImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2164,7 +2174,7 @@ class __$$_DistrictCopyWithImpl<$Res>
     Object? id = freezed,
     Object? districtName = freezed,
   }) {
-    return _then(_$_District(
+    return _then(_$DistrictImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -2180,11 +2190,11 @@ class __$$_DistrictCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_District implements _District {
-  const _$_District({this.id, this.districtName});
+class _$DistrictImpl implements _District {
+  const _$DistrictImpl({this.id, this.districtName});
 
-  factory _$_District.fromJson(Map<String, dynamic> json) =>
-      _$$_DistrictFromJson(json);
+  factory _$DistrictImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DistrictImplFromJson(json);
 
   @override
   final int? id;
@@ -2197,10 +2207,10 @@ class _$_District implements _District {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_District &&
+            other is _$DistrictImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.districtName, districtName) ||
                 other.districtName == districtName));
@@ -2213,12 +2223,12 @@ class _$_District implements _District {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DistrictCopyWith<_$_District> get copyWith =>
-      __$$_DistrictCopyWithImpl<_$_District>(this, _$identity);
+  _$$DistrictImplCopyWith<_$DistrictImpl> get copyWith =>
+      __$$DistrictImplCopyWithImpl<_$DistrictImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DistrictToJson(
+    return _$$DistrictImplToJson(
       this,
     );
   }
@@ -2226,9 +2236,10 @@ class _$_District implements _District {
 
 abstract class _District implements District {
   const factory _District({final int? id, final String? districtName}) =
-      _$_District;
+      _$DistrictImpl;
 
-  factory _District.fromJson(Map<String, dynamic> json) = _$_District.fromJson;
+  factory _District.fromJson(Map<String, dynamic> json) =
+      _$DistrictImpl.fromJson;
 
   @override
   int? get id;
@@ -2236,7 +2247,7 @@ abstract class _District implements District {
   String? get districtName;
   @override
   @JsonKey(ignore: true)
-  _$$_DistrictCopyWith<_$_District> get copyWith =>
+  _$$DistrictImplCopyWith<_$DistrictImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2308,9 +2319,10 @@ class _$PivotCopyWithImpl<$Res, $Val extends Pivot>
 }
 
 /// @nodoc
-abstract class _$$_PivotCopyWith<$Res> implements $PivotCopyWith<$Res> {
-  factory _$$_PivotCopyWith(_$_Pivot value, $Res Function(_$_Pivot) then) =
-      __$$_PivotCopyWithImpl<$Res>;
+abstract class _$$PivotImplCopyWith<$Res> implements $PivotCopyWith<$Res> {
+  factory _$$PivotImplCopyWith(
+          _$PivotImpl value, $Res Function(_$PivotImpl) then) =
+      __$$PivotImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -2321,9 +2333,11 @@ abstract class _$$_PivotCopyWith<$Res> implements $PivotCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_PivotCopyWithImpl<$Res> extends _$PivotCopyWithImpl<$Res, _$_Pivot>
-    implements _$$_PivotCopyWith<$Res> {
-  __$$_PivotCopyWithImpl(_$_Pivot _value, $Res Function(_$_Pivot) _then)
+class __$$PivotImplCopyWithImpl<$Res>
+    extends _$PivotCopyWithImpl<$Res, _$PivotImpl>
+    implements _$$PivotImplCopyWith<$Res> {
+  __$$PivotImplCopyWithImpl(
+      _$PivotImpl _value, $Res Function(_$PivotImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2334,7 +2348,7 @@ class __$$_PivotCopyWithImpl<$Res> extends _$PivotCopyWithImpl<$Res, _$_Pivot>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
-    return _then(_$_Pivot(
+    return _then(_$PivotImpl(
       trainerDetailId: freezed == trainerDetailId
           ? _value.trainerDetailId
           : trainerDetailId // ignore: cast_nullable_to_non_nullable
@@ -2358,12 +2372,12 @@ class __$$_PivotCopyWithImpl<$Res> extends _$PivotCopyWithImpl<$Res, _$_Pivot>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Pivot implements _Pivot {
-  const _$_Pivot(
+class _$PivotImpl implements _Pivot {
+  const _$PivotImpl(
       {this.trainerDetailId, this.branchId, this.createdAt, this.updatedAt});
 
-  factory _$_Pivot.fromJson(Map<String, dynamic> json) =>
-      _$$_PivotFromJson(json);
+  factory _$PivotImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PivotImplFromJson(json);
 
   @override
   final int? trainerDetailId;
@@ -2380,10 +2394,10 @@ class _$_Pivot implements _Pivot {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Pivot &&
+            other is _$PivotImpl &&
             (identical(other.trainerDetailId, trainerDetailId) ||
                 other.trainerDetailId == trainerDetailId) &&
             (identical(other.branchId, branchId) ||
@@ -2402,12 +2416,12 @@ class _$_Pivot implements _Pivot {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PivotCopyWith<_$_Pivot> get copyWith =>
-      __$$_PivotCopyWithImpl<_$_Pivot>(this, _$identity);
+  _$$PivotImplCopyWith<_$PivotImpl> get copyWith =>
+      __$$PivotImplCopyWithImpl<_$PivotImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PivotToJson(
+    return _$$PivotImplToJson(
       this,
     );
   }
@@ -2418,9 +2432,9 @@ abstract class _Pivot implements Pivot {
       {final int? trainerDetailId,
       final int? branchId,
       final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$_Pivot;
+      final DateTime? updatedAt}) = _$PivotImpl;
 
-  factory _Pivot.fromJson(Map<String, dynamic> json) = _$_Pivot.fromJson;
+  factory _Pivot.fromJson(Map<String, dynamic> json) = _$PivotImpl.fromJson;
 
   @override
   int? get trainerDetailId;
@@ -2432,7 +2446,7 @@ abstract class _Pivot implements Pivot {
   DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
-  _$$_PivotCopyWith<_$_Pivot> get copyWith =>
+  _$$PivotImplCopyWith<_$PivotImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2490,22 +2504,22 @@ class _$StateDetailCopyWithImpl<$Res, $Val extends StateDetail>
 }
 
 /// @nodoc
-abstract class _$$_StateDetailCopyWith<$Res>
+abstract class _$$StateDetailImplCopyWith<$Res>
     implements $StateDetailCopyWith<$Res> {
-  factory _$$_StateDetailCopyWith(
-          _$_StateDetail value, $Res Function(_$_StateDetail) then) =
-      __$$_StateDetailCopyWithImpl<$Res>;
+  factory _$$StateDetailImplCopyWith(
+          _$StateDetailImpl value, $Res Function(_$StateDetailImpl) then) =
+      __$$StateDetailImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String? stateName});
 }
 
 /// @nodoc
-class __$$_StateDetailCopyWithImpl<$Res>
-    extends _$StateDetailCopyWithImpl<$Res, _$_StateDetail>
-    implements _$$_StateDetailCopyWith<$Res> {
-  __$$_StateDetailCopyWithImpl(
-      _$_StateDetail _value, $Res Function(_$_StateDetail) _then)
+class __$$StateDetailImplCopyWithImpl<$Res>
+    extends _$StateDetailCopyWithImpl<$Res, _$StateDetailImpl>
+    implements _$$StateDetailImplCopyWith<$Res> {
+  __$$StateDetailImplCopyWithImpl(
+      _$StateDetailImpl _value, $Res Function(_$StateDetailImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2514,7 +2528,7 @@ class __$$_StateDetailCopyWithImpl<$Res>
     Object? id = freezed,
     Object? stateName = freezed,
   }) {
-    return _then(_$_StateDetail(
+    return _then(_$StateDetailImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -2530,11 +2544,11 @@ class __$$_StateDetailCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_StateDetail implements _StateDetail {
-  const _$_StateDetail({this.id, this.stateName});
+class _$StateDetailImpl implements _StateDetail {
+  const _$StateDetailImpl({this.id, this.stateName});
 
-  factory _$_StateDetail.fromJson(Map<String, dynamic> json) =>
-      _$$_StateDetailFromJson(json);
+  factory _$StateDetailImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StateDetailImplFromJson(json);
 
   @override
   final int? id;
@@ -2547,10 +2561,10 @@ class _$_StateDetail implements _StateDetail {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StateDetail &&
+            other is _$StateDetailImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.stateName, stateName) ||
                 other.stateName == stateName));
@@ -2563,12 +2577,12 @@ class _$_StateDetail implements _StateDetail {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StateDetailCopyWith<_$_StateDetail> get copyWith =>
-      __$$_StateDetailCopyWithImpl<_$_StateDetail>(this, _$identity);
+  _$$StateDetailImplCopyWith<_$StateDetailImpl> get copyWith =>
+      __$$StateDetailImplCopyWithImpl<_$StateDetailImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StateDetailToJson(
+    return _$$StateDetailImplToJson(
       this,
     );
   }
@@ -2576,10 +2590,10 @@ class _$_StateDetail implements _StateDetail {
 
 abstract class _StateDetail implements StateDetail {
   const factory _StateDetail({final int? id, final String? stateName}) =
-      _$_StateDetail;
+      _$StateDetailImpl;
 
   factory _StateDetail.fromJson(Map<String, dynamic> json) =
-      _$_StateDetail.fromJson;
+      _$StateDetailImpl.fromJson;
 
   @override
   int? get id;
@@ -2587,7 +2601,7 @@ abstract class _StateDetail implements StateDetail {
   String? get stateName;
   @override
   @JsonKey(ignore: true)
-  _$$_StateDetailCopyWith<_$_StateDetail> get copyWith =>
+  _$$StateDetailImplCopyWith<_$StateDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2644,21 +2658,22 @@ class _$TimezoneCopyWithImpl<$Res, $Val extends Timezone>
 }
 
 /// @nodoc
-abstract class _$$_TimezoneCopyWith<$Res> implements $TimezoneCopyWith<$Res> {
-  factory _$$_TimezoneCopyWith(
-          _$_Timezone value, $Res Function(_$_Timezone) then) =
-      __$$_TimezoneCopyWithImpl<$Res>;
+abstract class _$$TimezoneImplCopyWith<$Res>
+    implements $TimezoneCopyWith<$Res> {
+  factory _$$TimezoneImplCopyWith(
+          _$TimezoneImpl value, $Res Function(_$TimezoneImpl) then) =
+      __$$TimezoneImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String? timezone});
 }
 
 /// @nodoc
-class __$$_TimezoneCopyWithImpl<$Res>
-    extends _$TimezoneCopyWithImpl<$Res, _$_Timezone>
-    implements _$$_TimezoneCopyWith<$Res> {
-  __$$_TimezoneCopyWithImpl(
-      _$_Timezone _value, $Res Function(_$_Timezone) _then)
+class __$$TimezoneImplCopyWithImpl<$Res>
+    extends _$TimezoneCopyWithImpl<$Res, _$TimezoneImpl>
+    implements _$$TimezoneImplCopyWith<$Res> {
+  __$$TimezoneImplCopyWithImpl(
+      _$TimezoneImpl _value, $Res Function(_$TimezoneImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2667,7 +2682,7 @@ class __$$_TimezoneCopyWithImpl<$Res>
     Object? id = freezed,
     Object? timezone = freezed,
   }) {
-    return _then(_$_Timezone(
+    return _then(_$TimezoneImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -2683,11 +2698,11 @@ class __$$_TimezoneCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Timezone implements _Timezone {
-  const _$_Timezone({this.id, this.timezone});
+class _$TimezoneImpl implements _Timezone {
+  const _$TimezoneImpl({this.id, this.timezone});
 
-  factory _$_Timezone.fromJson(Map<String, dynamic> json) =>
-      _$$_TimezoneFromJson(json);
+  factory _$TimezoneImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TimezoneImplFromJson(json);
 
   @override
   final int? id;
@@ -2700,10 +2715,10 @@ class _$_Timezone implements _Timezone {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Timezone &&
+            other is _$TimezoneImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.timezone, timezone) ||
                 other.timezone == timezone));
@@ -2716,12 +2731,12 @@ class _$_Timezone implements _Timezone {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TimezoneCopyWith<_$_Timezone> get copyWith =>
-      __$$_TimezoneCopyWithImpl<_$_Timezone>(this, _$identity);
+  _$$TimezoneImplCopyWith<_$TimezoneImpl> get copyWith =>
+      __$$TimezoneImplCopyWithImpl<_$TimezoneImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TimezoneToJson(
+    return _$$TimezoneImplToJson(
       this,
     );
   }
@@ -2729,9 +2744,10 @@ class _$_Timezone implements _Timezone {
 
 abstract class _Timezone implements Timezone {
   const factory _Timezone({final int? id, final String? timezone}) =
-      _$_Timezone;
+      _$TimezoneImpl;
 
-  factory _Timezone.fromJson(Map<String, dynamic> json) = _$_Timezone.fromJson;
+  factory _Timezone.fromJson(Map<String, dynamic> json) =
+      _$TimezoneImpl.fromJson;
 
   @override
   int? get id;
@@ -2739,7 +2755,7 @@ abstract class _Timezone implements Timezone {
   String? get timezone;
   @override
   @JsonKey(ignore: true)
-  _$$_TimezoneCopyWith<_$_Timezone> get copyWith =>
+  _$$TimezoneImplCopyWith<_$TimezoneImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2795,18 +2811,21 @@ class _$BatchCopyWithImpl<$Res, $Val extends Batch>
 }
 
 /// @nodoc
-abstract class _$$_BatchCopyWith<$Res> implements $BatchCopyWith<$Res> {
-  factory _$$_BatchCopyWith(_$_Batch value, $Res Function(_$_Batch) then) =
-      __$$_BatchCopyWithImpl<$Res>;
+abstract class _$$BatchImplCopyWith<$Res> implements $BatchCopyWith<$Res> {
+  factory _$$BatchImplCopyWith(
+          _$BatchImpl value, $Res Function(_$BatchImpl) then) =
+      __$$BatchImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String? batchName});
 }
 
 /// @nodoc
-class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
-    implements _$$_BatchCopyWith<$Res> {
-  __$$_BatchCopyWithImpl(_$_Batch _value, $Res Function(_$_Batch) _then)
+class __$$BatchImplCopyWithImpl<$Res>
+    extends _$BatchCopyWithImpl<$Res, _$BatchImpl>
+    implements _$$BatchImplCopyWith<$Res> {
+  __$$BatchImplCopyWithImpl(
+      _$BatchImpl _value, $Res Function(_$BatchImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2815,7 +2834,7 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
     Object? id = freezed,
     Object? batchName = freezed,
   }) {
-    return _then(_$_Batch(
+    return _then(_$BatchImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -2831,11 +2850,11 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Batch implements _Batch {
-  const _$_Batch({this.id, this.batchName});
+class _$BatchImpl implements _Batch {
+  const _$BatchImpl({this.id, this.batchName});
 
-  factory _$_Batch.fromJson(Map<String, dynamic> json) =>
-      _$$_BatchFromJson(json);
+  factory _$BatchImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BatchImplFromJson(json);
 
   @override
   final int? id;
@@ -2848,10 +2867,10 @@ class _$_Batch implements _Batch {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Batch &&
+            other is _$BatchImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.batchName, batchName) ||
                 other.batchName == batchName));
@@ -2864,21 +2883,21 @@ class _$_Batch implements _Batch {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BatchCopyWith<_$_Batch> get copyWith =>
-      __$$_BatchCopyWithImpl<_$_Batch>(this, _$identity);
+  _$$BatchImplCopyWith<_$BatchImpl> get copyWith =>
+      __$$BatchImplCopyWithImpl<_$BatchImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BatchToJson(
+    return _$$BatchImplToJson(
       this,
     );
   }
 }
 
 abstract class _Batch implements Batch {
-  const factory _Batch({final int? id, final String? batchName}) = _$_Batch;
+  const factory _Batch({final int? id, final String? batchName}) = _$BatchImpl;
 
-  factory _Batch.fromJson(Map<String, dynamic> json) = _$_Batch.fromJson;
+  factory _Batch.fromJson(Map<String, dynamic> json) = _$BatchImpl.fromJson;
 
   @override
   int? get id;
@@ -2886,7 +2905,7 @@ abstract class _Batch implements Batch {
   String? get batchName;
   @override
   @JsonKey(ignore: true)
-  _$$_BatchCopyWith<_$_Batch> get copyWith =>
+  _$$BatchImplCopyWith<_$BatchImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -3008,11 +3027,11 @@ class _$DatumBranchCopyWithImpl<$Res, $Val extends DatumBranch>
 }
 
 /// @nodoc
-abstract class _$$_DatumBranchCopyWith<$Res>
+abstract class _$$DatumBranchImplCopyWith<$Res>
     implements $DatumBranchCopyWith<$Res> {
-  factory _$$_DatumBranchCopyWith(
-          _$_DatumBranch value, $Res Function(_$_DatumBranch) then) =
-      __$$_DatumBranchCopyWithImpl<$Res>;
+  factory _$$DatumBranchImplCopyWith(
+          _$DatumBranchImpl value, $Res Function(_$DatumBranchImpl) then) =
+      __$$DatumBranchImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -3031,11 +3050,11 @@ abstract class _$$_DatumBranchCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DatumBranchCopyWithImpl<$Res>
-    extends _$DatumBranchCopyWithImpl<$Res, _$_DatumBranch>
-    implements _$$_DatumBranchCopyWith<$Res> {
-  __$$_DatumBranchCopyWithImpl(
-      _$_DatumBranch _value, $Res Function(_$_DatumBranch) _then)
+class __$$DatumBranchImplCopyWithImpl<$Res>
+    extends _$DatumBranchCopyWithImpl<$Res, _$DatumBranchImpl>
+    implements _$$DatumBranchImplCopyWith<$Res> {
+  __$$DatumBranchImplCopyWithImpl(
+      _$DatumBranchImpl _value, $Res Function(_$DatumBranchImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -3049,7 +3068,7 @@ class __$$_DatumBranchCopyWithImpl<$Res>
     Object? district = freezed,
     Object? timezone = freezed,
   }) {
-    return _then(_$_DatumBranch(
+    return _then(_$DatumBranchImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -3085,8 +3104,8 @@ class __$$_DatumBranchCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_DatumBranch implements _DatumBranch {
-  const _$_DatumBranch(
+class _$DatumBranchImpl implements _DatumBranch {
+  const _$DatumBranchImpl(
       {this.id,
       this.branchName,
       this.stateId,
@@ -3095,8 +3114,8 @@ class _$_DatumBranch implements _DatumBranch {
       this.district,
       this.timezone});
 
-  factory _$_DatumBranch.fromJson(Map<String, dynamic> json) =>
-      _$$_DatumBranchFromJson(json);
+  factory _$DatumBranchImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DatumBranchImplFromJson(json);
 
   @override
   final int? id;
@@ -3119,10 +3138,10 @@ class _$_DatumBranch implements _DatumBranch {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DatumBranch &&
+            other is _$DatumBranchImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.branchName, branchName) ||
                 other.branchName == branchName) &&
@@ -3150,12 +3169,12 @@ class _$_DatumBranch implements _DatumBranch {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DatumBranchCopyWith<_$_DatumBranch> get copyWith =>
-      __$$_DatumBranchCopyWithImpl<_$_DatumBranch>(this, _$identity);
+  _$$DatumBranchImplCopyWith<_$DatumBranchImpl> get copyWith =>
+      __$$DatumBranchImplCopyWithImpl<_$DatumBranchImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DatumBranchToJson(
+    return _$$DatumBranchImplToJson(
       this,
     );
   }
@@ -3169,10 +3188,10 @@ abstract class _DatumBranch implements DatumBranch {
       final int? districtId,
       final StateDetail? state,
       final District? district,
-      final dynamic timezone}) = _$_DatumBranch;
+      final dynamic timezone}) = _$DatumBranchImpl;
 
   factory _DatumBranch.fromJson(Map<String, dynamic> json) =
-      _$_DatumBranch.fromJson;
+      _$DatumBranchImpl.fromJson;
 
   @override
   int? get id;
@@ -3190,7 +3209,7 @@ abstract class _DatumBranch implements DatumBranch {
   dynamic get timezone;
   @override
   @JsonKey(ignore: true)
-  _$$_DatumBranchCopyWith<_$_DatumBranch> get copyWith =>
+  _$$DatumBranchImplCopyWith<_$DatumBranchImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -3312,10 +3331,11 @@ class _$FollowUpCopyWithImpl<$Res, $Val extends FollowUp>
 }
 
 /// @nodoc
-abstract class _$$_FollowUpCopyWith<$Res> implements $FollowUpCopyWith<$Res> {
-  factory _$$_FollowUpCopyWith(
-          _$_FollowUp value, $Res Function(_$_FollowUp) then) =
-      __$$_FollowUpCopyWithImpl<$Res>;
+abstract class _$$FollowUpImplCopyWith<$Res>
+    implements $FollowUpCopyWith<$Res> {
+  factory _$$FollowUpImplCopyWith(
+          _$FollowUpImpl value, $Res Function(_$FollowUpImpl) then) =
+      __$$FollowUpImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -3334,11 +3354,11 @@ abstract class _$$_FollowUpCopyWith<$Res> implements $FollowUpCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_FollowUpCopyWithImpl<$Res>
-    extends _$FollowUpCopyWithImpl<$Res, _$_FollowUp>
-    implements _$$_FollowUpCopyWith<$Res> {
-  __$$_FollowUpCopyWithImpl(
-      _$_FollowUp _value, $Res Function(_$_FollowUp) _then)
+class __$$FollowUpImplCopyWithImpl<$Res>
+    extends _$FollowUpCopyWithImpl<$Res, _$FollowUpImpl>
+    implements _$$FollowUpImplCopyWith<$Res> {
+  __$$FollowUpImplCopyWithImpl(
+      _$FollowUpImpl _value, $Res Function(_$FollowUpImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -3354,7 +3374,7 @@ class __$$_FollowUpCopyWithImpl<$Res>
     Object? followUpStatus = freezed,
     Object? assignedTo = freezed,
   }) {
-    return _then(_$_FollowUp(
+    return _then(_$FollowUpImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -3398,8 +3418,8 @@ class __$$_FollowUpCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_FollowUp implements _FollowUp {
-  const _$_FollowUp(
+class _$FollowUpImpl implements _FollowUp {
+  const _$FollowUpImpl(
       {this.id,
       this.leadId,
       this.assignedToType,
@@ -3410,8 +3430,8 @@ class _$_FollowUp implements _FollowUp {
       this.followUpStatus,
       this.assignedTo});
 
-  factory _$_FollowUp.fromJson(Map<String, dynamic> json) =>
-      _$$_FollowUpFromJson(json);
+  factory _$FollowUpImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FollowUpImplFromJson(json);
 
   @override
   final int? id;
@@ -3438,10 +3458,10 @@ class _$_FollowUp implements _FollowUp {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FollowUp &&
+            other is _$FollowUpImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.leadId, leadId) || other.leadId == leadId) &&
             (identical(other.assignedToType, assignedToType) ||
@@ -3477,12 +3497,12 @@ class _$_FollowUp implements _FollowUp {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FollowUpCopyWith<_$_FollowUp> get copyWith =>
-      __$$_FollowUpCopyWithImpl<_$_FollowUp>(this, _$identity);
+  _$$FollowUpImplCopyWith<_$FollowUpImpl> get copyWith =>
+      __$$FollowUpImplCopyWithImpl<_$FollowUpImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FollowUpToJson(
+    return _$$FollowUpImplToJson(
       this,
     );
   }
@@ -3498,9 +3518,10 @@ abstract class _FollowUp implements FollowUp {
       final String? followUpTime,
       final dynamic followUpComment,
       final String? followUpStatus,
-      final AssignedTo? assignedTo}) = _$_FollowUp;
+      final AssignedTo? assignedTo}) = _$FollowUpImpl;
 
-  factory _FollowUp.fromJson(Map<String, dynamic> json) = _$_FollowUp.fromJson;
+  factory _FollowUp.fromJson(Map<String, dynamic> json) =
+      _$FollowUpImpl.fromJson;
 
   @override
   int? get id;
@@ -3522,6 +3543,6 @@ abstract class _FollowUp implements FollowUp {
   AssignedTo? get assignedTo;
   @override
   @JsonKey(ignore: true)
-  _$$_FollowUpCopyWith<_$_FollowUp> get copyWith =>
+  _$$FollowUpImplCopyWith<_$FollowUpImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -87,11 +87,11 @@ class _$AttendenceAddRequestCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_AttendenceAddRequestCopyWith<$Res>
+abstract class _$$AttendenceAddRequestImplCopyWith<$Res>
     implements $AttendenceAddRequestCopyWith<$Res> {
-  factory _$$_AttendenceAddRequestCopyWith(_$_AttendenceAddRequest value,
-          $Res Function(_$_AttendenceAddRequest) then) =
-      __$$_AttendenceAddRequestCopyWithImpl<$Res>;
+  factory _$$AttendenceAddRequestImplCopyWith(_$AttendenceAddRequestImpl value,
+          $Res Function(_$AttendenceAddRequestImpl) then) =
+      __$$AttendenceAddRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -102,11 +102,11 @@ abstract class _$$_AttendenceAddRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AttendenceAddRequestCopyWithImpl<$Res>
-    extends _$AttendenceAddRequestCopyWithImpl<$Res, _$_AttendenceAddRequest>
-    implements _$$_AttendenceAddRequestCopyWith<$Res> {
-  __$$_AttendenceAddRequestCopyWithImpl(_$_AttendenceAddRequest _value,
-      $Res Function(_$_AttendenceAddRequest) _then)
+class __$$AttendenceAddRequestImplCopyWithImpl<$Res>
+    extends _$AttendenceAddRequestCopyWithImpl<$Res, _$AttendenceAddRequestImpl>
+    implements _$$AttendenceAddRequestImplCopyWith<$Res> {
+  __$$AttendenceAddRequestImplCopyWithImpl(_$AttendenceAddRequestImpl _value,
+      $Res Function(_$AttendenceAddRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -117,7 +117,7 @@ class __$$_AttendenceAddRequestCopyWithImpl<$Res>
     Object? endTime = freezed,
     Object? attendance = freezed,
   }) {
-    return _then(_$_AttendenceAddRequest(
+    return _then(_$AttendenceAddRequestImpl(
       conductedOn: freezed == conductedOn
           ? _value.conductedOn
           : conductedOn // ignore: cast_nullable_to_non_nullable
@@ -141,16 +141,16 @@ class __$$_AttendenceAddRequestCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_AttendenceAddRequest implements _AttendenceAddRequest {
-  const _$_AttendenceAddRequest(
+class _$AttendenceAddRequestImpl implements _AttendenceAddRequest {
+  const _$AttendenceAddRequestImpl(
       {this.conductedOn,
       this.startTime,
       this.endTime,
       @JsonKey(name: 'attendance[]') final List<String>? attendance})
       : _attendance = attendance;
 
-  factory _$_AttendenceAddRequest.fromJson(Map<String, dynamic> json) =>
-      _$$_AttendenceAddRequestFromJson(json);
+  factory _$AttendenceAddRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AttendenceAddRequestImplFromJson(json);
 
   @override
   final String? conductedOn;
@@ -177,10 +177,10 @@ class _$_AttendenceAddRequest implements _AttendenceAddRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AttendenceAddRequest &&
+            other is _$AttendenceAddRequestImpl &&
             (identical(other.conductedOn, conductedOn) ||
                 other.conductedOn == conductedOn) &&
             (identical(other.startTime, startTime) ||
@@ -198,13 +198,14 @@ class _$_AttendenceAddRequest implements _AttendenceAddRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AttendenceAddRequestCopyWith<_$_AttendenceAddRequest> get copyWith =>
-      __$$_AttendenceAddRequestCopyWithImpl<_$_AttendenceAddRequest>(
-          this, _$identity);
+  _$$AttendenceAddRequestImplCopyWith<_$AttendenceAddRequestImpl>
+      get copyWith =>
+          __$$AttendenceAddRequestImplCopyWithImpl<_$AttendenceAddRequestImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AttendenceAddRequestToJson(
+    return _$$AttendenceAddRequestImplToJson(
       this,
     );
   }
@@ -216,10 +217,10 @@ abstract class _AttendenceAddRequest implements AttendenceAddRequest {
           final String? startTime,
           final String? endTime,
           @JsonKey(name: 'attendance[]') final List<String>? attendance}) =
-      _$_AttendenceAddRequest;
+      _$AttendenceAddRequestImpl;
 
   factory _AttendenceAddRequest.fromJson(Map<String, dynamic> json) =
-      _$_AttendenceAddRequest.fromJson;
+      _$AttendenceAddRequestImpl.fromJson;
 
   @override
   String? get conductedOn;
@@ -232,8 +233,8 @@ abstract class _AttendenceAddRequest implements AttendenceAddRequest {
   List<String>? get attendance;
   @override
   @JsonKey(ignore: true)
-  _$$_AttendenceAddRequestCopyWith<_$_AttendenceAddRequest> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$AttendenceAddRequestImplCopyWith<_$AttendenceAddRequestImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 Attendance _$AttendanceFromJson(Map<String, dynamic> json) {
@@ -290,22 +291,22 @@ class _$AttendanceCopyWithImpl<$Res, $Val extends Attendance>
 }
 
 /// @nodoc
-abstract class _$$_AttendanceCopyWith<$Res>
+abstract class _$$AttendanceImplCopyWith<$Res>
     implements $AttendanceCopyWith<$Res> {
-  factory _$$_AttendanceCopyWith(
-          _$_Attendance value, $Res Function(_$_Attendance) then) =
-      __$$_AttendanceCopyWithImpl<$Res>;
+  factory _$$AttendanceImplCopyWith(
+          _$AttendanceImpl value, $Res Function(_$AttendanceImpl) then) =
+      __$$AttendanceImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? studentDetailId, int? isPresent});
 }
 
 /// @nodoc
-class __$$_AttendanceCopyWithImpl<$Res>
-    extends _$AttendanceCopyWithImpl<$Res, _$_Attendance>
-    implements _$$_AttendanceCopyWith<$Res> {
-  __$$_AttendanceCopyWithImpl(
-      _$_Attendance _value, $Res Function(_$_Attendance) _then)
+class __$$AttendanceImplCopyWithImpl<$Res>
+    extends _$AttendanceCopyWithImpl<$Res, _$AttendanceImpl>
+    implements _$$AttendanceImplCopyWith<$Res> {
+  __$$AttendanceImplCopyWithImpl(
+      _$AttendanceImpl _value, $Res Function(_$AttendanceImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -314,7 +315,7 @@ class __$$_AttendanceCopyWithImpl<$Res>
     Object? studentDetailId = freezed,
     Object? isPresent = freezed,
   }) {
-    return _then(_$_Attendance(
+    return _then(_$AttendanceImpl(
       studentDetailId: freezed == studentDetailId
           ? _value.studentDetailId
           : studentDetailId // ignore: cast_nullable_to_non_nullable
@@ -330,11 +331,11 @@ class __$$_AttendanceCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Attendance implements _Attendance {
-  const _$_Attendance({this.studentDetailId, this.isPresent});
+class _$AttendanceImpl implements _Attendance {
+  const _$AttendanceImpl({this.studentDetailId, this.isPresent});
 
-  factory _$_Attendance.fromJson(Map<String, dynamic> json) =>
-      _$$_AttendanceFromJson(json);
+  factory _$AttendanceImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AttendanceImplFromJson(json);
 
   @override
   final int? studentDetailId;
@@ -347,10 +348,10 @@ class _$_Attendance implements _Attendance {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Attendance &&
+            other is _$AttendanceImpl &&
             (identical(other.studentDetailId, studentDetailId) ||
                 other.studentDetailId == studentDetailId) &&
             (identical(other.isPresent, isPresent) ||
@@ -364,12 +365,12 @@ class _$_Attendance implements _Attendance {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AttendanceCopyWith<_$_Attendance> get copyWith =>
-      __$$_AttendanceCopyWithImpl<_$_Attendance>(this, _$identity);
+  _$$AttendanceImplCopyWith<_$AttendanceImpl> get copyWith =>
+      __$$AttendanceImplCopyWithImpl<_$AttendanceImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AttendanceToJson(
+    return _$$AttendanceImplToJson(
       this,
     );
   }
@@ -377,10 +378,10 @@ class _$_Attendance implements _Attendance {
 
 abstract class _Attendance implements Attendance {
   const factory _Attendance(
-      {final int? studentDetailId, final int? isPresent}) = _$_Attendance;
+      {final int? studentDetailId, final int? isPresent}) = _$AttendanceImpl;
 
   factory _Attendance.fromJson(Map<String, dynamic> json) =
-      _$_Attendance.fromJson;
+      _$AttendanceImpl.fromJson;
 
   @override
   int? get studentDetailId;
@@ -388,6 +389,6 @@ abstract class _Attendance implements Attendance {
   int? get isPresent;
   @override
   @JsonKey(ignore: true)
-  _$$_AttendanceCopyWith<_$_Attendance> get copyWith =>
+  _$$AttendanceImplCopyWith<_$AttendanceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

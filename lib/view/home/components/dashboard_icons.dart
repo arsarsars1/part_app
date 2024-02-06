@@ -8,6 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/dashboard_item.dart';
 import 'package:part_app/view/components/alert.dart';
+import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/home/home_cubit.dart';
 import 'package:showcaseview/showcaseview.dart';
@@ -27,8 +28,8 @@ class _DashboardIconsState extends State<DashboardIcons> {
     'Trainers',
     'Today\'s Classes',
     'Class Links',
-    'Branches',
     'Branch Managers',
+    'Branches',
     'Batches'
   ];
   List<String> descriptions = [
@@ -38,8 +39,8 @@ class _DashboardIconsState extends State<DashboardIcons> {
     'See all the trainer related details here',
     'A quick view into daily academy schedule',
     'Add Link and notify students about an Online class',
-    'Manage the Branch details here',
     'Coming Soon',
+    'Manage the Branch details here',
     'Add/Remove and alsoEdit batches here',
   ];
 
@@ -52,7 +53,20 @@ class _DashboardIconsState extends State<DashboardIcons> {
       }
       bool temp = Hive.box(Database.userBox).get("Showcase") ?? false;
       if (temp == false) {
-        ShowCaseWidget.of(context).startShowCase(tempkey);
+        CommonDialog(
+          context: context,
+          message: 'Do you want to see the features available in the app ?',
+          buttonText: 'Proceed',
+          subColor: AppColors.primaryColor,
+          onTap: () {
+            Navigator.pop(context);
+            ShowCaseWidget.of(context).startShowCase(tempkey);
+          },
+          onCancelTap: () {
+            Hive.box(Database.userBox).put("Showcase", true);
+            Navigator.pop(context);
+          },
+        ).show();
       }
     });
     super.initState();

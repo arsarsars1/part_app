@@ -6,9 +6,9 @@ part of 'student_app_batch_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_StudentAppBatchResponse _$$_StudentAppBatchResponseFromJson(
+_$StudentAppBatchResponseImpl _$$StudentAppBatchResponseImplFromJson(
         Map<String, dynamic> json) =>
-    _$_StudentAppBatchResponse(
+    _$StudentAppBatchResponseImpl(
       branchName: json['branch_name'] as String?,
       batches: (json['batches'] as List<dynamic>?)
           ?.map(
@@ -17,17 +17,17 @@ _$_StudentAppBatchResponse _$$_StudentAppBatchResponseFromJson(
       status: json['status'] as int?,
     );
 
-Map<String, dynamic> _$$_StudentAppBatchResponseToJson(
-        _$_StudentAppBatchResponse instance) =>
+Map<String, dynamic> _$$StudentAppBatchResponseImplToJson(
+        _$StudentAppBatchResponseImpl instance) =>
     <String, dynamic>{
       'branch_name': instance.branchName,
       'batches': instance.batches,
       'status': instance.status,
     };
 
-_$_StudentAppBatchDetail _$$_StudentAppBatchDetailFromJson(
+_$StudentAppBatchDetailImpl _$$StudentAppBatchDetailImplFromJson(
         Map<String, dynamic> json) =>
-    _$_StudentAppBatchDetail(
+    _$StudentAppBatchDetailImpl(
       id: json['id'] as int?,
       batchName: json['batch_name'] as String?,
       academyId: json['academy_id'] as int?,
@@ -62,8 +62,8 @@ _$_StudentAppBatchDetail _$$_StudentAppBatchDetailFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$$_StudentAppBatchDetailToJson(
-        _$_StudentAppBatchDetail instance) =>
+Map<String, dynamic> _$$StudentAppBatchDetailImplToJson(
+        _$StudentAppBatchDetailImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'batch_name': instance.batchName,
@@ -84,8 +84,8 @@ Map<String, dynamic> _$$_StudentAppBatchDetailToJson(
       'students': instance.students,
     };
 
-_$_AdminDetail _$$_AdminDetailFromJson(Map<String, dynamic> json) =>
-    _$_AdminDetail(
+_$AdminDetailImpl _$$AdminDetailImplFromJson(Map<String, dynamic> json) =>
+    _$AdminDetailImpl(
       id: json['id'] as int?,
       name: json['name'] as String?,
       userId: json['user_id'] as int?,
@@ -98,7 +98,7 @@ _$_AdminDetail _$$_AdminDetailFromJson(Map<String, dynamic> json) =>
       isActive: json['is_active'] as int?,
     );
 
-Map<String, dynamic> _$$_AdminDetailToJson(_$_AdminDetail instance) =>
+Map<String, dynamic> _$$AdminDetailImplToJson(_$AdminDetailImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -112,9 +112,9 @@ Map<String, dynamic> _$$_AdminDetailToJson(_$_AdminDetail instance) =>
       'is_active': instance.isActive,
     };
 
-_$_StudentAppBatchInDetail _$$_StudentAppBatchInDetailFromJson(
+_$StudentAppBatchInDetailImpl _$$StudentAppBatchInDetailImplFromJson(
         Map<String, dynamic> json) =>
-    _$_StudentAppBatchInDetail(
+    _$StudentAppBatchInDetailImpl(
       id: json['id'] as int?,
       batchId: json['batch_id'] as int?,
       day: json['day'] as int?,
@@ -122,8 +122,8 @@ _$_StudentAppBatchInDetail _$$_StudentAppBatchInDetailFromJson(
       endTime: json['end_time'] as String?,
     );
 
-Map<String, dynamic> _$$_StudentAppBatchInDetailToJson(
-        _$_StudentAppBatchInDetail instance) =>
+Map<String, dynamic> _$$StudentAppBatchInDetailImplToJson(
+        _$StudentAppBatchInDetailImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'batch_id': instance.batchId,
@@ -132,32 +132,33 @@ Map<String, dynamic> _$$_StudentAppBatchInDetailToJson(
       'end_time': instance.endTime,
     };
 
-_$_Branch _$$_BranchFromJson(Map<String, dynamic> json) => _$_Branch(
+_$BranchImpl _$$BranchImplFromJson(Map<String, dynamic> json) => _$BranchImpl(
       id: json['id'] as int?,
       branchName: json['branch_name'] as String?,
       academyId: json['academy_id'] as int?,
     );
 
-Map<String, dynamic> _$$_BranchToJson(_$_Branch instance) => <String, dynamic>{
+Map<String, dynamic> _$$BranchImplToJson(_$BranchImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'branch_name': instance.branchName,
       'academy_id': instance.academyId,
     };
 
-_$_CourseDetail _$$_CourseDetailFromJson(Map<String, dynamic> json) =>
-    _$_CourseDetail(
+_$CourseDetailImpl _$$CourseDetailImplFromJson(Map<String, dynamic> json) =>
+    _$CourseDetailImpl(
       id: json['id'] as int?,
       courseName: json['course_name'] as String?,
     );
 
-Map<String, dynamic> _$$_CourseDetailToJson(_$_CourseDetail instance) =>
+Map<String, dynamic> _$$CourseDetailImplToJson(_$CourseDetailImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'course_name': instance.courseName,
     };
 
-_$_StudentDetail _$$_StudentDetailFromJson(Map<String, dynamic> json) =>
-    _$_StudentDetail(
+_$StudentDetailImpl _$$StudentDetailImplFromJson(Map<String, dynamic> json) =>
+    _$StudentDetailImpl(
       name: json['name'] as String?,
       feeAmount: json['fee_amount'] as int?,
       feeType: json['fee_type'] as String?,
@@ -167,7 +168,7 @@ _$_StudentDetail _$$_StudentDetailFromJson(Map<String, dynamic> json) =>
       paymentDueDate: json['payment_due_date'] as int?,
     );
 
-Map<String, dynamic> _$$_StudentDetailToJson(_$_StudentDetail instance) =>
+Map<String, dynamic> _$$StudentDetailImplToJson(_$StudentDetailImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'fee_amount': instance.feeAmount,
@@ -178,23 +179,25 @@ Map<String, dynamic> _$$_StudentDetailToJson(_$_StudentDetail instance) =>
       'payment_due_date': instance.paymentDueDate,
     };
 
-_$_Subject _$$_SubjectFromJson(Map<String, dynamic> json) => _$_Subject(
+_$SubjectImpl _$$SubjectImplFromJson(Map<String, dynamic> json) =>
+    _$SubjectImpl(
       id: json['id'] as int?,
       subjectName: json['subject_name'] as String?,
     );
 
-Map<String, dynamic> _$$_SubjectToJson(_$_Subject instance) =>
+Map<String, dynamic> _$$SubjectImplToJson(_$SubjectImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'subject_name': instance.subjectName,
     };
 
-_$_Trainer _$$_TrainerFromJson(Map<String, dynamic> json) => _$_Trainer(
+_$TrainerImpl _$$TrainerImplFromJson(Map<String, dynamic> json) =>
+    _$TrainerImpl(
       name: json['name'] as String?,
       profilePic: json['profile_pic'] as String?,
     );
 
-Map<String, dynamic> _$$_TrainerToJson(_$_Trainer instance) =>
+Map<String, dynamic> _$$TrainerImplToJson(_$TrainerImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'profile_pic': instance.profilePic,

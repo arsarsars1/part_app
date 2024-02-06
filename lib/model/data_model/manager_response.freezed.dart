@@ -101,11 +101,11 @@ class _$ManagerResponseCopyWithImpl<$Res, $Val extends ManagerResponse>
 }
 
 /// @nodoc
-abstract class _$$_ManagerResponseCopyWith<$Res>
+abstract class _$$ManagerResponseImplCopyWith<$Res>
     implements $ManagerResponseCopyWith<$Res> {
-  factory _$$_ManagerResponseCopyWith(
-          _$_ManagerResponse value, $Res Function(_$_ManagerResponse) then) =
-      __$$_ManagerResponseCopyWithImpl<$Res>;
+  factory _$$ManagerResponseImplCopyWith(_$ManagerResponseImpl value,
+          $Res Function(_$ManagerResponseImpl) then) =
+      __$$ManagerResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int status, Datum? managers, Manager? manager});
@@ -117,11 +117,11 @@ abstract class _$$_ManagerResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ManagerResponseCopyWithImpl<$Res>
-    extends _$ManagerResponseCopyWithImpl<$Res, _$_ManagerResponse>
-    implements _$$_ManagerResponseCopyWith<$Res> {
-  __$$_ManagerResponseCopyWithImpl(
-      _$_ManagerResponse _value, $Res Function(_$_ManagerResponse) _then)
+class __$$ManagerResponseImplCopyWithImpl<$Res>
+    extends _$ManagerResponseCopyWithImpl<$Res, _$ManagerResponseImpl>
+    implements _$$ManagerResponseImplCopyWith<$Res> {
+  __$$ManagerResponseImplCopyWithImpl(
+      _$ManagerResponseImpl _value, $Res Function(_$ManagerResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -131,7 +131,7 @@ class __$$_ManagerResponseCopyWithImpl<$Res>
     Object? managers = freezed,
     Object? manager = freezed,
   }) {
-    return _then(_$_ManagerResponse(
+    return _then(_$ManagerResponseImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -150,11 +150,12 @@ class __$$_ManagerResponseCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ManagerResponse implements _ManagerResponse {
-  const _$_ManagerResponse({required this.status, this.managers, this.manager});
+class _$ManagerResponseImpl implements _ManagerResponse {
+  const _$ManagerResponseImpl(
+      {required this.status, this.managers, this.manager});
 
-  factory _$_ManagerResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_ManagerResponseFromJson(json);
+  factory _$ManagerResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ManagerResponseImplFromJson(json);
 
   @override
   final int status;
@@ -169,10 +170,10 @@ class _$_ManagerResponse implements _ManagerResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ManagerResponse &&
+            other is _$ManagerResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.managers, managers) ||
                 other.managers == managers) &&
@@ -186,12 +187,13 @@ class _$_ManagerResponse implements _ManagerResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ManagerResponseCopyWith<_$_ManagerResponse> get copyWith =>
-      __$$_ManagerResponseCopyWithImpl<_$_ManagerResponse>(this, _$identity);
+  _$$ManagerResponseImplCopyWith<_$ManagerResponseImpl> get copyWith =>
+      __$$ManagerResponseImplCopyWithImpl<_$ManagerResponseImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ManagerResponseToJson(
+    return _$$ManagerResponseImplToJson(
       this,
     );
   }
@@ -201,10 +203,10 @@ abstract class _ManagerResponse implements ManagerResponse {
   const factory _ManagerResponse(
       {required final int status,
       final Datum? managers,
-      final Manager? manager}) = _$_ManagerResponse;
+      final Manager? manager}) = _$ManagerResponseImpl;
 
   factory _ManagerResponse.fromJson(Map<String, dynamic> json) =
-      _$_ManagerResponse.fromJson;
+      _$ManagerResponseImpl.fromJson;
 
   @override
   int get status;
@@ -214,7 +216,7 @@ abstract class _ManagerResponse implements ManagerResponse {
   Manager? get manager;
   @override
   @JsonKey(ignore: true)
-  _$$_ManagerResponseCopyWith<_$_ManagerResponse> get copyWith =>
+  _$$ManagerResponseImplCopyWith<_$ManagerResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -289,9 +291,10 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
 }
 
 /// @nodoc
-abstract class _$$_DatumCopyWith<$Res> implements $DatumCopyWith<$Res> {
-  factory _$$_DatumCopyWith(_$_Datum value, $Res Function(_$_Datum) then) =
-      __$$_DatumCopyWithImpl<$Res>;
+abstract class _$$DatumImplCopyWith<$Res> implements $DatumCopyWith<$Res> {
+  factory _$$DatumImplCopyWith(
+          _$DatumImpl value, $Res Function(_$DatumImpl) then) =
+      __$$DatumImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -299,9 +302,11 @@ abstract class _$$_DatumCopyWith<$Res> implements $DatumCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
-    implements _$$_DatumCopyWith<$Res> {
-  __$$_DatumCopyWithImpl(_$_Datum _value, $Res Function(_$_Datum) _then)
+class __$$DatumImplCopyWithImpl<$Res>
+    extends _$DatumCopyWithImpl<$Res, _$DatumImpl>
+    implements _$$DatumImplCopyWith<$Res> {
+  __$$DatumImplCopyWithImpl(
+      _$DatumImpl _value, $Res Function(_$DatumImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -313,7 +318,7 @@ class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
     Object? perPage = freezed,
     Object? to = freezed,
   }) {
-    return _then(_$_Datum(
+    return _then(_$DatumImpl(
       currentPage: freezed == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -341,8 +346,8 @@ class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Datum implements _Datum {
-  const _$_Datum(
+class _$DatumImpl implements _Datum {
+  const _$DatumImpl(
       {this.currentPage,
       required final List<Manager> data,
       this.from,
@@ -350,8 +355,8 @@ class _$_Datum implements _Datum {
       this.to})
       : _data = data;
 
-  factory _$_Datum.fromJson(Map<String, dynamic> json) =>
-      _$$_DatumFromJson(json);
+  factory _$DatumImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DatumImplFromJson(json);
 
   @override
   final int? currentPage;
@@ -376,10 +381,10 @@ class _$_Datum implements _Datum {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Datum &&
+            other is _$DatumImpl &&
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             const DeepCollectionEquality().equals(other._data, _data) &&
@@ -396,12 +401,12 @@ class _$_Datum implements _Datum {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DatumCopyWith<_$_Datum> get copyWith =>
-      __$$_DatumCopyWithImpl<_$_Datum>(this, _$identity);
+  _$$DatumImplCopyWith<_$DatumImpl> get copyWith =>
+      __$$DatumImplCopyWithImpl<_$DatumImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DatumToJson(
+    return _$$DatumImplToJson(
       this,
     );
   }
@@ -413,9 +418,9 @@ abstract class _Datum implements Datum {
       required final List<Manager> data,
       final int? from,
       final int? perPage,
-      final int? to}) = _$_Datum;
+      final int? to}) = _$DatumImpl;
 
-  factory _Datum.fromJson(Map<String, dynamic> json) = _$_Datum.fromJson;
+  factory _Datum.fromJson(Map<String, dynamic> json) = _$DatumImpl.fromJson;
 
   @override
   int? get currentPage;
@@ -429,7 +434,7 @@ abstract class _Datum implements Datum {
   int? get to;
   @override
   @JsonKey(ignore: true)
-  _$$_DatumCopyWith<_$_Datum> get copyWith =>
+  _$$DatumImplCopyWith<_$DatumImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -634,10 +639,10 @@ class _$ManagerCopyWithImpl<$Res, $Val extends Manager>
 }
 
 /// @nodoc
-abstract class _$$_ManagerCopyWith<$Res> implements $ManagerCopyWith<$Res> {
-  factory _$$_ManagerCopyWith(
-          _$_Manager value, $Res Function(_$_Manager) then) =
-      __$$_ManagerCopyWithImpl<$Res>;
+abstract class _$$ManagerImplCopyWith<$Res> implements $ManagerCopyWith<$Res> {
+  factory _$$ManagerImplCopyWith(
+          _$ManagerImpl value, $Res Function(_$ManagerImpl) then) =
+      __$$ManagerImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -667,10 +672,11 @@ abstract class _$$_ManagerCopyWith<$Res> implements $ManagerCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ManagerCopyWithImpl<$Res>
-    extends _$ManagerCopyWithImpl<$Res, _$_Manager>
-    implements _$$_ManagerCopyWith<$Res> {
-  __$$_ManagerCopyWithImpl(_$_Manager _value, $Res Function(_$_Manager) _then)
+class __$$ManagerImplCopyWithImpl<$Res>
+    extends _$ManagerCopyWithImpl<$Res, _$ManagerImpl>
+    implements _$$ManagerImplCopyWith<$Res> {
+  __$$ManagerImplCopyWithImpl(
+      _$ManagerImpl _value, $Res Function(_$ManagerImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -700,7 +706,7 @@ class __$$_ManagerCopyWithImpl<$Res>
     Object? managerDetail = freezed,
     Object? branches = freezed,
   }) {
-    return _then(_$_Manager(
+    return _then(_$ManagerImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -800,8 +806,8 @@ class __$$_ManagerCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Manager implements _Manager {
-  const _$_Manager(
+class _$ManagerImpl implements _Manager {
+  const _$ManagerImpl(
       {required this.id,
       this.userId,
       this.academyId,
@@ -828,8 +834,8 @@ class _$_Manager implements _Manager {
       : _managerDetail = managerDetail,
         _branches = branches;
 
-  factory _$_Manager.fromJson(Map<String, dynamic> json) =>
-      _$$_ManagerFromJson(json);
+  factory _$ManagerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ManagerImplFromJson(json);
 
   @override
   final int id;
@@ -899,10 +905,10 @@ class _$_Manager implements _Manager {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Manager &&
+            other is _$ManagerImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.academyId, academyId) ||
@@ -973,12 +979,12 @@ class _$_Manager implements _Manager {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ManagerCopyWith<_$_Manager> get copyWith =>
-      __$$_ManagerCopyWithImpl<_$_Manager>(this, _$identity);
+  _$$ManagerImplCopyWith<_$ManagerImpl> get copyWith =>
+      __$$ManagerImplCopyWithImpl<_$ManagerImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ManagerToJson(
+    return _$$ManagerImplToJson(
       this,
     );
   }
@@ -1008,9 +1014,9 @@ abstract class _Manager implements Manager {
       final String? document_2,
       final int? isActive,
       final List<Manager>? managerDetail,
-      final List<Branch>? branches}) = _$_Manager;
+      final List<Branch>? branches}) = _$ManagerImpl;
 
-  factory _Manager.fromJson(Map<String, dynamic> json) = _$_Manager.fromJson;
+  factory _Manager.fromJson(Map<String, dynamic> json) = _$ManagerImpl.fromJson;
 
   @override
   int get id;
@@ -1060,6 +1066,6 @@ abstract class _Manager implements Manager {
   List<Branch>? get branches;
   @override
   @JsonKey(ignore: true)
-  _$$_ManagerCopyWith<_$_Manager> get copyWith =>
+  _$$ManagerImplCopyWith<_$ManagerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

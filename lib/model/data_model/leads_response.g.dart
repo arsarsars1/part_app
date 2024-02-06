@@ -6,21 +6,21 @@ part of 'leads_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_LeadsResponse _$$_LeadsResponseFromJson(Map<String, dynamic> json) =>
-    _$_LeadsResponse(
+_$LeadsResponseImpl _$$LeadsResponseImplFromJson(Map<String, dynamic> json) =>
+    _$LeadsResponseImpl(
       status: json['status'] as int?,
       leads: json['leads'] == null
           ? null
           : Leads.fromJson(json['leads'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_LeadsResponseToJson(_$_LeadsResponse instance) =>
+Map<String, dynamic> _$$LeadsResponseImplToJson(_$LeadsResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'leads': instance.leads,
     };
 
-_$_Leads _$$_LeadsFromJson(Map<String, dynamic> json) => _$_Leads(
+_$LeadsImpl _$$LeadsImplFromJson(Map<String, dynamic> json) => _$LeadsImpl(
       currentPage: json['current_page'] as int?,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => Lead.fromJson(e as Map<String, dynamic>))
@@ -34,7 +34,8 @@ _$_Leads _$$_LeadsFromJson(Map<String, dynamic> json) => _$_Leads(
       to: json['to'] as int?,
     );
 
-Map<String, dynamic> _$$_LeadsToJson(_$_Leads instance) => <String, dynamic>{
+Map<String, dynamic> _$$LeadsImplToJson(_$LeadsImpl instance) =>
+    <String, dynamic>{
       'current_page': instance.currentPage,
       'data': instance.data,
       'first_page_url': instance.firstPageUrl,
@@ -46,7 +47,7 @@ Map<String, dynamic> _$$_LeadsToJson(_$_Leads instance) => <String, dynamic>{
       'to': instance.to,
     };
 
-_$_Lead _$$_LeadFromJson(Map<String, dynamic> json) => _$_Lead(
+_$LeadImpl _$$LeadImplFromJson(Map<String, dynamic> json) => _$LeadImpl(
       id: json['id'] as int?,
       academyId: json['academy_id'] as int?,
       name: json['name'] as String?,
@@ -79,7 +80,8 @@ _$_Lead _$$_LeadFromJson(Map<String, dynamic> json) => _$_Lead(
           .toList(),
     );
 
-Map<String, dynamic> _$$_LeadToJson(_$_Lead instance) => <String, dynamic>{
+Map<String, dynamic> _$$LeadImplToJson(_$LeadImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'academy_id': instance.academyId,
       'name': instance.name,
@@ -102,8 +104,8 @@ Map<String, dynamic> _$$_LeadToJson(_$_Lead instance) => <String, dynamic>{
       'follow_ups': instance.followUps,
     };
 
-_$_AssignedTo _$$_AssignedToFromJson(Map<String, dynamic> json) =>
-    _$_AssignedTo(
+_$AssignedToImpl _$$AssignedToImplFromJson(Map<String, dynamic> json) =>
+    _$AssignedToImpl(
       id: json['id'] as int?,
       name: json['name'] as String?,
       branches: (json['branches'] as List<dynamic>?)
@@ -111,15 +113,15 @@ _$_AssignedTo _$$_AssignedToFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_AssignedToToJson(_$_AssignedTo instance) =>
+Map<String, dynamic> _$$AssignedToImplToJson(_$AssignedToImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'branches': instance.branches,
     };
 
-_$_BranchElement _$$_BranchElementFromJson(Map<String, dynamic> json) =>
-    _$_BranchElement(
+_$BranchElementImpl _$$BranchElementImplFromJson(Map<String, dynamic> json) =>
+    _$BranchElementImpl(
       id: json['id'] as int?,
       branchName: json['branch_name'] as String?,
       academyId: json['academy_id'] as int?,
@@ -148,7 +150,7 @@ _$_BranchElement _$$_BranchElementFromJson(Map<String, dynamic> json) =>
           : Timezone.fromJson(json['timezone'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_BranchElementToJson(_$_BranchElement instance) =>
+Map<String, dynamic> _$$BranchElementImplToJson(_$BranchElementImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'branch_name': instance.branchName,
@@ -168,7 +170,8 @@ Map<String, dynamic> _$$_BranchElementToJson(_$_BranchElement instance) =>
       'timezone': instance.timezone,
     };
 
-_$_Country _$$_CountryFromJson(Map<String, dynamic> json) => _$_Country(
+_$CountryImpl _$$CountryImplFromJson(Map<String, dynamic> json) =>
+    _$CountryImpl(
       id: json['id'] as int?,
       name: json['name'] as String?,
       currency: json['currency'] as String?,
@@ -178,7 +181,7 @@ _$_Country _$$_CountryFromJson(Map<String, dynamic> json) => _$_Country(
       currencySubUnit: json['currency_sub_unit'] as String?,
     );
 
-Map<String, dynamic> _$$_CountryToJson(_$_Country instance) =>
+Map<String, dynamic> _$$CountryImplToJson(_$CountryImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -189,18 +192,19 @@ Map<String, dynamic> _$$_CountryToJson(_$_Country instance) =>
       'currency_sub_unit': instance.currencySubUnit,
     };
 
-_$_District _$$_DistrictFromJson(Map<String, dynamic> json) => _$_District(
+_$DistrictImpl _$$DistrictImplFromJson(Map<String, dynamic> json) =>
+    _$DistrictImpl(
       id: json['id'] as int?,
       districtName: json['district_name'] as String?,
     );
 
-Map<String, dynamic> _$$_DistrictToJson(_$_District instance) =>
+Map<String, dynamic> _$$DistrictImplToJson(_$DistrictImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'district_name': instance.districtName,
     };
 
-_$_Pivot _$$_PivotFromJson(Map<String, dynamic> json) => _$_Pivot(
+_$PivotImpl _$$PivotImplFromJson(Map<String, dynamic> json) => _$PivotImpl(
       trainerDetailId: json['trainer_detail_id'] as int?,
       branchId: json['branch_id'] as int?,
       createdAt: json['created_at'] == null
@@ -211,48 +215,51 @@ _$_Pivot _$$_PivotFromJson(Map<String, dynamic> json) => _$_Pivot(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$_PivotToJson(_$_Pivot instance) => <String, dynamic>{
+Map<String, dynamic> _$$PivotImplToJson(_$PivotImpl instance) =>
+    <String, dynamic>{
       'trainer_detail_id': instance.trainerDetailId,
       'branch_id': instance.branchId,
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
-_$_StateDetail _$$_StateDetailFromJson(Map<String, dynamic> json) =>
-    _$_StateDetail(
+_$StateDetailImpl _$$StateDetailImplFromJson(Map<String, dynamic> json) =>
+    _$StateDetailImpl(
       id: json['id'] as int?,
       stateName: json['state_name'] as String?,
     );
 
-Map<String, dynamic> _$$_StateDetailToJson(_$_StateDetail instance) =>
+Map<String, dynamic> _$$StateDetailImplToJson(_$StateDetailImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'state_name': instance.stateName,
     };
 
-_$_Timezone _$$_TimezoneFromJson(Map<String, dynamic> json) => _$_Timezone(
+_$TimezoneImpl _$$TimezoneImplFromJson(Map<String, dynamic> json) =>
+    _$TimezoneImpl(
       id: json['id'] as int?,
       timezone: json['timezone'] as String?,
     );
 
-Map<String, dynamic> _$$_TimezoneToJson(_$_Timezone instance) =>
+Map<String, dynamic> _$$TimezoneImplToJson(_$TimezoneImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'timezone': instance.timezone,
     };
 
-_$_Batch _$$_BatchFromJson(Map<String, dynamic> json) => _$_Batch(
+_$BatchImpl _$$BatchImplFromJson(Map<String, dynamic> json) => _$BatchImpl(
       id: json['id'] as int?,
       batchName: json['batch_name'] as String?,
     );
 
-Map<String, dynamic> _$$_BatchToJson(_$_Batch instance) => <String, dynamic>{
+Map<String, dynamic> _$$BatchImplToJson(_$BatchImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'batch_name': instance.batchName,
     };
 
-_$_DatumBranch _$$_DatumBranchFromJson(Map<String, dynamic> json) =>
-    _$_DatumBranch(
+_$DatumBranchImpl _$$DatumBranchImplFromJson(Map<String, dynamic> json) =>
+    _$DatumBranchImpl(
       id: json['id'] as int?,
       branchName: json['branch_name'] as String?,
       stateId: json['state_id'] as int?,
@@ -266,7 +273,7 @@ _$_DatumBranch _$$_DatumBranchFromJson(Map<String, dynamic> json) =>
       timezone: json['timezone'],
     );
 
-Map<String, dynamic> _$$_DatumBranchToJson(_$_DatumBranch instance) =>
+Map<String, dynamic> _$$DatumBranchImplToJson(_$DatumBranchImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'branch_name': instance.branchName,
@@ -277,7 +284,8 @@ Map<String, dynamic> _$$_DatumBranchToJson(_$_DatumBranch instance) =>
       'timezone': instance.timezone,
     };
 
-_$_FollowUp _$$_FollowUpFromJson(Map<String, dynamic> json) => _$_FollowUp(
+_$FollowUpImpl _$$FollowUpImplFromJson(Map<String, dynamic> json) =>
+    _$FollowUpImpl(
       id: json['id'] as int?,
       leadId: json['lead_id'] as int?,
       assignedToType: json['assigned_to_type'] as String?,
@@ -293,7 +301,7 @@ _$_FollowUp _$$_FollowUpFromJson(Map<String, dynamic> json) => _$_FollowUp(
           : AssignedTo.fromJson(json['assigned_to'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_FollowUpToJson(_$_FollowUp instance) =>
+Map<String, dynamic> _$$FollowUpImplToJson(_$FollowUpImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'lead_id': instance.leadId,

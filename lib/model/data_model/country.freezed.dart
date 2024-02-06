@@ -194,10 +194,10 @@ class _$CountryCopyWithImpl<$Res, $Val extends Country>
 }
 
 /// @nodoc
-abstract class _$$_CountryCopyWith<$Res> implements $CountryCopyWith<$Res> {
-  factory _$$_CountryCopyWith(
-          _$_Country value, $Res Function(_$_Country) then) =
-      __$$_CountryCopyWithImpl<$Res>;
+abstract class _$$CountryImplCopyWith<$Res> implements $CountryCopyWith<$Res> {
+  factory _$$CountryImplCopyWith(
+          _$CountryImpl value, $Res Function(_$CountryImpl) then) =
+      __$$CountryImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -224,10 +224,11 @@ abstract class _$$_CountryCopyWith<$Res> implements $CountryCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_CountryCopyWithImpl<$Res>
-    extends _$CountryCopyWithImpl<$Res, _$_Country>
-    implements _$$_CountryCopyWith<$Res> {
-  __$$_CountryCopyWithImpl(_$_Country _value, $Res Function(_$_Country) _then)
+class __$$CountryImplCopyWithImpl<$Res>
+    extends _$CountryCopyWithImpl<$Res, _$CountryImpl>
+    implements _$$CountryImplCopyWith<$Res> {
+  __$$CountryImplCopyWithImpl(
+      _$CountryImpl _value, $Res Function(_$CountryImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -254,7 +255,7 @@ class __$$_CountryCopyWithImpl<$Res>
     Object? timezone = freezed,
     Object? isActive = freezed,
   }) {
-    return _then(_$_Country(
+    return _then(_$CountryImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -342,8 +343,8 @@ class __$$_CountryCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Country implements _Country {
-  const _$_Country(
+class _$CountryImpl implements _Country {
+  const _$CountryImpl(
       {required this.id,
       this.capital,
       this.citizenship,
@@ -365,8 +366,8 @@ class _$_Country implements _Country {
       this.timezone,
       this.isActive});
 
-  factory _$_Country.fromJson(Map<String, dynamic> json) =>
-      _$$_CountryFromJson(json);
+  factory _$CountryImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CountryImplFromJson(json);
 
   @override
   final int id;
@@ -415,10 +416,10 @@ class _$_Country implements _Country {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Country &&
+            other is _$CountryImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.capital, capital) || other.capital == capital) &&
             (identical(other.citizenship, citizenship) ||
@@ -485,12 +486,12 @@ class _$_Country implements _Country {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CountryCopyWith<_$_Country> get copyWith =>
-      __$$_CountryCopyWithImpl<_$_Country>(this, _$identity);
+  _$$CountryImplCopyWith<_$CountryImpl> get copyWith =>
+      __$$CountryImplCopyWithImpl<_$CountryImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CountryToJson(
+    return _$$CountryImplToJson(
       this,
     );
   }
@@ -517,9 +518,9 @@ abstract class _Country implements Country {
       final String? callingCode,
       final String? flag,
       final String? timezone,
-      final int? isActive}) = _$_Country;
+      final int? isActive}) = _$CountryImpl;
 
-  factory _Country.fromJson(Map<String, dynamic> json) = _$_Country.fromJson;
+  factory _Country.fromJson(Map<String, dynamic> json) = _$CountryImpl.fromJson;
 
   @override
   int get id;
@@ -563,6 +564,6 @@ abstract class _Country implements Country {
   int? get isActive;
   @override
   @JsonKey(ignore: true)
-  _$$_CountryCopyWith<_$_Country> get copyWith =>
+  _$$CountryImplCopyWith<_$CountryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

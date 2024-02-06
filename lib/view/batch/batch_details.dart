@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/models.dart';
@@ -11,6 +12,7 @@ import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:share_plus/share_plus.dart';
 
 class BatchDetails extends StatefulWidget {
   static const route = '/batch/details';
@@ -160,6 +162,32 @@ class _BatchDetailsState extends State<BatchDetails> {
                                         ),
                                         child: const Icon(
                                           Icons.edit_outlined,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 15.w,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Share.share(
+                                            'Please use the below link to add students : \n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batch?.shareToken}');
+                                      },
+                                      child: Container(
+                                        width: 24.w,
+                                        height: 24.w,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.black54,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2,
+                                          ),
+                                        ),
+                                        child: const Icon(
+                                          Icons.share,
                                           size: 16,
                                           color: Colors.white,
                                         ),

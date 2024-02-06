@@ -68,22 +68,22 @@ class _$ClassResponseCopyWithImpl<$Res, $Val extends ClassResponse>
 }
 
 /// @nodoc
-abstract class _$$_ClassResponseCopyWith<$Res>
+abstract class _$$ClassResponseImplCopyWith<$Res>
     implements $ClassResponseCopyWith<$Res> {
-  factory _$$_ClassResponseCopyWith(
-          _$_ClassResponse value, $Res Function(_$_ClassResponse) then) =
-      __$$_ClassResponseCopyWithImpl<$Res>;
+  factory _$$ClassResponseImplCopyWith(
+          _$ClassResponseImpl value, $Res Function(_$ClassResponseImpl) then) =
+      __$$ClassResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? status, List<Class>? classes});
 }
 
 /// @nodoc
-class __$$_ClassResponseCopyWithImpl<$Res>
-    extends _$ClassResponseCopyWithImpl<$Res, _$_ClassResponse>
-    implements _$$_ClassResponseCopyWith<$Res> {
-  __$$_ClassResponseCopyWithImpl(
-      _$_ClassResponse _value, $Res Function(_$_ClassResponse) _then)
+class __$$ClassResponseImplCopyWithImpl<$Res>
+    extends _$ClassResponseCopyWithImpl<$Res, _$ClassResponseImpl>
+    implements _$$ClassResponseImplCopyWith<$Res> {
+  __$$ClassResponseImplCopyWithImpl(
+      _$ClassResponseImpl _value, $Res Function(_$ClassResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +92,7 @@ class __$$_ClassResponseCopyWithImpl<$Res>
     Object? status = freezed,
     Object? classes = freezed,
   }) {
-    return _then(_$_ClassResponse(
+    return _then(_$ClassResponseImpl(
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -108,12 +108,12 @@ class __$$_ClassResponseCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_ClassResponse implements _ClassResponse {
-  const _$_ClassResponse({this.status, final List<Class>? classes})
+class _$ClassResponseImpl implements _ClassResponse {
+  const _$ClassResponseImpl({this.status, final List<Class>? classes})
       : _classes = classes;
 
-  factory _$_ClassResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_ClassResponseFromJson(json);
+  factory _$ClassResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ClassResponseImplFromJson(json);
 
   @override
   final int? status;
@@ -133,10 +133,10 @@ class _$_ClassResponse implements _ClassResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ClassResponse &&
+            other is _$ClassResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._classes, _classes));
   }
@@ -149,12 +149,12 @@ class _$_ClassResponse implements _ClassResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ClassResponseCopyWith<_$_ClassResponse> get copyWith =>
-      __$$_ClassResponseCopyWithImpl<_$_ClassResponse>(this, _$identity);
+  _$$ClassResponseImplCopyWith<_$ClassResponseImpl> get copyWith =>
+      __$$ClassResponseImplCopyWithImpl<_$ClassResponseImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ClassResponseToJson(
+    return _$$ClassResponseImplToJson(
       this,
     );
   }
@@ -162,10 +162,10 @@ class _$_ClassResponse implements _ClassResponse {
 
 abstract class _ClassResponse implements ClassResponse {
   const factory _ClassResponse(
-      {final int? status, final List<Class>? classes}) = _$_ClassResponse;
+      {final int? status, final List<Class>? classes}) = _$ClassResponseImpl;
 
   factory _ClassResponse.fromJson(Map<String, dynamic> json) =
-      _$_ClassResponse.fromJson;
+      _$ClassResponseImpl.fromJson;
 
   @override
   int? get status;
@@ -173,7 +173,7 @@ abstract class _ClassResponse implements ClassResponse {
   List<Class>? get classes;
   @override
   @JsonKey(ignore: true)
-  _$$_ClassResponseCopyWith<_$_ClassResponse> get copyWith =>
+  _$$ClassResponseImplCopyWith<_$ClassResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -301,9 +301,10 @@ class _$ClassCopyWithImpl<$Res, $Val extends Class>
 }
 
 /// @nodoc
-abstract class _$$_ClassCopyWith<$Res> implements $ClassCopyWith<$Res> {
-  factory _$$_ClassCopyWith(_$_Class value, $Res Function(_$_Class) then) =
-      __$$_ClassCopyWithImpl<$Res>;
+abstract class _$$ClassImplCopyWith<$Res> implements $ClassCopyWith<$Res> {
+  factory _$$ClassImplCopyWith(
+          _$ClassImpl value, $Res Function(_$ClassImpl) then) =
+      __$$ClassImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -322,9 +323,11 @@ abstract class _$$_ClassCopyWith<$Res> implements $ClassCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ClassCopyWithImpl<$Res> extends _$ClassCopyWithImpl<$Res, _$_Class>
-    implements _$$_ClassCopyWith<$Res> {
-  __$$_ClassCopyWithImpl(_$_Class _value, $Res Function(_$_Class) _then)
+class __$$ClassImplCopyWithImpl<$Res>
+    extends _$ClassCopyWithImpl<$Res, _$ClassImpl>
+    implements _$$ClassImplCopyWith<$Res> {
+  __$$ClassImplCopyWithImpl(
+      _$ClassImpl _value, $Res Function(_$ClassImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -343,7 +346,7 @@ class __$$_ClassCopyWithImpl<$Res> extends _$ClassCopyWithImpl<$Res, _$_Class>
     Object? branchName = freezed,
     Object? trainers = freezed,
   }) {
-    return _then(_$_Class(
+    return _then(_$ClassImpl(
       startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
@@ -399,8 +402,8 @@ class __$$_ClassCopyWithImpl<$Res> extends _$ClassCopyWithImpl<$Res, _$_Class>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Class implements _Class {
-  const _$_Class(
+class _$ClassImpl implements _Class {
+  const _$ClassImpl(
       {this.startTime,
       this.endTime,
       this.rescheduled,
@@ -414,8 +417,8 @@ class _$_Class implements _Class {
       this.branchName,
       this.trainers});
 
-  factory _$_Class.fromJson(Map<String, dynamic> json) =>
-      _$$_ClassFromJson(json);
+  factory _$ClassImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ClassImplFromJson(json);
 
   @override
   final String? startTime;
@@ -448,10 +451,10 @@ class _$_Class implements _Class {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Class &&
+            other is _$ClassImpl &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
@@ -495,12 +498,12 @@ class _$_Class implements _Class {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ClassCopyWith<_$_Class> get copyWith =>
-      __$$_ClassCopyWithImpl<_$_Class>(this, _$identity);
+  _$$ClassImplCopyWith<_$ClassImpl> get copyWith =>
+      __$$ClassImplCopyWithImpl<_$ClassImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ClassToJson(
+    return _$$ClassImplToJson(
       this,
     );
   }
@@ -519,9 +522,9 @@ abstract class _Class implements Class {
       final String? courseName,
       final String? subjectName,
       final String? branchName,
-      final String? trainers}) = _$_Class;
+      final String? trainers}) = _$ClassImpl;
 
-  factory _Class.fromJson(Map<String, dynamic> json) = _$_Class.fromJson;
+  factory _Class.fromJson(Map<String, dynamic> json) = _$ClassImpl.fromJson;
 
   @override
   String? get startTime;
@@ -549,6 +552,6 @@ abstract class _Class implements Class {
   String? get trainers;
   @override
   @JsonKey(ignore: true)
-  _$$_ClassCopyWith<_$_Class> get copyWith =>
+  _$$ClassImplCopyWith<_$ClassImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

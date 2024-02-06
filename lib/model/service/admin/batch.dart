@@ -41,14 +41,14 @@ class BatchService {
     return courseFromJson(jsonEncode(response));
   }
 
-  Future<Common?> createBatch(BatchRequest request) async {
+  Future<BatchResponse?> createBatch(BatchRequest request) async {
     try {
       var response = await _apiClient.post(
         postPath: '/admin/batches',
         data: request.toJson(),
         formData: true,
       );
-      return commonFromJson(jsonEncode(response));
+      return batchResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

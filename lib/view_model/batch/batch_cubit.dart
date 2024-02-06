@@ -43,6 +43,7 @@ class BatchCubit extends Cubit<BatchState> {
   BatchModel? _batchModel;
   ClassLink? tempClass;
   Batch? _batch;
+  String? sharedToken;
 
   // pagination
 
@@ -171,14 +172,15 @@ class BatchCubit extends Cubit<BatchState> {
   Future createBatch(BatchRequest request) async {
     emit(CreatingBatch());
     try {
-      Common? response = await _batchService.createBatch(request);
+      BatchResponse? response = await _batchService.createBatch(request);
       if (response == null) {
         emit(BatchNetworkError());
       } else if (response.status == 1) {
         await getBatches();
+        sharedToken = response.batch?.shareToken;
         emit(CreatedBatch());
       } else {
-        emit(CreateBatchFailed(response.message ?? 'Failed to create batch.'));
+        emit(CreateBatchFailed('Failed to create batch.'));
       }
     } catch (e) {
       emit(CreateBatchFailed('Failed to create batch.'));

@@ -6,25 +6,25 @@ part of 'reschedule_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RescheduleResponse _$$_RescheduleResponseFromJson(
+_$RescheduleResponseImpl _$$RescheduleResponseImplFromJson(
         Map<String, dynamic> json) =>
-    _$_RescheduleResponse(
+    _$RescheduleResponseImpl(
       status: json['status'] as int?,
       rescheduledClasses: (json['rescheduled_classes'] as List<dynamic>?)
           ?.map((e) => RescheduledClass.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$_RescheduleResponseToJson(
-        _$_RescheduleResponse instance) =>
+Map<String, dynamic> _$$RescheduleResponseImplToJson(
+        _$RescheduleResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'rescheduled_classes': instance.rescheduledClasses,
     };
 
-_$_RescheduledClasses _$$_RescheduledClassesFromJson(
+_$RescheduledClassesImpl _$$RescheduledClassesImplFromJson(
         Map<String, dynamic> json) =>
-    _$_RescheduledClasses(
+    _$RescheduledClassesImpl(
       currentPage: json['current_page'] as int?,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => RescheduledClass.fromJson(e as Map<String, dynamic>))
@@ -37,8 +37,8 @@ _$_RescheduledClasses _$$_RescheduledClassesFromJson(
       to: json['to'] as int?,
     );
 
-Map<String, dynamic> _$$_RescheduledClassesToJson(
-        _$_RescheduledClasses instance) =>
+Map<String, dynamic> _$$RescheduledClassesImplToJson(
+        _$RescheduledClassesImpl instance) =>
     <String, dynamic>{
       'current_page': instance.currentPage,
       'data': instance.data,
@@ -50,8 +50,9 @@ Map<String, dynamic> _$$_RescheduledClassesToJson(
       'to': instance.to,
     };
 
-_$_RescheduledClass _$$_RescheduledClassFromJson(Map<String, dynamic> json) =>
-    _$_RescheduledClass(
+_$RescheduledClassImpl _$$RescheduledClassImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RescheduledClassImpl(
       id: json['id'] as int?,
       batchId: json['batch_id'] as int?,
       oldDate: json['old_date'] == null
@@ -71,7 +72,8 @@ _$_RescheduledClass _$$_RescheduledClassFromJson(Map<String, dynamic> json) =>
       cancelledEndTime: json['cancelled_end_time'],
     );
 
-Map<String, dynamic> _$$_RescheduledClassToJson(_$_RescheduledClass instance) =>
+Map<String, dynamic> _$$RescheduledClassImplToJson(
+        _$RescheduledClassImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'batch_id': instance.batchId,

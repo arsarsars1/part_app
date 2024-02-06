@@ -6,8 +6,8 @@ part of 'manager_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ManagerRequest _$$_ManagerRequestFromJson(Map<String, dynamic> json) =>
-    _$_ManagerRequest(
+_$ManagerRequestImpl _$$ManagerRequestImplFromJson(Map<String, dynamic> json) =>
+    _$ManagerRequestImpl(
       branchId: json['branch_id'] as int?,
       name: json['name'] as String?,
       mobileNo: json['mobile_no'] as String?,
@@ -24,7 +24,8 @@ _$_ManagerRequest _$$_ManagerRequestFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String?,
     );
 
-Map<String, dynamic> _$$_ManagerRequestToJson(_$_ManagerRequest instance) =>
+Map<String, dynamic> _$$ManagerRequestImplToJson(
+        _$ManagerRequestImpl instance) =>
     <String, dynamic>{
       'branch_id': instance.branchId,
       'name': instance.name,

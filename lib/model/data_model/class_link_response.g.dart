@@ -6,22 +6,24 @@ part of 'class_link_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ClassLinkResponse _$$_ClassLinkResponseFromJson(Map<String, dynamic> json) =>
-    _$_ClassLinkResponse(
+_$ClassLinkResponseImpl _$$ClassLinkResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ClassLinkResponseImpl(
       status: json['status'] as int?,
       classLinks: (json['class_links'] as List<dynamic>?)
           ?.map((e) => ClassLink.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$_ClassLinkResponseToJson(
-        _$_ClassLinkResponse instance) =>
+Map<String, dynamic> _$$ClassLinkResponseImplToJson(
+        _$ClassLinkResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'class_links': instance.classLinks,
     };
 
-_$_ClassLink _$$_ClassLinkFromJson(Map<String, dynamic> json) => _$_ClassLink(
+_$ClassLinkImpl _$$ClassLinkImplFromJson(Map<String, dynamic> json) =>
+    _$ClassLinkImpl(
       id: json['id'] as int?,
       batchId: json['batch_id'] as int?,
       link: json['link'] as String?,
@@ -39,7 +41,7 @@ _$_ClassLink _$$_ClassLinkFromJson(Map<String, dynamic> json) => _$_ClassLink(
       subjectName: json['subject_name'] as String?,
     );
 
-Map<String, dynamic> _$$_ClassLinkToJson(_$_ClassLink instance) =>
+Map<String, dynamic> _$$ClassLinkImplToJson(_$ClassLinkImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'batch_id': instance.batchId,

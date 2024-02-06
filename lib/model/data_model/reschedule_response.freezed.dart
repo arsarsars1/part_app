@@ -69,22 +69,22 @@ class _$RescheduleResponseCopyWithImpl<$Res, $Val extends RescheduleResponse>
 }
 
 /// @nodoc
-abstract class _$$_RescheduleResponseCopyWith<$Res>
+abstract class _$$RescheduleResponseImplCopyWith<$Res>
     implements $RescheduleResponseCopyWith<$Res> {
-  factory _$$_RescheduleResponseCopyWith(_$_RescheduleResponse value,
-          $Res Function(_$_RescheduleResponse) then) =
-      __$$_RescheduleResponseCopyWithImpl<$Res>;
+  factory _$$RescheduleResponseImplCopyWith(_$RescheduleResponseImpl value,
+          $Res Function(_$RescheduleResponseImpl) then) =
+      __$$RescheduleResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? status, List<RescheduledClass>? rescheduledClasses});
 }
 
 /// @nodoc
-class __$$_RescheduleResponseCopyWithImpl<$Res>
-    extends _$RescheduleResponseCopyWithImpl<$Res, _$_RescheduleResponse>
-    implements _$$_RescheduleResponseCopyWith<$Res> {
-  __$$_RescheduleResponseCopyWithImpl(
-      _$_RescheduleResponse _value, $Res Function(_$_RescheduleResponse) _then)
+class __$$RescheduleResponseImplCopyWithImpl<$Res>
+    extends _$RescheduleResponseCopyWithImpl<$Res, _$RescheduleResponseImpl>
+    implements _$$RescheduleResponseImplCopyWith<$Res> {
+  __$$RescheduleResponseImplCopyWithImpl(_$RescheduleResponseImpl _value,
+      $Res Function(_$RescheduleResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -93,7 +93,7 @@ class __$$_RescheduleResponseCopyWithImpl<$Res>
     Object? status = freezed,
     Object? rescheduledClasses = freezed,
   }) {
-    return _then(_$_RescheduleResponse(
+    return _then(_$RescheduleResponseImpl(
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -109,13 +109,13 @@ class __$$_RescheduleResponseCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_RescheduleResponse implements _RescheduleResponse {
-  const _$_RescheduleResponse(
+class _$RescheduleResponseImpl implements _RescheduleResponse {
+  const _$RescheduleResponseImpl(
       {this.status, final List<RescheduledClass>? rescheduledClasses})
       : _rescheduledClasses = rescheduledClasses;
 
-  factory _$_RescheduleResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_RescheduleResponseFromJson(json);
+  factory _$RescheduleResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RescheduleResponseImplFromJson(json);
 
   @override
   final int? status;
@@ -136,10 +136,10 @@ class _$_RescheduleResponse implements _RescheduleResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RescheduleResponse &&
+            other is _$RescheduleResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality()
                 .equals(other._rescheduledClasses, _rescheduledClasses));
@@ -153,13 +153,13 @@ class _$_RescheduleResponse implements _RescheduleResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RescheduleResponseCopyWith<_$_RescheduleResponse> get copyWith =>
-      __$$_RescheduleResponseCopyWithImpl<_$_RescheduleResponse>(
+  _$$RescheduleResponseImplCopyWith<_$RescheduleResponseImpl> get copyWith =>
+      __$$RescheduleResponseImplCopyWithImpl<_$RescheduleResponseImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RescheduleResponseToJson(
+    return _$$RescheduleResponseImplToJson(
       this,
     );
   }
@@ -169,10 +169,10 @@ abstract class _RescheduleResponse implements RescheduleResponse {
   const factory _RescheduleResponse(
           {final int? status,
           final List<RescheduledClass>? rescheduledClasses}) =
-      _$_RescheduleResponse;
+      _$RescheduleResponseImpl;
 
   factory _RescheduleResponse.fromJson(Map<String, dynamic> json) =
-      _$_RescheduleResponse.fromJson;
+      _$RescheduleResponseImpl.fromJson;
 
   @override
   int? get status;
@@ -180,7 +180,7 @@ abstract class _RescheduleResponse implements RescheduleResponse {
   List<RescheduledClass>? get rescheduledClasses;
   @override
   @JsonKey(ignore: true)
-  _$$_RescheduleResponseCopyWith<_$_RescheduleResponse> get copyWith =>
+  _$$RescheduleResponseImplCopyWith<_$RescheduleResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -282,11 +282,11 @@ class _$RescheduledClassesCopyWithImpl<$Res, $Val extends RescheduledClasses>
 }
 
 /// @nodoc
-abstract class _$$_RescheduledClassesCopyWith<$Res>
+abstract class _$$RescheduledClassesImplCopyWith<$Res>
     implements $RescheduledClassesCopyWith<$Res> {
-  factory _$$_RescheduledClassesCopyWith(_$_RescheduledClasses value,
-          $Res Function(_$_RescheduledClasses) then) =
-      __$$_RescheduledClassesCopyWithImpl<$Res>;
+  factory _$$RescheduledClassesImplCopyWith(_$RescheduledClassesImpl value,
+          $Res Function(_$RescheduledClassesImpl) then) =
+      __$$RescheduledClassesImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -301,11 +301,11 @@ abstract class _$$_RescheduledClassesCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RescheduledClassesCopyWithImpl<$Res>
-    extends _$RescheduledClassesCopyWithImpl<$Res, _$_RescheduledClasses>
-    implements _$$_RescheduledClassesCopyWith<$Res> {
-  __$$_RescheduledClassesCopyWithImpl(
-      _$_RescheduledClasses _value, $Res Function(_$_RescheduledClasses) _then)
+class __$$RescheduledClassesImplCopyWithImpl<$Res>
+    extends _$RescheduledClassesCopyWithImpl<$Res, _$RescheduledClassesImpl>
+    implements _$$RescheduledClassesImplCopyWith<$Res> {
+  __$$RescheduledClassesImplCopyWithImpl(_$RescheduledClassesImpl _value,
+      $Res Function(_$RescheduledClassesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -320,7 +320,7 @@ class __$$_RescheduledClassesCopyWithImpl<$Res>
     Object? perPage = freezed,
     Object? to = freezed,
   }) {
-    return _then(_$_RescheduledClasses(
+    return _then(_$RescheduledClassesImpl(
       currentPage: freezed == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -360,8 +360,8 @@ class __$$_RescheduledClassesCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_RescheduledClasses implements _RescheduledClasses {
-  const _$_RescheduledClasses(
+class _$RescheduledClassesImpl implements _RescheduledClasses {
+  const _$RescheduledClassesImpl(
       {this.currentPage,
       final List<RescheduledClass>? data,
       this.firstPageUrl,
@@ -372,8 +372,8 @@ class _$_RescheduledClasses implements _RescheduledClasses {
       this.to})
       : _data = data;
 
-  factory _$_RescheduledClasses.fromJson(Map<String, dynamic> json) =>
-      _$$_RescheduledClassesFromJson(json);
+  factory _$RescheduledClassesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RescheduledClassesImplFromJson(json);
 
   @override
   final int? currentPage;
@@ -406,10 +406,10 @@ class _$_RescheduledClasses implements _RescheduledClasses {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RescheduledClasses &&
+            other is _$RescheduledClassesImpl &&
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             const DeepCollectionEquality().equals(other._data, _data) &&
@@ -439,13 +439,13 @@ class _$_RescheduledClasses implements _RescheduledClasses {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RescheduledClassesCopyWith<_$_RescheduledClasses> get copyWith =>
-      __$$_RescheduledClassesCopyWithImpl<_$_RescheduledClasses>(
+  _$$RescheduledClassesImplCopyWith<_$RescheduledClassesImpl> get copyWith =>
+      __$$RescheduledClassesImplCopyWithImpl<_$RescheduledClassesImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RescheduledClassesToJson(
+    return _$$RescheduledClassesImplToJson(
       this,
     );
   }
@@ -460,10 +460,10 @@ abstract class _RescheduledClasses implements RescheduledClasses {
       final int? from,
       final String? path,
       final int? perPage,
-      final int? to}) = _$_RescheduledClasses;
+      final int? to}) = _$RescheduledClassesImpl;
 
   factory _RescheduledClasses.fromJson(Map<String, dynamic> json) =
-      _$_RescheduledClasses.fromJson;
+      _$RescheduledClassesImpl.fromJson;
 
   @override
   int? get currentPage;
@@ -483,7 +483,7 @@ abstract class _RescheduledClasses implements RescheduledClasses {
   int? get to;
   @override
   @JsonKey(ignore: true)
-  _$$_RescheduledClassesCopyWith<_$_RescheduledClasses> get copyWith =>
+  _$$RescheduledClassesImplCopyWith<_$RescheduledClassesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -620,11 +620,11 @@ class _$RescheduledClassCopyWithImpl<$Res, $Val extends RescheduledClass>
 }
 
 /// @nodoc
-abstract class _$$_RescheduledClassCopyWith<$Res>
+abstract class _$$RescheduledClassImplCopyWith<$Res>
     implements $RescheduledClassCopyWith<$Res> {
-  factory _$$_RescheduledClassCopyWith(
-          _$_RescheduledClass value, $Res Function(_$_RescheduledClass) then) =
-      __$$_RescheduledClassCopyWithImpl<$Res>;
+  factory _$$RescheduledClassImplCopyWith(_$RescheduledClassImpl value,
+          $Res Function(_$RescheduledClassImpl) then) =
+      __$$RescheduledClassImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -644,11 +644,11 @@ abstract class _$$_RescheduledClassCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RescheduledClassCopyWithImpl<$Res>
-    extends _$RescheduledClassCopyWithImpl<$Res, _$_RescheduledClass>
-    implements _$$_RescheduledClassCopyWith<$Res> {
-  __$$_RescheduledClassCopyWithImpl(
-      _$_RescheduledClass _value, $Res Function(_$_RescheduledClass) _then)
+class __$$RescheduledClassImplCopyWithImpl<$Res>
+    extends _$RescheduledClassCopyWithImpl<$Res, _$RescheduledClassImpl>
+    implements _$$RescheduledClassImplCopyWith<$Res> {
+  __$$RescheduledClassImplCopyWithImpl(_$RescheduledClassImpl _value,
+      $Res Function(_$RescheduledClassImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -668,7 +668,7 @@ class __$$_RescheduledClassCopyWithImpl<$Res>
     Object? cancelledStartTime = freezed,
     Object? cancelledEndTime = freezed,
   }) {
-    return _then(_$_RescheduledClass(
+    return _then(_$RescheduledClassImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -728,8 +728,8 @@ class __$$_RescheduledClassCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_RescheduledClass implements _RescheduledClass {
-  const _$_RescheduledClass(
+class _$RescheduledClassImpl implements _RescheduledClass {
+  const _$RescheduledClassImpl(
       {this.id,
       this.batchId,
       this.oldDate,
@@ -744,8 +744,8 @@ class _$_RescheduledClass implements _RescheduledClass {
       this.cancelledStartTime,
       this.cancelledEndTime});
 
-  factory _$_RescheduledClass.fromJson(Map<String, dynamic> json) =>
-      _$$_RescheduledClassFromJson(json);
+  factory _$RescheduledClassImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RescheduledClassImplFromJson(json);
 
   @override
   final int? id;
@@ -780,10 +780,10 @@ class _$_RescheduledClass implements _RescheduledClass {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RescheduledClass &&
+            other is _$RescheduledClassImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.batchId, batchId) || other.batchId == batchId) &&
             (identical(other.oldDate, oldDate) || other.oldDate == oldDate) &&
@@ -829,12 +829,13 @@ class _$_RescheduledClass implements _RescheduledClass {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RescheduledClassCopyWith<_$_RescheduledClass> get copyWith =>
-      __$$_RescheduledClassCopyWithImpl<_$_RescheduledClass>(this, _$identity);
+  _$$RescheduledClassImplCopyWith<_$RescheduledClassImpl> get copyWith =>
+      __$$RescheduledClassImplCopyWithImpl<_$RescheduledClassImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RescheduledClassToJson(
+    return _$$RescheduledClassImplToJson(
       this,
     );
   }
@@ -854,10 +855,10 @@ abstract class _RescheduledClass implements RescheduledClass {
       final int? rescheduledById,
       final dynamic cancelledDate,
       final dynamic cancelledStartTime,
-      final dynamic cancelledEndTime}) = _$_RescheduledClass;
+      final dynamic cancelledEndTime}) = _$RescheduledClassImpl;
 
   factory _RescheduledClass.fromJson(Map<String, dynamic> json) =
-      _$_RescheduledClass.fromJson;
+      _$RescheduledClassImpl.fromJson;
 
   @override
   int? get id;
@@ -887,6 +888,6 @@ abstract class _RescheduledClass implements RescheduledClass {
   dynamic get cancelledEndTime;
   @override
   @JsonKey(ignore: true)
-  _$$_RescheduledClassCopyWith<_$_RescheduledClass> get copyWith =>
+  _$$RescheduledClassImplCopyWith<_$RescheduledClassImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

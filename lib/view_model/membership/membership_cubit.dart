@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_getters_setters
 
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/common.dart';
@@ -102,6 +104,8 @@ class MembershipCubit extends Cubit<MembershipState> {
       try {
         var userResp = userResponseFromJson(userStr);
         Membership membership = memberships.firstWhere((element) => element.paymentType=='free');
+        log(_selectedMembership?.membershipType ?? 'No Selected Value');
+        log(membership.membershipType ?? 'No Value');
         Common value = await _membershipService.addMembership(
           academyId: userResp.user?.adminDetail?.academy?.id,
           membershipID: _selectedMembership?.id ?? membership.id,

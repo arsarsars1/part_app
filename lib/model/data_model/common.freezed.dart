@@ -66,19 +66,21 @@ class _$CommonCopyWithImpl<$Res, $Val extends Common>
 }
 
 /// @nodoc
-abstract class _$$_CommonCopyWith<$Res> implements $CommonCopyWith<$Res> {
-  factory _$$_CommonCopyWith(_$_Common value, $Res Function(_$_Common) then) =
-      __$$_CommonCopyWithImpl<$Res>;
+abstract class _$$CommonImplCopyWith<$Res> implements $CommonCopyWith<$Res> {
+  factory _$$CommonImplCopyWith(
+          _$CommonImpl value, $Res Function(_$CommonImpl) then) =
+      __$$CommonImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String? message, int? status});
 }
 
 /// @nodoc
-class __$$_CommonCopyWithImpl<$Res>
-    extends _$CommonCopyWithImpl<$Res, _$_Common>
-    implements _$$_CommonCopyWith<$Res> {
-  __$$_CommonCopyWithImpl(_$_Common _value, $Res Function(_$_Common) _then)
+class __$$CommonImplCopyWithImpl<$Res>
+    extends _$CommonCopyWithImpl<$Res, _$CommonImpl>
+    implements _$$CommonImplCopyWith<$Res> {
+  __$$CommonImplCopyWithImpl(
+      _$CommonImpl _value, $Res Function(_$CommonImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +89,7 @@ class __$$_CommonCopyWithImpl<$Res>
     Object? message = freezed,
     Object? status = freezed,
   }) {
-    return _then(_$_Common(
+    return _then(_$CommonImpl(
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -102,11 +104,11 @@ class __$$_CommonCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Common implements _Common {
-  const _$_Common({this.message, this.status});
+class _$CommonImpl implements _Common {
+  const _$CommonImpl({this.message, this.status});
 
-  factory _$_Common.fromJson(Map<String, dynamic> json) =>
-      _$$_CommonFromJson(json);
+  factory _$CommonImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CommonImplFromJson(json);
 
   @override
   final String? message;
@@ -119,10 +121,10 @@ class _$_Common implements _Common {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Common &&
+            other is _$CommonImpl &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.status, status) || other.status == status));
   }
@@ -134,21 +136,22 @@ class _$_Common implements _Common {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CommonCopyWith<_$_Common> get copyWith =>
-      __$$_CommonCopyWithImpl<_$_Common>(this, _$identity);
+  _$$CommonImplCopyWith<_$CommonImpl> get copyWith =>
+      __$$CommonImplCopyWithImpl<_$CommonImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CommonToJson(
+    return _$$CommonImplToJson(
       this,
     );
   }
 }
 
 abstract class _Common implements Common {
-  const factory _Common({final String? message, final int? status}) = _$_Common;
+  const factory _Common({final String? message, final int? status}) =
+      _$CommonImpl;
 
-  factory _Common.fromJson(Map<String, dynamic> json) = _$_Common.fromJson;
+  factory _Common.fromJson(Map<String, dynamic> json) = _$CommonImpl.fromJson;
 
   @override
   String? get message;
@@ -156,6 +159,6 @@ abstract class _Common implements Common {
   int? get status;
   @override
   @JsonKey(ignore: true)
-  _$$_CommonCopyWith<_$_Common> get copyWith =>
+  _$$CommonImplCopyWith<_$CommonImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

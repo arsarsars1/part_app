@@ -6,9 +6,9 @@ part of 'profile_update_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ProfileUpdateRequest _$$_ProfileUpdateRequestFromJson(
+_$ProfileUpdateRequestImpl _$$ProfileUpdateRequestImplFromJson(
         Map<String, dynamic> json) =>
-    _$_ProfileUpdateRequest(
+    _$ProfileUpdateRequestImpl(
       name: json['name'] as String?,
       mobileNo: json['mobile_no'] as String?,
       countryCode: json['country_code'] as String?,
@@ -20,8 +20,8 @@ _$_ProfileUpdateRequest _$$_ProfileUpdateRequestFromJson(
       profilePic: json['profile_pic'] as String?,
     );
 
-Map<String, dynamic> _$$_ProfileUpdateRequestToJson(
-        _$_ProfileUpdateRequest instance) =>
+Map<String, dynamic> _$$ProfileUpdateRequestImplToJson(
+        _$ProfileUpdateRequestImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'mobile_no': instance.mobileNo,

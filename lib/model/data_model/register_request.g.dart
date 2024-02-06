@@ -6,8 +6,9 @@ part of 'register_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RegisterRequest _$$_RegisterRequestFromJson(Map<String, dynamic> json) =>
-    _$_RegisterRequest(
+_$RegisterRequestImpl _$$RegisterRequestImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RegisterRequestImpl(
       mobileNo: json['mobile_no'] as String?,
       countryCode: json['country_code'] as String?,
       whatsappNo: json['whatsapp_no'] as String?,
@@ -29,7 +30,8 @@ _$_RegisterRequest _$$_RegisterRequestFromJson(Map<String, dynamic> json) =>
       districtId: json['district_id'] as int?,
     );
 
-Map<String, dynamic> _$$_RegisterRequestToJson(_$_RegisterRequest instance) =>
+Map<String, dynamic> _$$RegisterRequestImplToJson(
+        _$RegisterRequestImpl instance) =>
     <String, dynamic>{
       'mobile_no': instance.mobileNo,
       'country_code': instance.countryCode,

@@ -6,8 +6,8 @@ part of 'order_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_OrderResponse _$$_OrderResponseFromJson(Map<String, dynamic> json) =>
-    _$_OrderResponse(
+_$OrderResponseImpl _$$OrderResponseImplFromJson(Map<String, dynamic> json) =>
+    _$OrderResponseImpl(
       id: json['id'] as String,
       entity: json['entity'] as String?,
       amount: json['amount'] as int?,
@@ -21,7 +21,7 @@ _$_OrderResponse _$$_OrderResponseFromJson(Map<String, dynamic> json) =>
       createdAt: json['createdAt'] as int?,
     );
 
-Map<String, dynamic> _$$_OrderResponseToJson(_$_OrderResponse instance) =>
+Map<String, dynamic> _$$OrderResponseImplToJson(_$OrderResponseImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'entity': instance.entity,
@@ -36,12 +36,13 @@ Map<String, dynamic> _$$_OrderResponseToJson(_$_OrderResponse instance) =>
       'createdAt': instance.createdAt,
     };
 
-_$_Notes _$$_NotesFromJson(Map<String, dynamic> json) => _$_Notes(
+_$NotesImpl _$$NotesImplFromJson(Map<String, dynamic> json) => _$NotesImpl(
       notesKey1: json['notesKey1'] as String?,
       notesKey2: json['notesKey2'] as String?,
     );
 
-Map<String, dynamic> _$$_NotesToJson(_$_Notes instance) => <String, dynamic>{
+Map<String, dynamic> _$$NotesImplToJson(_$NotesImpl instance) =>
+    <String, dynamic>{
       'notesKey1': instance.notesKey1,
       'notesKey2': instance.notesKey2,
     };

@@ -6,8 +6,8 @@ part of 'membership.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Membership _$$_MembershipFromJson(Map<String, dynamic> json) =>
-    _$_Membership(
+_$MembershipImpl _$$MembershipImplFromJson(Map<String, dynamic> json) =>
+    _$MembershipImpl(
       id: json['id'] as int,
       membershipType: json['membership_type'] as String?,
       period: json['period'] as String?,
@@ -26,7 +26,7 @@ _$_Membership _$$_MembershipFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$_MembershipToJson(_$_Membership instance) =>
+Map<String, dynamic> _$$MembershipImplToJson(_$MembershipImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'membership_type': instance.membershipType,

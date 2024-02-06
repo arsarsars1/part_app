@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/view/batch/batch_list.dart';
@@ -11,6 +15,7 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AddBatch extends StatefulWidget {
   static const route = '/batch/add';
@@ -79,6 +84,17 @@ class _AddBatchState extends State<AddBatch> {
               ModalRoute.withName(BatchesPage.route),
             );
             Alert(context).show(message: 'Batch created successfully.');
+            CommonDialog(
+              context: context,
+              message: 'Do you want to share the link for adding students ?',
+              buttonText: 'Proceed',
+              subColor: AppColors.primaryColor,
+              onTap: () {
+                Share.share(
+                  'Please use the below link to add students : \n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${cubit.sharedToken}'
+                );
+              },
+            ).show();
           } else if (state is CreateBatchFailed) {
             Alert(context).show(message: state.message);
             Navigator.pop(context);

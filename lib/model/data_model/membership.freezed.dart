@@ -140,11 +140,11 @@ class _$MembershipCopyWithImpl<$Res, $Val extends Membership>
 }
 
 /// @nodoc
-abstract class _$$_MembershipCopyWith<$Res>
+abstract class _$$MembershipImplCopyWith<$Res>
     implements $MembershipCopyWith<$Res> {
-  factory _$$_MembershipCopyWith(
-          _$_Membership value, $Res Function(_$_Membership) then) =
-      __$$_MembershipCopyWithImpl<$Res>;
+  factory _$$MembershipImplCopyWith(
+          _$MembershipImpl value, $Res Function(_$MembershipImpl) then) =
+      __$$MembershipImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -163,11 +163,11 @@ abstract class _$$_MembershipCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MembershipCopyWithImpl<$Res>
-    extends _$MembershipCopyWithImpl<$Res, _$_Membership>
-    implements _$$_MembershipCopyWith<$Res> {
-  __$$_MembershipCopyWithImpl(
-      _$_Membership _value, $Res Function(_$_Membership) _then)
+class __$$MembershipImplCopyWithImpl<$Res>
+    extends _$MembershipCopyWithImpl<$Res, _$MembershipImpl>
+    implements _$$MembershipImplCopyWith<$Res> {
+  __$$MembershipImplCopyWithImpl(
+      _$MembershipImpl _value, $Res Function(_$MembershipImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -186,7 +186,7 @@ class __$$_MembershipCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
-    return _then(_$_Membership(
+    return _then(_$MembershipImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -242,8 +242,8 @@ class __$$_MembershipCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Membership implements _Membership {
-  const _$_Membership(
+class _$MembershipImpl implements _Membership {
+  const _$MembershipImpl(
       {required this.id,
       this.membershipType,
       this.period,
@@ -257,8 +257,8 @@ class _$_Membership implements _Membership {
       this.createdAt,
       this.updatedAt});
 
-  factory _$_Membership.fromJson(Map<String, dynamic> json) =>
-      _$$_MembershipFromJson(json);
+  factory _$MembershipImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MembershipImplFromJson(json);
 
   @override
   final int id;
@@ -291,10 +291,10 @@ class _$_Membership implements _Membership {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Membership &&
+            other is _$MembershipImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.membershipType, membershipType) ||
                 other.membershipType == membershipType) &&
@@ -338,12 +338,12 @@ class _$_Membership implements _Membership {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MembershipCopyWith<_$_Membership> get copyWith =>
-      __$$_MembershipCopyWithImpl<_$_Membership>(this, _$identity);
+  _$$MembershipImplCopyWith<_$MembershipImpl> get copyWith =>
+      __$$MembershipImplCopyWithImpl<_$MembershipImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MembershipToJson(
+    return _$$MembershipImplToJson(
       this,
     );
   }
@@ -362,10 +362,10 @@ abstract class _Membership implements Membership {
       final int? maxNoOfBranches,
       final int? isActive,
       final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$_Membership;
+      final DateTime? updatedAt}) = _$MembershipImpl;
 
   factory _Membership.fromJson(Map<String, dynamic> json) =
-      _$_Membership.fromJson;
+      _$MembershipImpl.fromJson;
 
   @override
   int get id;
@@ -393,6 +393,6 @@ abstract class _Membership implements Membership {
   DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
-  _$$_MembershipCopyWith<_$_Membership> get copyWith =>
+  _$$MembershipImplCopyWith<_$MembershipImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

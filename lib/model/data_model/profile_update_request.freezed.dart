@@ -120,11 +120,11 @@ class _$ProfileUpdateRequestCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_ProfileUpdateRequestCopyWith<$Res>
+abstract class _$$ProfileUpdateRequestImplCopyWith<$Res>
     implements $ProfileUpdateRequestCopyWith<$Res> {
-  factory _$$_ProfileUpdateRequestCopyWith(_$_ProfileUpdateRequest value,
-          $Res Function(_$_ProfileUpdateRequest) then) =
-      __$$_ProfileUpdateRequestCopyWithImpl<$Res>;
+  factory _$$ProfileUpdateRequestImplCopyWith(_$ProfileUpdateRequestImpl value,
+          $Res Function(_$ProfileUpdateRequestImpl) then) =
+      __$$ProfileUpdateRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -140,11 +140,11 @@ abstract class _$$_ProfileUpdateRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ProfileUpdateRequestCopyWithImpl<$Res>
-    extends _$ProfileUpdateRequestCopyWithImpl<$Res, _$_ProfileUpdateRequest>
-    implements _$$_ProfileUpdateRequestCopyWith<$Res> {
-  __$$_ProfileUpdateRequestCopyWithImpl(_$_ProfileUpdateRequest _value,
-      $Res Function(_$_ProfileUpdateRequest) _then)
+class __$$ProfileUpdateRequestImplCopyWithImpl<$Res>
+    extends _$ProfileUpdateRequestCopyWithImpl<$Res, _$ProfileUpdateRequestImpl>
+    implements _$$ProfileUpdateRequestImplCopyWith<$Res> {
+  __$$ProfileUpdateRequestImplCopyWithImpl(_$ProfileUpdateRequestImpl _value,
+      $Res Function(_$ProfileUpdateRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -160,7 +160,7 @@ class __$$_ProfileUpdateRequestCopyWithImpl<$Res>
     Object? dob = freezed,
     Object? profilePic = freezed,
   }) {
-    return _then(_$_ProfileUpdateRequest(
+    return _then(_$ProfileUpdateRequestImpl(
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -204,8 +204,8 @@ class __$$_ProfileUpdateRequestCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_ProfileUpdateRequest implements _ProfileUpdateRequest {
-  const _$_ProfileUpdateRequest(
+class _$ProfileUpdateRequestImpl implements _ProfileUpdateRequest {
+  const _$ProfileUpdateRequestImpl(
       {this.name,
       this.mobileNo,
       this.countryCode,
@@ -216,8 +216,8 @@ class _$_ProfileUpdateRequest implements _ProfileUpdateRequest {
       this.dob,
       this.profilePic});
 
-  factory _$_ProfileUpdateRequest.fromJson(Map<String, dynamic> json) =>
-      _$$_ProfileUpdateRequestFromJson(json);
+  factory _$ProfileUpdateRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProfileUpdateRequestImplFromJson(json);
 
   @override
   final String? name;
@@ -244,10 +244,10 @@ class _$_ProfileUpdateRequest implements _ProfileUpdateRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ProfileUpdateRequest &&
+            other is _$ProfileUpdateRequestImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.mobileNo, mobileNo) ||
                 other.mobileNo == mobileNo) &&
@@ -272,13 +272,14 @@ class _$_ProfileUpdateRequest implements _ProfileUpdateRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ProfileUpdateRequestCopyWith<_$_ProfileUpdateRequest> get copyWith =>
-      __$$_ProfileUpdateRequestCopyWithImpl<_$_ProfileUpdateRequest>(
-          this, _$identity);
+  _$$ProfileUpdateRequestImplCopyWith<_$ProfileUpdateRequestImpl>
+      get copyWith =>
+          __$$ProfileUpdateRequestImplCopyWithImpl<_$ProfileUpdateRequestImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ProfileUpdateRequestToJson(
+    return _$$ProfileUpdateRequestImplToJson(
       this,
     );
   }
@@ -294,10 +295,10 @@ abstract class _ProfileUpdateRequest implements ProfileUpdateRequest {
       final String? whatsappNo,
       final String? academyName,
       final String? dob,
-      final String? profilePic}) = _$_ProfileUpdateRequest;
+      final String? profilePic}) = _$ProfileUpdateRequestImpl;
 
   factory _ProfileUpdateRequest.fromJson(Map<String, dynamic> json) =
-      _$_ProfileUpdateRequest.fromJson;
+      _$ProfileUpdateRequestImpl.fromJson;
 
   @override
   String? get name;
@@ -319,6 +320,6 @@ abstract class _ProfileUpdateRequest implements ProfileUpdateRequest {
   String? get profilePic;
   @override
   @JsonKey(ignore: true)
-  _$$_ProfileUpdateRequestCopyWith<_$_ProfileUpdateRequest> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ProfileUpdateRequestImplCopyWith<_$ProfileUpdateRequestImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

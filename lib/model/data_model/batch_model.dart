@@ -14,6 +14,7 @@ class BatchModel {
   final String subjectName;
   final int? admissionFee;
   final int? fee;
+  final String? shareToken;
   final int? studentCount;
   final PivotClass? pivot;
   final List<Trainer>? trainers;
@@ -32,6 +33,7 @@ class BatchModel {
     this.branchId,
     this.admissionFee,
     this.fee,
+    this.shareToken,
     this.studentCount,
     this.pivot,
     this.trainers,
@@ -68,6 +70,7 @@ class BatchModel {
       subjectName: batch.subject?.subjectName ?? 'NA',
       admissionFee: batch.admissionFees,
       fee: batch.feeAmount,
+      shareToken: batch.shareToken,
       batchDetail: batch.batchDetail,
       studentCount: batch.activeStudentsCount,
       trainers: batch.trainers,

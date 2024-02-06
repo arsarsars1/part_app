@@ -68,22 +68,22 @@ class _$AcademyTypeCopyWithImpl<$Res, $Val extends AcademyType>
 }
 
 /// @nodoc
-abstract class _$$_AcademyTypeCopyWith<$Res>
+abstract class _$$AcademyTypeImplCopyWith<$Res>
     implements $AcademyTypeCopyWith<$Res> {
-  factory _$$_AcademyTypeCopyWith(
-          _$_AcademyType value, $Res Function(_$_AcademyType) then) =
-      __$$_AcademyTypeCopyWithImpl<$Res>;
+  factory _$$AcademyTypeImplCopyWith(
+          _$AcademyTypeImpl value, $Res Function(_$AcademyTypeImpl) then) =
+      __$$AcademyTypeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String academyType});
 }
 
 /// @nodoc
-class __$$_AcademyTypeCopyWithImpl<$Res>
-    extends _$AcademyTypeCopyWithImpl<$Res, _$_AcademyType>
-    implements _$$_AcademyTypeCopyWith<$Res> {
-  __$$_AcademyTypeCopyWithImpl(
-      _$_AcademyType _value, $Res Function(_$_AcademyType) _then)
+class __$$AcademyTypeImplCopyWithImpl<$Res>
+    extends _$AcademyTypeCopyWithImpl<$Res, _$AcademyTypeImpl>
+    implements _$$AcademyTypeImplCopyWith<$Res> {
+  __$$AcademyTypeImplCopyWithImpl(
+      _$AcademyTypeImpl _value, $Res Function(_$AcademyTypeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +92,7 @@ class __$$_AcademyTypeCopyWithImpl<$Res>
     Object? id = null,
     Object? academyType = null,
   }) {
-    return _then(_$_AcademyType(
+    return _then(_$AcademyTypeImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -108,11 +108,11 @@ class __$$_AcademyTypeCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_AcademyType implements _AcademyType {
-  const _$_AcademyType({required this.id, required this.academyType});
+class _$AcademyTypeImpl implements _AcademyType {
+  const _$AcademyTypeImpl({required this.id, required this.academyType});
 
-  factory _$_AcademyType.fromJson(Map<String, dynamic> json) =>
-      _$$_AcademyTypeFromJson(json);
+  factory _$AcademyTypeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AcademyTypeImplFromJson(json);
 
   @override
   final int id;
@@ -125,10 +125,10 @@ class _$_AcademyType implements _AcademyType {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AcademyType &&
+            other is _$AcademyTypeImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.academyType, academyType) ||
                 other.academyType == academyType));
@@ -141,12 +141,12 @@ class _$_AcademyType implements _AcademyType {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AcademyTypeCopyWith<_$_AcademyType> get copyWith =>
-      __$$_AcademyTypeCopyWithImpl<_$_AcademyType>(this, _$identity);
+  _$$AcademyTypeImplCopyWith<_$AcademyTypeImpl> get copyWith =>
+      __$$AcademyTypeImplCopyWithImpl<_$AcademyTypeImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AcademyTypeToJson(
+    return _$$AcademyTypeImplToJson(
       this,
     );
   }
@@ -155,10 +155,10 @@ class _$_AcademyType implements _AcademyType {
 abstract class _AcademyType implements AcademyType {
   const factory _AcademyType(
       {required final int id,
-      required final String academyType}) = _$_AcademyType;
+      required final String academyType}) = _$AcademyTypeImpl;
 
   factory _AcademyType.fromJson(Map<String, dynamic> json) =
-      _$_AcademyType.fromJson;
+      _$AcademyTypeImpl.fromJson;
 
   @override
   int get id;
@@ -166,6 +166,6 @@ abstract class _AcademyType implements AcademyType {
   String get academyType;
   @override
   @JsonKey(ignore: true)
-  _$$_AcademyTypeCopyWith<_$_AcademyType> get copyWith =>
+  _$$AcademyTypeImplCopyWith<_$AcademyTypeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

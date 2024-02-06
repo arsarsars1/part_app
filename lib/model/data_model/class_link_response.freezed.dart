@@ -68,22 +68,22 @@ class _$ClassLinkResponseCopyWithImpl<$Res, $Val extends ClassLinkResponse>
 }
 
 /// @nodoc
-abstract class _$$_ClassLinkResponseCopyWith<$Res>
+abstract class _$$ClassLinkResponseImplCopyWith<$Res>
     implements $ClassLinkResponseCopyWith<$Res> {
-  factory _$$_ClassLinkResponseCopyWith(_$_ClassLinkResponse value,
-          $Res Function(_$_ClassLinkResponse) then) =
-      __$$_ClassLinkResponseCopyWithImpl<$Res>;
+  factory _$$ClassLinkResponseImplCopyWith(_$ClassLinkResponseImpl value,
+          $Res Function(_$ClassLinkResponseImpl) then) =
+      __$$ClassLinkResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? status, List<ClassLink>? classLinks});
 }
 
 /// @nodoc
-class __$$_ClassLinkResponseCopyWithImpl<$Res>
-    extends _$ClassLinkResponseCopyWithImpl<$Res, _$_ClassLinkResponse>
-    implements _$$_ClassLinkResponseCopyWith<$Res> {
-  __$$_ClassLinkResponseCopyWithImpl(
-      _$_ClassLinkResponse _value, $Res Function(_$_ClassLinkResponse) _then)
+class __$$ClassLinkResponseImplCopyWithImpl<$Res>
+    extends _$ClassLinkResponseCopyWithImpl<$Res, _$ClassLinkResponseImpl>
+    implements _$$ClassLinkResponseImplCopyWith<$Res> {
+  __$$ClassLinkResponseImplCopyWithImpl(_$ClassLinkResponseImpl _value,
+      $Res Function(_$ClassLinkResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +92,7 @@ class __$$_ClassLinkResponseCopyWithImpl<$Res>
     Object? status = freezed,
     Object? classLinks = freezed,
   }) {
-    return _then(_$_ClassLinkResponse(
+    return _then(_$ClassLinkResponseImpl(
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -108,12 +108,13 @@ class __$$_ClassLinkResponseCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_ClassLinkResponse implements _ClassLinkResponse {
-  const _$_ClassLinkResponse({this.status, final List<ClassLink>? classLinks})
+class _$ClassLinkResponseImpl implements _ClassLinkResponse {
+  const _$ClassLinkResponseImpl(
+      {this.status, final List<ClassLink>? classLinks})
       : _classLinks = classLinks;
 
-  factory _$_ClassLinkResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_ClassLinkResponseFromJson(json);
+  factory _$ClassLinkResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ClassLinkResponseImplFromJson(json);
 
   @override
   final int? status;
@@ -133,10 +134,10 @@ class _$_ClassLinkResponse implements _ClassLinkResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ClassLinkResponse &&
+            other is _$ClassLinkResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality()
                 .equals(other._classLinks, _classLinks));
@@ -150,13 +151,13 @@ class _$_ClassLinkResponse implements _ClassLinkResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ClassLinkResponseCopyWith<_$_ClassLinkResponse> get copyWith =>
-      __$$_ClassLinkResponseCopyWithImpl<_$_ClassLinkResponse>(
+  _$$ClassLinkResponseImplCopyWith<_$ClassLinkResponseImpl> get copyWith =>
+      __$$ClassLinkResponseImplCopyWithImpl<_$ClassLinkResponseImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ClassLinkResponseToJson(
+    return _$$ClassLinkResponseImplToJson(
       this,
     );
   }
@@ -165,10 +166,10 @@ class _$_ClassLinkResponse implements _ClassLinkResponse {
 abstract class _ClassLinkResponse implements ClassLinkResponse {
   const factory _ClassLinkResponse(
       {final int? status,
-      final List<ClassLink>? classLinks}) = _$_ClassLinkResponse;
+      final List<ClassLink>? classLinks}) = _$ClassLinkResponseImpl;
 
   factory _ClassLinkResponse.fromJson(Map<String, dynamic> json) =
-      _$_ClassLinkResponse.fromJson;
+      _$ClassLinkResponseImpl.fromJson;
 
   @override
   int? get status;
@@ -176,7 +177,7 @@ abstract class _ClassLinkResponse implements ClassLinkResponse {
   List<ClassLink>? get classLinks;
   @override
   @JsonKey(ignore: true)
-  _$$_ClassLinkResponseCopyWith<_$_ClassLinkResponse> get copyWith =>
+  _$$ClassLinkResponseImplCopyWith<_$ClassLinkResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -312,10 +313,11 @@ class _$ClassLinkCopyWithImpl<$Res, $Val extends ClassLink>
 }
 
 /// @nodoc
-abstract class _$$_ClassLinkCopyWith<$Res> implements $ClassLinkCopyWith<$Res> {
-  factory _$$_ClassLinkCopyWith(
-          _$_ClassLink value, $Res Function(_$_ClassLink) then) =
-      __$$_ClassLinkCopyWithImpl<$Res>;
+abstract class _$$ClassLinkImplCopyWith<$Res>
+    implements $ClassLinkCopyWith<$Res> {
+  factory _$$ClassLinkImplCopyWith(
+          _$ClassLinkImpl value, $Res Function(_$ClassLinkImpl) then) =
+      __$$ClassLinkImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -335,11 +337,11 @@ abstract class _$$_ClassLinkCopyWith<$Res> implements $ClassLinkCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ClassLinkCopyWithImpl<$Res>
-    extends _$ClassLinkCopyWithImpl<$Res, _$_ClassLink>
-    implements _$$_ClassLinkCopyWith<$Res> {
-  __$$_ClassLinkCopyWithImpl(
-      _$_ClassLink _value, $Res Function(_$_ClassLink) _then)
+class __$$ClassLinkImplCopyWithImpl<$Res>
+    extends _$ClassLinkCopyWithImpl<$Res, _$ClassLinkImpl>
+    implements _$$ClassLinkImplCopyWith<$Res> {
+  __$$ClassLinkImplCopyWithImpl(
+      _$ClassLinkImpl _value, $Res Function(_$ClassLinkImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -359,7 +361,7 @@ class __$$_ClassLinkCopyWithImpl<$Res>
     Object? courseName = freezed,
     Object? subjectName = freezed,
   }) {
-    return _then(_$_ClassLink(
+    return _then(_$ClassLinkImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -419,8 +421,8 @@ class __$$_ClassLinkCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_ClassLink implements _ClassLink {
-  const _$_ClassLink(
+class _$ClassLinkImpl implements _ClassLink {
+  const _$ClassLinkImpl(
       {this.id,
       this.batchId,
       this.link,
@@ -435,8 +437,8 @@ class _$_ClassLink implements _ClassLink {
       this.courseName,
       this.subjectName});
 
-  factory _$_ClassLink.fromJson(Map<String, dynamic> json) =>
-      _$$_ClassLinkFromJson(json);
+  factory _$ClassLinkImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ClassLinkImplFromJson(json);
 
   @override
   final int? id;
@@ -471,10 +473,10 @@ class _$_ClassLink implements _ClassLink {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ClassLink &&
+            other is _$ClassLinkImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.batchId, batchId) || other.batchId == batchId) &&
             (identical(other.link, link) || other.link == link) &&
@@ -519,12 +521,12 @@ class _$_ClassLink implements _ClassLink {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ClassLinkCopyWith<_$_ClassLink> get copyWith =>
-      __$$_ClassLinkCopyWithImpl<_$_ClassLink>(this, _$identity);
+  _$$ClassLinkImplCopyWith<_$ClassLinkImpl> get copyWith =>
+      __$$ClassLinkImplCopyWithImpl<_$ClassLinkImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ClassLinkToJson(
+    return _$$ClassLinkImplToJson(
       this,
     );
   }
@@ -544,10 +546,10 @@ abstract class _ClassLink implements ClassLink {
       final String? batchName,
       final String? branchName,
       final String? courseName,
-      final String? subjectName}) = _$_ClassLink;
+      final String? subjectName}) = _$ClassLinkImpl;
 
   factory _ClassLink.fromJson(Map<String, dynamic> json) =
-      _$_ClassLink.fromJson;
+      _$ClassLinkImpl.fromJson;
 
   @override
   int? get id;
@@ -577,6 +579,6 @@ abstract class _ClassLink implements ClassLink {
   String? get subjectName;
   @override
   @JsonKey(ignore: true)
-  _$$_ClassLinkCopyWith<_$_ClassLink> get copyWith =>
+  _$$ClassLinkImplCopyWith<_$ClassLinkImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

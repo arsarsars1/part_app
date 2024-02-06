@@ -133,11 +133,11 @@ class _$OrderResponseCopyWithImpl<$Res, $Val extends OrderResponse>
 }
 
 /// @nodoc
-abstract class _$$_OrderResponseCopyWith<$Res>
+abstract class _$$OrderResponseImplCopyWith<$Res>
     implements $OrderResponseCopyWith<$Res> {
-  factory _$$_OrderResponseCopyWith(
-          _$_OrderResponse value, $Res Function(_$_OrderResponse) then) =
-      __$$_OrderResponseCopyWithImpl<$Res>;
+  factory _$$OrderResponseImplCopyWith(
+          _$OrderResponseImpl value, $Res Function(_$OrderResponseImpl) then) =
+      __$$OrderResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -155,11 +155,11 @@ abstract class _$$_OrderResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_OrderResponseCopyWithImpl<$Res>
-    extends _$OrderResponseCopyWithImpl<$Res, _$_OrderResponse>
-    implements _$$_OrderResponseCopyWith<$Res> {
-  __$$_OrderResponseCopyWithImpl(
-      _$_OrderResponse _value, $Res Function(_$_OrderResponse) _then)
+class __$$OrderResponseImplCopyWithImpl<$Res>
+    extends _$OrderResponseCopyWithImpl<$Res, _$OrderResponseImpl>
+    implements _$$OrderResponseImplCopyWith<$Res> {
+  __$$OrderResponseImplCopyWithImpl(
+      _$OrderResponseImpl _value, $Res Function(_$OrderResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -177,7 +177,7 @@ class __$$_OrderResponseCopyWithImpl<$Res>
     Object? attempts = freezed,
     Object? createdAt = freezed,
   }) {
-    return _then(_$_OrderResponse(
+    return _then(_$OrderResponseImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -228,8 +228,8 @@ class __$$_OrderResponseCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_OrderResponse implements _OrderResponse {
-  const _$_OrderResponse(
+class _$OrderResponseImpl implements _OrderResponse {
+  const _$OrderResponseImpl(
       {required this.id,
       this.entity,
       this.amount,
@@ -242,8 +242,8 @@ class _$_OrderResponse implements _OrderResponse {
       this.attempts,
       this.createdAt});
 
-  factory _$_OrderResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_OrderResponseFromJson(json);
+  factory _$OrderResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OrderResponseImplFromJson(json);
 
   @override
   final String id;
@@ -274,10 +274,10 @@ class _$_OrderResponse implements _OrderResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OrderResponse &&
+            other is _$OrderResponseImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.entity, entity) || other.entity == entity) &&
             (identical(other.amount, amount) || other.amount == amount) &&
@@ -315,12 +315,12 @@ class _$_OrderResponse implements _OrderResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OrderResponseCopyWith<_$_OrderResponse> get copyWith =>
-      __$$_OrderResponseCopyWithImpl<_$_OrderResponse>(this, _$identity);
+  _$$OrderResponseImplCopyWith<_$OrderResponseImpl> get copyWith =>
+      __$$OrderResponseImplCopyWithImpl<_$OrderResponseImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OrderResponseToJson(
+    return _$$OrderResponseImplToJson(
       this,
     );
   }
@@ -338,10 +338,10 @@ abstract class _OrderResponse implements OrderResponse {
       final dynamic offerId,
       final String? status,
       final int? attempts,
-      final int? createdAt}) = _$_OrderResponse;
+      final int? createdAt}) = _$OrderResponseImpl;
 
   factory _OrderResponse.fromJson(Map<String, dynamic> json) =
-      _$_OrderResponse.fromJson;
+      _$OrderResponseImpl.fromJson;
 
   @override
   String get id;
@@ -367,7 +367,7 @@ abstract class _OrderResponse implements OrderResponse {
   int? get createdAt;
   @override
   @JsonKey(ignore: true)
-  _$$_OrderResponseCopyWith<_$_OrderResponse> get copyWith =>
+  _$$OrderResponseImplCopyWith<_$OrderResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -423,18 +423,21 @@ class _$NotesCopyWithImpl<$Res, $Val extends Notes>
 }
 
 /// @nodoc
-abstract class _$$_NotesCopyWith<$Res> implements $NotesCopyWith<$Res> {
-  factory _$$_NotesCopyWith(_$_Notes value, $Res Function(_$_Notes) then) =
-      __$$_NotesCopyWithImpl<$Res>;
+abstract class _$$NotesImplCopyWith<$Res> implements $NotesCopyWith<$Res> {
+  factory _$$NotesImplCopyWith(
+          _$NotesImpl value, $Res Function(_$NotesImpl) then) =
+      __$$NotesImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String? notesKey1, String? notesKey2});
 }
 
 /// @nodoc
-class __$$_NotesCopyWithImpl<$Res> extends _$NotesCopyWithImpl<$Res, _$_Notes>
-    implements _$$_NotesCopyWith<$Res> {
-  __$$_NotesCopyWithImpl(_$_Notes _value, $Res Function(_$_Notes) _then)
+class __$$NotesImplCopyWithImpl<$Res>
+    extends _$NotesCopyWithImpl<$Res, _$NotesImpl>
+    implements _$$NotesImplCopyWith<$Res> {
+  __$$NotesImplCopyWithImpl(
+      _$NotesImpl _value, $Res Function(_$NotesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -443,7 +446,7 @@ class __$$_NotesCopyWithImpl<$Res> extends _$NotesCopyWithImpl<$Res, _$_Notes>
     Object? notesKey1 = freezed,
     Object? notesKey2 = freezed,
   }) {
-    return _then(_$_Notes(
+    return _then(_$NotesImpl(
       notesKey1: freezed == notesKey1
           ? _value.notesKey1
           : notesKey1 // ignore: cast_nullable_to_non_nullable
@@ -458,11 +461,11 @@ class __$$_NotesCopyWithImpl<$Res> extends _$NotesCopyWithImpl<$Res, _$_Notes>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Notes implements _Notes {
-  const _$_Notes({this.notesKey1, this.notesKey2});
+class _$NotesImpl implements _Notes {
+  const _$NotesImpl({this.notesKey1, this.notesKey2});
 
-  factory _$_Notes.fromJson(Map<String, dynamic> json) =>
-      _$$_NotesFromJson(json);
+  factory _$NotesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NotesImplFromJson(json);
 
   @override
   final String? notesKey1;
@@ -475,10 +478,10 @@ class _$_Notes implements _Notes {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Notes &&
+            other is _$NotesImpl &&
             (identical(other.notesKey1, notesKey1) ||
                 other.notesKey1 == notesKey1) &&
             (identical(other.notesKey2, notesKey2) ||
@@ -492,12 +495,12 @@ class _$_Notes implements _Notes {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NotesCopyWith<_$_Notes> get copyWith =>
-      __$$_NotesCopyWithImpl<_$_Notes>(this, _$identity);
+  _$$NotesImplCopyWith<_$NotesImpl> get copyWith =>
+      __$$NotesImplCopyWithImpl<_$NotesImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NotesToJson(
+    return _$$NotesImplToJson(
       this,
     );
   }
@@ -505,9 +508,9 @@ class _$_Notes implements _Notes {
 
 abstract class _Notes implements Notes {
   const factory _Notes({final String? notesKey1, final String? notesKey2}) =
-      _$_Notes;
+      _$NotesImpl;
 
-  factory _Notes.fromJson(Map<String, dynamic> json) = _$_Notes.fromJson;
+  factory _Notes.fromJson(Map<String, dynamic> json) = _$NotesImpl.fromJson;
 
   @override
   String? get notesKey1;
@@ -515,6 +518,6 @@ abstract class _Notes implements Notes {
   String? get notesKey2;
   @override
   @JsonKey(ignore: true)
-  _$$_NotesCopyWith<_$_Notes> get copyWith =>
+  _$$NotesImplCopyWith<_$NotesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

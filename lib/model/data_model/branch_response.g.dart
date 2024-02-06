@@ -6,8 +6,8 @@ part of 'branch_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_BranchResponse _$$_BranchResponseFromJson(Map<String, dynamic> json) =>
-    _$_BranchResponse(
+_$BranchResponseImpl _$$BranchResponseImplFromJson(Map<String, dynamic> json) =>
+    _$BranchResponseImpl(
       status: json['status'] as int,
       branches: (json['branches'] as List<dynamic>?)
           ?.map((e) => Branch.fromJson(e as Map<String, dynamic>))
@@ -17,14 +17,15 @@ _$_BranchResponse _$$_BranchResponseFromJson(Map<String, dynamic> json) =>
           : Branch.fromJson(json['branch'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_BranchResponseToJson(_$_BranchResponse instance) =>
+Map<String, dynamic> _$$BranchResponseImplToJson(
+        _$BranchResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'branches': instance.branches,
       'branch': instance.branch,
     };
 
-_$_Branch _$$_BranchFromJson(Map<String, dynamic> json) => _$_Branch(
+_$BranchImpl _$$BranchImplFromJson(Map<String, dynamic> json) => _$BranchImpl(
       id: json['id'] as int,
       branchName: json['branch_name'] as String?,
       academyId: json['academy_id'] as int?,
@@ -55,7 +56,8 @@ _$_Branch _$$_BranchFromJson(Map<String, dynamic> json) => _$_Branch(
           : Manager.fromJson(json['manager_detail'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_BranchToJson(_$_Branch instance) => <String, dynamic>{
+Map<String, dynamic> _$$BranchImplToJson(_$BranchImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'branch_name': instance.branchName,
       'academy_id': instance.academyId,

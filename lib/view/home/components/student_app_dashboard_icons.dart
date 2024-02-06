@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/dashboard_item.dart';
+import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:showcaseview/showcaseview.dart';
@@ -35,7 +36,20 @@ class _StudentAppDashboardIconsState extends State<StudentAppDashboardIcons> {
       }
       bool temp = Hive.box(Database.userBox).get("Student Showcase") ?? false;
       if (temp == false) {
-        ShowCaseWidget.of(context).startShowCase(tempkey);
+        CommonDialog(
+          context: context,
+          message: 'Do you want to see the features available in the app ?',
+          buttonText: 'Proceed',
+          subColor: AppColors.primaryColor,
+          onTap: () {
+            Navigator.pop(context);
+            ShowCaseWidget.of(context).startShowCase(tempkey);
+          },
+          onCancelTap: () {
+            Hive.box(Database.userBox).put("Student Showcase", true);
+            Navigator.pop(context);
+          },
+        ).show();
       }
     });
     super.initState();

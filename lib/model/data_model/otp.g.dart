@@ -6,13 +6,13 @@ part of 'otp.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Otp _$$_OtpFromJson(Map<String, dynamic> json) => _$_Otp(
+_$OtpImpl _$$OtpImplFromJson(Map<String, dynamic> json) => _$OtpImpl(
       message: json['message'] as String,
       otp: json['otp'],
       status: json['status'] as int?,
     );
 
-Map<String, dynamic> _$$_OtpToJson(_$_Otp instance) => <String, dynamic>{
+Map<String, dynamic> _$$OtpImplToJson(_$OtpImpl instance) => <String, dynamic>{
       'message': instance.message,
       'otp': instance.otp,
       'status': instance.status,

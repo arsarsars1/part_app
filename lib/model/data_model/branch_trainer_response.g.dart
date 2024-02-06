@@ -6,17 +6,17 @@ part of 'branch_trainer_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_BranchTrainerResponse _$$_BranchTrainerResponseFromJson(
+_$BranchTrainerResponseImpl _$$BranchTrainerResponseImplFromJson(
         Map<String, dynamic> json) =>
-    _$_BranchTrainerResponse(
+    _$BranchTrainerResponseImpl(
       status: json['status'] as int,
       trainers: (json['trainers'] as List<dynamic>?)
           ?.map((e) => Trainer.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$_BranchTrainerResponseToJson(
-        _$_BranchTrainerResponse instance) =>
+Map<String, dynamic> _$$BranchTrainerResponseImplToJson(
+        _$BranchTrainerResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'trainers': instance.trainers,

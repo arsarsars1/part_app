@@ -6,8 +6,9 @@ part of 'notification_list.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_NotificationList _$$_NotificationListFromJson(Map<String, dynamic> json) =>
-    _$_NotificationList(
+_$NotificationListImpl _$$NotificationListImplFromJson(
+        Map<String, dynamic> json) =>
+    _$NotificationListImpl(
       status: json['status'] as int?,
       notifications: json['notifications'] == null
           ? null
@@ -15,14 +16,15 @@ _$_NotificationList _$$_NotificationListFromJson(Map<String, dynamic> json) =>
               json['notifications'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_NotificationListToJson(_$_NotificationList instance) =>
+Map<String, dynamic> _$$NotificationListImplToJson(
+        _$NotificationListImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'notifications': instance.notifications,
     };
 
-_$_Notifications _$$_NotificationsFromJson(Map<String, dynamic> json) =>
-    _$_Notifications(
+_$NotificationsImpl _$$NotificationsImplFromJson(Map<String, dynamic> json) =>
+    _$NotificationsImpl(
       currentPage: json['current_page'] as int?,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => NotificationData.fromJson(e as Map<String, dynamic>))
@@ -36,7 +38,7 @@ _$_Notifications _$$_NotificationsFromJson(Map<String, dynamic> json) =>
       to: json['to'] as int?,
     );
 
-Map<String, dynamic> _$$_NotificationsToJson(_$_Notifications instance) =>
+Map<String, dynamic> _$$NotificationsImplToJson(_$NotificationsImpl instance) =>
     <String, dynamic>{
       'current_page': instance.currentPage,
       'data': instance.data,
@@ -49,8 +51,9 @@ Map<String, dynamic> _$$_NotificationsToJson(_$_Notifications instance) =>
       'to': instance.to,
     };
 
-_$_NotificationData _$$_NotificationDataFromJson(Map<String, dynamic> json) =>
-    _$_NotificationData(
+_$NotificationDataImpl _$$NotificationDataImplFromJson(
+        Map<String, dynamic> json) =>
+    _$NotificationDataImpl(
       id: json['id'] as String?,
       screen: json['screen'] as String?,
       entityType: json['entity_type'] as String?,
@@ -73,7 +76,8 @@ _$_NotificationData _$$_NotificationDataFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$_NotificationDataToJson(_$_NotificationData instance) =>
+Map<String, dynamic> _$$NotificationDataImplToJson(
+        _$NotificationDataImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'screen': instance.screen,
@@ -89,7 +93,7 @@ Map<String, dynamic> _$$_NotificationDataToJson(_$_NotificationData instance) =>
       'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
-_$_Data _$$_DataFromJson(Map<String, dynamic> json) => _$_Data(
+_$DataImpl _$$DataImplFromJson(Map<String, dynamic> json) => _$DataImpl(
       title: json['title'] as String?,
       message: json['message'] as String?,
       screen: json['screen'] as String?,
@@ -97,7 +101,8 @@ _$_Data _$$_DataFromJson(Map<String, dynamic> json) => _$_Data(
       entityId: json['entity_id'] as int?,
     );
 
-Map<String, dynamic> _$$_DataToJson(_$_Data instance) => <String, dynamic>{
+Map<String, dynamic> _$$DataImplToJson(_$DataImpl instance) =>
+    <String, dynamic>{
       'title': instance.title,
       'message': instance.message,
       'screen': instance.screen,
