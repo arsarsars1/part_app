@@ -6,7 +6,6 @@ import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/constants/constant.dart';
-import 'package:part_app/view_model/batch/batch_cubit.dart';
 import 'package:part_app/view_model/branch/branch_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 

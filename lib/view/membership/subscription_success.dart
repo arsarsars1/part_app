@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class SubscriptionSuccess extends StatelessWidget {
           ),
           const Spacer(),
           ContinueButton(
-            onTap: () {
+            onTap: () async {
               if (academySuccess) {
                 /// The Platform condition check which is added below is added to remove the membership for ios
                 /// This will be removed in the future
@@ -64,10 +65,11 @@ class SubscriptionSuccess extends StatelessWidget {
                   );
                   return;
                 } else {
-                  context.read<MembershipCubit>().getMembership();
-                  Future.delayed(const Duration(seconds: 2)).then((value) {
+                  await context.read<MembershipCubit>().getMembership();
+                  Future.delayed(const Duration(seconds: 3)).then((value) {
                     context.read<MembershipCubit>().selectedMembership =
                         context.read<MembershipCubit>().memberships.first;
+                    log('${context.read<MembershipCubit>().selectedMembership?.paymentType}   ${context.read<MembershipCubit>().selectedMembership?.period}');
                     context
                         .read<MembershipCubit>()
                         .addMemberShip(paymentMethod: null);
@@ -79,11 +81,11 @@ class SubscriptionSuccess extends StatelessWidget {
                   });
                 }
               }
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                SwitchAccount.route,
-                (value) => false,
-              );
+              // Navigator.pushNamedAndRemoveUntil(
+              //   context,
+              //   SwitchAccount.route,
+              //   (value) => false,
+              // );
             },
           ),
           SizedBox(

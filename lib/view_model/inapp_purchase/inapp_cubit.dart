@@ -104,7 +104,7 @@ class InappCubit extends Cubit<InappState> {
               product.productDetails, '${product.id} is not a known product');
       }
     } catch (e) {
-      print('Error buying consumable: $e');
+      debugPrint('Error buying consumable: $e');
     }
   }
 

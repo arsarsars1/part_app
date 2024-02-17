@@ -6,7 +6,7 @@ abstract class InappState {}
 class InappLoading extends InappState {}
 
 class InappListed extends InappState {
-  List<PurchasableProduct> products;
+  final List<PurchasableProduct> products;
   InappListed(this.products);
 }
 
