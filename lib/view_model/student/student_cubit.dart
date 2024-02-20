@@ -231,6 +231,61 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
+  Future getStudentsForTrainer({
+    required int trainerId,
+    String? searchQuery,
+    String? activeStatus,
+    int? batchId,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _studentsMap.clear();
+      emit(FetchingStudents());
+    } else {
+      emit(FetchingStudents(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(StudentsFetched());
+      return;
+    }
+
+    StudentsResponse? response = await _studentService.getStudentsForTrainer(
+      trainerId: trainerId,
+      batchId: batchId,
+      searchQuery: searchQuery,
+      activeStatus: activeStatus,
+      pageNo: page,
+    );
+
+    if (response?.status == 1) {
+      nextPageUrl = response?.students?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      var items = response?.students?.data ?? [];
+      activeStudentsCount = response?.activeStudentsCount;
+      List<StudentModel> tempStudents = [];
+
+      for (var student in items) {
+        var details = student.studentDetail;
+        if (details != null) {
+          for (var details in details) {
+            var newStudent = StudentModel.fromEntity(student, details);
+            tempStudents.add(newStudent);
+          }
+        }
+      }
+
+      _studentsMap.addEntries(tempStudents.map((e) => MapEntry(e.detailId, e)));
+
+      emit(StudentsFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
   Future studentDetails(int? studentId) async {
     _student = null;
     emit(StudentDetailsFetching());

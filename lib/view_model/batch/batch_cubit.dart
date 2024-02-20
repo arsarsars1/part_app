@@ -265,6 +265,52 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future getBatchesByStatusForTrainer({
+    required int? trainerId,
+    int? branchId,
+    String status = 'ongoing',
+    String? search,
+    bool clean = false,
+    bool branchSearch = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(FetchingBatches());
+    } else {
+      emit(FetchingBatches(pagination: true));
+    }
+    if (nextPageUrl == null) {
+      emit(BatchesFetched());
+      return;
+    }
+    BatchResponse? response = await _batchService.getBatchesByStatus(
+      branchId: branchId,
+      status: status,
+      search: search,
+      page: page,
+      branchSearch: branchSearch,
+    );
+
+    if (response == null) {
+      emit(BatchNetworkError());
+    } else if (response.status == 1) {
+      nextPageUrl = response.batches?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      var items = response.batches?.data
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
+
+      _batches.addAll(items);
+      emit(BatchesFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
   Future getStudentAppBatchesByStatus({
     int? studentId,
     int? branchId,

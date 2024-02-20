@@ -82,6 +82,14 @@ class BranchCubit extends Cubit<BranchState> {
     emit(BranchesLoaded());
   }
 
+  Future getBranchesForTrainer({required int trainerId}) async {
+    emit(BranchesLoading());
+    List<Branch>? list = await _branchService.getBranchesForTrainer(trainerId: trainerId);
+    firstBranch = list?.firstWhere((element) => element.isActive == 1);
+    branches = list ?? [];
+    emit(BranchesLoaded());
+  }
+
   Future getStudentAppBranches({int? studentId}) async {
     emit(BranchesLoading());
     List<Branch>? list =

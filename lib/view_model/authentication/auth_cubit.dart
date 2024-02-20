@@ -15,6 +15,7 @@ import 'package:part_app/model/data_model/profile_update_request.dart';
 import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api.dart';
+import 'package:part_app/view/home/trainer_app_home.dart';
 
 import '../../flavors.dart';
 import '../../model/data_model/students_response.dart';
@@ -38,6 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
   User? _user;
   String? _token;
   int studentIndex = 0;
+  int trainerIndex = 0;
 
   String get phoneNumber => '+$_countryCode $_phoneNo';
 
@@ -440,7 +442,12 @@ class AuthCubit extends Cubit<AuthState> {
           (route) => false,
         );
       } else if (accountType == AccountType.trainer) {
-        Alert(context).show(message: 'WIP');
+        trainerIndex = 0;
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          TrainerAppHome.route,
+          (route) => false,
+        );
       } else {
         studentIndex = 0;
         Navigator.pushNamedAndRemoveUntil(

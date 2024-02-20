@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/students_response.dart';
+import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/account/account_card.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/home/student_app_home.dart';
+import 'package:part_app/view/home/trainer_app_home.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 import '../../model/data_base/data_base.dart';
@@ -36,7 +38,6 @@ class SwitchAccount extends StatelessWidget {
                     onTap: () {
                       cubit.accountType = AccountType.admin;
                       database.setUserType('admin');
-
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         Home.route,
@@ -77,25 +78,29 @@ class SwitchAccount extends StatelessWidget {
                       ),
                     ),
                   ),
-                // if (cubit.user?.trainerDetail != null &&
-                //     cubit.user!.trainerDetail!.isNotEmpty)
-                //   ListView.builder(
-                //     shrinkWrap: true,
-                //     physics: const NeverScrollableScrollPhysics(),
-                //     itemCount: cubit.user?.trainerDetail?.length,
-                //     itemBuilder: (context, index) {
-                //       Trainer trainer = cubit.user!.trainerDetail![index];
-                //       return AccountCard(
-                //         onTap: () {
-                //           cubit.accountType = AccountType.trainer;
-                //            database.setUserType('trainer');
-                //           Alert(context).show(message: 'WIP');
-                //         },
-                //         accountType: '${trainer.name}, Trainer',
-                //         academyName: trainer.academy?.academyName ?? '',
-                //       );
-                //     },
-                //   ),
+                if (cubit.user?.trainerDetail != null &&
+                    cubit.user!.trainerDetail!.isNotEmpty)
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: cubit.user?.trainerDetail?.length,
+                    itemBuilder: (context, index) {
+                      Trainer trainer = cubit.user!.trainerDetail![index];
+                      return AccountCard(
+                        onTap: () {
+                          cubit.accountType = AccountType.trainer;
+                           database.setUserType('trainer');
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            TrainerAppHome.route,
+                            (route) => false,
+                          );
+                        },
+                        accountType: '${trainer.name}, Trainer',
+                        academyName: trainer.academy?.academyName ?? '',
+                      );
+                    },
+                  ),
                 if (cubit.user?.studentDetail != null &&
                     cubit.user!.studentDetail!.isNotEmpty)
                   ListView.builder(

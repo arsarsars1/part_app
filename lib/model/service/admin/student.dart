@@ -92,6 +92,38 @@ class StudentService {
     }
   }
 
+  Future<StudentsResponse?> getStudentsForTrainer({
+    int? trainerId,
+    String? searchQuery,
+    String? activeStatus,
+    int? batchId,
+    int? pageNo,
+  }) async {
+    try {
+      String path = '';
+
+      if (batchId == null) {
+        path = '/trainers/$trainerId/students';
+      } else {
+        path = '/trainers/$trainerId/batches/$batchId/students';
+      }
+      if (activeStatus != null) {
+        path = '/trainers/$trainerId/batches/$batchId/$activeStatus';
+      }
+
+      if (searchQuery != null) {
+        path += '/search/$searchQuery';
+      }
+
+      path += '?page=$pageNo';
+
+      var response = await _client.get(queryPath: path);
+      return studentsResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentResponse?> studentDetails(int? studentId) async {
     try {
       var response = await _client.get(queryPath: '/admin/students/$studentId');
