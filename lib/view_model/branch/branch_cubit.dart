@@ -147,6 +147,44 @@ class BranchCubit extends Cubit<BranchState> {
     }
   }
 
+  /// Method to get thr trainers list for the specific branch
+  /// [ branchId ] is the branch Id and is required
+  Future getBranchTrainersForTrainer({
+    required int trainerId,
+    required String branchId,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _trainers.clear();
+      emit(TrainersLoading());
+    } else {
+      emit(TrainersLoading(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(TrainersLoaded());
+      return;
+    }
+
+    var temp = await _branchService.getTrainersForTrainer(
+      trainerId: trainerId,
+      branchId: branchId,
+      pageNo: page,
+    );
+    if (temp?.status == 1) {
+      nextPageUrl = temp?.trainers?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+      _trainers.addAll(temp!.trainers!.data);
+      emit(TrainersLoaded());
+    } else {
+      emit(TrainersFailed('Failed to get the trainers list'));
+    }
+  }
+
   Future getBatchTrainers({
     required String batchId,
     bool clean = false,

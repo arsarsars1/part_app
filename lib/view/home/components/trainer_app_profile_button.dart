@@ -73,8 +73,8 @@ class _TrainerProfileButtonState extends State<TrainerProfileButton> {
                   ? '${F.baseUrl}/trainers/${authCubit.user?.trainerDetail?[authCubit.trainerIndex].id}/images/profile-pic/${authCubit.user?.trainerDetail?.first.profilePic}'
                   : user?.trainerDetail?[authCubit.trainerIndex].gender ==
                           "male"
-                      ? "https://dev.partapp.in/images/avatars/avatar-5.png"
-                      : "https://dev.partapp.in/images/avatars/avatar-1.png";
+                      ? "https://v1.partapp.in/images/avatars/avatar-5.png"
+                      : "https://v1.partapp.in/images/avatars/avatar-1.png";
             } else if (state is ProfileLoaded) {
               url =
                   '${F.baseUrl}/trainers/${authCubit.user?.trainerDetail?[authCubit.trainerIndex].id}/images/profile-pic/${state.profilePic}';

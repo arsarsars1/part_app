@@ -59,8 +59,8 @@ class _LeadDetailsState extends State<LeadDetails> {
                           ? '${F.baseUrl}/admin/images/lead/${cubit.lead?.id}'
                               '/${cubit.lead?.profilePic}'
                           : cubit.lead?.gender == "male"
-                              ? "https://dev.partapp.in/images/avatars/avatar-5.png"
-                              : "https://dev.partapp.in/images/avatars/avatar-1.png",
+                              ? "https://v1.partapp.in/images/avatars/avatar-5.png"
+                              : "https://v1.partapp.in/images/avatars/avatar-1.png",
                       onEdit: () {},
                       onAvatar: (File value) {},
                       onChange: (File value) {},

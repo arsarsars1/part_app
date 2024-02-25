@@ -466,9 +466,9 @@ class AuthCubit extends Cubit<AuthState> {
         url = '${F.baseUrl}/admin/images/profile-pic'
             '/${user?.adminDetail?.profilePic}';
       } else if (user?.adminDetail?.gender == "male") {
-        url = "https://dev.partapp.in/images/avatars/avatar-5.png";
+        url = "https://v1.partapp.in/images/avatars/avatar-5.png";
       } else {
-        url = "https://dev.partapp.in/images/avatars/avatar-1.png";
+        url = "https://v1.partapp.in/images/avatars/avatar-1.png";
       }
     } else if (accountType == AccountType.student) {
       if (user?.studentDetail?[studentIndex].profilePic?.isNotEmpty ?? false) {
@@ -476,9 +476,9 @@ class AuthCubit extends Cubit<AuthState> {
             '${F.baseUrl}/students/${user?.studentDetail?[studentIndex].id}/images/profile-pic'
             '/${user?.studentDetail?[studentIndex].profilePic}';
       } else if (user?.adminDetail?.gender == "male") {
-        url = "https://dev.partapp.in/images/avatars/avatar-5.png";
+        url = "https://v1.partapp.in/images/avatars/avatar-5.png";
       } else {
-        url = "https://dev.partapp.in/images/avatars/avatar-1.png";
+        url = "https://v1.partapp.in/images/avatars/avatar-1.png";
       }
     }
     return url;

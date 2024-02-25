@@ -42,8 +42,8 @@ class _StudentDetailsState extends State<StudentDetails> {
                         ? '${F.baseUrl}/admin/images/student/${details?.id}'
                             '/${details?.profilePic}'
                         : details?.gender == "male"
-                            ? "https://dev.partapp.in/images/avatars/avatar-5.png"
-                            : "https://dev.partapp.in/images/avatars/avatar-1.png",
+                            ? "https://v1.partapp.in/images/avatars/avatar-5.png"
+                            : "https://v1.partapp.in/images/avatars/avatar-1.png",
                     onEdit: () {},
                     onAvatar: (File value) {},
                     onChange: (File value) {

@@ -6,7 +6,7 @@ import 'package:part_app/model/data_model/notification_list.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/home/components/trainer_app_profile_button.dart';
-import 'package:part_app/view/notifications/notification_screen.dart';
+import 'package:part_app/view/notifications/trainer_app_notification_screen.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/home/home_cubit.dart';
 import 'package:part_app/view_model/notification/cubit/notification_cubit.dart';
@@ -22,10 +22,11 @@ class TrainerAppHomeBar extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       NotificationList? list = await homeCubit.getTrainerAppNotificationList(
           trainerId: context
-              .read<AuthCubit>()
-              .user
-              ?.trainerDetail?[context.read<AuthCubit>().trainerIndex]
-              .id,
+                  .read<AuthCubit>()
+                  .user
+                  ?.trainerDetail?[context.read<AuthCubit>().trainerIndex]
+                  .id ??
+              0,
           clean: true);
       notificationCubit.emitNotificationBadge(list);
     });
@@ -59,7 +60,8 @@ class TrainerAppHomeBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, NotificationScreen.route);
+                Navigator.pushNamed(
+                    context, TrainerAppNotificationScreen.route);
               },
               child: Stack(
                 children: [
@@ -131,7 +133,8 @@ class TrainerAppHomeBar extends StatelessWidget {
               padding: EdgeInsets.only(right: 32.w),
               child: Text(
                 cubit.user?.trainerDetail?[cubit.trainerIndex].academy
-                        ?.academyName ?? 'N/A',
+                        ?.academyName ??
+                    'N/A',
                 maxLines: 2,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: AppColors.primaryColor,

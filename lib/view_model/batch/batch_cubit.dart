@@ -162,6 +162,16 @@ class BatchCubit extends Cubit<BatchState> {
     emit(CoursesUpdated());
   }
 
+  Future getCoursesForTrainer({required int acadamyId}) async {
+    _courses = await _batchService.getCoursesForTrainer(acadamyId: acadamyId);
+    if (_courses == null) {
+      emit(BatchNetworkError());
+    }
+    _defaultCourse = null;
+    _defaultSubject = null;
+    emit(CoursesUpdated());
+  }
+
   Future getSubjects({required int? courseId}) async {
     emit(GettingCourses());
     _defaultSubject = null;
@@ -173,6 +183,25 @@ class BatchCubit extends Cubit<BatchState> {
     emit(CreatingBatch());
     try {
       BatchResponse? response = await _batchService.createBatch(request);
+      if (response == null) {
+        emit(BatchNetworkError());
+      } else if (response.status == 1) {
+        await getBatches();
+        sharedToken = response.batch?.shareToken;
+        emit(CreatedBatch());
+      } else {
+        emit(CreateBatchFailed('Failed to create batch.'));
+      }
+    } catch (e) {
+      emit(CreateBatchFailed('Failed to create batch.'));
+    }
+  }
+
+  Future createBatchForTrainer(int trainerId, BatchRequest request) async {
+    emit(CreatingBatch());
+    try {
+      BatchResponse? response =
+          await _batchService.createBatchForTrainer(trainerId, request);
       if (response == null) {
         emit(BatchNetworkError());
       } else if (response.status == 1) {
@@ -285,7 +314,8 @@ class BatchCubit extends Cubit<BatchState> {
       emit(BatchesFetched());
       return;
     }
-    BatchResponse? response = await _batchService.getBatchesByStatus(
+    BatchResponse? response = await _batchService.getBatchesByStatusForTrainer(
+      trainerId: trainerId,
       branchId: branchId,
       status: status,
       search: search,
@@ -474,6 +504,46 @@ class BatchCubit extends Cubit<BatchState> {
       // fetch the courses list
       if (_courses == null || _courses!.isEmpty) {
         await getCourses();
+      }
+
+      await getSubjects(courseId: _batch?.course?.id);
+      _defaultCourse = getCourseMenuItem(_batch?.course?.id);
+      _defaultSubject = getSubjectMenuItem(_batch?.subject?.id);
+
+      _days = _batch?.batchDetail
+              ?.map((e) => Days(
+                    day: e.day,
+                    endTime: e.endTime,
+                    startTime: e.startTime,
+                  ))
+              .toList() ??
+          [];
+
+      var items = _batch?.trainers?.map((e) => e.id).toList();
+      if (items != null) {
+        _selectedTrainers.addAll(items);
+      }
+      emit(FetchedBatch());
+    } else {
+      emit(FetchBatchFailed('Failed to fetch batch details.'));
+    }
+  }
+
+  Future getBatchForTrainer(
+      {required int trainerId, required String batchId, required int acadamyId}) async {
+    emit(FetchingBatch());
+    BatchResponse? response = await _batchService.getBatchForTrainer(
+        trainerId: trainerId, id: batchId);
+    if (response?.status == 1 && response?.batch != null) {
+      _batch = response?.batch;
+      _batchModel = BatchModel.fromEntity(response!.batch!);
+
+      // fetch the students
+      // getStudentsByBatch(_batch?.id);
+
+      // fetch the courses list
+      if (_courses == null || _courses!.isEmpty) {
+        await getCoursesForTrainer(acadamyId: acadamyId);
       }
 
       await getSubjects(courseId: _batch?.course?.id);

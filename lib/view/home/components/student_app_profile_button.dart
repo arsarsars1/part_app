@@ -70,8 +70,8 @@ class _StudentProfileButtonState extends State<StudentProfileButton> {
                   ? '${F.baseUrl}/students/${authCubit.user?.studentDetail?[authCubit.studentIndex].id}/images/profile-pic/${authCubit.user?.studentDetail?.first.profilePic}'
                   : user?.studentDetail?[authCubit.studentIndex].gender ==
                           "male"
-                      ? "https://dev.partapp.in/images/avatars/avatar-5.png"
-                      : "https://dev.partapp.in/images/avatars/avatar-1.png";
+                      ? "https://v1.partapp.in/images/avatars/avatar-5.png"
+                      : "https://v1.partapp.in/images/avatars/avatar-1.png";
             } else if (state is ProfileLoaded) {
               url =
                   '${F.baseUrl}/students/${authCubit.user?.studentDetail?[authCubit.studentIndex].id}/images/profile-pic/${state.profilePic}';

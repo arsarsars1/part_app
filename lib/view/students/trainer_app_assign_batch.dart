@@ -77,7 +77,7 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
                 const SizedBox(
                   height: 20,
                 ),
-                BranchField(
+                TrainerAppBranchField(
                   onSelect: (value) {
                     setState(() {
                       branchId = value;

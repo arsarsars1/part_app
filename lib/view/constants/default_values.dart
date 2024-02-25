@@ -277,7 +277,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Batches',
-      route: '/batches',
+      route: '/trainer-app-batches',
       asset: Assets.batches,
       color: Color(0xFFF7B733),
     ),

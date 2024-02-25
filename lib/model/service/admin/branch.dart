@@ -151,6 +151,18 @@ class BranchService {
     }
   }
 
+  Future<TrainerResponse?> getTrainersForTrainer(
+      {required int trainerId ,required String branchId, int pageNo = 1}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/trainers/$trainerId/branches/$branchId/trainers?page=$pageNo',
+      );
+      return trainerResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<TrainerResponse?> getBatchTrainers(
       {required String batchId, int pageNo = 1}) async {
     try {

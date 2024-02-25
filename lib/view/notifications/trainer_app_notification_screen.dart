@@ -9,21 +9,24 @@ import 'package:part_app/view/notifications/widgets/custom_container_for_notific
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/notification/cubit/notification_cubit.dart';
 
-class NotificationScreen extends StatefulWidget {
-  static const route = '/notifications';
-  const NotificationScreen({super.key});
+class TrainerAppNotificationScreen extends StatefulWidget {
+  static const route = '/trainer-app-notifications';
+  const TrainerAppNotificationScreen({super.key});
 
   @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
+  State<TrainerAppNotificationScreen> createState() =>
+      _TrainerAppNotificationScreenState();
 }
 
-class _NotificationScreenState extends State<NotificationScreen> {
+class _TrainerAppNotificationScreenState
+    extends State<TrainerAppNotificationScreen> {
   ScrollController scrollController = ScrollController();
+  AuthCubit? authCubit;
 
   @override
   void initState() {
     super.initState();
-
+    authCubit = context.read<AuthCubit>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<StudentCubit>().clean();
     });
@@ -38,7 +41,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
         title: 'Notifications',
       ),
       body: FutureBuilder(
-        future: cubit.getNotificationList(clean: true),
+        future: cubit.getTrainerAppNotificationList(
+            trainerId: authCubit
+                    ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+                0,
+            clean: true),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           return BlocConsumer<HomeCubit, HomeState>(
             listener: (context, state) {

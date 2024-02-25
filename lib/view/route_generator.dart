@@ -20,6 +20,9 @@ import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/batch/student_app_batch_list.dart';
+import 'package:part_app/view/batch/trainer_app_add_batch.dart';
+import 'package:part_app/view/batch/trainer_app_batch_details.dart';
+import 'package:part_app/view/batch/trainer_app_batch_list.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
@@ -60,6 +63,7 @@ import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/notifications/notification_screen.dart';
 import 'package:part_app/view/notifications/student_app_notification_screen.dart';
+import 'package:part_app/view/notifications/trainer_app_notification_screen.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/students/add_student.dart';
@@ -111,7 +115,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const TrainerAppHome(),
           settings: settings,
-        );  
+        );
       case SplashScreen.route:
         return MaterialPageRoute(
           builder: (_) => const SplashScreen(),
@@ -300,6 +304,11 @@ class RouteGenerator {
           builder: (_) => const BatchesPage(),
           settings: settings,
         );
+      case TrainerAppBatchesPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppBatchesPage(),
+          settings: settings,
+        );
       case StudentAppBatchesPage.route:
         return MaterialPageRoute(
           builder: (_) => const StudentAppBatchesPage(),
@@ -310,6 +319,11 @@ class RouteGenerator {
           builder: (_) => const AddBatch(),
           settings: settings,
         );
+      case TrainerAppAddBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppAddBatch(),
+          settings: settings,
+        );
       case TrainerBranches.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerBranches(),
@@ -318,6 +332,11 @@ class RouteGenerator {
       case BatchDetails.route:
         return MaterialPageRoute(
           builder: (_) => const BatchDetails(),
+          settings: settings,
+        );
+      case TrainerAppBatchDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppBatchDetails(),
           settings: settings,
         );
       case AssignedBatches.route:
@@ -366,7 +385,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const TrainerAppStudentsView(),
           settings: settings,
-        );  
+        );
       case AddStudent.route:
         return MaterialPageRoute(
           builder: (_) => const AddStudent(),
@@ -376,7 +395,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const TrainerAppAddStudent(),
           settings: settings,
-        );  
+        );
       case AssignBatch.route:
         return MaterialPageRoute(
           builder: (_) => AssignBatch(
@@ -390,7 +409,7 @@ class RouteGenerator {
             editStudent: settings.arguments as bool,
           ),
           settings: settings,
-        );  
+        );
       case AssignStudentBatch.route:
         return MaterialPageRoute(
           builder: (_) => AssignStudentBatch(
@@ -574,6 +593,11 @@ class RouteGenerator {
       case NotificationScreen.route:
         return MaterialPageRoute(
           builder: (_) => const NotificationScreen(),
+          settings: settings,
+        );
+      case TrainerAppNotificationScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppNotificationScreen(),
           settings: settings,
         );
       case StudentAppNotificationScreen.route:

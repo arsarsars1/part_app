@@ -71,8 +71,8 @@ class _ProfileButtonState extends State<ProfileButton> {
                   ? '${F.baseUrl}/admin/images/profile-pic'
                       '/${context.read<AuthCubit>().user?.adminDetail?.profilePic}'
                   : user?.adminDetail?.gender == "male"
-                      ? "https://dev.partapp.in/images/avatars/avatar-5.png"
-                      : "https://dev.partapp.in/images/avatars/avatar-1.png";
+                      ? "https://v1.partapp.in/images/avatars/avatar-5.png"
+                      : "https://v1.partapp.in/images/avatars/avatar-1.png";
             } else if (state is ProfileLoaded) {
               url = '${F.baseUrl}/admin/images/profile-pic'
                   '/${state.profilePic}';

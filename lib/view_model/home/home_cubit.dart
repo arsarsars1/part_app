@@ -281,7 +281,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future getTrainerAppNotificationList({
-    int? trainerId,
+    required int trainerId,
     bool clean = true,
   }) async {
     if (clean) {
