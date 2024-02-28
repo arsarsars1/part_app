@@ -4,11 +4,11 @@ import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/batch/batch_students.dart';
 import 'package:part_app/view/batch/cancel_batch_class.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
+import 'package:part_app/view/batch/trainer_app_batch_students.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -27,7 +27,14 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
   bool isActive = true;
   ScrollController scrollController = ScrollController();
   BatchModel? batch;
+  AuthCubit? authCubit;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    authCubit = context.read<AuthCubit>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,10 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
     return WillPopScope(
       onWillPop: () async {
         if (batchCubit.isFromBatch) {
-          batchCubit.getBatchesByStatus(
+          batchCubit.getBatchesByStatusForTrainer(
+            trainerId: authCubit
+                    ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+                0,
             branchId: batch?.branchId,
             status: context.read<BatchCubit>().tempStatus,
             clean: true,
@@ -50,7 +60,10 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
           title: 'Batch Details',
           onPressed: () {
             if (batchCubit.isFromBatch) {
-              batchCubit.getBatchesByStatus(
+              batchCubit.getBatchesByStatusForTrainer(
+                trainerId: authCubit?.user
+                        ?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+                    0,
                 branchId: batch?.branchId,
                 status: context.read<BatchCubit>().tempStatus,
                 clean: true,
@@ -379,7 +392,7 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
                               ],
                             ),
                           ),
-                          BatchStudents(
+                          TrainerAppBatchStudents(
                             onChange: (bool value) {
                               isActive = value;
                               doSearch();
@@ -412,7 +425,10 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
   }
 
   void doSearch({bool clean = true}) {
-    context.read<StudentCubit>().getStudents(
+    context.read<StudentCubit>().getStudentsForTrainer(
+          trainerId: authCubit
+                  ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+              0,
           batchId: batch?.id,
           searchQuery: null,
           activeStatus: isActive ? null : 'inactive-students',

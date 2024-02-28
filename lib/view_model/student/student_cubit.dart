@@ -301,6 +301,23 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
+  Future studentDetailsForTrainer(
+      {required int trainerId, int? studentId}) async {
+    _student = null;
+    emit(StudentDetailsFetching());
+    StudentResponse? response =
+        await _studentService.studentDetailsForTrainer(trainerId, studentId);
+    if (response?.status == 1) {
+      _student = response?.student;
+      emit(StudentDetailsFetched());
+    } else {
+      emit(
+        StudentDetailsFailed(
+            response?.message ?? 'Failed to fetch student details,'),
+      );
+    }
+  }
+
   void insertStudent() {
     emit(StudentsFetched());
   }

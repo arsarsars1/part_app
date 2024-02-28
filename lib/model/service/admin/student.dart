@@ -133,6 +133,17 @@ class StudentService {
     }
   }
 
+  Future<StudentResponse?> studentDetailsForTrainer(
+      int trainerId, int? studentId) async {
+    try {
+      var response = await _client.get(
+          queryPath: '/trainers/$trainerId/students/$studentId');
+      return studentResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentsBatchResponse?> getStudentBatches(int? studentId) async {
     var response =
         await _client.get(queryPath: '/admin/students/$studentId/batches');

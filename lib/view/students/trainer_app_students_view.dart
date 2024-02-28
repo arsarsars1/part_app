@@ -4,8 +4,8 @@ import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
-import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/trainer_app_add_student.dart';
+import 'package:part_app/view/students/trainer_app_student_details.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view/students/widgets/student_item.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -93,8 +93,8 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                           ),
                           child: Button(
                             height: 30.h,
-                            onTap: () =>
-                                Navigator.pushNamed(context, TrainerAppAddStudent.route),
+                            onTap: () => Navigator.pushNamed(
+                                context, TrainerAppAddStudent.route),
                             title: 'Add New Student',
                           ),
                         ),
@@ -329,10 +329,18 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                                     return StudentItem(
                                       student: student,
                                       onTap: () {
-                                        cubit.studentDetails(student.detailId);
+                                        cubit.studentDetailsForTrainer(
+                                            trainerId: authCubit
+                                                    ?.user
+                                                    ?.trainerDetail?[authCubit
+                                                            ?.trainerIndex ??
+                                                        0]
+                                                    .id ??
+                                                0,
+                                            studentId: student.detailId);
                                         Navigator.pushNamed(
                                           context,
-                                          StudentDetails.route,
+                                          TrainerAppStudentDetails.route,
                                         );
                                       },
                                     );

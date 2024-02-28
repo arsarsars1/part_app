@@ -77,6 +77,7 @@ import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view/students/trainer_app_add_student.dart';
 import 'package:part_app/view/students/trainer_app_assign_batch.dart';
+import 'package:part_app/view/students/trainer_app_student_details.dart';
 import 'package:part_app/view/students/trainer_app_students_view.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/add_advance_salary.dart';
@@ -420,6 +421,11 @@ class RouteGenerator {
       case StudentDetails.route:
         return MaterialPageRoute(
           builder: (_) => const StudentDetails(),
+          settings: settings,
+        );
+      case TrainerAppStudentDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppStudentDetails(),
           settings: settings,
         );
       case EditStudent.route:
