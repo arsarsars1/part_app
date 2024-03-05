@@ -7,10 +7,10 @@ import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/fee/student_admission_fee_details.dart';
-import 'package:part_app/view/fee/student_fee_details.dart';
+import 'package:part_app/view/fee/trainer_app_student_fee_details.dart';
 import 'package:part_app/view/students/edit_student.dart';
-import 'package:part_app/view/students/edit_student_batches.dart';
-import 'package:part_app/view/students/student_attendence.dart';
+import 'package:part_app/view/students/trainer_app_edit_student_batches.dart';
+import 'package:part_app/view/students/trainer_app_student_attendence.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAppStudentDetails extends StatefulWidget {
@@ -19,11 +19,19 @@ class TrainerAppStudentDetails extends StatefulWidget {
   const TrainerAppStudentDetails({Key? key}) : super(key: key);
 
   @override
-  State<TrainerAppStudentDetails> createState() => _TrainerAppStudentDetailsState();
+  State<TrainerAppStudentDetails> createState() =>
+      _TrainerAppStudentDetailsState();
 }
 
 class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
   bool active = true;
+  AuthCubit? authCubit;
+
+  @override
+  void initState() {
+    authCubit = context.read<AuthCubit>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,10 +155,16 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                 LargeButton(
                   title: 'Student Batches',
                   onTap: () {
-                    context.read<StudentCubit>().getStudentBatches();
+                    context.read<StudentCubit>().getStudentBatchesForTrainer(
+                          trainerId: authCubit
+                                  ?.user
+                                  ?.trainerDetail?[authCubit?.trainerIndex ?? 0]
+                                  .id ??
+                              0,
+                        );
                     Navigator.pushNamed(
                       context,
-                      EditStudentBatches.route,
+                      TrainerAppEditStudentBatches.route,
                       arguments: true,
                     );
                   },
@@ -163,7 +177,7 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                   onTap: () {
                     Navigator.pushNamed(
                       context,
-                      StudentAttendanceCalenderView.route,
+                      TrainerAppStudentAttendanceCalenderView.route,
                     );
                   },
                   color: const Color(0xFFA29CF4),
@@ -176,7 +190,7 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                   onTap: () {
                     Navigator.pushNamed(
                       context,
-                      StudentFeeDetails.route,
+                      TrainerAppStudentFeeDetails.route,
                     );
                   },
                   color: AppColors.defaultBlue,

@@ -151,6 +151,14 @@ class StudentService {
     return studentBatchResponseFromJson(jsonEncode(response));
   }
 
+  Future<StudentsBatchResponse?> getStudentBatchesForTrainer(
+      int? studentId, int? trainerId) async {
+    var response = await _client.get(
+        queryPath: '/trainers/$trainerId/students/$studentId/batches');
+
+    return studentBatchResponseFromJson(jsonEncode(response));
+  }
+
   Future<Common?> removeStudentBatch(int? batchId, int? studentId,
       {String? date, String? reason}) async {
     var response;
@@ -162,6 +170,24 @@ class StudentService {
     } else {
       response = await _client.post(
         postPath: '/admin/batches/$batchId/remove/$studentId',
+        data: {'rejoining_date': date, 'reason': reason},
+      );
+    }
+
+    return commonFromJson(jsonEncode(response));
+  }
+
+  Future<Common?> removeStudentBatchforTrainer(int? batchId, int? studentId,
+      {String? date, String? reason, int? trainerId}) async {
+    var response;
+    if (date == "") {
+      response = await _client.post(
+        postPath: '/trainers/$trainerId/batches/$batchId/remove/$studentId',
+        data: {'reason': reason},
+      );
+    } else {
+      response = await _client.post(
+        postPath: '/trainers/$trainerId/batches/$batchId/remove/$studentId',
         data: {'rejoining_date': date, 'reason': reason},
       );
     }

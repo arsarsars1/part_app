@@ -105,6 +105,35 @@ class FeeDetailsService {
     }
   }
 
+  Future<FeeDetailHistory?> studentFeeDetailsForTrainer({
+    int? trainerId,
+    int? month,
+    int? year,
+    String? feeType,
+    String? searchQuery,
+    int? studentId,
+    String? paymentStatus,
+    required int pageNo,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath: feeType == 'monthly'
+              ? month != null
+                  ? paymentStatus != 'all'
+                      ? '/trainers/$trainerId/students/$studentId/fee-details/$year/$month?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                      : '/trainers/$trainerId/students/$studentId/fee-details/$year/$month?fee_type=$feeType&page=$pageNo'
+                  : paymentStatus != 'all'
+                      ? '/trainers/$trainerId/students/$studentId/fee-details/$year?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                      : '/trainers/$trainerId/students/$studentId/fee-details/$year?fee_type=$feeType&page=$pageNo'
+              : paymentStatus != 'all'
+                  ? '/trainers/$trainerId/students/$studentId/fee-details?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                  : '/trainers/$trainerId/students/$studentId/fee-details?fee_type=$feeType&page=$pageNo');
+      return feeDetailHistoryFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentAppFeeDetailHistory?> studentAppFeeDetails({
     int? month,
     int? year,
