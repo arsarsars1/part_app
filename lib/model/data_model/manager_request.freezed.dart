@@ -154,11 +154,11 @@ class _$ManagerRequestCopyWithImpl<$Res, $Val extends ManagerRequest>
 }
 
 /// @nodoc
-abstract class _$$_ManagerRequestCopyWith<$Res>
+abstract class _$$ManagerRequestImplCopyWith<$Res>
     implements $ManagerRequestCopyWith<$Res> {
-  factory _$$_ManagerRequestCopyWith(
-          _$_ManagerRequest value, $Res Function(_$_ManagerRequest) then) =
-      __$$_ManagerRequestCopyWithImpl<$Res>;
+  factory _$$ManagerRequestImplCopyWith(_$ManagerRequestImpl value,
+          $Res Function(_$ManagerRequestImpl) then) =
+      __$$ManagerRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -179,11 +179,11 @@ abstract class _$$_ManagerRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ManagerRequestCopyWithImpl<$Res>
-    extends _$ManagerRequestCopyWithImpl<$Res, _$_ManagerRequest>
-    implements _$$_ManagerRequestCopyWith<$Res> {
-  __$$_ManagerRequestCopyWithImpl(
-      _$_ManagerRequest _value, $Res Function(_$_ManagerRequest) _then)
+class __$$ManagerRequestImplCopyWithImpl<$Res>
+    extends _$ManagerRequestCopyWithImpl<$Res, _$ManagerRequestImpl>
+    implements _$$ManagerRequestImplCopyWith<$Res> {
+  __$$ManagerRequestImplCopyWithImpl(
+      _$ManagerRequestImpl _value, $Res Function(_$ManagerRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -204,7 +204,7 @@ class __$$_ManagerRequestCopyWithImpl<$Res>
     Object? upiId = freezed,
     Object? address = freezed,
   }) {
-    return _then(_$_ManagerRequest(
+    return _then(_$ManagerRequestImpl(
       branchId: freezed == branchId
           ? _value.branchId
           : branchId // ignore: cast_nullable_to_non_nullable
@@ -268,8 +268,8 @@ class __$$_ManagerRequestCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_ManagerRequest implements _ManagerRequest {
-  const _$_ManagerRequest(
+class _$ManagerRequestImpl implements _ManagerRequest {
+  const _$ManagerRequestImpl(
       {this.branchId,
       this.name,
       this.mobileNo,
@@ -285,8 +285,8 @@ class _$_ManagerRequest implements _ManagerRequest {
       this.upiId,
       this.address});
 
-  factory _$_ManagerRequest.fromJson(Map<String, dynamic> json) =>
-      _$$_ManagerRequestFromJson(json);
+  factory _$ManagerRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ManagerRequestImplFromJson(json);
 
   @override
   final int? branchId;
@@ -323,10 +323,10 @@ class _$_ManagerRequest implements _ManagerRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ManagerRequest &&
+            other is _$ManagerRequestImpl &&
             (identical(other.branchId, branchId) ||
                 other.branchId == branchId) &&
             (identical(other.name, name) || other.name == name) &&
@@ -372,12 +372,13 @@ class _$_ManagerRequest implements _ManagerRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ManagerRequestCopyWith<_$_ManagerRequest> get copyWith =>
-      __$$_ManagerRequestCopyWithImpl<_$_ManagerRequest>(this, _$identity);
+  _$$ManagerRequestImplCopyWith<_$ManagerRequestImpl> get copyWith =>
+      __$$ManagerRequestImplCopyWithImpl<_$ManagerRequestImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ManagerRequestToJson(
+    return _$$ManagerRequestImplToJson(
       this,
     );
   }
@@ -398,10 +399,10 @@ abstract class _ManagerRequest implements ManagerRequest {
       final String? salaryDate,
       final String? salaryAmount,
       final String? upiId,
-      final String? address}) = _$_ManagerRequest;
+      final String? address}) = _$ManagerRequestImpl;
 
   factory _ManagerRequest.fromJson(Map<String, dynamic> json) =
-      _$_ManagerRequest.fromJson;
+      _$ManagerRequestImpl.fromJson;
 
   @override
   int? get branchId;
@@ -433,6 +434,6 @@ abstract class _ManagerRequest implements ManagerRequest {
   String? get address;
   @override
   @JsonKey(ignore: true)
-  _$$_ManagerRequestCopyWith<_$_ManagerRequest> get copyWith =>
+  _$$ManagerRequestImplCopyWith<_$ManagerRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

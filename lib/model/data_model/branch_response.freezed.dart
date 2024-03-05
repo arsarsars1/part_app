@@ -88,11 +88,11 @@ class _$BranchResponseCopyWithImpl<$Res, $Val extends BranchResponse>
 }
 
 /// @nodoc
-abstract class _$$_BranchResponseCopyWith<$Res>
+abstract class _$$BranchResponseImplCopyWith<$Res>
     implements $BranchResponseCopyWith<$Res> {
-  factory _$$_BranchResponseCopyWith(
-          _$_BranchResponse value, $Res Function(_$_BranchResponse) then) =
-      __$$_BranchResponseCopyWithImpl<$Res>;
+  factory _$$BranchResponseImplCopyWith(_$BranchResponseImpl value,
+          $Res Function(_$BranchResponseImpl) then) =
+      __$$BranchResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int status, List<Branch>? branches, Branch? branch});
@@ -102,11 +102,11 @@ abstract class _$$_BranchResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BranchResponseCopyWithImpl<$Res>
-    extends _$BranchResponseCopyWithImpl<$Res, _$_BranchResponse>
-    implements _$$_BranchResponseCopyWith<$Res> {
-  __$$_BranchResponseCopyWithImpl(
-      _$_BranchResponse _value, $Res Function(_$_BranchResponse) _then)
+class __$$BranchResponseImplCopyWithImpl<$Res>
+    extends _$BranchResponseCopyWithImpl<$Res, _$BranchResponseImpl>
+    implements _$$BranchResponseImplCopyWith<$Res> {
+  __$$BranchResponseImplCopyWithImpl(
+      _$BranchResponseImpl _value, $Res Function(_$BranchResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -116,7 +116,7 @@ class __$$_BranchResponseCopyWithImpl<$Res>
     Object? branches = freezed,
     Object? branch = freezed,
   }) {
-    return _then(_$_BranchResponse(
+    return _then(_$BranchResponseImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -136,13 +136,13 @@ class __$$_BranchResponseCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_BranchResponse implements _BranchResponse {
-  const _$_BranchResponse(
+class _$BranchResponseImpl implements _BranchResponse {
+  const _$BranchResponseImpl(
       {required this.status, final List<Branch>? branches, this.branch})
       : _branches = branches;
 
-  factory _$_BranchResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_BranchResponseFromJson(json);
+  factory _$BranchResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BranchResponseImplFromJson(json);
 
   @override
   final int status;
@@ -165,10 +165,10 @@ class _$_BranchResponse implements _BranchResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BranchResponse &&
+            other is _$BranchResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._branches, _branches) &&
             (identical(other.branch, branch) || other.branch == branch));
@@ -182,12 +182,13 @@ class _$_BranchResponse implements _BranchResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BranchResponseCopyWith<_$_BranchResponse> get copyWith =>
-      __$$_BranchResponseCopyWithImpl<_$_BranchResponse>(this, _$identity);
+  _$$BranchResponseImplCopyWith<_$BranchResponseImpl> get copyWith =>
+      __$$BranchResponseImplCopyWithImpl<_$BranchResponseImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BranchResponseToJson(
+    return _$$BranchResponseImplToJson(
       this,
     );
   }
@@ -197,10 +198,10 @@ abstract class _BranchResponse implements BranchResponse {
   const factory _BranchResponse(
       {required final int status,
       final List<Branch>? branches,
-      final Branch? branch}) = _$_BranchResponse;
+      final Branch? branch}) = _$BranchResponseImpl;
 
   factory _BranchResponse.fromJson(Map<String, dynamic> json) =
-      _$_BranchResponse.fromJson;
+      _$BranchResponseImpl.fromJson;
 
   @override
   int get status;
@@ -210,7 +211,7 @@ abstract class _BranchResponse implements BranchResponse {
   Branch? get branch;
   @override
   @JsonKey(ignore: true)
-  _$$_BranchResponseCopyWith<_$_BranchResponse> get copyWith =>
+  _$$BranchResponseImplCopyWith<_$BranchResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -419,9 +420,10 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
 }
 
 /// @nodoc
-abstract class _$$_BranchCopyWith<$Res> implements $BranchCopyWith<$Res> {
-  factory _$$_BranchCopyWith(_$_Branch value, $Res Function(_$_Branch) then) =
-      __$$_BranchCopyWithImpl<$Res>;
+abstract class _$$BranchImplCopyWith<$Res> implements $BranchCopyWith<$Res> {
+  factory _$$BranchImplCopyWith(
+          _$BranchImpl value, $Res Function(_$BranchImpl) then) =
+      __$$BranchImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -453,10 +455,11 @@ abstract class _$$_BranchCopyWith<$Res> implements $BranchCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_BranchCopyWithImpl<$Res>
-    extends _$BranchCopyWithImpl<$Res, _$_Branch>
-    implements _$$_BranchCopyWith<$Res> {
-  __$$_BranchCopyWithImpl(_$_Branch _value, $Res Function(_$_Branch) _then)
+class __$$BranchImplCopyWithImpl<$Res>
+    extends _$BranchCopyWithImpl<$Res, _$BranchImpl>
+    implements _$$BranchImplCopyWith<$Res> {
+  __$$BranchImplCopyWithImpl(
+      _$BranchImpl _value, $Res Function(_$BranchImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -479,7 +482,7 @@ class __$$_BranchCopyWithImpl<$Res>
     Object? district = freezed,
     Object? managerDetail = freezed,
   }) {
-    return _then(_$_Branch(
+    return _then(_$BranchImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -551,8 +554,8 @@ class __$$_BranchCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Branch implements _Branch {
-  const _$_Branch(
+class _$BranchImpl implements _Branch {
+  const _$BranchImpl(
       {required this.id,
       this.branchName,
       this.academyId,
@@ -570,8 +573,8 @@ class _$_Branch implements _Branch {
       this.district,
       this.managerDetail});
 
-  factory _$_Branch.fromJson(Map<String, dynamic> json) =>
-      _$$_BranchFromJson(json);
+  factory _$BranchImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BranchImplFromJson(json);
 
   @override
   final int id;
@@ -612,10 +615,10 @@ class _$_Branch implements _Branch {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Branch &&
+            other is _$BranchImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.branchName, branchName) ||
                 other.branchName == branchName) &&
@@ -668,12 +671,12 @@ class _$_Branch implements _Branch {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BranchCopyWith<_$_Branch> get copyWith =>
-      __$$_BranchCopyWithImpl<_$_Branch>(this, _$identity);
+  _$$BranchImplCopyWith<_$BranchImpl> get copyWith =>
+      __$$BranchImplCopyWithImpl<_$BranchImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BranchToJson(
+    return _$$BranchImplToJson(
       this,
     );
   }
@@ -696,9 +699,9 @@ abstract class _Branch implements Branch {
       final Country? country,
       final District? state,
       final District? district,
-      final Manager? managerDetail}) = _$_Branch;
+      final Manager? managerDetail}) = _$BranchImpl;
 
-  factory _Branch.fromJson(Map<String, dynamic> json) = _$_Branch.fromJson;
+  factory _Branch.fromJson(Map<String, dynamic> json) = _$BranchImpl.fromJson;
 
   @override
   int get id;
@@ -734,6 +737,6 @@ abstract class _Branch implements Branch {
   Manager? get managerDetail;
   @override
   @JsonKey(ignore: true)
-  _$$_BranchCopyWith<_$_Branch> get copyWith =>
+  _$$BranchImplCopyWith<_$BranchImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

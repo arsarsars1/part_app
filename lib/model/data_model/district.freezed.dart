@@ -79,21 +79,22 @@ class _$DistrictCopyWithImpl<$Res, $Val extends District>
 }
 
 /// @nodoc
-abstract class _$$_DistrictCopyWith<$Res> implements $DistrictCopyWith<$Res> {
-  factory _$$_DistrictCopyWith(
-          _$_District value, $Res Function(_$_District) then) =
-      __$$_DistrictCopyWithImpl<$Res>;
+abstract class _$$DistrictImplCopyWith<$Res>
+    implements $DistrictCopyWith<$Res> {
+  factory _$$DistrictImplCopyWith(
+          _$DistrictImpl value, $Res Function(_$DistrictImpl) then) =
+      __$$DistrictImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String? message, int id, String? districtName, String? stateName});
 }
 
 /// @nodoc
-class __$$_DistrictCopyWithImpl<$Res>
-    extends _$DistrictCopyWithImpl<$Res, _$_District>
-    implements _$$_DistrictCopyWith<$Res> {
-  __$$_DistrictCopyWithImpl(
-      _$_District _value, $Res Function(_$_District) _then)
+class __$$DistrictImplCopyWithImpl<$Res>
+    extends _$DistrictCopyWithImpl<$Res, _$DistrictImpl>
+    implements _$$DistrictImplCopyWith<$Res> {
+  __$$DistrictImplCopyWithImpl(
+      _$DistrictImpl _value, $Res Function(_$DistrictImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -104,7 +105,7 @@ class __$$_DistrictCopyWithImpl<$Res>
     Object? districtName = freezed,
     Object? stateName = freezed,
   }) {
-    return _then(_$_District(
+    return _then(_$DistrictImpl(
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -128,12 +129,12 @@ class __$$_DistrictCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_District implements _District {
-  const _$_District(
+class _$DistrictImpl implements _District {
+  const _$DistrictImpl(
       {this.message, required this.id, this.districtName, this.stateName});
 
-  factory _$_District.fromJson(Map<String, dynamic> json) =>
-      _$$_DistrictFromJson(json);
+  factory _$DistrictImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DistrictImplFromJson(json);
 
   @override
   final String? message;
@@ -150,10 +151,10 @@ class _$_District implements _District {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_District &&
+            other is _$DistrictImpl &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.districtName, districtName) ||
@@ -170,12 +171,12 @@ class _$_District implements _District {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DistrictCopyWith<_$_District> get copyWith =>
-      __$$_DistrictCopyWithImpl<_$_District>(this, _$identity);
+  _$$DistrictImplCopyWith<_$DistrictImpl> get copyWith =>
+      __$$DistrictImplCopyWithImpl<_$DistrictImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DistrictToJson(
+    return _$$DistrictImplToJson(
       this,
     );
   }
@@ -186,9 +187,10 @@ abstract class _District implements District {
       {final String? message,
       required final int id,
       final String? districtName,
-      final String? stateName}) = _$_District;
+      final String? stateName}) = _$DistrictImpl;
 
-  factory _District.fromJson(Map<String, dynamic> json) = _$_District.fromJson;
+  factory _District.fromJson(Map<String, dynamic> json) =
+      _$DistrictImpl.fromJson;
 
   @override
   String? get message;
@@ -200,6 +202,6 @@ abstract class _District implements District {
   String? get stateName;
   @override
   @JsonKey(ignore: true)
-  _$$_DistrictCopyWith<_$_District> get copyWith =>
+  _$$DistrictImplCopyWith<_$DistrictImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

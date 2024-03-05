@@ -6,12 +6,13 @@ part of 'common.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Common _$$_CommonFromJson(Map<String, dynamic> json) => _$_Common(
+_$CommonImpl _$$CommonImplFromJson(Map<String, dynamic> json) => _$CommonImpl(
       message: json['message'] as String?,
       status: json['status'] as int?,
     );
 
-Map<String, dynamic> _$$_CommonToJson(_$_Common instance) => <String, dynamic>{
+Map<String, dynamic> _$$CommonImplToJson(_$CommonImpl instance) =>
+    <String, dynamic>{
       'message': instance.message,
       'status': instance.status,
     };

@@ -6,9 +6,9 @@ part of 'attendence_add_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AttendenceAddRequest _$$_AttendenceAddRequestFromJson(
+_$AttendenceAddRequestImpl _$$AttendenceAddRequestImplFromJson(
         Map<String, dynamic> json) =>
-    _$_AttendenceAddRequest(
+    _$AttendenceAddRequestImpl(
       conductedOn: json['conducted_on'] as String?,
       startTime: json['start_time'] as String?,
       endTime: json['end_time'] as String?,
@@ -17,8 +17,8 @@ _$_AttendenceAddRequest _$$_AttendenceAddRequestFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$$_AttendenceAddRequestToJson(
-        _$_AttendenceAddRequest instance) =>
+Map<String, dynamic> _$$AttendenceAddRequestImplToJson(
+        _$AttendenceAddRequestImpl instance) =>
     <String, dynamic>{
       'conducted_on': instance.conductedOn,
       'start_time': instance.startTime,
@@ -26,13 +26,13 @@ Map<String, dynamic> _$$_AttendenceAddRequestToJson(
       'attendance[]': instance.attendance,
     };
 
-_$_Attendance _$$_AttendanceFromJson(Map<String, dynamic> json) =>
-    _$_Attendance(
+_$AttendanceImpl _$$AttendanceImplFromJson(Map<String, dynamic> json) =>
+    _$AttendanceImpl(
       studentDetailId: json['student_detail_id'] as int?,
       isPresent: json['is_present'] as int?,
     );
 
-Map<String, dynamic> _$$_AttendanceToJson(_$_Attendance instance) =>
+Map<String, dynamic> _$$AttendanceImplToJson(_$AttendanceImpl instance) =>
     <String, dynamic>{
       'student_detail_id': instance.studentDetailId,
       'is_present': instance.isPresent,

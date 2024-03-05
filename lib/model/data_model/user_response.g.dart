@@ -6,8 +6,8 @@ part of 'user_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UserResponse _$$_UserResponseFromJson(Map<String, dynamic> json) =>
-    _$_UserResponse(
+_$UserResponseImpl _$$UserResponseImplFromJson(Map<String, dynamic> json) =>
+    _$UserResponseImpl(
       user: json['user'] == null
           ? null
           : User.fromJson(json['user'] as Map<String, dynamic>),
@@ -16,7 +16,7 @@ _$_UserResponse _$$_UserResponseFromJson(Map<String, dynamic> json) =>
       status: json['status'] as int?,
     );
 
-Map<String, dynamic> _$$_UserResponseToJson(_$_UserResponse instance) =>
+Map<String, dynamic> _$$UserResponseImplToJson(_$UserResponseImpl instance) =>
     <String, dynamic>{
       'user': instance.user,
       'token': instance.token,
@@ -24,7 +24,7 @@ Map<String, dynamic> _$$_UserResponseToJson(_$_UserResponse instance) =>
       'status': instance.status,
     };
 
-_$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
+_$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       id: json['id'] as int,
       name: json['name'] as String?,
       countryCode: json['country_code'] as String?,
@@ -49,7 +49,8 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       managerDetail: json['manager_detail'] as List<dynamic>?,
     );
 
-Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
+Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'country_code': instance.countryCode,
@@ -64,7 +65,7 @@ Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
       'manager_detail': instance.managerDetail,
     };
 
-_$_Admin _$$_AdminFromJson(Map<String, dynamic> json) => _$_Admin(
+_$AdminImpl _$$AdminImplFromJson(Map<String, dynamic> json) => _$AdminImpl(
       id: json['id'] as int,
       name: json['name'] as String?,
       userId: json['user_id'] as int?,
@@ -87,7 +88,8 @@ _$_Admin _$$_AdminFromJson(Map<String, dynamic> json) => _$_Admin(
           : Academy.fromJson(json['academy'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_AdminToJson(_$_Admin instance) => <String, dynamic>{
+Map<String, dynamic> _$$AdminImplToJson(_$AdminImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'user_id': instance.userId,
@@ -104,7 +106,8 @@ Map<String, dynamic> _$$_AdminToJson(_$_Admin instance) => <String, dynamic>{
       'academy': instance.academy,
     };
 
-_$_Academy _$$_AcademyFromJson(Map<String, dynamic> json) => _$_Academy(
+_$AcademyImpl _$$AcademyImplFromJson(Map<String, dynamic> json) =>
+    _$AcademyImpl(
       id: json['id'] as int,
       academyName: json['academy_name'] as String?,
       countryId: json['country_id'] as int?,
@@ -140,7 +143,7 @@ _$_Academy _$$_AcademyFromJson(Map<String, dynamic> json) => _$_Academy(
               json['membership'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_AcademyToJson(_$_Academy instance) =>
+Map<String, dynamic> _$$AcademyImplToJson(_$AcademyImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'academy_name': instance.academyName,
@@ -165,8 +168,9 @@ Map<String, dynamic> _$$_AcademyToJson(_$_Academy instance) =>
       'membership': instance.membership,
     };
 
-_$_MembershipDetails _$$_MembershipDetailsFromJson(Map<String, dynamic> json) =>
-    _$_MembershipDetails(
+_$MembershipDetailsImpl _$$MembershipDetailsImplFromJson(
+        Map<String, dynamic> json) =>
+    _$MembershipDetailsImpl(
       id: json['id'] as int?,
       membershipType: json['membership_type'] as String?,
       countryId: json['country_id'] as int?,
@@ -187,8 +191,8 @@ _$_MembershipDetails _$$_MembershipDetailsFromJson(Map<String, dynamic> json) =>
       isActive: json['is_active'] as int?,
     );
 
-Map<String, dynamic> _$$_MembershipDetailsToJson(
-        _$_MembershipDetails instance) =>
+Map<String, dynamic> _$$MembershipDetailsImplToJson(
+        _$MembershipDetailsImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'membership_type': instance.membershipType,

@@ -128,11 +128,11 @@ class _$BatchRequestCopyWithImpl<$Res, $Val extends BatchRequest>
 }
 
 /// @nodoc
-abstract class _$$_BatchRequestCopyWith<$Res>
+abstract class _$$BatchRequestImplCopyWith<$Res>
     implements $BatchRequestCopyWith<$Res> {
-  factory _$$_BatchRequestCopyWith(
-          _$_BatchRequest value, $Res Function(_$_BatchRequest) then) =
-      __$$_BatchRequestCopyWithImpl<$Res>;
+  factory _$$BatchRequestImplCopyWith(
+          _$BatchRequestImpl value, $Res Function(_$BatchRequestImpl) then) =
+      __$$BatchRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -149,11 +149,11 @@ abstract class _$$_BatchRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BatchRequestCopyWithImpl<$Res>
-    extends _$BatchRequestCopyWithImpl<$Res, _$_BatchRequest>
-    implements _$$_BatchRequestCopyWith<$Res> {
-  __$$_BatchRequestCopyWithImpl(
-      _$_BatchRequest _value, $Res Function(_$_BatchRequest) _then)
+class __$$BatchRequestImplCopyWithImpl<$Res>
+    extends _$BatchRequestCopyWithImpl<$Res, _$BatchRequestImpl>
+    implements _$$BatchRequestImplCopyWith<$Res> {
+  __$$BatchRequestImplCopyWithImpl(
+      _$BatchRequestImpl _value, $Res Function(_$BatchRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -170,7 +170,7 @@ class __$$_BatchRequestCopyWithImpl<$Res>
     Object? trainers = freezed,
     Object? days = freezed,
   }) {
-    return _then(_$_BatchRequest(
+    return _then(_$BatchRequestImpl(
       batchName: freezed == batchName
           ? _value.batchName
           : batchName // ignore: cast_nullable_to_non_nullable
@@ -218,8 +218,8 @@ class __$$_BatchRequestCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_BatchRequest implements _BatchRequest {
-  const _$_BatchRequest(
+class _$BatchRequestImpl implements _BatchRequest {
+  const _$BatchRequestImpl(
       {this.batchName,
       this.branchId,
       this.courseId,
@@ -232,8 +232,8 @@ class _$_BatchRequest implements _BatchRequest {
       @JsonKey(name: 'days[]') final List<String>? days})
       : _days = days;
 
-  factory _$_BatchRequest.fromJson(Map<String, dynamic> json) =>
-      _$$_BatchRequestFromJson(json);
+  factory _$BatchRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BatchRequestImplFromJson(json);
 
   @override
   final String? batchName;
@@ -271,10 +271,10 @@ class _$_BatchRequest implements _BatchRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BatchRequest &&
+            other is _$BatchRequestImpl &&
             (identical(other.batchName, batchName) ||
                 other.batchName == batchName) &&
             (identical(other.branchId, branchId) ||
@@ -312,12 +312,12 @@ class _$_BatchRequest implements _BatchRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BatchRequestCopyWith<_$_BatchRequest> get copyWith =>
-      __$$_BatchRequestCopyWithImpl<_$_BatchRequest>(this, _$identity);
+  _$$BatchRequestImplCopyWith<_$BatchRequestImpl> get copyWith =>
+      __$$BatchRequestImplCopyWithImpl<_$BatchRequestImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BatchRequestToJson(
+    return _$$BatchRequestImplToJson(
       this,
     );
   }
@@ -334,10 +334,10 @@ abstract class _BatchRequest implements BatchRequest {
       final dynamic feeAmount,
       final dynamic admissionFees,
       @JsonKey(name: 'trainers[]') final dynamic trainers,
-      @JsonKey(name: 'days[]') final List<String>? days}) = _$_BatchRequest;
+      @JsonKey(name: 'days[]') final List<String>? days}) = _$BatchRequestImpl;
 
   factory _BatchRequest.fromJson(Map<String, dynamic> json) =
-      _$_BatchRequest.fromJson;
+      _$BatchRequestImpl.fromJson;
 
   @override
   String? get batchName;
@@ -363,7 +363,7 @@ abstract class _BatchRequest implements BatchRequest {
   List<String>? get days;
   @override
   @JsonKey(ignore: true)
-  _$$_BatchRequestCopyWith<_$_BatchRequest> get copyWith =>
+  _$$BatchRequestImplCopyWith<_$BatchRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -425,18 +425,20 @@ class _$DaysCopyWithImpl<$Res, $Val extends Days>
 }
 
 /// @nodoc
-abstract class _$$_DaysCopyWith<$Res> implements $DaysCopyWith<$Res> {
-  factory _$$_DaysCopyWith(_$_Days value, $Res Function(_$_Days) then) =
-      __$$_DaysCopyWithImpl<$Res>;
+abstract class _$$DaysImplCopyWith<$Res> implements $DaysCopyWith<$Res> {
+  factory _$$DaysImplCopyWith(
+          _$DaysImpl value, $Res Function(_$DaysImpl) then) =
+      __$$DaysImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? day, String? startTime, String? endTime});
 }
 
 /// @nodoc
-class __$$_DaysCopyWithImpl<$Res> extends _$DaysCopyWithImpl<$Res, _$_Days>
-    implements _$$_DaysCopyWith<$Res> {
-  __$$_DaysCopyWithImpl(_$_Days _value, $Res Function(_$_Days) _then)
+class __$$DaysImplCopyWithImpl<$Res>
+    extends _$DaysCopyWithImpl<$Res, _$DaysImpl>
+    implements _$$DaysImplCopyWith<$Res> {
+  __$$DaysImplCopyWithImpl(_$DaysImpl _value, $Res Function(_$DaysImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -446,7 +448,7 @@ class __$$_DaysCopyWithImpl<$Res> extends _$DaysCopyWithImpl<$Res, _$_Days>
     Object? startTime = freezed,
     Object? endTime = freezed,
   }) {
-    return _then(_$_Days(
+    return _then(_$DaysImpl(
       day: freezed == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
@@ -466,10 +468,11 @@ class __$$_DaysCopyWithImpl<$Res> extends _$DaysCopyWithImpl<$Res, _$_Days>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Days implements _Days {
-  const _$_Days({this.day, this.startTime, this.endTime});
+class _$DaysImpl implements _Days {
+  const _$DaysImpl({this.day, this.startTime, this.endTime});
 
-  factory _$_Days.fromJson(Map<String, dynamic> json) => _$$_DaysFromJson(json);
+  factory _$DaysImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DaysImplFromJson(json);
 
   @override
   final int? day;
@@ -484,10 +487,10 @@ class _$_Days implements _Days {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Days &&
+            other is _$DaysImpl &&
             (identical(other.day, day) || other.day == day) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
@@ -501,12 +504,12 @@ class _$_Days implements _Days {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DaysCopyWith<_$_Days> get copyWith =>
-      __$$_DaysCopyWithImpl<_$_Days>(this, _$identity);
+  _$$DaysImplCopyWith<_$DaysImpl> get copyWith =>
+      __$$DaysImplCopyWithImpl<_$DaysImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DaysToJson(
+    return _$$DaysImplToJson(
       this,
     );
   }
@@ -516,9 +519,9 @@ abstract class _Days implements Days {
   const factory _Days(
       {final int? day,
       final String? startTime,
-      final String? endTime}) = _$_Days;
+      final String? endTime}) = _$DaysImpl;
 
-  factory _Days.fromJson(Map<String, dynamic> json) = _$_Days.fromJson;
+  factory _Days.fromJson(Map<String, dynamic> json) = _$DaysImpl.fromJson;
 
   @override
   int? get day;
@@ -528,5 +531,6 @@ abstract class _Days implements Days {
   String? get endTime;
   @override
   @JsonKey(ignore: true)
-  _$$_DaysCopyWith<_$_Days> get copyWith => throw _privateConstructorUsedError;
+  _$$DaysImplCopyWith<_$DaysImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

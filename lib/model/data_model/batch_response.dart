@@ -74,6 +74,7 @@ abstract class Batch with _$Batch {
     int? courseId,
     int? subjectId,
     String? batchStatus,
+    String? shareToken,
     int? feeAmount,
     int? activeStudentsCount,
     int? inactiveStudentsCount,

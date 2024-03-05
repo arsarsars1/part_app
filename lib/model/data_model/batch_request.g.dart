@@ -6,8 +6,8 @@ part of 'batch_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_BatchRequest _$$_BatchRequestFromJson(Map<String, dynamic> json) =>
-    _$_BatchRequest(
+_$BatchRequestImpl _$$BatchRequestImplFromJson(Map<String, dynamic> json) =>
+    _$BatchRequestImpl(
       batchName: json['batch_name'] as String?,
       branchId: json['branch_id'] as int?,
       courseId: json['course_id'] as int?,
@@ -21,7 +21,7 @@ _$_BatchRequest _$$_BatchRequestFromJson(Map<String, dynamic> json) =>
           (json['days[]'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$$_BatchRequestToJson(_$_BatchRequest instance) =>
+Map<String, dynamic> _$$BatchRequestImplToJson(_$BatchRequestImpl instance) =>
     <String, dynamic>{
       'batch_name': instance.batchName,
       'branch_id': instance.branchId,
@@ -35,13 +35,14 @@ Map<String, dynamic> _$$_BatchRequestToJson(_$_BatchRequest instance) =>
       'days[]': instance.days,
     };
 
-_$_Days _$$_DaysFromJson(Map<String, dynamic> json) => _$_Days(
+_$DaysImpl _$$DaysImplFromJson(Map<String, dynamic> json) => _$DaysImpl(
       day: json['day'] as int?,
       startTime: json['start_time'] as String?,
       endTime: json['end_time'] as String?,
     );
 
-Map<String, dynamic> _$$_DaysToJson(_$_Days instance) => <String, dynamic>{
+Map<String, dynamic> _$$DaysImplToJson(_$DaysImpl instance) =>
+    <String, dynamic>{
       'day': instance.day,
       'start_time': instance.startTime,
       'end_time': instance.endTime,

@@ -101,11 +101,11 @@ class _$BatchResponseCopyWithImpl<$Res, $Val extends BatchResponse>
 }
 
 /// @nodoc
-abstract class _$$_BatchResponseCopyWith<$Res>
+abstract class _$$BatchResponseImplCopyWith<$Res>
     implements $BatchResponseCopyWith<$Res> {
-  factory _$$_BatchResponseCopyWith(
-          _$_BatchResponse value, $Res Function(_$_BatchResponse) then) =
-      __$$_BatchResponseCopyWithImpl<$Res>;
+  factory _$$BatchResponseImplCopyWith(
+          _$BatchResponseImpl value, $Res Function(_$BatchResponseImpl) then) =
+      __$$BatchResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? status, Datum? batches, Batch? batch});
@@ -117,11 +117,11 @@ abstract class _$$_BatchResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BatchResponseCopyWithImpl<$Res>
-    extends _$BatchResponseCopyWithImpl<$Res, _$_BatchResponse>
-    implements _$$_BatchResponseCopyWith<$Res> {
-  __$$_BatchResponseCopyWithImpl(
-      _$_BatchResponse _value, $Res Function(_$_BatchResponse) _then)
+class __$$BatchResponseImplCopyWithImpl<$Res>
+    extends _$BatchResponseCopyWithImpl<$Res, _$BatchResponseImpl>
+    implements _$$BatchResponseImplCopyWith<$Res> {
+  __$$BatchResponseImplCopyWithImpl(
+      _$BatchResponseImpl _value, $Res Function(_$BatchResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -131,7 +131,7 @@ class __$$_BatchResponseCopyWithImpl<$Res>
     Object? batches = freezed,
     Object? batch = freezed,
   }) {
-    return _then(_$_BatchResponse(
+    return _then(_$BatchResponseImpl(
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -151,11 +151,11 @@ class __$$_BatchResponseCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_BatchResponse implements _BatchResponse {
-  const _$_BatchResponse({this.status, this.batches, this.batch});
+class _$BatchResponseImpl implements _BatchResponse {
+  const _$BatchResponseImpl({this.status, this.batches, this.batch});
 
-  factory _$_BatchResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_BatchResponseFromJson(json);
+  factory _$BatchResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BatchResponseImplFromJson(json);
 
   @override
   final int? status;
@@ -170,10 +170,10 @@ class _$_BatchResponse implements _BatchResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BatchResponse &&
+            other is _$BatchResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.batches, batches) || other.batches == batches) &&
             (identical(other.batch, batch) || other.batch == batch));
@@ -186,12 +186,12 @@ class _$_BatchResponse implements _BatchResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BatchResponseCopyWith<_$_BatchResponse> get copyWith =>
-      __$$_BatchResponseCopyWithImpl<_$_BatchResponse>(this, _$identity);
+  _$$BatchResponseImplCopyWith<_$BatchResponseImpl> get copyWith =>
+      __$$BatchResponseImplCopyWithImpl<_$BatchResponseImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BatchResponseToJson(
+    return _$$BatchResponseImplToJson(
       this,
     );
   }
@@ -201,10 +201,10 @@ abstract class _BatchResponse implements BatchResponse {
   const factory _BatchResponse(
       {final int? status,
       final Datum? batches,
-      final Batch? batch}) = _$_BatchResponse;
+      final Batch? batch}) = _$BatchResponseImpl;
 
   factory _BatchResponse.fromJson(Map<String, dynamic> json) =
-      _$_BatchResponse.fromJson;
+      _$BatchResponseImpl.fromJson;
 
   @override
   int? get status;
@@ -214,7 +214,7 @@ abstract class _BatchResponse implements BatchResponse {
   Batch? get batch;
   @override
   @JsonKey(ignore: true)
-  _$$_BatchResponseCopyWith<_$_BatchResponse> get copyWith =>
+  _$$BatchResponseImplCopyWith<_$BatchResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -274,22 +274,24 @@ class _$StudentsBatchResponseCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_StudentsBatchResponseCopyWith<$Res>
+abstract class _$$StudentsBatchResponseImplCopyWith<$Res>
     implements $StudentsBatchResponseCopyWith<$Res> {
-  factory _$$_StudentsBatchResponseCopyWith(_$_StudentsBatchResponse value,
-          $Res Function(_$_StudentsBatchResponse) then) =
-      __$$_StudentsBatchResponseCopyWithImpl<$Res>;
+  factory _$$StudentsBatchResponseImplCopyWith(
+          _$StudentsBatchResponseImpl value,
+          $Res Function(_$StudentsBatchResponseImpl) then) =
+      __$$StudentsBatchResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? status, List<Batch>? batches});
 }
 
 /// @nodoc
-class __$$_StudentsBatchResponseCopyWithImpl<$Res>
-    extends _$StudentsBatchResponseCopyWithImpl<$Res, _$_StudentsBatchResponse>
-    implements _$$_StudentsBatchResponseCopyWith<$Res> {
-  __$$_StudentsBatchResponseCopyWithImpl(_$_StudentsBatchResponse _value,
-      $Res Function(_$_StudentsBatchResponse) _then)
+class __$$StudentsBatchResponseImplCopyWithImpl<$Res>
+    extends _$StudentsBatchResponseCopyWithImpl<$Res,
+        _$StudentsBatchResponseImpl>
+    implements _$$StudentsBatchResponseImplCopyWith<$Res> {
+  __$$StudentsBatchResponseImplCopyWithImpl(_$StudentsBatchResponseImpl _value,
+      $Res Function(_$StudentsBatchResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -298,7 +300,7 @@ class __$$_StudentsBatchResponseCopyWithImpl<$Res>
     Object? status = freezed,
     Object? batches = freezed,
   }) {
-    return _then(_$_StudentsBatchResponse(
+    return _then(_$StudentsBatchResponseImpl(
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -314,12 +316,12 @@ class __$$_StudentsBatchResponseCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_StudentsBatchResponse implements _StudentsBatchResponse {
-  const _$_StudentsBatchResponse({this.status, final List<Batch>? batches})
+class _$StudentsBatchResponseImpl implements _StudentsBatchResponse {
+  const _$StudentsBatchResponseImpl({this.status, final List<Batch>? batches})
       : _batches = batches;
 
-  factory _$_StudentsBatchResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_StudentsBatchResponseFromJson(json);
+  factory _$StudentsBatchResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StudentsBatchResponseImplFromJson(json);
 
   @override
   final int? status;
@@ -339,10 +341,10 @@ class _$_StudentsBatchResponse implements _StudentsBatchResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StudentsBatchResponse &&
+            other is _$StudentsBatchResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._batches, _batches));
   }
@@ -355,13 +357,13 @@ class _$_StudentsBatchResponse implements _StudentsBatchResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StudentsBatchResponseCopyWith<_$_StudentsBatchResponse> get copyWith =>
-      __$$_StudentsBatchResponseCopyWithImpl<_$_StudentsBatchResponse>(
-          this, _$identity);
+  _$$StudentsBatchResponseImplCopyWith<_$StudentsBatchResponseImpl>
+      get copyWith => __$$StudentsBatchResponseImplCopyWithImpl<
+          _$StudentsBatchResponseImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StudentsBatchResponseToJson(
+    return _$$StudentsBatchResponseImplToJson(
       this,
     );
   }
@@ -370,10 +372,10 @@ class _$_StudentsBatchResponse implements _StudentsBatchResponse {
 abstract class _StudentsBatchResponse implements StudentsBatchResponse {
   const factory _StudentsBatchResponse(
       {final int? status,
-      final List<Batch>? batches}) = _$_StudentsBatchResponse;
+      final List<Batch>? batches}) = _$StudentsBatchResponseImpl;
 
   factory _StudentsBatchResponse.fromJson(Map<String, dynamic> json) =
-      _$_StudentsBatchResponse.fromJson;
+      _$StudentsBatchResponseImpl.fromJson;
 
   @override
   int? get status;
@@ -381,8 +383,8 @@ abstract class _StudentsBatchResponse implements StudentsBatchResponse {
   List<Batch>? get batches;
   @override
   @JsonKey(ignore: true)
-  _$$_StudentsBatchResponseCopyWith<_$_StudentsBatchResponse> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$StudentsBatchResponseImplCopyWith<_$StudentsBatchResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 Datum _$DatumFromJson(Map<String, dynamic> json) {
@@ -467,9 +469,10 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
 }
 
 /// @nodoc
-abstract class _$$_DatumCopyWith<$Res> implements $DatumCopyWith<$Res> {
-  factory _$$_DatumCopyWith(_$_Datum value, $Res Function(_$_Datum) then) =
-      __$$_DatumCopyWithImpl<$Res>;
+abstract class _$$DatumImplCopyWith<$Res> implements $DatumCopyWith<$Res> {
+  factory _$$DatumImplCopyWith(
+          _$DatumImpl value, $Res Function(_$DatumImpl) then) =
+      __$$DatumImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -482,9 +485,11 @@ abstract class _$$_DatumCopyWith<$Res> implements $DatumCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
-    implements _$$_DatumCopyWith<$Res> {
-  __$$_DatumCopyWithImpl(_$_Datum _value, $Res Function(_$_Datum) _then)
+class __$$DatumImplCopyWithImpl<$Res>
+    extends _$DatumCopyWithImpl<$Res, _$DatumImpl>
+    implements _$$DatumImplCopyWith<$Res> {
+  __$$DatumImplCopyWithImpl(
+      _$DatumImpl _value, $Res Function(_$DatumImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -497,7 +502,7 @@ class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
     Object? nextPageUrl = freezed,
     Object? to = freezed,
   }) {
-    return _then(_$_Datum(
+    return _then(_$DatumImpl(
       currentPage: freezed == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
@@ -529,8 +534,8 @@ class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Datum implements _Datum {
-  const _$_Datum(
+class _$DatumImpl implements _Datum {
+  const _$DatumImpl(
       {this.currentPage,
       required final List<Batch> data,
       this.from,
@@ -539,8 +544,8 @@ class _$_Datum implements _Datum {
       this.to})
       : _data = data;
 
-  factory _$_Datum.fromJson(Map<String, dynamic> json) =>
-      _$$_DatumFromJson(json);
+  factory _$DatumImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DatumImplFromJson(json);
 
   @override
   final int? currentPage;
@@ -567,10 +572,10 @@ class _$_Datum implements _Datum {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Datum &&
+            other is _$DatumImpl &&
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             const DeepCollectionEquality().equals(other._data, _data) &&
@@ -595,12 +600,12 @@ class _$_Datum implements _Datum {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DatumCopyWith<_$_Datum> get copyWith =>
-      __$$_DatumCopyWithImpl<_$_Datum>(this, _$identity);
+  _$$DatumImplCopyWith<_$DatumImpl> get copyWith =>
+      __$$DatumImplCopyWithImpl<_$DatumImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DatumToJson(
+    return _$$DatumImplToJson(
       this,
     );
   }
@@ -613,9 +618,9 @@ abstract class _Datum implements Datum {
       final int? from,
       final int? perPage,
       final String? nextPageUrl,
-      final int? to}) = _$_Datum;
+      final int? to}) = _$DatumImpl;
 
-  factory _Datum.fromJson(Map<String, dynamic> json) = _$_Datum.fromJson;
+  factory _Datum.fromJson(Map<String, dynamic> json) = _$DatumImpl.fromJson;
 
   @override
   int? get currentPage;
@@ -631,7 +636,7 @@ abstract class _Datum implements Datum {
   int? get to;
   @override
   @JsonKey(ignore: true)
-  _$$_DatumCopyWith<_$_Datum> get copyWith =>
+  _$$DatumImplCopyWith<_$DatumImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -648,6 +653,7 @@ mixin _$Batch {
   int? get courseId => throw _privateConstructorUsedError;
   int? get subjectId => throw _privateConstructorUsedError;
   String? get batchStatus => throw _privateConstructorUsedError;
+  String? get shareToken => throw _privateConstructorUsedError;
   int? get feeAmount => throw _privateConstructorUsedError;
   int? get activeStudentsCount => throw _privateConstructorUsedError;
   int? get inactiveStudentsCount => throw _privateConstructorUsedError;
@@ -678,6 +684,7 @@ abstract class $BatchCopyWith<$Res> {
       int? courseId,
       int? subjectId,
       String? batchStatus,
+      String? shareToken,
       int? feeAmount,
       int? activeStudentsCount,
       int? inactiveStudentsCount,
@@ -716,6 +723,7 @@ class _$BatchCopyWithImpl<$Res, $Val extends Batch>
     Object? courseId = freezed,
     Object? subjectId = freezed,
     Object? batchStatus = freezed,
+    Object? shareToken = freezed,
     Object? feeAmount = freezed,
     Object? activeStudentsCount = freezed,
     Object? inactiveStudentsCount = freezed,
@@ -756,6 +764,10 @@ class _$BatchCopyWithImpl<$Res, $Val extends Batch>
       batchStatus: freezed == batchStatus
           ? _value.batchStatus
           : batchStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shareToken: freezed == shareToken
+          ? _value.shareToken
+          : shareToken // ignore: cast_nullable_to_non_nullable
               as String?,
       feeAmount: freezed == feeAmount
           ? _value.feeAmount
@@ -854,9 +866,10 @@ class _$BatchCopyWithImpl<$Res, $Val extends Batch>
 }
 
 /// @nodoc
-abstract class _$$_BatchCopyWith<$Res> implements $BatchCopyWith<$Res> {
-  factory _$$_BatchCopyWith(_$_Batch value, $Res Function(_$_Batch) then) =
-      __$$_BatchCopyWithImpl<$Res>;
+abstract class _$$BatchImplCopyWith<$Res> implements $BatchCopyWith<$Res> {
+  factory _$$BatchImplCopyWith(
+          _$BatchImpl value, $Res Function(_$BatchImpl) then) =
+      __$$BatchImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -867,6 +880,7 @@ abstract class _$$_BatchCopyWith<$Res> implements $BatchCopyWith<$Res> {
       int? courseId,
       int? subjectId,
       String? batchStatus,
+      String? shareToken,
       int? feeAmount,
       int? activeStudentsCount,
       int? inactiveStudentsCount,
@@ -890,9 +904,11 @@ abstract class _$$_BatchCopyWith<$Res> implements $BatchCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
-    implements _$$_BatchCopyWith<$Res> {
-  __$$_BatchCopyWithImpl(_$_Batch _value, $Res Function(_$_Batch) _then)
+class __$$BatchImplCopyWithImpl<$Res>
+    extends _$BatchCopyWithImpl<$Res, _$BatchImpl>
+    implements _$$BatchImplCopyWith<$Res> {
+  __$$BatchImplCopyWithImpl(
+      _$BatchImpl _value, $Res Function(_$BatchImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -905,6 +921,7 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
     Object? courseId = freezed,
     Object? subjectId = freezed,
     Object? batchStatus = freezed,
+    Object? shareToken = freezed,
     Object? feeAmount = freezed,
     Object? activeStudentsCount = freezed,
     Object? inactiveStudentsCount = freezed,
@@ -917,7 +934,7 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
     Object? subject = freezed,
     Object? branch = freezed,
   }) {
-    return _then(_$_Batch(
+    return _then(_$BatchImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -945,6 +962,10 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
       batchStatus: freezed == batchStatus
           ? _value.batchStatus
           : batchStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shareToken: freezed == shareToken
+          ? _value.shareToken
+          : shareToken // ignore: cast_nullable_to_non_nullable
               as String?,
       feeAmount: freezed == feeAmount
           ? _value.feeAmount
@@ -997,8 +1018,8 @@ class __$$_BatchCopyWithImpl<$Res> extends _$BatchCopyWithImpl<$Res, _$_Batch>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Batch implements _Batch {
-  const _$_Batch(
+class _$BatchImpl implements _Batch {
+  const _$BatchImpl(
       {this.id,
       this.batchName,
       this.academyId,
@@ -1006,6 +1027,7 @@ class _$_Batch implements _Batch {
       this.courseId,
       this.subjectId,
       this.batchStatus,
+      this.shareToken,
       this.feeAmount,
       this.activeStudentsCount,
       this.inactiveStudentsCount,
@@ -1020,8 +1042,8 @@ class _$_Batch implements _Batch {
       : _batchDetail = batchDetail,
         _trainers = trainers;
 
-  factory _$_Batch.fromJson(Map<String, dynamic> json) =>
-      _$$_BatchFromJson(json);
+  factory _$BatchImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BatchImplFromJson(json);
 
   @override
   final int? id;
@@ -1037,6 +1059,8 @@ class _$_Batch implements _Batch {
   final int? subjectId;
   @override
   final String? batchStatus;
+  @override
+  final String? shareToken;
   @override
   final int? feeAmount;
   @override
@@ -1078,14 +1102,14 @@ class _$_Batch implements _Batch {
 
   @override
   String toString() {
-    return 'Batch(id: $id, batchName: $batchName, academyId: $academyId, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, batchStatus: $batchStatus, feeAmount: $feeAmount, activeStudentsCount: $activeStudentsCount, inactiveStudentsCount: $inactiveStudentsCount, admissionFees: $admissionFees, isActive: $isActive, pivot: $pivot, batchDetail: $batchDetail, trainers: $trainers, course: $course, subject: $subject, branch: $branch)';
+    return 'Batch(id: $id, batchName: $batchName, academyId: $academyId, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, batchStatus: $batchStatus, shareToken: $shareToken, feeAmount: $feeAmount, activeStudentsCount: $activeStudentsCount, inactiveStudentsCount: $inactiveStudentsCount, admissionFees: $admissionFees, isActive: $isActive, pivot: $pivot, batchDetail: $batchDetail, trainers: $trainers, course: $course, subject: $subject, branch: $branch)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Batch &&
+            other is _$BatchImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.batchName, batchName) ||
                 other.batchName == batchName) &&
@@ -1099,6 +1123,8 @@ class _$_Batch implements _Batch {
                 other.subjectId == subjectId) &&
             (identical(other.batchStatus, batchStatus) ||
                 other.batchStatus == batchStatus) &&
+            (identical(other.shareToken, shareToken) ||
+                other.shareToken == shareToken) &&
             (identical(other.feeAmount, feeAmount) ||
                 other.feeAmount == feeAmount) &&
             (identical(other.activeStudentsCount, activeStudentsCount) ||
@@ -1120,36 +1146,38 @@ class _$_Batch implements _Batch {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      batchName,
-      academyId,
-      branchId,
-      courseId,
-      subjectId,
-      batchStatus,
-      feeAmount,
-      activeStudentsCount,
-      inactiveStudentsCount,
-      admissionFees,
-      isActive,
-      pivot,
-      const DeepCollectionEquality().hash(_batchDetail),
-      const DeepCollectionEquality().hash(_trainers),
-      course,
-      subject,
-      branch);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        batchName,
+        academyId,
+        branchId,
+        courseId,
+        subjectId,
+        batchStatus,
+        shareToken,
+        feeAmount,
+        activeStudentsCount,
+        inactiveStudentsCount,
+        admissionFees,
+        isActive,
+        pivot,
+        const DeepCollectionEquality().hash(_batchDetail),
+        const DeepCollectionEquality().hash(_trainers),
+        course,
+        subject,
+        branch
+      ]);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BatchCopyWith<_$_Batch> get copyWith =>
-      __$$_BatchCopyWithImpl<_$_Batch>(this, _$identity);
+  _$$BatchImplCopyWith<_$BatchImpl> get copyWith =>
+      __$$BatchImplCopyWithImpl<_$BatchImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BatchToJson(
+    return _$$BatchImplToJson(
       this,
     );
   }
@@ -1164,6 +1192,7 @@ abstract class _Batch implements Batch {
       final int? courseId,
       final int? subjectId,
       final String? batchStatus,
+      final String? shareToken,
       final int? feeAmount,
       final int? activeStudentsCount,
       final int? inactiveStudentsCount,
@@ -1174,9 +1203,9 @@ abstract class _Batch implements Batch {
       final List<Trainer>? trainers,
       final Course? course,
       final Course? subject,
-      final Branch? branch}) = _$_Batch;
+      final Branch? branch}) = _$BatchImpl;
 
-  factory _Batch.fromJson(Map<String, dynamic> json) = _$_Batch.fromJson;
+  factory _Batch.fromJson(Map<String, dynamic> json) = _$BatchImpl.fromJson;
 
   @override
   int? get id;
@@ -1192,6 +1221,8 @@ abstract class _Batch implements Batch {
   int? get subjectId;
   @override
   String? get batchStatus;
+  @override
+  String? get shareToken;
   @override
   int? get feeAmount;
   @override
@@ -1216,7 +1247,7 @@ abstract class _Batch implements Batch {
   Branch? get branch;
   @override
   @JsonKey(ignore: true)
-  _$$_BatchCopyWith<_$_Batch> get copyWith =>
+  _$$BatchImplCopyWith<_$BatchImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1318,11 +1349,11 @@ class _$BatchDetailCopyWithImpl<$Res, $Val extends BatchDetail>
 }
 
 /// @nodoc
-abstract class _$$_BatchDetailCopyWith<$Res>
+abstract class _$$BatchDetailImplCopyWith<$Res>
     implements $BatchDetailCopyWith<$Res> {
-  factory _$$_BatchDetailCopyWith(
-          _$_BatchDetail value, $Res Function(_$_BatchDetail) then) =
-      __$$_BatchDetailCopyWithImpl<$Res>;
+  factory _$$BatchDetailImplCopyWith(
+          _$BatchDetailImpl value, $Res Function(_$BatchDetailImpl) then) =
+      __$$BatchDetailImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1337,11 +1368,11 @@ abstract class _$$_BatchDetailCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BatchDetailCopyWithImpl<$Res>
-    extends _$BatchDetailCopyWithImpl<$Res, _$_BatchDetail>
-    implements _$$_BatchDetailCopyWith<$Res> {
-  __$$_BatchDetailCopyWithImpl(
-      _$_BatchDetail _value, $Res Function(_$_BatchDetail) _then)
+class __$$BatchDetailImplCopyWithImpl<$Res>
+    extends _$BatchDetailCopyWithImpl<$Res, _$BatchDetailImpl>
+    implements _$$BatchDetailImplCopyWith<$Res> {
+  __$$BatchDetailImplCopyWithImpl(
+      _$BatchDetailImpl _value, $Res Function(_$BatchDetailImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1356,7 +1387,7 @@ class __$$_BatchDetailCopyWithImpl<$Res>
     Object? endTime = freezed,
     Object? isActive = freezed,
   }) {
-    return _then(_$_BatchDetail(
+    return _then(_$BatchDetailImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1396,8 +1427,8 @@ class __$$_BatchDetailCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_BatchDetail implements _BatchDetail {
-  const _$_BatchDetail(
+class _$BatchDetailImpl implements _BatchDetail {
+  const _$BatchDetailImpl(
       {this.id,
       this.batchId,
       this.day,
@@ -1407,8 +1438,8 @@ class _$_BatchDetail implements _BatchDetail {
       this.endTime,
       this.isActive});
 
-  factory _$_BatchDetail.fromJson(Map<String, dynamic> json) =>
-      _$$_BatchDetailFromJson(json);
+  factory _$BatchDetailImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BatchDetailImplFromJson(json);
 
   @override
   final int? id;
@@ -1433,10 +1464,10 @@ class _$_BatchDetail implements _BatchDetail {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BatchDetail &&
+            other is _$BatchDetailImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.batchId, batchId) || other.batchId == batchId) &&
             (identical(other.day, day) || other.day == day) &&
@@ -1458,12 +1489,12 @@ class _$_BatchDetail implements _BatchDetail {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BatchDetailCopyWith<_$_BatchDetail> get copyWith =>
-      __$$_BatchDetailCopyWithImpl<_$_BatchDetail>(this, _$identity);
+  _$$BatchDetailImplCopyWith<_$BatchDetailImpl> get copyWith =>
+      __$$BatchDetailImplCopyWithImpl<_$BatchDetailImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BatchDetailToJson(
+    return _$$BatchDetailImplToJson(
       this,
     );
   }
@@ -1478,10 +1509,10 @@ abstract class _BatchDetail implements BatchDetail {
       final DateTime? newDate,
       final String? startTime,
       final String? endTime,
-      final int? isActive}) = _$_BatchDetail;
+      final int? isActive}) = _$BatchDetailImpl;
 
   factory _BatchDetail.fromJson(Map<String, dynamic> json) =
-      _$_BatchDetail.fromJson;
+      _$BatchDetailImpl.fromJson;
 
   @override
   int? get id;
@@ -1501,7 +1532,7 @@ abstract class _BatchDetail implements BatchDetail {
   int? get isActive;
   @override
   @JsonKey(ignore: true)
-  _$$_BatchDetailCopyWith<_$_BatchDetail> get copyWith =>
+  _$$BatchDetailImplCopyWith<_$BatchDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1617,11 +1648,11 @@ class _$PivotClassCopyWithImpl<$Res, $Val extends PivotClass>
 }
 
 /// @nodoc
-abstract class _$$_PivotClassCopyWith<$Res>
+abstract class _$$PivotClassImplCopyWith<$Res>
     implements $PivotClassCopyWith<$Res> {
-  factory _$$_PivotClassCopyWith(
-          _$_PivotClass value, $Res Function(_$_PivotClass) then) =
-      __$$_PivotClassCopyWithImpl<$Res>;
+  factory _$$PivotClassImplCopyWith(
+          _$PivotClassImpl value, $Res Function(_$PivotClassImpl) then) =
+      __$$PivotClassImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1638,11 +1669,11 @@ abstract class _$$_PivotClassCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PivotClassCopyWithImpl<$Res>
-    extends _$PivotClassCopyWithImpl<$Res, _$_PivotClass>
-    implements _$$_PivotClassCopyWith<$Res> {
-  __$$_PivotClassCopyWithImpl(
-      _$_PivotClass _value, $Res Function(_$_PivotClass) _then)
+class __$$PivotClassImplCopyWithImpl<$Res>
+    extends _$PivotClassCopyWithImpl<$Res, _$PivotClassImpl>
+    implements _$$PivotClassImplCopyWith<$Res> {
+  __$$PivotClassImplCopyWithImpl(
+      _$PivotClassImpl _value, $Res Function(_$PivotClassImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1659,7 +1690,7 @@ class __$$_PivotClassCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
-    return _then(_$_PivotClass(
+    return _then(_$PivotClassImpl(
       studentDetailId: freezed == studentDetailId
           ? _value.studentDetailId
           : studentDetailId // ignore: cast_nullable_to_non_nullable
@@ -1707,8 +1738,8 @@ class __$$_PivotClassCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_PivotClass implements _PivotClass {
-  const _$_PivotClass(
+class _$PivotClassImpl implements _PivotClass {
+  const _$PivotClassImpl(
       {this.studentDetailId,
       this.batchId,
       this.noOfClasses,
@@ -1720,8 +1751,8 @@ class _$_PivotClass implements _PivotClass {
       this.createdAt,
       this.updatedAt});
 
-  factory _$_PivotClass.fromJson(Map<String, dynamic> json) =>
-      _$$_PivotClassFromJson(json);
+  factory _$PivotClassImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PivotClassImplFromJson(json);
 
   @override
   final int? studentDetailId;
@@ -1750,10 +1781,10 @@ class _$_PivotClass implements _PivotClass {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PivotClass &&
+            other is _$PivotClassImpl &&
             (identical(other.studentDetailId, studentDetailId) ||
                 other.studentDetailId == studentDetailId) &&
             (identical(other.batchId, batchId) || other.batchId == batchId) &&
@@ -1790,12 +1821,12 @@ class _$_PivotClass implements _PivotClass {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PivotClassCopyWith<_$_PivotClass> get copyWith =>
-      __$$_PivotClassCopyWithImpl<_$_PivotClass>(this, _$identity);
+  _$$PivotClassImplCopyWith<_$PivotClassImpl> get copyWith =>
+      __$$PivotClassImplCopyWithImpl<_$PivotClassImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PivotClassToJson(
+    return _$$PivotClassImplToJson(
       this,
     );
   }
@@ -1812,10 +1843,10 @@ abstract class _PivotClass implements PivotClass {
       final int? cycle,
       final DateTime? doj,
       final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$_PivotClass;
+      final DateTime? updatedAt}) = _$PivotClassImpl;
 
   factory _PivotClass.fromJson(Map<String, dynamic> json) =
-      _$_PivotClass.fromJson;
+      _$PivotClassImpl.fromJson;
 
   @override
   int? get studentDetailId;
@@ -1839,6 +1870,6 @@ abstract class _PivotClass implements PivotClass {
   DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
-  _$$_PivotClassCopyWith<_$_PivotClass> get copyWith =>
+  _$$PivotClassImplCopyWith<_$PivotClassImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

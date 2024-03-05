@@ -10,12 +10,12 @@ import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/home/components/account.dart';
 import 'package:part_app/view/home/components/logout.dart';
-import 'package:part_app/view/membership/current_membership.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 
-enum MenuItems { profile, account, logout, membership, switchAccount }
+// enum MenuItems { profile, account, logout, membership, switchAccount }
+enum MenuItems { profile, account, logout, switchAccount }
 
 class ProfileButton extends StatefulWidget {
   const ProfileButton({Key? key}) : super(key: key);
@@ -41,9 +41,9 @@ class _ProfileButtonState extends State<ProfileButton> {
           case MenuItems.logout:
             Logout(context).show();
             break;
-          case MenuItems.membership:
-            Navigator.pushNamed(context, CurrentMembership.route);
-            break;
+          // case MenuItems.membership:
+          //   Navigator.pushNamed(context, CurrentMembership.route);
+          //   break;
           case MenuItems.switchAccount:
             Navigator.pushNamed(context, SwitchAccount.route);
             break;
@@ -71,8 +71,8 @@ class _ProfileButtonState extends State<ProfileButton> {
                   ? '${F.baseUrl}/admin/images/profile-pic'
                       '/${context.read<AuthCubit>().user?.adminDetail?.profilePic}'
                   : user?.adminDetail?.gender == "male"
-                      ? "https://dev.partapp.in/images/avatars/avatar-5.png"
-                      : "https://dev.partapp.in/images/avatars/avatar-1.png";
+                      ? "https://v1.partapp.in/images/avatars/avatar-5.png"
+                      : "https://v1.partapp.in/images/avatars/avatar-1.png";
             } else if (state is ProfileLoaded) {
               url = '${F.baseUrl}/admin/images/profile-pic'
                   '/${state.profilePic}';
@@ -118,15 +118,15 @@ class _ProfileButtonState extends State<ProfileButton> {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
-          PopupMenuItem(
-            height: 14,
-            value: MenuItems.membership,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: Text(
-              'Membership',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ),
+          // PopupMenuItem(
+          //   height: 14,
+          //   value: MenuItems.membership,
+          //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          //   child: Text(
+          //     'Membership',
+          //     style: Theme.of(context).textTheme.bodyLarge,
+          //   ),
+          // ),
           PopupMenuItem(
             height: 14,
             value: MenuItems.logout,

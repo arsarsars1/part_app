@@ -20,6 +20,9 @@ import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/batch/student_app_batch_list.dart';
+import 'package:part_app/view/batch/trainer_app_add_batch.dart';
+import 'package:part_app/view/batch/trainer_app_batch_details.dart';
+import 'package:part_app/view/batch/trainer_app_batch_list.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
@@ -35,11 +38,13 @@ import 'package:part_app/view/fee/fees_details_view.dart';
 import 'package:part_app/view/fee/student_admission_fee_details.dart';
 import 'package:part_app/view/fee/student_app_fee_details.dart';
 import 'package:part_app/view/fee/student_fee_details.dart';
+import 'package:part_app/view/fee/trainer_app_student_fee_details.dart';
 import 'package:part_app/view/home/components/account.dart';
 import 'package:part_app/view/home/components/delete_account.dart';
 import 'package:part_app/view/home/components/student_account.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/home/student_app_home.dart';
+import 'package:part_app/view/home/trainer_app_home.dart';
 import 'package:part_app/view/leads/add_lead.dart';
 import 'package:part_app/view/leads/all_followups_view.dart';
 import 'package:part_app/view/leads/edit_lead.dart';
@@ -54,10 +59,12 @@ import 'package:part_app/view/manager/manager_page.dart';
 import 'package:part_app/view/membership/current_membership.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view/membership/membership_home.dart';
+import 'package:part_app/view/membership/membership_home_ios.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/notifications/notification_screen.dart';
 import 'package:part_app/view/notifications/student_app_notification_screen.dart';
+import 'package:part_app/view/notifications/trainer_app_notification_screen.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/students/add_student.dart';
@@ -69,6 +76,12 @@ import 'package:part_app/view/students/edit_student_batches.dart';
 import 'package:part_app/view/students/student_attendence.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
+import 'package:part_app/view/students/trainer_app_add_student.dart';
+import 'package:part_app/view/students/trainer_app_assign_batch.dart';
+import 'package:part_app/view/students/trainer_app_edit_student_batches.dart';
+import 'package:part_app/view/students/trainer_app_student_attendence.dart';
+import 'package:part_app/view/students/trainer_app_student_details.dart';
+import 'package:part_app/view/students/trainer_app_students_view.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/add_advance_salary.dart';
 import 'package:part_app/view/trainer/add_or_edit_salary.dart';
@@ -100,6 +113,11 @@ class RouteGenerator {
       case StudentAppHome.route:
         return MaterialPageRoute(
           builder: (_) => const StudentAppHome(),
+          settings: settings,
+        );
+      case TrainerAppHome.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppHome(),
           settings: settings,
         );
       case SplashScreen.route:
@@ -155,6 +173,11 @@ class RouteGenerator {
       case MembershipHome.route:
         return MaterialPageRoute(
           builder: (_) => const MembershipHome(),
+          settings: settings,
+        );
+      case MembershipHomeIos.route:
+        return MaterialPageRoute(
+          builder: (_) => const MembershipHomeIos(),
           settings: settings,
         );
       case SalesManPhone.route:
@@ -285,6 +308,11 @@ class RouteGenerator {
           builder: (_) => const BatchesPage(),
           settings: settings,
         );
+      case TrainerAppBatchesPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppBatchesPage(),
+          settings: settings,
+        );
       case StudentAppBatchesPage.route:
         return MaterialPageRoute(
           builder: (_) => const StudentAppBatchesPage(),
@@ -295,6 +323,11 @@ class RouteGenerator {
           builder: (_) => const AddBatch(),
           settings: settings,
         );
+      case TrainerAppAddBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppAddBatch(),
+          settings: settings,
+        );
       case TrainerBranches.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerBranches(),
@@ -303,6 +336,11 @@ class RouteGenerator {
       case BatchDetails.route:
         return MaterialPageRoute(
           builder: (_) => const BatchDetails(),
+          settings: settings,
+        );
+      case TrainerAppBatchDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppBatchDetails(),
           settings: settings,
         );
       case AssignedBatches.route:
@@ -347,14 +385,31 @@ class RouteGenerator {
           builder: (_) => const StudentsView(),
           settings: settings,
         );
+      case TrainerAppStudentsView.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppStudentsView(),
+          settings: settings,
+        );
       case AddStudent.route:
         return MaterialPageRoute(
           builder: (_) => const AddStudent(),
           settings: settings,
         );
+      case TrainerAppAddStudent.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppAddStudent(),
+          settings: settings,
+        );
       case AssignBatch.route:
         return MaterialPageRoute(
           builder: (_) => AssignBatch(
+            editStudent: settings.arguments as bool,
+          ),
+          settings: settings,
+        );
+      case TrainerAppAssignBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => TrainerAppAssignBatch(
             editStudent: settings.arguments as bool,
           ),
           settings: settings,
@@ -371,6 +426,11 @@ class RouteGenerator {
           builder: (_) => const StudentDetails(),
           settings: settings,
         );
+      case TrainerAppStudentDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppStudentDetails(),
+          settings: settings,
+        );
       case EditStudent.route:
         return MaterialPageRoute(
           builder: (_) => const EditStudent(),
@@ -379,6 +439,13 @@ class RouteGenerator {
       case EditStudentBatches.route:
         return MaterialPageRoute(
           builder: (_) => EditStudentBatches(
+            editStudent: settings.arguments as bool,
+          ),
+          settings: settings,
+        );
+      case TrainerAppEditStudentBatches.route:
+        return MaterialPageRoute(
+          builder: (_) => TrainerAppEditStudentBatches(
             editStudent: settings.arguments as bool,
           ),
           settings: settings,
@@ -459,6 +526,11 @@ class RouteGenerator {
           builder: (_) => const StudentAttendanceCalenderView(),
           settings: settings,
         );
+      case TrainerAppStudentAttendanceCalenderView.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppStudentAttendanceCalenderView(),
+          settings: settings,
+        );
       case StudentAppAttendanceCalenderView.route:
         return MaterialPageRoute(
           builder: (_) => const StudentAppAttendanceCalenderView(),
@@ -504,6 +576,11 @@ class RouteGenerator {
           builder: (_) => const StudentFeeDetails(),
           settings: settings,
         );
+      case TrainerAppStudentFeeDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppStudentFeeDetails(),
+          settings: settings,
+        );
       case StudentAppFeeDetails.route:
         return MaterialPageRoute(
           builder: (_) => const StudentAppFeeDetails(),
@@ -542,6 +619,11 @@ class RouteGenerator {
       case NotificationScreen.route:
         return MaterialPageRoute(
           builder: (_) => const NotificationScreen(),
+          settings: settings,
+        );
+      case TrainerAppNotificationScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppNotificationScreen(),
           settings: settings,
         );
       case StudentAppNotificationScreen.route:

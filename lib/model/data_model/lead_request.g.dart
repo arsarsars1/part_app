@@ -6,8 +6,8 @@ part of 'lead_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_LeadRequest _$$_LeadRequestFromJson(Map<String, dynamic> json) =>
-    _$_LeadRequest(
+_$LeadRequestImpl _$$LeadRequestImplFromJson(Map<String, dynamic> json) =>
+    _$LeadRequestImpl(
       branchId: json['branch_id'] as int?,
       batchId: json['batch_id'] as int?,
       leadStatus: json['lead_status'] as String?,
@@ -24,7 +24,7 @@ _$_LeadRequest _$$_LeadRequestFromJson(Map<String, dynamic> json) =>
       followUpComment: json['follow_up_comment'] as String?,
     );
 
-Map<String, dynamic> _$$_LeadRequestToJson(_$_LeadRequest instance) =>
+Map<String, dynamic> _$$LeadRequestImplToJson(_$LeadRequestImpl instance) =>
     <String, dynamic>{
       'branch_id': instance.branchId,
       'batch_id': instance.batchId,

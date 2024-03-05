@@ -6,8 +6,8 @@ part of 'trainer_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TrainerRequest _$$_TrainerRequestFromJson(Map<String, dynamic> json) =>
-    _$_TrainerRequest(
+_$TrainerRequestImpl _$$TrainerRequestImplFromJson(Map<String, dynamic> json) =>
+    _$TrainerRequestImpl(
       name: json['name'] as String?,
       mobileNo: json['mobile_no'] as String?,
       countryCode: json['country_code'] as int?,
@@ -25,7 +25,8 @@ _$_TrainerRequest _$$_TrainerRequestFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String?,
     );
 
-Map<String, dynamic> _$$_TrainerRequestToJson(_$_TrainerRequest instance) =>
+Map<String, dynamic> _$$TrainerRequestImplToJson(
+        _$TrainerRequestImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'mobile_no': instance.mobileNo,

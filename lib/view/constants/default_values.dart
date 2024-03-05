@@ -256,6 +256,46 @@ class DefaultValues {
     ),
   ];
 
+  static const trainerDashboardItems = [
+    DashboardItem(
+      title: 'Students',
+      route: '/trainer-app-students',
+      asset: Assets.students,
+      color: Color(0xFFFC6767),
+    ),
+     DashboardItem(
+      title: 'Fees',
+      route: '/fees',
+      asset: Assets.fee,
+      color: Color(0xFF1D976C),
+    ),
+    DashboardItem(
+      title: 'Attendance',
+      route: '/attendance-batch-list',
+      asset: Assets.attendance,
+      color: Color(0xFF2B32B2),
+    ),
+    DashboardItem(
+      title: 'Batches',
+      route: '/trainer-app-batches',
+      asset: Assets.batches,
+      color: Color(0xFFF7B733),
+    ),
+    DashboardItem(
+      title: 'Salary',
+      route: '/salary',
+      asset: Assets.fee,
+      color: Color(0xFFF7B733),
+    ),
+    DashboardItem(
+      title: 'Class Link',
+      route: ClassLinkView.route,
+      asset: Assets.classLink,
+      color: Color.fromARGB(255, 228, 50, 80),
+    ),
+    
+  ];
+
   static const Map<int, dynamic> defaultTrainingDays = {
     0: 'Sunday',
     1: 'Monday',

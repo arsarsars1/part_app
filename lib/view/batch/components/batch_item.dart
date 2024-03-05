@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/branch/branch_cubit.dart';
+import 'package:share_plus/share_plus.dart';
 
 class BatchItem extends StatelessWidget {
   final BatchModel batch;
@@ -187,9 +189,27 @@ class BatchItem extends StatelessWidget {
                   ),
                 ),
                 if (!reschedule && !edit)
-                  const Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.white,
+                  Column(
+                    children: [
+                      const Icon(
+                        Icons.keyboard_arrow_right,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        height: 17.h,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Share.share(
+                              'Please use the below link to add students : \n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batch.shareToken}');
+                        },
+                        child: Icon(
+                          Icons.share,
+                          color: Colors.white,
+                          size: 20.h,
+                        ),
+                      ),
+                    ],
                   ),
               ],
             ),

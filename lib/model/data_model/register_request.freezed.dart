@@ -189,11 +189,11 @@ class _$RegisterRequestCopyWithImpl<$Res, $Val extends RegisterRequest>
 }
 
 /// @nodoc
-abstract class _$$_RegisterRequestCopyWith<$Res>
+abstract class _$$RegisterRequestImplCopyWith<$Res>
     implements $RegisterRequestCopyWith<$Res> {
-  factory _$$_RegisterRequestCopyWith(
-          _$_RegisterRequest value, $Res Function(_$_RegisterRequest) then) =
-      __$$_RegisterRequestCopyWithImpl<$Res>;
+  factory _$$RegisterRequestImplCopyWith(_$RegisterRequestImpl value,
+          $Res Function(_$RegisterRequestImpl) then) =
+      __$$RegisterRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -219,11 +219,11 @@ abstract class _$$_RegisterRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RegisterRequestCopyWithImpl<$Res>
-    extends _$RegisterRequestCopyWithImpl<$Res, _$_RegisterRequest>
-    implements _$$_RegisterRequestCopyWith<$Res> {
-  __$$_RegisterRequestCopyWithImpl(
-      _$_RegisterRequest _value, $Res Function(_$_RegisterRequest) _then)
+class __$$RegisterRequestImplCopyWithImpl<$Res>
+    extends _$RegisterRequestCopyWithImpl<$Res, _$RegisterRequestImpl>
+    implements _$$RegisterRequestImplCopyWith<$Res> {
+  __$$RegisterRequestImplCopyWithImpl(
+      _$RegisterRequestImpl _value, $Res Function(_$RegisterRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -249,7 +249,7 @@ class __$$_RegisterRequestCopyWithImpl<$Res>
     Object? stateId = freezed,
     Object? districtId = freezed,
   }) {
-    return _then(_$_RegisterRequest(
+    return _then(_$RegisterRequestImpl(
       mobileNo: freezed == mobileNo
           ? _value.mobileNo
           : mobileNo // ignore: cast_nullable_to_non_nullable
@@ -333,8 +333,8 @@ class __$$_RegisterRequestCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_RegisterRequest implements _RegisterRequest {
-  const _$_RegisterRequest(
+class _$RegisterRequestImpl implements _RegisterRequest {
+  const _$RegisterRequestImpl(
       {this.mobileNo,
       this.countryCode,
       this.whatsappNo,
@@ -355,8 +355,8 @@ class _$_RegisterRequest implements _RegisterRequest {
       this.stateId,
       this.districtId});
 
-  factory _$_RegisterRequest.fromJson(Map<String, dynamic> json) =>
-      _$$_RegisterRequestFromJson(json);
+  factory _$RegisterRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RegisterRequestImplFromJson(json);
 
   @override
   final String? mobileNo;
@@ -403,10 +403,10 @@ class _$_RegisterRequest implements _RegisterRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RegisterRequest &&
+            other is _$RegisterRequestImpl &&
             (identical(other.mobileNo, mobileNo) ||
                 other.mobileNo == mobileNo) &&
             (identical(other.countryCode, countryCode) ||
@@ -470,12 +470,13 @@ class _$_RegisterRequest implements _RegisterRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RegisterRequestCopyWith<_$_RegisterRequest> get copyWith =>
-      __$$_RegisterRequestCopyWithImpl<_$_RegisterRequest>(this, _$identity);
+  _$$RegisterRequestImplCopyWith<_$RegisterRequestImpl> get copyWith =>
+      __$$RegisterRequestImplCopyWithImpl<_$RegisterRequestImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RegisterRequestToJson(
+    return _$$RegisterRequestImplToJson(
       this,
     );
   }
@@ -501,10 +502,10 @@ abstract class _RegisterRequest implements RegisterRequest {
       final String? name,
       final int? countryId,
       final int? stateId,
-      final int? districtId}) = _$_RegisterRequest;
+      final int? districtId}) = _$RegisterRequestImpl;
 
   factory _RegisterRequest.fromJson(Map<String, dynamic> json) =
-      _$_RegisterRequest.fromJson;
+      _$RegisterRequestImpl.fromJson;
 
   @override
   String? get mobileNo;
@@ -546,6 +547,6 @@ abstract class _RegisterRequest implements RegisterRequest {
   int? get districtId;
   @override
   @JsonKey(ignore: true)
-  _$$_RegisterRequestCopyWith<_$_RegisterRequest> get copyWith =>
+  _$$RegisterRequestImplCopyWith<_$RegisterRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

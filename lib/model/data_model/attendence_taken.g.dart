@@ -6,8 +6,9 @@ part of 'attendence_taken.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AttendenceTaken _$$_AttendenceTakenFromJson(Map<String, dynamic> json) =>
-    _$_AttendenceTaken(
+_$AttendenceTakenImpl _$$AttendenceTakenImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AttendenceTakenImpl(
       conductedClass: json['conducted_class'] == null
           ? null
           : ConductedClassDetails.fromJson(
@@ -15,15 +16,16 @@ _$_AttendenceTaken _$$_AttendenceTakenFromJson(Map<String, dynamic> json) =>
       status: json['status'] as int?,
     );
 
-Map<String, dynamic> _$$_AttendenceTakenToJson(_$_AttendenceTaken instance) =>
+Map<String, dynamic> _$$AttendenceTakenImplToJson(
+        _$AttendenceTakenImpl instance) =>
     <String, dynamic>{
       'conducted_class': instance.conductedClass,
       'status': instance.status,
     };
 
-_$_ConductedClassDetails _$$_ConductedClassDetailsFromJson(
+_$ConductedClassDetailsImpl _$$ConductedClassDetailsImplFromJson(
         Map<String, dynamic> json) =>
-    _$_ConductedClassDetails(
+    _$ConductedClassDetailsImpl(
       id: json['id'] as int?,
       batchId: json['batch_id'] as int?,
       takenByType: json['taken_by_type'] as String?,
@@ -50,8 +52,8 @@ _$_ConductedClassDetails _$$_ConductedClassDetailsFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$$_ConductedClassDetailsToJson(
-        _$_ConductedClassDetails instance) =>
+Map<String, dynamic> _$$ConductedClassDetailsImplToJson(
+        _$ConductedClassDetailsImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'batch_id': instance.batchId,
@@ -69,8 +71,9 @@ Map<String, dynamic> _$$_ConductedClassDetailsToJson(
       'attendances': instance.attendances,
     };
 
-_$_AttendanceDetails _$$_AttendanceDetailsFromJson(Map<String, dynamic> json) =>
-    _$_AttendanceDetails(
+_$AttendanceDetailsImpl _$$AttendanceDetailsImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AttendanceDetailsImpl(
       id: json['id'] as int?,
       conductedClassId: json['conducted_class_id'] as int?,
       studentDetailId: json['student_detail_id'] as int?,
@@ -83,8 +86,8 @@ _$_AttendanceDetails _$$_AttendanceDetailsFromJson(Map<String, dynamic> json) =>
               json['student_detail'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_AttendanceDetailsToJson(
-        _$_AttendanceDetails instance) =>
+Map<String, dynamic> _$$AttendanceDetailsImplToJson(
+        _$AttendanceDetailsImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'conducted_class_id': instance.conductedClassId,
@@ -95,8 +98,8 @@ Map<String, dynamic> _$$_AttendanceDetailsToJson(
       'student_detail': instance.studentDetail,
     };
 
-_$_StudentDetail _$$_StudentDetailFromJson(Map<String, dynamic> json) =>
-    _$_StudentDetail(
+_$StudentDetailImpl _$$StudentDetailImplFromJson(Map<String, dynamic> json) =>
+    _$StudentDetailImpl(
       id: json['id'] as int?,
       name: json['name'] as String?,
       parentName: json['parent_name'] as String?,
@@ -112,7 +115,7 @@ _$_StudentDetail _$$_StudentDetailFromJson(Map<String, dynamic> json) =>
       isActive: json['is_active'] as int?,
     );
 
-Map<String, dynamic> _$$_StudentDetailToJson(_$_StudentDetail instance) =>
+Map<String, dynamic> _$$StudentDetailImplToJson(_$StudentDetailImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -129,12 +132,13 @@ Map<String, dynamic> _$$_StudentDetailToJson(_$_StudentDetail instance) =>
       'is_active': instance.isActive,
     };
 
-_$_TakenBy _$$_TakenByFromJson(Map<String, dynamic> json) => _$_TakenBy(
+_$TakenByImpl _$$TakenByImplFromJson(Map<String, dynamic> json) =>
+    _$TakenByImpl(
       id: json['id'] as int?,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$$_TakenByToJson(_$_TakenBy instance) =>
+Map<String, dynamic> _$$TakenByImplToJson(_$TakenByImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

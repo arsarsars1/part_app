@@ -196,6 +196,53 @@ class FeeCubit extends Cubit<FeeState> {
     }
   }
 
+  Future getStudentFeeDetailsForTrainer({
+    required int trainerId,
+    String? searchQuery,
+    int? branchId,
+    int? batchId,
+    int? month,
+    int? year,
+    String? feeType,
+    int? studentId,
+    String? paymentStatus,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      batchInvoice.clear();
+      emit(FetchingFee());
+    } else {
+      emit(FetchingFee(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(FeeFetched());
+      return;
+    }
+
+    FeeDetailHistory? response = await _feeService.studentFeeDetailsForTrainer(
+      trainerId: trainerId,
+      month: month,
+      year: year,
+      feeType: feeType,
+      searchQuery: searchQuery,
+      studentId: studentId,
+      paymentStatus: paymentStatus,
+      pageNo: page,
+    );
+
+    if (response?.status == 1) {
+      nextPageUrl = response?.feeDetailHistory?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+      batchInvoice.addAll(response?.feeDetailHistory?.data ?? []);
+      emit(FeeFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
   Future getStudentAppFeeDetails({
     String? searchQuery,
     int? branchId,

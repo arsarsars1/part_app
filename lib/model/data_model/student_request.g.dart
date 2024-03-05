@@ -6,8 +6,8 @@ part of 'student_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_StudentRequest _$$_StudentRequestFromJson(Map<String, dynamic> json) =>
-    _$_StudentRequest(
+_$StudentRequestImpl _$$StudentRequestImplFromJson(Map<String, dynamic> json) =>
+    _$StudentRequestImpl(
       name: json['name'] as String?,
       mobileNo: json['mobile_no'] as String?,
       countryCode: json['country_code'] as int?,
@@ -29,7 +29,8 @@ _$_StudentRequest _$$_StudentRequestFromJson(Map<String, dynamic> json) =>
       parentName: json['parent_name'] as String?,
     );
 
-Map<String, dynamic> _$$_StudentRequestToJson(_$_StudentRequest instance) =>
+Map<String, dynamic> _$$StudentRequestImplToJson(
+        _$StudentRequestImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'mobile_no': instance.mobileNo,

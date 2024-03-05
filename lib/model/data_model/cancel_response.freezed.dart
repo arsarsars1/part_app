@@ -69,22 +69,22 @@ class _$CancelResponseCopyWithImpl<$Res, $Val extends CancelResponse>
 }
 
 /// @nodoc
-abstract class _$$_CancelResponseCopyWith<$Res>
+abstract class _$$CancelResponseImplCopyWith<$Res>
     implements $CancelResponseCopyWith<$Res> {
-  factory _$$_CancelResponseCopyWith(
-          _$_CancelResponse value, $Res Function(_$_CancelResponse) then) =
-      __$$_CancelResponseCopyWithImpl<$Res>;
+  factory _$$CancelResponseImplCopyWith(_$CancelResponseImpl value,
+          $Res Function(_$CancelResponseImpl) then) =
+      __$$CancelResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? status, List<CancelledClass>? cancelledClasses});
 }
 
 /// @nodoc
-class __$$_CancelResponseCopyWithImpl<$Res>
-    extends _$CancelResponseCopyWithImpl<$Res, _$_CancelResponse>
-    implements _$$_CancelResponseCopyWith<$Res> {
-  __$$_CancelResponseCopyWithImpl(
-      _$_CancelResponse _value, $Res Function(_$_CancelResponse) _then)
+class __$$CancelResponseImplCopyWithImpl<$Res>
+    extends _$CancelResponseCopyWithImpl<$Res, _$CancelResponseImpl>
+    implements _$$CancelResponseImplCopyWith<$Res> {
+  __$$CancelResponseImplCopyWithImpl(
+      _$CancelResponseImpl _value, $Res Function(_$CancelResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -93,7 +93,7 @@ class __$$_CancelResponseCopyWithImpl<$Res>
     Object? status = freezed,
     Object? cancelledClasses = freezed,
   }) {
-    return _then(_$_CancelResponse(
+    return _then(_$CancelResponseImpl(
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -109,13 +109,13 @@ class __$$_CancelResponseCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_CancelResponse implements _CancelResponse {
-  const _$_CancelResponse(
+class _$CancelResponseImpl implements _CancelResponse {
+  const _$CancelResponseImpl(
       {this.status, final List<CancelledClass>? cancelledClasses})
       : _cancelledClasses = cancelledClasses;
 
-  factory _$_CancelResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_CancelResponseFromJson(json);
+  factory _$CancelResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CancelResponseImplFromJson(json);
 
   @override
   final int? status;
@@ -136,10 +136,10 @@ class _$_CancelResponse implements _CancelResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CancelResponse &&
+            other is _$CancelResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality()
                 .equals(other._cancelledClasses, _cancelledClasses));
@@ -153,12 +153,13 @@ class _$_CancelResponse implements _CancelResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CancelResponseCopyWith<_$_CancelResponse> get copyWith =>
-      __$$_CancelResponseCopyWithImpl<_$_CancelResponse>(this, _$identity);
+  _$$CancelResponseImplCopyWith<_$CancelResponseImpl> get copyWith =>
+      __$$CancelResponseImplCopyWithImpl<_$CancelResponseImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CancelResponseToJson(
+    return _$$CancelResponseImplToJson(
       this,
     );
   }
@@ -167,10 +168,10 @@ class _$_CancelResponse implements _CancelResponse {
 abstract class _CancelResponse implements CancelResponse {
   const factory _CancelResponse(
       {final int? status,
-      final List<CancelledClass>? cancelledClasses}) = _$_CancelResponse;
+      final List<CancelledClass>? cancelledClasses}) = _$CancelResponseImpl;
 
   factory _CancelResponse.fromJson(Map<String, dynamic> json) =
-      _$_CancelResponse.fromJson;
+      _$CancelResponseImpl.fromJson;
 
   @override
   int? get status;
@@ -178,7 +179,7 @@ abstract class _CancelResponse implements CancelResponse {
   List<CancelledClass>? get cancelledClasses;
   @override
   @JsonKey(ignore: true)
-  _$$_CancelResponseCopyWith<_$_CancelResponse> get copyWith =>
+  _$$CancelResponseImplCopyWith<_$CancelResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -315,11 +316,11 @@ class _$CancelledClassCopyWithImpl<$Res, $Val extends CancelledClass>
 }
 
 /// @nodoc
-abstract class _$$_CancelledClassCopyWith<$Res>
+abstract class _$$CancelledClassImplCopyWith<$Res>
     implements $CancelledClassCopyWith<$Res> {
-  factory _$$_CancelledClassCopyWith(
-          _$_CancelledClass value, $Res Function(_$_CancelledClass) then) =
-      __$$_CancelledClassCopyWithImpl<$Res>;
+  factory _$$CancelledClassImplCopyWith(_$CancelledClassImpl value,
+          $Res Function(_$CancelledClassImpl) then) =
+      __$$CancelledClassImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -340,11 +341,11 @@ abstract class _$$_CancelledClassCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CancelledClassCopyWithImpl<$Res>
-    extends _$CancelledClassCopyWithImpl<$Res, _$_CancelledClass>
-    implements _$$_CancelledClassCopyWith<$Res> {
-  __$$_CancelledClassCopyWithImpl(
-      _$_CancelledClass _value, $Res Function(_$_CancelledClass) _then)
+class __$$CancelledClassImplCopyWithImpl<$Res>
+    extends _$CancelledClassCopyWithImpl<$Res, _$CancelledClassImpl>
+    implements _$$CancelledClassImplCopyWith<$Res> {
+  __$$CancelledClassImplCopyWithImpl(
+      _$CancelledClassImpl _value, $Res Function(_$CancelledClassImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -362,7 +363,7 @@ class __$$_CancelledClassCopyWithImpl<$Res>
     Object? updatedAt = freezed,
     Object? cancelledBy = freezed,
   }) {
-    return _then(_$_CancelledClass(
+    return _then(_$CancelledClassImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -414,8 +415,8 @@ class __$$_CancelledClassCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_CancelledClass implements _CancelledClass {
-  const _$_CancelledClass(
+class _$CancelledClassImpl implements _CancelledClass {
+  const _$CancelledClassImpl(
       {this.id,
       this.batchId,
       this.classDate,
@@ -428,8 +429,8 @@ class _$_CancelledClass implements _CancelledClass {
       this.updatedAt,
       this.cancelledBy});
 
-  factory _$_CancelledClass.fromJson(Map<String, dynamic> json) =>
-      _$$_CancelledClassFromJson(json);
+  factory _$CancelledClassImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CancelledClassImplFromJson(json);
 
   @override
   final int? id;
@@ -460,10 +461,10 @@ class _$_CancelledClass implements _CancelledClass {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CancelledClass &&
+            other is _$CancelledClassImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.batchId, batchId) || other.batchId == batchId) &&
             (identical(other.classDate, classDate) ||
@@ -503,12 +504,13 @@ class _$_CancelledClass implements _CancelledClass {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CancelledClassCopyWith<_$_CancelledClass> get copyWith =>
-      __$$_CancelledClassCopyWithImpl<_$_CancelledClass>(this, _$identity);
+  _$$CancelledClassImplCopyWith<_$CancelledClassImpl> get copyWith =>
+      __$$CancelledClassImplCopyWithImpl<_$CancelledClassImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CancelledClassToJson(
+    return _$$CancelledClassImplToJson(
       this,
     );
   }
@@ -526,10 +528,10 @@ abstract class _CancelledClass implements CancelledClass {
       final int? cancelledById,
       final DateTime? createdAt,
       final DateTime? updatedAt,
-      final CancelledBy? cancelledBy}) = _$_CancelledClass;
+      final CancelledBy? cancelledBy}) = _$CancelledClassImpl;
 
   factory _CancelledClass.fromJson(Map<String, dynamic> json) =
-      _$_CancelledClass.fromJson;
+      _$CancelledClassImpl.fromJson;
 
   @override
   int? get id;
@@ -555,7 +557,7 @@ abstract class _CancelledClass implements CancelledClass {
   CancelledBy? get cancelledBy;
   @override
   @JsonKey(ignore: true)
-  _$$_CancelledClassCopyWith<_$_CancelledClass> get copyWith =>
+  _$$CancelledClassImplCopyWith<_$CancelledClassImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -671,11 +673,11 @@ class _$CancelledByCopyWithImpl<$Res, $Val extends CancelledBy>
 }
 
 /// @nodoc
-abstract class _$$_CancelledByCopyWith<$Res>
+abstract class _$$CancelledByImplCopyWith<$Res>
     implements $CancelledByCopyWith<$Res> {
-  factory _$$_CancelledByCopyWith(
-          _$_CancelledBy value, $Res Function(_$_CancelledBy) then) =
-      __$$_CancelledByCopyWithImpl<$Res>;
+  factory _$$CancelledByImplCopyWith(
+          _$CancelledByImpl value, $Res Function(_$CancelledByImpl) then) =
+      __$$CancelledByImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -692,11 +694,11 @@ abstract class _$$_CancelledByCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CancelledByCopyWithImpl<$Res>
-    extends _$CancelledByCopyWithImpl<$Res, _$_CancelledBy>
-    implements _$$_CancelledByCopyWith<$Res> {
-  __$$_CancelledByCopyWithImpl(
-      _$_CancelledBy _value, $Res Function(_$_CancelledBy) _then)
+class __$$CancelledByImplCopyWithImpl<$Res>
+    extends _$CancelledByCopyWithImpl<$Res, _$CancelledByImpl>
+    implements _$$CancelledByImplCopyWith<$Res> {
+  __$$CancelledByImplCopyWithImpl(
+      _$CancelledByImpl _value, $Res Function(_$CancelledByImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -713,7 +715,7 @@ class __$$_CancelledByCopyWithImpl<$Res>
     Object? profilePic = freezed,
     Object? isActive = freezed,
   }) {
-    return _then(_$_CancelledBy(
+    return _then(_$CancelledByImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -761,8 +763,8 @@ class __$$_CancelledByCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_CancelledBy implements _CancelledBy {
-  const _$_CancelledBy(
+class _$CancelledByImpl implements _CancelledBy {
+  const _$CancelledByImpl(
       {this.id,
       this.name,
       this.userId,
@@ -774,8 +776,8 @@ class _$_CancelledBy implements _CancelledBy {
       this.profilePic,
       this.isActive});
 
-  factory _$_CancelledBy.fromJson(Map<String, dynamic> json) =>
-      _$$_CancelledByFromJson(json);
+  factory _$CancelledByImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CancelledByImplFromJson(json);
 
   @override
   final int? id;
@@ -804,10 +806,10 @@ class _$_CancelledBy implements _CancelledBy {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CancelledBy &&
+            other is _$CancelledByImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.userId, userId) || other.userId == userId) &&
@@ -831,12 +833,12 @@ class _$_CancelledBy implements _CancelledBy {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CancelledByCopyWith<_$_CancelledBy> get copyWith =>
-      __$$_CancelledByCopyWithImpl<_$_CancelledBy>(this, _$identity);
+  _$$CancelledByImplCopyWith<_$CancelledByImpl> get copyWith =>
+      __$$CancelledByImplCopyWithImpl<_$CancelledByImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CancelledByToJson(
+    return _$$CancelledByImplToJson(
       this,
     );
   }
@@ -853,10 +855,10 @@ abstract class _CancelledBy implements CancelledBy {
       final DateTime? dob,
       final DateTime? doj,
       final String? profilePic,
-      final int? isActive}) = _$_CancelledBy;
+      final int? isActive}) = _$CancelledByImpl;
 
   factory _CancelledBy.fromJson(Map<String, dynamic> json) =
-      _$_CancelledBy.fromJson;
+      _$CancelledByImpl.fromJson;
 
   @override
   int? get id;
@@ -880,6 +882,6 @@ abstract class _CancelledBy implements CancelledBy {
   int? get isActive;
   @override
   @JsonKey(ignore: true)
-  _$$_CancelledByCopyWith<_$_CancelledBy> get copyWith =>
+  _$$CancelledByImplCopyWith<_$CancelledByImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

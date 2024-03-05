@@ -70,22 +70,24 @@ class _$BranchTrainerResponseCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_BranchTrainerResponseCopyWith<$Res>
+abstract class _$$BranchTrainerResponseImplCopyWith<$Res>
     implements $BranchTrainerResponseCopyWith<$Res> {
-  factory _$$_BranchTrainerResponseCopyWith(_$_BranchTrainerResponse value,
-          $Res Function(_$_BranchTrainerResponse) then) =
-      __$$_BranchTrainerResponseCopyWithImpl<$Res>;
+  factory _$$BranchTrainerResponseImplCopyWith(
+          _$BranchTrainerResponseImpl value,
+          $Res Function(_$BranchTrainerResponseImpl) then) =
+      __$$BranchTrainerResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int status, List<Trainer>? trainers});
 }
 
 /// @nodoc
-class __$$_BranchTrainerResponseCopyWithImpl<$Res>
-    extends _$BranchTrainerResponseCopyWithImpl<$Res, _$_BranchTrainerResponse>
-    implements _$$_BranchTrainerResponseCopyWith<$Res> {
-  __$$_BranchTrainerResponseCopyWithImpl(_$_BranchTrainerResponse _value,
-      $Res Function(_$_BranchTrainerResponse) _then)
+class __$$BranchTrainerResponseImplCopyWithImpl<$Res>
+    extends _$BranchTrainerResponseCopyWithImpl<$Res,
+        _$BranchTrainerResponseImpl>
+    implements _$$BranchTrainerResponseImplCopyWith<$Res> {
+  __$$BranchTrainerResponseImplCopyWithImpl(_$BranchTrainerResponseImpl _value,
+      $Res Function(_$BranchTrainerResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -94,7 +96,7 @@ class __$$_BranchTrainerResponseCopyWithImpl<$Res>
     Object? status = null,
     Object? trainers = freezed,
   }) {
-    return _then(_$_BranchTrainerResponse(
+    return _then(_$BranchTrainerResponseImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -110,13 +112,13 @@ class __$$_BranchTrainerResponseCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_BranchTrainerResponse implements _BranchTrainerResponse {
-  const _$_BranchTrainerResponse(
+class _$BranchTrainerResponseImpl implements _BranchTrainerResponse {
+  const _$BranchTrainerResponseImpl(
       {required this.status, final List<Trainer>? trainers})
       : _trainers = trainers;
 
-  factory _$_BranchTrainerResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_BranchTrainerResponseFromJson(json);
+  factory _$BranchTrainerResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BranchTrainerResponseImplFromJson(json);
 
   @override
   final int status;
@@ -136,10 +138,10 @@ class _$_BranchTrainerResponse implements _BranchTrainerResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BranchTrainerResponse &&
+            other is _$BranchTrainerResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._trainers, _trainers));
   }
@@ -152,13 +154,13 @@ class _$_BranchTrainerResponse implements _BranchTrainerResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BranchTrainerResponseCopyWith<_$_BranchTrainerResponse> get copyWith =>
-      __$$_BranchTrainerResponseCopyWithImpl<_$_BranchTrainerResponse>(
-          this, _$identity);
+  _$$BranchTrainerResponseImplCopyWith<_$BranchTrainerResponseImpl>
+      get copyWith => __$$BranchTrainerResponseImplCopyWithImpl<
+          _$BranchTrainerResponseImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BranchTrainerResponseToJson(
+    return _$$BranchTrainerResponseImplToJson(
       this,
     );
   }
@@ -167,10 +169,10 @@ class _$_BranchTrainerResponse implements _BranchTrainerResponse {
 abstract class _BranchTrainerResponse implements BranchTrainerResponse {
   const factory _BranchTrainerResponse(
       {required final int status,
-      final List<Trainer>? trainers}) = _$_BranchTrainerResponse;
+      final List<Trainer>? trainers}) = _$BranchTrainerResponseImpl;
 
   factory _BranchTrainerResponse.fromJson(Map<String, dynamic> json) =
-      _$_BranchTrainerResponse.fromJson;
+      _$BranchTrainerResponseImpl.fromJson;
 
   @override
   int get status;
@@ -178,6 +180,6 @@ abstract class _BranchTrainerResponse implements BranchTrainerResponse {
   List<Trainer>? get trainers;
   @override
   @JsonKey(ignore: true)
-  _$$_BranchTrainerResponseCopyWith<_$_BranchTrainerResponse> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$BranchTrainerResponseImplCopyWith<_$BranchTrainerResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

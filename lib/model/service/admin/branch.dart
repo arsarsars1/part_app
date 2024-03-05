@@ -86,6 +86,21 @@ class BranchService {
     return null;
   }
 
+  Future<List<Branch>?> getBranchesForTrainer({int? trainerId}) async {
+    try {
+      var response = await _apiClient.get(queryPath: '/trainers/$trainerId/branches');
+      BranchResponse branchResponse =
+          branchResponseFromJson(jsonEncode(response));
+      if (branchResponse.status == 1 && branchResponse.branches != null) {
+        var list = branchResponse.branches;
+        return list;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return null;
+  }
+
   Future<List<Branch>?> getStudentAppBranches({int? studentId}) async {
     try {
       var response =
@@ -129,6 +144,18 @@ class BranchService {
     try {
       var response = await _apiClient.get(
         queryPath: '/admin/branches/$branchId/trainers?page=$pageNo',
+      );
+      return trainerResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<TrainerResponse?> getTrainersForTrainer(
+      {required int trainerId ,required String branchId, int pageNo = 1}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/trainers/$trainerId/branches/$branchId/trainers?page=$pageNo',
       );
       return trainerResponseFromJson(jsonEncode(response));
     } catch (e) {

@@ -6,9 +6,9 @@ part of 'student_attendence_of_month.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_StudentAttendenceOfMonth _$$_StudentAttendenceOfMonthFromJson(
+_$StudentAttendenceOfMonthImpl _$$StudentAttendenceOfMonthImplFromJson(
         Map<String, dynamic> json) =>
-    _$_StudentAttendenceOfMonth(
+    _$StudentAttendenceOfMonthImpl(
       status: json['status'] as int?,
       studentAttendance: (json['student_attendance'] as List<dynamic>?)
           ?.map((e) => StudentAttendances.fromJson(e as Map<String, dynamic>))
@@ -17,8 +17,8 @@ _$_StudentAttendenceOfMonth _$$_StudentAttendenceOfMonthFromJson(
       absentCount: json['absent_count'] as int?,
     );
 
-Map<String, dynamic> _$$_StudentAttendenceOfMonthToJson(
-        _$_StudentAttendenceOfMonth instance) =>
+Map<String, dynamic> _$$StudentAttendenceOfMonthImplToJson(
+        _$StudentAttendenceOfMonthImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'student_attendance': instance.studentAttendance,
@@ -26,9 +26,9 @@ Map<String, dynamic> _$$_StudentAttendenceOfMonthToJson(
       'absent_count': instance.absentCount,
     };
 
-_$_StudentAttendances _$$_StudentAttendancesFromJson(
+_$StudentAttendancesImpl _$$StudentAttendancesImplFromJson(
         Map<String, dynamic> json) =>
-    _$_StudentAttendances(
+    _$StudentAttendancesImpl(
       id: json['id'] as int?,
       conductedClassId: json['conducted_class_id'] as int?,
       studentDetailId: json['student_detail_id'] as int?,
@@ -41,8 +41,8 @@ _$_StudentAttendances _$$_StudentAttendancesFromJson(
               json['conducted_class'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_StudentAttendancesToJson(
-        _$_StudentAttendances instance) =>
+Map<String, dynamic> _$$StudentAttendancesImplToJson(
+        _$StudentAttendancesImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'conducted_class_id': instance.conductedClassId,
@@ -53,8 +53,9 @@ Map<String, dynamic> _$$_StudentAttendancesToJson(
       'conducted_class': instance.conductedClass,
     };
 
-_$_ConductedClasses _$$_ConductedClassesFromJson(Map<String, dynamic> json) =>
-    _$_ConductedClasses(
+_$ConductedClassesImpl _$$ConductedClassesImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ConductedClassesImpl(
       id: json['id'] as int?,
       batchId: json['batch_id'] as int?,
       takenByType: json['taken_by_type'] as String?,
@@ -80,7 +81,8 @@ _$_ConductedClasses _$$_ConductedClassesFromJson(Map<String, dynamic> json) =>
           : By.fromJson(json['updated_by'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_ConductedClassesToJson(_$_ConductedClasses instance) =>
+Map<String, dynamic> _$$ConductedClassesImplToJson(
+        _$ConductedClassesImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'batch_id': instance.batchId,
@@ -97,12 +99,12 @@ Map<String, dynamic> _$$_ConductedClassesToJson(_$_ConductedClasses instance) =>
       'updated_by': instance.updatedBy,
     };
 
-_$_By _$$_ByFromJson(Map<String, dynamic> json) => _$_By(
+_$ByImpl _$$ByImplFromJson(Map<String, dynamic> json) => _$ByImpl(
       id: json['id'] as int?,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$$_ByToJson(_$_By instance) => <String, dynamic>{
+Map<String, dynamic> _$$ByImplToJson(_$ByImpl instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
     };

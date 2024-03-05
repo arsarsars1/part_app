@@ -24,7 +24,7 @@ class BatchService {
       int? academyTypeId = user!.adminDetail!.academy!.academyTypeId;
       var response = await _apiClient.get(
         queryPath: '',
-        baseUrl: 'https://dev.partapp.in/academy-type/$academyTypeId/courses',
+        baseUrl: 'https://v1.partapp.in/academy-type/$academyTypeId/courses',
       );
 
       return courseFromJson(jsonEncode(response));
@@ -32,23 +32,46 @@ class BatchService {
     return null;
   }
 
-  Future<List<Course>?> getSubjects(int? courseId) async {
+  Future<List<Course>?> getCoursesForTrainer({int? acadamyId}) async {
     var response = await _apiClient.get(
       queryPath: '',
-      baseUrl: 'https://dev.partapp.in/course/$courseId/subjects',
+      baseUrl: 'https://v1.partapp.in/academy-type/$acadamyId/courses',
     );
 
     return courseFromJson(jsonEncode(response));
   }
 
-  Future<Common?> createBatch(BatchRequest request) async {
+  Future<List<Course>?> getSubjects(int? courseId) async {
+    var response = await _apiClient.get(
+      queryPath: '',
+      baseUrl: 'https://v1.partapp.in/course/$courseId/subjects',
+    );
+
+    return courseFromJson(jsonEncode(response));
+  }
+
+  Future<BatchResponse?> createBatch(BatchRequest request) async {
     try {
       var response = await _apiClient.post(
         postPath: '/admin/batches',
         data: request.toJson(),
         formData: true,
       );
-      return commonFromJson(jsonEncode(response));
+      return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<BatchResponse?> createBatchForTrainer(
+      int trainerId, BatchRequest request) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/trainers/$trainerId/batches',
+        data: request.toJson(),
+        formData: true,
+      );
+      return batchResponseFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }
@@ -115,6 +138,42 @@ class BatchService {
 
       if (branchSearch) {
         path = '/admin/branches/$branchId/batches';
+      }
+
+      /// append the search text if search query is not null
+      if (search != null) {
+        path += '/search/$search';
+      }
+
+      path += '?page=$page';
+
+      var response = await _apiClient.get(
+        queryPath: path,
+      );
+
+      return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// this method will handle four different apis based on
+  /// [ branchId ] , [ status ] , [ search ]
+  Future<BatchResponse?> getBatchesByStatusForTrainer({
+    int? trainerId,
+    int? branchId,
+    String status = 'ongoing',
+    String? search,
+    required int page,
+    bool branchSearch = false,
+  }) async {
+    try {
+      String path = branchId == null
+          ? '/trainers/$trainerId/batches/batch-status/$status'
+          : '/trainers/$trainerId/branches/$branchId/batches/batch-status/$status';
+
+      if (branchSearch) {
+        path = '/trainers/$trainerId/branches/$branchId/batches';
       }
 
       /// append the search text if search query is not null
@@ -218,6 +277,18 @@ class BatchService {
     try {
       var response = await _apiClient.get(
         queryPath: '/admin/batches/$id',
+      );
+
+      return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<BatchResponse?> getBatchForTrainer({required int trainerId, required String id}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/trainers/$trainerId/batches/$id',
       );
 
       return batchResponseFromJson(jsonEncode(response));

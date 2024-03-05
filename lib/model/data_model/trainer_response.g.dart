@@ -6,8 +6,9 @@ part of 'trainer_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TrainerResponse _$$_TrainerResponseFromJson(Map<String, dynamic> json) =>
-    _$_TrainerResponse(
+_$TrainerResponseImpl _$$TrainerResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$TrainerResponseImpl(
       status: json['status'] as int,
       trainers: json['trainers'] == null
           ? null
@@ -17,14 +18,15 @@ _$_TrainerResponse _$$_TrainerResponseFromJson(Map<String, dynamic> json) =>
           : Trainer.fromJson(json['trainer'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_TrainerResponseToJson(_$_TrainerResponse instance) =>
+Map<String, dynamic> _$$TrainerResponseImplToJson(
+        _$TrainerResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'trainers': instance.trainers,
       'trainer': instance.trainer,
     };
 
-_$_Datum _$$_DatumFromJson(Map<String, dynamic> json) => _$_Datum(
+_$DatumImpl _$$DatumImplFromJson(Map<String, dynamic> json) => _$DatumImpl(
       currentPage: json['current_page'] as int?,
       data: (json['data'] as List<dynamic>)
           .map((e) => Trainer.fromJson(e as Map<String, dynamic>))
@@ -35,7 +37,8 @@ _$_Datum _$$_DatumFromJson(Map<String, dynamic> json) => _$_Datum(
       nextPageUrl: json['next_page_url'] as String?,
     );
 
-Map<String, dynamic> _$$_DatumToJson(_$_Datum instance) => <String, dynamic>{
+Map<String, dynamic> _$$DatumImplToJson(_$DatumImpl instance) =>
+    <String, dynamic>{
       'current_page': instance.currentPage,
       'data': instance.data,
       'from': instance.from,
@@ -44,7 +47,8 @@ Map<String, dynamic> _$$_DatumToJson(_$_Datum instance) => <String, dynamic>{
       'next_page_url': instance.nextPageUrl,
     };
 
-_$_Trainer _$$_TrainerFromJson(Map<String, dynamic> json) => _$_Trainer(
+_$TrainerImpl _$$TrainerImplFromJson(Map<String, dynamic> json) =>
+    _$TrainerImpl(
       id: json['id'] as int,
       userId: json['user_id'] as int?,
       academyId: json['academy_id'] as int?,
@@ -82,7 +86,7 @@ _$_Trainer _$$_TrainerFromJson(Map<String, dynamic> json) => _$_Trainer(
           .toList(),
     );
 
-Map<String, dynamic> _$$_TrainerToJson(_$_Trainer instance) =>
+Map<String, dynamic> _$$TrainerImplToJson(_$TrainerImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'user_id': instance.userId,
@@ -113,7 +117,8 @@ Map<String, dynamic> _$$_TrainerToJson(_$_Trainer instance) =>
       'trainer_detail': instance.trainerDetail,
     };
 
-_$_Document _$$_DocumentFromJson(Map<String, dynamic> json) => _$_Document(
+_$DocumentImpl _$$DocumentImplFromJson(Map<String, dynamic> json) =>
+    _$DocumentImpl(
       id: json['id'] as int?,
       documentIndex: json['documentIndex'] as int?,
       image: json['image'] as String?,
@@ -122,7 +127,7 @@ _$_Document _$$_DocumentFromJson(Map<String, dynamic> json) => _$_Document(
       isAvailable: json['isAvailable'] as int?,
     );
 
-Map<String, dynamic> _$$_DocumentToJson(_$_Document instance) =>
+Map<String, dynamic> _$$DocumentImplToJson(_$DocumentImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'documentIndex': instance.documentIndex,
