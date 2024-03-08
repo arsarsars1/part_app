@@ -62,6 +62,23 @@ class FeeCubit extends Cubit<FeeState> {
     }
   }
 
+  Future addAdvanceFeesForTrainer(
+      {Map<String, dynamic>? data, required int trainerId}) async {
+    try {
+      emit(AddingFees());
+      Common? response =
+          await _feeService.addAdvanceFeesForTrainer(data!, trainerId);
+
+      if (response?.status == 1) {
+        emit(AddedFees(response?.message ?? 'Fees Added'));
+      } else {
+        emit(AddFeesFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future addFeesForAdmission(
       int? batchInvoiceId, Map<String, dynamic> data) async {
     try {
@@ -80,6 +97,19 @@ class FeeCubit extends Cubit<FeeState> {
   }
 
   Future getBatchInvoice(int? batchInvoiceId) async {
+    emit(GettingBatchInvoice());
+    BatchFeeInvoice? response = await _feeService.batchFeeInvoiceDetails(
+        batchFeeInvoiceId: batchInvoiceId);
+    if (response?.status == 1) {
+      batchFeeInvoice = response?.batchFeeInvoice;
+      emit(GotBatchInvoice());
+    } else {
+      emit(AddFeesFailed('Failed to add link.'));
+    }
+  }
+
+  Future getBatchInvoiceForTrainer(
+      {int? batchInvoiceId, required int trainerId}) async {
     emit(GettingBatchInvoice());
     BatchFeeInvoice? response = await _feeService.batchFeeInvoiceDetails(
         batchFeeInvoiceId: batchInvoiceId);

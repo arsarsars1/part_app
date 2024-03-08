@@ -38,6 +38,20 @@ class FeeDetailsService {
     }
   }
 
+  Future<Common?> addAdvanceFeesForTrainer(
+      Map<String, dynamic> data, int? trainerId) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/trainers/$trainerId/fee-details/batch-fee-invoices/advance-payment',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> addFeesForAdmission(
       int? batchInvoiceId, Map<String, dynamic> data) async {
     try {

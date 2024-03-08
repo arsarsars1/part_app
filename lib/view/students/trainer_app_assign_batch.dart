@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/students/assign_student_batch.dart';
+import 'package:part_app/view/students/trainer_app_assign_student_batch.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAppAssignBatch extends StatefulWidget {
@@ -165,12 +165,24 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
                           enrolled:
                               studentCubit.enrolledBatches.contains(batch.id),
                           onAddToBatch: () {
-                            context
-                                .read<BatchCubit>()
-                                .getBatch(batchId: '${batch.id}');
+                            context.read<BatchCubit>().getBatchForTrainer(
+                                trainerId: authCubit
+                                        ?.user
+                                        ?.trainerDetail?[
+                                            authCubit?.trainerIndex ?? 0]
+                                        .id ??
+                                    0,
+                                acadamyId: authCubit
+                                        ?.user
+                                        ?.trainerDetail?[
+                                            authCubit?.trainerIndex ?? 0]
+                                        .academy
+                                        ?.academyTypeId ??
+                                    0,
+                                batchId: '${batch.id}');
                             Navigator.pushNamed(
                               context,
-                              AssignStudentBatch.route,
+                              TrainerAppAssignStudentBatch.route,
                               arguments: widget.editStudent,
                             );
                           },

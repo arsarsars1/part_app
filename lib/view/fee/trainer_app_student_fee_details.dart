@@ -3,9 +3,9 @@ import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
-import 'package:part_app/view/fee/add_advance_fee.dart';
-import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/components/fee_list_item.dart';
+import 'package:part_app/view/fee/trainer_app_add_advance_fee.dart';
+import 'package:part_app/view/fee/trainer_app_add_or_edit_fees.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 
@@ -125,7 +125,7 @@ class _TrainerAppStudentFeeDetailsState
                             );
                         Navigator.pushNamed(
                           context,
-                          AddAdvanceFeePage.route,
+                          TrainerAppAddAdvanceFeePage.route,
                         );
                       },
                       title: 'Add Advance Fee',
@@ -295,7 +295,7 @@ class _TrainerAppStudentFeeDetailsState
                                 onTap: () async {
                                   cubit.student = studentInvoice;
                                   await Navigator.pushNamed(
-                                      context, AddOrEditFees.route);
+                                      context, TrainerAppAddOrEditFees.route);
                                   doSearch(true);
                                 },
                               );
