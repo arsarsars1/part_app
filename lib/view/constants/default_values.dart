@@ -6,6 +6,7 @@ import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/manager/manager_page.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
+import 'package:part_app/view/trainer/trainer_app_trainer_salary_slips.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
 class DefaultValues {
@@ -263,7 +264,7 @@ class DefaultValues {
       asset: Assets.students,
       color: Color(0xFFFC6767),
     ),
-     DashboardItem(
+    DashboardItem(
       title: 'Fees',
       route: '/fees',
       asset: Assets.fee,
@@ -283,7 +284,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Salary',
-      route: '/salary',
+      route: TrainerAppTrainerSalarySlips.route,
       asset: Assets.fee,
       color: Color(0xFFF7B733),
     ),
@@ -293,7 +294,6 @@ class DefaultValues {
       asset: Assets.classLink,
       color: Color.fromARGB(255, 228, 50, 80),
     ),
-    
   ];
 
   static const Map<int, dynamic> defaultTrainingDays = {

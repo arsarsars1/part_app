@@ -377,7 +377,6 @@ class TrainerCubit extends Cubit<TrainerState> {
     String? searchQuery = '',
     int? branchId,
   }) async {
-    
     if (clean) {
       page = 1;
       nextPageUrl = '';
@@ -411,6 +410,53 @@ class TrainerCubit extends Cubit<TrainerState> {
       if (branchId == null) {
         salaryInvoice.removeWhere((element) =>
             element.trainerDetail?.name != trainer?.trainerDetail?[0].name);
+      }
+      emit(TrainerSalaryFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
+  Future getSalaryDetailsForTrainer({
+    int? trainerId,
+    int? month,
+    int? year,
+    bool clean = false,
+    String? searchQuery = '',
+    int? branchId,
+    String? trainerName,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      salaryInvoice.clear();
+      emit(FetchingTrainerSalary());
+    } else {
+      emit(FetchingTrainerSalary(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(TrainerSalaryFetched());
+      return;
+    }
+
+    TrainerSalarySlip? response = await _trainerService.salaryDetailsForTrainer(
+      month: month,
+      year: year,
+      trainerId: trainerId,
+      pageNo: page,
+      branchId: branchId,
+      searchQuery: searchQuery,
+    );
+
+    if (response?.status == 1) {
+      nextPageUrl = response?.salarySlips?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      salaryInvoice.addAll(response?.salarySlips?.data ?? []);
+      if (branchId == null) {
+        salaryInvoice.removeWhere(
+            (element) => element.trainerDetail?.name != trainerName);
       }
       emit(TrainerSalaryFetched(moreItems: nextPageUrl != null));
     }
