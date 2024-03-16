@@ -91,6 +91,32 @@ class FeeDetailsService {
     }
   }
 
+  Future<BatchFeeInvoiceList?> feeDetailsForTrainer({
+    int? trainerId,
+    int? branchId,
+    int? batchId,
+    int? month,
+    int? year,
+    String? feeType,
+    String? searchQuery,
+    required int pageNo,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath: month == null || year == null
+              ? searchQuery == '' || searchQuery == null
+                  ? '/trainers/$trainerId/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
+                  : '/trainers/$trainerId/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo'
+              : searchQuery == '' || searchQuery == null
+                  ? '/trainers/$trainerId/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
+                  : '/trainers/$trainerId/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo');
+      return batchFeeInvoiceListFromJson(jsonEncode(response));
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
   Future<FeeDetailHistory?> studentFeeDetails({
     int? month,
     int? year,

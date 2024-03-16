@@ -197,6 +197,54 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }
   }
 
+  Future getBatchesByStatusForTrainer({
+    required int trainerId,
+    int? branchId,
+    String? search,
+    bool clean = false,
+    bool branchSearch = false,
+    String status = "ongoing",
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(FetchingAttendanceBatches());
+    } else {
+      emit(FetchingAttendanceBatches(pagination: true));
+    }
+    if (nextPageUrl == null) {
+      emit(AttendanceBatchesFetched());
+      return;
+    }
+    BatchResponse? response =
+        await _attendanceService.getBatchesByStatusForTrainer(
+      trainerId: trainerId,
+      branchId: branchId,
+      status: status,
+      search: search,
+      page: page,
+      branchSearch: branchSearch,
+    );
+
+    if (response == null) {
+      emit(AttendanceNetworkError());
+    } else if (response.status == 1) {
+      nextPageUrl = response.batches?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      var items = response.batches?.data
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
+
+      _batches.addAll(items);
+      emit(AttendanceBatchesFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
   Future getStudentsMonthly({
     String? searchQuery,
     String? activeStatus,

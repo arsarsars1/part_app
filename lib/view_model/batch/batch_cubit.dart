@@ -475,6 +475,36 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future getBatchesByBranchForTrainer(
+      {required int trainerId, int? branchId, bool clean = false}) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(FetchingBatches());
+    } else {
+      emit(FetchingBatches(pagination: true));
+    }
+    BatchResponse? response = await _batchService.getBatchesByBranchForTrainer(
+      trainerId: trainerId,
+      page: page,
+      branchId: branchId,
+    );
+    if (response?.status == 1) {
+      nextPageUrl = response?.batches?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+      var items = response?.batches?.data
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
+
+      _batches.addAll(items);
+      emit(BatchesFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
   Future getOngoigBatchesForTrainer(int? trainerId) async {
     _batches.clear();
     var items = await _batchService.getTrainerBatches(trainerId);
@@ -530,7 +560,9 @@ class BatchCubit extends Cubit<BatchState> {
   }
 
   Future getBatchForTrainer(
-      {required int trainerId, required String batchId, required int acadamyId}) async {
+      {required int trainerId,
+      required String batchId,
+      required int acadamyId}) async {
     emit(FetchingBatch());
     BatchResponse? response = await _batchService.getBatchForTrainer(
         trainerId: trainerId, id: batchId);

@@ -266,13 +266,13 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Fees',
-      route: '/fees',
+      route: '/trainer-app-fees',
       asset: Assets.fee,
       color: Color(0xFF1D976C),
     ),
     DashboardItem(
       title: 'Attendance',
-      route: '/attendance-batch-list',
+      route: '/trainer-app-attendance-batch-list',
       asset: Assets.attendance,
       color: Color(0xFF2B32B2),
     ),

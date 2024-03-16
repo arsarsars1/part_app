@@ -201,7 +201,15 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                           onChange: (value) {
                             status = value.id;
 
-                            context.read<BatchCubit>().getBatchesByStatus(
+                            context
+                                .read<BatchCubit>()
+                                .getBatchesByStatusForTrainer(
+                                  trainerId: authCubit
+                                          ?.user
+                                          ?.trainerDetail?[
+                                              authCubit?.trainerIndex ?? 0]
+                                          .id ??
+                                      0,
                                   branchId: branchId,
                                   status: status!,
                                   clean: true,

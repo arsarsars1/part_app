@@ -4,6 +4,7 @@ import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/attendance/attendance_add.dart';
 import 'package:part_app/view/attendance/attendance_update.dart';
 import 'package:part_app/view/attendance/student_app_attendence_view.dart';
+import 'package:part_app/view/attendance/trainer_app_attendance_batch_list.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/auth/register/acadmey_details.dart';
@@ -40,6 +41,7 @@ import 'package:part_app/view/fee/student_app_fee_details.dart';
 import 'package:part_app/view/fee/student_fee_details.dart';
 import 'package:part_app/view/fee/trainer_app_add_advance_fee.dart';
 import 'package:part_app/view/fee/trainer_app_add_or_edit_fees.dart';
+import 'package:part_app/view/fee/trainer_app_fees_details_view.dart';
 import 'package:part_app/view/fee/trainer_app_student_fee_details.dart';
 import 'package:part_app/view/home/components/account.dart';
 import 'package:part_app/view/home/components/delete_account.dart';
@@ -517,6 +519,11 @@ class RouteGenerator {
           builder: (_) => const AttendanceBatchListPage(),
           settings: settings,
         );
+      case TrainerAppAttendanceBatchListPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppAttendanceBatchListPage(),
+          settings: settings,
+        );
       case AttendanceCalenderView.route:
         return MaterialPageRoute(
           builder: (_) => const AttendanceCalenderView(),
@@ -531,7 +538,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const AddAdvanceFeePage(),
           settings: settings,
-        );  
+        );
       case AddAdvanceSalaryPage.route:
         return MaterialPageRoute(
           builder: (_) => const AddAdvanceSalaryPage(),
@@ -590,6 +597,11 @@ class RouteGenerator {
       case FeesDetailsView.route:
         return MaterialPageRoute(
           builder: (_) => const FeesDetailsView(),
+          settings: settings,
+        );
+      case TrainerAppFeesDetailsView.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppFeesDetailsView(),
           settings: settings,
         );
       case StudentFeeDetails.route:

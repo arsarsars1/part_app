@@ -211,6 +211,40 @@ class AttendanceService {
     }
   }
 
+  Future<BatchResponse?> getBatchesByStatusForTrainer({
+    int? trainerId,
+    int? branchId,
+    String status = 'ongoing',
+    String? search,
+    required int page,
+    bool branchSearch = false,
+  }) async {
+    try {
+      String path = branchId == null
+          ? '/trainers/$trainerId/batches/batch-status/$status'
+          : '/trainers/$trainerId/branches/$branchId/batches/batch-status/$status';
+
+      if (branchSearch) {
+        path = '/trainers/$trainerId/branches/$branchId/batches';
+      }
+
+      /// append the search text if search query is not null
+      if (search != null) {
+        path += '/search/$search';
+      }
+
+      path += '?page=$page';
+
+      var response = await _apiClient.get(
+        queryPath: path,
+      );
+
+      return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<AttendanceMonthlyRecord?> getStudents({
     String? searchQuery,
     String? activeStatus,

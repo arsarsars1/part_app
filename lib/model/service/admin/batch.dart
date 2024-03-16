@@ -273,6 +273,21 @@ class BatchService {
     }
   }
 
+  Future<BatchResponse?> getBatchesByBranchForTrainer(
+      {required int page,
+      required int? branchId,
+      required int trainerId}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/trainers/$trainerId/branches/$branchId/batches?page=$page',
+      );
+
+      return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<BatchResponse?> getBatch({required String id}) async {
     try {
       var response = await _apiClient.get(
@@ -285,7 +300,8 @@ class BatchService {
     }
   }
 
-  Future<BatchResponse?> getBatchForTrainer({required int trainerId, required String id}) async {
+  Future<BatchResponse?> getBatchForTrainer(
+      {required int trainerId, required String id}) async {
     try {
       var response = await _apiClient.get(
         queryPath: '/trainers/$trainerId/batches/$id',

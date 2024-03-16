@@ -46,7 +46,7 @@ class _TrainerAppDashboardState extends State<TrainerAppDashboard> {
             ShowCaseWidget(
               enableAutoScroll: true,
               onFinish: () {
-                Hive.box(Database.userBox).put("Showcase", true);
+                Hive.box(Database.userBox).put("Trainer Showcase", true);
               },
               builder: Builder(
                 builder: (context) {
