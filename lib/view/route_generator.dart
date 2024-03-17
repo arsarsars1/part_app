@@ -5,6 +5,9 @@ import 'package:part_app/view/attendance/attendance_add.dart';
 import 'package:part_app/view/attendance/attendance_update.dart';
 import 'package:part_app/view/attendance/student_app_attendence_view.dart';
 import 'package:part_app/view/attendance/trainer_app_attendance_batch_list.dart';
+import 'package:part_app/view/attendance/trainer_app_attendance_calender_view.dart';
+import 'package:part_app/view/attendance/trainer_app_attendance_update.dart';
+import 'package:part_app/view/attendance/trainer_app_monthly_attendance_view.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/auth/register/acadmey_details.dart';
@@ -529,6 +532,11 @@ class RouteGenerator {
           builder: (_) => const AttendanceCalenderView(),
           settings: settings,
         );
+      case TrainerAppAttendanceCalenderView.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppAttendanceCalenderView(),
+          settings: settings,
+        );
       case AddAdvanceFeePage.route:
         return MaterialPageRoute(
           builder: (_) => const AddAdvanceFeePage(),
@@ -564,9 +572,19 @@ class RouteGenerator {
           builder: (_) => const MonthlyAttendanceView(),
           settings: settings,
         );
+      case TrainerAppMonthlyAttendanceView.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppMonthlyAttendanceView(),
+          settings: settings,
+        );
       case AttendanceUpdate.route:
         return MaterialPageRoute(
           builder: (_) => const AttendanceUpdate(),
+          settings: settings,
+        );
+      case TrainerAppAttendanceUpdate.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppAttendanceUpdate(),
           settings: settings,
         );
       case AttendanceAdd.route:

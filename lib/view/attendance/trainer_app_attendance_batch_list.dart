@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
-import 'package:part_app/view/attendance/attendance_calender_view.dart';
+import 'package:part_app/view/attendance/trainer_app_attendance_calender_view.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
@@ -29,19 +29,26 @@ class _TrainerAppAttendanceBatchListPageState
   void initState() {
     super.initState();
     // initial call to show the batches
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var branchCubit = context.read<BranchCubit>();
       authCubit = context.read<AuthCubit>();
+      branchCubit.getBranchesForTrainer(
+        trainerId:
+            authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+                0,
+      );
       AttendanceCubit cubit = context.read<AttendanceCubit>();
-      branchId = branchCubit.firstBranch?.id;
-      setState(() {
-        cubit.getBatchesByStatusForTrainer(
-          trainerId: authCubit
-                  ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
-              0,
-          branchId: branchId,
-          clean: true,
-        );
+      Future.delayed(const Duration(seconds: 1)).then((value) {
+        branchId = branchCubit.firstBranch?.id;
+        setState(() {
+          cubit.getBatchesByStatusForTrainer(
+            trainerId: authCubit
+                    ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+                0,
+            branchId: branchId,
+            clean: true,
+          );
+        });
       });
     });
 
@@ -192,14 +199,29 @@ class _TrainerAppAttendanceBatchListPageState
                                     return BatchItem(
                                       batch: batch,
                                       onTap: () {
-                                        context
-                                            .read<BatchCubit>()
-                                            .getBatch(batchId: '${batch.id}');
+                                        context.read<BatchCubit>().getBatchForTrainer(
+                                            trainerId: authCubit
+                                                    ?.user
+                                                    ?.trainerDetail?[authCubit
+                                                            ?.trainerIndex ??
+                                                        0]
+                                                    .id ??
+                                                0,
+                                            acadamyId: authCubit
+                                                    ?.user
+                                                    ?.trainerDetail?[authCubit
+                                                            ?.trainerIndex ??
+                                                        0]
+                                                    .academy
+                                                    ?.academyTypeId ??
+                                                0,
+                                            batchId: '${batch.id}');
                                         context.read<AttendanceCubit>().id =
                                             batch.id;
                                         Navigator.pushNamed(
                                           context,
-                                          AttendanceCalenderView.route,
+                                          TrainerAppAttendanceCalenderView
+                                              .route,
                                         );
                                       },
                                     );

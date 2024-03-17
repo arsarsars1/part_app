@@ -42,11 +42,46 @@ class AttendanceService {
     }
   }
 
+  Future<Common?> updateAttendenceForTrainer(
+      {int? trainerId,
+      Map<String, dynamic>? request,
+      int? batchId,
+      int? conductedClassId,
+      int? conductedClassStudentId}) async {
+    try {
+      var response = await _apiClient.post(
+        postPath:
+            '/trainers/$trainerId/batches/$batchId/attendance/$conductedClassId/$conductedClassStudentId',
+        data: request ?? {"": ""},
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<AttendenceTaken?> getAttendenceTaken(
       {required int batchId, required int conductedClassId}) async {
     try {
       var response = await _apiClient.get(
         queryPath: '/admin/batches/$batchId/attendance/$conductedClassId',
+      );
+
+      return attendenceTakenFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AttendenceTaken?> getAttendenceTakenForTrainer(
+      {required int? trainerId,
+      required int batchId,
+      required int conductedClassId}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/trainers/$trainerId/batches/$batchId/attendance/$conductedClassId',
       );
 
       return attendenceTakenFromJson(jsonEncode(response));
@@ -119,6 +154,23 @@ class AttendanceService {
       var response = await _apiClient.get(
         queryPath:
             '/admin/batches/$batchId/attendance/list/${date?.year}/${date?.month}',
+      );
+
+      return attendenceConductedClassFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AttendenceConductedClass?>
+      getConductedAttendeceClassesOfMonthForTrainer(
+          {required int? trainerId,
+          required int? batchId,
+          required DateTime? date}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/trainers/$trainerId/batches/$batchId/attendance/list/${date?.year}/${date?.month}',
       );
 
       return attendenceConductedClassFromJson(jsonEncode(response));
@@ -257,6 +309,29 @@ class AttendanceService {
       String path = '';
       if (batchId != null) {
         path = '/admin/batches/$batchId/attendance/record/$year/$month';
+      }
+      path += '?page=$pageNo';
+      var response = await _apiClient.get(queryPath: path);
+      return attendanceMonthlyRecordFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AttendanceMonthlyRecord?> getStudentsForTrainer({
+    required int trainerId,
+    String? searchQuery,
+    String? activeStatus,
+    int? batchId,
+    int? pageNo,
+    int? month,
+    int? year,
+  }) async {
+    try {
+      String path = '';
+      if (batchId != null) {
+        path =
+            '/trainers/$trainerId/batches/$batchId/attendance/record/$year/$month';
       }
       path += '?page=$pageNo';
       var response = await _apiClient.get(queryPath: path);

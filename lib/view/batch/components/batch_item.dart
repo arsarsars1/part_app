@@ -190,10 +190,15 @@ class BatchItem extends StatelessWidget {
                 ),
                 if (!reschedule && !edit)
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Icon(
-                        Icons.keyboard_arrow_right,
-                        color: Colors.white,
+                      SizedBox(
+                        width: 50.w,
+                        height: 20.h,
+                        child: const Icon(
+                          Icons.keyboard_arrow_right,
+                          color: Colors.white,
+                        ),
                       ),
                       SizedBox(
                         height: 17.h,
@@ -203,10 +208,14 @@ class BatchItem extends StatelessWidget {
                           Share.share(
                               'Please use the below link to add students : \n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batch.shareToken}');
                         },
-                        child: Icon(
-                          Icons.share,
-                          color: Colors.white,
-                          size: 20.h,
+                        child: SizedBox(
+                          width: 50.w,
+                          height: 20.h,
+                          child: Icon(
+                            Icons.share,
+                            color: Colors.white,
+                            size: 20.h,
+                          ),
                         ),
                       ),
                     ],

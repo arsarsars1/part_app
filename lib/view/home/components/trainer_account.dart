@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/home/components/delete_account.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAccount extends StatelessWidget {
@@ -42,7 +41,7 @@ class TrainerAccount extends StatelessWidget {
                     SizedBox(
                       width: 150.w,
                       child: Text(
-                        '${cubit.user?.adminDetail?.name}',
+                        '${cubit.user?.trainerDetail?[cubit.trainerIndex].name}',
                         textAlign: TextAlign.end,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 16.sp,
@@ -63,7 +62,7 @@ class TrainerAccount extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      '${cubit.user?.adminDetail?.whatsappNo}',
+                      '${cubit.user?.trainerDetail?[cubit.trainerIndex].whatsappNo}',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.bold,
@@ -84,7 +83,7 @@ class TrainerAccount extends StatelessWidget {
                     SizedBox(
                       width: 150.w,
                       child: Text(
-                        '${cubit.user?.adminDetail?.email}',
+                        '${cubit.user?.trainerDetail?[cubit.trainerIndex].email}',
                         textAlign: TextAlign.end,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 16.sp,
@@ -105,7 +104,7 @@ class TrainerAccount extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      '${cubit.user?.adminDetail?.dob?.toDateString()}',
+                      '${cubit.user?.trainerDetail?[cubit.trainerIndex].dob?.toDateString()}',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.bold,
@@ -124,7 +123,7 @@ class TrainerAccount extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      '${cubit.user?.adminDetail?.doj?.toDateString()}',
+                      '${cubit.user?.trainerDetail?[cubit.trainerIndex].doj?.toDateString()}',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.bold,
@@ -135,16 +134,16 @@ class TrainerAccount extends StatelessWidget {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Button(
-              height: 40.h,
-              onTap: () {
-                Navigator.pushNamed(context, DeleteAccount.route);
-              },
-              title: 'Delete Account',
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.center,
+          //   child: Button(
+          //     height: 40.h,
+          //     onTap: () {
+          //       Navigator.pushNamed(context, DeleteAccount.route);
+          //     },
+          //     title: 'Delete Account',
+          //   ),
+          // ),
         ],
       ),
     );
