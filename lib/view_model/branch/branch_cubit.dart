@@ -84,7 +84,8 @@ class BranchCubit extends Cubit<BranchState> {
 
   Future getBranchesForTrainer({required int trainerId}) async {
     emit(BranchesLoading());
-    List<Branch>? list = await _branchService.getBranchesForTrainer(trainerId: trainerId);
+    List<Branch>? list =
+        await _branchService.getBranchesForTrainer(trainerId: trainerId);
     firstBranch = list?.firstWhere((element) => element.isActive == 1);
     branches = list ?? [];
     emit(BranchesLoaded());
@@ -260,6 +261,49 @@ class BranchCubit extends Cubit<BranchState> {
     }
   }
 
+  Future getBatchClassesOfDateForTrainer({
+    required int trainerId,
+    required String batchId,
+    required String branchId,
+    required String date,
+    bool clean = false,
+  }) async {
+    // if (clean) {
+    //   page = 1;
+    //   nextPageUrl = '';
+    //   _classes.clear();
+    //   // emit(ClassesLoading());
+    // }
+
+    // if (nextPageUrl == null) {
+    //   emit(ClassesLoaded());
+    //   return;
+    // }
+    emit(ClassesLoading());
+    _classes.clear();
+
+    ClassResponse? temp = await _branchService.getBatchClassesForTrainer(
+      trainerId: trainerId,
+      batchId: batchId,
+      brabchId: branchId,
+      date: date,
+      pageNo: page,
+    );
+    if (temp?.status == 1) {
+      // nextPageUrl = temp?.trainers?.nextPageUrl;
+      // if (nextPageUrl != null) {
+      //   page++;
+      // }
+      var items =
+          temp?.classes?.map((e) => ClassModel.fromEntity(e)).toList() ?? [];
+      _classes = items;
+      // _classes.addAll(temp!.classes);
+      emit(ClassesLoaded());
+    } else {
+      emit(ClassesFailed('Failed to get the class list'));
+    }
+  }
+
   Future getBranchClassesOfDate({
     required String branchId,
     required String date,
@@ -268,6 +312,35 @@ class BranchCubit extends Cubit<BranchState> {
     _newClasses.clear();
 
     ClassResponse? temp = await _branchService.getBranchClasses(
+      branchId: branchId,
+      date: date,
+      pageNo: page,
+    );
+    if (temp?.status == 1) {
+      // nextPageUrl = temp?.trainers?.nextPageUrl;
+      // if (nextPageUrl != null) {
+      //   page++;
+      // }
+      var items =
+          temp?.classes?.map((e) => ClassModel.fromEntity(e)).toList() ?? [];
+      _newClasses = items;
+      // _classes.addAll(temp!.classes);
+      emit(ClassesLoaded());
+    } else {
+      emit(ClassesFailed('Failed to get the class list'));
+    }
+  }
+
+  Future getBranchClassesOfDateForTrainer({
+    required int trainerId,
+    required String branchId,
+    required String date,
+    bool clean = false,
+  }) async {
+    _newClasses.clear();
+
+    ClassResponse? temp = await _branchService.getBranchClassesForTrainer(
+      trainerId: trainerId,
       branchId: branchId,
       date: date,
       pageNo: page,

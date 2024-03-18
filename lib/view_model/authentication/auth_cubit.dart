@@ -344,6 +344,50 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future updateProfileForTrainer(ProfileUpdateRequest request, int trainerId,
+      [String? otp, bool isToOtpPage = false]) async {
+    if (!isToOtpPage) {
+      emit(UpdatingUser());
+    }
+    UserResponse? response = await _authService.updateTrainerProfile(
+        request.toJson()..putIfAbsent('otp', () => otp), trainerId);
+    if (response?.status == 1) {
+      if (!isToOtpPage) {
+        validateLocalUser();
+
+        final trainerList = user!.trainerDetail!.toList();
+        final trainer =
+            trainerList.firstWhere((element) => element.id == trainerId);
+        final newStudent = trainer.copyWith(
+          name: request.name ?? trainer.name,
+          email: request.email ?? trainer.email,
+          gender: request.gender ?? trainer.gender,
+          whatsappNo: request.whatsappNo ?? trainer.whatsappNo,
+          dob: (request.dob != null
+              ? DateTime.parse(request.dob!)
+              : trainer.dob),
+          academy: trainer.academy!.copyWith(
+            academyName: request.academyName ?? trainer.academy!.academyName,
+          ),
+        );
+        trainerList.insert(trainerList.indexOf(trainer), newStudent);
+        trainerList.remove(trainer);
+
+        emit(
+          UpdateUserSuccess(
+            user: user!.copyWith(
+                mobileNo: request.mobileNo ?? user!.mobileNo,
+                trainerDetail: trainerList),
+          ),
+        );
+      } else {
+        emit(UpdateOTPSuccess());
+      }
+    } else {
+      emit(UpdateUserFailed(response?.message ?? 'Failed to update'));
+    }
+  }
+
   Future sendAccountDeleteOTP() async {
     emit(SendingOtp());
     Otp? response = await _authService.generateOTPForDeleteAccount();
@@ -358,7 +402,10 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future updateProfilePic(
-      {BuildContext? context, required File profilePic, int? studentId}) async {
+      {BuildContext? context,
+      required File profilePic,
+      int? studentId,
+      int? trainerId}) async {
     // emit(UpdatingUser());
     MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
     Map<String, dynamic> request = {
@@ -376,6 +423,31 @@ class AuthCubit extends Cubit<AuthState> {
       } else if (response?.user?.studentDetail?.first.profilePic?.isNotEmpty ??
           false) {
         url = response?.user?.studentDetail?.first.profilePic ?? '';
+      }
+      context.read<ProfileCubit>().emitProfileLoaded(url);
+    } else {
+      emit(UpdateUserFailed(response?.message ?? 'Failed to update'));
+    }
+  }
+
+  Future updateProfilePicForTrainer(
+      {BuildContext? context,
+      required File profilePic,
+      required int trainerId}) async {
+    // emit(UpdatingUser());
+    MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
+    Map<String, dynamic> request = {
+      'profile_pic': picFile,
+    };
+    UserResponse? response =
+        await _authService.updateTrainerProfile(request, trainerId);
+
+    if (response?.status == 1 && context != null && context.mounted) {
+      Alert(context).show(message: 'User Profile Updated');
+      String url = '';
+      if (response?.user?.trainerDetail?.first.profilePic?.isNotEmpty ??
+          false) {
+        url = response?.user?.trainerDetail?.first.profilePic ?? '';
       }
       context.read<ProfileCubit>().emitProfileLoaded(url);
     } else {

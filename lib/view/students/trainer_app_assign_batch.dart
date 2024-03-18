@@ -45,7 +45,10 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        context.read<BatchCubit>().getBatchesByStatus(
+        context.read<BatchCubit>().getBatchesByStatusForTrainer(
+              trainerId: authCubit
+                      ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+                  0,
               branchId: branchId,
               search: search,
               branchSearch: true,
@@ -84,7 +87,12 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
                       searched = true;
                     });
 
-                    context.read<BatchCubit>().getBatchesByStatus(
+                    context.read<BatchCubit>().getBatchesByStatusForTrainer(
+                          trainerId: authCubit
+                                  ?.user
+                                  ?.trainerDetail?[authCubit?.trainerIndex ?? 0]
+                                  .id ??
+                              0,
                           branchId: value,
                           clean: true,
                           branchSearch: false,
@@ -113,7 +121,13 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
                   onSubmit: (value) {
                     search = value;
                     if (value.isNotEmpty) {
-                      context.read<BatchCubit>().getBatchesByStatus(
+                      context.read<BatchCubit>().getBatchesByStatusForTrainer(
+                            trainerId: authCubit
+                                    ?.user
+                                    ?.trainerDetail?[
+                                        authCubit?.trainerIndex ?? 0]
+                                    .id ??
+                                0,
                             branchId: branchId,
                             search: value,
                             clean: true,

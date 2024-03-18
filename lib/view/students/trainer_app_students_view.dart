@@ -287,7 +287,13 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                         onChange: (value) {
                           if (value.isEmpty) {
                             query = null;
-                            context.read<StudentCubit>().getStudents(
+                            context.read<StudentCubit>().getStudentsForTrainer(
+                                  trainerId: authCubit
+                                          ?.user
+                                          ?.trainerDetail?[
+                                              authCubit?.trainerIndex ?? 0]
+                                          .id ??
+                                      0,
                                   batchId: batch?.id,
                                   searchQuery: query,
                                   activeStatus: activeStatus,

@@ -27,6 +27,10 @@ import 'package:part_app/view/batch/student_app_batch_list.dart';
 import 'package:part_app/view/batch/trainer_app_add_batch.dart';
 import 'package:part_app/view/batch/trainer_app_batch_details.dart';
 import 'package:part_app/view/batch/trainer_app_batch_list.dart';
+import 'package:part_app/view/batch/trainer_app_cancel_batch_class.dart';
+import 'package:part_app/view/batch/trainer_app_cancelled_batch_class.dart';
+import 'package:part_app/view/batch/trainer_app_reschedule_class.dart';
+import 'package:part_app/view/batch/trainer_app_rescheduled_classes.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
@@ -73,6 +77,7 @@ import 'package:part_app/view/notifications/notification_screen.dart';
 import 'package:part_app/view/notifications/student_app_notification_screen.dart';
 import 'package:part_app/view/notifications/trainer_app_notification_screen.dart';
 import 'package:part_app/view/profile/profile.dart';
+import 'package:part_app/view/profile/trainer_app_profile.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/students/add_student.dart';
 import 'package:part_app/view/students/assign_batch.dart';
@@ -214,6 +219,11 @@ class RouteGenerator {
       case Profile.route:
         return MaterialPageRoute(
           builder: (_) => const Profile(),
+          settings: settings,
+        );
+      case TrainerAppProfile.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppProfile(),
           settings: settings,
         );
       case Account.route:
@@ -367,9 +377,19 @@ class RouteGenerator {
           builder: (_) => const RescheduledClasses(),
           settings: settings,
         );
+      case TrainerAppRescheduledClasses.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppRescheduledClasses(),
+          settings: settings,
+        );
       case RescheduleClass.route:
         return MaterialPageRoute(
           builder: (_) => const RescheduleClass(),
+          settings: settings,
+        );
+      case TrainerAppRescheduleClass.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppRescheduleClass(),
           settings: settings,
         );
       case CancelClass.route:
@@ -377,9 +397,19 @@ class RouteGenerator {
           builder: (_) => const CancelClass(),
           settings: settings,
         );
+      case TrainerAppCancelClass.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppCancelClass(),
+          settings: settings,
+        );
       case CancelledClasses.route:
         return MaterialPageRoute(
           builder: (_) => const CancelledClasses(),
+          settings: settings,
+        );
+      case TrainerAppCancelledClasses.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppCancelledClasses(),
           settings: settings,
         );
       case ManagerDetails.route:
