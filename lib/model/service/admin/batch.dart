@@ -173,7 +173,8 @@ class BatchService {
           : '/trainers/$trainerId/branches/$branchId/batches/batch-status/$status';
 
       if (branchSearch) {
-        path = '/trainers/$trainerId/branches/$branchId/batches';
+        path =
+            '/trainers/$trainerId/branches/$branchId/batches/batch-status/ongoing';
       }
 
       /// append the search text if search query is not null
@@ -273,6 +274,21 @@ class BatchService {
     }
   }
 
+  Future<BatchResponse?> getBatchesByBranchForTrainer(
+      {required int page,
+      required int? branchId,
+      required int trainerId}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/trainers/$trainerId/branches/$branchId/batches?page=$page',
+      );
+
+      return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<BatchResponse?> getBatch({required String id}) async {
     try {
       var response = await _apiClient.get(
@@ -285,7 +301,8 @@ class BatchService {
     }
   }
 
-  Future<BatchResponse?> getBatchForTrainer({required int trainerId, required String id}) async {
+  Future<BatchResponse?> getBatchForTrainer(
+      {required int trainerId, required String id}) async {
     try {
       var response = await _apiClient.get(
         queryPath: '/trainers/$trainerId/batches/$id',
@@ -326,6 +343,21 @@ class BatchService {
     }
   }
 
+  Future<Common?> rescheduleClassForTrainer(
+      Map<String, dynamic> request, int trainerId,
+      [int? batchId]) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/trainers/$trainerId/batches/$batchId/reschedule-class',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> cancelClass(Map<String, dynamic> request,
       [int? batchId]) async {
     try {
@@ -340,11 +372,42 @@ class BatchService {
     }
   }
 
+  Future<Common?> cancelClassForTrainer(
+      Map<String, dynamic> request, int trainerId,
+      [int? batchId]) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/trainers/$trainerId/batches/$batchId/cancel-class',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> deactivateClass(
       {required int? batchId, required int? classId}) async {
     try {
       var response = await _apiClient.delete(
         queryPath: '/admin/batches/$batchId/rescheduled-classes/$classId',
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> deactivateClassForTrainer(
+      {required int trainerId,
+      required int? batchId,
+      required int? classId}) async {
+    try {
+      var response = await _apiClient.delete(
+        queryPath:
+            '/trainers/$trainerId/batches/$batchId/rescheduled-classes/$classId',
       );
 
       return commonFromJson(jsonEncode(response));
@@ -390,6 +453,24 @@ class BatchService {
     try {
       var response = await _apiClient.get(
         queryPath: '/admin/batches/$batchId/cancelled-classes?$query',
+      );
+
+      return cancelResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<CancelResponse?> cancelledClassesForTrainer(
+      int? batchId, int trainerId,
+      {int? year, int? month}) async {
+    String query = 'year=${year ?? DateTime.now().year}'
+        '&month=${month ?? DateTime.now().month}';
+
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/trainers/$trainerId/batches/$batchId/cancelled-classes?$query',
       );
 
       return cancelResponseFromJson(jsonEncode(response));

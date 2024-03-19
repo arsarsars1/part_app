@@ -14,10 +14,10 @@ class CancelClass extends StatefulWidget {
   const CancelClass({Key? key}) : super(key: key);
 
   @override
-  State<CancelClass> createState() => _RescheduleClassState();
+  State<CancelClass> createState() => _CancelClassState();
 }
 
-class _RescheduleClassState extends State<CancelClass> {
+class _CancelClassState extends State<CancelClass> {
   String? selectedDate = "";
   var formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();

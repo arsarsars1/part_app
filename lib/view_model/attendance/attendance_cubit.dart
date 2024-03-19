@@ -87,6 +87,27 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }
   }
 
+  Future updateAttendenceForTrainer(
+      {required int trainerId,
+      Map<String, dynamic>? request,
+      int? batchId,
+      int? conductedClassId,
+      int? conductedClassStudentId}) async {
+    emit(UpdatingAttendence());
+    Common? response = await _attendanceService.updateAttendenceForTrainer(
+      trainerId: trainerId,
+      request: request,
+      batchId: batchId,
+      conductedClassId: conductedClassId,
+      conductedClassStudentId: conductedClassStudentId,
+    );
+    if (response?.status == 1) {
+      emit(UpdatedAttendence());
+    } else {
+      emit(UpdateAttendenceFailed(response?.message ?? 'Failed to reschedule'));
+    }
+  }
+
   /// reset
   void reset() {
     _batches.clear();
@@ -197,6 +218,54 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }
   }
 
+  Future getBatchesByStatusForTrainer({
+    required int trainerId,
+    int? branchId,
+    String? search,
+    bool clean = false,
+    bool branchSearch = false,
+    String status = "ongoing",
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(FetchingAttendanceBatches());
+    } else {
+      emit(FetchingAttendanceBatches(pagination: true));
+    }
+    if (nextPageUrl == null) {
+      emit(AttendanceBatchesFetched());
+      return;
+    }
+    BatchResponse? response =
+        await _attendanceService.getBatchesByStatusForTrainer(
+      trainerId: trainerId,
+      branchId: branchId,
+      status: status,
+      search: search,
+      page: page,
+      branchSearch: branchSearch,
+    );
+
+    if (response == null) {
+      emit(AttendanceNetworkError());
+    } else if (response.status == 1) {
+      nextPageUrl = response.batches?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      var items = response.batches?.data
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
+
+      _batches.addAll(items);
+      emit(AttendanceBatchesFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
   Future getStudentsMonthly({
     String? searchQuery,
     String? activeStatus,
@@ -221,6 +290,48 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }
 
     AttendanceMonthlyRecord? response = await _attendanceService.getStudents(
+      batchId: batchId,
+      month: month,
+      year: year,
+      searchQuery: searchQuery,
+      activeStatus: activeStatus,
+      pageNo: page,
+    );
+
+    if (response?.status == 1) {
+      studentAttendanceDetails = response?.studentAttendances ?? [];
+      conductedClassCount = response?.conductedClassCount ?? 0;
+      emit(StudentsAttendanceFetched(/*moreItems: nextPageUrl != null*/));
+    }
+  }
+
+  Future getStudentsMonthlyForTrainer({
+    required int trainerId,
+    String? searchQuery,
+    String? activeStatus,
+    int? batchId,
+    int? year,
+    int? month,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      // _studentsMap.clear();
+      studentAttendanceDetails = [];
+      emit(FetchingStudentsAttendance());
+    } else {
+      emit(FetchingStudentsAttendance(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(StudentsAttendanceFetched());
+      return;
+    }
+
+    AttendanceMonthlyRecord? response =
+        await _attendanceService.getStudentsForTrainer(
+      trainerId: trainerId,
       batchId: batchId,
       month: month,
       year: year,
@@ -302,6 +413,23 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }
   }
 
+  /// this method is used to get the classes of a batch in a particular month
+  Future getConductedClassesOfMonthForTrainer({
+    required int trainerId,
+    int? batchId,
+    DateTime? date,
+  }) async {
+    _batches.clear();
+    emit(FetchingAttendanceBatches(pagination: false));
+    AttendenceConductedClass? response =
+        await _attendanceService.getConductedAttendeceClassesOfMonthForTrainer(
+            trainerId: trainerId, batchId: batchId, date: date);
+    if (response?.status == 1) {
+      conductedClasses = response?.conductedClasses.data ?? [];
+      emit(AttendanceBatchesFetched());
+    }
+  }
+
   /// this method can use when needed. It is working right now
   Future getAttendenceTaken({int? batchId, int? conductedClassId}) async {
     selectedStudents.clear();
@@ -310,6 +438,37 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     try {
       AttendenceTaken? response = await _attendanceService.getAttendenceTaken(
           batchId: batchId ?? 0, conductedClassId: conductedClassId ?? 0);
+      if (response?.status == 1) {
+        var items = response?.conductedClass?.attendances ?? [];
+
+        _attendenceTaken.addAll(items);
+
+        updatedStudents.clear();
+        for (AttendanceDetails element in _attendenceTaken) {
+          if (element.isPresent == 1) {
+            updatedStudents.add(element.studentDetailId ?? 0);
+          }
+        }
+
+        emit(AttendanceBatchesFetched());
+      }
+    } catch (e) {
+      emit(UpdateAttendenceFailed(e.toString()));
+    }
+  }
+
+  /// this method can use when needed. It is working right now
+  Future getAttendenceTakenForTrainer(
+      {required int trainerId, int? batchId, int? conductedClassId}) async {
+    selectedStudents.clear();
+    _attendenceTaken.clear();
+    emit(UpdatingAttendence());
+    try {
+      AttendenceTaken? response =
+          await _attendanceService.getAttendenceTakenForTrainer(
+              trainerId: trainerId,
+              batchId: batchId ?? 0,
+              conductedClassId: conductedClassId ?? 0);
       if (response?.status == 1) {
         var items = response?.conductedClass?.attendances ?? [];
 

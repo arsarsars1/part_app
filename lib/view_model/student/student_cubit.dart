@@ -89,6 +89,35 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
+  Future createStudentForTrainer({
+    required int trainerId,
+  }) async {
+    emit(CreatingStudent());
+    _student = null;
+    var request = _studentRequest.toJson();
+
+    if (_profilePic != null) {
+      MultipartFile? picFile =
+          await Utils().generateMultiPartFile(_profilePic!);
+      request.putIfAbsent('profile_pic', () => picFile);
+    }
+    StudentResponse? response = await _studentService.createStudentForTrainer(
+        request: request, trainerId: trainerId);
+
+    if (response?.status == 1) {
+      _student = response?.student;
+      tempStudent = response?.student;
+      // updateStudentsList();
+      emit(CreatedStudent());
+      _profilePic = null;
+      _studentRequest = const StudentRequest();
+    } else {
+      emit(
+        CreateStudentFailed(response?.message ?? 'Failed to create student'),
+      );
+    }
+  }
+
   Future enrollToBatch() async {
     emit(CreatingStudent());
 
@@ -96,6 +125,26 @@ class StudentCubit extends Cubit<StudentState> {
       _studentRequest.toJson(),
       _student?.studentDetail?[0].id,
     );
+
+    if (response?.status == 1) {
+      await getStudentBatches();
+      emit(CreatedStudent());
+    } else {
+      emit(
+        CreateStudentFailed(response?.message ?? 'Failed to add batch.'),
+      );
+    }
+  }
+
+  Future enrollToBatchForTrainer({
+    required int trainerId,
+  }) async {
+    emit(CreatingStudent());
+
+    StudentResponse? response = await _studentService.enrollToBatchForTrainer(
+        request: _studentRequest.toJson(),
+        studentId: _student?.studentDetail?[0].id,
+        trainerId: trainerId);
 
     if (response?.status == 1) {
       await getStudentBatches();

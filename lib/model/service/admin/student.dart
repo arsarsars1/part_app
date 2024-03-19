@@ -25,12 +25,46 @@ class StudentService {
     }
   }
 
+  Future<StudentResponse?> createStudentForTrainer({
+    Map<String, dynamic>? request,
+    int? trainerId,
+  }) async {
+    try {
+      request?.removeWhere((key, value) => value == null);
+      var response = await _client.post(
+        postPath: '/trainers/$trainerId/students',
+        data: request!,
+        formData: true,
+      );
+      return studentResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentResponse?> enrollToBatch(
       Map<String, dynamic> request, int? studentId) async {
     try {
       request.removeWhere((key, value) => value == null);
       var response = await _client.post(
           postPath: '/admin/students/$studentId/enroll', data: request);
+      return studentResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  Future<StudentResponse?> enrollToBatchForTrainer({
+    Map<String, dynamic>? request,
+    int? studentId,
+    int? trainerId,
+  }) async {
+    try {
+      request?.removeWhere((key, value) => value == null);
+      var response = await _client.post(
+          postPath: '/trainers/$trainerId/students/$studentId/enroll',
+          data: request!);
       return studentResponseFromJson(jsonEncode(response));
     } catch (e) {
       log(e.toString());

@@ -62,6 +62,23 @@ class FeeCubit extends Cubit<FeeState> {
     }
   }
 
+  Future addAdvanceFeesForTrainer(
+      {Map<String, dynamic>? data, required int trainerId}) async {
+    try {
+      emit(AddingFees());
+      Common? response =
+          await _feeService.addAdvanceFeesForTrainer(data!, trainerId);
+
+      if (response?.status == 1) {
+        emit(AddedFees(response?.message ?? 'Fees Added'));
+      } else {
+        emit(AddFeesFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future addFeesForAdmission(
       int? batchInvoiceId, Map<String, dynamic> data) async {
     try {
@@ -80,6 +97,19 @@ class FeeCubit extends Cubit<FeeState> {
   }
 
   Future getBatchInvoice(int? batchInvoiceId) async {
+    emit(GettingBatchInvoice());
+    BatchFeeInvoice? response = await _feeService.batchFeeInvoiceDetails(
+        batchFeeInvoiceId: batchInvoiceId);
+    if (response?.status == 1) {
+      batchFeeInvoice = response?.batchFeeInvoice;
+      emit(GotBatchInvoice());
+    } else {
+      emit(AddFeesFailed('Failed to add link.'));
+    }
+  }
+
+  Future getBatchInvoiceForTrainer(
+      {int? batchInvoiceId, required int trainerId}) async {
     emit(GettingBatchInvoice());
     BatchFeeInvoice? response = await _feeService.batchFeeInvoiceDetails(
         batchFeeInvoiceId: batchInvoiceId);
@@ -128,6 +158,56 @@ class FeeCubit extends Cubit<FeeState> {
 
     try {
       BatchFeeInvoiceList? response = await _feeService.feeDetails(
+        branchId: branchId,
+        batchId: batchId,
+        month: month,
+        year: year,
+        feeType: feeType,
+        searchQuery: searchQuery,
+        pageNo: page,
+      );
+
+      if (response?.status == 1) {
+        nextPageUrl = response?.batchFeeInvoices?.nextPageUrl;
+        if (nextPageUrl != null) {
+          page++;
+        }
+        batchInvoice.addAll(response?.batchFeeInvoices?.data ?? []);
+        emit(FeeFetched(moreItems: nextPageUrl != null));
+      }
+    } catch (e) {
+      log(e.toString());
+      emit(FeeFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
+  Future getFeeDetailsForTrainer({
+    required int trainerId,
+    String? searchQuery,
+    int? branchId,
+    int? batchId,
+    int? month,
+    int? year,
+    String? feeType,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      batchInvoice.clear();
+      emit(FetchingFee());
+    } else {
+      emit(FetchingFee(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(FeeFetched());
+      return;
+    }
+
+    try {
+      BatchFeeInvoiceList? response = await _feeService.feeDetailsForTrainer(
+        trainerId: trainerId,
         branchId: branchId,
         batchId: batchId,
         month: month,

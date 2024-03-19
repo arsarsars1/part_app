@@ -241,6 +241,33 @@ class TrainerService {
     }
   }
 
+  Future<TrainerSalarySlip?> salaryDetailsForTrainer({
+    int? trainerId,
+    int? month,
+    int? year,
+    int? branchId,
+    String? searchQuery = '',
+    required int pageNo,
+  }) async {
+    try {
+      if (branchId == null) {
+        var response = await _client.get(
+            queryPath: month != null
+                ? '/trainers/$trainerId/salary-history/$year/$month&page=$pageNo'
+                : '/trainers/$trainerId/salary-history/$year&page=$pageNo');
+        return trainerSalarySlipFromJson(jsonEncode(response));
+      } else {
+        var response = await _client.get(
+            queryPath: month != null
+                ? '/salary/trainers?branch_id=$branchId&year=$year&month=$month&page=$pageNo&search=${searchQuery ?? ''}'
+                : '/salary/trainers?branch_id=$branchId&year=$year&page=$pageNo&search=${searchQuery ?? ''}');
+        return trainerSalarySlipFromJson(jsonEncode(response));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<SalarySlip?> salaryPayments({
     required int? trainerSlipId,
   }) async {

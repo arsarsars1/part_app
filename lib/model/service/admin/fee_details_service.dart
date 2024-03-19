@@ -38,6 +38,20 @@ class FeeDetailsService {
     }
   }
 
+  Future<Common?> addAdvanceFeesForTrainer(
+      Map<String, dynamic> data, int? trainerId) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/trainers/$trainerId/fee-details/batch-fee-invoices/advance-payment',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> addFeesForAdmission(
       int? batchInvoiceId, Map<String, dynamic> data) async {
     try {
@@ -70,6 +84,32 @@ class FeeDetailsService {
               : searchQuery == '' || searchQuery == null
                   ? '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
                   : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo');
+      return batchFeeInvoiceListFromJson(jsonEncode(response));
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  Future<BatchFeeInvoiceList?> feeDetailsForTrainer({
+    int? trainerId,
+    int? branchId,
+    int? batchId,
+    int? month,
+    int? year,
+    String? feeType,
+    String? searchQuery,
+    required int pageNo,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath: month == null || year == null
+              ? searchQuery == '' || searchQuery == null
+                  ? '/trainers/$trainerId/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
+                  : '/trainers/$trainerId/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo'
+              : searchQuery == '' || searchQuery == null
+                  ? '/trainers/$trainerId/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
+                  : '/trainers/$trainerId/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo');
       return batchFeeInvoiceListFromJson(jsonEncode(response));
     } catch (e) {
       log(e.toString());

@@ -8,9 +8,9 @@ import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api_client.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/constants/constant.dart';
-import 'package:part_app/view/home/components/account.dart';
 import 'package:part_app/view/home/components/logout.dart';
-import 'package:part_app/view/profile/profile.dart';
+import 'package:part_app/view/home/components/trainer_account.dart';
+import 'package:part_app/view/profile/trainer_app_profile.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 
@@ -34,10 +34,10 @@ class _TrainerProfileButtonState extends State<TrainerProfileButton> {
       onSelected: (MenuItems item) {
         switch (item) {
           case MenuItems.profile:
-            Navigator.pushNamed(context, Profile.route);
+            Navigator.pushNamed(context, TrainerAppProfile.route);
             break;
           case MenuItems.account:
-            Navigator.pushNamed(context, Account.route);
+            Navigator.pushNamed(context, TrainerAccount.route);
             break;
           case MenuItems.logout:
             Logout(context).show();

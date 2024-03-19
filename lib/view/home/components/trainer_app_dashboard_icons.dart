@@ -83,7 +83,7 @@ class _TrainerAppDashboardIconsState extends State<TrainerAppDashboardIcons> {
         itemBuilder: (context, index) {
           DashboardItem item = DefaultValues.trainerDashboardItems[index];
           return Showcase(
-            key: context.read<HomeCubit>().keyCap[index],
+            key: context.read<HomeCubit>().trainerkKeyCap[index],
             title: titles[index],
             description: descriptions[index],
             child: InkWell(

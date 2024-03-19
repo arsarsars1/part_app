@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/students/assign_student_batch.dart';
+import 'package:part_app/view/students/trainer_app_assign_student_batch.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAppAssignBatch extends StatefulWidget {
@@ -45,7 +45,10 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        context.read<BatchCubit>().getBatchesByStatus(
+        context.read<BatchCubit>().getBatchesByStatusForTrainer(
+              trainerId: authCubit
+                      ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+                  0,
               branchId: branchId,
               search: search,
               branchSearch: true,
@@ -84,7 +87,12 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
                       searched = true;
                     });
 
-                    context.read<BatchCubit>().getBatchesByStatus(
+                    context.read<BatchCubit>().getBatchesByStatusForTrainer(
+                          trainerId: authCubit
+                                  ?.user
+                                  ?.trainerDetail?[authCubit?.trainerIndex ?? 0]
+                                  .id ??
+                              0,
                           branchId: value,
                           clean: true,
                           branchSearch: false,
@@ -101,7 +109,13 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
                   onChange: (value) {
                     if (value.isEmpty) {
                       search = null;
-                      context.read<BatchCubit>().getBatchesByStatus(
+                      context.read<BatchCubit>().getBatchesByStatusForTrainer(
+                            trainerId: authCubit
+                                    ?.user
+                                    ?.trainerDetail?[
+                                        authCubit?.trainerIndex ?? 0]
+                                    .id ??
+                                0,
                             branchId: branchId,
                             search: null,
                             clean: true,
@@ -113,7 +127,13 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
                   onSubmit: (value) {
                     search = value;
                     if (value.isNotEmpty) {
-                      context.read<BatchCubit>().getBatchesByStatus(
+                      context.read<BatchCubit>().getBatchesByStatusForTrainer(
+                            trainerId: authCubit
+                                    ?.user
+                                    ?.trainerDetail?[
+                                        authCubit?.trainerIndex ?? 0]
+                                    .id ??
+                                0,
                             branchId: branchId,
                             search: value,
                             clean: true,
@@ -165,12 +185,24 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
                           enrolled:
                               studentCubit.enrolledBatches.contains(batch.id),
                           onAddToBatch: () {
-                            context
-                                .read<BatchCubit>()
-                                .getBatch(batchId: '${batch.id}');
+                            context.read<BatchCubit>().getBatchForTrainer(
+                                trainerId: authCubit
+                                        ?.user
+                                        ?.trainerDetail?[
+                                            authCubit?.trainerIndex ?? 0]
+                                        .id ??
+                                    0,
+                                acadamyId: authCubit
+                                        ?.user
+                                        ?.trainerDetail?[
+                                            authCubit?.trainerIndex ?? 0]
+                                        .academy
+                                        ?.academyTypeId ??
+                                    0,
+                                batchId: '${batch.id}');
                             Navigator.pushNamed(
                               context,
-                              AssignStudentBatch.route,
+                              TrainerAppAssignStudentBatch.route,
                               arguments: widget.editStudent,
                             );
                           },
