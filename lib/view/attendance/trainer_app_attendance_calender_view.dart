@@ -97,8 +97,8 @@ class _TrainerAppAttendanceCalenderViewState
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (didPop) {
         context.read<AttendanceCubit>().getBatchesByStatusForTrainer(
               trainerId: authCubit
                       ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
@@ -108,7 +108,6 @@ class _TrainerAppAttendanceCalenderViewState
               clean: true,
             );
         Navigator.pop(context);
-        return true;
       },
       child: Scaffold(
         key: scaffoldKey,

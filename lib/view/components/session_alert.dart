@@ -48,8 +48,8 @@ class _SessionDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => Future.value(false),
+    return PopScope(
+      onPopInvoked: (didPop) => Future.value(false),
       child: Container(
         padding: const EdgeInsets.all(16),
         color: AppColors.liteDark,

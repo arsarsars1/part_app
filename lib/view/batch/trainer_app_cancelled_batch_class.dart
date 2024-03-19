@@ -37,8 +37,8 @@ class TrainerAppCancelledClassesState
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (didPop) {
         if (cubit.second) {
           cubit.second = false;
           Navigator.pushNamedAndRemoveUntil(
@@ -49,7 +49,6 @@ class TrainerAppCancelledClassesState
         } else {
           Navigator.pop(context);
         }
-        return true;
       },
       child: Scaffold(
         appBar: CommonBar(

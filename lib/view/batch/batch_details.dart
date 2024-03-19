@@ -32,8 +32,8 @@ class _BatchDetailsState extends State<BatchDetails> {
   @override
   Widget build(BuildContext context) {
     var batchCubit = context.read<BatchCubit>();
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (didPop) {
         if (batchCubit.isFromBatch) {
           batchCubit.getBatchesByStatus(
             branchId: batch?.branchId,
@@ -42,7 +42,6 @@ class _BatchDetailsState extends State<BatchDetails> {
           );
         }
         Navigator.pop(context);
-        return true;
       },
       child: Scaffold(
         key: scaffoldKey,

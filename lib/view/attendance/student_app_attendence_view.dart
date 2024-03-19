@@ -46,12 +46,11 @@ class _StudentAppAttendanceCalenderViewState
     var attendenceCubit = context.read<AttendanceCubit>();
     var authCubit = context.read<AuthCubit>();
     // var branchCubit = context.read<BranchCubit>();
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (didPop) {
         attendenceCubit.pre = 0;
         attendenceCubit.abs = 0;
         Navigator.pop(context);
-        return true;
       },
       child: Scaffold(
         key: scaffoldKey,

@@ -81,15 +81,14 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (didPop) {
         context.read<AttendanceCubit>().getBatchesByStatus(
               branchId: context.read<BatchCubit>().batchModel?.branchId,
               status: context.read<BatchCubit>().tempStatus,
               clean: true,
             );
         Navigator.pop(context);
-        return true;
       },
       child: Scaffold(
         key: scaffoldKey,

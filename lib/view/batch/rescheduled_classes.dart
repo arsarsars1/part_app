@@ -29,8 +29,8 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (didPop) {
         if (cubit.second) {
           cubit.second = false;
           Navigator.pushNamedAndRemoveUntil(
@@ -38,10 +38,8 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
             Home.route,
             (route) => false,
           );
-          return true;
         } else {
           Navigator.pop(context);
-          return true;
         }
       },
       child: Scaffold(

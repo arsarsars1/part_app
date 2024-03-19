@@ -104,13 +104,12 @@ class _StudentAttendanceCalenderViewState
     batchCubit = context.read<BatchCubit>();
     studentCubit = context.read<StudentCubit>();
     var attendenceCubit = context.read<AttendanceCubit>();
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (didPop) {
         attendenceCubit.pre = 0;
         attendenceCubit.abs = 0;
         Navigator.pop(context);
         Navigator.pop(context);
-        return true;
       },
       child: Scaffold(
         key: scaffoldKey,

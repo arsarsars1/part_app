@@ -39,8 +39,8 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
   @override
   Widget build(BuildContext context) {
     var batchCubit = context.read<BatchCubit>();
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (didPop) {
         if (batchCubit.isFromBatch) {
           batchCubit.getBatchesByStatusForTrainer(
             trainerId: authCubit
@@ -52,7 +52,6 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
           );
         }
         Navigator.pop(context);
-        return true;
       },
       child: Scaffold(
         key: scaffoldKey,

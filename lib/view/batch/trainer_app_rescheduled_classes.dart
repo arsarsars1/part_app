@@ -37,8 +37,8 @@ class _TrainerAppRescheduledClassesState
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (didPop) {
         if (cubit.second) {
           cubit.second = false;
           Navigator.pushNamedAndRemoveUntil(
@@ -46,10 +46,8 @@ class _TrainerAppRescheduledClassesState
             TrainerAppHome.route,
             (route) => false,
           );
-          return true;
         } else {
           Navigator.pop(context);
-          return true;
         }
       },
       child: Scaffold(

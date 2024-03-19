@@ -33,8 +33,8 @@ class _TrainerAppEditStudentBatchesState
   @override
   Widget build(BuildContext context) {
     var studentCubit = context.read<StudentCubit>();
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (didPop) {
         if (widget.editStudent) {
           if (studentCubit.second) {
             studentCubit.second = false;
@@ -54,7 +54,6 @@ class _TrainerAppEditStudentBatchesState
             (route) => false,
           );
         }
-        return true;
       },
       child: Scaffold(
         appBar: CommonBar(
