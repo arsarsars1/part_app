@@ -173,7 +173,8 @@ class BatchService {
           : '/trainers/$trainerId/branches/$branchId/batches/batch-status/$status';
 
       if (branchSearch) {
-        path = '/trainers/$trainerId/branches/$branchId/batches';
+        path =
+            '/trainers/$trainerId/branches/$branchId/batches/batch-status/ongoing';
       }
 
       /// append the search text if search query is not null

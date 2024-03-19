@@ -109,7 +109,13 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
                   onChange: (value) {
                     if (value.isEmpty) {
                       search = null;
-                      context.read<BatchCubit>().getBatchesByStatus(
+                      context.read<BatchCubit>().getBatchesByStatusForTrainer(
+                            trainerId: authCubit
+                                    ?.user
+                                    ?.trainerDetail?[
+                                        authCubit?.trainerIndex ?? 0]
+                                    .id ??
+                                0,
                             branchId: branchId,
                             search: null,
                             clean: true,
