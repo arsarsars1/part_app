@@ -21,6 +21,7 @@ class BatchModel {
   final List<TrainerModel>? trainersList;
   final List<BatchDetail>? batchDetail;
   final bool active;
+  final String sharedToken;
 
   BatchModel({
     required this.name,
@@ -40,6 +41,7 @@ class BatchModel {
     this.batchDetail,
     this.trainersList,
     required this.active,
+    required this.sharedToken,
   });
 
   factory BatchModel.fromEntity(Batch batch) {
@@ -78,6 +80,7 @@ class BatchModel {
       trainersList:
           batch.trainers?.map((e) => TrainerModel.fromEntity(e)).toList(),
       active: batch.isActive == 1,
+      sharedToken: batch.shareToken ?? '',
     );
   }
 }

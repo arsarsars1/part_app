@@ -55,6 +55,19 @@ class StudentService {
     }
   }
 
+  Future<StudentResponse?> enrollToBatchForStudent(
+      Map<String, dynamic> request, String token) async {
+    try {
+      request.removeWhere((key, value) => value == null);
+      var response = await _client.post(
+          postPath: '/students/join-batch/$token', data: request);
+      return studentResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
   Future<StudentResponse?> enrollToBatchForTrainer({
     Map<String, dynamic>? request,
     int? studentId,

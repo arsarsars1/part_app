@@ -67,9 +67,13 @@
         	<string>Editor</string>
         	<key>CFBundleURLSchemes</key>
         	<array>
-            	<string>https</string> <!-- Replace with your custom scheme -->
+            	<string>v1.partapp.in</string> 
         	</array>
     	</dict>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+    	<string>v1.partapp.in</string> 
 	</array>
 </dict>
 </plist>

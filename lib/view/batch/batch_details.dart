@@ -172,7 +172,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                                     GestureDetector(
                                       onTap: () {
                                         Share.share(
-                                            'Please use the below link to add students : \n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batch?.shareToken}');
+                                            'Hello ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName} Student,\nWelcome To PartApp!!!\nNever miss another update from ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName} again.\n\nYou are only 50 seconds away from being part of a dynamic community of artists!!! \n\nStep 1: Download PartApp here\n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batch?.sharedToken}\n\nStep 2: Click the link to register as a student in ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName}\'s PartApp.\n\nNB: We request you to avoid using the \'Join Now\' button in the app. Kindly use the second link to register as a Student.');
                                       },
                                       child: Container(
                                         width: 24.w,
