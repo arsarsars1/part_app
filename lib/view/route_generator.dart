@@ -60,6 +60,7 @@ import 'package:part_app/view/leads/add_lead.dart';
 import 'package:part_app/view/leads/all_followups_view.dart';
 import 'package:part_app/view/leads/edit_lead.dart';
 import 'package:part_app/view/leads/lead_details.dart';
+import 'package:part_app/view/leads/leads_view.dart';
 import 'package:part_app/view/leads/todays_followup_view.dart';
 import 'package:part_app/view/manager/add_manager.dart';
 import 'package:part_app/view/manager/edit_manager.dart';
@@ -305,6 +306,11 @@ class RouteGenerator {
       case ManagerPage.route:
         return MaterialPageRoute(
           builder: (_) => const ManagerPage(),
+          settings: settings,
+        );
+      case Leads.route:
+        return MaterialPageRoute(
+          builder: (_) => const Leads(),
           settings: settings,
         );
       case ManagerBranches.route:

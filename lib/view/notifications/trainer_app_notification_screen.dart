@@ -55,12 +55,20 @@ class _TrainerAppNotificationScreenState
                 Alert(context).show(message: state.message);
               } else if (state is ReadNotification) {
                 Alert(context).show(message: state.message);
-                cubit.getNotificationList(clean: true);
+                cubit.getTrainerAppNotificationList(
+                    trainerId: authCubit?.user
+                            ?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+                        0,
+                    clean: true);
               } else if (state is DeleteNotificationFailed) {
                 Alert(context).show(message: state.message);
               } else if (state is DeletedNotification) {
                 Alert(context).show(message: state.message);
-                cubit.getNotificationList(clean: true);
+                cubit.getTrainerAppNotificationList(
+                    trainerId: authCubit?.user
+                            ?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+                        0,
+                    clean: true);
               }
             },
             builder: (context, state) {
@@ -75,9 +83,13 @@ class _TrainerAppNotificationScreenState
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (scrollNotification) {
                     if (scrollNotification is ScrollEndNotification) {
-                      context
-                          .read<HomeCubit>()
-                          .getNotificationList(clean: false);
+                      context.read<HomeCubit>().getTrainerAppNotificationList(
+                          trainerId: authCubit
+                                  ?.user
+                                  ?.trainerDetail?[authCubit?.trainerIndex ?? 0]
+                                  .id ??
+                              0,
+                          clean: false);
                     }
                     return false;
                   },
@@ -94,8 +106,16 @@ class _TrainerAppNotificationScreenState
                             return GestureDetector(
                               onTap: () async {
                                 //if notification is read, bagde is refreshed
-                                final isSuccess = await cubit
-                                    .readNotification(notification?.id);
+                                final isSuccess =
+                                    await cubit.readNotificationForTrainer(
+                                        authCubit
+                                                ?.user
+                                                ?.trainerDetail?[
+                                                    authCubit?.trainerIndex ??
+                                                        0]
+                                                .id ??
+                                            0,
+                                        notification?.id);
                                 if (isSuccess) {
                                   notificationCubit
                                       .refreshBadge(notification?.id);
@@ -107,7 +127,14 @@ class _TrainerAppNotificationScreenState
                                   children: [
                                     SlidableAction(
                                       onPressed: (context) {
-                                        cubit.deleteNotification(
+                                        cubit.deleteNotificationForTrainer(
+                                            authCubit
+                                                    ?.user
+                                                    ?.trainerDetail?[authCubit
+                                                            ?.trainerIndex ??
+                                                        0]
+                                                    .id ??
+                                                0,
                                             notification?.id);
                                       },
                                       backgroundColor: AppColors.red,

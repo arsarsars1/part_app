@@ -4,10 +4,10 @@ import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/batch/cancel_batch_class.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/trainer_app_batch_students.dart';
+import 'package:part_app/view/batch/trainer_app_cancel_batch_class.dart';
 import 'package:part_app/view/batch/trainer_app_reschedule_class.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -307,7 +307,7 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
                                 GestureDetector(
                                   onTap: () => Navigator.pushNamed(
                                     context,
-                                    CancelClass.route,
+                                    TrainerAppCancelClass.route,
                                   ),
                                   child: Container(
                                     height: 34.h,

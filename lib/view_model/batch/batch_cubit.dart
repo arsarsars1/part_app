@@ -624,7 +624,7 @@ class BatchCubit extends Cubit<BatchState> {
       batchModel?.id,
     );
     if (response?.status == 1) {
-      await getRescheduledBatches();
+      await getRescheduledBatchesForTrainer(trainerId: trainerId);
       emit(RescheduledBatch());
     } else {
       emit(RescheduleFailed(response?.message ?? 'Failed to reschedule'));
@@ -742,10 +742,12 @@ class BatchCubit extends Cubit<BatchState> {
   Future getRescheduledBatchesForTrainer(
       {required int trainerId, int? year, int? month}) async {
     emit(RescheduledListFetching());
-    RescheduleResponse? response = await _batchService.rescheduledClasses(
+    RescheduleResponse? response =
+        await _batchService.rescheduledClassesForTrainer(
       batchModel?.id,
       year: year,
       month: month,
+      trainerId: trainerId,
     );
 
     if (response?.status == 1) {

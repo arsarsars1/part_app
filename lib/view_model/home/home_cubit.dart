@@ -44,8 +44,8 @@ class HomeCubit extends Cubit<HomeState> {
       5, (index) => GlobalKey(debugLabel: 'student_key_$index'),
       growable: false);
   List<GlobalKey> trainerkKeyCap = List<GlobalKey>.generate(
-      6, (index) => GlobalKey(debugLabel: 'trainer_key_$index'),
-      growable: false);    
+      7, (index) => GlobalKey(debugLabel: 'trainer_key_$index'),
+      growable: false);
 
   // pagination
   int page = 1;
@@ -80,7 +80,8 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future getDashboardForTrainerApp({required int trainerId}) async {
     emit(DashboardLoading());
-    var tempDash = await _service.getDashboardForTrainerApp(trainerId: trainerId);
+    var tempDash =
+        await _service.getDashboardForTrainerApp(trainerId: trainerId);
     if (tempDash?.status == 1) {
       _totalStudents = tempDash?.totalStudents;
       _dailyCollection = tempDash?.totalPaymentsDaily;
@@ -375,6 +376,26 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  Future<bool> readNotificationForTrainer(
+      int? trainerId, String? notificationId) async {
+    try {
+      emit(ReadingNotification());
+      Common? response =
+          await _service.readNotificationForTrainer(trainerId, notificationId);
+
+      if (response?.status == 1) {
+        emit(ReadNotification(response?.message ?? 'Notification Read'));
+        return true;
+      } else {
+        emit(ReadNotificationFailed(
+            response?.message ?? 'Failed to read notification'));
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
   String createTrainerString(List<String>? trainers) {
     String trainer = '';
     if (trainers != null && trainers.isNotEmpty) {
@@ -413,6 +434,24 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       emit(DeletingNotification());
       Common? response = await _service.deleteNotification(notificationId);
+
+      if (response?.status == 1) {
+        emit(DeletedNotification(response?.message ?? 'Notification Deleted'));
+      } else {
+        emit(DeleteNotificationFailed(
+            response?.message ?? 'Failed to delete notification'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future deleteNotificationForTrainer(
+      int? trainerId, String? notificationId) async {
+    try {
+      emit(DeletingNotification());
+      Common? response = await _service.deleteNotificationForTrainer(
+          trainerId, notificationId);
 
       if (response?.status == 1) {
         emit(DeletedNotification(response?.message ?? 'Notification Deleted'));

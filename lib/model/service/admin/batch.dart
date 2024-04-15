@@ -432,6 +432,23 @@ class BatchService {
     }
   }
 
+  Future<RescheduleResponse?> rescheduledClassesForTrainer(int? batchId,
+      {required int trainerId, int? year, int? month}) async {
+    String query = 'year=${year ?? DateTime.now().year}'
+        '&month=${month ?? DateTime.now().month}';
+
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/trainers/$trainerId/batches/$batchId/rescheduled-classes?$query',
+      );
+
+      return rescheduleResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> deleteClassCancellation(
       {required int? batchId, required int? classId}) async {
     try {
