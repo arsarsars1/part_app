@@ -7,6 +7,7 @@ import 'package:part_app/model/data_model/calender_events_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/dashboard.dart' as tempbanner;
 import 'package:part_app/model/data_model/notification_list.dart';
+import 'package:part_app/model/data_model/shop_url.dart';
 import 'package:part_app/model/data_model/student_app_calender_events.dart';
 import 'package:part_app/model/data_model/student_dashboard.dart';
 import 'package:part_app/model/extensions.dart';
@@ -373,6 +374,31 @@ class HomeCubit extends Cubit<HomeState> {
       }
     } catch (e) {
       return false;
+    }
+  }
+
+  Future<String> getShopUrl({int? trainerId, int? studentId}) async {
+    try {
+      emit(ReadingNotification());
+      ShopUrl? response;
+      if (trainerId != null) {
+        response = await _service.getShopUrl(trainerId: trainerId);
+      } else if (studentId != null) {
+        response = await _service.getShopUrl(studentId: studentId);
+      } else {
+        response = await _service.getShopUrl();
+      }
+
+      if (response?.status == 1) {
+        emit(ReadNotification(response?.url ?? 'Notification Read'));
+        return response?.url ?? '';
+      } else {
+        emit(ReadNotificationFailed(
+            response?.url ?? 'Failed to read notification'));
+        return response?.url ?? '';
+      }
+    } catch (e) {
+      return '';
     }
   }
 

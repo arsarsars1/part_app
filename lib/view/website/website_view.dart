@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view_model/cubits.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WebsiteView extends StatefulWidget {
@@ -10,6 +11,39 @@ class WebsiteView extends StatefulWidget {
 }
 
 class _WebsiteViewState extends State<WebsiteView> {
+  AuthCubit? authCubit;
+  HomeCubit? homeCubit;
+  String? shopUrl;
+  @override
+  void initState() {
+    super.initState();
+    authCubit = context.read<AuthCubit>();
+    homeCubit = context.read<HomeCubit>();
+    checkForUrl();
+  }
+
+  checkForUrl() async {
+    if (authCubit?.user?.adminDetail?.id != null) {
+      shopUrl = await homeCubit?.getShopUrl();
+    } else if (authCubit
+            ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id !=
+        null) {
+      shopUrl = await homeCubit?.getShopUrl(
+        trainerId:
+            authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+                0,
+      );
+    } else if (authCubit
+            ?.user?.studentDetail?[authCubit?.studentIndex ?? 0].id !=
+        null) {
+      shopUrl = await homeCubit?.getShopUrl(
+        studentId:
+            authCubit?.user?.studentDetail?[authCubit?.studentIndex ?? 0].id ??
+                0,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +68,7 @@ class _WebsiteViewState extends State<WebsiteView> {
               child: Button(
                 height: 40.h,
                 onTap: () {
-                  final Uri url = Uri.parse('https://flutter.dev');
+                  final Uri url = Uri.parse(shopUrl ?? '');
                   _launchUrl(url);
                 },
                 title: 'Go To Website',

@@ -5,6 +5,7 @@ import 'package:part_app/model/data_model/calender_events_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/dashboard.dart';
 import 'package:part_app/model/data_model/notification_list.dart';
+import 'package:part_app/model/data_model/shop_url.dart';
 import 'package:part_app/model/data_model/student_app_calender_events.dart';
 import 'package:part_app/model/data_model/student_dashboard.dart';
 import 'package:part_app/model/service/api_client.dart';
@@ -159,6 +160,21 @@ class DashboardService {
         queryPath: '/admin/notifications/mark-as-read/$notificationId',
       );
       return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<ShopUrl?> getShopUrl({int? trainerId, int? studentId}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: trainerId != null
+            ? '/trainers/$trainerId/shop-url'
+            : studentId != null
+                ? '/students/$studentId/shop-url'
+                : '/admin/shop-url',
+      );
+      return shopUrlFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }
