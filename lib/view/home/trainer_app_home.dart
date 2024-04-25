@@ -2,15 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:part_app/view/calender/calender_view.dart';
+import 'package:part_app/view/calender/trainer_app_calender_view.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/session_alert.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/home/dashboard/trainer_app_dashboard.dart';
-import 'package:part_app/view/leads/leads_view.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/support/support_screen.dart';
+import 'package:part_app/view/website/website_view.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAppHome extends StatefulWidget {
@@ -92,11 +92,11 @@ class _TrainerAppHomeState extends State<TrainerAppHome> {
             ),
             BottomNavigationBarItem(
               backgroundColor: AppColors.liteDark,
-              label: 'Leads',
+              label: 'Website',
               icon: Padding(
                 padding: const EdgeInsets.all(2.0),
-                child: SvgPicture.asset(
-                  Assets.leads,
+                child: Icon(
+                  Icons.web_rounded,
                   color: currentIndex == 3 ? selectedColor : unselectedColor,
                 ),
               ),
@@ -111,11 +111,11 @@ class _TrainerAppHomeState extends State<TrainerAppHome> {
     if (currentIndex == 0) {
       return const TrainerAppDashboard();
     } else if (currentIndex == 1) {
-      return const CalenderView();
+      return const TrainerAppCalenderView();
     } else if (currentIndex == 2) {
       return const SupportScreen();
     } else if (currentIndex == 3) {
-      return const Leads();
+      return const WebsiteView();
     }
     return const Center(
       child: Text('WIP'),

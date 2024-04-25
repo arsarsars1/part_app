@@ -70,7 +70,7 @@ class _TrainerAppBatchesPageState extends State<TrainerAppBatchesPage> {
     cubit.reset();
 
     return Scaffold(
-      appBar: const CommonBar(title: 'Batches'),
+      appBar: const CommonBar(title: 'Batches 123'),
       body: SafeArea(
         child: Column(
           children: [
@@ -99,7 +99,7 @@ class _TrainerAppBatchesPageState extends State<TrainerAppBatchesPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  BranchField(
+                  TrainerAppBranchField(
                     title: 'Select A Branch To List Batches',
                     onSelect: (value) {
                       branchId = value;
@@ -278,8 +278,8 @@ class _TrainerAppBatchesPageState extends State<TrainerAppBatchesPage> {
                                               branchId: '${batch.branchId}',
                                               clean: true,
                                             );
-                                        Navigator.pushNamed(
-                                            context, TrainerAppBatchDetails.route);
+                                        Navigator.pushNamed(context,
+                                            TrainerAppBatchDetails.route);
                                       },
                                     );
                                   },

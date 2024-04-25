@@ -9,6 +9,7 @@ import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/model/data_model/student_request.dart';
+import 'package:part_app/model/data_model/student_request_for_student.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/service/admin/student.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -24,6 +25,12 @@ class StudentCubit extends Cubit<StudentState> {
   StudentRequest _studentRequest = const StudentRequest();
 
   StudentRequest get studentRequest => _studentRequest;
+
+  StudentRequestForStudent _studentRequestForStudent =
+      const StudentRequestForStudent();
+
+  StudentRequestForStudent get studentRequestForStudent =>
+      _studentRequestForStudent;
 
   Student? _student;
   Student? tempStudent;
@@ -51,6 +58,10 @@ class StudentCubit extends Cubit<StudentState> {
 
   void setStudent(StudentRequest request) {
     _studentRequest = request;
+  }
+
+  void setStudentForStudent(StudentRequestForStudent request) {
+    _studentRequestForStudent = request;
   }
 
   void setProfilePic(File file) {
@@ -128,6 +139,21 @@ class StudentCubit extends Cubit<StudentState> {
 
     if (response?.status == 1) {
       await getStudentBatches();
+      emit(CreatedStudent());
+    } else {
+      emit(
+        CreateStudentFailed(response?.message ?? 'Failed to add batch.'),
+      );
+    }
+  }
+
+  Future enrollToBatchForStudent({required String token}) async {
+    emit(CreatingStudent());
+
+    StudentResponse? response = await _studentService.enrollToBatchForStudent(
+        _studentRequestForStudent.toJson(), token);
+
+    if (response?.status == 1) {
       emit(CreatedStudent());
     } else {
       emit(

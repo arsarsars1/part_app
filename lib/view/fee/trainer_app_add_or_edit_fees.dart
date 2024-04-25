@@ -333,9 +333,16 @@ class _TrainerAppAddOrEditFeesState extends State<TrainerAppAddOrEditFees> {
                                           'Are You Sure That You Want To Delete\nThe Fees Entered on ${payment?.paymentDate?.toDateString()}\nby ${payment?.collectedBy?.name} ?',
                                       onTap: () {
                                         Navigator.pop(context);
-                                        feeCubit?.deleteFees(
+                                        feeCubit?.deleteFeesForTrainer(
                                             batchFeeInvoiceId:
                                                 feeCubit?.batchFeeInvoice?.id,
+                                            trainerId: authCubit
+                                                    ?.user
+                                                    ?.trainerDetail?[authCubit
+                                                            ?.trainerIndex ??
+                                                        0]
+                                                    .id ??
+                                                0,
                                             paymentId: payment?.id);
                                       },
                                     ).show();
@@ -385,14 +392,23 @@ class _TrainerAppAddOrEditFeesState extends State<TrainerAppAddOrEditFees> {
                                         formKey1.currentState!.save();
                                         if (formKey1.currentState!.validate()) {
                                           Navigator.pop(context);
-                                          feeCubit?.editFees({
-                                            'new_date': date,
-                                            'new_amount': amount,
-                                            'reason': reason
-                                          },
-                                              batchFeeInvoiceId:
-                                                  feeCubit?.batchFeeInvoice?.id,
-                                              paymentId: payment?.id);
+                                          feeCubit?.editFeesForTrainer(
+                                            {
+                                              'new_date': date,
+                                              'new_amount': amount,
+                                              'reason': reason
+                                            },
+                                            batchFeeInvoiceId:
+                                                feeCubit?.batchFeeInvoice?.id,
+                                            paymentId: payment?.id,
+                                            trainerId: authCubit
+                                                    ?.user
+                                                    ?.trainerDetail?[authCubit
+                                                            ?.trainerIndex ??
+                                                        0]
+                                                    .id ??
+                                                0,
+                                          );
                                         }
                                       },
                                     ).show();
@@ -905,12 +921,19 @@ class _TrainerAppAddOrEditFeesState extends State<TrainerAppAddOrEditFees> {
                           child: Button(
                             onTap: () {
                               if (formKey.currentState!.validate()) {
-                                feeCubit
-                                    ?.addFees(feeCubit?.batchFeeInvoice?.id, {
-                                  'amount': amount,
-                                  'payment_method': 'cash',
-                                  'payment_date': date?.toServerString()
-                                });
+                                feeCubit?.addFeesForTrainer(
+                                    authCubit
+                                            ?.user
+                                            ?.trainerDetail?[
+                                                authCubit?.trainerIndex ?? 0]
+                                            .id ??
+                                        0,
+                                    feeCubit?.batchFeeInvoice?.id,
+                                    {
+                                      'amount': amount,
+                                      'payment_method': 'cash',
+                                      'payment_date': date?.toServerString()
+                                    });
                               }
                             },
                             title: 'Submit',

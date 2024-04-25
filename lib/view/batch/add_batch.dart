@@ -28,7 +28,7 @@ class AddBatch extends StatefulWidget {
 class _AddBatchState extends State<AddBatch> {
   TextEditingController dobController = TextEditingController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  AuthCubit? authCubit;
   String? batchName;
   int? branchId;
   int? courseId;
@@ -53,6 +53,7 @@ class _AddBatchState extends State<AddBatch> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      authCubit = context.read<AuthCubit>();
       context.read<BatchCubit>().getCourses();
       var branchCubit = context.read<BranchCubit>();
       branchId = branchCubit.firstBranch?.id;
@@ -90,8 +91,7 @@ class _AddBatchState extends State<AddBatch> {
               subColor: AppColors.primaryColor,
               onTap: () {
                 Share.share(
-                  'Please use the below link to add students : \n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${cubit.sharedToken}'
-                );
+                    'Hello ${authCubit?.user?.adminDetail?.academy?.academyName} Student,\nWelcome To PartApp!!!\nNever miss another update from ${authCubit?.user?.adminDetail?.academy?.academyName} again.\n\nYou are only 50 seconds away from being part of a dynamic community of artists!!! \n\nStep 1: Download PartApp here\n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${cubit.sharedToken}\n\nStep 2: Click the link to register as a student in ${authCubit?.user?.adminDetail?.academy?.academyName}\'s PartApp.\n\nNB: We request you to avoid using the \'Join Now\' button in the app. Kindly use the second link to register as a Student.');
               },
             ).show();
           } else if (state is CreateBatchFailed) {

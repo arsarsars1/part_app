@@ -29,7 +29,8 @@ class _TrainerAppDashboardIconsState extends State<TrainerAppDashboardIcons> {
     'Attendence',
     'Batches',
     'Salary',
-    'Class Link'
+    'Class Link',
+    'Leads'
   ];
   List<String> descriptions = [
     'Add, View and Edit Student details here',
@@ -38,6 +39,7 @@ class _TrainerAppDashboardIconsState extends State<TrainerAppDashboardIcons> {
     'Add/Remove and alsoEdit batches here',
     'View Salary Details',
     'Add Link and notify students about an Online class',
+    'Manage the Leads details here'
   ];
   AuthCubit? authCubit;
 
@@ -46,7 +48,7 @@ class _TrainerAppDashboardIconsState extends State<TrainerAppDashboardIcons> {
     authCubit = context.read<AuthCubit>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       List<GlobalKey> tempkey = [];
-      for (int i = 0; i < 6; i++) {
+      for (int i = 0; i < 7; i++) {
         tempkey.add(context.read<HomeCubit>().trainerkKeyCap[i]);
       }
       bool temp = Hive.box(Database.userBox).get("Trainer Showcase") ?? false;

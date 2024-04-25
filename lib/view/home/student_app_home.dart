@@ -10,6 +10,7 @@ import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/home/dashboard/student_app_dashboard.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/support/student_app_support_screen.dart';
+import 'package:part_app/view/website/website_view.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class StudentAppHome extends StatefulWidget {
@@ -89,6 +90,17 @@ class _StudentAppHomeState extends State<StudentAppHome> {
                 ),
               ),
             ),
+            BottomNavigationBarItem(
+              backgroundColor: AppColors.liteDark,
+              label: 'Website',
+              icon: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Icon(
+                  Icons.web_rounded,
+                  color: currentIndex == 3 ? selectedColor : unselectedColor,
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -102,6 +114,8 @@ class _StudentAppHomeState extends State<StudentAppHome> {
       return const StudentAppCalenderView();
     } else if (currentIndex == 2) {
       return const StudentAppSupportScreen();
+    } else if (currentIndex == 3) {
+      return const WebsiteView();
     }
     return const Center(
       child: Text('WIP'),

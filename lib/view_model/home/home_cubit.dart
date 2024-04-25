@@ -7,6 +7,7 @@ import 'package:part_app/model/data_model/calender_events_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/dashboard.dart' as tempbanner;
 import 'package:part_app/model/data_model/notification_list.dart';
+import 'package:part_app/model/data_model/shop_url.dart';
 import 'package:part_app/model/data_model/student_app_calender_events.dart';
 import 'package:part_app/model/data_model/student_dashboard.dart';
 import 'package:part_app/model/extensions.dart';
@@ -44,8 +45,8 @@ class HomeCubit extends Cubit<HomeState> {
       5, (index) => GlobalKey(debugLabel: 'student_key_$index'),
       growable: false);
   List<GlobalKey> trainerkKeyCap = List<GlobalKey>.generate(
-      6, (index) => GlobalKey(debugLabel: 'trainer_key_$index'),
-      growable: false);    
+      7, (index) => GlobalKey(debugLabel: 'trainer_key_$index'),
+      growable: false);
 
   // pagination
   int page = 1;
@@ -80,7 +81,8 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future getDashboardForTrainerApp({required int trainerId}) async {
     emit(DashboardLoading());
-    var tempDash = await _service.getDashboardForTrainerApp(trainerId: trainerId);
+    var tempDash =
+        await _service.getDashboardForTrainerApp(trainerId: trainerId);
     if (tempDash?.status == 1) {
       _totalStudents = tempDash?.totalStudents;
       _dailyCollection = tempDash?.totalPaymentsDaily;
@@ -137,6 +139,44 @@ class HomeCubit extends Cubit<HomeState> {
     }
 
     CalenderEventsList? temp = await _service.getCalenderEvents(
+      date: date,
+    );
+    if (temp?.status == 1) {
+      feePayments = temp?.data?.feePayments;
+      trainerSalaryPayments = temp?.data?.trainerSalaryPayments;
+      scheduledClasses = temp?.data?.scheduledClasses;
+      rescheduledClasses = temp?.data?.rescheduledClasses;
+      studentsJoined = temp?.data?.studentsJoined;
+      trainersJoined = temp?.data?.trainersJoined;
+      followUpLeads = temp?.data?.followUpLeads;
+      newLeads = temp?.data?.newLeads;
+      emit(GotCalenderEvents());
+    } else {
+      emit(GetCalenderEventsFailed('Failed to get the calender events list'));
+    }
+  }
+
+  Future getCalenderEventsForTrainer({
+    required int trainerId,
+    required String date,
+    bool clean = true,
+  }) async {
+    if (clean) {
+      feePayments = null;
+      trainerSalaryPayments?.clear();
+      scheduledClasses?.clear();
+      rescheduledClasses?.clear();
+      studentsJoined?.clear();
+      trainersJoined?.clear();
+      followUpLeads?.clear();
+      newLeads?.clear();
+      emit(GettingCalenderEvents());
+    } else {
+      emit(GettingCalenderEvents(pagination: true));
+    }
+
+    CalenderEventsList? temp = await _service.getCalenderEventsForTrainer(
+      trainerId: trainerId,
       date: date,
     );
     if (temp?.status == 1) {
@@ -375,6 +415,51 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  Future<String> getShopUrl({int? trainerId, int? studentId}) async {
+    try {
+      emit(ReadingNotification());
+      ShopUrl? response;
+      if (trainerId != null) {
+        response = await _service.getShopUrl(trainerId: trainerId);
+      } else if (studentId != null) {
+        response = await _service.getShopUrl(studentId: studentId);
+      } else {
+        response = await _service.getShopUrl();
+      }
+
+      if (response?.status == 1) {
+        emit(ReadNotification(response?.url ?? 'Notification Read'));
+        return response?.url ?? '';
+      } else {
+        emit(ReadNotificationFailed(
+            response?.url ?? 'Failed to read notification'));
+        return response?.url ?? '';
+      }
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<bool> readNotificationForTrainer(
+      int? trainerId, String? notificationId) async {
+    try {
+      emit(ReadingNotification());
+      Common? response =
+          await _service.readNotificationForTrainer(trainerId, notificationId);
+
+      if (response?.status == 1) {
+        emit(ReadNotification(response?.message ?? 'Notification Read'));
+        return true;
+      } else {
+        emit(ReadNotificationFailed(
+            response?.message ?? 'Failed to read notification'));
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
   String createTrainerString(List<String>? trainers) {
     String trainer = '';
     if (trainers != null && trainers.isNotEmpty) {
@@ -413,6 +498,24 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       emit(DeletingNotification());
       Common? response = await _service.deleteNotification(notificationId);
+
+      if (response?.status == 1) {
+        emit(DeletedNotification(response?.message ?? 'Notification Deleted'));
+      } else {
+        emit(DeleteNotificationFailed(
+            response?.message ?? 'Failed to delete notification'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future deleteNotificationForTrainer(
+      int? trainerId, String? notificationId) async {
+    try {
+      emit(DeletingNotification());
+      Common? response = await _service.deleteNotificationForTrainer(
+          trainerId, notificationId);
 
       if (response?.status == 1) {
         emit(DeletedNotification(response?.message ?? 'Notification Deleted'));

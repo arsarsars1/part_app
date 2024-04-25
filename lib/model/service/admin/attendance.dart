@@ -104,6 +104,20 @@ class AttendanceService {
     }
   }
 
+  Future<Common?> createAttendenceForTrainer(AttendenceAddRequest request,
+      {int? batchId, required int trainerId}) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/trainers/$trainerId/batches/$batchId/attendance',
+        data: request.toJson(),
+        formData: true,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<AttendenceClassDetailsesOfMonth?> getAttendeceClassesOfMonth(
       {required int? batchId, required DateTime? date}) async {
     try {

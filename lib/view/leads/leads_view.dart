@@ -8,6 +8,7 @@ import 'package:part_app/view/leads/todays_followup_view.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
 
 class Leads extends StatefulWidget {
+  static const route = '/leads';
   const Leads({Key? key}) : super(key: key);
 
   @override

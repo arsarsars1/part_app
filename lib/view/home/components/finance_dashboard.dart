@@ -27,25 +27,17 @@ class FinanceDashboard extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  height: 95.h,
+                  height: 100.h,
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(5),
-                      image: const DecorationImage(
-                          image: AssetImage('assets/images/accounts.png'),
-                          fit: BoxFit.cover)
-                      // gradient: LinearGradient(
-                      //   begin: Alignment.topCenter,
-                      //   end: Alignment.bottomCenter,
-                      //   colors: [
-                      //     const Color(0xFFF27121).withOpacity(0.83),
-                      //     const Color(0xFFE94057).withOpacity(0.61),
-                      //     const Color(0xFF8A2387).withOpacity(0.76),
-                      //   ],
-                      // ),
-                      ),
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(5),
+                    image: const DecorationImage(
+                        image: AssetImage('assets/images/accounts.png'),
+                        fit: BoxFit.cover),
+                  ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text('Accounts'),
@@ -73,24 +65,18 @@ class FinanceDashboard extends StatelessWidget {
                     TrainerSalarySlipsHome.route,
                   ),
                   child: Container(
-                    height: 95.h,
+                    height: 100.h,
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor,
                       borderRadius: BorderRadius.circular(5),
-                       image: const DecorationImage(
-                            image: AssetImage('assets/images/trainer_salary.png'),
-                            fit: BoxFit.cover)
-                      // gradient: LinearGradient(
-                      //   begin: Alignment.topCenter,
-                      //   end: Alignment.bottomCenter,
-                      //   colors: [
-                      //     const Color(0xFF0575E6).withOpacity(0.90),
-                      //     const Color(0xFF640078).withOpacity(0.60),
-                      //   ],
-                      // ),
+                      image: const DecorationImage(
+                        image: AssetImage('assets/images/trainer_salary.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text('Trainer Salary'),

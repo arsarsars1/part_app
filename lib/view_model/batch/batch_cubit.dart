@@ -624,7 +624,7 @@ class BatchCubit extends Cubit<BatchState> {
       batchModel?.id,
     );
     if (response?.status == 1) {
-      await getRescheduledBatches();
+      await getRescheduledBatchesForTrainer(trainerId: trainerId);
       emit(RescheduledBatch());
     } else {
       emit(RescheduleFailed(response?.message ?? 'Failed to reschedule'));
@@ -742,10 +742,12 @@ class BatchCubit extends Cubit<BatchState> {
   Future getRescheduledBatchesForTrainer(
       {required int trainerId, int? year, int? month}) async {
     emit(RescheduledListFetching());
-    RescheduleResponse? response = await _batchService.rescheduledClasses(
+    RescheduleResponse? response =
+        await _batchService.rescheduledClassesForTrainer(
       batchModel?.id,
       year: year,
       month: month,
+      trainerId: trainerId,
     );
 
     if (response?.status == 1) {
@@ -819,12 +821,46 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future addClassLinkForTrainer(
+      int trainerId, int? batchId, Map<String, dynamic> data) async {
+    try {
+      emit(AddingLink());
+      Common? response =
+          await _batchService.addClassLinkForTrainer(trainerId, batchId, data);
+
+      if (response?.status == 1) {
+        emit(AddedLink());
+      } else {
+        emit(AddLinkFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future updateClassLink(
       int? batchId, int? classId, Map<String, dynamic> data) async {
     try {
       emit(UpdatingLink());
       Common? response =
           await _batchService.updateClassLink(batchId, classId, data);
+
+      if (response?.status == 1) {
+        emit(UpdatedLink());
+      } else {
+        emit(UpdateLinkFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future updateClassLinkForTrainer(int trainerId, int? batchId, int? classId,
+      Map<String, dynamic> data) async {
+    try {
+      emit(UpdatingLink());
+      Common? response = await _batchService.updateClassLinkForTrainerId(
+          trainerId, batchId, classId, data);
 
       if (response?.status == 1) {
         emit(UpdatedLink());
@@ -851,12 +887,48 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future getClassLinkForTrainer(
+      int trainerId, int? batchId, DateTime dateTime) async {
+    emit(FetchingLinks());
+    _classLinks = [];
+    ClassLinkResponse? response = await _batchService.getClassLinkForTrainer(
+      trainerId,
+      batchId,
+      dateTime,
+    );
+    if (response?.classLinks != null) {
+      _classLinks = response?.classLinks;
+      emit(FetchedLinks());
+    } else {
+      emit(FetchingLinks());
+    }
+  }
+
   Future removeClassLink(
     int? batchId,
     int? linkId,
   ) async {
     emit(RemovingLink());
     Common? response = await _batchService.removeClassLink(
+      batchId,
+      linkId,
+    );
+
+    if (response?.status == 1) {
+      emit(RemovedLink());
+    } else {
+      emit(RemoveLinkFailed(response?.message ?? 'Failed to add link.'));
+    }
+  }
+
+  Future removeClassLinkForTrainer(
+    int trainerId,
+    int? batchId,
+    int? linkId,
+  ) async {
+    emit(RemovingLink());
+    Common? response = await _batchService.removeClassLinkForTrainer(
+      trainerId,
       batchId,
       linkId,
     );

@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:part_app/model/data_model/dashboard_item.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
+import 'package:part_app/view/class_link/trainer_app_class_link_view.dart';
 import 'package:part_app/view/constants/assets.dart';
-import 'package:part_app/view/manager/manager_page.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/trainer_app_trainer_salary_slips.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
@@ -217,9 +217,9 @@ class DefaultValues {
       color: Color.fromARGB(255, 228, 50, 80),
     ),
     DashboardItem(
-      title: 'Branch Manager',
-      route: ManagerPage.route,
-      asset: Assets.branchManager,
+      title: 'Leads',
+      route: '/leads',
+      asset: Assets.leads,
       color: Color(0xFF6100FF),
     ),
     DashboardItem(
@@ -290,9 +290,15 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Class Link',
-      route: ClassLinkView.route,
+      route: TrainerAppClassLinkView.route,
       asset: Assets.classLink,
       color: Color.fromARGB(255, 228, 50, 80),
+    ),
+    DashboardItem(
+      title: 'Leads',
+      route: '/leads',
+      asset: Assets.leads,
+      color: Color(0xFF6100FF),
     ),
   ];
 
