@@ -3,7 +3,7 @@ import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
-import 'package:part_app/view/fee/components/fee_list_item.dart';
+import 'package:part_app/view/fee/components/trainer_app_fee_list_item.dart';
 import 'package:part_app/view/fee/trainer_app_add_advance_fee.dart';
 import 'package:part_app/view/fee/trainer_app_add_or_edit_fees.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -290,7 +290,7 @@ class _TrainerAppStudentFeeDetailsState
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               Datum studentInvoice = cubit.batchInvoice[index];
-                              return FeeListItem(
+                              return TrainerAppFeeListItem(
                                 student: studentInvoice,
                                 onTap: () async {
                                   cubit.student = studentInvoice;

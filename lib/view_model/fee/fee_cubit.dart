@@ -47,6 +47,23 @@ class FeeCubit extends Cubit<FeeState> {
     }
   }
 
+  Future addFeesForTrainer(
+      int trainerId, int? batchInvoiceId, Map<String, dynamic> data) async {
+    try {
+      emit(AddingFees());
+      Common? response =
+          await _feeService.addFeesForTrainer(trainerId, batchInvoiceId, data);
+
+      if (response?.status == 1) {
+        emit(AddedFees(response?.message ?? 'Fees Added'));
+      } else {
+        emit(AddFeesFailed(response?.message ?? 'Failed to add link.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future addAdvanceFees(Map<String, dynamic> data) async {
     try {
       emit(AddingFees());
@@ -111,8 +128,9 @@ class FeeCubit extends Cubit<FeeState> {
   Future getBatchInvoiceForTrainer(
       {int? batchInvoiceId, required int trainerId}) async {
     emit(GettingBatchInvoice());
-    BatchFeeInvoice? response = await _feeService.batchFeeInvoiceDetails(
-        batchFeeInvoiceId: batchInvoiceId);
+    BatchFeeInvoice? response =
+        await _feeService.batchFeeInvoiceDetailsForTrainer(
+            batchFeeInvoiceId: batchInvoiceId, trainerId: trainerId);
     if (response?.status == 1) {
       batchFeeInvoice = response?.batchFeeInvoice;
       emit(GotBatchInvoice());
@@ -424,11 +442,45 @@ class FeeCubit extends Cubit<FeeState> {
     }
   }
 
+  Future sendReminderForTrainer(
+      {required int? batchFeeInvoiceId, required int trainerId}) async {
+    emit(FeeReminderSending());
+    try {
+      Common? response = await _feeService.sendReminderForTrainer(
+          batchFeeInvoiceId: batchFeeInvoiceId, trainerId: trainerId);
+      if (response?.status == 1) {
+        emit(FeeReminderSent(response?.message ?? 'Message sent'));
+      } else {
+        emit(FeeReminderSentFailed(
+            response?.message ?? 'Failed to save attendence.'));
+      }
+    } catch (e) {
+      emit(FeeReminderSentFailed('Failed to save attendence.'));
+    }
+  }
+
   Future sendReminderForAdmission({required int? batchFeeInvoiceId}) async {
     emit(FeeReminderSending());
     try {
       Common? response = await _feeService.sendReminderForAdmission(
           batchFeeInvoiceId: batchFeeInvoiceId);
+      if (response?.status == 1) {
+        emit(FeeReminderSent(response?.message ?? 'Message sent'));
+      } else {
+        emit(FeeReminderSentFailed(
+            response?.message ?? 'Failed to save attendence.'));
+      }
+    } catch (e) {
+      emit(FeeReminderSentFailed('Failed to save attendence.'));
+    }
+  }
+
+  Future sendReminderForAdmissionForTrainer(
+      {required int? batchFeeInvoiceId, required int trainerId}) async {
+    emit(FeeReminderSending());
+    try {
+      Common? response = await _feeService.sendReminderForAdmissionForTrainer(
+          batchFeeInvoiceId: batchFeeInvoiceId, trainerId: trainerId);
       if (response?.status == 1) {
         emit(FeeReminderSent(response?.message ?? 'Message sent'));
       } else {
@@ -455,6 +507,22 @@ class FeeCubit extends Cubit<FeeState> {
     }
   }
 
+  Future writeOffFeesForTrainer(Map<String, dynamic> request,
+      {required int? batchFeeInvoiceId, required int trainerId}) async {
+    emit(WritingOff());
+    Common? response = await _feeService.writeOffFeesForTrainer(
+      request,
+      batchFeeInvoiceId,
+      trainerId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(WrittenOff(response?.message ?? 'Fees written off'));
+    } else {
+      emit(WriteOffFailed(response?.message ?? 'Failed to write off'));
+    }
+  }
+
   Future writeOffFeesAdmissionFee(Map<String, dynamic> request,
       {required int? batchFeeInvoiceId}) async {
     emit(WritingOff());
@@ -470,12 +538,46 @@ class FeeCubit extends Cubit<FeeState> {
     }
   }
 
+  Future writeOffFeesAdmissionFeeForTrainer(Map<String, dynamic> request,
+      {required int? batchFeeInvoiceId, required int trainerId}) async {
+    emit(WritingOff());
+    Common? response = await _feeService.writeOffFeesForAdmissionForTrainer(
+      request,
+      batchFeeInvoiceId,
+      trainerId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(WrittenOff(response?.message ?? 'Fees written off'));
+    } else {
+      emit(WriteOffFailed(response?.message ?? 'Failed to write off'));
+    }
+  }
+
   Future deleteFees(
       {required int? batchFeeInvoiceId, required int? paymentId}) async {
     emit(DeletingFees());
     Common? response = await _feeService.deleteFees(
       batchFeeInvoiceId,
       paymentId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(FeesDeleted(response?.message ?? 'Fees Deleted'));
+    } else {
+      emit(DeleteFeesFailed(response?.message ?? 'Fees Deletion Failed'));
+    }
+  }
+
+  Future deleteFeesForTrainer(
+      {required int? batchFeeInvoiceId,
+      required int? paymentId,
+      required int? trainerId}) async {
+    emit(DeletingFees());
+    Common? response = await _feeService.deleteFeesForTrainer(
+      batchFeeInvoiceId,
+      paymentId,
+      trainerId,
     );
     if (response?.status == 1) {
       // await getRescheduledBatches();
@@ -508,6 +610,21 @@ class FeeCubit extends Cubit<FeeState> {
       batchFeeInvoiceId,
       paymentId,
     );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(EdittedFee(response?.message ?? 'Fees Editted'));
+    } else {
+      emit(EditFeesFailed(response?.message ?? 'Failed to edit'));
+    }
+  }
+
+  Future editFeesForTrainer(Map<String, dynamic> request,
+      {required int? batchFeeInvoiceId,
+      required int? paymentId,
+      required int trainerId}) async {
+    emit(EditingFee());
+    Common? response = await _feeService.editFeesForTrainer(
+        request, batchFeeInvoiceId, paymentId, trainerId);
     if (response?.status == 1) {
       // await getRescheduledBatches();
       emit(EdittedFee(response?.message ?? 'Fees Editted'));

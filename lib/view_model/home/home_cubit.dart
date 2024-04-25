@@ -156,6 +156,44 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  Future getCalenderEventsForTrainer({
+    required int trainerId,
+    required String date,
+    bool clean = true,
+  }) async {
+    if (clean) {
+      feePayments = null;
+      trainerSalaryPayments?.clear();
+      scheduledClasses?.clear();
+      rescheduledClasses?.clear();
+      studentsJoined?.clear();
+      trainersJoined?.clear();
+      followUpLeads?.clear();
+      newLeads?.clear();
+      emit(GettingCalenderEvents());
+    } else {
+      emit(GettingCalenderEvents(pagination: true));
+    }
+
+    CalenderEventsList? temp = await _service.getCalenderEventsForTrainer(
+      trainerId: trainerId,
+      date: date,
+    );
+    if (temp?.status == 1) {
+      feePayments = temp?.data?.feePayments;
+      trainerSalaryPayments = temp?.data?.trainerSalaryPayments;
+      scheduledClasses = temp?.data?.scheduledClasses;
+      rescheduledClasses = temp?.data?.rescheduledClasses;
+      studentsJoined = temp?.data?.studentsJoined;
+      trainersJoined = temp?.data?.trainersJoined;
+      followUpLeads = temp?.data?.followUpLeads;
+      newLeads = temp?.data?.newLeads;
+      emit(GotCalenderEvents());
+    } else {
+      emit(GetCalenderEventsFailed('Failed to get the calender events list'));
+    }
+  }
+
   Future getStudentAppCalenderEvents({
     required String date,
     required int studentId,

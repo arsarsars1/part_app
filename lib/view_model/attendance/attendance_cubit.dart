@@ -145,6 +145,25 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }
   }
 
+  Future addAttendenceForTrainer(AttendenceAddRequest request,
+      {int? batchId, required int trainerId}) async {
+    emit(CreatingAttendance());
+    try {
+      Common? response = await _attendanceService.createAttendenceForTrainer(
+          request,
+          batchId: batchId,
+          trainerId: trainerId);
+      if (response?.status == 1) {
+        emit(CreatedAttendance());
+      } else {
+        emit(CreateAttendanceFailed(
+            response?.message ?? 'Failed to save attendence.'));
+      }
+    } catch (e) {
+      emit(CreateAttendanceFailed('Failed to save attendence.'));
+    }
+  }
+
   void refresh() {
     emit(AttendanceBatchesFetched());
   }

@@ -39,7 +39,7 @@ class _TrainerAppRescheduleClassState extends State<TrainerAppRescheduleClass> {
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
-        title: 'Reschedule Class',
+        title: 'Reschedule Class 123',
       ),
       body: BlocListener<BatchCubit, BatchState>(
         listener: (context, state) {

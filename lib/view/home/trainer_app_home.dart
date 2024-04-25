@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:part_app/view/calender/calender_view.dart';
+import 'package:part_app/view/calender/trainer_app_calender_view.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/session_alert.dart';
 import 'package:part_app/view/constants/app_colors.dart';
@@ -111,7 +111,7 @@ class _TrainerAppHomeState extends State<TrainerAppHome> {
     if (currentIndex == 0) {
       return const TrainerAppDashboard();
     } else if (currentIndex == 1) {
-      return const CalenderView();
+      return const TrainerAppCalenderView();
     } else if (currentIndex == 2) {
       return const SupportScreen();
     } else if (currentIndex == 3) {

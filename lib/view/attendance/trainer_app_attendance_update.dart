@@ -51,7 +51,7 @@ class _TrainerAppAttendanceUpdateState
     var studentCubit = context.read<StudentCubit>();
     return Scaffold(
       appBar: const CommonBar(
-        title: 'Class Attendance',
+        title: 'Class Attendances',
       ),
       body: Column(
         children: [

@@ -4,6 +4,7 @@ import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/attendance/attendance_add.dart';
 import 'package:part_app/view/attendance/attendance_update.dart';
 import 'package:part_app/view/attendance/student_app_attendence_view.dart';
+import 'package:part_app/view/attendance/trainer_app_attendance_add.dart';
 import 'package:part_app/view/attendance/trainer_app_attendance_batch_list.dart';
 import 'package:part_app/view/attendance/trainer_app_attendance_calender_view.dart';
 import 'package:part_app/view/attendance/trainer_app_attendance_update.dart';
@@ -36,9 +37,13 @@ import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
 import 'package:part_app/view/calender/calender_events.dart';
 import 'package:part_app/view/calender/student_app_calender_events.dart';
+import 'package:part_app/view/calender/trainer_app_calender_events.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
+import 'package:part_app/view/class_link/trainer_app_class_link_list.dart';
+import 'package:part_app/view/class_link/trainer_app_class_link_view.dart';
+import 'package:part_app/view/class_link/trainer_app_edit_class_link.dart';
 import 'package:part_app/view/fee/add_advance_fee.dart';
 import 'package:part_app/view/fee/add_or_edit_admission_fees.dart';
 import 'package:part_app/view/fee/add_or_edit_fees.dart';
@@ -513,19 +518,25 @@ class RouteGenerator {
           settings: settings,
         );
       case ClassLinkView.route:
-        {
-          return MaterialPageRoute(
-            builder: (_) => const ClassLinkView(),
-            settings: settings,
-          );
-        }
+        return MaterialPageRoute(
+          builder: (_) => const ClassLinkView(),
+          settings: settings,
+        );
+      case TrainerAppClassLinkView.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppClassLinkView(),
+          settings: settings,
+        );
       case EditClassLink.route:
-        {
-          return MaterialPageRoute(
-            builder: (_) => const EditClassLink(),
-            settings: settings,
-          );
-        }
+        return MaterialPageRoute(
+          builder: (_) => const EditClassLink(),
+          settings: settings,
+        );
+      case TrainerAppEditClassLink.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppEditClassLink(),
+          settings: settings,
+        );
       case EditAssignedBatch.route:
         return MaterialPageRoute(
           builder: (_) => EditAssignedBatch(
@@ -536,6 +547,11 @@ class RouteGenerator {
       case ClassLinkList.route:
         return MaterialPageRoute(
           builder: (_) => const ClassLinkList(),
+          settings: settings,
+        );
+      case TrainerAppClassLinkList.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppClassLinkList(),
           settings: settings,
         );
       case AddLead.route:
@@ -590,7 +606,7 @@ class RouteGenerator {
         );
       case TrainerAppAddAdvanceFeePage.route:
         return MaterialPageRoute(
-          builder: (_) => const AddAdvanceFeePage(),
+          builder: (_) => const TrainerAppAddAdvanceFeePage(),
           settings: settings,
         );
       case AddAdvanceSalaryPage.route:
@@ -636,6 +652,11 @@ class RouteGenerator {
       case AttendanceAdd.route:
         return MaterialPageRoute(
           builder: (_) => const AttendanceAdd(),
+          settings: settings,
+        );
+      case TrainerAppAttendanceAdd.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppAttendanceAdd(),
           settings: settings,
         );
       case AddOrEditFees.route:
@@ -711,6 +732,11 @@ class RouteGenerator {
       case CalenderEvent.route:
         return MaterialPageRoute(
           builder: (_) => const CalenderEvent(),
+          settings: settings,
+        );
+      case TrainerAppCalenderEvent.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppCalenderEvent(),
           settings: settings,
         );
       case StudentAppCalenderEvent.route:

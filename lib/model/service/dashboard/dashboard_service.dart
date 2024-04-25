@@ -71,6 +71,18 @@ class DashboardService {
     }
   }
 
+  Future<CalenderEventsList?> getCalenderEventsForTrainer(
+      {required int trainerId, required String date}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/trainers/$trainerId/calendar/$date',
+      );
+      return calenderEventsListFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentAppCalenderEvents?> getStudentAppCalenderEvents(
       {required String date, required int studentId}) async {
     try {

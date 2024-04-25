@@ -12,7 +12,7 @@ import 'package:part_app/view_model/attendance/attendance_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class AttendanceAdd extends StatefulWidget {
-  static const route = '/add_attendance';
+  static const route = '/add-attendance';
 
   const AttendanceAdd({Key? key}) : super(key: key);
 

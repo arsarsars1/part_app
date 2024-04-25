@@ -5,8 +5,8 @@ import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/default_values.dart';
-import 'package:part_app/view/fee/add_or_edit_fees.dart';
-import 'package:part_app/view/fee/components/fee_list_item.dart';
+import 'package:part_app/view/fee/components/trainer_app_fee_list_item.dart';
+import 'package:part_app/view/fee/trainer_app_add_or_edit_fees.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
@@ -364,12 +364,12 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               Datum studentInvoice = cubit.batchInvoice[index];
-                              return FeeListItem(
+                              return TrainerAppFeeListItem(
                                 student: studentInvoice,
                                 onTap: () async {
                                   cubit.student = studentInvoice;
                                   await Navigator.pushNamed(
-                                      context, AddOrEditFees.route);
+                                      context, TrainerAppAddOrEditFees.route);
                                   doSearch(true);
                                 },
                               );
