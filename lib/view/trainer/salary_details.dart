@@ -148,7 +148,9 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                   validator: (value) {
                     return value == null || value.toString().isEmpty
                         ? 'Please enter pay day.'
-                        : null;
+                        : int.parse(value) > 31
+                            ? 'Entered date is not valid. Should be below 31'
+                            : null;
                   },
                   showInfo: true,
                   toolTipMessage:

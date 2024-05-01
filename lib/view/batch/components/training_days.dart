@@ -1,10 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/alert.dart';
+import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
@@ -299,14 +301,10 @@ class _ClassTimeState extends State<ClassTime> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: GestureDetector(
+                child: InkWell(
                   onTap: () => Navigator.pop(context),
-                  child: Center(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 8,
-                      ),
+                  child: SizedBox(
+                    child: Center(
                       child: Text(
                         'Cancel',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -323,7 +321,7 @@ class _ClassTimeState extends State<ClassTime> {
                 height: 34,
               ),
               Expanded(
-                child: GestureDetector(
+                child: InkWell(
                   onTap: () {
                     if (startTime != null && endTime != null) {
                       Navigator.pop(context);
@@ -335,12 +333,8 @@ class _ClassTimeState extends State<ClassTime> {
                       context.read<BatchCubit>().addDay(day);
                     }
                   },
-                  child: Center(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 8,
-                      ),
+                  child: SizedBox(
+                    child: Center(
                       child: Text(
                         'Add',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(

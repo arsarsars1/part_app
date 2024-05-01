@@ -29,24 +29,37 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
-    return Scaffold(
-      appBar: CommonBar(
-        title: 'Rescheduled Classes',
-        onPressed: () {
-          if (cubit.second) {
-            cubit.second = false;
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Home.route,
-              (route) => false,
-            );
-          } else {
-            Navigator.pop(context);
-          }
-        },
-      ),
-      body: SingleChildScrollView(
-        child: Column(
+    return WillPopScope(
+      onWillPop: () async {
+        if (cubit.second) {
+          cubit.second = false;
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            Home.route,
+            (route) => false,
+          );
+        } else {
+          Navigator.pop(context);
+        }
+        return false;
+      },
+      child: Scaffold(
+        appBar: CommonBar(
+          title: 'Rescheduled Classes',
+          onPressed: () {
+            if (cubit.second) {
+              cubit.second = false;
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Home.route,
+                (route) => false,
+              );
+            } else {
+              Navigator.pop(context);
+            }
+          },
+        ),
+        body: Column(
           children: [
             Align(
               alignment: Alignment.centerRight,
@@ -83,7 +96,7 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                 if (state is RescheduledListFetching) {
                   return const Expanded(child: LoadingView());
                 }
-    
+
                 if (cubit.rescheduledList.isEmpty) {
                   return const Expanded(
                     child: Center(
@@ -92,7 +105,7 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                   );
                 }
                 return ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
+                  // physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: cubit.rescheduledList.length,
                   itemBuilder: (context, index) {
@@ -150,8 +163,7 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                               ),
                             ),
                             Column(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 GestureDetector(
@@ -191,8 +203,8 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                                                   .textTheme
                                                   .bodyLarge
                                                   ?.copyWith(
-                                                    color: AppColors
-                                                        .primaryColor,
+                                                    color:
+                                                        AppColors.primaryColor,
                                                   ),
                                             ),
                                             const Text(
@@ -208,8 +220,8 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                                                   .textTheme
                                                   .bodyLarge
                                                   ?.copyWith(
-                                                    color: AppColors
-                                                        .primaryColor,
+                                                    color:
+                                                        AppColors.primaryColor,
                                                   ),
                                             ),
                                             SizedBox(
