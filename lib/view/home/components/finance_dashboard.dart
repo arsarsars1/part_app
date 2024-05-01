@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/trainer/trainer_salary_slips_home.dart';
 
@@ -26,32 +27,38 @@ class FinanceDashboard extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: Container(
-                  height: 100.h,
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(5),
-                    image: const DecorationImage(
-                        image: AssetImage('assets/images/accounts.png'),
-                        fit: BoxFit.cover),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Accounts'),
-                      SizedBox(
-                        height: 4.h,
-                      ),
-                      Text(
-                        'View All Financial Affairs',
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontSize: 12.sp,
-                            ),
-                      ),
-                    ],
+                child: GestureDetector(
+                  onTap: () {
+                    Alert(context).show(message: "Coming soon !!");
+                  },
+                  child: Container(
+                    height: 100.h,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(5),
+                      image: const DecorationImage(
+                          image: AssetImage('assets/images/accounts.png'),
+                          fit: BoxFit.cover),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Accounts'),
+                        SizedBox(
+                          height: 4.h,
+                        ),
+                        Text(
+                          'View All Financial Affairs',
+                          textAlign: TextAlign.start,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontSize: 12.sp,
+                                  ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

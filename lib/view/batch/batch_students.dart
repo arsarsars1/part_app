@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/flavors.dart';
+import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/tab_button.dart';
@@ -10,8 +11,9 @@ import 'package:part_app/view_model/cubits.dart';
 
 class BatchStudents extends StatefulWidget {
   final ValueChanged<bool> onChange;
-
-  const BatchStudents({Key? key, required this.onChange}) : super(key: key);
+  final BatchModel? batch;
+  const BatchStudents({Key? key, required this.onChange, this.batch})
+      : super(key: key);
 
   @override
   State<BatchStudents> createState() => _BatchStudentsState();

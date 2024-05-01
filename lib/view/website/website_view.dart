@@ -68,8 +68,9 @@ class _WebsiteViewState extends State<WebsiteView> {
               child: Button(
                 height: 40.h,
                 onTap: () {
-                  final Uri url = Uri.parse(shopUrl ?? '');
-                  _launchUrl(url);
+                  Alert(context).show(message: "Coming soon !!");
+                  // final Uri url = Uri.parse(shopUrl ?? '');
+                  // _launchUrl(url);
                 },
                 title: 'Go To Website',
               ),

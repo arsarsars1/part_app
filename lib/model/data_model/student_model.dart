@@ -66,4 +66,30 @@ class StudentModel {
       studentActive: detail.isActive,
     );
   }
+
+  factory StudentModel.fromEntity1(
+      Student student, StudentDetail detail, int batchId) {
+    return StudentModel(
+      id: student.id,
+      countryCode: student.countryCode,
+      mobileNo: student.mobileNo,
+      isActive: student.isActive,
+      detailId: detail.id,
+      name: detail.name,
+      parentName: detail.parentName,
+      userId: detail.userId,
+      academyId: detail.academyId,
+      pivot: student.studentDetail?[0].discontinuedBatches
+          ?.firstWhere((element) => element.id == batchId)
+          .pivot,
+      gender: detail.gender,
+      dob: detail.dob,
+      doj: detail.doj,
+      email: detail.email,
+      whatsappNo: detail.whatsappNo,
+      address: detail.address,
+      profilePic: detail.profilePic,
+      studentActive: detail.isActive,
+    );
+  }
 }

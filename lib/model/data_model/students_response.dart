@@ -104,8 +104,58 @@ abstract class StudentDetail with _$StudentDetail {
     List<Batch>? batches,
     PivotClass? pivot,
     Academy? academy,
+    List<DiscontinuedBatch>? discontinuedBatches,
   }) = _StudentDetail;
 
   factory StudentDetail.fromJson(Map<String, dynamic> json) =>
       _$StudentDetailFromJson(json);
+}
+
+@freezed
+class DiscontinuedBatch with _$DiscontinuedBatch {
+  const factory DiscontinuedBatch({
+    int? id,
+    String? batchName,
+    int? academyId,
+    int? branchId,
+    int? courseId,
+    int? subjectId,
+    String? batchStatus,
+    int? feeAmount,
+    int? admissionFees,
+    String? shareToken,
+    int? isActive,
+    PivotClass? pivot,
+    Course1? course,
+    Subject1? subject,
+  }) = _DiscontinuedBatch;
+
+  factory DiscontinuedBatch.fromJson(Map<String, dynamic> json) =>
+      _$DiscontinuedBatchFromJson(json);
+}
+
+@freezed
+class Course1 with _$Course1 {
+  const factory Course1({
+    int? id,
+    int? academyTypeId,
+    String? courseName,
+    int? isActive,
+  }) = _Course1;
+
+  factory Course1.fromJson(Map<String, dynamic> json) =>
+      _$Course1FromJson(json);
+}
+
+@freezed
+class Subject1 with _$Subject1 {
+  const factory Subject1({
+    int? id,
+    int? courseId,
+    String? subjectName,
+    int? isActive,
+  }) = _Subject1;
+
+  factory Subject1.fromJson(Map<String, dynamic> json) =>
+      _$Subject1FromJson(json);
 }

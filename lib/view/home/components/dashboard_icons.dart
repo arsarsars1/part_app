@@ -90,7 +90,7 @@ class _DashboardIconsState extends State<DashboardIcons> {
             description: descriptions[index],
             child: InkWell(
               onTap: () async {
-                if (item.title == 'Branch Manager') {
+                if (item.title == 'Branch Manager' || item.title == 'Leads') {
                   Alert(context).show(message: "Coming soon !!");
                 } else {
                   await Navigator.pushNamed(context, item.route);

@@ -114,6 +114,9 @@ _$StudentDetailImpl _$$StudentDetailImplFromJson(Map<String, dynamic> json) =>
       academy: json['academy'] == null
           ? null
           : Academy.fromJson(json['academy'] as Map<String, dynamic>),
+      discontinuedBatches: (json['discontinued_batches'] as List<dynamic>?)
+          ?.map((e) => DiscontinuedBatch.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$StudentDetailImplToJson(_$StudentDetailImpl instance) =>
@@ -134,4 +137,81 @@ Map<String, dynamic> _$$StudentDetailImplToJson(_$StudentDetailImpl instance) =>
       'batches': instance.batches,
       'pivot': instance.pivot,
       'academy': instance.academy,
+      'discontinued_batches': instance.discontinuedBatches,
+    };
+
+_$DiscontinuedBatchImpl _$$DiscontinuedBatchImplFromJson(
+        Map<String, dynamic> json) =>
+    _$DiscontinuedBatchImpl(
+      id: json['id'] as int?,
+      batchName: json['batchName'] as String?,
+      academyId: json['academyId'] as int?,
+      branchId: json['branchId'] as int?,
+      courseId: json['courseId'] as int?,
+      subjectId: json['subjectId'] as int?,
+      batchStatus: json['batchStatus'] as String?,
+      feeAmount: json['feeAmount'] as int?,
+      admissionFees: json['admissionFees'] as int?,
+      shareToken: json['shareToken'] as String?,
+      isActive: json['isActive'] as int?,
+      pivot: json['pivot'] == null
+          ? null
+          : PivotClass.fromJson(json['pivot'] as Map<String, dynamic>),
+      course: json['course'] == null
+          ? null
+          : Course1.fromJson(json['course'] as Map<String, dynamic>),
+      subject: json['subject'] == null
+          ? null
+          : Subject1.fromJson(json['subject'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$DiscontinuedBatchImplToJson(
+        _$DiscontinuedBatchImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'batchName': instance.batchName,
+      'academyId': instance.academyId,
+      'branchId': instance.branchId,
+      'courseId': instance.courseId,
+      'subjectId': instance.subjectId,
+      'batchStatus': instance.batchStatus,
+      'feeAmount': instance.feeAmount,
+      'admissionFees': instance.admissionFees,
+      'shareToken': instance.shareToken,
+      'isActive': instance.isActive,
+      'pivot': instance.pivot,
+      'course': instance.course,
+      'subject': instance.subject,
+    };
+
+_$Course1Impl _$$Course1ImplFromJson(Map<String, dynamic> json) =>
+    _$Course1Impl(
+      id: json['id'] as int?,
+      academyTypeId: json['academyTypeId'] as int?,
+      courseName: json['courseName'] as String?,
+      isActive: json['isActive'] as int?,
+    );
+
+Map<String, dynamic> _$$Course1ImplToJson(_$Course1Impl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'academyTypeId': instance.academyTypeId,
+      'courseName': instance.courseName,
+      'isActive': instance.isActive,
+    };
+
+_$Subject1Impl _$$Subject1ImplFromJson(Map<String, dynamic> json) =>
+    _$Subject1Impl(
+      id: json['id'] as int?,
+      courseId: json['courseId'] as int?,
+      subjectName: json['subjectName'] as String?,
+      isActive: json['isActive'] as int?,
+    );
+
+Map<String, dynamic> _$$Subject1ImplToJson(_$Subject1Impl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'courseId': instance.courseId,
+      'subjectName': instance.subjectName,
+      'isActive': instance.isActive,
     };

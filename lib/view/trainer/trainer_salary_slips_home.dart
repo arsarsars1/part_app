@@ -41,6 +41,13 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
       context.read<TrainerCubit>().clean();
       var branchCubit = context.read<BranchCubit>();
       branchId = branchCubit.firstBranch?.id;
+      context.read<TrainerCubit>().getSalaryDetails(
+            branchId: branchId,
+            searchQuery: query,
+            month: null,
+            year: DateTime.now().year,
+            clean: true,
+          );
     });
     // Pagination listener
     scrollController.addListener(() {
@@ -100,6 +107,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
                       title: 'Year',
                       hint: 'Select a year',
                       dateMonth: true,
+                      initialValue: '${DateTime.now().year}',
                       onDateSelect: (DateTime value) {
                         year = value.year;
                         doSearch(true);

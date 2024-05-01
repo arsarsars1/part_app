@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
@@ -37,12 +38,14 @@ class _AddStudentState extends State<AddStudent> {
   bool whatsappSelected = false;
 
   TextEditingController dobController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
   // form key
   var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final FlutterContactPicker contactPicker = FlutterContactPicker();
     return Scaffold(
       appBar: const CommonBar(title: 'Add New Student'),
       body: Form(
@@ -166,7 +169,24 @@ class _AddStudentState extends State<AddStudent> {
                 inputType: TextInputType.phone,
                 title: 'Mobile No *',
                 hint: 'Eg: 9876543210',
-                initialValue: phone,
+                // initialValue: phone,
+                controller: phoneController,
+                suffixIcon: InkWell(
+                  onTap: () async {
+                    Contact? contact = await contactPicker.selectContact();
+                    setState(() {
+                      phone =
+                          contact?.phoneNumbers?.first.replaceAll('+91', '');
+                      phoneController.text =
+                          (contact?.phoneNumbers?.first ?? '')
+                              .replaceAll('+91', '');
+                    });
+                  },
+                  child: Icon(
+                    Icons.contact_page,
+                    color: AppColors.grey81,
+                  ),
+                ),
                 onChange: (value) {
                   phone = value;
                   if (value.length >= 10) {

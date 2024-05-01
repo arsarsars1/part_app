@@ -39,6 +39,13 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<TrainerCubit>().clean();
+      context.read<TrainerCubit>().getSalaryDetails(
+            trainerId:
+                context.read<TrainerCubit>().trainer?.trainerDetail?[0].id,
+            month: null,
+            year: DateTime.now().year,
+            clean: true,
+          );
     });
     // Pagination listener
     scrollController.addListener(() {
@@ -125,6 +132,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
                         year = value.year;
                         doSearch(true);
                       },
+                      initialValue: '${DateTime.now().year}',
                       time: false,
                       year: true,
                       selectedDate: finalDate,

@@ -977,6 +977,8 @@ mixin _$StudentDetail {
   List<Batch>? get batches => throw _privateConstructorUsedError;
   PivotClass? get pivot => throw _privateConstructorUsedError;
   Academy? get academy => throw _privateConstructorUsedError;
+  List<DiscontinuedBatch>? get discontinuedBatches =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1006,7 +1008,8 @@ abstract class $StudentDetailCopyWith<$Res> {
       int? isActive,
       List<Batch>? batches,
       PivotClass? pivot,
-      Academy? academy});
+      Academy? academy,
+      List<DiscontinuedBatch>? discontinuedBatches});
 
   $PivotClassCopyWith<$Res>? get pivot;
   $AcademyCopyWith<$Res>? get academy;
@@ -1041,6 +1044,7 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
     Object? batches = freezed,
     Object? pivot = freezed,
     Object? academy = freezed,
+    Object? discontinuedBatches = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -1107,6 +1111,10 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
           ? _value.academy
           : academy // ignore: cast_nullable_to_non_nullable
               as Academy?,
+      discontinuedBatches: freezed == discontinuedBatches
+          ? _value.discontinuedBatches
+          : discontinuedBatches // ignore: cast_nullable_to_non_nullable
+              as List<DiscontinuedBatch>?,
     ) as $Val);
   }
 
@@ -1159,7 +1167,8 @@ abstract class _$$StudentDetailImplCopyWith<$Res>
       int? isActive,
       List<Batch>? batches,
       PivotClass? pivot,
-      Academy? academy});
+      Academy? academy,
+      List<DiscontinuedBatch>? discontinuedBatches});
 
   @override
   $PivotClassCopyWith<$Res>? get pivot;
@@ -1194,6 +1203,7 @@ class __$$StudentDetailImplCopyWithImpl<$Res>
     Object? batches = freezed,
     Object? pivot = freezed,
     Object? academy = freezed,
+    Object? discontinuedBatches = freezed,
   }) {
     return _then(_$StudentDetailImpl(
       id: freezed == id
@@ -1260,6 +1270,10 @@ class __$$StudentDetailImplCopyWithImpl<$Res>
           ? _value.academy
           : academy // ignore: cast_nullable_to_non_nullable
               as Academy?,
+      discontinuedBatches: freezed == discontinuedBatches
+          ? _value._discontinuedBatches
+          : discontinuedBatches // ignore: cast_nullable_to_non_nullable
+              as List<DiscontinuedBatch>?,
     ));
   }
 }
@@ -1284,8 +1298,10 @@ class _$StudentDetailImpl implements _StudentDetail {
       this.isActive,
       final List<Batch>? batches,
       this.pivot,
-      this.academy})
-      : _batches = batches;
+      this.academy,
+      final List<DiscontinuedBatch>? discontinuedBatches})
+      : _batches = batches,
+        _discontinuedBatches = discontinuedBatches;
 
   factory _$StudentDetailImpl.fromJson(Map<String, dynamic> json) =>
       _$$StudentDetailImplFromJson(json);
@@ -1330,10 +1346,20 @@ class _$StudentDetailImpl implements _StudentDetail {
   final PivotClass? pivot;
   @override
   final Academy? academy;
+  final List<DiscontinuedBatch>? _discontinuedBatches;
+  @override
+  List<DiscontinuedBatch>? get discontinuedBatches {
+    final value = _discontinuedBatches;
+    if (value == null) return null;
+    if (_discontinuedBatches is EqualUnmodifiableListView)
+      return _discontinuedBatches;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'StudentDetail(id: $id, name: $name, parentName: $parentName, userId: $userId, academyId: $academyId, gender: $gender, dob: $dob, doj: $doj, email: $email, whatsappNo: $whatsappNo, address: $address, profilePic: $profilePic, isActive: $isActive, batches: $batches, pivot: $pivot, academy: $academy)';
+    return 'StudentDetail(id: $id, name: $name, parentName: $parentName, userId: $userId, academyId: $academyId, gender: $gender, dob: $dob, doj: $doj, email: $email, whatsappNo: $whatsappNo, address: $address, profilePic: $profilePic, isActive: $isActive, batches: $batches, pivot: $pivot, academy: $academy, discontinuedBatches: $discontinuedBatches)';
   }
 
   @override
@@ -1361,7 +1387,9 @@ class _$StudentDetailImpl implements _StudentDetail {
                 other.isActive == isActive) &&
             const DeepCollectionEquality().equals(other._batches, _batches) &&
             (identical(other.pivot, pivot) || other.pivot == pivot) &&
-            (identical(other.academy, academy) || other.academy == academy));
+            (identical(other.academy, academy) || other.academy == academy) &&
+            const DeepCollectionEquality()
+                .equals(other._discontinuedBatches, _discontinuedBatches));
   }
 
   @JsonKey(ignore: true)
@@ -1383,7 +1411,8 @@ class _$StudentDetailImpl implements _StudentDetail {
       isActive,
       const DeepCollectionEquality().hash(_batches),
       pivot,
-      academy);
+      academy,
+      const DeepCollectionEquality().hash(_discontinuedBatches));
 
   @JsonKey(ignore: true)
   @override
@@ -1401,22 +1430,24 @@ class _$StudentDetailImpl implements _StudentDetail {
 
 abstract class _StudentDetail implements StudentDetail {
   const factory _StudentDetail(
-      {final int? id,
-      final String? name,
-      final String? parentName,
-      final int? userId,
-      final int? academyId,
-      final String? gender,
-      final DateTime? dob,
-      final DateTime? doj,
-      final String? email,
-      final String? whatsappNo,
-      final String? address,
-      final String? profilePic,
-      final int? isActive,
-      final List<Batch>? batches,
-      final PivotClass? pivot,
-      final Academy? academy}) = _$StudentDetailImpl;
+          {final int? id,
+          final String? name,
+          final String? parentName,
+          final int? userId,
+          final int? academyId,
+          final String? gender,
+          final DateTime? dob,
+          final DateTime? doj,
+          final String? email,
+          final String? whatsappNo,
+          final String? address,
+          final String? profilePic,
+          final int? isActive,
+          final List<Batch>? batches,
+          final PivotClass? pivot,
+          final Academy? academy,
+          final List<DiscontinuedBatch>? discontinuedBatches}) =
+      _$StudentDetailImpl;
 
   factory _StudentDetail.fromJson(Map<String, dynamic> json) =
       _$StudentDetailImpl.fromJson;
@@ -1454,7 +1485,863 @@ abstract class _StudentDetail implements StudentDetail {
   @override
   Academy? get academy;
   @override
+  List<DiscontinuedBatch>? get discontinuedBatches;
+  @override
   @JsonKey(ignore: true)
   _$$StudentDetailImplCopyWith<_$StudentDetailImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+DiscontinuedBatch _$DiscontinuedBatchFromJson(Map<String, dynamic> json) {
+  return _DiscontinuedBatch.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DiscontinuedBatch {
+  int? get id => throw _privateConstructorUsedError;
+  String? get batchName => throw _privateConstructorUsedError;
+  int? get academyId => throw _privateConstructorUsedError;
+  int? get branchId => throw _privateConstructorUsedError;
+  int? get courseId => throw _privateConstructorUsedError;
+  int? get subjectId => throw _privateConstructorUsedError;
+  String? get batchStatus => throw _privateConstructorUsedError;
+  int? get feeAmount => throw _privateConstructorUsedError;
+  int? get admissionFees => throw _privateConstructorUsedError;
+  String? get shareToken => throw _privateConstructorUsedError;
+  int? get isActive => throw _privateConstructorUsedError;
+  PivotClass? get pivot => throw _privateConstructorUsedError;
+  Course1? get course => throw _privateConstructorUsedError;
+  Subject1? get subject => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DiscontinuedBatchCopyWith<DiscontinuedBatch> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DiscontinuedBatchCopyWith<$Res> {
+  factory $DiscontinuedBatchCopyWith(
+          DiscontinuedBatch value, $Res Function(DiscontinuedBatch) then) =
+      _$DiscontinuedBatchCopyWithImpl<$Res, DiscontinuedBatch>;
+  @useResult
+  $Res call(
+      {int? id,
+      String? batchName,
+      int? academyId,
+      int? branchId,
+      int? courseId,
+      int? subjectId,
+      String? batchStatus,
+      int? feeAmount,
+      int? admissionFees,
+      String? shareToken,
+      int? isActive,
+      PivotClass? pivot,
+      Course1? course,
+      Subject1? subject});
+
+  $PivotClassCopyWith<$Res>? get pivot;
+  $Course1CopyWith<$Res>? get course;
+  $Subject1CopyWith<$Res>? get subject;
+}
+
+/// @nodoc
+class _$DiscontinuedBatchCopyWithImpl<$Res, $Val extends DiscontinuedBatch>
+    implements $DiscontinuedBatchCopyWith<$Res> {
+  _$DiscontinuedBatchCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? batchName = freezed,
+    Object? academyId = freezed,
+    Object? branchId = freezed,
+    Object? courseId = freezed,
+    Object? subjectId = freezed,
+    Object? batchStatus = freezed,
+    Object? feeAmount = freezed,
+    Object? admissionFees = freezed,
+    Object? shareToken = freezed,
+    Object? isActive = freezed,
+    Object? pivot = freezed,
+    Object? course = freezed,
+    Object? subject = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      batchName: freezed == batchName
+          ? _value.batchName
+          : batchName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      academyId: freezed == academyId
+          ? _value.academyId
+          : academyId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      branchId: freezed == branchId
+          ? _value.branchId
+          : branchId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      courseId: freezed == courseId
+          ? _value.courseId
+          : courseId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      subjectId: freezed == subjectId
+          ? _value.subjectId
+          : subjectId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      batchStatus: freezed == batchStatus
+          ? _value.batchStatus
+          : batchStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      feeAmount: freezed == feeAmount
+          ? _value.feeAmount
+          : feeAmount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      admissionFees: freezed == admissionFees
+          ? _value.admissionFees
+          : admissionFees // ignore: cast_nullable_to_non_nullable
+              as int?,
+      shareToken: freezed == shareToken
+          ? _value.shareToken
+          : shareToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pivot: freezed == pivot
+          ? _value.pivot
+          : pivot // ignore: cast_nullable_to_non_nullable
+              as PivotClass?,
+      course: freezed == course
+          ? _value.course
+          : course // ignore: cast_nullable_to_non_nullable
+              as Course1?,
+      subject: freezed == subject
+          ? _value.subject
+          : subject // ignore: cast_nullable_to_non_nullable
+              as Subject1?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PivotClassCopyWith<$Res>? get pivot {
+    if (_value.pivot == null) {
+      return null;
+    }
+
+    return $PivotClassCopyWith<$Res>(_value.pivot!, (value) {
+      return _then(_value.copyWith(pivot: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $Course1CopyWith<$Res>? get course {
+    if (_value.course == null) {
+      return null;
+    }
+
+    return $Course1CopyWith<$Res>(_value.course!, (value) {
+      return _then(_value.copyWith(course: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $Subject1CopyWith<$Res>? get subject {
+    if (_value.subject == null) {
+      return null;
+    }
+
+    return $Subject1CopyWith<$Res>(_value.subject!, (value) {
+      return _then(_value.copyWith(subject: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$DiscontinuedBatchImplCopyWith<$Res>
+    implements $DiscontinuedBatchCopyWith<$Res> {
+  factory _$$DiscontinuedBatchImplCopyWith(_$DiscontinuedBatchImpl value,
+          $Res Function(_$DiscontinuedBatchImpl) then) =
+      __$$DiscontinuedBatchImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int? id,
+      String? batchName,
+      int? academyId,
+      int? branchId,
+      int? courseId,
+      int? subjectId,
+      String? batchStatus,
+      int? feeAmount,
+      int? admissionFees,
+      String? shareToken,
+      int? isActive,
+      PivotClass? pivot,
+      Course1? course,
+      Subject1? subject});
+
+  @override
+  $PivotClassCopyWith<$Res>? get pivot;
+  @override
+  $Course1CopyWith<$Res>? get course;
+  @override
+  $Subject1CopyWith<$Res>? get subject;
+}
+
+/// @nodoc
+class __$$DiscontinuedBatchImplCopyWithImpl<$Res>
+    extends _$DiscontinuedBatchCopyWithImpl<$Res, _$DiscontinuedBatchImpl>
+    implements _$$DiscontinuedBatchImplCopyWith<$Res> {
+  __$$DiscontinuedBatchImplCopyWithImpl(_$DiscontinuedBatchImpl _value,
+      $Res Function(_$DiscontinuedBatchImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? batchName = freezed,
+    Object? academyId = freezed,
+    Object? branchId = freezed,
+    Object? courseId = freezed,
+    Object? subjectId = freezed,
+    Object? batchStatus = freezed,
+    Object? feeAmount = freezed,
+    Object? admissionFees = freezed,
+    Object? shareToken = freezed,
+    Object? isActive = freezed,
+    Object? pivot = freezed,
+    Object? course = freezed,
+    Object? subject = freezed,
+  }) {
+    return _then(_$DiscontinuedBatchImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      batchName: freezed == batchName
+          ? _value.batchName
+          : batchName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      academyId: freezed == academyId
+          ? _value.academyId
+          : academyId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      branchId: freezed == branchId
+          ? _value.branchId
+          : branchId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      courseId: freezed == courseId
+          ? _value.courseId
+          : courseId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      subjectId: freezed == subjectId
+          ? _value.subjectId
+          : subjectId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      batchStatus: freezed == batchStatus
+          ? _value.batchStatus
+          : batchStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      feeAmount: freezed == feeAmount
+          ? _value.feeAmount
+          : feeAmount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      admissionFees: freezed == admissionFees
+          ? _value.admissionFees
+          : admissionFees // ignore: cast_nullable_to_non_nullable
+              as int?,
+      shareToken: freezed == shareToken
+          ? _value.shareToken
+          : shareToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pivot: freezed == pivot
+          ? _value.pivot
+          : pivot // ignore: cast_nullable_to_non_nullable
+              as PivotClass?,
+      course: freezed == course
+          ? _value.course
+          : course // ignore: cast_nullable_to_non_nullable
+              as Course1?,
+      subject: freezed == subject
+          ? _value.subject
+          : subject // ignore: cast_nullable_to_non_nullable
+              as Subject1?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$DiscontinuedBatchImpl implements _DiscontinuedBatch {
+  const _$DiscontinuedBatchImpl(
+      {this.id,
+      this.batchName,
+      this.academyId,
+      this.branchId,
+      this.courseId,
+      this.subjectId,
+      this.batchStatus,
+      this.feeAmount,
+      this.admissionFees,
+      this.shareToken,
+      this.isActive,
+      this.pivot,
+      this.course,
+      this.subject});
+
+  factory _$DiscontinuedBatchImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DiscontinuedBatchImplFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? batchName;
+  @override
+  final int? academyId;
+  @override
+  final int? branchId;
+  @override
+  final int? courseId;
+  @override
+  final int? subjectId;
+  @override
+  final String? batchStatus;
+  @override
+  final int? feeAmount;
+  @override
+  final int? admissionFees;
+  @override
+  final String? shareToken;
+  @override
+  final int? isActive;
+  @override
+  final PivotClass? pivot;
+  @override
+  final Course1? course;
+  @override
+  final Subject1? subject;
+
+  @override
+  String toString() {
+    return 'DiscontinuedBatch(id: $id, batchName: $batchName, academyId: $academyId, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, batchStatus: $batchStatus, feeAmount: $feeAmount, admissionFees: $admissionFees, shareToken: $shareToken, isActive: $isActive, pivot: $pivot, course: $course, subject: $subject)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DiscontinuedBatchImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.batchName, batchName) ||
+                other.batchName == batchName) &&
+            (identical(other.academyId, academyId) ||
+                other.academyId == academyId) &&
+            (identical(other.branchId, branchId) ||
+                other.branchId == branchId) &&
+            (identical(other.courseId, courseId) ||
+                other.courseId == courseId) &&
+            (identical(other.subjectId, subjectId) ||
+                other.subjectId == subjectId) &&
+            (identical(other.batchStatus, batchStatus) ||
+                other.batchStatus == batchStatus) &&
+            (identical(other.feeAmount, feeAmount) ||
+                other.feeAmount == feeAmount) &&
+            (identical(other.admissionFees, admissionFees) ||
+                other.admissionFees == admissionFees) &&
+            (identical(other.shareToken, shareToken) ||
+                other.shareToken == shareToken) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            (identical(other.pivot, pivot) || other.pivot == pivot) &&
+            (identical(other.course, course) || other.course == course) &&
+            (identical(other.subject, subject) || other.subject == subject));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      batchName,
+      academyId,
+      branchId,
+      courseId,
+      subjectId,
+      batchStatus,
+      feeAmount,
+      admissionFees,
+      shareToken,
+      isActive,
+      pivot,
+      course,
+      subject);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DiscontinuedBatchImplCopyWith<_$DiscontinuedBatchImpl> get copyWith =>
+      __$$DiscontinuedBatchImplCopyWithImpl<_$DiscontinuedBatchImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$DiscontinuedBatchImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DiscontinuedBatch implements DiscontinuedBatch {
+  const factory _DiscontinuedBatch(
+      {final int? id,
+      final String? batchName,
+      final int? academyId,
+      final int? branchId,
+      final int? courseId,
+      final int? subjectId,
+      final String? batchStatus,
+      final int? feeAmount,
+      final int? admissionFees,
+      final String? shareToken,
+      final int? isActive,
+      final PivotClass? pivot,
+      final Course1? course,
+      final Subject1? subject}) = _$DiscontinuedBatchImpl;
+
+  factory _DiscontinuedBatch.fromJson(Map<String, dynamic> json) =
+      _$DiscontinuedBatchImpl.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get batchName;
+  @override
+  int? get academyId;
+  @override
+  int? get branchId;
+  @override
+  int? get courseId;
+  @override
+  int? get subjectId;
+  @override
+  String? get batchStatus;
+  @override
+  int? get feeAmount;
+  @override
+  int? get admissionFees;
+  @override
+  String? get shareToken;
+  @override
+  int? get isActive;
+  @override
+  PivotClass? get pivot;
+  @override
+  Course1? get course;
+  @override
+  Subject1? get subject;
+  @override
+  @JsonKey(ignore: true)
+  _$$DiscontinuedBatchImplCopyWith<_$DiscontinuedBatchImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Course1 _$Course1FromJson(Map<String, dynamic> json) {
+  return _Course1.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Course1 {
+  int? get id => throw _privateConstructorUsedError;
+  int? get academyTypeId => throw _privateConstructorUsedError;
+  String? get courseName => throw _privateConstructorUsedError;
+  int? get isActive => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $Course1CopyWith<Course1> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $Course1CopyWith<$Res> {
+  factory $Course1CopyWith(Course1 value, $Res Function(Course1) then) =
+      _$Course1CopyWithImpl<$Res, Course1>;
+  @useResult
+  $Res call({int? id, int? academyTypeId, String? courseName, int? isActive});
+}
+
+/// @nodoc
+class _$Course1CopyWithImpl<$Res, $Val extends Course1>
+    implements $Course1CopyWith<$Res> {
+  _$Course1CopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? academyTypeId = freezed,
+    Object? courseName = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      academyTypeId: freezed == academyTypeId
+          ? _value.academyTypeId
+          : academyTypeId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      courseName: freezed == courseName
+          ? _value.courseName
+          : courseName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$Course1ImplCopyWith<$Res> implements $Course1CopyWith<$Res> {
+  factory _$$Course1ImplCopyWith(
+          _$Course1Impl value, $Res Function(_$Course1Impl) then) =
+      __$$Course1ImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? id, int? academyTypeId, String? courseName, int? isActive});
+}
+
+/// @nodoc
+class __$$Course1ImplCopyWithImpl<$Res>
+    extends _$Course1CopyWithImpl<$Res, _$Course1Impl>
+    implements _$$Course1ImplCopyWith<$Res> {
+  __$$Course1ImplCopyWithImpl(
+      _$Course1Impl _value, $Res Function(_$Course1Impl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? academyTypeId = freezed,
+    Object? courseName = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_$Course1Impl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      academyTypeId: freezed == academyTypeId
+          ? _value.academyTypeId
+          : academyTypeId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      courseName: freezed == courseName
+          ? _value.courseName
+          : courseName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$Course1Impl implements _Course1 {
+  const _$Course1Impl(
+      {this.id, this.academyTypeId, this.courseName, this.isActive});
+
+  factory _$Course1Impl.fromJson(Map<String, dynamic> json) =>
+      _$$Course1ImplFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final int? academyTypeId;
+  @override
+  final String? courseName;
+  @override
+  final int? isActive;
+
+  @override
+  String toString() {
+    return 'Course1(id: $id, academyTypeId: $academyTypeId, courseName: $courseName, isActive: $isActive)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$Course1Impl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.academyTypeId, academyTypeId) ||
+                other.academyTypeId == academyTypeId) &&
+            (identical(other.courseName, courseName) ||
+                other.courseName == courseName) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, academyTypeId, courseName, isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$Course1ImplCopyWith<_$Course1Impl> get copyWith =>
+      __$$Course1ImplCopyWithImpl<_$Course1Impl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$Course1ImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Course1 implements Course1 {
+  const factory _Course1(
+      {final int? id,
+      final int? academyTypeId,
+      final String? courseName,
+      final int? isActive}) = _$Course1Impl;
+
+  factory _Course1.fromJson(Map<String, dynamic> json) = _$Course1Impl.fromJson;
+
+  @override
+  int? get id;
+  @override
+  int? get academyTypeId;
+  @override
+  String? get courseName;
+  @override
+  int? get isActive;
+  @override
+  @JsonKey(ignore: true)
+  _$$Course1ImplCopyWith<_$Course1Impl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Subject1 _$Subject1FromJson(Map<String, dynamic> json) {
+  return _Subject1.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Subject1 {
+  int? get id => throw _privateConstructorUsedError;
+  int? get courseId => throw _privateConstructorUsedError;
+  String? get subjectName => throw _privateConstructorUsedError;
+  int? get isActive => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $Subject1CopyWith<Subject1> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $Subject1CopyWith<$Res> {
+  factory $Subject1CopyWith(Subject1 value, $Res Function(Subject1) then) =
+      _$Subject1CopyWithImpl<$Res, Subject1>;
+  @useResult
+  $Res call({int? id, int? courseId, String? subjectName, int? isActive});
+}
+
+/// @nodoc
+class _$Subject1CopyWithImpl<$Res, $Val extends Subject1>
+    implements $Subject1CopyWith<$Res> {
+  _$Subject1CopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? courseId = freezed,
+    Object? subjectName = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      courseId: freezed == courseId
+          ? _value.courseId
+          : courseId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      subjectName: freezed == subjectName
+          ? _value.subjectName
+          : subjectName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$Subject1ImplCopyWith<$Res>
+    implements $Subject1CopyWith<$Res> {
+  factory _$$Subject1ImplCopyWith(
+          _$Subject1Impl value, $Res Function(_$Subject1Impl) then) =
+      __$$Subject1ImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? id, int? courseId, String? subjectName, int? isActive});
+}
+
+/// @nodoc
+class __$$Subject1ImplCopyWithImpl<$Res>
+    extends _$Subject1CopyWithImpl<$Res, _$Subject1Impl>
+    implements _$$Subject1ImplCopyWith<$Res> {
+  __$$Subject1ImplCopyWithImpl(
+      _$Subject1Impl _value, $Res Function(_$Subject1Impl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? courseId = freezed,
+    Object? subjectName = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_$Subject1Impl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      courseId: freezed == courseId
+          ? _value.courseId
+          : courseId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      subjectName: freezed == subjectName
+          ? _value.subjectName
+          : subjectName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$Subject1Impl implements _Subject1 {
+  const _$Subject1Impl(
+      {this.id, this.courseId, this.subjectName, this.isActive});
+
+  factory _$Subject1Impl.fromJson(Map<String, dynamic> json) =>
+      _$$Subject1ImplFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final int? courseId;
+  @override
+  final String? subjectName;
+  @override
+  final int? isActive;
+
+  @override
+  String toString() {
+    return 'Subject1(id: $id, courseId: $courseId, subjectName: $subjectName, isActive: $isActive)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$Subject1Impl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.courseId, courseId) ||
+                other.courseId == courseId) &&
+            (identical(other.subjectName, subjectName) ||
+                other.subjectName == subjectName) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, courseId, subjectName, isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$Subject1ImplCopyWith<_$Subject1Impl> get copyWith =>
+      __$$Subject1ImplCopyWithImpl<_$Subject1Impl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$Subject1ImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Subject1 implements Subject1 {
+  const factory _Subject1(
+      {final int? id,
+      final int? courseId,
+      final String? subjectName,
+      final int? isActive}) = _$Subject1Impl;
+
+  factory _Subject1.fromJson(Map<String, dynamic> json) =
+      _$Subject1Impl.fromJson;
+
+  @override
+  int? get id;
+  @override
+  int? get courseId;
+  @override
+  String? get subjectName;
+  @override
+  int? get isActive;
+  @override
+  @JsonKey(ignore: true)
+  _$$Subject1ImplCopyWith<_$Subject1Impl> get copyWith =>
       throw _privateConstructorUsedError;
 }
