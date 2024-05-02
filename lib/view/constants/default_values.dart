@@ -101,6 +101,11 @@ class DefaultValues {
   ];
   List<DropDownItem> feeType = [
     const DropDownItem(
+      id: 'all',
+      title: 'All',
+      item: 'All',
+    ),
+    const DropDownItem(
       id: 'monthly',
       title: 'Monthly',
       item: 'Monthly',

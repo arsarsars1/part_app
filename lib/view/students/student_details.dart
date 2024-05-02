@@ -127,6 +127,10 @@ class _StudentDetailsState extends State<StudentDetails> {
                         subText: '${details?.dob?.toDateString()}',
                       ),
                       TitledText(
+                        title: 'Date Of Joining',
+                        subText: '${details?.doj?.toDateString()}',
+                      ),
+                      TitledText(
                         title: 'Gender',
                         subText: '${details?.gender?.capitalize()}',
                       ),

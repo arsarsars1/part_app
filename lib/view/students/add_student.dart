@@ -175,11 +175,13 @@ class _AddStudentState extends State<AddStudent> {
                   onTap: () async {
                     Contact? contact = await contactPicker.selectContact();
                     setState(() {
-                      phone =
-                          contact?.phoneNumbers?.first.replaceAll('+91', '');
+                      phone = contact?.phoneNumbers?.first
+                          .replaceAll('+91', '')
+                          .replaceAll(' ', '');
                       phoneController.text =
                           (contact?.phoneNumbers?.first ?? '')
-                              .replaceAll('+91', '');
+                              .replaceAll('+91', '')
+                              .replaceAll(' ', '');
                     });
                   },
                   child: Icon(

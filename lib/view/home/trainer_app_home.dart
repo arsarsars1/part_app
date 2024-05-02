@@ -92,11 +92,11 @@ class _TrainerAppHomeState extends State<TrainerAppHome> {
             ),
             BottomNavigationBarItem(
               backgroundColor: AppColors.liteDark,
-              label: 'Website',
+              label: 'Shop',
               icon: Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: Icon(
-                  Icons.web_rounded,
+                  Icons.shopping_cart,
                   color: currentIndex == 3 ? selectedColor : unselectedColor,
                 ),
               ),

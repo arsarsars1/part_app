@@ -42,11 +42,13 @@ class _LoginState extends State<Login> {
           if (state is SendingOtpFailed && state.login) {
             Navigator.pop(context);
             Alert(context).show(message: state.message);
+            Navigator.pushReplacementNamed(context, SignUp.route);
           }
           // if the OTP is sent show the User with the verification UI
           else if (state is OTPSent && !state.resend && state.login) {
             Navigator.pop(context);
-            Navigator.pushNamed(context, OTPVerify.route, arguments: OTPRoutes.login);
+            Navigator.pushNamed(context, OTPVerify.route,
+                arguments: OTPRoutes.login);
           }
         },
         child: SafeArea(

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -81,11 +83,11 @@ class SubscriptionSuccess extends StatelessWidget {
                   });
                 }
               }
-              // Navigator.pushNamedAndRemoveUntil(
-              //   context,
-              //   SwitchAccount.route,
-              //   (value) => false,
-              // );
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                SwitchAccount.route,
+                (value) => false,
+              );
             },
           ),
           SizedBox(

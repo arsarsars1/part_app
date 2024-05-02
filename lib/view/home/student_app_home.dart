@@ -96,7 +96,7 @@ class _StudentAppHomeState extends State<StudentAppHome> {
               icon: Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: Icon(
-                  Icons.web_rounded,
+                  Icons.shopping_cart,
                   color: currentIndex == 3 ? selectedColor : unselectedColor,
                 ),
               ),

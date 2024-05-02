@@ -6,7 +6,6 @@ import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/trainer/components/docs_upload.dart';
 import 'package:part_app/view/trainer/salary_details.dart';
@@ -140,11 +139,13 @@ class _AddTrainerState extends State<AddTrainer> {
                     onTap: () async {
                       Contact? contact = await contactPicker.selectContact();
                       setState(() {
-                        phone =
-                            contact?.phoneNumbers?.first.replaceAll('+91', '');
+                        phone = contact?.phoneNumbers?.first
+                            .replaceAll('+91', '')
+                            .replaceAll(' ', '');
                         phoneController.text =
                             (contact?.phoneNumbers?.first ?? '')
-                                .replaceAll('+91', '');
+                                .replaceAll('+91', '')
+                                .replaceAll(' ', '');
                       });
                     },
                     child: Icon(

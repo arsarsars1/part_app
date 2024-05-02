@@ -80,7 +80,7 @@ class MembershipCubit extends Cubit<MembershipState> {
         phoneNo: _salesManPhoneNo!,
       );
 
-      if (value.status != 0) {
+      if (value.status == 1) {
         emit(SalesOTPSent(resend));
       } else {
         emit(SalesOTPFailed(value.message ?? 'Failed to send OTP.'));
@@ -101,7 +101,8 @@ class MembershipCubit extends Cubit<MembershipState> {
     if (userStr != null) {
       try {
         var userResp = userResponseFromJson(userStr);
-        Membership membership = memberships.firstWhere((element) => element.paymentType=='free');
+        Membership membership =
+            memberships.firstWhere((element) => element.paymentType == 'free');
         Common value = await _membershipService.addMembership(
           academyId: userResp.user?.adminDetail?.academy?.id,
           membershipID: _selectedMembership?.id ?? membership.id,

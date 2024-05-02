@@ -150,9 +150,11 @@ class FeeDetailsService {
                   : paymentStatus != 'all'
                       ? '/admin/students/$studentId/fee-details/$year?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
                       : '/admin/students/$studentId/fee-details/$year?fee_type=$feeType&page=$pageNo'
-              : paymentStatus != 'all'
-                  ? '/admin/students/$studentId/fee-details?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
-                  : '/admin/students/$studentId/fee-details?fee_type=$feeType&page=$pageNo');
+              : feeType == 'all'
+                  ? '/admin/students/$studentId/fee-details?payment_status=$paymentStatus&page=$pageNo'
+                  : paymentStatus != 'all'
+                      ? '/admin/students/$studentId/fee-details?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                      : '/admin/students/$studentId/fee-details?fee_type=$feeType&page=$pageNo');
       return feeDetailHistoryFromJson(jsonEncode(response));
     } catch (e) {
       return null;

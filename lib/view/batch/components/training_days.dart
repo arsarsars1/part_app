@@ -1,13 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view_model/batch/batch_cubit.dart';
@@ -80,18 +77,20 @@ class TrainingDays extends StatelessWidget {
                           return;
                         }
 
-                        Database database = Database();
-                        String? startTime =
-                            await database.getPreviousClassStartTime();
-                        String? endTime =
-                            await database.getPreviousClassEndTime();
+                        // Database database = Database();
+                        // String? startTime =
+                        //     await database.getPreviousClassStartTime();
+                        // String? endTime =
+                        //     await database.getPreviousClassEndTime();
 
                         showDialog(
                           context: context,
                           builder: (context) {
                             return ClassTime(
-                              start: startTime ?? days?.startTime,
-                              end: endTime ?? days?.endTime,
+                              // start: startTime ?? days?.startTime,
+                              // end: endTime ?? days?.endTime,
+                              start: days?.startTime,
+                              end: days?.endTime,
                               day: data.key,
                               startTime: (TimeOfDay value) {},
                               endTime: (TimeOfDay value) {},

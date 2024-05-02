@@ -28,7 +28,7 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
   String? status = 'all';
   int? month;
   DateTime? finalDate = DateTime.now();
-  String? feeType = 'monthly';
+  String? feeType;
 
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -40,6 +40,7 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FeeCubit>().clean();
+      doSearch(false);
     });
     // Pagination listener
     scrollController.addListener(() {
@@ -120,58 +121,74 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
                 child: ListView(
                   controller: scrollController,
                   children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: TabButton(
-                        onChange: (String value) {
-                          if (value == 'Monthly') {
-                            setState(() {
-                              feeType = 'monthly';
-                              cubit.batchInvoice.clear();
-                              status = 'all';
-                            });
-                            cubit.getStudentFeeDetails(
-                              month: month,
-                              year: year,
-                              feeType: feeType,
-                              searchQuery: query,
-                              paymentStatus: status,
-                              studentId: context
-                                  .read<StudentCubit>()
-                                  .student
-                                  ?.studentDetail?[0]
-                                  .id,
-                              clean: true,
-                            );
-                          } else {
-                            setState(() {
-                              feeType = 'class';
-                              cubit.batchInvoice.clear();
-                              status = 'all';
-                            });
-                            cubit.getStudentFeeDetails(
-                              month: month,
-                              year: year,
-                              feeType: feeType,
-                              searchQuery: query,
-                              paymentStatus: status,
-                              studentId: context
-                                  .read<StudentCubit>()
-                                  .student
-                                  ?.studentDetail?[0]
-                                  .id,
-                              clean: true,
-                            );
-                          }
-                        },
-                        options: const [
-                          'Monthly',
-                          'Class Based',
-                        ],
-                      ),
+                    // SizedBox(
+                    //   height: 20.h,
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                    //   child: TabButton(
+                    //     onChange: (String value) {
+                    //       if (value == 'Monthly') {
+                    //         setState(() {
+                    //           feeType = 'monthly';
+                    //           cubit.batchInvoice.clear();
+                    //           status = 'all';
+                    //         });
+                    //         cubit.getStudentFeeDetails(
+                    //           month: month,
+                    //           year: year,
+                    //           feeType: feeType,
+                    //           searchQuery: query,
+                    //           paymentStatus: status,
+                    //           studentId: context
+                    //               .read<StudentCubit>()
+                    //               .student
+                    //               ?.studentDetail?[0]
+                    //               .id,
+                    //           clean: true,
+                    //         );
+                    //       } else {
+                    //         setState(() {
+                    //           feeType = 'class';
+                    //           cubit.batchInvoice.clear();
+                    //           status = 'all';
+                    //         });
+                    //         cubit.getStudentFeeDetails(
+                    //           month: month,
+                    //           year: year,
+                    //           feeType: feeType,
+                    //           searchQuery: query,
+                    //           paymentStatus: status,
+                    //           studentId: context
+                    //               .read<StudentCubit>()
+                    //               .student
+                    //               ?.studentDetail?[0]
+                    //               .id,
+                    //           clean: true,
+                    //         );
+                    //       }
+                    //     },
+                    //     options: const [
+                    //       'Monthly',
+                    //       'Class Based',
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 20.h,
+                    // ),
+                    CommonField(
+                      title: 'Fee Type',
+                      hint: 'Select a fee type',
+                      dropDown: true,
+                      dropDownItems: DefaultValues().feeType,
+                      defaultItem: DefaultValues().feeType.firstWhere(
+                            (element) => element.title?.toLowerCase() == 'all',
+                          ),
+                      onChange: (value) {
+                        feeType = value?.id;
+                        doSearch(true);
+                      },
                     ),
                     SizedBox(
                       height: 20.h,
@@ -209,11 +226,12 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
                               doSearch(true);
                             },
                           ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
                         ],
                       ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
+
                     CommonField(
                       title: 'Payment Status',
                       hint: 'Select a status',

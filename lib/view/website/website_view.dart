@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class WebsiteView extends StatefulWidget {
   const WebsiteView({Key? key}) : super(key: key);
@@ -81,9 +80,9 @@ class _WebsiteViewState extends State<WebsiteView> {
     );
   }
 
-  Future<void> _launchUrl(Uri url) async {
-    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      throw Exception('Could not launch $url');
-    }
-  }
+  // Future<void> _launchUrl(Uri url) async {
+  //   if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+  //     throw Exception('Could not launch $url');
+  //   }
+  // }
 }
