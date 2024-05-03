@@ -189,18 +189,18 @@ class _AddTrainerState extends State<AddTrainer> {
                 CommonField(
                   inputType: TextInputType.emailAddress,
                   length: 50,
-                  title: 'Email *',
+                  title: 'Email',
                   hint: 'Eg: contact@polestar.com',
                   capitalization: TextCapitalization.none,
-                  validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter email';
-                    } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                      return 'Invalid email address.';
-                    } else {
-                      return null;
-                    }
-                  },
+                  // validator: (value) {
+                  //   if (value == null || value.toString().isEmpty) {
+                  //     return 'Please enter email';
+                  //   } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                  //     return 'Invalid email address.';
+                  //   } else {
+                  //     return null;
+                  //   }
+                  // },
                   onChange: (value) {
                     email = value;
                   },

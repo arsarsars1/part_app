@@ -8,7 +8,7 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/default_values.dart';
-import 'package:part_app/view/constants/regex.dart';
+// import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view/students/assign_batch.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -260,18 +260,18 @@ class _AddStudentState extends State<AddStudent> {
                 initialValue: email,
                 inputType: TextInputType.emailAddress,
                 length: 50,
-                title: 'Email ID *',
+                title: 'Email ID',
                 hint: 'Eg: contact@polestar.com',
                 capitalization: TextCapitalization.none,
-                validator: (value) {
-                  if (value == null || value.toString().isEmpty) {
-                    return 'Please enter email';
-                  } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                    return 'Invalid email address.';
-                  } else {
-                    return null;
-                  }
-                },
+                // validator: (value) {
+                //   if (value == null || value.toString().isEmpty) {
+                //     return 'Please enter email';
+                //   } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                //     return 'Invalid email address.';
+                //   } else {
+                //     return null;
+                //   }
+                // },
                 onChange: (value) {
                   email = value;
                 },

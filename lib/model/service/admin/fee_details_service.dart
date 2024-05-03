@@ -93,11 +93,19 @@ class FeeDetailsService {
       var response = await _client.get(
           queryPath: month == null || year == null
               ? searchQuery == '' || searchQuery == null
-                  ? '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
-                  : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo'
+                  ? feeType == 'all'
+                      ? '/admin/fee-details/batch-fee-invoices?branch_id=$branchId&batch_id=$batchId&page=$pageNo'
+                      : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
+                  : feeType == 'all'
+                      ? '/admin/fee-details/batch-fee-invoices?branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo'
+                      : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo'
               : searchQuery == '' || searchQuery == null
-                  ? '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
-                  : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo');
+                  ? feeType == 'all'
+                      ? '/admin/fee-details/batch-fee-invoices?year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
+                      : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
+                  : feeType == 'all'
+                      ? '/admin/fee-details/batch-fee-invoices?year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo'
+                      : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo');
       return batchFeeInvoiceListFromJson(jsonEncode(response));
     } catch (e) {
       log(e.toString());
