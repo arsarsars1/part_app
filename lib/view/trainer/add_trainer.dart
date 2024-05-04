@@ -264,7 +264,7 @@ class _AddTrainerState extends State<AddTrainer> {
                           TrainerRequest request =
                               trainerCubit.request.copyWith(
                             name: name,
-                            email: email,
+                            email: email == '' ? null : email,
                             countryCode: 91,
                             whatsappNo: whatsappNo ?? phone,
                             mobileNo: phone,

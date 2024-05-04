@@ -29,11 +29,14 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
   String? query;
   BatchModel? batch;
 
+  DropDownItem? selectedItem;
+
   int? year;
   int? month;
   DateTime? finalDate = DateTime.now();
   String? feeType;
   final _dropDownKey = GlobalKey<FormFieldState>();
+  bool branchSelected = false;
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController feeTypeController = TextEditingController();
@@ -42,14 +45,16 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FeeCubit>().clean();
-      var branchCubit = context.read<BranchCubit>();
-      branchId = branchCubit.firstBranch?.id;
-      setState(() {
-        context.read<BatchCubit>().getBatchesByBranch(
-              branchId: branchId,
-              clean: true,
-            );
-      });
+      doSearch(false);
+      // var branchCubit = context.read<BranchCubit>();
+      // branchId = branchCubit.firstBranch?.id;
+      // setState(() {
+      //   context.read<BatchCubit>().getBatchesByBranch(
+      //         branchId: branchId,
+      //         clean: true,
+      //       );
+      // });
+      batchController.text = 'All';
     });
     // Pagination listener
     scrollController.addListener(() {
@@ -63,6 +68,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
 
   @override
   Widget build(BuildContext context) {
+    var branchCubit = context.read<BranchCubit>();
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
@@ -127,23 +133,112 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    BranchField(
-                      onSelect: (value) {
-                        setState(() {
-                          branchId = value;
-                        });
-                        batchController.clear();
-                        feeTypeController.clear();
-                        dateController.clear();
-                        batch = null;
-                        feeType = null;
-                        _dropDownKey.currentState?.reset();
-                        cubit.batchInvoice.clear();
-                        feeTypeController.clear();
-                        context.read<BatchCubit>().getBatchesByBranch(
-                              branchId: branchId,
-                              clean: true,
-                            );
+                    // BranchField(
+                    //   onSelect: (value) {
+                    //     setState(() {
+                    //       branchId = value;
+                    //     });
+                    //     batchController.clear();
+                    //     feeTypeController.clear();
+                    //     dateController.clear();
+                    //     batch = null;
+                    //     feeType = null;
+                    //     _dropDownKey.currentState?.reset();
+                    //     cubit.batchInvoice.clear();
+                    //     feeTypeController.clear();
+                    //     context.read<BatchCubit>().getBatchesByBranch(
+                    //           branchId: branchId,
+                    //           clean: true,
+                    //         );
+                    //   },
+                    // ),
+                    BlocBuilder<BranchCubit, BranchState>(
+                      builder: (context, state) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Branch',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              DropdownButtonFormField<DropDownItem>(
+                                dropdownColor: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .fillColor,
+                                value:
+                                    selectedItem ?? const DropDownItem(id: -1),
+                                decoration: const InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 32),
+                                ),
+                                items: [
+                                  DropdownMenuItem(
+                                    value: const DropDownItem(id: -1),
+                                    child: SizedBox(
+                                      width: 200.w,
+                                      child: Text(
+                                        'All',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: Colors.white,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                  ...branchCubit.dropDownBranches().map((e) {
+                                    return DropdownMenuItem(
+                                      value: e,
+                                      child: SizedBox(
+                                        width: 200.w,
+                                        child: Text(
+                                          e.title ?? '',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                color: Colors.white,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList()
+                                ],
+                                onChanged: (value) {
+                                  if (value?.id == -1) {
+                                    branchSelected = false;
+                                    batchController.text = 'All';
+                                  } else {
+                                    branchSelected = true;
+                                  }
+                                  setState(() {
+                                    branchId = value?.id;
+                                  });
+                                  batchController.clear();
+                                  feeTypeController.clear();
+                                  dateController.clear();
+                                  batch = null;
+                                  feeType = null;
+                                  _dropDownKey.currentState?.reset();
+                                  cubit.batchInvoice.clear();
+                                  feeTypeController.clear();
+                                  context.read<BatchCubit>().getBatchesByBranch(
+                                        branchId: branchId,
+                                        clean: true,
+                                      );
+                                },
+                              ),
+                            ],
+                          ),
+                        );
                       },
                     ),
                     const SizedBox(
@@ -152,28 +247,34 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     CommonField(
                       controller: batchController,
                       onTap: () {
-                        dateController.clear();
-                        feeTypeController.clear();
-                        feeType = null;
-                        if (branchId != null) {
-                          scaffoldKey.currentState?.showBottomSheet(
-                            elevation: 10,
-                            backgroundColor: Colors.transparent,
-                            (context) => BatchPicker(
-                              branchId: branchId!,
-                              status: '',
-                              onSelect: (value) {
-                                batch = value;
-                                batchController.text = value.name;
-                                cubit.batchInvoice.clear();
-                                // setState(() {});
-                              },
-                            ),
+                        if (!branchSelected) {
+                          Alert(context).show(
+                            message: 'Please select Branch To Proceed',
                           );
                         } else {
-                          Alert(context).show(
-                            message: 'Please select Branch and Status.',
-                          );
+                          dateController.clear();
+                          feeTypeController.clear();
+                          feeType = null;
+                          if (branchId != null) {
+                            scaffoldKey.currentState?.showBottomSheet(
+                              elevation: 10,
+                              backgroundColor: Colors.transparent,
+                              (context) => BatchPicker(
+                                branchId: branchId!,
+                                status: '',
+                                onSelect: (value) {
+                                  batch = value;
+                                  batchController.text = value.name;
+                                  cubit.batchInvoice.clear();
+                                  // setState(() {});
+                                },
+                              ),
+                            );
+                          } else {
+                            Alert(context).show(
+                              message: 'Please select Branch and Status.',
+                            );
+                          }
                         }
                       },
                       disabled: true,
@@ -195,75 +296,88 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Fee Type *',
-                            style: Theme.of(context).textTheme.bodyLarge,
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text(
+                    //         'Fee Type *',
+                    //         style: Theme.of(context).textTheme.bodyLarge,
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 8,
+                    //       ),
+                    //       DropdownButtonFormField<DropDownItem>(
+                    //         key: _dropDownKey,
+                    //         validator: (value) {
+                    //           return value == null
+                    //               ? 'Please select Fee Type.'
+                    //               : null;
+                    //         },
+                    //         hint: Text(
+                    //           'Select Fee Type',
+                    //           style: Theme.of(context)
+                    //               .inputDecorationTheme
+                    //               .hintStyle,
+                    //         ),
+                    //         dropdownColor: Theme.of(context)
+                    //             .inputDecorationTheme
+                    //             .fillColor,
+                    //         value: null,
+                    //         decoration: const InputDecoration(
+                    //           contentPadding:
+                    //               EdgeInsets.symmetric(horizontal: 32),
+                    //         ),
+                    //         items: DefaultValues().feeType.map((e) {
+                    //           return DropdownMenuItem(
+                    //             value: e,
+                    //             child: Text(
+                    //               e.title ?? '',
+                    //               style: Theme.of(context)
+                    //                   .textTheme
+                    //                   .bodyLarge
+                    //                   ?.copyWith(
+                    //                     color: Colors.white,
+                    //                     overflow: TextOverflow.ellipsis,
+                    //                   ),
+                    //             ),
+                    //           );
+                    //         }).toList(),
+                    //         onChanged: (value) {
+                    //           if (value?.id == 'monthly') {
+                    //             setState(() {
+                    //               feeType = value?.id;
+                    //               dateController.clear();
+                    //               cubit.batchInvoice.clear();
+                    //             });
+                    //           } else {
+                    //             setState(() {
+                    //               feeType = value?.id;
+                    //               dateController.clear();
+                    //               month = null;
+                    //               year = null;
+                    //               cubit.batchInvoice.clear();
+                    //             });
+                    //             doSearch(true);
+                    //           }
+                    //         },
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    CommonField(
+                      title: 'Fee Type',
+                      hint: 'Select a fee type',
+                      dropDown: true,
+                      dropDownItems: DefaultValues().feeType,
+                      defaultItem: DefaultValues().feeType.firstWhere(
+                            (element) => element.title?.toLowerCase() == 'all',
                           ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          DropdownButtonFormField<DropDownItem>(
-                            key: _dropDownKey,
-                            validator: (value) {
-                              return value == null
-                                  ? 'Please select Fee Type.'
-                                  : null;
-                            },
-                            hint: Text(
-                              'Select Fee Type',
-                              style: Theme.of(context)
-                                  .inputDecorationTheme
-                                  .hintStyle,
-                            ),
-                            dropdownColor: Theme.of(context)
-                                .inputDecorationTheme
-                                .fillColor,
-                            value: null,
-                            decoration: const InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 32),
-                            ),
-                            items: DefaultValues().feeType.map((e) {
-                              return DropdownMenuItem(
-                                value: e,
-                                child: Text(
-                                  e.title ?? '',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        color: Colors.white,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              if (value?.id == 'monthly') {
-                                setState(() {
-                                  feeType = value?.id;
-                                  dateController.clear();
-                                  cubit.batchInvoice.clear();
-                                });
-                              } else {
-                                setState(() {
-                                  feeType = value?.id;
-                                  dateController.clear();
-                                  month = null;
-                                  year = null;
-                                  cubit.batchInvoice.clear();
-                                });
-                                doSearch(true);
-                              }
-                            },
-                          ),
-                        ],
-                      ),
+                      onChange: (value) {
+                        feeType = value?.id;
+                        doSearch(true);
+                      },
                     ),
                     if (feeType == "monthly")
                       Column(
@@ -293,12 +407,14 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                       height: 20,
                     ),
                     CommonField(
-                      disabled: batch == null,
                       title: 'Search',
                       hint: 'Search By Name or Phone Number',
                       onChange: (value) {
                         if (value.isEmpty) {
                           query = null;
+                          doSearch(true);
+                        } else {
+                          query = value;
                           doSearch(true);
                         }
                       },

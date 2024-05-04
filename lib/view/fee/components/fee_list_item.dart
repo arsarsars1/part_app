@@ -403,6 +403,13 @@ class _FeeListItemState extends State<FeeListItem> {
                                                             row.isDeleted != 1
                                                                 ? Text(
                                                                     "${row.paymentDate?.toDateString()}",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          11.5.sp,
+                                                                      decorationThickness:
+                                                                          2.85,
+                                                                    ),
                                                                   )
                                                                 : Text(
                                                                     "${row.paymentDate?.toDateString()}",

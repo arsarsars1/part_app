@@ -28,7 +28,7 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
   String? status = 'all';
   int? month;
   DateTime? finalDate = DateTime.now();
-  String? feeType;
+  String? feeType = 'all';
 
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
