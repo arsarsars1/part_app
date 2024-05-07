@@ -195,7 +195,13 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
                                   trainerCubit.slipDetails = studentInvoice;
                                   await Navigator.pushNamed(
                                       context, AddOrEditSalary.route);
-                                  doSearch(true);
+                                  trainerCubit.getSalaryDetails(
+                                    trainerId: trainerCubit
+                                        .trainer?.trainerDetail?[0].id,
+                                    month: null,
+                                    year: DateTime.now().year,
+                                    clean: true,
+                                  );
                                 },
                               );
                             },

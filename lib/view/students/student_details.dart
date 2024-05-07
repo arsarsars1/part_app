@@ -124,7 +124,9 @@ class _StudentDetailsState extends State<StudentDetails> {
                         ),
                       TitledText(
                         title: 'Date Of Birth',
-                        subText: '${details?.dob?.toDateString()}',
+                        subText: details?.dob == null
+                            ? 'Not Provided'
+                            : '${details?.dob?.toDateString()}',
                       ),
                       TitledText(
                         title: 'Date Of Joining',
@@ -136,7 +138,9 @@ class _StudentDetailsState extends State<StudentDetails> {
                       ),
                       TitledText(
                         title: 'Email Id',
-                        subText: '${details?.email}',
+                        subText: details?.email == null
+                            ? 'Not Provided'
+                            : '${details?.email}',
                       ),
                       TitledText(
                         title: 'Address',

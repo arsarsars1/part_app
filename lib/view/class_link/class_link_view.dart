@@ -29,7 +29,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
   List<String>? batchDays = [];
   ClassModel? selectedclass;
   FocusNode linkFocus = FocusNode();
-
+  bool temp = false;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -43,6 +43,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
       var batchCubit = context.read<BatchCubit>();
       await branchCubit.getBranches();
       branchId = branchCubit.firstBranch?.id;
+      temp == true;
       batchCubit.getBatchesByStatus(
         branchId: branchId,
         clean: true,
@@ -84,6 +85,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
               dateController.clear();
               date = null;
               branchId = null;
+              temp = false;
               setState(() {});
             } else if (state is AddLinkFailed) {
               Navigator.pop(context);
@@ -158,7 +160,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 ),
                 BranchField(
                   onSelect: (value) {
-                    if (branchId != null) {
+                    if (branchId != null && temp != false) {
                       AlertBox.showConfirmation(
                         message:
                             'Are your sure, that you need to change the branch',

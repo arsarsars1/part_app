@@ -90,45 +90,50 @@ class FeeDetailsService {
     required int pageNo,
   }) async {
     try {
-      var response = await _client.get(
-          queryPath: branchId == null
-              // ? searchQuery == '' || searchQuery == null
-              //     ? feeType == null || feeType == 'all'
-              //         ? '/admin/fee-details/batch-fee-invoices?page=$pageNo'
-              //         : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&page=$pageNo'
-              //     : feeType == null || feeType == 'all'
-              //         ? '/admin/fee-details/batch-fee-invoices?search=$searchQuery&page=$pageNo'
-              //         : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&search=$searchQuery&page=$pageNo'
-              ? month == null || year == null
-                  ? searchQuery == '' || searchQuery == null
-                      ? feeType == null || feeType == 'all'
-                          ? '/admin/fee-details/batch-fee-invoices?page=$pageNo'
-                          : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&page=$pageNo'
-                      : feeType == null || feeType == 'all'
-                          ? '/admin/fee-details/batch-fee-invoices?search=$searchQuery&page=$pageNo'
-                          : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&search=$searchQuery&page=$pageNo'
-                  : searchQuery == '' || searchQuery == null
-                      ? feeType == null || feeType == 'all'
-                          ? '/admin/fee-details/batch-fee-invoices?year=$year&month=$month&page=$pageNo'
-                          : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&page=$pageNo'
-                      : feeType == null || feeType == 'all'
-                          ? '/admin/fee-details/batch-fee-invoices?year=$year&month=$month&search=$searchQuery&page=$pageNo'
-                          : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&search=$searchQuery&page=$pageNo'
-              : month == null || year == null
-                  ? searchQuery == '' || searchQuery == null
-                      ? feeType == 'all'
-                          ? '/admin/fee-details/batch-fee-invoices?branch_id=$branchId&batch_id=$batchId&page=$pageNo'
-                          : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
-                      : feeType == 'all'
-                          ? '/admin/fee-details/batch-fee-invoices?branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo'
-                          : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo'
-                  : searchQuery == '' || searchQuery == null
-                      ? feeType == 'all'
-                          ? '/admin/fee-details/batch-fee-invoices?year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
-                          : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
-                      : feeType == 'all'
-                          ? '/admin/fee-details/batch-fee-invoices?year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo'
-                          : '/admin/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo');
+      String queryPath = '/admin/fee-details/batch-fee-invoices?';
+      if (branchId != null) {
+        queryPath += 'branch_id=$branchId';
+        if (batchId != null) {
+          queryPath += '&batch_id=$batchId';
+        }
+        if ((feeType != null || feeType != 'all') &&
+            (feeType == 'class' || feeType == 'monthly')) {
+          queryPath += '&fee_type=$feeType';
+          if (searchQuery == '' || searchQuery == null) {
+            queryPath += '&page=$pageNo';
+          } else {
+            queryPath += '&search=$searchQuery';
+            queryPath += '&page=$pageNo';
+          }
+        } else {
+          if (searchQuery == '' || searchQuery == null) {
+            queryPath += '&page=$pageNo';
+          } else {
+            queryPath += '&search=$searchQuery';
+            queryPath += '&page=$pageNo';
+          }
+        }
+      } else {
+        if ((feeType != null || feeType != 'all') &&
+            (feeType == 'class' || feeType == 'monthly')) {
+          queryPath += 'fee_type=$feeType';
+          if (searchQuery == '' || searchQuery == null) {
+            queryPath += '&page=$pageNo';
+          } else {
+            queryPath += '&search=$searchQuery';
+            queryPath += '&page=$pageNo';
+          }
+        } else {
+          if (searchQuery == '' || searchQuery == null) {
+            queryPath += 'page=$pageNo';
+          } else {
+            queryPath += 'search=$searchQuery';
+            queryPath += '&page=$pageNo';
+          }
+        }
+      }
+
+      var response = await _client.get(queryPath: queryPath);
       return batchFeeInvoiceListFromJson(jsonEncode(response));
     } catch (e) {
       log(e.toString());
@@ -261,8 +266,12 @@ class FeeDetailsService {
     try {
       var response = await _client.get(
           queryPath: paymentStatus != 'all'
-              ? '/admin/students/$studentId/admission-fee-details?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
-              : '/admin/students/$studentId/admission-fee-details?fee_type=$feeType&page=$pageNo');
+              ? feeType == null || feeType == 'all'
+                  ? '/admin/students/$studentId/admission-fee-details?payment_status=$paymentStatus&page=$pageNo'
+                  : '/admin/students/$studentId/admission-fee-details?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+              : feeType == null || feeType == 'all'
+                  ? '/admin/students/$studentId/admission-fee-details?page=$pageNo'
+                  : '/admin/students/$studentId/admission-fee-details?fee_type=$feeType&page=$pageNo');
       return feeDetailHistoryFromJson(jsonEncode(response));
     } catch (e) {
       return null;

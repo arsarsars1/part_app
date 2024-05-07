@@ -46,7 +46,8 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FeeCubit>().clean();
       doSearch(false);
-      // var branchCubit = context.read<BranchCubit>();
+      var branchCubit = context.read<BranchCubit>();
+      branchCubit.getBranches();
       // branchId = branchCubit.firstBranch?.id;
       // setState(() {
       //   context.read<BatchCubit>().getBatchesByBranch(
@@ -226,7 +227,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                                   feeTypeController.clear();
                                   dateController.clear();
                                   batch = null;
-                                  feeType = null;
+                                  // feeType = null;
                                   _dropDownKey.currentState?.reset();
                                   cubit.batchInvoice.clear();
                                   feeTypeController.clear();
@@ -234,6 +235,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                                         branchId: branchId,
                                         clean: true,
                                       );
+                                  doSearch(true);
                                 },
                               ),
                             ],
@@ -266,6 +268,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                                   batch = value;
                                   batchController.text = value.name;
                                   cubit.batchInvoice.clear();
+                                  doSearch(true);
                                   // setState(() {});
                                 },
                               ),

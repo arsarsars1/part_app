@@ -226,12 +226,12 @@ class _AddStudentState extends State<AddStudent> {
                 onTap: datePicker,
                 disabled: true,
                 hint: 'dd/mm/yyyy',
-                title: 'Date of Birth *',
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please enter dob.'
-                      : null;
-                },
+                title: 'Date of Birth',
+                // validator: (value) {
+                //   return value == null || value.toString().isEmpty
+                //       ? 'Please enter dob.'
+                //       : null;
+                // },
                 onChange: (value) {},
               ),
               const SizedBox(

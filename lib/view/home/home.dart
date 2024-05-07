@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
             ),
             BottomNavigationBarItem(
               backgroundColor: AppColors.liteDark,
-              label: 'Website',
+              label: 'Shop',
               icon: Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: Icon(

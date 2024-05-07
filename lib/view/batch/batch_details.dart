@@ -70,7 +70,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                     Alert(context).show(message: state.message);
                   }
                   if (state is FetchedBatch) {
-                    doSearch();
+                    doSearch(true);
                   }
                 },
                 builder: (context, state) {
@@ -89,7 +89,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                   return NotificationListener<ScrollNotification>(
                     onNotification: (scrollNotification) {
                       if (scrollNotification is ScrollEndNotification) {
-                        doSearch(clean: false);
+                        doSearch(true, clean: false);
                       }
                       return false;
                     },
@@ -382,7 +382,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                           BatchStudents(
                             onChange: (bool value) {
                               isActive = value;
-                              doSearch();
+                              doSearch(value);
                             },
                           ),
                         ],
@@ -411,7 +411,7 @@ class _BatchDetailsState extends State<BatchDetails> {
     );
   }
 
-  void doSearch({bool clean = true}) {
+  void doSearch(bool active, {bool clean = true}) {
     context.read<StudentCubit>().getStudents(
           batchId: batch?.id,
           searchQuery: null,

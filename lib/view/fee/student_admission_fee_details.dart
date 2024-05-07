@@ -31,7 +31,7 @@ class _StudentAdmissionFeeDetailsState
   String? status = 'all';
   int? month;
   DateTime? finalDate = DateTime.now();
-  String? feeType = 'monthly';
+  String? feeType = 'all';
 
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -44,7 +44,7 @@ class _StudentAdmissionFeeDetailsState
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FeeCubit>().clean();
       context.read<FeeCubit>().getAdmissionFeeDetails(
-          feeType: "monthly",
+          feeType: "all",
           searchQuery: query,
           paymentStatus: "all",
           studentId: context.read<StudentCubit>().student?.studentDetail?[0].id,
@@ -107,49 +107,62 @@ class _StudentAdmissionFeeDetailsState
                     SizedBox(
                       height: 20.h,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: TabButton(
-                        onChange: (String value) {
-                          if (value == 'Monthly') {
-                            setState(() {
-                              feeType = 'monthly';
-                              cubit.batchInvoice.clear();
-                              status = 'all';
-                            });
-                            cubit.getAdmissionFeeDetails(
-                                feeType: feeType,
-                                searchQuery: query,
-                                paymentStatus: status,
-                                studentId: context
-                                    .read<StudentCubit>()
-                                    .student
-                                    ?.studentDetail?[0]
-                                    .id,
-                                clean: true);
-                          } else {
-                            setState(() {
-                              feeType = 'class';
-                              cubit.batchInvoice.clear();
-                              status = 'all';
-                            });
-                            cubit.getAdmissionFeeDetails(
-                                feeType: feeType,
-                                searchQuery: query,
-                                paymentStatus: status,
-                                studentId: context
-                                    .read<StudentCubit>()
-                                    .student
-                                    ?.studentDetail?[0]
-                                    .id,
-                                clean: true);
-                          }
-                        },
-                        options: const [
-                          'Monthly',
-                          'Class Based',
-                        ],
-                      ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                    //   child: TabButton(
+                    //     onChange: (String value) {
+                    //       if (value == 'Monthly') {
+                    //         setState(() {
+                    //           feeType = 'monthly';
+                    //           cubit.batchInvoice.clear();
+                    //           status = 'all';
+                    //         });
+                    //         cubit.getAdmissionFeeDetails(
+                    //             feeType: feeType,
+                    //             searchQuery: query,
+                    //             paymentStatus: status,
+                    //             studentId: context
+                    //                 .read<StudentCubit>()
+                    //                 .student
+                    //                 ?.studentDetail?[0]
+                    //                 .id,
+                    //             clean: true);
+                    //       } else {
+                    //         setState(() {
+                    //           feeType = 'class';
+                    //           cubit.batchInvoice.clear();
+                    //           status = 'all';
+                    //         });
+                    //         cubit.getAdmissionFeeDetails(
+                    //             feeType: feeType,
+                    //             searchQuery: query,
+                    //             paymentStatus: status,
+                    //             studentId: context
+                    //                 .read<StudentCubit>()
+                    //                 .student
+                    //                 ?.studentDetail?[0]
+                    //                 .id,
+                    //             clean: true);
+                    //       }
+                    //     },
+                    //     options: const [
+                    //       'Monthly',
+                    //       'Class Based',
+                    //     ],
+                    //   ),
+                    // ),
+                    CommonField(
+                      title: 'Fee Type',
+                      hint: 'Select a fee type',
+                      dropDown: true,
+                      dropDownItems: DefaultValues().feeType,
+                      defaultItem: DefaultValues().feeType.firstWhere(
+                            (element) => element.title?.toLowerCase() == 'all',
+                          ),
+                      onChange: (value) {
+                        feeType = value?.id;
+                        doSearch(true);
+                      },
                     ),
                     SizedBox(
                       height: 20.h,
