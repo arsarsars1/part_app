@@ -30,6 +30,7 @@ abstract class BatchRequest with _$BatchRequest {
     dynamic admissionFees,
     @JsonKey(name: 'trainers[]') dynamic trainers,
     @JsonKey(name: 'days[]') List<String>? days,
+    @JsonKey(name: 'students[]') List<String>? students,
   }) = _BatchRequest;
 
   factory BatchRequest.fromJson(Map<String, dynamic> json) =>
@@ -46,4 +47,16 @@ abstract class Days with _$Days {
   }) = _Days;
 
   factory Days.fromJson(Map<String, dynamic> json) => _$DaysFromJson(json);
+}
+
+@freezed
+abstract class StudentsData with _$StudentsData {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory StudentsData({
+    String? name,
+    String? mobileNo,
+  }) = _StudentsData;
+
+  factory StudentsData.fromJson(Map<String, dynamic> json) =>
+      _$StudentsDataFromJson(json);
 }

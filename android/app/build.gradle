@@ -70,13 +70,13 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "com.part_app.android"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 47
+        versionCode 48
         versionName flutterVersionName
     }
 

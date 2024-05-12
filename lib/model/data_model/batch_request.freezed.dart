@@ -32,6 +32,8 @@ mixin _$BatchRequest {
   dynamic get trainers => throw _privateConstructorUsedError;
   @JsonKey(name: 'days[]')
   List<String>? get days => throw _privateConstructorUsedError;
+  @JsonKey(name: 'students[]')
+  List<String>? get students => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,7 +57,8 @@ abstract class $BatchRequestCopyWith<$Res> {
       dynamic feeAmount,
       dynamic admissionFees,
       @JsonKey(name: 'trainers[]') dynamic trainers,
-      @JsonKey(name: 'days[]') List<String>? days});
+      @JsonKey(name: 'days[]') List<String>? days,
+      @JsonKey(name: 'students[]') List<String>? students});
 }
 
 /// @nodoc
@@ -81,6 +84,7 @@ class _$BatchRequestCopyWithImpl<$Res, $Val extends BatchRequest>
     Object? admissionFees = freezed,
     Object? trainers = freezed,
     Object? days = freezed,
+    Object? students = freezed,
   }) {
     return _then(_value.copyWith(
       batchName: freezed == batchName
@@ -123,6 +127,10 @@ class _$BatchRequestCopyWithImpl<$Res, $Val extends BatchRequest>
           ? _value.days
           : days // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      students: freezed == students
+          ? _value.students
+          : students // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -145,7 +153,8 @@ abstract class _$$BatchRequestImplCopyWith<$Res>
       dynamic feeAmount,
       dynamic admissionFees,
       @JsonKey(name: 'trainers[]') dynamic trainers,
-      @JsonKey(name: 'days[]') List<String>? days});
+      @JsonKey(name: 'days[]') List<String>? days,
+      @JsonKey(name: 'students[]') List<String>? students});
 }
 
 /// @nodoc
@@ -169,6 +178,7 @@ class __$$BatchRequestImplCopyWithImpl<$Res>
     Object? admissionFees = freezed,
     Object? trainers = freezed,
     Object? days = freezed,
+    Object? students = freezed,
   }) {
     return _then(_$BatchRequestImpl(
       batchName: freezed == batchName
@@ -211,6 +221,10 @@ class __$$BatchRequestImplCopyWithImpl<$Res>
           ? _value._days
           : days // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      students: freezed == students
+          ? _value._students
+          : students // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -229,8 +243,10 @@ class _$BatchRequestImpl implements _BatchRequest {
       this.feeAmount,
       this.admissionFees,
       @JsonKey(name: 'trainers[]') this.trainers,
-      @JsonKey(name: 'days[]') final List<String>? days})
-      : _days = days;
+      @JsonKey(name: 'days[]') final List<String>? days,
+      @JsonKey(name: 'students[]') final List<String>? students})
+      : _days = days,
+        _students = students;
 
   factory _$BatchRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$BatchRequestImplFromJson(json);
@@ -265,9 +281,20 @@ class _$BatchRequestImpl implements _BatchRequest {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<String>? _students;
+  @override
+  @JsonKey(name: 'students[]')
+  List<String>? get students {
+    final value = _students;
+    if (value == null) return null;
+    if (_students is EqualUnmodifiableListView) return _students;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'BatchRequest(batchName: $batchName, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, retainStudents: $retainStudents, batchStatus: $batchStatus, feeAmount: $feeAmount, admissionFees: $admissionFees, trainers: $trainers, days: $days)';
+    return 'BatchRequest(batchName: $batchName, branchId: $branchId, courseId: $courseId, subjectId: $subjectId, retainStudents: $retainStudents, batchStatus: $batchStatus, feeAmount: $feeAmount, admissionFees: $admissionFees, trainers: $trainers, days: $days, students: $students)';
   }
 
   @override
@@ -291,7 +318,8 @@ class _$BatchRequestImpl implements _BatchRequest {
             const DeepCollectionEquality()
                 .equals(other.admissionFees, admissionFees) &&
             const DeepCollectionEquality().equals(other.trainers, trainers) &&
-            const DeepCollectionEquality().equals(other._days, _days));
+            const DeepCollectionEquality().equals(other._days, _days) &&
+            const DeepCollectionEquality().equals(other._students, _students));
   }
 
   @JsonKey(ignore: true)
@@ -307,7 +335,8 @@ class _$BatchRequestImpl implements _BatchRequest {
       const DeepCollectionEquality().hash(feeAmount),
       const DeepCollectionEquality().hash(admissionFees),
       const DeepCollectionEquality().hash(trainers),
-      const DeepCollectionEquality().hash(_days));
+      const DeepCollectionEquality().hash(_days),
+      const DeepCollectionEquality().hash(_students));
 
   @JsonKey(ignore: true)
   @override
@@ -325,16 +354,18 @@ class _$BatchRequestImpl implements _BatchRequest {
 
 abstract class _BatchRequest implements BatchRequest {
   const factory _BatchRequest(
-      {final String? batchName,
-      final int? branchId,
-      final int? courseId,
-      final int? subjectId,
-      final int? retainStudents,
-      final String? batchStatus,
-      final dynamic feeAmount,
-      final dynamic admissionFees,
-      @JsonKey(name: 'trainers[]') final dynamic trainers,
-      @JsonKey(name: 'days[]') final List<String>? days}) = _$BatchRequestImpl;
+          {final String? batchName,
+          final int? branchId,
+          final int? courseId,
+          final int? subjectId,
+          final int? retainStudents,
+          final String? batchStatus,
+          final dynamic feeAmount,
+          final dynamic admissionFees,
+          @JsonKey(name: 'trainers[]') final dynamic trainers,
+          @JsonKey(name: 'days[]') final List<String>? days,
+          @JsonKey(name: 'students[]') final List<String>? students}) =
+      _$BatchRequestImpl;
 
   factory _BatchRequest.fromJson(Map<String, dynamic> json) =
       _$BatchRequestImpl.fromJson;
@@ -361,6 +392,9 @@ abstract class _BatchRequest implements BatchRequest {
   @override
   @JsonKey(name: 'days[]')
   List<String>? get days;
+  @override
+  @JsonKey(name: 'students[]')
+  List<String>? get students;
   @override
   @JsonKey(ignore: true)
   _$$BatchRequestImplCopyWith<_$BatchRequestImpl> get copyWith =>
@@ -532,5 +566,160 @@ abstract class _Days implements Days {
   @override
   @JsonKey(ignore: true)
   _$$DaysImplCopyWith<_$DaysImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+StudentsData _$StudentsDataFromJson(Map<String, dynamic> json) {
+  return _StudentsData.fromJson(json);
+}
+
+/// @nodoc
+mixin _$StudentsData {
+  String? get name => throw _privateConstructorUsedError;
+  String? get mobileNo => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $StudentsDataCopyWith<StudentsData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StudentsDataCopyWith<$Res> {
+  factory $StudentsDataCopyWith(
+          StudentsData value, $Res Function(StudentsData) then) =
+      _$StudentsDataCopyWithImpl<$Res, StudentsData>;
+  @useResult
+  $Res call({String? name, String? mobileNo});
+}
+
+/// @nodoc
+class _$StudentsDataCopyWithImpl<$Res, $Val extends StudentsData>
+    implements $StudentsDataCopyWith<$Res> {
+  _$StudentsDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? mobileNo = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mobileNo: freezed == mobileNo
+          ? _value.mobileNo
+          : mobileNo // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$StudentsDataImplCopyWith<$Res>
+    implements $StudentsDataCopyWith<$Res> {
+  factory _$$StudentsDataImplCopyWith(
+          _$StudentsDataImpl value, $Res Function(_$StudentsDataImpl) then) =
+      __$$StudentsDataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? name, String? mobileNo});
+}
+
+/// @nodoc
+class __$$StudentsDataImplCopyWithImpl<$Res>
+    extends _$StudentsDataCopyWithImpl<$Res, _$StudentsDataImpl>
+    implements _$$StudentsDataImplCopyWith<$Res> {
+  __$$StudentsDataImplCopyWithImpl(
+      _$StudentsDataImpl _value, $Res Function(_$StudentsDataImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? mobileNo = freezed,
+  }) {
+    return _then(_$StudentsDataImpl(
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mobileNo: freezed == mobileNo
+          ? _value.mobileNo
+          : mobileNo // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class _$StudentsDataImpl implements _StudentsData {
+  const _$StudentsDataImpl({this.name, this.mobileNo});
+
+  factory _$StudentsDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StudentsDataImplFromJson(json);
+
+  @override
+  final String? name;
+  @override
+  final String? mobileNo;
+
+  @override
+  String toString() {
+    return 'StudentsData(name: $name, mobileNo: $mobileNo)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$StudentsDataImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.mobileNo, mobileNo) ||
+                other.mobileNo == mobileNo));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, mobileNo);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StudentsDataImplCopyWith<_$StudentsDataImpl> get copyWith =>
+      __$$StudentsDataImplCopyWithImpl<_$StudentsDataImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$StudentsDataImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _StudentsData implements StudentsData {
+  const factory _StudentsData({final String? name, final String? mobileNo}) =
+      _$StudentsDataImpl;
+
+  factory _StudentsData.fromJson(Map<String, dynamic> json) =
+      _$StudentsDataImpl.fromJson;
+
+  @override
+  String? get name;
+  @override
+  String? get mobileNo;
+  @override
+  @JsonKey(ignore: true)
+  _$$StudentsDataImplCopyWith<_$StudentsDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -19,6 +19,9 @@ _$BatchRequestImpl _$$BatchRequestImplFromJson(Map<String, dynamic> json) =>
       trainers: json['trainers[]'],
       days:
           (json['days[]'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      students: (json['students[]'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$BatchRequestImplToJson(_$BatchRequestImpl instance) =>
@@ -33,6 +36,7 @@ Map<String, dynamic> _$$BatchRequestImplToJson(_$BatchRequestImpl instance) =>
       'admission_fees': instance.admissionFees,
       'trainers[]': instance.trainers,
       'days[]': instance.days,
+      'students[]': instance.students,
     };
 
 _$DaysImpl _$$DaysImplFromJson(Map<String, dynamic> json) => _$DaysImpl(
@@ -46,4 +50,16 @@ Map<String, dynamic> _$$DaysImplToJson(_$DaysImpl instance) =>
       'day': instance.day,
       'start_time': instance.startTime,
       'end_time': instance.endTime,
+    };
+
+_$StudentsDataImpl _$$StudentsDataImplFromJson(Map<String, dynamic> json) =>
+    _$StudentsDataImpl(
+      name: json['name'] as String?,
+      mobileNo: json['mobile_no'] as String?,
+    );
+
+Map<String, dynamic> _$$StudentsDataImplToJson(_$StudentsDataImpl instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'mobile_no': instance.mobileNo,
     };

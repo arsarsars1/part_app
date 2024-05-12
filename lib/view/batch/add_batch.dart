@@ -7,6 +7,7 @@ import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/view/batch/batch_list.dart';
+import 'package:part_app/view/batch/components/selected_students.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
 import 'package:part_app/view/components/alert_box.dart';
@@ -69,6 +70,7 @@ class _AddBatchState extends State<AddBatch> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
+    cubit.studentData.clear();
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(title: 'Add New Batch'),
@@ -272,6 +274,28 @@ class _AddBatchState extends State<AddBatch> {
                           ],
                         ),
                       ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: AppColors.liteDark,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Batch Students'),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            SelectedStudents()
+                          ],
+                        ),
+                      ),
                       Center(
                         child: SafeArea(
                           child: Padding(
@@ -289,6 +313,7 @@ class _AddBatchState extends State<AddBatch> {
                                     BatchRequest request = BatchRequest(
                                       branchId: branchId,
                                       days: cubit.buildDaysList(),
+                                      students: cubit.buildStudentList(),
                                       batchName: batchName,
                                       batchStatus: batchStatus,
                                       subjectId: subjectId,

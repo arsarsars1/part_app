@@ -86,7 +86,7 @@ import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view/profile/trainer_app_profile.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/students/add_student.dart';
-import 'package:part_app/view/students/add_student_by_student.dart';
+// import 'package:part_app/view/students/add_student_by_student.dart';
 import 'package:part_app/view/students/assign_batch.dart';
 import 'package:part_app/view/students/assign_student_batch.dart';
 import 'package:part_app/view/students/edit_assigned_batch.dart';
@@ -111,6 +111,7 @@ import 'package:part_app/view/trainer/assigned_batches.dart';
 import 'package:part_app/view/trainer/edit_salary_trainer.dart';
 import 'package:part_app/view/trainer/edit_trainer.dart';
 import 'package:part_app/view/trainer/salary_details.dart';
+import 'package:part_app/view/trainer/students_picker.dart';
 import 'package:part_app/view/trainer/trainer_app_trainer_salary_slips.dart';
 import 'package:part_app/view/trainer/trainer_branches.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
@@ -125,15 +126,15 @@ import 'profile/change_phone.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    if ((settings.name ?? '').contains('/join-batch')) {
-      final token = (settings.name ?? '').split('/').last;
-      return MaterialPageRoute(
-        builder: (_) => AddStudentByStudent(
-          token: token,
-        ),
-        settings: settings,
-      );
-    }
+    // if ((settings.name ?? '').contains('/join-batch')) {
+    //   final token = (settings.name ?? '').split('/').last;
+    //   return MaterialPageRoute(
+    //     builder: (_) => AddStudentByStudent(
+    //       token: token,
+    //     ),
+    //     settings: settings,
+    //   );
+    // }
     switch (settings.name) {
       case Home.route:
         return MaterialPageRoute(
@@ -284,6 +285,11 @@ class RouteGenerator {
       case TrainerDetails.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerDetails(),
+          settings: settings,
+        );
+      case StudentPicker.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentPicker(),
           settings: settings,
         );
       case AddTrainer.route:
