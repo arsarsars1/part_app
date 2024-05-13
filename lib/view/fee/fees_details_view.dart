@@ -219,23 +219,25 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                                     batchController.text = 'All';
                                   } else {
                                     branchSelected = true;
+                                    setState(() {
+                                      branchId = value?.id;
+                                    });
+                                    batchController.clear();
+                                    feeTypeController.clear();
+                                    dateController.clear();
+                                    batch = null;
+                                    // feeType = null;
+                                    _dropDownKey.currentState?.reset();
+                                    cubit.batchInvoice.clear();
+                                    feeTypeController.clear();
+                                    context
+                                        .read<BatchCubit>()
+                                        .getBatchesByBranch(
+                                          branchId: branchId,
+                                          clean: true,
+                                        );
+                                    doSearch(true);
                                   }
-                                  setState(() {
-                                    branchId = value?.id;
-                                  });
-                                  batchController.clear();
-                                  feeTypeController.clear();
-                                  dateController.clear();
-                                  batch = null;
-                                  // feeType = null;
-                                  _dropDownKey.currentState?.reset();
-                                  cubit.batchInvoice.clear();
-                                  feeTypeController.clear();
-                                  context.read<BatchCubit>().getBatchesByBranch(
-                                        branchId: branchId,
-                                        clean: true,
-                                      );
-                                  doSearch(true);
                                 },
                               ),
                             ],

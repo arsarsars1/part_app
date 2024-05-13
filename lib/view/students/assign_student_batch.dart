@@ -369,7 +369,7 @@ class _AssignStudentBatchState extends State<AssignStudentBatch> {
                               }
                             }
                           },
-                          title: 'Ok',
+                          title: 'OK',
                         ),
                       ],
                     )

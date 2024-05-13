@@ -76,7 +76,7 @@ android {
         applicationId "com.part_app.android"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 49
+        versionCode 50
         versionName flutterVersionName
     }
 

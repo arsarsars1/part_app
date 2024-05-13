@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/constants/constant.dart';
-import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/branch/branch_cubit.dart';
-import 'package:share_plus/share_plus.dart';
 
 class BatchItem extends StatelessWidget {
   final BatchModel batch;
@@ -201,30 +198,30 @@ class BatchItem extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(
-                        height: 17.h,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          if (context.read<AuthCubit>().user?.adminDetail ==
-                              null) {
-                            Share.share(
-                                'Hello ${context.read<AuthCubit>().user?.trainerDetail?[context.read<AuthCubit>().trainerIndex].academy?.academyName} Student,\nWelcome To PartApp!!!\nNever miss another update from ${context.read<AuthCubit>().user?.trainerDetail?[context.read<AuthCubit>().trainerIndex].academy?.academyName} again.\n\nYou are only 50 seconds away from being part of a dynamic community of artists!!! \n\nStep 1: Download PartApp here\n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batch.sharedToken}\n\nStep 2: Click the link to register as a student in ${context.read<AuthCubit>().user?.trainerDetail?[context.read<AuthCubit>().trainerIndex].academy?.academyName}\'s PartApp.\n\nNB: We request you to avoid using the \'Join Now\' button in the app. Kindly use the second link to register as a Student.');
-                          } else {
-                            Share.share(
-                                'Hello ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName} Student,\nWelcome To PartApp!!!\nNever miss another update from ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName} again.\n\nYou are only 50 seconds away from being part of a dynamic community of artists!!! \n\nStep 1: Download PartApp here\n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batch.sharedToken}\n\nStep 2: Click the link to register as a student in ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName}\'s PartApp.\n\nNB: We request you to avoid using the \'Join Now\' button in the app. Kindly use the second link to register as a Student.');
-                          }
-                        },
-                        child: SizedBox(
-                          width: 50.w,
-                          height: 20.h,
-                          child: Icon(
-                            Icons.share,
-                            color: Colors.white,
-                            size: 20.h,
-                          ),
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 17.h,
+                      // ),
+                      // InkWell(
+                      //   onTap: () {
+                      //     if (context.read<AuthCubit>().user?.adminDetail ==
+                      //         null) {
+                      //       Share.share(
+                      //           'Hello ${context.read<AuthCubit>().user?.trainerDetail?[context.read<AuthCubit>().trainerIndex].academy?.academyName} Student,\nWelcome To PartApp!!!\nNever miss another update from ${context.read<AuthCubit>().user?.trainerDetail?[context.read<AuthCubit>().trainerIndex].academy?.academyName} again.\n\nYou are only 50 seconds away from being part of a dynamic community of artists!!! \n\nStep 1: Download PartApp here\n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batch.sharedToken}\n\nStep 2: Click the link to register as a student in ${context.read<AuthCubit>().user?.trainerDetail?[context.read<AuthCubit>().trainerIndex].academy?.academyName}\'s PartApp.\n\nNB: We request you to avoid using the \'Join Now\' button in the app. Kindly use the second link to register as a Student.');
+                      //     } else {
+                      //       Share.share(
+                      //           'Hello ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName} Student,\nWelcome To PartApp!!!\nNever miss another update from ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName} again.\n\nYou are only 50 seconds away from being part of a dynamic community of artists!!! \n\nStep 1: Download PartApp here\n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batch.sharedToken}\n\nStep 2: Click the link to register as a student in ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName}\'s PartApp.\n\nNB: We request you to avoid using the \'Join Now\' button in the app. Kindly use the second link to register as a Student.');
+                      //     }
+                      //   },
+                      //   child: SizedBox(
+                      //     width: 50.w,
+                      //     height: 20.h,
+                      //     child: Icon(
+                      //       Icons.share,
+                      //       color: Colors.white,
+                      //       size: 20.h,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
               ],

@@ -651,8 +651,10 @@ class _FeeListItemState extends State<FeeListItem> {
                                         String? reason;
                                         CommonDialog(
                                           context: context,
-                                          message:
-                                              'Are You Sure That You Want To Close\nThe Fees For ${widget.student.paymentDueDate?.toMMMMYYYY()} ?',
+                                          message: widget.student.feeType ==
+                                                  'monthly'
+                                              ? 'Are You Sure You Want To Close\nThe Fees For ${widget.student.paymentDueDate?.toMMMMYYYY()} ?'
+                                              : 'Are You Sure You Want To Close\nThe Fees For ${widget.student.cycleAttendancePresentCount}/${widget.student.totalNoOfClasses} Classes ?',
                                           subContent: WriteOffFeesPopUp(
                                             formKey: formKey1,
                                             reason: (value) {

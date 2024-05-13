@@ -215,7 +215,7 @@ class Logout extends StatelessWidget {
                       width: 95.w,
                       height: 36.h,
                       onTap: onTap,
-                      title: buttonText ?? 'Ok',
+                      title: buttonText ?? 'OK',
                     ),
                   ],
                 )

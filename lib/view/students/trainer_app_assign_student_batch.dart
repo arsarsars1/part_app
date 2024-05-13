@@ -394,7 +394,7 @@ class _TrainerAppAssignStudentBatchState
                               }
                             }
                           },
-                          title: 'Ok',
+                          title: 'OK',
                         ),
                       ],
                     )

@@ -295,7 +295,7 @@ class _TrainerAppAttendanceUpdateState
                                                     context: context,
                                                     message:
                                                         'Are You Sure You Want to Update the\nAttendence For ${selectedStudent?.studentDetail?.name} ?',
-                                                    buttonText: 'Ok',
+                                                    buttonText: 'OK',
                                                     subColor:
                                                         AppColors.primaryColor,
                                                     subContent: Column(
