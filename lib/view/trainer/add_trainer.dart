@@ -33,7 +33,7 @@ class _AddTrainerState extends State<AddTrainer> {
   String? address;
   TextEditingController phoneController = TextEditingController();
 
-  bool selected = false;
+  bool selected = true;
 
   final formKey = GlobalKey<FormState>();
 
@@ -142,6 +142,7 @@ class _AddTrainerState extends State<AddTrainer> {
                         phone = contact?.phoneNumbers?.first
                             .replaceAll('+91', '')
                             .replaceAll(' ', '');
+                        whatsappNo = phone;
                         phoneController.text =
                             (contact?.phoneNumbers?.first ?? '')
                                 .replaceAll('+91', '')
@@ -155,6 +156,7 @@ class _AddTrainerState extends State<AddTrainer> {
                   ),
                   onChange: (value) {
                     phone = value;
+                    whatsappNo = phone;
                     if (value.length >= 10) {
                       FocusManager.instance.primaryFocus?.unfocus();
                     }
@@ -173,6 +175,7 @@ class _AddTrainerState extends State<AddTrainer> {
                   height: 20,
                 ),
                 WhatsappCheckButton(
+                  selected: selected,
                   onChange: (bool value) {
                     setState(() {
                       selected = value;
@@ -225,16 +228,16 @@ class _AddTrainerState extends State<AddTrainer> {
                   length: 300,
                   maxLines: 3,
                   verticalPadding: 10,
-                  title: 'Address *',
+                  title: 'Address ',
                   textInputAction: TextInputAction.newline,
                   hint: 'Enter Communication Address',
-                  validator: (value) {
-                    if (value == null || value.toString().isEmpty) {
-                      return 'Please enter address';
-                    } else {
-                      return null;
-                    }
-                  },
+                  // validator: (value) {
+                  //   if (value == null || value.toString().isEmpty) {
+                  //     return 'Please enter address';
+                  //   } else {
+                  //     return null;
+                  //   }
+                  // },
                   onChange: (value) {
                     address = value;
                   },

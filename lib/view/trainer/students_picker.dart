@@ -77,47 +77,46 @@ class _StudentPickerState extends State<StudentPicker> {
               title: 'Add',
             ),
           ),
-          body: permission == PermissionStatus.granted
-              ? (contacts ?? []).isEmpty
-                  ? const LoadingView()
-                  : Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        CommonField(
-                          title: 'Search',
-                          hint: 'Search Student',
-                          onChange: (value) {
-                            if (isInteger(value.toString())) {
-                              backUpContacts?.forEach((contact) {
-                                for (var phone in contact.phones) {
-                                  if (phone.number.contains(value)) {
-                                    filteredData?.add(contact);
-                                  }
-                                }
-                              });
-                              contacts?.clear();
-                              contacts?.addAll(filteredData ?? []);
-                              filteredData?.clear();
-                              setState(() {});
-                            } else {
-                              backUpContacts?.forEach((contact) {
-                                if (contact.displayName
-                                    .toLowerCase()
-                                    .contains(value.toLowerCase())) {
-                                  filteredData?.add(contact);
-                                }
-                              });
-                              contacts?.clear();
-                              contacts?.addAll(filteredData ?? []);
-                              filteredData?.clear();
-                              setState(() {});
-                            }
-                          },
-                          prefixIcon: const Icon(Icons.search),
-                          textInputAction: TextInputAction.search,
-                        ),
-                        Expanded(
-                          child: ListView.builder(
+          body: Column(
+            children: [
+              CommonField(
+                title: 'Search',
+                hint: 'Search Student',
+                onChange: (value) {
+                  if (isInteger(value.toString())) {
+                    backUpContacts?.forEach((contact) {
+                      for (var phone in contact.phones) {
+                        if (phone.number.contains(value)) {
+                          filteredData?.add(contact);
+                        }
+                      }
+                    });
+                    contacts?.clear();
+                    contacts?.addAll(filteredData ?? []);
+                    filteredData?.clear();
+                    setState(() {});
+                  } else {
+                    backUpContacts?.forEach((contact) {
+                      if (contact.displayName
+                          .toLowerCase()
+                          .contains(value.toLowerCase())) {
+                        filteredData?.add(contact);
+                      }
+                    });
+                    contacts?.clear();
+                    contacts?.addAll(filteredData ?? []);
+                    filteredData?.clear();
+                    setState(() {});
+                  }
+                },
+                prefixIcon: const Icon(Icons.search),
+                textInputAction: TextInputAction.search,
+              ),
+              Expanded(
+                child: permission == PermissionStatus.granted
+                    ? (contacts ?? []).isEmpty
+                        ? const LoadingView()
+                        : ListView.builder(
                             shrinkWrap: true,
                             itemCount: contacts?.length,
                             itemBuilder: (context, index) {
@@ -185,15 +184,13 @@ class _StudentPickerState extends State<StudentPicker> {
                                 ),
                               );
                             },
-                          ),
-                        ),
-                      ],
-                    )
-              : const Expanded(
-                  child: Center(
-                    child: Text('Contact Permission Not granted'),
-                  ),
-                ),
+                          )
+                    : const Center(
+                        child: Text('Contact Permission Not granted'),
+                      ),
+              ),
+            ],
+          ),
         );
       },
     );

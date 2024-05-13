@@ -51,7 +51,8 @@ class _EditTrainerState extends State<EditTrainer> {
       var trainerCubit = context.read<TrainerCubit>();
       dobController.text =
           trainerCubit.trainer?.trainerDetail?[0].dob?.toDateString() ?? '';
-      selectedDate = trainerCubit.trainer?.trainerDetail?[0].dob ?? DateTime.now();
+      selectedDate =
+          trainerCubit.trainer?.trainerDetail?[0].dob ?? DateTime.now();
     });
   }
 
@@ -169,12 +170,12 @@ class _EditTrainerState extends State<EditTrainer> {
                     onTap: datePicker,
                     disabled: true,
                     hint: 'dd/mm/yyyy',
-                    title: 'Date of Birth *',
-                    validator: (value) {
-                      return value == null || value.toString().isEmpty
-                          ? 'Please enter dob.'
-                          : null;
-                    },
+                    title: 'Date of Birth',
+                    // validator: (value) {
+                    //   return value == null || value.toString().isEmpty
+                    //       ? 'Please enter dob.'
+                    //       : null;
+                    // },
                     onChange: (value) {},
                   ),
                   const SizedBox(
@@ -184,18 +185,18 @@ class _EditTrainerState extends State<EditTrainer> {
                     inputType: TextInputType.emailAddress,
                     length: 50,
                     initialValue: trainer?.email,
-                    title: 'Email *',
+                    title: 'Email ',
                     hint: 'Eg: contact@polestar.com',
                     capitalization: TextCapitalization.none,
-                    validator: (value) {
-                      if (value == null || value.toString().isEmpty) {
-                        return 'Please enter email.';
-                      } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                        return 'Invalid email address.';
-                      } else {
-                        return null;
-                      }
-                    },
+                    // validator: (value) {
+                    //   if (value == null || value.toString().isEmpty) {
+                    //     return 'Please enter email.';
+                    //   } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                    //     return 'Invalid email address.';
+                    //   } else {
+                    //     return null;
+                    //   }
+                    // },
                     onChange: (value) {
                       email = value;
                     },
@@ -222,16 +223,16 @@ class _EditTrainerState extends State<EditTrainer> {
                     length: 300,
                     verticalPadding: 10,
                     maxLines: 3,
-                    title: 'Address *',
+                    title: 'Address',
                     textInputAction: TextInputAction.newline,
                     hint: 'Enter Communication Address',
-                    validator: (value) {
-                      if (value == null || value.toString().isEmpty) {
-                        return 'Please enter address.';
-                      } else {
-                        return null;
-                      }
-                    },
+                    // validator: (value) {
+                    //   if (value == null || value.toString().isEmpty) {
+                    //     return 'Please enter address.';
+                    //   } else {
+                    //     return null;
+                    //   }
+                    // },
                     onChange: (value) {
                       address = value;
                     },

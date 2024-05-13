@@ -58,6 +58,7 @@ class _AddBatchState extends State<AddBatch> {
       context.read<BatchCubit>().getCourses();
       var branchCubit = context.read<BranchCubit>();
       branchId = branchCubit.firstBranch?.id;
+      batchStatus = 'ongoing';
       setState(() {
         branchCubit.getBranchTrainers(
           branchId: '$branchId',
@@ -225,6 +226,10 @@ class _AddBatchState extends State<AddBatch> {
                         title: 'Batch Status *',
                         hint: 'Select Batch Status',
                         dropDown: true,
+                        defaultItem: DefaultValues()
+                            .batchStatus
+                            .where((element) => element.title == 'Ongoing')
+                            .first,
                         dropDownItems: DefaultValues().batchStatus,
                         onChange: (value) {
                           batchStatus = value?.id;

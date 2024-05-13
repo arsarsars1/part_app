@@ -36,7 +36,7 @@ class _SelectedStudentsState extends State<SelectedStudents> {
                         children: [
                           Icon(
                             Icons.account_circle,
-                            size: 50.h,
+                            size: 70.h,
                             color: AppColors.grey100,
                           ),
                           const SizedBox(

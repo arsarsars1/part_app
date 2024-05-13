@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/batch_students.dart';
 import 'package:part_app/view/batch/cancel_batch_class.dart';
+import 'package:part_app/view/batch/components/selected_students.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
-import 'package:share_plus/share_plus.dart';
 
 class BatchDetails extends StatefulWidget {
   static const route = '/batch/details';
@@ -28,6 +27,12 @@ class _BatchDetailsState extends State<BatchDetails> {
   ScrollController scrollController = ScrollController();
   BatchModel? batch;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    context.read<BatchCubit>().studentData.clear();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +71,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                 listener: (context, state) {
                   if (state is UpdatedBatch) {
                     Alert(context).show(message: 'Batch Updated Successfully.');
+                    batchCubit.studentData.clear();
                   } else if (state is UpdateBatchFailed) {
                     Alert(context).show(message: state.message);
                   }
@@ -167,32 +173,32 @@ class _BatchDetailsState extends State<BatchDetails> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 15.w,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Share.share(
-                                            'Hello ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName} Student,\nWelcome To PartApp!!!\nNever miss another update from ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName} again.\n\nYou are only 50 seconds away from being part of a dynamic community of artists!!! \n\nStep 1: Download PartApp here\n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batch?.sharedToken}\n\nStep 2: Click the link to register as a student in ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName}\'s PartApp.\n\nNB: We request you to avoid using the \'Join Now\' button in the app. Kindly use the second link to register as a Student.');
-                                      },
-                                      child: Container(
-                                        width: 24.w,
-                                        height: 24.w,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.black54,
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 2,
-                                          ),
-                                        ),
-                                        child: const Icon(
-                                          Icons.share,
-                                          size: 16,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
+                                    // SizedBox(
+                                    //   width: 15.w,
+                                    // ),
+                                    // GestureDetector(
+                                    //   onTap: () {
+                                    //     Share.share(
+                                    //         'Hello ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName} Student,\nWelcome To PartApp!!!\nNever miss another update from ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName} again.\n\nYou are only 50 seconds away from being part of a dynamic community of artists!!! \n\nStep 1: Download PartApp here\n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batch?.sharedToken}\n\nStep 2: Click the link to register as a student in ${context.read<AuthCubit>().user?.adminDetail?.academy?.academyName}\'s PartApp.\n\nNB: We request you to avoid using the \'Join Now\' button in the app. Kindly use the second link to register as a Student.');
+                                    //   },
+                                    //   child: Container(
+                                    //     width: 24.w,
+                                    //     height: 24.w,
+                                    //     decoration: BoxDecoration(
+                                    //       shape: BoxShape.circle,
+                                    //       color: Colors.black54,
+                                    //       border: Border.all(
+                                    //         color: Colors.white,
+                                    //         width: 2,
+                                    //       ),
+                                    //     ),
+                                    //     child: const Icon(
+                                    //       Icons.share,
+                                    //       size: 16,
+                                    //       color: Colors.white,
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                                 const SizedBox(
@@ -378,6 +384,49 @@ class _BatchDetailsState extends State<BatchDetails> {
                                 )
                               ],
                             ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: AppColors.liteDark,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Batch Students'),
+                                    if (batchCubit.studentData.isNotEmpty)
+                                      Button(
+                                        height: 30.h,
+                                        width: 75.w,
+                                        onTap: () {
+                                          BatchRequest request;
+                                          request = BatchRequest(
+                                            students:
+                                                batchCubit.buildStudentList(),
+                                          );
+                                          batchCubit.updateBatch(request);
+                                        },
+                                        title: 'Add',
+                                      ),
+                                  ],
+                                ),
+                                SizedBox(height: 16.h),
+                                const SelectedStudents()
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
                           ),
                           BatchStudents(
                             onChange: (bool value) {

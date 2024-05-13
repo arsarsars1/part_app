@@ -284,16 +284,16 @@ class _AddStudentState extends State<AddStudent> {
                 initialValue: address,
                 length: 300,
                 maxLines: 3,
-                title: 'Address *',
+                title: 'Address',
                 textInputAction: TextInputAction.newline,
                 hint: 'Enter Communication Address',
-                validator: (value) {
-                  if (value == null || value.toString().isEmpty) {
-                    return 'Please enter address';
-                  } else {
-                    return null;
-                  }
-                },
+                // validator: (value) {
+                //   if (value == null || value.toString().isEmpty) {
+                //     return 'Please enter address';
+                //   } else {
+                //     return null;
+                //   }
+                // },
                 onChange: (value) {
                   address = value;
                 },

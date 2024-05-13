@@ -221,12 +221,12 @@ class _EditStudentState extends State<EditStudent> {
                 onTap: datePicker,
                 disabled: true,
                 hint: 'dd/mm/yyyy',
-                title: 'Date of Birth *',
-                validator: (value) {
-                  return value == null || value.toString().isEmpty
-                      ? 'Please enter dob.'
-                      : null;
-                },
+                title: 'Date of Birth',
+                // validator: (value) {
+                //   return value == null || value.toString().isEmpty
+                //       ? 'Please enter dob.'
+                //       : null;
+                // },
                 onChange: (value) {},
               ),
               const SizedBox(
@@ -256,18 +256,18 @@ class _EditStudentState extends State<EditStudent> {
                 initialValue: details?.email,
                 inputType: TextInputType.emailAddress,
                 length: 50,
-                title: 'Email ID *',
+                title: 'Email ID ',
                 hint: 'Eg: contact@polestar.com',
                 capitalization: TextCapitalization.none,
-                validator: (value) {
-                  if (value == null || value.toString().isEmpty) {
-                    return 'Please enter email';
-                  } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                    return 'Invalid email address.';
-                  } else {
-                    return null;
-                  }
-                },
+                // validator: (value) {
+                // if (value == null || value.toString().isEmpty) {
+                //   return 'Please enter email';
+                // } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                //   return 'Invalid email address.';
+                // } else {
+                //   return null;
+                // }
+                // },
                 onChange: (value) {
                   email = value;
                 },
@@ -280,16 +280,16 @@ class _EditStudentState extends State<EditStudent> {
                 length: 300,
                 maxLines: 3,
                 verticalPadding: 10,
-                title: 'Address *',
+                title: 'Address',
                 textInputAction: TextInputAction.newline,
                 hint: 'Enter Communication Address',
-                validator: (value) {
-                  if (value == null || value.toString().isEmpty) {
-                    return 'Please enter address';
-                  } else {
-                    return null;
-                  }
-                },
+                // validator: (value) {
+                //   if (value == null || value.toString().isEmpty) {
+                //     return 'Please enter address';
+                //   } else {
+                //     return null;
+                //   }
+                // },
                 onChange: (value) {
                   address = value;
                 },

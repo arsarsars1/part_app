@@ -149,7 +149,7 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                     return value == null || value.toString().isEmpty
                         ? 'Please enter pay day.'
                         : int.parse(value) > 31 || int.parse(value) < 1
-                            ? 'Should be below 31 amd above 0'
+                            ? 'Should be below 31 and above 0'
                             : null;
                   },
                   showInfo: true,
