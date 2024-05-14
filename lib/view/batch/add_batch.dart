@@ -283,7 +283,7 @@ class _AddBatchState extends State<AddBatch> {
                       Container(
                         width: MediaQuery.of(context).size.width,
                         margin: const EdgeInsets.symmetric(horizontal: 16),
-                        padding: const EdgeInsets.all(12),
+                        padding: EdgeInsets.all(12.w),
                         decoration: BoxDecoration(
                           color: AppColors.liteDark,
                           borderRadius: BorderRadius.circular(4),

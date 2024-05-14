@@ -3,9 +3,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:fast_contacts/fast_contacts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
@@ -47,6 +47,7 @@ class BatchCubit extends Cubit<BatchState> {
   Batch? _batch;
   String? sharedToken;
   List<Contact> _selectedContactList = [];
+  bool isFromBatchDetail = false;
 
   // pagination
 
@@ -108,16 +109,17 @@ class BatchCubit extends Cubit<BatchState> {
     _selectedContactList.add(contact);
     _studentData.add(
       StudentsData(
-          name: contact.displayName, mobileNo: contact.phones.first.number),
+          name: contact.displayName,
+          mobileNo: contact.phones.first.normalizedNumber),
     );
     emit(ContactAdded());
   }
 
   void removeContact(Contact contact) {
     _selectedContactList.removeWhere((element) =>
-        element.phones.first.number == contact.phones.first.number);
+        element.phones.first.number == contact.phones.first.normalizedNumber);
     _studentData.removeWhere(
-        (element) => element.mobileNo == contact.phones.first.number);
+        (element) => element.mobileNo == contact.phones.first.normalizedNumber);
     emit(ContactRemoved());
   }
 
@@ -129,7 +131,8 @@ class BatchCubit extends Cubit<BatchState> {
   bool checkContactSelected(Contact contact) {
     bool flag = false;
     for (var element in selectedContactList) {
-      if (element.phones.first.number == contact.phones.first.number) {
+      if (element.phones.first.normalizedNumber ==
+          contact.phones.first.normalizedNumber) {
         flag = true;
       }
     }

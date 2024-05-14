@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -16,11 +17,14 @@ class _SelectedStudentsState extends State<SelectedStudents> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
-    var width = MediaQuery.of(context).size.width / 6.5;
+    var width = MediaQuery.of(context).size.width;
     return BlocBuilder<BatchCubit, BatchState>(
       builder: (context, state) {
-        return Wrap(
-          alignment: WrapAlignment.start,
+        return GridView.count(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          crossAxisCount: 4,
+          childAspectRatio: 0.8,
           children: [
             ...cubit.studentData.map(
               (e) {
@@ -29,46 +33,45 @@ class _SelectedStudentsState extends State<SelectedStudents> {
                   onTap: () {
                     cubit.removeContact1(e);
                   },
-                  child: Stack(
-                    alignment: Alignment.topRight,
+                  child: Column(
                     children: [
-                      Column(
+                      Stack(
+                        alignment: Alignment.topRight,
                         children: [
                           Icon(
                             Icons.account_circle,
                             size: 70.h,
                             color: AppColors.grey100,
                           ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          SizedBox(
-                            width: width,
-                            child: Text(
-                              '${detail.name}',
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
+                          Container(
+                            height: 20.h,
+                            width: 20.h,
+                            decoration: BoxDecoration(
+                              color: AppColors.grey400,
+                              border: Border.all(
+                                color: AppColors.grey400,
+                              ),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.close_rounded,
+                                color: Colors.black,
+                                size: 15.h,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      Container(
-                          height: 20.h,
-                          width: 20.h,
-                          decoration: BoxDecoration(
-                            color: AppColors.grey400,
-                            border: Border.all(
-                              color: AppColors.grey400,
-                            ),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.close_rounded,
-                              color: Colors.black,
-                              size: 15.h,
-                            ),
-                          ))
+                      SizedBox(height: 4.h),
+                      SizedBox(
+                        width: width,
+                        child: Text(
+                          '${detail.name}',
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                        ),
+                      ),
                     ],
                   ),
                 );
@@ -83,9 +86,9 @@ class _SelectedStudentsState extends State<SelectedStudents> {
               },
               child: Container(
                 margin: const EdgeInsets.only(
-                  right: 16,
+                  right: 12,
                   bottom: 8,
-                  left: 16,
+                  left: 12,
                   top: 8,
                 ),
                 decoration: BoxDecoration(
@@ -96,8 +99,8 @@ class _SelectedStudentsState extends State<SelectedStudents> {
                   ),
                   shape: BoxShape.circle,
                 ),
-                width: width,
-                height: width,
+                // width: width,
+                // height: width,
                 child: const Icon(Icons.add),
               ),
             ),

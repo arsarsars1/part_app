@@ -1,5 +1,6 @@
-import 'package:fast_contacts/fast_contacts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -20,6 +21,7 @@ class _StudentPickerState extends State<StudentPicker> {
   PermissionStatus? permission;
   List<Contact>? contacts = [];
   List<Contact>? backUpContacts = [];
+  List<Contact>? selectedContacts = [];
   List<Contact>? filteredData = [];
   @override
   void initState() {
@@ -33,9 +35,13 @@ class _StudentPickerState extends State<StudentPicker> {
     permission = permissionStatus;
     setState(() {});
     if (permission == PermissionStatus.granted) {
-      contacts = await FastContacts.getAllContacts();
-      backUpContacts = await FastContacts.getAllContacts();
+      contacts = await FlutterContacts.getContacts(
+          withProperties: true, withAccounts: true);
+      backUpContacts = await FlutterContacts.getContacts(
+          withProperties: true, withAccounts: true);
     }
+    contacts?.removeWhere((element) => element.phones.isEmpty);
+    backUpContacts?.removeWhere((element) => element.phones.isEmpty);
     setState(() {});
   }
 
@@ -65,15 +71,30 @@ class _StudentPickerState extends State<StudentPicker> {
       builder: (context, state) {
         return Scaffold(
           appBar: CommonBar(
-            title:
-                'Select Students ( ${cubit.selectedContactList.length} selected )',
+            title: 'Select Students ( ${selectedContacts?.length} selected )',
           ),
           bottomNavigationBar: Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 15),
+            padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 15.h),
             child: Button(
               onTap: () {
-                Navigator.pop(context);
+                if (cubit.isFromBatchDetail) {
+                  selectedContacts?.forEach((element) {
+                    cubit.addContact(element);
+                  });
+                  BatchRequest request;
+                  request = BatchRequest(
+                    students: cubit.buildStudentList(),
+                  );
+                  cubit.updateBatch(request);
+                  Navigator.pop(context);
+                } else {
+                  selectedContacts?.forEach((element) {
+                    cubit.addContact(element);
+                  });
+                  Navigator.pop(context);
+                }
               },
+              disable: (selectedContacts ?? []).isEmpty,
               title: 'Add',
             ),
           ),
@@ -112,10 +133,66 @@ class _StudentPickerState extends State<StudentPicker> {
                 prefixIcon: const Icon(Icons.search),
                 textInputAction: TextInputAction.search,
               ),
+              if ((selectedContacts ?? []).isNotEmpty)
+                Container(
+                  margin: EdgeInsets.all(15.w),
+                  height: 25.h,
+                  child: Center(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: selectedContacts?.length,
+                      itemBuilder: (context, index) {
+                        Contact contact = (selectedContacts ?? [])[index];
+                        return GestureDetector(
+                          onTap: () {
+                            selectedContacts?.remove(contact);
+                            setState(() {});
+                          },
+                          child: Container(
+                            height: 20.h,
+                            margin: EdgeInsets.symmetric(horizontal: 5.w),
+                            padding: EdgeInsets.only(left: 5.h, right: 5.h),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: AppColors.hintColor,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 100.w,
+                                  child: Text(
+                                    contact.displayName,
+                                    maxLines: 1,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(fontSize: 12.sp),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.close,
+                                  size: 15.sp,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
               Expanded(
                 child: permission == PermissionStatus.granted
                     ? (contacts ?? []).isEmpty
-                        ? const LoadingView()
+                        ? (filteredData ?? []).isEmpty
+                            ? const Center(
+                                child: Text('No contacts found'),
+                              )
+                            : const LoadingView()
                         : ListView.builder(
                             shrinkWrap: true,
                             itemCount: contacts?.length,
@@ -123,62 +200,77 @@ class _StudentPickerState extends State<StudentPicker> {
                               Contact contact = (contacts ?? [])[index];
                               return GestureDetector(
                                 onTap: () {
-                                  if (cubit.checkContactSelected(contact)) {
-                                    cubit.removeContact(contact);
+                                  if (contact.phones.isEmpty) {
+                                    Alert(context).show(
+                                        message:
+                                            'No Phone Number Added for this contact !!');
                                   } else {
-                                    cubit.addContact(contact);
+                                    if (checkContactSelected(contact)) {
+                                      selectedContacts?.remove(contact);
+                                    } else {
+                                      selectedContacts?.add(contact);
+                                    }
+                                    setState(() {});
                                   }
                                 },
                                 child: Container(
-                                  height: 70.h,
-                                  margin: EdgeInsets.all(10.h),
+                                  height: 40.h,
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 15.w),
                                   padding:
                                       EdgeInsets.only(left: 10.h, right: 10.h),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
-                                    color: AppColors.hintColor.withOpacity(0.5),
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: 300.w,
-                                            child: Text(
-                                              contact.displayName,
-                                              maxLines: 2,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge
-                                                  ?.copyWith(fontSize: 16),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          Text(
-                                            '( ${contact.phones.first.number} )',
-                                            maxLines: 2,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                  color: AppColors.primaryColor,
-                                                  fontSize: 12,
-                                                ),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
+                                      SizedBox(
+                                        width: 250.w,
+                                        child: Text(
+                                          contact.displayName,
+                                          maxLines: 1,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(fontSize: 16),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                      if (cubit.checkContactSelected(contact))
-                                        Icon(
-                                          Icons.check,
-                                          color: AppColors.green,
-                                        )
+                                      checkContactSelected(contact)
+                                          ? Container(
+                                              width: 20.w,
+                                              height: 20.w,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(50.0),
+                                                border: Border.all(
+                                                    color: Colors.grey,
+                                                    width: 2.0),
+                                              ),
+                                              child: Container(
+                                                width: 5.w,
+                                                height: 5.w,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50.0),
+                                                ),
+                                              ),
+                                            )
+                                          : Container(
+                                              width: 20.w,
+                                              height: 20.w,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(50.0),
+                                                border: Border.all(
+                                                    color: Colors.grey,
+                                                    width: 2.0),
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ),
@@ -194,5 +286,16 @@ class _StudentPickerState extends State<StudentPicker> {
         );
       },
     );
+  }
+
+  bool checkContactSelected(Contact contact) {
+    bool flag = false;
+    for (Contact element in (selectedContacts ?? [])) {
+      if (element.phones.first.normalizedNumber ==
+          contact.phones.first.normalizedNumber) {
+        flag = true;
+      }
+    }
+    return flag;
   }
 }

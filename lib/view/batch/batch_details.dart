@@ -5,12 +5,12 @@ import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/batch_students.dart';
 import 'package:part_app/view/batch/cancel_batch_class.dart';
-import 'package:part_app/view/batch/components/selected_students.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/trainer/students_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class BatchDetails extends StatefulWidget {
@@ -334,6 +334,45 @@ class _BatchDetailsState extends State<BatchDetails> {
                               ],
                             ),
                           ),
+                          SizedBox(height: 15.h),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 15.w),
+                            child: GestureDetector(
+                              onTap: () {
+                                batchCubit.isFromBatchDetail = true;
+                                Navigator.pushNamed(
+                                  context,
+                                  StudentPicker.route,
+                                );
+                              },
+                              child: Container(
+                                height: 34.h,
+                                decoration: BoxDecoration(
+                                  color: AppColors.defaultBlue,
+                                  borderRadius: BorderRadius.circular(45),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 4),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Spacer(),
+                                    Text(
+                                      'Add Students',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontSize: 12,
+                                          ),
+                                    ),
+                                    const Spacer(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                           Container(
                             width: double.maxFinite,
                             margin: const EdgeInsets.all(16),
@@ -385,49 +424,7 @@ class _BatchDetailsState extends State<BatchDetails> {
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            margin: const EdgeInsets.symmetric(horizontal: 16),
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: AppColors.liteDark,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text('Batch Students'),
-                                    if (batchCubit.studentData.isNotEmpty)
-                                      Button(
-                                        height: 30.h,
-                                        width: 75.w,
-                                        onTap: () {
-                                          BatchRequest request;
-                                          request = BatchRequest(
-                                            students:
-                                                batchCubit.buildStudentList(),
-                                          );
-                                          batchCubit.updateBatch(request);
-                                        },
-                                        title: 'Add',
-                                      ),
-                                  ],
-                                ),
-                                SizedBox(height: 16.h),
-                                const SelectedStudents()
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          SizedBox(height: 10.h),
                           BatchStudents(
                             onChange: (bool value) {
                               isActive = value;
