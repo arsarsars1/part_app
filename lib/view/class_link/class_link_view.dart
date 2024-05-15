@@ -679,12 +679,12 @@ class _ClassLinkViewState extends State<ClassLinkView> {
           DateTime.now().year, DateTime.now().month + 3, DateTime.now().day),
     ).then((value) {
       if (value != null) {
-        if (!batchDays!.contains(value.formattedDay2())) {
-          Alert(context).show(
-            message: 'Selected batch does not have class on selected date',
-          );
-          return;
-        }
+        // if (!batchDays!.contains(value.formattedDay2()) ) {
+        //   Alert(context).show(
+        //     message: 'Selected batch does not have class on selected date',
+        //   );
+        //   return;
+        // }
         date = value;
         dateController.text = value.toDateString();
         setState(() {});

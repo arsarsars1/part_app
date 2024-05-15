@@ -365,11 +365,15 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       ),
                       TitledText(
                         title: 'Date Of Birth',
-                        subText: '${trainer.dob?.toDateString()}',
+                        subText: trainer.dob == null
+                            ? 'Not Provided'
+                            : '${trainer.dob?.toDateString()}',
                       ),
                       TitledText(
                         title: 'Email Id',
-                        subText: '${trainer.email}',
+                        subText: trainer.email == null || trainer.email == ''
+                            ? 'Not Provided'
+                            : '${trainer.email}',
                       ),
                       TitledText(
                         title: 'Area Of Expertise',

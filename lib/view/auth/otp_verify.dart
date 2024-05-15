@@ -73,6 +73,7 @@ class _OTPVerifyState extends State<OTPVerify> {
           }
 
           if (state is DeleteAccountFailed) {
+            Navigator.pop(context);
             Alert(context).show(message: state.message);
           }
 
