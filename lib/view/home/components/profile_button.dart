@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,8 +45,12 @@ class _ProfileButtonState extends State<ProfileButton> {
             Logout(context).show();
             break;
           case MenuItems.membership:
-            Navigator.pushNamed(context, CurrentMembership.route);
-            break;
+            if (Platform.isAndroid) {
+              Navigator.pushNamed(context, CurrentMembership.route);
+              break;
+            } else {
+              break;
+            }
           case MenuItems.switchAccount:
             Navigator.pushNamed(context, SwitchAccount.route);
             break;
@@ -119,15 +125,16 @@ class _ProfileButtonState extends State<ProfileButton> {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
-          PopupMenuItem(
-            height: 14,
-            value: MenuItems.membership,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: Text(
-              'Membership',
-              style: Theme.of(context).textTheme.bodyLarge,
+          if (Platform.isAndroid)
+            PopupMenuItem(
+              height: 14,
+              value: MenuItems.membership,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: Text(
+                'Membership',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
             ),
-          ),
           PopupMenuItem(
             height: 14,
             value: MenuItems.logout,

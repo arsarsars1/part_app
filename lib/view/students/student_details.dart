@@ -134,7 +134,10 @@ class _StudentDetailsState extends State<StudentDetails> {
                       ),
                       TitledText(
                         title: 'Gender',
-                        subText: '${details?.gender?.capitalize()}',
+                        subText:
+                            details?.gender == null || details?.gender == ''
+                                ? 'Not Provided'
+                                : '${details?.gender?.capitalize()}',
                       ),
                       TitledText(
                         title: 'Email Id',
@@ -144,7 +147,10 @@ class _StudentDetailsState extends State<StudentDetails> {
                       ),
                       TitledText(
                         title: 'Address',
-                        subText: '${details?.address}',
+                        subText:
+                            details?.address == null || details?.address == ''
+                                ? 'Not Provided'
+                                : '${details?.address}',
                       ),
                       const SizedBox(
                         height: 16,

@@ -162,7 +162,7 @@ class _TrainerAppStudentAttendanceCalenderViewState
                   SizedBox(
                     height: 20.h,
                   ),
-                  BranchField(
+                  TrainerAppBranchField(
                     onSelect: (value) {
                       setState(() {
                         branchId = value;

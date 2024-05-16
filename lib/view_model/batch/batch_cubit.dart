@@ -110,16 +110,19 @@ class BatchCubit extends Cubit<BatchState> {
     _studentData.add(
       StudentsData(
           name: contact.displayName,
-          mobileNo: contact.phones.first.normalizedNumber),
+          mobileNo:
+              contact.phones.first.normalizedNumber.replaceAll('+91', '')),
     );
     emit(ContactAdded());
   }
 
   void removeContact(Contact contact) {
     _selectedContactList.removeWhere((element) =>
-        element.phones.first.number == contact.phones.first.normalizedNumber);
-    _studentData.removeWhere(
-        (element) => element.mobileNo == contact.phones.first.normalizedNumber);
+        element.phones.first.number ==
+        contact.phones.first.normalizedNumber.replaceAll('+91', ''));
+    _studentData.removeWhere((element) =>
+        element.mobileNo ==
+        contact.phones.first.normalizedNumber.replaceAll('+91', ''));
     emit(ContactRemoved());
   }
 
@@ -131,8 +134,8 @@ class BatchCubit extends Cubit<BatchState> {
   bool checkContactSelected(Contact contact) {
     bool flag = false;
     for (var element in selectedContactList) {
-      if (element.phones.first.normalizedNumber ==
-          contact.phones.first.normalizedNumber) {
+      if (element.phones.first.normalizedNumber.replaceAll('+91', '') ==
+          contact.phones.first.normalizedNumber.replaceAll('+91', '')) {
         flag = true;
       }
     }

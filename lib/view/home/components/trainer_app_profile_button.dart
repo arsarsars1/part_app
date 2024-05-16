@@ -9,13 +9,12 @@ import 'package:part_app/model/service/api_client.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/home/components/logout.dart';
-import 'package:part_app/view/home/components/trainer_account.dart';
 import 'package:part_app/view/profile/trainer_app_profile.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 
 // enum MenuItems { profile, account, logout, membership, switchAccount }
-enum MenuItems { profile, account, logout, switchAccount }
+enum MenuItems { profile, logout, switchAccount }
 
 class TrainerProfileButton extends StatefulWidget {
   const TrainerProfileButton({Key? key}) : super(key: key);
@@ -36,9 +35,9 @@ class _TrainerProfileButtonState extends State<TrainerProfileButton> {
           case MenuItems.profile:
             Navigator.pushNamed(context, TrainerAppProfile.route);
             break;
-          case MenuItems.account:
-            Navigator.pushNamed(context, TrainerAccount.route);
-            break;
+          // case MenuItems.account:
+          //   Navigator.pushNamed(context, TrainerAccount.route);
+          //   break;
           case MenuItems.logout:
             Logout(context).show();
             break;
@@ -102,15 +101,15 @@ class _TrainerProfileButtonState extends State<TrainerProfileButton> {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
-          PopupMenuItem(
-            height: 14,
-            value: MenuItems.account,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: Text(
-              'Account',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ),
+          // PopupMenuItem(
+          //   height: 14,
+          //   value: MenuItems.account,
+          //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          //   child: Text(
+          //     'Account',
+          //     style: Theme.of(context).textTheme.bodyLarge,
+          //   ),
+          // ),
           PopupMenuItem(
             height: 14,
             value: MenuItems.switchAccount,
