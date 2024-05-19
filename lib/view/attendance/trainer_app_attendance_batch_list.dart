@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/attendance/trainer_app_attendance_calender_view.dart';
+import 'package:part_app/view/attendance/trainer_app_monthly_attendance_view.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 import '../../view_model/attendance/attendance_cubit.dart';
-import 'monthly_attendance_view.dart';
 
 class TrainerAppAttendanceBatchListPage extends StatefulWidget {
   static const route = '/trainer-app-attendance-batch-list';
@@ -94,7 +94,7 @@ class _TrainerAppAttendanceBatchListPageState
                           cubit.days.clear();
                           Navigator.pushNamed(
                             context,
-                            MonthlyAttendanceView.route,
+                            TrainerAppMonthlyAttendanceView.route,
                           );
                         },
                         title: 'View Monthly Attendance',

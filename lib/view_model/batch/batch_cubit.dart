@@ -286,10 +286,46 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future updateBatchForTrainer(int trainerId, BatchRequest request) async {
+    emit(UpdatingBatch());
+    try {
+      Common? response = await _batchService.updateBatchForTrainer(
+        trainerId,
+        request,
+        _batchModel?.id,
+      );
+      if (response?.status == 1) {
+        await getBatchesForTrainer(trainerId);
+        await getBatchForTrainerDetail(
+            trainerId: trainerId, batchId: '${_batchModel?.id}');
+        emit(UpdatedBatch());
+      } else {
+        emit(UpdateBatchFailed(response?.message ?? 'Failed to update batch.'));
+      }
+    } catch (e) {
+      emit(UpdateBatchFailed('Failed to update batch.'));
+    }
+  }
+
   Future getBatches() async {
     _batches.clear();
     emit(FetchingBatches(pagination: false));
     BatchResponse? response = await _batchService.getBatches();
+    if (response?.status == 1) {
+      _batches = response?.batches?.data
+              .where((element) => element.branch?.isActive == 1)
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
+      emit(BatchesFetched());
+    }
+  }
+
+  Future getBatchesForTrainer(int trainerId) async {
+    _batches.clear();
+    emit(FetchingBatches(pagination: false));
+    BatchResponse? response =
+        await _batchService.getBatchesForTrainer(trainerId);
     if (response?.status == 1) {
       _batches = response?.batches?.data
               .where((element) => element.branch?.isActive == 1)
@@ -610,6 +646,46 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future getBatchForTrainerDetail(
+      {required int trainerId, required String batchId}) async {
+    emit(FetchingBatch());
+    BatchResponse? response = await _batchService.getBatchForTrainerDetail(
+        trainerId: trainerId, id: batchId);
+    if (response?.status == 1 && response?.batch != null) {
+      _batch = response?.batch;
+      _batchModel = BatchModel.fromEntity(response!.batch!);
+
+      // fetch the students
+      // getStudentsByBatch(_batch?.id);
+
+      // fetch the courses list
+      if (_courses == null || _courses!.isEmpty) {
+        await getCourses();
+      }
+
+      await getSubjects(courseId: _batch?.course?.id);
+      _defaultCourse = getCourseMenuItem(_batch?.course?.id);
+      _defaultSubject = getSubjectMenuItem(_batch?.subject?.id);
+
+      _days = _batch?.batchDetail
+              ?.map((e) => Days(
+                    day: e.day,
+                    endTime: e.endTime,
+                    startTime: e.startTime,
+                  ))
+              .toList() ??
+          [];
+
+      var items = _batch?.trainers?.map((e) => e.id).toList();
+      if (items != null) {
+        _selectedTrainers.addAll(items);
+      }
+      emit(FetchedBatch());
+    } else {
+      emit(FetchBatchFailed('Failed to fetch batch details.'));
+    }
+  }
+
   Future getBatchForTrainer(
       {required int trainerId,
       required String batchId,
@@ -732,12 +808,13 @@ class BatchCubit extends Cubit<BatchState> {
   Future deleteClassCancellationForTrainer(
       int? batchDetailId, int trainerId) async {
     emit(DeleteCancelledClass());
-    Common? response = await _batchService.deleteClassCancellation(
+    Common? response = await _batchService.deleteClassCancellationForTrainer(
+      trainerId: trainerId,
       classId: batchDetailId,
       batchId: _batch?.id,
     );
     if (response?.status == 1) {
-      await getCancelledBatches();
+      await getCancelledBatchesForTrainer(trainerId: trainerId);
       emit(DeletedCancelledClass());
     } else {
       emit(CancelledClassDeletionFailed(

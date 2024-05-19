@@ -626,6 +626,22 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  Future<int> sendSupportRequestForTrainer(
+      int trainerId, Map<String, dynamic> data) async {
+    try {
+      Common? response =
+          await _service.sendSupportRequestForTrainer(trainerId, data);
+
+      if (response?.status == 1) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      return 0;
+    }
+  }
+
   Future<int> sendStudentSupportRequest(
       int studentId, Map<String, dynamic> data) async {
     try {

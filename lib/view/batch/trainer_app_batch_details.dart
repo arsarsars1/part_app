@@ -5,9 +5,9 @@ import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
-import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/trainer_app_batch_students.dart';
 import 'package:part_app/view/batch/trainer_app_cancel_batch_class.dart';
+import 'package:part_app/view/batch/trainer_app_edit_batch_details.dart';
 import 'package:part_app/view/batch/trainer_app_reschedule_class.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
@@ -159,7 +159,7 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
                                       onTap: () {
                                         Navigator.pushNamed(
                                           context,
-                                          EditBatchDetails.route,
+                                          TrainerAppEditBatchDetails.route,
                                         );
                                       },
                                       child: Container(
@@ -370,7 +370,15 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
                                       );
                                       context
                                           .read<BatchCubit>()
-                                          .updateBatch(request);
+                                          .updateBatchForTrainer(
+                                              authCubit
+                                                      ?.user
+                                                      ?.trainerDetail?[authCubit
+                                                              ?.trainerIndex ??
+                                                          0]
+                                                      .id ??
+                                                  0,
+                                              request);
                                     } else {
                                       BatchRequest request = BatchRequest(
                                         trainers: context
@@ -385,7 +393,15 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
                                       );
                                       context
                                           .read<BatchCubit>()
-                                          .updateBatch(request);
+                                          .updateBatchForTrainer(
+                                              authCubit
+                                                      ?.user
+                                                      ?.trainerDetail?[authCubit
+                                                              ?.trainerIndex ??
+                                                          0]
+                                                      .id ??
+                                                  0,
+                                              request);
                                     }
                                   },
                                 )

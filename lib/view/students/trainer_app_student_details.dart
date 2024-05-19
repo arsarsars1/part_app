@@ -6,7 +6,7 @@ import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
-import 'package:part_app/view/fee/student_admission_fee_details.dart';
+import 'package:part_app/view/fee/trainer_app_student_admission_fee_details.dart';
 import 'package:part_app/view/fee/trainer_app_student_fee_details.dart';
 import 'package:part_app/view/students/edit_student.dart';
 import 'package:part_app/view/students/trainer_app_edit_student_batches.dart';
@@ -203,7 +203,7 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                   onTap: () {
                     Navigator.pushNamed(
                       context,
-                      StudentAdmissionFeeDetails.route,
+                      TrainerAppStudentAdmissionFeeDetails.route,
                     );
                   },
                   color: AppColors.defaultBlue,

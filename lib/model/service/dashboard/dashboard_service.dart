@@ -142,6 +142,19 @@ class DashboardService {
     }
   }
 
+  Future<Common?> sendSupportRequestForTrainer(
+      int trainerId, Map<String, dynamic> data) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/trainers/$trainerId/support',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> sendStudentSupportRequest(
       int studentId, Map<String, dynamic> data) async {
     try {

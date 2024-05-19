@@ -80,6 +80,20 @@ class FeeDetailsService {
     }
   }
 
+  Future<Common?> addFeesForAdmissionForTrainer(
+      int trainerId, int? batchInvoiceId, Map<String, dynamic> data) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/trainers/$trainerId/fee-details/admission-fee-invoices/$batchInvoiceId/payments',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<BatchFeeInvoiceList?> feeDetails({
     int? branchId,
     int? batchId,
@@ -278,6 +292,29 @@ class FeeDetailsService {
     }
   }
 
+  Future<FeeDetailHistory?> admissionFeeDetailsForTrainerApp({
+    required int trainerId,
+    String? feeType,
+    String? searchQuery,
+    int? studentId,
+    String? paymentStatus,
+    required int pageNo,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath: paymentStatus != 'all'
+              ? feeType == null || feeType == 'all'
+                  ? '/trainers/$trainerId/students/$studentId/admission-fee-details?payment_status=$paymentStatus&page=$pageNo'
+                  : '/trainers/$trainerId/students/$studentId/admission-fee-details?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+              : feeType == null || feeType == 'all'
+                  ? '/trainers/$trainerId/students/$studentId/admission-fee-details?page=$pageNo'
+                  : '/trainers/$trainerId/students/$studentId/admission-fee-details?fee_type=$feeType&page=$pageNo');
+      return feeDetailHistoryFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> sendReminder({
     required int? batchFeeInvoiceId,
   }) async {
@@ -443,6 +480,24 @@ class FeeDetailsService {
     }
   }
 
+  Future<Common?> editAdmissionFeesForTrainer(
+      int trainerId,
+      Map<String, dynamic> request,
+      int? admissionFeeInvoiceId,
+      int? paymentId) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/trainers/$trainerId/fee-details/admission-fee-invoices/$admissionFeeInvoiceId/payments/$paymentId',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> deleteFees(int? batchFeesInvoiceId, int? paymentId) async {
     try {
       var response = await _client.delete(
@@ -476,6 +531,20 @@ class FeeDetailsService {
       var response = await _client.delete(
         queryPath:
             '/admin/fee-details/admission-fee-invoices/$admissionFeeInvoiceId/payments/$paymentId',
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> deleteAdmissionFeesForTrainer(
+      int trainerId, int? admissionFeeInvoiceId, int? paymentId) async {
+    try {
+      var response = await _client.delete(
+        queryPath:
+            '/trainers/$trainerId/fee-details/admission-fee-invoices/$admissionFeeInvoiceId/payments/$paymentId',
       );
 
       return commonFromJson(jsonEncode(response));
@@ -518,6 +587,20 @@ class FeeDetailsService {
       var response = await _client.get(
           queryPath:
               '/admin/fee-details/admission-fee-invoices/$batchFeeInvoiceId');
+      return admissionFeeInvoiceFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AdmissionFeeInvoice?> admissionFeeInvoiceDetailForTrainer({
+    required int trainerId,
+    required int? batchFeeInvoiceId,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath:
+              '/trainers/$trainerId/fee-details/admission-fee-invoices/$batchFeeInvoiceId');
       return admissionFeeInvoiceFromJson(jsonEncode(response));
     } catch (e) {
       return null;

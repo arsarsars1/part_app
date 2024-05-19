@@ -9,7 +9,7 @@ import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/home/dashboard/trainer_app_dashboard.dart';
 import 'package:part_app/view/splash.dart';
-import 'package:part_app/view/support/support_screen.dart';
+import 'package:part_app/view/support/trainer_app_support_screen.dart';
 import 'package:part_app/view/website/website_view.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -113,7 +113,7 @@ class _TrainerAppHomeState extends State<TrainerAppHome> {
     } else if (currentIndex == 1) {
       return const TrainerAppCalenderView();
     } else if (currentIndex == 2) {
-      return const SupportScreen();
+      return const TrainerAppSupportScreen();
     } else if (currentIndex == 3) {
       return const WebsiteView();
     }

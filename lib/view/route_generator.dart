@@ -30,6 +30,7 @@ import 'package:part_app/view/batch/trainer_app_batch_details.dart';
 import 'package:part_app/view/batch/trainer_app_batch_list.dart';
 import 'package:part_app/view/batch/trainer_app_cancel_batch_class.dart';
 import 'package:part_app/view/batch/trainer_app_cancelled_batch_class.dart';
+import 'package:part_app/view/batch/trainer_app_edit_batch_details.dart';
 import 'package:part_app/view/batch/trainer_app_reschedule_class.dart';
 import 'package:part_app/view/batch/trainer_app_rescheduled_classes.dart';
 import 'package:part_app/view/branch/add_branch.dart';
@@ -52,8 +53,10 @@ import 'package:part_app/view/fee/student_admission_fee_details.dart';
 import 'package:part_app/view/fee/student_app_fee_details.dart';
 import 'package:part_app/view/fee/student_fee_details.dart';
 import 'package:part_app/view/fee/trainer_app_add_advance_fee.dart';
+import 'package:part_app/view/fee/trainer_app_add_or_edit_admission_fees.dart';
 import 'package:part_app/view/fee/trainer_app_add_or_edit_fees.dart';
 import 'package:part_app/view/fee/trainer_app_fees_details_view.dart';
+import 'package:part_app/view/fee/trainer_app_student_admission_fee_details.dart';
 import 'package:part_app/view/fee/trainer_app_student_fee_details.dart';
 import 'package:part_app/view/home/components/account.dart';
 import 'package:part_app/view/home/components/delete_account.dart';
@@ -399,6 +402,11 @@ class RouteGenerator {
           builder: (_) => const EditBatchDetails(),
           settings: settings,
         );
+      case TrainerAppEditBatchDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppEditBatchDetails(),
+          settings: settings,
+        );
       case RescheduledClasses.route:
         return MaterialPageRoute(
           builder: (_) => const RescheduledClasses(),
@@ -680,6 +688,11 @@ class RouteGenerator {
           builder: (_) => const AddOrEditAdmissionFees(),
           settings: settings,
         );
+      case TrainerAppAddOrEditAdmissionFees.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppAddOrEditAdmissionFees(),
+          settings: settings,
+        );
       case TodaysClasses.route:
         return MaterialPageRoute(
           builder: (_) => const TodaysClasses(),
@@ -713,6 +726,11 @@ class RouteGenerator {
       case StudentAdmissionFeeDetails.route:
         return MaterialPageRoute(
           builder: (_) => const StudentAdmissionFeeDetails(),
+          settings: settings,
+        );
+      case TrainerAppStudentAdmissionFeeDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppStudentAdmissionFeeDetails(),
           settings: settings,
         );
       case TrainerSalarySlips.route:
