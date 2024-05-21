@@ -62,6 +62,7 @@ class AuthService {
     try {
       String? fcmToken;
       try {
+        FirebaseMessaging.instance.requestPermission();
         await FirebaseMessaging.instance.deleteToken();
         fcmToken = await FirebaseMessaging.instance.getToken();
       } on FirebaseException catch (e) {
