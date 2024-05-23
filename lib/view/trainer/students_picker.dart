@@ -18,6 +18,7 @@ class StudentPicker extends StatefulWidget {
 }
 
 class _StudentPickerState extends State<StudentPicker> {
+  bool isLoading = true;
   PermissionStatus? permission;
   List<Contact>? contacts = [];
   List<Contact>? backUpContacts = [];
@@ -42,6 +43,7 @@ class _StudentPickerState extends State<StudentPicker> {
     }
     contacts?.removeWhere((element) => element.phones.isEmpty);
     backUpContacts?.removeWhere((element) => element.phones.isEmpty);
+    isLoading = false;
     setState(() {});
   }
 
@@ -98,191 +100,200 @@ class _StudentPickerState extends State<StudentPicker> {
               title: 'Add',
             ),
           ),
-          body: Column(
-            children: [
-              CommonField(
-                title: 'Search',
-                hint: 'Search Student',
-                onChange: (value) {
-                  if (isInteger(value.toString())) {
-                    backUpContacts?.forEach((contact) {
-                      for (var phone in contact.phones) {
-                        if (phone.number.contains(value)) {
-                          filteredData?.add(contact);
+          body: isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  children: [
+                    CommonField(
+                      title: 'Search',
+                      hint: 'Search Student',
+                      onChange: (value) {
+                        if (isInteger(value.toString())) {
+                          backUpContacts?.forEach((contact) {
+                            for (var phone in contact.phones) {
+                              if (phone.number.contains(value)) {
+                                filteredData?.add(contact);
+                              }
+                            }
+                          });
+                          contacts?.clear();
+                          contacts?.addAll(filteredData ?? []);
+                          filteredData?.clear();
+                          setState(() {});
+                        } else {
+                          backUpContacts?.forEach((contact) {
+                            if (contact.displayName
+                                .toLowerCase()
+                                .contains(value.toLowerCase())) {
+                              filteredData?.add(contact);
+                            }
+                          });
+                          contacts?.clear();
+                          contacts?.addAll(filteredData ?? []);
+                          filteredData?.clear();
+                          setState(() {});
                         }
-                      }
-                    });
-                    contacts?.clear();
-                    contacts?.addAll(filteredData ?? []);
-                    filteredData?.clear();
-                    setState(() {});
-                  } else {
-                    backUpContacts?.forEach((contact) {
-                      if (contact.displayName
-                          .toLowerCase()
-                          .contains(value.toLowerCase())) {
-                        filteredData?.add(contact);
-                      }
-                    });
-                    contacts?.clear();
-                    contacts?.addAll(filteredData ?? []);
-                    filteredData?.clear();
-                    setState(() {});
-                  }
-                },
-                prefixIcon: const Icon(Icons.search),
-                textInputAction: TextInputAction.search,
-              ),
-              if ((selectedContacts ?? []).isNotEmpty)
-                Container(
-                  margin: EdgeInsets.all(15.w),
-                  height: 25.h,
-                  child: Center(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: selectedContacts?.length,
-                      itemBuilder: (context, index) {
-                        Contact contact = (selectedContacts ?? [])[index];
-                        return GestureDetector(
-                          onTap: () {
-                            selectedContacts?.remove(contact);
-                            setState(() {});
-                          },
-                          child: Container(
-                            height: 20.h,
-                            margin: EdgeInsets.symmetric(horizontal: 5.w),
-                            padding: EdgeInsets.only(left: 5.h, right: 5.h),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: AppColors.hintColor,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: 100.w,
-                                  child: Text(
-                                    contact.displayName,
-                                    maxLines: 1,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(fontSize: 12.sp),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.close,
-                                  size: 15.sp,
-                                  color: Colors.white,
-                                )
-                              ],
-                            ),
-                          ),
-                        );
                       },
+                      prefixIcon: const Icon(Icons.search),
+                      textInputAction: TextInputAction.search,
                     ),
-                  ),
-                ),
-              Expanded(
-                child: permission == PermissionStatus.granted
-                    ? (contacts ?? []).isEmpty
-                        ? (filteredData ?? []).isEmpty
-                            ? const Center(
-                                child: Text('No contacts found'),
-                              )
-                            : const LoadingView()
-                        : ListView.builder(
+                    if ((selectedContacts ?? []).isNotEmpty)
+                      Container(
+                        margin: EdgeInsets.all(15.w),
+                        height: 25.h,
+                        child: Center(
+                          child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: contacts?.length,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: selectedContacts?.length,
                             itemBuilder: (context, index) {
-                              Contact contact = (contacts ?? [])[index];
+                              Contact contact = (selectedContacts ?? [])[index];
                               return GestureDetector(
                                 onTap: () {
-                                  if (contact.phones.isEmpty) {
-                                    Alert(context).show(
-                                        message:
-                                            'No Phone Number Added for this contact !!');
-                                  } else {
-                                    if (checkContactSelected(contact)) {
-                                      selectedContacts?.remove(contact);
-                                    } else {
-                                      selectedContacts?.add(contact);
-                                    }
-                                    setState(() {});
-                                  }
+                                  selectedContacts?.remove(contact);
+                                  setState(() {});
                                 },
                                 child: Container(
-                                  height: 40.h,
-                                  margin:
-                                      EdgeInsets.symmetric(horizontal: 15.w),
+                                  height: 20.h,
+                                  margin: EdgeInsets.symmetric(horizontal: 5.w),
                                   padding:
-                                      EdgeInsets.only(left: 10.h, right: 10.h),
+                                      EdgeInsets.only(left: 5.h, right: 5.h),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
+                                    color: AppColors.hintColor,
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       SizedBox(
-                                        width: 250.w,
+                                        width: 100.w,
                                         child: Text(
                                           contact.displayName,
                                           maxLines: 1,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyLarge
-                                              ?.copyWith(fontSize: 16),
+                                              ?.copyWith(fontSize: 12.sp),
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                      checkContactSelected(contact)
-                                          ? Container(
-                                              width: 20.w,
-                                              height: 20.w,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(50.0),
-                                                border: Border.all(
-                                                    color: Colors.grey,
-                                                    width: 2.0),
-                                              ),
-                                              child: Container(
-                                                width: 5.w,
-                                                height: 5.w,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          50.0),
-                                                ),
-                                              ),
-                                            )
-                                          : Container(
-                                              width: 20.w,
-                                              height: 20.w,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(50.0),
-                                                border: Border.all(
-                                                    color: Colors.grey,
-                                                    width: 2.0),
-                                              ),
-                                            ),
+                                      Icon(
+                                        Icons.close,
+                                        size: 15.sp,
+                                        color: Colors.white,
+                                      )
                                     ],
                                   ),
                                 ),
                               );
                             },
-                          )
-                    : const Center(
-                        child: Text('Contact Permission Not granted'),
+                          ),
+                        ),
                       ),
-              ),
-            ],
-          ),
+                    Expanded(
+                      child: permission == PermissionStatus.granted
+                          ? (contacts ?? []).isEmpty
+                              ? (filteredData ?? []).isEmpty
+                                  ? const Center(
+                                      child: Text('No contacts found'),
+                                    )
+                                  : const LoadingView()
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: contacts?.length,
+                                  itemBuilder: (context, index) {
+                                    Contact contact = (contacts ?? [])[index];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        if (contact.phones.isEmpty) {
+                                          Alert(context).show(
+                                              message:
+                                                  'No Phone Number Added for this contact !!');
+                                        } else {
+                                          if (checkContactSelected(contact)) {
+                                            selectedContacts?.remove(contact);
+                                          } else {
+                                            selectedContacts?.add(contact);
+                                          }
+                                          setState(() {});
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 40.h,
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 15.w),
+                                        padding: EdgeInsets.only(
+                                            left: 10.h, right: 10.h),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SizedBox(
+                                              width: 250.w,
+                                              child: Text(
+                                                contact.displayName,
+                                                maxLines: 1,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                                    ?.copyWith(fontSize: 16),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            checkContactSelected(contact)
+                                                ? Container(
+                                                    width: 20.w,
+                                                    height: 20.w,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50.0),
+                                                      border: Border.all(
+                                                          color: Colors.grey,
+                                                          width: 2.0),
+                                                    ),
+                                                    child: Container(
+                                                      width: 5.w,
+                                                      height: 5.w,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(50.0),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Container(
+                                                    width: 20.w,
+                                                    height: 20.w,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50.0),
+                                                      border: Border.all(
+                                                          color: Colors.grey,
+                                                          width: 2.0),
+                                                    ),
+                                                  ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                )
+                          : const Center(
+                              child: Text('Contact Permission Not granted'),
+                            ),
+                    ),
+                  ],
+                ),
         );
       },
     );
@@ -291,8 +302,7 @@ class _StudentPickerState extends State<StudentPicker> {
   bool checkContactSelected(Contact contact) {
     bool flag = false;
     for (Contact element in (selectedContacts ?? [])) {
-      if (element.phones.first.normalizedNumber ==
-          contact.phones.first.normalizedNumber) {
+      if (element.phones.first.number == contact.phones.first.number) {
         flag = true;
       }
     }

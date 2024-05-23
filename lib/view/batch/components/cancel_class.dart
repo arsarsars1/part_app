@@ -30,7 +30,7 @@ class _CancelClassPopUpState extends State<CancelClassPopUp> {
             },
             validator: (value) {
               return value.toString().trim().isEmpty
-                  ? 'Please enter the remark/reason'
+                  ? 'please enter the reason'
                   : null;
             },
           ),

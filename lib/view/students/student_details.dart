@@ -115,7 +115,11 @@ class _StudentDetailsState extends State<StudentDetails> {
                       ),
                       TitledText(
                         title: 'Whatsapp No',
-                        subText: '${details?.whatsappNo}',
+                        subText: details?.whatsappNo == null ||
+                                details?.whatsappNo == '' ||
+                                details?.whatsappNo == '0'
+                            ? 'Not Provided'
+                            : '${details?.whatsappNo}',
                       ),
                       if (details?.parentName != null)
                         TitledText(

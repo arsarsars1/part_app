@@ -107,12 +107,18 @@ class BatchCubit extends Cubit<BatchState> {
 
   void addContact(Contact contact) {
     _selectedContactList.add(contact);
-    _studentData.add(
-      StudentsData(
-          name: contact.displayName,
-          mobileNo:
-              contact.phones.first.normalizedNumber.replaceAll('+91', '')),
-    );
+    if (!_studentData.contains(StudentsData(
+        name: contact.displayName,
+        mobileNo:
+            contact.phones.first.normalizedNumber.replaceAll('+91', '')))) {
+      _studentData.add(
+        StudentsData(
+            name: contact.displayName,
+            mobileNo:
+                contact.phones.first.normalizedNumber.replaceAll('+91', '')),
+      );
+    }
+
     emit(ContactAdded());
   }
 

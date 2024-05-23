@@ -37,17 +37,19 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       context.read<TrainerCubit>().clean();
       var branchCubit = context.read<BranchCubit>();
-      branchId = branchCubit.firstBranch?.id;
-      context.read<TrainerCubit>().getSalaryDetails(
-            branchId: branchId,
-            searchQuery: query,
-            month: null,
-            year: DateTime.now().year,
-            clean: true,
-          );
+      var trainerCubit = context.read<TrainerCubit>();
+      await branchCubit.getBranches();
+      branchId = branchCubit.branches.last.id;
+      trainerCubit.getSalaryDetails(
+        branchId: branchId,
+        searchQuery: query,
+        month: null,
+        year: DateTime.now().year,
+        clean: true,
+      );
     });
     // Pagination listener
     scrollController.addListener(() {

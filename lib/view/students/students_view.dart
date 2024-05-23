@@ -161,11 +161,13 @@ class _StudentsViewState extends State<StudentsView> {
                                       setState(() {
                                         branchId = null;
                                         selectedItem = value;
+                                        batchController.clear();
                                         doSearch(true);
                                       });
                                     } else {
                                       branchId = value?.id;
                                       selectedItem = value;
+                                      batchController.clear();
                                       setState(() {
                                         doSearch(true);
                                       });

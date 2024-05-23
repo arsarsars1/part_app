@@ -54,7 +54,7 @@ class _RemoveStudentState extends State<RemoveStudent> {
             },
             validator: (value) {
               return value.toString().trim().isEmpty
-                  ? 'Please enter the remark/reason'
+                  ? 'please enter the reason'
                   : null;
             },
           ),
