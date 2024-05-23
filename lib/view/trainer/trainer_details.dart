@@ -377,14 +377,20 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                       ),
                       TitledText(
                         title: 'Area Of Expertise',
-                        subText: trainer.expertise ?? 'NA',
+                        subText:
+                            trainer.expertise == null || trainer.expertise == ''
+                                ? 'Not Provided'
+                                : '${trainer.expertise}',
                       ),
                       TitledText(
                         title: 'Address',
-                        subText: '${trainer.address}',
+                        subText:
+                            trainer.address == null || trainer.address == ''
+                                ? 'Not Provided'
+                                : '${trainer.address}',
                       ),
-                      const SizedBox(
-                        height: 16,
+                      SizedBox(
+                        height: 16.h,
                       ),
                       Text(
                         'ID Proof Images Max Of 2 Nos.',
