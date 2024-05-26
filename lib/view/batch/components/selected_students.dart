@@ -78,11 +78,15 @@ class _SelectedStudentsState extends State<SelectedStudents> {
               },
             ),
             GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(
+              onTap: () async {
+                cubit.isFromBatchDetail = false;
+                await Navigator.pushNamed(
                   context,
                   StudentPicker.route,
                 );
+                if(cubit.days.isEmpty) {
+                  cubit.days.clear();
+                }
               },
               child: Container(
                 margin: const EdgeInsets.only(
