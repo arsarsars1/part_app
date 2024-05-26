@@ -167,6 +167,15 @@ class _StudentsViewState extends State<StudentsView> {
                                     } else {
                                       branchId = value?.id;
                                       selectedItem = value;
+                                      if (status != null) {
+                                        context
+                                            .read<BatchCubit>()
+                                            .getBatchesByStatus(
+                                              branchId: branchId,
+                                              status: status!,
+                                              clean: true,
+                                            );
+                                      }
                                       batchController.clear();
                                       setState(() {
                                         doSearch(true);

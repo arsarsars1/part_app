@@ -28,10 +28,11 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
   void initState() {
     super.initState();
     // initial call to show the batches
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var branchCubit = context.read<BranchCubit>();
       AttendanceCubit cubit = context.read<AttendanceCubit>();
-      branchId = branchCubit.firstBranch?.id;
+      await branchCubit.getBranches();
+      branchId = branchCubit.branches.last.id;
       setState(() {
         cubit.getBatchesByStatus(
           branchId: branchId,
