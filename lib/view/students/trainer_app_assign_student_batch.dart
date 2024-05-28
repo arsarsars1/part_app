@@ -4,8 +4,8 @@ import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/students/edit_student_batches.dart';
-import 'package:part_app/view/students/student_details.dart';
+import 'package:part_app/view/students/trainer_app_edit_student_batches.dart';
+import 'package:part_app/view/students/trainer_app_student_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAppAssignStudentBatch extends StatefulWidget {
@@ -77,7 +77,7 @@ class _TrainerAppAssignStudentBatchState
               context.read<StudentCubit>().second = true;
               Navigator.pushNamed(
                 context,
-                EditStudentBatches.route,
+                TrainerAppEditStudentBatches.route,
                 arguments: widget.editStudent,
               );
             } else {
@@ -94,10 +94,14 @@ class _TrainerAppAssignStudentBatchState
               Navigator.pop(context);
               Navigator.pop(
                 context,
-                StudentDetails.route,
+                TrainerAppStudentDetails.route,
               );
-              context.read<StudentCubit>().getStudentBatches();
-              Navigator.pushNamed(context, EditStudentBatches.route,
+              context.read<StudentCubit>().getStudentBatchesForTrainer(
+                    trainerId: authCubit?.user
+                            ?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+                        0,
+                  );
+              Navigator.pushNamed(context, TrainerAppEditStudentBatches.route,
                   arguments: widget.editStudent);
             }
           } else if (state is CreateStudentFailed) {
