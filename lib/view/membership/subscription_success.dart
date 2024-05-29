@@ -82,12 +82,13 @@ class SubscriptionSuccess extends StatelessWidget {
                     );
                   });
                 }
+              } else {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  SwitchAccount.route,
+                  (value) => false,
+                );
               }
-              // Navigator.pushNamedAndRemoveUntil(
-              //   context,
-              //   SwitchAccount.route,
-              //   (value) => false,
-              // );
             },
           ),
           SizedBox(
