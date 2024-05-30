@@ -10,7 +10,7 @@ import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/home/components/logout.dart';
 import 'package:part_app/view/home/components/student_account.dart';
-import 'package:part_app/view/profile/profile.dart';
+import 'package:part_app/view/profile/student_app_profile.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 import '../../../view_model/profile_pic/cubit/profile_cubit.dart';
@@ -34,7 +34,7 @@ class _StudentProfileButtonState extends State<StudentProfileButton> {
       onSelected: (MenuItems item) {
         switch (item) {
           case MenuItems.profile:
-            Navigator.pushNamed(context, Profile.route);
+            Navigator.pushNamed(context, StudentAppProfile.route);
             break;
           case MenuItems.account:
             Navigator.pushNamed(context, StudentAccount.route);

@@ -8,7 +8,7 @@ import 'package:part_app/view/components/button.dart';
 import 'package:part_app/view/components/common_bar.dart';
 import 'package:part_app/view/components/common_field.dart';
 import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/students/widgets/student_batch_picker.dart';
+import 'package:part_app/view/students/widgets/trainer_app_student_batch_picker.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 import 'package:part_app/view_model/student/student_cubit.dart';
@@ -76,7 +76,7 @@ class _TrainerAppAddAdvanceFeePageState
                     scaffoldKey.currentState?.showBottomSheet(
                       elevation: 10,
                       backgroundColor: Colors.transparent,
-                      (context) => StudentBatchPicker(
+                      (context) => TrainerAppStudentBatchPicker(
                         studentId: context
                                 .read<StudentCubit>()
                                 .student

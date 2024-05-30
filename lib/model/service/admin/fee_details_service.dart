@@ -166,14 +166,49 @@ class FeeDetailsService {
     required int pageNo,
   }) async {
     try {
-      var response = await _client.get(
-          queryPath: month == null || year == null
-              ? searchQuery == '' || searchQuery == null
-                  ? '/trainers/$trainerId/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
-                  : '/trainers/$trainerId/fee-details/batch-fee-invoices?fee_type=$feeType&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo'
-              : searchQuery == '' || searchQuery == null
-                  ? '/trainers/$trainerId/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&page=$pageNo'
-                  : '/trainers/$trainerId/fee-details/batch-fee-invoices?fee_type=$feeType&year=$year&month=$month&branch_id=$branchId&batch_id=$batchId&search=$searchQuery&page=$pageNo');
+      String queryPath = '/trainers/$trainerId/fee-details/batch-fee-invoices?';
+      if (branchId != null) {
+        queryPath += 'branch_id=$branchId';
+        if (batchId != null) {
+          queryPath += '&batch_id=$batchId';
+        }
+        if ((feeType != null || feeType != 'all') &&
+            (feeType == 'class' || feeType == 'monthly')) {
+          queryPath += '&fee_type=$feeType';
+          if (searchQuery == '' || searchQuery == null) {
+            queryPath += '&page=$pageNo';
+          } else {
+            queryPath += '&search=$searchQuery';
+            queryPath += '&page=$pageNo';
+          }
+        } else {
+          if (searchQuery == '' || searchQuery == null) {
+            queryPath += '&page=$pageNo';
+          } else {
+            queryPath += '&search=$searchQuery';
+            queryPath += '&page=$pageNo';
+          }
+        }
+      } else {
+        if ((feeType != null || feeType != 'all') &&
+            (feeType == 'class' || feeType == 'monthly')) {
+          queryPath += 'fee_type=$feeType';
+          if (searchQuery == '' || searchQuery == null) {
+            queryPath += '&page=$pageNo';
+          } else {
+            queryPath += '&search=$searchQuery';
+            queryPath += '&page=$pageNo';
+          }
+        } else {
+          if (searchQuery == '' || searchQuery == null) {
+            queryPath += 'page=$pageNo';
+          } else {
+            queryPath += 'search=$searchQuery';
+            queryPath += '&page=$pageNo';
+          }
+        }
+      }
+      var response = await _client.get(queryPath: queryPath);
       return batchFeeInvoiceListFromJson(jsonEncode(response));
     } catch (e) {
       log(e.toString());

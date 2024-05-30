@@ -168,11 +168,13 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                                       setState(() {
                                         branchId = null;
                                         selectedItem = value;
+                                        batchController.clear();
                                         doSearch(true);
                                       });
                                     } else {
                                       branchId = value?.id;
                                       selectedItem = value;
+                                      batchController.clear();
                                       setState(() {
                                         doSearch(true);
                                       });

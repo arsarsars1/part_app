@@ -47,7 +47,7 @@ class _WAValidationState extends State<AdminDetails> {
                     capitalization: TextCapitalization.words,
                     maxLines: 1,
                     length: 50,
-                    title: 'Enter you name *',
+                    title: 'Enter your name *',
                     hint: 'Name',
                     onChange: (value) {
                       name = value;

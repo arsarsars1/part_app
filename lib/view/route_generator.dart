@@ -86,6 +86,7 @@ import 'package:part_app/view/notifications/notification_screen.dart';
 import 'package:part_app/view/notifications/student_app_notification_screen.dart';
 import 'package:part_app/view/notifications/trainer_app_notification_screen.dart';
 import 'package:part_app/view/profile/profile.dart';
+import 'package:part_app/view/profile/student_app_profile.dart';
 import 'package:part_app/view/profile/trainer_app_profile.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/students/add_student.dart';
@@ -239,6 +240,11 @@ class RouteGenerator {
       case Profile.route:
         return MaterialPageRoute(
           builder: (_) => const Profile(),
+          settings: settings,
+        );
+      case StudentAppProfile.route:
+        return MaterialPageRoute(
+          builder: (_) => const StudentAppProfile(),
           settings: settings,
         );
       case TrainerAppProfile.route:

@@ -123,16 +123,30 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                       ),
                       TitledText(
                         title: 'Whatsapp No',
-                        subText: '${details?.whatsappNo}',
+                        subText: details?.whatsappNo == null ||
+                                details?.whatsappNo == '0'
+                            ? 'Not Provided'
+                            : '${details?.whatsappNo}',
                       ),
                       if (details?.parentName != null)
                         TitledText(
                           title: 'Parent Name',
-                          subText: '${details?.parentName}',
+                          subText: details?.parentName == null ||
+                                  details?.parentName == ''
+                              ? 'Not Provided'
+                              : '${details?.parentName}',
                         ),
                       TitledText(
                         title: 'Date Of Birth',
-                        subText: '${details?.dob?.toDateString()}',
+                        subText: details?.dob == null
+                            ? 'Not Provided'
+                            : '${details?.dob?.toDateString()}',
+                      ),
+                      TitledText(
+                        title: 'Date Of Joining',
+                        subText: details?.doj == null
+                            ? 'Not Provided'
+                            : '${details?.doj?.toDateString()}',
                       ),
                       TitledText(
                         title: 'Gender',
@@ -140,11 +154,16 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                       ),
                       TitledText(
                         title: 'Email Id',
-                        subText: '${details?.email}',
+                        subText: details?.email == null || details?.email == ''
+                            ? 'Not Provided'
+                            : '${details?.email}',
                       ),
                       TitledText(
                         title: 'Address',
-                        subText: '${details?.address}',
+                        subText:
+                            details?.address == null || details?.address == ''
+                                ? 'Not Provided'
+                                : '${details?.address}',
                       ),
                       const SizedBox(
                         height: 16,

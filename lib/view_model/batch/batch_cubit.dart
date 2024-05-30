@@ -109,13 +109,11 @@ class BatchCubit extends Cubit<BatchState> {
     _selectedContactList.add(contact);
     if (!_studentData.contains(StudentsData(
         name: contact.displayName,
-        mobileNo:
-            contact.phones.first.number.replaceAll('+91', '')))) {
+        mobileNo: contact.phones.first.number.replaceAll('+91', '')))) {
       _studentData.add(
         StudentsData(
             name: contact.displayName,
-            mobileNo:
-                contact.phones.first.number.replaceAll('+91', '')),
+            mobileNo: contact.phones.first.number.replaceAll('+91', '')),
       );
     }
 
@@ -127,8 +125,7 @@ class BatchCubit extends Cubit<BatchState> {
         element.phones.first.number ==
         contact.phones.first.number.replaceAll('+91', ''));
     _studentData.removeWhere((element) =>
-        element.mobileNo ==
-        contact.phones.first.number.replaceAll('+91', ''));
+        element.mobileNo == contact.phones.first.number.replaceAll('+91', ''));
     emit(ContactRemoved());
   }
 
@@ -515,6 +512,53 @@ class BatchCubit extends Cubit<BatchState> {
       return;
     }
     BatchResponse? response = await _batchService.getBatchesByStatus(
+      branchId: studentId,
+      status: status,
+      search: search,
+      page: page,
+      branchSearch: studentSearch,
+    );
+
+    if (response == null) {
+      emit(BatchNetworkError());
+    } else if (response.status == 1) {
+      nextPageUrl = response.batches?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      var items = response.batches?.data
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
+
+      _batches.addAll(items);
+      emit(BatchesFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
+  Future getStudentBatchesByStatusForTrainer({
+    required int trainerId,
+    int? studentId,
+    String status = 'ongoing',
+    String? search,
+    bool clean = false,
+    bool studentSearch = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(FetchingBatches());
+    } else {
+      emit(FetchingBatches(pagination: true));
+    }
+    if (nextPageUrl == null) {
+      emit(BatchesFetched());
+      return;
+    }
+    BatchResponse? response = await _batchService.getBatchesByStatusForTrainer(
+      trainerId: trainerId,
       branchId: studentId,
       status: status,
       search: search,
