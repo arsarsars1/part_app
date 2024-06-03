@@ -100,6 +100,21 @@ class StudentService {
     }
   }
 
+  Future<StudentResponse?> updateStudentForTrainer(
+      Map<String, dynamic> request, int? id, int trainerId) async {
+    try {
+      request.removeWhere((key, value) => value == null);
+      var response = await _client.post(
+        postPath: '/trainers/$trainerId/students/$id',
+        data: request,
+        formData: true,
+      );
+      return studentResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> updateStatus(
       {required int status, required int? studentId}) async {
     var response = await _client.get(

@@ -5,20 +5,30 @@ import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/tab_button.dart';
 import 'package:part_app/view/components/user_image.dart';
 import 'package:part_app/view/constants/constant.dart';
-import 'package:part_app/view/students/student_details.dart';
+import 'package:part_app/view/students/trainer_app_student_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAppBatchStudents extends StatefulWidget {
   final ValueChanged<bool> onChange;
 
-  const TrainerAppBatchStudents({Key? key, required this.onChange}) : super(key: key);
+  const TrainerAppBatchStudents({Key? key, required this.onChange})
+      : super(key: key);
 
   @override
-  State<TrainerAppBatchStudents> createState() => _TrainerAppBatchStudentsState();
+  State<TrainerAppBatchStudents> createState() =>
+      _TrainerAppBatchStudentsState();
 }
 
 class _TrainerAppBatchStudentsState extends State<TrainerAppBatchStudents> {
   String studentText = 'Active Students';
+  AuthCubit? authCubit;
+
+  @override
+  void initState() {
+    authCubit = context.read<AuthCubit>();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var studentCubit = context.read<StudentCubit>();
@@ -75,10 +85,17 @@ class _TrainerAppBatchStudentsState extends State<TrainerAppBatchStudents> {
 
                     return GestureDetector(
                       onTap: () {
-                        studentCubit.studentDetails(student.detailId);
+                        studentCubit.studentDetailsForTrainer(
+                            trainerId: authCubit
+                                    ?.user
+                                    ?.trainerDetail?[
+                                        authCubit?.trainerIndex ?? 0]
+                                    .id ??
+                                0,
+                            studentId: student.id);
                         Navigator.pushNamed(
                           context,
-                          StudentDetails.route,
+                          TrainerAppStudentDetails.route,
                         );
                       },
                       child: Container(

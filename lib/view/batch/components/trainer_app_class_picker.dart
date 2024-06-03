@@ -134,7 +134,7 @@ class _TrainerAppClassPickerState extends State<TrainerAppClassPicker> {
                       height: 15.h,
                     ),
                     const Center(
-                      child: Text('Something went wrong'),
+                      child: Text('Something went wrong1'),
                     ),
                   ],
                 ),

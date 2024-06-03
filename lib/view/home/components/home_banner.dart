@@ -33,16 +33,6 @@ class _HomeBannerState extends State<HomeBanner> {
   late String formattedString = toTime.formattedString();
 
   @override
-  void initState() {
-    // bool temp = Hive.box(Database.userBox).get("Showcase") ?? false;
-    // if (temp == false) {
-    //   ShowCaseWidget.of(context)
-    //       .startShowCase([context.read<HomeCubit>().keyCap[9]]);
-    // }
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var authCubit = context.read<AuthCubit>();
     var cubit = context.read<HomeCubit>();

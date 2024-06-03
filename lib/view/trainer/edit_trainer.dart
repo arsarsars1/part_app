@@ -278,6 +278,7 @@ class _EditTrainerState extends State<EditTrainer> {
                               whatsappNo: whatsappNo ?? phone,
                               dob: dob,
                               address: address,
+                              expertise: areaOfExpertise,
                             );
 
                             trainerCubit.updateTrainer(

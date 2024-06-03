@@ -35,6 +35,9 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
   DateTime? finalDate = DateTime.now();
   String? feeType;
   final _dropDownKey = GlobalKey<FormFieldState>();
+  bool branchSelected = false;
+  DropDownItem? selectedItem;
+  BranchCubit? branchCubit;
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController feeTypeController = TextEditingController();
@@ -43,18 +46,26 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FeeCubit>().clean();
-      var branchCubit = context.read<BranchCubit>();
+      branchCubit = context.read<BranchCubit>();
       authCubit = context.read<AuthCubit>();
-      branchId = branchCubit.firstBranch?.id;
-      setState(() {
-        context.read<BatchCubit>().getBatchesByBranchForTrainer(
-              trainerId: authCubit
-                      ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
-                  0,
-              branchId: branchId,
-              clean: true,
-            );
-      });
+      branchCubit?.getBranchesForTrainer(
+        trainerId:
+            authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+                0,
+      );
+      doSearch(true);
+      // branchId = branchCubit.firstBranch?.id;
+      // setState(() {
+      //   context.read<BatchCubit>().getBatchesByBranchForTrainer(
+      //         trainerId: authCubit
+      //                 ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
+      //             0,
+      //         branchId: branchId,
+      //         clean: true,
+      //       );
+      // });
+      batchController.text = 'All';
+      feeTypeController.text = 'All';
     });
     // Pagination listener
     scrollController.addListener(() {
@@ -138,29 +149,124 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    TrainerAppBranchField(
-                      onSelect: (value) {
-                        setState(() {
-                          branchId = value;
-                        });
-                        batchController.clear();
-                        feeTypeController.clear();
-                        dateController.clear();
-                        batch = null;
-                        feeType = null;
-                        _dropDownKey.currentState?.reset();
-                        cubit.batchInvoice.clear();
-                        feeTypeController.clear();
-                        context.read<BatchCubit>().getBatchesByBranchForTrainer(
-                              trainerId: authCubit
-                                      ?.user
-                                      ?.trainerDetail?[
-                                          authCubit?.trainerIndex ?? 0]
-                                      .id ??
-                                  0,
-                              branchId: branchId,
-                              clean: true,
-                            );
+                    // TrainerAppBranchField(
+                    //   onSelect: (value) {
+                    //     setState(() {
+                    //       branchId = value;
+                    //     });
+                    //     batchController.clear();
+                    //     feeTypeController.clear();
+                    //     dateController.clear();
+                    //     batch = null;
+                    //     feeType = null;
+                    //     _dropDownKey.currentState?.reset();
+                    //     cubit.batchInvoice.clear();
+                    //     feeTypeController.clear();
+                    //     context.read<BatchCubit>().getBatchesByBranchForTrainer(
+                    //           trainerId: authCubit
+                    //                   ?.user
+                    //                   ?.trainerDetail?[
+                    //                       authCubit?.trainerIndex ?? 0]
+                    //                   .id ??
+                    //               0,
+                    //           branchId: branchId,
+                    //           clean: true,
+                    //         );
+                    //   },
+                    // ),
+                    BlocBuilder<BranchCubit, BranchState>(
+                      builder: (context, state) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Branch *',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              DropdownButtonFormField<DropDownItem>(
+                                dropdownColor: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .fillColor,
+                                value:
+                                    selectedItem ?? const DropDownItem(id: -1),
+                                decoration: const InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 32),
+                                ),
+                                items: [
+                                  DropdownMenuItem(
+                                    value: const DropDownItem(id: -1),
+                                    child: SizedBox(
+                                      width: 200.w,
+                                      child: Text(
+                                        'All',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: Colors.white,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                  ...(branchCubit?.dropDownBranches().map((e) {
+                                            return DropdownMenuItem(
+                                              value: e,
+                                              child: SizedBox(
+                                                width: 200.w,
+                                                child: Text(
+                                                  e.title ?? '',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge
+                                                      ?.copyWith(
+                                                        color: Colors.white,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                ),
+                                              ),
+                                            );
+                                          }) ??
+                                          [])
+                                      .toList()
+                                ],
+                                onChanged: (value) {
+                                  if (value?.id == -1) {
+                                    branchSelected = false;
+                                    batchController.text = 'All';
+                                  } else {
+                                    branchSelected = true;
+                                    setState(() {
+                                      branchId = value?.id;
+                                    });
+                                    batchController.clear();
+                                    feeTypeController.clear();
+                                    dateController.clear();
+                                    batch = null;
+                                    // feeType = null;
+                                    _dropDownKey.currentState?.reset();
+                                    cubit.batchInvoice.clear();
+                                    feeTypeController.clear();
+                                    context
+                                        .read<BatchCubit>()
+                                        .getBatchesByBranch(
+                                          branchId: branchId,
+                                          clean: true,
+                                        );
+                                    doSearch(true);
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        );
                       },
                     ),
                     const SizedBox(
@@ -240,7 +346,7 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                             dropdownColor: Theme.of(context)
                                 .inputDecorationTheme
                                 .fillColor,
-                            value: null,
+                            value: DefaultValues().feeType[0],
                             decoration: const InputDecoration(
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 32),

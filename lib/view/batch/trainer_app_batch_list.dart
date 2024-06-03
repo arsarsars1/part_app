@@ -70,7 +70,7 @@ class _TrainerAppBatchesPageState extends State<TrainerAppBatchesPage> {
     cubit.reset();
 
     return Scaffold(
-      appBar: const CommonBar(title: 'Batches 123'),
+      appBar: const CommonBar(title: 'Batches'),
       body: SafeArea(
         child: Column(
           children: [

@@ -47,8 +47,28 @@ class _StudentAttendanceCalenderViewState
         branchSearch: false,
         status: 'ongoing',
       );
-      batch = batchCubit?.batches[0];
-      batchController.text = batchCubit?.batches[0].name ?? "";
+      // batchCubit?.batches.forEach((batch) {
+      //   context
+      //       .read<StudentCubit>()
+      //       .getStudents(
+      //         batchId: batch.id,
+      //         searchQuery: null,
+      //         activeStatus: null,
+      //         clean: true,
+      //       )
+      //       .then(
+      //         (value) => context.read<StudentCubit>().students?.forEach(
+      //           (student) {
+      //             if (student.id !=
+      //                 studentCubit?.student?.studentDetail?[0].id) {
+      //               batchCubit?.batches.remove(batch);
+      //             }
+      //           },
+      //         ),
+      //       );
+      // });
+      batch = batchCubit?.batches[1];
+      batchController.text = batchCubit?.batches[1].name ?? "";
       cubit.id = batch?.id ?? 0;
       await cubit.getAttendenceOfStudentOfMonth(
           studentDetailId: studentCubit?.student?.studentDetail?[0].id,

@@ -102,6 +102,7 @@ import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view/students/trainer_app_add_student.dart';
 import 'package:part_app/view/students/trainer_app_assign_batch.dart';
 import 'package:part_app/view/students/trainer_app_assign_student_batch.dart';
+import 'package:part_app/view/students/trainer_app_edit_student.dart';
 import 'package:part_app/view/students/trainer_app_edit_student_batches.dart';
 import 'package:part_app/view/students/trainer_app_student_attendence.dart';
 import 'package:part_app/view/students/trainer_app_student_details.dart';
@@ -521,6 +522,11 @@ class RouteGenerator {
       case EditStudent.route:
         return MaterialPageRoute(
           builder: (_) => const EditStudent(),
+          settings: settings,
+        );
+      case TrainerAppEditStudent.route:
+        return MaterialPageRoute(
+          builder: (_) => const TrainerAppEditStudent(),
           settings: settings,
         );
       case EditStudentBatches.route:

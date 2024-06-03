@@ -200,6 +200,25 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
+  Future updateStudentForTrainer(int trainerId, StudentRequest request) async {
+    emit(UpdatingStudent());
+    StudentResponse? response = await _studentService.updateStudentForTrainer(
+      request.toJson(),
+      _student?.studentDetail?[0].id,
+      trainerId,
+    );
+
+    if (response?.status == 1) {
+      _student = response?.student;
+      updateStudentsList();
+      emit(UpdatedStudent());
+    } else {
+      emit(
+        UpdateStudentFailed(response?.message ?? 'Failed to update student'),
+      );
+    }
+  }
+
   Future updateProfilePic({required File profilePic}) async {
     emit(UpdatingStudent());
     MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);

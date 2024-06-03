@@ -40,8 +40,8 @@ class _DashboardIconsState extends State<DashboardIcons> {
     'A quick view into daily academy schedule',
     'Add Link and notify students about an Online class',
     'Coming Soon',
-    'Manage the Leads details here',
-    'Add/Remove and alsoEdit batches here',
+    'Manage the Branch details here',
+    'Add/Remove/Edit batches here',
   ];
 
   @override

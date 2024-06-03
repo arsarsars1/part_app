@@ -376,9 +376,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                       hint: 'Select a fee type',
                       dropDown: true,
                       dropDownItems: DefaultValues().feeType,
-                      defaultItem: DefaultValues().feeType.firstWhere(
-                            (element) => element.title?.toLowerCase() == 'all',
-                          ),
+                      defaultItem: DefaultValues().feeType[0],
                       onChange: (value) {
                         feeType = value?.id;
                         doSearch(true);

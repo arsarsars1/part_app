@@ -234,7 +234,7 @@ class _TrainerAppProfileState extends State<TrainerAppProfile> {
               CommonField(
                 initialValue:
                     cubit.user?.trainerDetail?[cubit.trainerIndex].email,
-                title: 'Enter Email *',
+                title: 'Enter Email',
                 hint: 'Eg: contact@polestar.com',
                 onChange: (value) {
                   email = value;
@@ -248,7 +248,7 @@ class _TrainerAppProfileState extends State<TrainerAppProfile> {
                 disabled: true,
                 controller: dobController,
                 hint: 'dd/mm/yyyy',
-                title: 'Date of Birth *',
+                title: 'Date of Birth',
                 onChange: (value) {},
               ),
               const SizedBox(

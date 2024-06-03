@@ -8,7 +8,7 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/fee/trainer_app_student_admission_fee_details.dart';
 import 'package:part_app/view/fee/trainer_app_student_fee_details.dart';
-import 'package:part_app/view/students/edit_student.dart';
+import 'package:part_app/view/students/trainer_app_edit_student.dart';
 import 'package:part_app/view/students/trainer_app_edit_student_batches.dart';
 import 'package:part_app/view/students/trainer_app_student_attendence.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -99,7 +99,8 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, EditStudent.route);
+                              Navigator.pushNamed(
+                                  context, TrainerAppEditStudent.route);
                             },
                             child: Container(
                               width: 24.w,
