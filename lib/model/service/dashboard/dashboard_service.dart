@@ -171,7 +171,29 @@ class DashboardService {
   Future<List<FaqList?>?> getFAQList({String? page}) async {
     try {
       var response = await _apiClient.get(
-        queryPath: '/faqs',
+        queryPath: '/faqs/admin',
+      );
+      return faqListFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<List<FaqList?>?> getFAQListForStudent({String? page}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/faqs/student',
+      );
+      return faqListFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<List<FaqList?>?> getFAQListForTrainer({String? page}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/faqs/trainer',
       );
       return faqListFromJson(jsonEncode(response));
     } catch (e) {

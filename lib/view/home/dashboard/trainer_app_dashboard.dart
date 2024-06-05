@@ -27,7 +27,7 @@ class _TrainerAppDashboardState extends State<TrainerAppDashboard> {
                     ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
                 0,
           );
-      context.read<HomeCubit>().getFAQ();
+      context.read<HomeCubit>().getFAQForTrainer();
     });
   }
 

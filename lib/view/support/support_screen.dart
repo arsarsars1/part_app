@@ -29,7 +29,7 @@ class _SupportScreenState extends State<SupportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<FaqList?>? faqList = cubit?.faqList;
+    List<FaqList?> faqList = cubit?.faqList ?? [];
     return Scaffold(
       appBar: const CommonBar(
         title: 'Support',
@@ -121,9 +121,9 @@ class _SupportScreenState extends State<SupportScreen> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: faqList?.length,
+                itemCount: faqList.length,
                 itemBuilder: (context, index) {
-                  FaqList? faq = faqList?[index];
+                  FaqList? faq = faqList[index];
                   return Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),

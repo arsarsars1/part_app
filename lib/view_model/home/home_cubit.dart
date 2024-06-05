@@ -612,6 +612,32 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  /// this method is used to get the classes of a batch in a particular month
+  Future getFAQForTrainer() async {
+    _faqList?.clear();
+    emit(FetchingFAQ());
+    List<FaqList?>? response = await _service.getFAQListForTrainer();
+    if ((response ?? []).isNotEmpty) {
+      _faqList = response;
+      emit(FetchedFAQ());
+    } else {
+      emit(FetchFAQFailed("Error fetching the FAQ List"));
+    }
+  }
+
+  /// this method is used to get the classes of a batch in a particular month
+  Future getFAQForStudent() async {
+    _faqList?.clear();
+    emit(FetchingFAQ());
+    List<FaqList?>? response = await _service.getFAQListForStudent();
+    if ((response ?? []).isNotEmpty) {
+      _faqList = response;
+      emit(FetchedFAQ());
+    } else {
+      emit(FetchFAQFailed("Error fetching the FAQ List"));
+    }
+  }
+
   Future<int> sendSupportRequest(Map<String, dynamic> data) async {
     try {
       Common? response = await _service.sendSupportRequest(data);
