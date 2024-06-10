@@ -8,6 +8,7 @@ import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClassLinkList extends StatefulWidget {
   static const route = '/class-link/list';
@@ -239,14 +240,21 @@ class _ClassLinkListState extends State<ClassLinkList> {
                                   SizedBox(
                                     height: 10.h,
                                   ),
-                                  Text(
-                                    classLink.link ?? 'N/A',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: AppColors.defaultBlue,
-                                        ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      launchUrl(
+                                        Uri.parse(classLink.link ?? 'N/A'),
+                                      );
+                                    },
+                                    child: Text(
+                                      classLink.link ?? 'N/A',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            color: AppColors.defaultBlue,
+                                          ),
+                                    ),
                                   ),
                                 ],
                               ),

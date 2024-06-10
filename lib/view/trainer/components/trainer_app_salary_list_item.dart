@@ -292,22 +292,26 @@ class _FeeListItemState extends State<TrainerAppSalaryListItem> {
                                                     padding:
                                                         const EdgeInsets.only(
                                                             left: 5.0),
-                                                    child:
-                                                        payment.isDeleted != 1
-                                                            ? Text(
-                                                                "${payment.paymentDate?.toDateString()}",
-                                                              )
-                                                            : Text(
-                                                                "${payment.paymentDate?.toDateString()}",
-                                                                style: TextStyle(
-                                                                    color: AppColors
-                                                                        .grey700,
-                                                                    decorationThickness:
-                                                                        2.85,
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .lineThrough),
-                                                              ),
+                                                    child: payment.isDeleted !=
+                                                            1
+                                                        ? Text(
+                                                            "${payment.paymentDate?.toDateString()}",
+                                                            style: TextStyle(
+                                                              fontSize: 11.sp,
+                                                            ),
+                                                          )
+                                                        : Text(
+                                                            "${payment.paymentDate?.toDateString()}",
+                                                            style: TextStyle(
+                                                                fontSize: 11.sp,
+                                                                color: AppColors
+                                                                    .grey700,
+                                                                decorationThickness:
+                                                                    2.85,
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .lineThrough),
+                                                          ),
                                                   ),
                                                 )),
                                           ),
@@ -327,6 +331,9 @@ class _FeeListItemState extends State<TrainerAppSalaryListItem> {
                                                                 "cash"
                                                             ? "In Hand Payment"
                                                             : "${payment.paymentMethod}",
+                                                        style: TextStyle(
+                                                          fontSize: 11.sp,
+                                                        ),
                                                       )
                                                     : Text(
                                                         payment.paymentMethod ==
@@ -334,6 +341,7 @@ class _FeeListItemState extends State<TrainerAppSalaryListItem> {
                                                             ? "In Hand Payment"
                                                             : "${payment.paymentMethod}",
                                                         style: TextStyle(
+                                                            fontSize: 11.sp,
                                                             color: AppColors
                                                                 .grey700,
                                                             decorationThickness:
@@ -361,22 +369,26 @@ class _FeeListItemState extends State<TrainerAppSalaryListItem> {
                                                     padding:
                                                         const EdgeInsets.only(
                                                             right: 5.0),
-                                                    child:
-                                                        payment.isDeleted != 1
-                                                            ? Text(
-                                                                "₹ ${payment.amount}",
-                                                              )
-                                                            : Text(
-                                                                "₹ ${payment.amount}",
-                                                                style: TextStyle(
-                                                                    color: AppColors
-                                                                        .grey700,
-                                                                    decorationThickness:
-                                                                        2.85,
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .lineThrough),
-                                                              ),
+                                                    child: payment.isDeleted !=
+                                                            1
+                                                        ? Text(
+                                                            "₹ ${payment.amount}",
+                                                            style: TextStyle(
+                                                              fontSize: 11.sp,
+                                                            ),
+                                                          )
+                                                        : Text(
+                                                            "₹ ${payment.amount}",
+                                                            style: TextStyle(
+                                                                fontSize: 11.sp,
+                                                                color: AppColors
+                                                                    .grey700,
+                                                                decorationThickness:
+                                                                    2.85,
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .lineThrough),
+                                                          ),
                                                   ),
                                                 )),
                                           ),

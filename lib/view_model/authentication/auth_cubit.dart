@@ -552,6 +552,16 @@ class AuthCubit extends Cubit<AuthState> {
       } else {
         url = "https://v1.partapp.in/images/avatars/avatar-1.png";
       }
+    } else if (accountType == AccountType.trainer) {
+      if (user?.trainerDetail?[trainerIndex].profilePic?.isNotEmpty ?? false) {
+        url =
+            '${F.baseUrl}/trainers/${user?.trainerDetail?[trainerIndex].id}/images/profile-pic'
+            '/${user?.trainerDetail?[trainerIndex].profilePic}';
+      } else if (user?.adminDetail?.gender == "male") {
+        url = "https://v1.partapp.in/images/avatars/avatar-5.png";
+      } else {
+        url = "https://v1.partapp.in/images/avatars/avatar-1.png";
+      }
     }
     return url;
   }

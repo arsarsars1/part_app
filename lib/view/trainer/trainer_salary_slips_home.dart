@@ -24,7 +24,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
   int? branchId;
   String? query;
 
-  int? year;
+  int? year = DateTime.now().year;
   int? month;
   DateTime? finalDate = DateTime.now();
   String? feeType;

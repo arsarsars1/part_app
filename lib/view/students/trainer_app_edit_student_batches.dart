@@ -3,8 +3,8 @@ import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/home/trainer_app_home.dart';
-import 'package:part_app/view/students/edit_assigned_batch.dart';
 import 'package:part_app/view/students/trainer_app_assign_batch.dart';
+import 'package:part_app/view/students/trainer_app_edit_assigned_batch.dart';
 import 'package:part_app/view/students/trainer_app_student_details.dart';
 import 'package:part_app/view/students/widgets/remove_student.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -217,10 +217,18 @@ class _TrainerAppEditStudentBatchesState
                               onEdit: () {
                                 context
                                     .read<BatchCubit>()
-                                    .getBatch(batchId: '${batch.id}');
+                                    .getBatchForTrainerDetail(
+                                        trainerId: authCubit
+                                                ?.user
+                                                ?.trainerDetail?[
+                                                    authCubit?.trainerIndex ??
+                                                        0]
+                                                .id ??
+                                            0,
+                                        batchId: '${batch.id}');
                                 Navigator.pushNamed(
                                   context,
-                                  EditAssignedBatch.route,
+                                  TrainerAppEditAssignedBatch.route,
                                   arguments: true,
                                 );
                               },

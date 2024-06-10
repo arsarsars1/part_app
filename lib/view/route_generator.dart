@@ -102,6 +102,7 @@ import 'package:part_app/view/students/students_view.dart';
 import 'package:part_app/view/students/trainer_app_add_student.dart';
 import 'package:part_app/view/students/trainer_app_assign_batch.dart';
 import 'package:part_app/view/students/trainer_app_assign_student_batch.dart';
+import 'package:part_app/view/students/trainer_app_edit_assigned_batch.dart';
 import 'package:part_app/view/students/trainer_app_edit_student.dart';
 import 'package:part_app/view/students/trainer_app_edit_student_batches.dart';
 import 'package:part_app/view/students/trainer_app_student_attendence.dart';
@@ -566,6 +567,13 @@ class RouteGenerator {
       case EditAssignedBatch.route:
         return MaterialPageRoute(
           builder: (_) => EditAssignedBatch(
+            editStudent: settings.arguments as bool,
+          ),
+          settings: settings,
+        );
+      case TrainerAppEditAssignedBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => TrainerAppEditAssignedBatch(
             editStudent: settings.arguments as bool,
           ),
           settings: settings,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
+import 'package:part_app/view/components/components.dart';
 
 class CommonField extends StatelessWidget {
   final String title;
@@ -32,7 +33,7 @@ class CommonField extends StatelessWidget {
   final bool showInfo;
   final String toolTipMessage;
   final double verticalPadding;
-  
+
   final Icon? prefixIcon;
   final TextCapitalization capitalization;
 
@@ -72,7 +73,8 @@ class CommonField extends StatelessWidget {
     this.showInfo = false,
     this.capitalization = TextCapitalization.sentences,
     this.toolTipMessage = 'Info not available.',
-    this.verticalPadding = 0, this.enabled = true,
+    this.verticalPadding = 0,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -80,6 +82,12 @@ class CommonField extends StatelessWidget {
     DropDownItem? selectedItem;
     return GestureDetector(
       onTap: () {
+        if (disabled) {
+          Alert(context).show(
+              message:
+                  'You don\'t have authersation to change the academy type');
+          return;
+        }
         if (dropDown && onTap != null) {
           onTap!();
         }
@@ -113,23 +121,19 @@ class CommonField extends StatelessWidget {
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.symmetric(horizontal: 32),
                     ),
-                    items: disabled
-                        ? null
-                        : dropDownItems?.map((e) {
-                            return DropdownMenuItem(
-                              value: e,
-                              child: Text(
-                                e.title ?? '',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: Colors.white,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                              ),
-                            );
-                          }).toList(),
+                    items: dropDownItems?.map((e) {
+                      return DropdownMenuItem(
+                        value: e,
+                        child: Text(
+                          e.title ?? '',
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Colors.white,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                        ),
+                      );
+                    }).toList(),
                     onSaved: (value) {
                       selectedItem = value;
                       onChange(value);

@@ -12,9 +12,7 @@ import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
-
 import '../../flavors.dart';
-import 'change_phone.dart';
 
 class StudentAppProfile extends StatefulWidget {
   static const route = '/student-app-profile';
@@ -183,7 +181,7 @@ class _StudentAppProfileState extends State<StudentAppProfile> {
                   height: 30.h,
                   disable: true,
                   onTap: () {
-                    Navigator.pushNamed(context, ChangePhoneScreen.route);
+                    // Navigator.pushNamed(context, ChangePhoneScreen.route);
                   },
                   title: 'Change Phone Number',
                 ),
@@ -267,7 +265,7 @@ class _StudentAppProfileState extends State<StudentAppProfile> {
                 initialValue: isAdmin
                     ? cubit.user?.adminDetail?.email
                     : cubit.user?.studentDetail?[cubit.studentIndex].email,
-                title: 'Enter Email *',
+                title: 'Enter Email ',
                 hint: 'Eg: contact@polestar.com',
                 onChange: (value) {
                   email = value;
@@ -281,7 +279,7 @@ class _StudentAppProfileState extends State<StudentAppProfile> {
                 disabled: true,
                 controller: dobController,
                 hint: 'dd/mm/yyyy',
-                title: 'Date of Birth *',
+                title: 'Date of Birth',
                 onChange: (value) {},
               ),
               const SizedBox(
@@ -299,7 +297,7 @@ class _StudentAppProfileState extends State<StudentAppProfile> {
                                   ?.gender
                                   ?.toLowerCase())
                           : null,
-                      title: 'Gender *',
+                      title: 'Gender',
                       onChange: (value) {
                         gender = value?.title;
                       },
@@ -320,6 +318,7 @@ class _StudentAppProfileState extends State<StudentAppProfile> {
                 height: 20,
               ),
               CommonField(
+                disabled: true,
                 enabled: isAdmin,
                 initialValue: isAdmin
                     ? cubit.user?.adminDetail?.academy?.academyName
@@ -334,53 +333,22 @@ class _StudentAppProfileState extends State<StudentAppProfile> {
               const SizedBox(
                 height: 20,
               ),
-              academyType == null
-                  ? CommonField(
-                      title: 'Academy Type *',
-                      defaultItem: cubit
-                                  .user?.adminDetail?.academy?.academyTypeId !=
-                              null
-                          ? context
-                              .read<CountryCubit>()
-                              .academyTypes
-                              .firstWhere((element) =>
-                                  element.id ==
-                                  context
-                                      .read<AuthCubit>()
-                                      .user
-                                      ?.adminDetail
-                                      ?.academy
-                                      ?.academyTypeId)
-                          : cubit.user?.studentDetail?[cubit.studentIndex]
-                                      .academy?.academyTypeId !=
-                                  null
-                              ? context
-                                  .read<CountryCubit>()
-                                  .academyTypes
-                                  .firstWhere((element) =>
-                                      element.id ==
-                                      cubit
-                                          .user
-                                          ?.studentDetail?[cubit.studentIndex]
-                                          .academy
-                                          ?.academyTypeId)
-                              : null,
-                      onChange: (value) {
-                        academyType = value?.title;
-                      },
-                      hint: 'Select Academy Type',
-                      dropDown: true,
-                      dropDownItems: context.read<CountryCubit>().academyTypes,
-                    )
-                  : CommonField(
-                      initialValue: academyType,
-                      disabled: true,
-                      title: 'Academy Type',
-                      hint: 'Enter the academy name',
-                      onChange: (value) {
-                        // academyName = value;
-                      },
-                    ),
+              CommonField(
+                initialValue: context
+                    .read<CountryCubit>()
+                    .academyTypes
+                    .firstWhere((element) =>
+                        element.id ==
+                        cubit.user?.studentDetail?[cubit.studentIndex].academy
+                            ?.academyTypeId)
+                    .title,
+                disabled: true,
+                title: 'Academy Type',
+                hint: 'Enter the academy name',
+                onChange: (value) {
+                  // academyName = value;
+                },
+              ),
             ],
           ),
         );

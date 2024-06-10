@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:part_app/model/data_model/branch_trainer_response.dart';
@@ -221,21 +219,46 @@ class TrainerService {
     required int pageNo,
   }) async {
     try {
-      log(branchId.toString());
-
+      String queryPath;
       if (branchId == null) {
-        var response = await _client.get(
-            queryPath: month != null
-                ? '/admin/trainers/$trainerId/salary-history/$year/$month&page=$pageNo'
-                : '/admin/trainers/$trainerId/salary-history/$year&page=$pageNo');
-        return trainerSalarySlipFromJson(jsonEncode(response));
+        queryPath = '/admin';
+        if (trainerId != null) {
+          queryPath += '/trainers/$trainerId';
+        }
+        if (year != null) {
+          queryPath += '/salary-history/$year';
+          if (month != null) {
+            queryPath += '/$month';
+          }
+        }
       } else {
-        var response = await _client.get(
-            queryPath: month != null
-                ? '/admin/salary/trainers?branch_id=$branchId&year=$year&month=$month&page=$pageNo&search=${searchQuery ?? ''}'
-                : '/admin/salary/trainers?branch_id=$branchId&year=$year&page=$pageNo&search=${searchQuery ?? ''}');
-        return trainerSalarySlipFromJson(jsonEncode(response));
+        queryPath = '/admin/salary/trainers?branch_id=$branchId';
+        if (year != null) {
+          queryPath += '&year=$year';
+          if (month != null) {
+            queryPath += '&month=$month';
+          }
+        }
       }
+      if (searchQuery != null && searchQuery != '') {
+        queryPath += '&search=$searchQuery';
+      }
+      queryPath += '&page=$pageNo';
+      // if (branchId == null) {
+      //   var response = await _client.get(
+      //       queryPath: month != null
+      //           ? '/admin/trainers/$trainerId/salary-history/$year/$month&page=$pageNo'
+      //           : '/admin/trainers/$trainerId/salary-history/$year&page=$pageNo');
+      //   return trainerSalarySlipFromJson(jsonEncode(response));
+      // } else {
+      //   var response = await _client.get(
+      //       queryPath: month != null
+      //           ? '/admin/salary/trainers?branch_id=$branchId&year=$year&month=$month&page=$pageNo&search=${searchQuery ?? ''}'
+      //           : '/admin/salary/trainers?branch_id=$branchId&year=$year&page=$pageNo&search=${searchQuery ?? ''}');
+      //   return trainerSalarySlipFromJson(jsonEncode(response));
+      // }
+      var response = await _client.get(queryPath: queryPath);
+      return trainerSalarySlipFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

@@ -74,7 +74,7 @@ class _EditSalaryTrainerState extends State<EditSalaryTrainer> {
                 CommonField(
                   initialValue: trainer?.upiId,
                   title: 'UPI ID',
-                  hint: 'Enter UPI Id',
+                  hint: 'Enter UPI ID',
                   maxLines: 1,
                   length: 50,
                   textInputAction: TextInputAction.next,

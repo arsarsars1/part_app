@@ -12,7 +12,6 @@ import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 
 import '../../flavors.dart';
-import 'change_phone.dart';
 
 class TrainerAppProfile extends StatefulWidget {
   static const route = '/trainer-app-profile';
@@ -114,6 +113,15 @@ class _TrainerAppProfileState extends State<TrainerAppProfile> {
                     } else if (state is ProfileLoaded) {
                       url =
                           '${F.baseUrl}/trainers/${cubit.user?.trainerDetail?[cubit.trainerIndex].id}/images/profile-pic/${state.profilePic}';
+                      url = cubit.user?.trainerDetail?[cubit.trainerIndex]
+                                  .profilePic !=
+                              ""
+                          ? '${F.baseUrl}/trainers/${cubit.user?.trainerDetail?[cubit.trainerIndex].id}/images/profile-pic/${cubit.user?.trainerDetail?[cubit.trainerIndex].profilePic}'
+                          : cubit.user?.trainerDetail?[cubit.trainerIndex]
+                                      .gender ==
+                                  "male"
+                              ? "https://v1.partapp.in/images/avatars/avatar-5.png"
+                              : "https://v1.partapp.in/images/avatars/avatar-1.png";
                     }
                     return ProfilePicture(
                       imageUrl: url,
@@ -152,9 +160,10 @@ class _TrainerAppProfileState extends State<TrainerAppProfile> {
               Center(
                 child: Button(
                   width: 200.w,
+                  disable: true,
                   height: 30.h,
                   onTap: () {
-                    Navigator.pushNamed(context, ChangePhoneScreen.route);
+                    // Navigator.pushNamed(context, ChangePhoneScreen.route);
                   },
                   title: 'Change Phone Number',
                 ),

@@ -504,7 +504,7 @@ class StudentCubit extends Cubit<StudentState> {
     );
 
     if (common?.status == 1) {
-      getStudentBatches();
+      getStudentBatchesForTrainer(trainerId: trainerId);
       emit(RemovedStudent());
     } else {
       emit(RemoveStudentFailed(common?.message ?? 'Failed to remove student'));

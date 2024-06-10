@@ -142,11 +142,16 @@ class _AddTrainerState extends State<AddTrainer> {
                         phone = contact?.phoneNumbers?.first
                             .replaceAll('+91', '')
                             .replaceAll(' ', '');
+                        phone =
+                            contact?.phoneNumbers?.first.replaceAll('-', '');
                         whatsappNo = phone;
                         phoneController.text =
                             (contact?.phoneNumbers?.first ?? '')
                                 .replaceAll('+91', '')
                                 .replaceAll(' ', '');
+                        phoneController.text =
+                            (contact?.phoneNumbers?.first ?? '')
+                                .replaceAll('-', '');
                       });
                     },
                     child: Icon(
@@ -166,6 +171,8 @@ class _AddTrainerState extends State<AddTrainer> {
                       return 'Please enter number.';
                     } else if (value.toString().length < 10) {
                       return 'Invalid phone number.';
+                    } else if (value.toString().contains('-')) {
+                      return 'Remove the \'-\'';
                     }
 
                     return null;

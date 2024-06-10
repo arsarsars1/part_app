@@ -256,7 +256,14 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                                     feeTypeController.clear();
                                     context
                                         .read<BatchCubit>()
-                                        .getBatchesByBranch(
+                                        .getBatchesByBranchForTrainer(
+                                          trainerId: authCubit
+                                                  ?.user
+                                                  ?.trainerDetail?[
+                                                      authCubit?.trainerIndex ??
+                                                          0]
+                                                  .id ??
+                                              0,
                                           branchId: branchId,
                                           clean: true,
                                         );
@@ -416,14 +423,15 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                       height: 20,
                     ),
                     CommonField(
-                      disabled: batch == null,
                       title: 'Search',
                       hint: 'Search By Name or Phone Number',
                       onChange: (value) {
                         if (value.isEmpty) {
                           query = null;
-                          doSearch(true);
+                        } else {
+                          query = value;
                         }
+                        doSearch(true);
                       },
                       onSubmit: (value) {
                         if (value.isEmpty) {
