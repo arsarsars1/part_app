@@ -341,9 +341,8 @@ class _BatchDetailsState extends State<BatchDetails> {
                               onTap: () {
                                 batchCubit.isFromBatchDetail = true;
                                 Navigator.pushNamed(
-                                  context,
-                                  StudentPicker.route,
-                                );
+                                    context, StudentPicker.route,
+                                    arguments: {"isTrainer": false});
                               },
                               child: Container(
                                 height: 34.h,

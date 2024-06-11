@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
@@ -283,6 +283,27 @@ class BatchCubit extends Cubit<BatchState> {
         emit(UpdatedBatch());
       } else {
         emit(UpdateBatchFailed(response?.message ?? 'Failed to update batch.'));
+      }
+    } catch (e) {
+      emit(UpdateBatchFailed('Failed to update batch.'));
+    }
+  }
+
+  Future updateTrainerStudents(BatchRequest request,
+      {bool isTrainer = false, int? trainerDetailId}) async {
+    emit(UpdatingBatch());
+    try {
+      if (isTrainer && trainerDetailId != null) {
+        Common? response = await _batchService.updateTrainerStudents(
+            request, _batchModel?.id, trainerDetailId);
+        if (response?.status == 1) {
+          emit(UpdatedTrainerStudentBatch());
+        } else {
+          emit(UpdateBatchFailed(
+              response?.message ?? 'Failed to update batch.'));
+        }
+      } else {
+        emit(UpdateBatchFailed('Failed to update batch.'));
       }
     } catch (e) {
       emit(UpdateBatchFailed('Failed to update batch.'));

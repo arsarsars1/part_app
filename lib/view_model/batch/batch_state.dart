@@ -41,6 +41,8 @@ class UpdatingBatch extends BatchState {}
 
 class UpdatedBatch extends BatchState {}
 
+class UpdatedTrainerStudentBatch extends BatchState {}
+
 class UpdateBatchFailed extends BatchState {
   final String message;
 

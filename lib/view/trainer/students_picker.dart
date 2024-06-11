@@ -18,15 +18,25 @@ class StudentPicker extends StatefulWidget {
 }
 
 class _StudentPickerState extends State<StudentPicker> {
+  AuthCubit? authCubit;
   bool isLoading = true;
   PermissionStatus? permission;
   List<Contact>? contacts = [];
   List<Contact>? backUpContacts = [];
   List<Contact>? selectedContacts = [];
   List<Contact>? filteredData = [];
+  bool isTrainer = false;
+  late BatchCubit cubit;
   @override
   void initState() {
     super.initState();
+    authCubit = context.read<AuthCubit>();
+    Future.microtask(() {
+      setState(() => isLoading = true);
+      final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+      isTrainer = arguments['isTrainer'];
+      setState(() => isLoading = false);
+    });
     context.read<BatchCubit>().selectedContactList.clear();
     _askPermissions();
   }
@@ -75,31 +85,45 @@ class _StudentPickerState extends State<StudentPicker> {
           appBar: CommonBar(
             title: 'Select Students ( ${selectedContacts?.length} selected )',
           ),
-          bottomNavigationBar: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 15.h),
-            child: Button(
-              onTap: () {
-                if (cubit.isFromBatchDetail) {
-                  selectedContacts?.forEach((element) {
-                    cubit.addContact(element);
-                  });
-                  BatchRequest request;
-                  request = BatchRequest(
-                    students: cubit.buildStudentList(),
-                  );
-                  cubit.updateBatch(request);
-                  Navigator.pop(context);
-                } else {
-                  selectedContacts?.forEach((element) {
-                    cubit.addContact(element);
-                  });
-                  Navigator.pop(context);
-                }
-              },
-              disable: (selectedContacts ?? []).isEmpty,
-              title: 'Add',
-            ),
-          ),
+          bottomNavigationBar: isLoading
+              ? const SizedBox.shrink()
+              : Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 50.w, vertical: 15.h),
+                  child: Button(
+                    onTap: () {
+                      if (cubit.isFromBatchDetail) {
+                        selectedContacts?.forEach((element) {
+                          cubit.addContact(element);
+                        });
+                        BatchRequest request;
+                        request = BatchRequest(
+                          students: cubit.buildStudentList(),
+                        );
+                        if (isTrainer) {
+                          cubit.updateTrainerStudents(request,
+                              isTrainer: isTrainer,
+                              trainerDetailId: authCubit
+                                      ?.user
+                                      ?.trainerDetail?[
+                                          authCubit?.trainerIndex ?? 0]
+                                      .id ??
+                                  0);
+                        } else {
+                          cubit.updateBatch(request);
+                        }
+                        Navigator.pop(context);
+                      } else {
+                        selectedContacts?.forEach((element) {
+                          cubit.addContact(element);
+                        });
+                        Navigator.pop(context);
+                      }
+                    },
+                    disable: (selectedContacts ?? []).isEmpty,
+                    title: 'Add',
+                  ),
+                ),
           body: isLoading
               ? const Center(
                   child: CircularProgressIndicator(),
