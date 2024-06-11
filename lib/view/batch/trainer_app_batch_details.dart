@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/models.dart';
@@ -11,8 +10,8 @@ import 'package:part_app/view/batch/trainer_app_edit_batch_details.dart';
 import 'package:part_app/view/batch/trainer_app_reschedule_class.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/view/trainer/students_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
-import 'package:share_plus/share_plus.dart';
 
 class TrainerAppBatchDetails extends StatefulWidget {
   static const route = '/trainer-app-batch/details';
@@ -77,7 +76,11 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
             Expanded(
               child: BlocConsumer<BatchCubit, BatchState>(
                 listener: (context, state) {
-                  if (state is UpdatedBatch) {
+                  if (state is UpdatedTrainerStudentBatch) {
+                    Alert(context)
+                        .show(message: 'Student Updated Successfully.');
+                    doSearch();
+                  } else if (state is UpdatedBatch) {
                     Alert(context).show(message: 'Batch Updated Successfully.');
                   } else if (state is UpdateBatchFailed) {
                     Alert(context).show(message: state.message);
@@ -180,32 +183,32 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 15.w,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Share.share(
-                                            'Hello ${authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].academy?.academyName} Student,\nWelcome To PartApp!!!\nNever miss another update from ${authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].academy?.academyName} again.\n\nYou are only 50 seconds away from being part of a dynamic community of artists!!! \n\nStep 1: Download PartApp here\n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batchCubit.sharedToken}\n\nStep 2: Click the link to register as a student in ${authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].academy?.academyName}\'s PartApp.\n\nNB: We request you to avoid using the \'Join Now\' button in the app. Kindly use the second link to register as a Student.');
-                                      },
-                                      child: Container(
-                                        width: 24.w,
-                                        height: 24.w,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.black54,
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 2,
-                                          ),
-                                        ),
-                                        child: const Icon(
-                                          Icons.share,
-                                          size: 16,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
+                                    // SizedBox(
+                                    //   width: 15.w,
+                                    // ),
+                                    // GestureDetector(
+                                    //   onTap: () {
+                                    //     Share.share(
+                                    //         'Hello ${authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].academy?.academyName} Student,\nWelcome To PartApp!!!\nNever miss another update from ${authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].academy?.academyName} again.\n\nYou are only 50 seconds away from being part of a dynamic community of artists!!! \n\nStep 1: Download PartApp here\n ${F.baseUrl.replaceAll('/api', '')}/join-batch/${batchCubit.sharedToken}\n\nStep 2: Click the link to register as a student in ${authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].academy?.academyName}\'s PartApp.\n\nNB: We request you to avoid using the \'Join Now\' button in the app. Kindly use the second link to register as a Student.');
+                                    //   },
+                                    //   child: Container(
+                                    //     width: 24.w,
+                                    //     height: 24.w,
+                                    //     decoration: BoxDecoration(
+                                    //       shape: BoxShape.circle,
+                                    //       color: Colors.black54,
+                                    //       border: Border.all(
+                                    //         color: Colors.white,
+                                    //         width: 2,
+                                    //       ),
+                                    //     ),
+                                    //     child: const Icon(
+                                    //       Icons.share,
+                                    //       size: 16,
+                                    //       color: Colors.white,
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                                 const SizedBox(
@@ -339,6 +342,46 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
                                   ),
                                 ),
                               ],
+                            ),
+                          ),
+                          SizedBox(height: 15.h),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 15.w),
+                            child: GestureDetector(
+                              onTap: () {
+                                batchCubit.isFromBatchDetail = true;
+                                Navigator.pushNamed(
+                                  context,
+                                  StudentPicker.route,
+                                  arguments: {"isTrainer": true},
+                                );
+                              },
+                              child: Container(
+                                height: 34.h,
+                                decoration: BoxDecoration(
+                                  color: AppColors.defaultBlue,
+                                  borderRadius: BorderRadius.circular(45),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 4),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Spacer(),
+                                    Text(
+                                      'Add Students',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontSize: 12,
+                                          ),
+                                    ),
+                                    const Spacer(),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                           Container(

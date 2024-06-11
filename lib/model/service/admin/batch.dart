@@ -110,6 +110,40 @@ class BatchService {
     }
   }
 
+  Future<Common?> updateTrainerStudents(
+      BatchRequest request, int? batchId, int trainerDetailId) async {
+    // List<int?>? tempData = request.trainers;
+    // List<Map<String, dynamic>> data = [];
+    // tempData?.forEach((element) {
+    //   data.add({"trainer[]": element});
+    // });
+    var data = request.toJson();
+    data.removeWhere((key, value) => value == null);
+    // if (data.containsKey('trainers[]')) {
+    //   var items = data['trainers[]'];
+    //   if (items.isEmpty) {
+    //     data.remove('trainers[]');
+    //     data.putIfAbsent('trainers[]', () => '');
+    //   } else {
+    //     data.remove('trainers[]');
+    //     final gasGiants = <String, dynamic>{'trainers': items};
+    //     data.addEntries(gasGiants.entries);
+    //   }
+    // }
+
+    try {
+      log(data.toString());
+      var response = await _apiClient.post(
+        postPath: '/trainers/$trainerDetailId/batches/$batchId/add-students',
+        data: data,
+        formData: true,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> updateBatchForTrainer(
       int trainerId, BatchRequest request, int? batchId) async {
     // List<int?>? tempData = request.trainers;

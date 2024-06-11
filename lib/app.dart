@@ -17,6 +17,7 @@ import 'package:part_app/view_model/leads/leads_cubit.dart';
 import 'package:part_app/view_model/notification/cubit/notification_cubit.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 import 'package:part_app/view_model/todays_classes/classes_today_cubit.dart';
+
 import 'view_model/attendance/attendance_cubit.dart';
 
 class App extends StatefulWidget {
@@ -34,7 +35,6 @@ class _AppState extends State<App> {
     stream = ApiClient().controller?.stream;
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
