@@ -31,17 +31,18 @@ class _StudentPickerState extends State<StudentPicker> {
   void initState() {
     super.initState();
     authCubit = context.read<AuthCubit>();
-    Future.microtask(() {
+    Future.microtask(() async {
       setState(() => isLoading = true);
       final arguments = ModalRoute.of(context)!.settings.arguments as Map;
       isTrainer = arguments['isTrainer'];
       setState(() => isLoading = false);
+      context.read<BatchCubit>().selectedContactList.clear();
+      await _askPermissions();
     });
-    context.read<BatchCubit>().selectedContactList.clear();
-    _askPermissions();
   }
 
   Future<void> _askPermissions() async {
+    setState(() => isLoading = true);
     PermissionStatus permissionStatus = await _getContactPermission();
     permission = permissionStatus;
     setState(() {});
@@ -53,8 +54,7 @@ class _StudentPickerState extends State<StudentPicker> {
     }
     contacts?.removeWhere((element) => element.phones.isEmpty);
     backUpContacts?.removeWhere((element) => element.phones.isEmpty);
-    isLoading = false;
-    setState(() {});
+    setState(() => isLoading = false);
   }
 
   Future<PermissionStatus> _getContactPermission() async {
