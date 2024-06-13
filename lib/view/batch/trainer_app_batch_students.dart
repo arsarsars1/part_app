@@ -92,7 +92,7 @@ class _TrainerAppBatchStudentsState extends State<TrainerAppBatchStudents> {
                                         authCubit?.trainerIndex ?? 0]
                                     .id ??
                                 0,
-                            studentId: student.id);
+                            studentId: student.detailId);
                         Navigator.pushNamed(
                           context,
                           TrainerAppStudentDetails.route,
