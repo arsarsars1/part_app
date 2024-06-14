@@ -436,7 +436,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -787,7 +787,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -819,7 +819,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -842,7 +842,7 @@
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				INFOPLIST_KEY_CFBundleDisplayName = PartApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = Runner;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -862,7 +862,7 @@
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				INFOPLIST_KEY_CFBundleDisplayName = PartApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = Runner;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -882,7 +882,7 @@
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				INFOPLIST_KEY_CFBundleDisplayName = PartApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = Runner;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -902,7 +902,7 @@
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				INFOPLIST_KEY_CFBundleDisplayName = PartApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = Runner;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -922,7 +922,7 @@
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				INFOPLIST_KEY_CFBundleDisplayName = PartApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = Runner;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -942,7 +942,7 @@
 				DEVELOPMENT_TEAM = 8FGJL4SRQ7;
 				INFOPLIST_KEY_CFBundleDisplayName = PartApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.partapp.iosx;
 				PRODUCT_NAME = Runner;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
