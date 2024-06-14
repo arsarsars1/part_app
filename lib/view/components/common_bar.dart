@@ -10,12 +10,15 @@ class CommonBar extends StatelessWidget implements PreferredSizeWidget {
   final bool enableBack;
   final VoidCallback? onPressed;
 
+  final List<Widget> actions;
+
   const CommonBar({
     Key? key,
     this.showLogo = false,
     required this.title,
     this.enableBack = false,
     this.onPressed,
+    this.actions = const [],
   }) : super(key: key);
 
   @override
@@ -54,7 +57,8 @@ class CommonBar extends StatelessWidget implements PreferredSizeWidget {
             if (enableBack || Navigator.canPop(context))
               const SizedBox(
                 width: 48,
-              )
+              ),
+            if (actions.isNotEmpty) ...actions,
           ],
         ),
       ),
