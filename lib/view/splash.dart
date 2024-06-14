@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/components/alert_box.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -34,9 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
           AlertBox.showErrorAlert(context);
         } else if (state is UserAvailable) {
           if (state.member) {
-            cubit.navigateToDashboard(cubit.user?.adminDetail?.academy, cubit.user?.trainerDetail, cubit.user?.studentDetail, context
-            );
-           
+            cubit.navigateToDashboard(cubit.user?.adminDetail?.academy,
+                cubit.user?.trainerDetail, cubit.user?.studentDetail, context);
           } else {
             Navigator.pushReplacementNamed(
               context,
@@ -54,35 +52,8 @@ class _SplashScreenState extends State<SplashScreen> {
       },
       child: Scaffold(
         body: Center(
-          child: RichText(
-            text: TextSpan(children: [
-              TextSpan(
-                text: 'part',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: 72,
-                    ),
-              ),
-              TextSpan(
-                text: 'app',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: 32,
-                      color: AppColors.primaryColor,
-                    ),
-              ),
-              TextSpan(
-                text: '.',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: 32,
-                    ),
-              ),
-              TextSpan(
-                text: 'in',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: 32,
-                      color: const Color(0xFF00D053),
-                    ),
-              ),
-            ]),
+          child: Image.asset(
+            "assets/images/splash.png",
           ),
         ),
       ),
