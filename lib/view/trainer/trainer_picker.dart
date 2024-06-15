@@ -41,10 +41,7 @@ class _TrainerPickerState extends State<TrainerPicker> {
     super.initState();
 
     if (widget.isBatch) {
-      context.read<BranchCubit>().getBatchTrainers(
-            batchId: '${widget.batchId}',
-            clean: true,
-          );
+      context.read<BranchCubit>().getTrainers(clean: true);
     }
     trainers.addAll(widget.selectedTrainers);
     // Pagination listener

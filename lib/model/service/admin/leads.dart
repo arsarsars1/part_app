@@ -48,14 +48,13 @@ class LeadsService {
     return null;
   }
 
-  Future<LeadsResponse?> getLeadList({
-    int? branchId,
-    int? batchId,
-    String? date,
-    String? leadStatus,
-    String? searchQuery,
-    required int pageNo,
-  }) async {
+  Future<LeadsResponse?> getLeadList(
+      {int? branchId,
+      int? batchId,
+      String? date,
+      String? leadStatus,
+      String? searchQuery,
+      required int pageNo}) async {
     try {
       var response = await _apiClient.get(
           queryPath: date == null
@@ -65,6 +64,17 @@ class LeadsService {
               : searchQuery == '' || searchQuery == null
                   ? '/admin/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&follow_up_date=$date&page=$pageNo'
                   : '/admin/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&search=$searchQuery&follow_up_date=$date&page=$pageNo');
+      return leadsResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  Future<LeadsResponse?> getLeadLists({required int pageNo}) async {
+    try {
+      var response =
+          await _apiClient.get(queryPath: '/admin/leads/?page=$pageNo');
       return leadsResponseFromJson(jsonEncode(response));
     } catch (e) {
       log(e.toString());

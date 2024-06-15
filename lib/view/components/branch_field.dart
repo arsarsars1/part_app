@@ -6,9 +6,14 @@ class BranchField extends StatefulWidget {
   final ValueChanged<int?> onSelect;
   final int? initialBranch;
   final String? title;
+  final bool isMandatory;
 
   const BranchField(
-      {Key? key, required this.onSelect, this.initialBranch, this.title})
+      {Key? key,
+      required this.onSelect,
+      this.initialBranch,
+      this.title,
+      this.isMandatory = true})
       : super(key: key);
 
   @override
@@ -33,22 +38,22 @@ class _BranchFieldState extends State<BranchField> {
           return const SizedBox();
         }
         return CommonField(
-          title: widget.title ?? 'Branch *',
+          title: widget.title ?? 'Branch ${widget.isMandatory ? "*" : ""}',
           hint: 'Select Branch',
           dropDown: true,
           defaultItem: branchCubit.initialBranch(
             branchCubit.firstBranch?.id,
           ),
           dropDownItems: branchCubit.dropDownBranches(),
-          onChange: (value) {
-            widget.onSelect(value.id);
-          },
-          validator: (value) {
-            if (value == null) {
-              return 'Please select branch.';
-            }
-            return null;
-          },
+          onChange: (value) => widget.onSelect(value.id),
+          validator: widget.isMandatory
+              ? (value) {
+                  if (value == null) {
+                    return 'Please select branch.';
+                  }
+                  return null;
+                }
+              : null,
         );
       },
     );

@@ -38,7 +38,9 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<LeadsCubit>().getLeadStatuses();
+      var lead = context.read<LeadsCubit>();
+      lead.getLeadsLists(clean: true);
+      lead.getLeadStatuses();
     });
   }
 

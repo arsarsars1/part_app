@@ -100,6 +100,38 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
+  Future getLeadsLists({bool clean = false}) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _leads.clear();
+      emit(FetchingLeads());
+    } else {
+      emit(FetchingLeads(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(FetchedLeads());
+      return;
+    }
+
+    try {
+      LeadsResponse? response = await _api.getLeadLists(pageNo: page);
+
+      if (response?.status == 0) {
+        nextPageUrl = response?.leads?.nextPageUrl;
+        if (nextPageUrl != null) {
+          page++;
+        }
+        _leads.addAll(response?.leads?.data ?? []);
+        emit(FetchedLeads(moreItems: nextPageUrl != null));
+      }
+    } catch (e) {
+      log(e.toString());
+      emit(FetchedLeads(moreItems: nextPageUrl != null));
+    }
+  }
+
   void getLeadStatuses() async {
     emit(FetchingLeadStatuses());
     try {

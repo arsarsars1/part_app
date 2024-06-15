@@ -16,6 +16,7 @@ class CommonField extends StatelessWidget {
   final Color? textColor;
   final int? maxLines;
   final int? length;
+  final int? counterText;
   final VoidCallback? onTap;
   final TextEditingController? controller;
   final TextInputType? inputType;
@@ -60,6 +61,7 @@ class CommonField extends StatelessWidget {
     this.letterSpacing,
     this.suffixIcon,
     this.length,
+    this.counterText,
     this.validator,
     this.padding,
     this.crossAxisAlignment = CrossAxisAlignment.start,
@@ -146,7 +148,7 @@ class CommonField extends StatelessWidget {
                 : TextFormField(
                     focusNode: node,
                     enabled: enabled,
-                    maxLength: length,
+                    maxLength: length ?? counterText,
                     controller: controller,
                     onTap: onTap,
                     maxLines: maxLines,
@@ -163,13 +165,15 @@ class CommonField extends StatelessWidget {
                     },
                     onFieldSubmitted: onSubmit,
                     textInputAction: textInputAction,
-                    buildCounter: (
-                      BuildContext context, {
-                      required int currentLength,
-                      int? maxLength,
-                      required bool isFocused,
-                    }) =>
-                        const SizedBox(),
+                    buildCounter: counterText != null
+                        ? null
+                        : (
+                            BuildContext context, {
+                            required int currentLength,
+                            int? maxLength,
+                            required bool isFocused,
+                          }) =>
+                            const SizedBox(),
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: textColor,
                           letterSpacing: letterSpacing,
@@ -183,6 +187,10 @@ class CommonField extends StatelessWidget {
                     cursorColor: Colors.white,
                     textCapitalization: capitalization,
                     decoration: InputDecoration(
+                      counterStyle: TextStyle(
+                        color: textColor ?? Colors.white,
+                        letterSpacing: letterSpacing,
+                      ),
                       contentPadding: EdgeInsets.symmetric(
                           horizontal: 32, vertical: verticalPadding),
                       suffixIcon: suffixIcon,

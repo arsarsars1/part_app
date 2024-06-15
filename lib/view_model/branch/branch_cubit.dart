@@ -10,6 +10,7 @@ import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/trainer_model.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/model/service/admin/branch.dart';
+import 'package:part_app/model/service/admin/trainer.dart';
 
 part 'branch_state.dart';
 
@@ -186,10 +187,7 @@ class BranchCubit extends Cubit<BranchState> {
     }
   }
 
-  Future getBatchTrainers({
-    required String batchId,
-    bool clean = false,
-  }) async {
+  Future getBatchTrainers({required String batchId, bool clean = false}) async {
     if (clean) {
       page = 1;
       nextPageUrl = '';
@@ -204,8 +202,39 @@ class BranchCubit extends Cubit<BranchState> {
       return;
     }
 
+    TrainerService().getTrainers();
     var temp = await _branchService.getBatchTrainers(
       batchId: batchId,
+      pageNo: page,
+    );
+    if (temp?.status == 1) {
+      nextPageUrl = temp?.trainers?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+      _trainers.addAll(temp!.trainers!.data);
+      emit(TrainersLoaded());
+    } else {
+      emit(TrainersFailed('Failed to get the trainers list'));
+    }
+  }
+
+  Future getTrainers({bool clean = false}) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _trainers.clear();
+      emit(TrainersLoading());
+    } else {
+      emit(TrainersLoading(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(TrainersLoaded());
+      return;
+    }
+
+    var temp = await TrainerService().getTrainersPagination(
       pageNo: page,
     );
     if (temp?.status == 1) {

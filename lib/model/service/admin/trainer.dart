@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:part_app/model/data_model/branch_trainer_response.dart';
@@ -13,6 +14,19 @@ class TrainerService {
 
   Future<TrainerResponse?> getTrainers() async {
     var response = await _client.get(queryPath: '/admin/trainers/');
+
+    try {
+      TrainerResponse trainerResponse = trainerResponseFromJson(
+        jsonEncode(response),
+      );
+      return trainerResponse;
+    } on Exception {
+      return null;
+    }
+  }
+
+  Future<TrainerResponse?> getTrainersPagination({int pageNo = 1}) async {
+    var response = await _client.get(queryPath: '/admin/trainers?page=$pageNo');
 
     try {
       TrainerResponse trainerResponse = trainerResponseFromJson(
