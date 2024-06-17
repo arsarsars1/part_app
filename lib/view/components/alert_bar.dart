@@ -15,6 +15,7 @@ class AlertBar {
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
       decoration: BoxDecoration(
         color: AppColors.primaryColor,
+        border: Border.all(color: Colors.white),
         borderRadius: BorderRadius.circular(5),
       ),
       child: Row(

@@ -92,7 +92,7 @@ class _StudentAppDashboardIconsState extends State<StudentAppDashboardIcons> {
                 height: 98.h,
                 width: 98.w,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
@@ -120,6 +120,7 @@ class _StudentAppDashboardIconsState extends State<StudentAppDashboardIcons> {
                       item.title,
                       textAlign: TextAlign.center,
                       maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontSize: 12.sp,
                           ),

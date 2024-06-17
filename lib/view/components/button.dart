@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/constants/app_colors.dart';
 
 class Button extends StatelessWidget {
@@ -11,6 +12,8 @@ class Button extends StatelessWidget {
   final Color? backgroundColor;
   final bool border;
   final bool disable;
+  final TextStyle? style;
+  final bool fullWidget;
 
   const Button({
     Key? key,
@@ -22,12 +25,15 @@ class Button extends StatelessWidget {
     this.backgroundColor,
     this.disable = false,
     this.height,
+    this.style,
+    this.fullWidget = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(100),
       child: Container(
         decoration: BoxDecoration(
           color: border
@@ -50,13 +56,14 @@ class Button extends StatelessWidget {
         child: Center(
           child: Text(
             title,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.white,
-                  fontSize: fontSize,
-                ),
+            style: style ??
+                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Colors.white,
+                      fontSize: fontSize,
+                    ),
           ),
         ),
       ),
-    );
+    ).expandButton(shouldExpand: fullWidget);
   }
 }

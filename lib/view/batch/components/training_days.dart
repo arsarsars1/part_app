@@ -213,6 +213,7 @@ class _ClassTimeState extends State<ClassTime> {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
                         border: Border.all(
                           width: 0.5,
                           color: Colors.white54,
@@ -263,6 +264,7 @@ class _ClassTimeState extends State<ClassTime> {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
                         border: Border.all(
                           width: 0.5,
                           color: Colors.white54,
@@ -303,6 +305,7 @@ class _ClassTimeState extends State<ClassTime> {
                 child: InkWell(
                   onTap: () => Navigator.pop(context),
                   child: SizedBox(
+                    height: 45,
                     child: Center(
                       child: Text(
                         'Cancel',
@@ -317,7 +320,7 @@ class _ClassTimeState extends State<ClassTime> {
               Container(
                 width: 0.5,
                 color: Colors.white54,
-                height: 34,
+                height: 45,
               ),
               Expanded(
                 child: InkWell(
@@ -333,6 +336,7 @@ class _ClassTimeState extends State<ClassTime> {
                     }
                   },
                   child: SizedBox(
+                    height: 45,
                     child: Center(
                       child: Text(
                         'Add',

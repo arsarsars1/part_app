@@ -197,17 +197,20 @@ class _TrainerPickerState extends State<TrainerPicker> {
                     },
                   ),
                   if (widget.multiPicker)
-                    Button(
-                      onTap: () {
-                        var cubit = context.read<BranchCubit>();
-                        List<Trainer>? tempTrainers = cubit.trainers
-                            ?.where((element) => trainers
-                                .contains(element.trainerDetail?[0].userId))
-                            .toList();
-                        widget.onSave(tempTrainers ?? []);
-                        Navigator.pop(context);
-                      },
-                      title: 'Save',
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: Button(
+                        onTap: () {
+                          var cubit = context.read<BranchCubit>();
+                          List<Trainer>? tempTrainers = cubit.trainers
+                              ?.where((element) => trainers
+                                  .contains(element.trainerDetail?[0].userId))
+                              .toList();
+                          widget.onSave(tempTrainers ?? []);
+                          Navigator.pop(context);
+                        },
+                        title: 'Save',
+                      ),
                     )
                 ],
               ),

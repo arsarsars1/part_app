@@ -9,9 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class StudentPicker extends StatefulWidget {
   static const route = '/batch/add-student-contact';
-  const StudentPicker({
-    Key? key,
-  }) : super(key: key);
+  const StudentPicker({Key? key}) : super(key: key);
 
   @override
   State<StudentPicker> createState() => _StudentPickerState();
@@ -33,8 +31,12 @@ class _StudentPickerState extends State<StudentPicker> {
     authCubit = context.read<AuthCubit>();
     Future.microtask(() async {
       setState(() => isLoading = true);
-      final arguments = ModalRoute.of(context)!.settings.arguments as Map;
-      isTrainer = arguments['isTrainer'];
+      try {
+        final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+        isTrainer = arguments['isTrainer'];
+      } catch (e) {
+        isTrainer = false;
+      }
       setState(() => isLoading = false);
       context.read<BatchCubit>().selectedContactList.clear();
       await _askPermissions();

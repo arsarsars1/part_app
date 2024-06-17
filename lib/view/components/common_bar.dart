@@ -36,7 +36,11 @@ class CommonBar extends StatelessWidget implements PreferredSizeWidget {
                       () {
                         Navigator.pop(context);
                       },
-                  icon: SvgPicture.asset(Assets.back),
+                  icon: SvgPicture.asset(
+                    Assets.back,
+                    width: 30,
+                    height: 30,
+                  ),
                 ),
               ),
             if (!showLogo) const Spacer(),

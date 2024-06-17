@@ -115,7 +115,7 @@ class _AddLeadState extends State<AddLead> {
                     height: 20,
                   ),
                   CommonField(
-                    title: 'Age',
+                    title: 'Age *',
                     hint: 'Please enter age',
                     length: 2,
                     maxLines: 1,
@@ -124,17 +124,17 @@ class _AddLeadState extends State<AddLead> {
                     onChange: (value) {
                       age = value;
                     },
-                    // validator: (value) {
-                    //   return value == null || value.toString().isEmpty
-                    //       ? 'Please enter the age.'
-                    //       : null;
-                    // },
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please enter the age.'
+                          : null;
+                    },
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   CommonField(
-                    title: 'Gender',
+                    title: 'Gender *',
                     hint: 'Please select gender.',
                     length: 50,
                     maxLines: 1,
@@ -144,11 +144,11 @@ class _AddLeadState extends State<AddLead> {
                     onChange: (value) {
                       gender = value.id;
                     },
-                    // validator: (value) {
-                    //   return value == null || value.toString().isEmpty
-                    //       ? 'Please select gender.'
-                    //       : null;
-                    // },
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please select gender.'
+                          : null;
+                    },
                   ),
                   const SizedBox(
                     height: 20,
@@ -185,18 +185,18 @@ class _AddLeadState extends State<AddLead> {
                     initialValue: email,
                     inputType: TextInputType.emailAddress,
                     length: 50,
-                    title: 'Email ID ',
+                    title: 'Email ID *',
                     hint: 'Eg: contact@polestar.com',
                     capitalization: TextCapitalization.none,
-                    // validator: (value) {
-                    //   if (value == null || value.toString().isEmpty) {
-                    //     return 'Please enter email';
-                    //   } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                    //     return 'Invalid email address.';
-                    //   } else {
-                    //     return null;
-                    //   }
-                    // },
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return 'Please enter email';
+                      } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                        return 'Invalid email address.';
+                      } else {
+                        return null;
+                      }
+                    },
                     onChange: (value) {
                       email = value;
                     },
@@ -213,13 +213,12 @@ class _AddLeadState extends State<AddLead> {
                         branchSearch: true,
                       );
                     },
-                    isMandatory: false,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   CommonField(
-                    title: 'Batch',
+                    title: 'Batch *',
                     hint: 'Please select batch',
                     controller: batchController,
                     maxLines: 1,
@@ -249,11 +248,11 @@ class _AddLeadState extends State<AddLead> {
                         ),
                       );
                     },
-                    // validator: (value) {
-                    //   return value == null || value.toString().isEmpty
-                    //       ? 'Please select batch.'
-                    //       : null;
-                    // },
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please select batch.'
+                          : null;
+                    },
                   ),
                   const SizedBox(
                     height: 20,
@@ -302,7 +301,7 @@ class _AddLeadState extends State<AddLead> {
                   ),
                   CommonField(
                     controller: trainerController,
-                    title: 'Assign',
+                    title: 'Assign *',
                     hint: 'Please select Trainer or Branch Admin',
                     maxLines: 1,
                     disabled: true,
@@ -325,11 +324,11 @@ class _AddLeadState extends State<AddLead> {
                     },
                     textInputAction: TextInputAction.next,
                     onChange: (value) {},
-                    // validator: (value) {
-                    //   return value == null || value.toString().isEmpty
-                    //       ? 'Please select trainer'
-                    //       : null;
-                    // },
+                    validator: (value) {
+                      return value == null || value.toString().isEmpty
+                          ? 'Please select trainer'
+                          : null;
+                    },
                   ),
                   const SizedBox(
                     height: 20,

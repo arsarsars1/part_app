@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -132,4 +133,14 @@ Future<File> getImageFileFromAssets(String assetName) async {
   final File file = File('${tempDir.path}/$assetName');
   await file.writeAsBytes(imageData.buffer.asUint8List(), flush: true);
   return file;
+}
+
+extension ExpandableWidget on Widget {
+  Widget expanded({bool shouldExpand = true}) {
+    return shouldExpand ? Expanded(child: this) : this;
+  }
+
+  Widget expandButton({bool shouldExpand = true}) {
+    return shouldExpand ? Row(children: [Expanded(child: this)]) : this;
+  }
 }

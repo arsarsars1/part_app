@@ -272,7 +272,7 @@ class StudentCubit extends Cubit<StudentState> {
     emit(StudentInitial());
   }
 
-  Future getStudents({
+  Future<void> getStudents({
     String? searchQuery,
     String? activeStatus,
     int? batchId,

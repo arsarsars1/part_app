@@ -85,7 +85,7 @@ class _StudentsViewState extends State<StudentsView> {
                             top: 16.h,
                           ),
                           child: Button(
-                            height: 30.h,
+                            height: 40.h,
                             onTap: () =>
                                 Navigator.pushNamed(context, AddStudent.route),
                             title: 'Add New Student',
