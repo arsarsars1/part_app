@@ -16,7 +16,7 @@ class LeadsService {
     try {
       var response = await _apiClient.post(
         postPath: '/admin/leads',
-        data: request.toJson(),
+        data: request.toJson().removeNulls(),
       );
       Common common = commonFromJson(jsonEncode(response));
       return common;

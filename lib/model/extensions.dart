@@ -144,3 +144,10 @@ extension ExpandableWidget on Widget {
     return shouldExpand ? Row(children: [Expanded(child: this)]) : this;
   }
 }
+
+extension NullRemovalExtension on Map<String, dynamic> {
+  Map<String, dynamic> removeNulls() {
+    removeWhere((key, value) => value == null);
+    return this;
+  }
+}
