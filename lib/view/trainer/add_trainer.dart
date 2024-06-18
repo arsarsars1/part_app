@@ -140,14 +140,14 @@ class _AddTrainerState extends State<AddTrainer> {
                       Contact? contact = await contactPicker.selectContact();
                       setState(() {
                         phone = contact?.phoneNumbers?.first
-                            .replaceAll('+91', '')
+                            .replaceAll('+', '')
                             .replaceAll(' ', '');
                         phone =
                             contact?.phoneNumbers?.first.replaceAll('-', '');
                         whatsappNo = phone;
                         phoneController.text =
                             (contact?.phoneNumbers?.first ?? '')
-                                .replaceAll('+91', '')
+                                .replaceAll('+', '')
                                 .replaceAll(' ', '');
                         phoneController.text =
                             (contact?.phoneNumbers?.first ?? '')

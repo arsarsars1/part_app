@@ -210,7 +210,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                                 color: Colors.transparent,
                                 child: BatchPicker(
                                   branchId: branchId ?? 0,
-                                  status: '',
+                                  status: 'ongoing',
                                   onSelect: (value) {
                                     batch = value;
                                     batchController.text = value.name;

@@ -22,19 +22,20 @@ class StudentAppDashboardIcons extends StatefulWidget {
 class _StudentAppDashboardIconsState extends State<StudentAppDashboardIcons> {
   List<String> titles = ['Attendence', 'Fees', 'Batches'];
   List<String> descriptions = [
-    'Check and take attendance of each batch and students here.',
-    'Add, Edit, Manage all your Fee related needs here',
-    'See that batch here',
+    'Check Attendance of each Batch here',
+    'View Fees related details here',
+    'See Batch details here',
   ];
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       List<GlobalKey> tempkey = [];
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < 3; i++) {
         tempkey.add(context.read<HomeCubit>().studentkKeyCap[i]);
       }
-      bool temp = Hive.box(Database.userBox).get("Student Showcase") ?? false;
+      bool temp =
+          Hive.box(Database.userBox).get("Student App Showcase") ?? false;
       if (temp == false) {
         CommonDialog(
           context: context,
@@ -46,7 +47,7 @@ class _StudentAppDashboardIconsState extends State<StudentAppDashboardIcons> {
             ShowCaseWidget.of(context).startShowCase(tempkey);
           },
           onCancelTap: () {
-            Hive.box(Database.userBox).put("Student Showcase", true);
+            Hive.box(Database.userBox).put("Student App Showcase", true);
             Navigator.pop(context);
           },
         ).show();

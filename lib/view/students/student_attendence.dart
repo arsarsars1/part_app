@@ -195,7 +195,7 @@ class _StudentAttendanceCalenderViewState
                           backgroundColor: Colors.transparent,
                           (context) => BatchPicker(
                             branchId: branchId!,
-                            status: '',
+                            status: 'ongoing',
                             branchSearch: true,
                             onSelect: (value) async {
                               present = 0;

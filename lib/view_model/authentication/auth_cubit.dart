@@ -203,24 +203,21 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future register() async {
     emit(RegisteringUser());
-    debugPrint('hi1');
     UserResponse? value = await _authService.register(
       registerRequest: _registerRequest,
     );
-    debugPrint('hi2');
     if (value == null) {
-      debugPrint('hi3');
       emit(NetworkError());
     } else if (value.status == 1) {
-      debugPrint('hi4');
       _token = value.token;
       _user = value.user;
       Hive.box(Database.userBox).put(Database.token, value.token);
       Hive.box(Database.userBox).put(Database.userData, jsonEncode(value));
       Hive.box(Database.userBox).put("Showcase", false);
+      Hive.box(Database.userBox).put("Trainer Showcase", false);
+      Hive.box(Database.userBox).put("Student App Showcase", false);
       emit(RegisterSuccess());
     } else {
-      debugPrint('hi5');
       emit(RegisterFailed(value.message ?? ' Failed to register the user'));
     }
   }

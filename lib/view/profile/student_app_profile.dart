@@ -106,253 +106,256 @@ class _StudentAppProfileState extends State<StudentAppProfile> {
       appBar: CommonBar(
         title: isAdmin ? 'Admin Profile Details' : 'Profile Details',
       ),
-      body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
-        if (state is UpdateUserSuccess) {
-          Alert(context).show(message: 'User Profile Updated');
-          context.read<AuthCubit>().updateUser(state.user);
-        } else if (state is UpdateUserFailed) {
-          Alert(context).show(message: state.message);
-        }
-      }, builder: (context, state) {
-        if (state is UpdatingUser) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
+      body: BlocConsumer<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is UpdateUserSuccess) {
+            Alert(context).show(message: 'User Profile Updated');
+            context.read<AuthCubit>().updateUser(state.user);
+          } else if (state is UpdateUserFailed) {
+            Alert(context).show(message: state.message);
+          }
+        },
+        builder: (context, state) {
+          if (state is UpdatingUser) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-        return Form(
-          key: formKey,
-          child: ListView(
-            children: [
-              SizedBox(
-                height: 15.h,
-              ),
-              Center(
-                child: BlocBuilder<ProfileCubit, ProfileState>(
-                  builder: (context, state) {
-                    String url = '';
-                    if (state is ProfileInitial) {
-                      url = cubit.getUserProfilePic();
-                    } else if (state is ProfileLoaded && isAdmin) {
-                      url = '${F.baseUrl}/admin/images/profile-pic'
-                          '/${state.profilePic}';
-                    } else if (state is ProfileLoaded && !isAdmin) {
-                      url =
-                          '${F.baseUrl}/students/${cubit.user?.studentDetail?[cubit.studentIndex].id}/images/profile-pic/${state.profilePic}';
-                    }
-                    return ProfilePicture(
-                      imageUrl: url,
-                      onEdit: () {},
-                      onAvatar: (File value) {},
-                      onChange: (File value) {
-                        cubit.updateProfilePic(
-                            profilePic: value,
-                            studentId: isAdmin
-                                ? null
-                                : cubit.user?.studentDetail?[cubit.studentIndex]
-                                    .id,
-                            context: context);
-                      },
-                    );
-                  },
+          return Form(
+            key: formKey,
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: 15.h,
                 ),
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              CommonField(
-                initialValue: cubit.user?.mobileNo,
-                enabled: false,
-                suffixIcon: const Icon(
-                  Icons.check_circle_outline_outlined,
-                  color: Colors.greenAccent,
-                ),
-                fillColor: AppColors.disabledColor,
-                textColor: Colors.black,
-                title: 'Your Phone Number *',
-                onChange: (value) {},
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              Center(
-                child: Button(
-                  width: 200.w,
-                  height: 30.h,
-                  disable: true,
-                  onTap: () {
-                    // Navigator.pushNamed(context, ChangePhoneScreen.route);
-                  },
-                  title: 'Change Phone Number',
-                ),
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        'Is The Above Number Your Whatsapp Number?',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
+                Center(
+                  child: BlocBuilder<ProfileCubit, ProfileState>(
+                    builder: (context, state) {
+                      String url = '';
+                      if (state is ProfileInitial) {
+                        url = cubit.getUserProfilePic();
+                      } else if (state is ProfileLoaded && isAdmin) {
+                        url = '${F.baseUrl}/admin/images/profile-pic'
+                            '/${state.profilePic}';
+                      } else if (state is ProfileLoaded && !isAdmin) {
+                        url =
+                            '${F.baseUrl}/students/${cubit.user?.studentDetail?[cubit.studentIndex].id}/images/profile-pic/${state.profilePic}';
+                      }
+                      return ProfilePicture(
+                        imageUrl: url,
+                        onEdit: () {},
+                        onAvatar: (File value) {},
+                        onChange: (File value) {
+                          cubit.updateProfilePic(
+                              profilePic: value,
+                              studentId: isAdmin
+                                  ? null
+                                  : cubit.user
+                                      ?.studentDetail?[cubit.studentIndex].id,
+                              context: context);
+                        },
+                      );
+                    },
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      height: 25.0,
-                      padding: const EdgeInsets.only(right: 16),
-                      child: FittedBox(
-                        fit: BoxFit.contain,
-                        child: CupertinoSwitch(
-                          trackColor: AppColors.grey500,
-                          value: selected,
-                          onChanged: (value) {
-                            setState(() {
-                              selected = !selected;
-                            });
-                          },
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
+                CommonField(
+                  initialValue: cubit.user?.mobileNo,
+                  enabled: false,
+                  suffixIcon: const Icon(
+                    Icons.check_circle_outline_outlined,
+                    color: Colors.greenAccent,
+                  ),
+                  fillColor: AppColors.disabledColor,
+                  textColor: Colors.black,
+                  title: 'Your Phone Number *',
+                  onChange: (value) {},
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
+                Center(
+                  child: Button(
+                    width: 200.w,
+                    height: 30.h,
+                    disable: true,
+                    onTap: () {
+                      // Navigator.pushNamed(context, ChangePhoneScreen.route);
+                    },
+                    title: 'Change Phone Number',
+                  ),
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          'Is The Above Number Your Whatsapp Number?',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              if (!selected)
-                Column(
-                  children: [
-                    CommonField(
-                      length: 10,
-                      inputType: TextInputType.number,
-                      phoneField: true,
-                      title: 'Whatsapp Phone Number *',
-                      initialValue: isAdmin
-                          ? cubit.user?.adminDetail?.whatsappNo
-                          : cubit.user?.studentDetail?[cubit.studentIndex]
-                              .whatsappNo,
-                      onChange: (value) {
-                        waNumber = value;
-                      },
-                      hint: 'Eg: 9876543210',
-                    ),
-                    const SizedBox(
-                      height: 20,
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        height: 25.0,
+                        padding: const EdgeInsets.only(right: 16),
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: CupertinoSwitch(
+                            trackColor: AppColors.grey500,
+                            value: selected,
+                            onChanged: (value) {
+                              setState(() {
+                                selected = !selected;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              CommonField(
-                initialValue: isAdmin
-                    ? cubit.user?.adminDetail?.name
-                    : cubit.user?.studentDetail?[cubit.studentIndex].name,
-                title: 'Enter you name *',
-                hint: 'Name',
-                onChange: (value) {
-                  name = value;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                initialValue: isAdmin
-                    ? cubit.user?.adminDetail?.email
-                    : cubit.user?.studentDetail?[cubit.studentIndex].email,
-                title: 'Enter Email ',
-                hint: 'Eg: contact@polestar.com',
-                onChange: (value) {
-                  email = value;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                onTap: datePicker,
-                disabled: true,
-                controller: dobController,
-                hint: 'dd/mm/yyyy',
-                title: 'Date of Birth',
-                onChange: (value) {},
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              gender == null
-                  ? CommonField(
-                      defaultItem: cubit.user?.adminDetail?.gender != null
-                          ? DefaultValues().genders.firstWhere((element) =>
-                              element.title?.toLowerCase() ==
-                              context
-                                  .read<AuthCubit>()
-                                  .user
-                                  ?.adminDetail
-                                  ?.gender
-                                  ?.toLowerCase())
-                          : null,
-                      title: 'Gender',
-                      onChange: (value) {
-                        gender = value?.title;
-                      },
-                      hint: 'Select Gender',
-                      dropDown: true,
-                      dropDownItems: DefaultValues().genders,
-                    )
-                  : CommonField(
-                      disabled: true,
-                      initialValue: gender,
-                      title: 'Gender',
-                      hint: 'male',
-                      onChange: (value) {
-                        // email = value;
-                      },
-                    ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                disabled: true,
-                enabled: isAdmin,
-                initialValue: isAdmin
-                    ? cubit.user?.adminDetail?.academy?.academyName
-                    : cubit.user?.studentDetail?[cubit.studentIndex].academy
-                        ?.academyName,
-                title: isAdmin ? 'Academy Name *' : 'Academy Name',
-                hint: 'Enter the academy name',
-                onChange: (value) {
-                  academyName = value;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CommonField(
-                initialValue: context
-                    .read<CountryCubit>()
-                    .academyTypes
-                    .firstWhere((element) =>
-                        element.id ==
-                        cubit.user?.studentDetail?[cubit.studentIndex].academy
-                            ?.academyTypeId)
-                    .title,
-                disabled: true,
-                title: 'Academy Type',
-                hint: 'Enter the academy name',
-                onChange: (value) {
-                  // academyName = value;
-                },
-              ),
-            ],
-          ),
-        );
-      }),
+                SizedBox(
+                  height: 16.h,
+                ),
+                if (!selected)
+                  Column(
+                    children: [
+                      CommonField(
+                        length: 10,
+                        inputType: TextInputType.number,
+                        phoneField: true,
+                        title: 'Whatsapp Phone Number *',
+                        initialValue: isAdmin
+                            ? cubit.user?.adminDetail?.whatsappNo
+                            : cubit.user?.studentDetail?[cubit.studentIndex]
+                                .whatsappNo,
+                        onChange: (value) {
+                          waNumber = value;
+                        },
+                        hint: 'Eg: 9876543210',
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                CommonField(
+                  initialValue: isAdmin
+                      ? cubit.user?.adminDetail?.name
+                      : cubit.user?.studentDetail?[cubit.studentIndex].name,
+                  title: 'Enter you name *',
+                  hint: 'Name',
+                  onChange: (value) {
+                    name = value;
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonField(
+                  initialValue: isAdmin
+                      ? cubit.user?.adminDetail?.email
+                      : cubit.user?.studentDetail?[cubit.studentIndex].email,
+                  title: 'Enter Email ',
+                  hint: 'Eg: contact@polestar.com',
+                  onChange: (value) {
+                    email = value;
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonField(
+                  onTap: datePicker,
+                  disabled: true,
+                  controller: dobController,
+                  hint: 'dd/mm/yyyy',
+                  title: 'Date of Birth',
+                  onChange: (value) {},
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                gender == null
+                    ? CommonField(
+                        defaultItem: cubit.user?.adminDetail?.gender != null
+                            ? DefaultValues().genders.firstWhere((element) =>
+                                element.title?.toLowerCase() ==
+                                context
+                                    .read<AuthCubit>()
+                                    .user
+                                    ?.adminDetail
+                                    ?.gender
+                                    ?.toLowerCase())
+                            : null,
+                        title: 'Gender',
+                        onChange: (value) {
+                          gender = value?.title;
+                        },
+                        hint: 'Select Gender',
+                        dropDown: true,
+                        dropDownItems: DefaultValues().genders,
+                      )
+                    : CommonField(
+                        disabled: true,
+                        initialValue: gender,
+                        title: 'Gender',
+                        hint: 'male',
+                        onChange: (value) {
+                          // email = value;
+                        },
+                      ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CommonField(
+                  disabled: true,
+                  enabled: isAdmin,
+                  initialValue: isAdmin
+                      ? cubit.user?.adminDetail?.academy?.academyName
+                      : cubit.user?.studentDetail?[cubit.studentIndex].academy
+                          ?.academyName,
+                  title: isAdmin ? 'Academy Name *' : 'Academy Name',
+                  hint: 'Enter the academy name',
+                  onChange: (value) {
+                    academyName = value;
+                  },
+                ),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // CommonField(
+                //   initialValue: context
+                //       .read<CountryCubit>()
+                //       .academyTypes
+                //       .firstWhere((element) =>
+                //           element.id ==
+                //           cubit.user?.studentDetail?[cubit.studentIndex].academy
+                //               ?.academyTypeId)
+                //       .title,
+                //   disabled: true,
+                //   title: 'Academy Type',
+                //   hint: 'Enter the academy name',
+                //   onChange: (value) {
+                //     // academyName = value;
+                //   },
+                // ),
+              ],
+            ),
+          );
+        },
+      ),
       bottomNavigationBar: SizedBox(
         height: 100.h,
         child: BottomAppBar(
