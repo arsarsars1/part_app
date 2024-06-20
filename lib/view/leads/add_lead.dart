@@ -173,7 +173,9 @@ class _AddLeadState extends State<AddLead> {
                     },
                   ),
                   WhatsappCheckButton(
-                    onChange: (value) {},
+                    onChange: (value) {
+                      whatsappNumber = null;
+                    },
                     onNumberChange: (value) {
                       whatsappNumber = value;
                     },

@@ -151,3 +151,9 @@ extension NullRemovalExtension on Map<String, dynamic> {
     return this;
   }
 }
+
+extension ListExtensions<T> on List<T>? {
+  bool get isNotNullAndNotEmpty {
+    return this != null && this!.isNotEmpty;
+  }
+}
