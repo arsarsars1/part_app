@@ -90,7 +90,7 @@ class _DashboardIconsState extends State<DashboardIcons> {
             description: descriptions[index],
             child: InkWell(
               onTap: () async {
-                if (item.title == 'Branch Manager') {
+                if (item.title == 'Branch Manager' || item.title == 'Leads') {
                   Alert(context).show(message: "Coming soon !!");
                 } else {
                   await Navigator.pushNamed(context, item.route);
@@ -105,10 +105,9 @@ class _DashboardIconsState extends State<DashboardIcons> {
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Spacer(),
                     Container(
                       decoration: BoxDecoration(
                         color: item.color,
@@ -127,16 +126,14 @@ class _DashboardIconsState extends State<DashboardIcons> {
                     SizedBox(
                       height: 4.h,
                     ),
-                    Expanded(
-                      flex: 5,
-                      child: Text(
-                        item.title,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontSize: 12.sp,
-                            ),
-                      ),
+                    Text(
+                      "${item.title}\n",
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 12.sp,
+                          ),
                     ),
                   ],
                 ),

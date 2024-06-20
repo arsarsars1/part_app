@@ -32,6 +32,12 @@ class _HomeBannerState extends State<HomeBanner> {
   late String formattedString = toTime.formattedString();
 
   @override
+  void dispose() {
+    bannerPageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var authCubit = context.read<AuthCubit>();
     var cubit = context.read<HomeCubit>();

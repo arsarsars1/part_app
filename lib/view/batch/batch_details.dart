@@ -22,21 +22,36 @@ class BatchDetails extends StatefulWidget {
   State<BatchDetails> createState() => _BatchDetailsState();
 }
 
-class _BatchDetailsState extends State<BatchDetails> {
+class _BatchDetailsState extends State<BatchDetails>
+    with SingleTickerProviderStateMixin {
+  final GlobalKey _widgetKey = GlobalKey();
   bool isActive = true;
   ScrollController scrollController = ScrollController();
   BatchModel? batch;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  double _height = 0;
 
   @override
   void initState() {
     context.read<BatchCubit>().studentData.clear();
     super.initState();
+    _getSize();
+  }
+
+  void _getSize() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final RenderBox? renderBox =
+          _widgetKey.currentContext?.findRenderObject() as RenderBox?;
+      final size = renderBox?.size;
+      setState(() => _height = size?.height ?? 0);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     var batchCubit = context.read<BatchCubit>();
+    var size = MediaQuery.of(context).size;
+    double emptyHeight = size.height - _height;
     return WillPopScope(
       onWillPop: () async {
         if (batchCubit.isFromBatch) {
@@ -65,6 +80,7 @@ class _BatchDetailsState extends State<BatchDetails> {
           },
         ),
         body: Column(
+          key: _widgetKey,
           children: [
             Expanded(
               child: BlocConsumer<BatchCubit, BatchState>(
@@ -262,114 +278,61 @@ class _BatchDetailsState extends State<BatchDetails> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                GestureDetector(
+                                Button(
+                                  height: 40.h,
                                   onTap: () => Navigator.pushNamed(
                                     context,
                                     RescheduleClass.route,
                                   ),
-                                  child: Container(
-                                    height: 34.h,
-                                    width: 158.w,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.defaultBlue,
-                                      borderRadius: BorderRadius.circular(45),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12, vertical: 4),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Spacer(),
-                                        Text(
-                                          'Reschedule',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                fontSize: 12,
-                                              ),
-                                        ),
-                                        const Spacer(),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                  backgroundColor: AppColors.defaultBlue,
+                                  title: 'Reschedule',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        fontSize: 12,
+                                      ),
+                                ).expanded(shouldExpand: true),
                                 const SizedBox(
-                                  height: 16,
+                                  width: 16,
                                 ),
-                                GestureDetector(
+                                Button(
+                                  height: 40.h,
                                   onTap: () => Navigator.pushNamed(
                                     context,
                                     CancelClass.route,
                                   ),
-                                  child: Container(
-                                    height: 34.h,
-                                    width: 158.w,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
-                                      borderRadius: BorderRadius.circular(45),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12, vertical: 4),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Spacer(),
-                                        Text(
-                                          'Cancel',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                fontSize: 12,
-                                              ),
-                                        ),
-                                        const Spacer(),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                  title: 'Cancel',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        fontSize: 12,
+                                      ),
+                                ).expanded(shouldExpand: true),
                               ],
                             ),
                           ),
-                          SizedBox(height: 15.h),
+                          SizedBox(height: 16.h),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15.w),
-                            child: GestureDetector(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: Button(
+                              height: 40.h,
+                              fullWidget: true,
                               onTap: () {
                                 batchCubit.isFromBatchDetail = true;
                                 Navigator.pushNamed(
                                     context, StudentPicker.route,
                                     arguments: {"isTrainer": false});
                               },
-                              child: Container(
-                                height: 34.h,
-                                decoration: BoxDecoration(
-                                  color: AppColors.defaultBlue,
-                                  borderRadius: BorderRadius.circular(45),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 4),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Spacer(),
-                                    Text(
-                                      'Add Students',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontSize: 12,
-                                          ),
-                                    ),
-                                    const Spacer(),
-                                  ],
-                                ),
-                              ),
+                              backgroundColor: AppColors.defaultBlue,
+                              title: 'Add Students',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    fontSize: 12,
+                                  ),
                             ),
                           ),
                           Container(
@@ -425,9 +388,11 @@ class _BatchDetailsState extends State<BatchDetails> {
                           ),
                           SizedBox(height: 10.h),
                           BatchStudents(
-                            onChange: (bool value) {
+                            height: emptyHeight,
+                            onChange: (bool value) async {
                               isActive = value;
-                              doSearch(value);
+                              await doSearch(value);
+                              _getSize();
                             },
                           ),
                         ],
@@ -456,12 +421,11 @@ class _BatchDetailsState extends State<BatchDetails> {
     );
   }
 
-  void doSearch(bool active, {bool clean = true}) {
-    context.read<StudentCubit>().getStudents(
-          batchId: batch?.id,
-          searchQuery: null,
-          activeStatus: isActive ? null : 'inactive-students',
-          clean: clean,
-        );
-  }
+  Future<void> doSearch(bool active, {bool clean = true}) async =>
+      await context.read<StudentCubit>().getStudents(
+            batchId: batch?.id,
+            searchQuery: null,
+            activeStatus: active ? null : 'inactive-students',
+            clean: clean,
+          );
 }

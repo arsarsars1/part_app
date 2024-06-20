@@ -97,7 +97,7 @@ class _AddLeadState extends State<AddLead> {
                     height: 20,
                   ),
                   CommonField(
-                    title: 'Name *',
+                    title: 'Name',
                     hint: 'Please enter name',
                     length: 50,
                     maxLines: 1,
@@ -105,11 +105,11 @@ class _AddLeadState extends State<AddLead> {
                     onChange: (value) {
                       name = value;
                     },
-                    validator: (value) {
-                      return value == null || value.toString().isEmpty
-                          ? 'Please select lead status.'
-                          : null;
-                    },
+                    // validator: (value) {
+                    //   return value == null || value.toString().isEmpty
+                    //       ? 'Please select lead status.'
+                    //       : null;
+                    // },
                   ),
                   const SizedBox(
                     height: 20,
@@ -173,7 +173,9 @@ class _AddLeadState extends State<AddLead> {
                     },
                   ),
                   WhatsappCheckButton(
-                    onChange: (value) {},
+                    onChange: (value) {
+                      whatsappNumber = null;
+                    },
                     onNumberChange: (value) {
                       whatsappNumber = value;
                     },
@@ -185,7 +187,7 @@ class _AddLeadState extends State<AddLead> {
                     initialValue: email,
                     inputType: TextInputType.emailAddress,
                     length: 50,
-                    title: 'Email ID ',
+                    title: 'Email ID',
                     hint: 'Eg: contact@polestar.com',
                     capitalization: TextCapitalization.none,
                     // validator: (value) {
@@ -205,6 +207,7 @@ class _AddLeadState extends State<AddLead> {
                     height: 20,
                   ),
                   BranchField(
+                    isMandatory: false,
                     onSelect: (value) {
                       branchId = value;
                       batchCubit.getBatchesByStatus(
@@ -213,7 +216,6 @@ class _AddLeadState extends State<AddLead> {
                         branchSearch: true,
                       );
                     },
-                    isMandatory: false,
                   ),
                   const SizedBox(
                     height: 20,
@@ -259,7 +261,7 @@ class _AddLeadState extends State<AddLead> {
                     height: 20,
                   ),
                   CommonField(
-                    title: 'Followup Date *',
+                    title: 'Followup Date',
                     hint: 'Please select date',
                     controller: dateController,
                     length: 50,
@@ -270,17 +272,17 @@ class _AddLeadState extends State<AddLead> {
                     },
                     textInputAction: TextInputAction.next,
                     onChange: (value) {},
-                    validator: (value) {
-                      return value == null || value.toString().isEmpty
-                          ? 'Please select date'
-                          : null;
-                    },
+                    // validator: (value) {
+                    //   return value == null || value.toString().isEmpty
+                    //       ? 'Please select date'
+                    //       : null;
+                    // },
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   CommonField(
-                    title: 'Followup time *',
+                    title: 'Followup time',
                     hint: 'Please select time',
                     controller: timeController,
                     onTap: () {
@@ -291,11 +293,11 @@ class _AddLeadState extends State<AddLead> {
                     disabled: true,
                     textInputAction: TextInputAction.next,
                     onChange: (value) {},
-                    validator: (value) {
-                      return value == null || value.toString().isEmpty
-                          ? 'Please select time'
-                          : null;
-                    },
+                    // validator: (value) {
+                    //   return value == null || value.toString().isEmpty
+                    //       ? 'Please select time'
+                    //       : null;
+                    // },
                   ),
                   const SizedBox(
                     height: 20,

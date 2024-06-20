@@ -42,4 +42,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/private_key.pepk
 lib/view_model/inapp_purchase/inapp_cubit.dart

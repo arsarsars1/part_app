@@ -10,17 +10,25 @@ import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class BatchStudents extends StatefulWidget {
+  final double height;
   final ValueChanged<bool> onChange;
   final BatchModel? batch;
-  const BatchStudents({Key? key, required this.onChange, this.batch})
-      : super(key: key);
+  const BatchStudents({
+    Key? key,
+    required this.onChange,
+    this.batch,
+    required this.height,
+  }) : super(key: key);
 
   @override
   State<BatchStudents> createState() => _BatchStudentsState();
 }
 
-class _BatchStudentsState extends State<BatchStudents> {
+class _BatchStudentsState extends State<BatchStudents>
+    with SingleTickerProviderStateMixin {
+  final GlobalKey _loadingKey = GlobalKey();
   String studentText = 'Active Students';
+
   @override
   Widget build(BuildContext context) {
     var studentCubit = context.read<StudentCubit>();
@@ -50,13 +58,20 @@ class _BatchStudentsState extends State<BatchStudents> {
           builder: (context, state) {
             var students = studentCubit.students ?? [];
             if (state is FetchingStudents && students.isEmpty) {
-              return const LoadingView(
-                hideColor: true,
+              return SizedBox(
+                key: _loadingKey,
+                height: widget.height,
+                child: const LoadingView(
+                  hideColor: true,
+                ),
               );
             }
             if (state is StudentsFetched && students.isEmpty) {
-              return const Center(
-                child: Text('No students added.'),
+              return SizedBox(
+                height: widget.height,
+                child: const Center(
+                  child: Text('No students added.'),
+                ),
               );
             }
 
