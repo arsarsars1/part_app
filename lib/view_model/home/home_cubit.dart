@@ -42,7 +42,7 @@ class HomeCubit extends Cubit<HomeState> {
       10, (index) => GlobalKey(debugLabel: 'key_$index'),
       growable: false);
   List<GlobalKey> studentkKeyCap = List<GlobalKey>.generate(
-      5, (index) => GlobalKey(debugLabel: 'student_key_$index'),
+      4, (index) => GlobalKey(debugLabel: 'student_key_$index'),
       growable: false);
   List<GlobalKey> trainerkKeyCap = List<GlobalKey>.generate(
       7, (index) => GlobalKey(debugLabel: 'trainer_key_$index'),

@@ -237,7 +237,7 @@ class _TrainerAppClassLinkViewState extends State<TrainerAppClassLinkView> {
                         backgroundColor: Colors.transparent,
                         (context) => BatchPicker(
                           branchId: branchId!,
-                          status: '',
+                          status: 'ongoing',
                           branchSearch: true,
                           onSelect: (value) async {
                             batch = value;

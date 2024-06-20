@@ -240,7 +240,7 @@ class _AddLeadState extends State<AddLead> {
                         backgroundColor: Colors.transparent,
                         (context) => BatchPicker(
                           branchId: branchId!,
-                          status: '',
+                          status: 'ongoing',
                           branchSearch: true,
                           onSelect: (value) {
                             batchId = value;

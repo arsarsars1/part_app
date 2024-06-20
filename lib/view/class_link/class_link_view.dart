@@ -213,7 +213,7 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                         backgroundColor: Colors.transparent,
                         (context) => BatchPicker(
                           branchId: branchId!,
-                          status: '',
+                          status: 'ongoing',
                           branchSearch: true,
                           onSelect: (value) async {
                             batch = value;

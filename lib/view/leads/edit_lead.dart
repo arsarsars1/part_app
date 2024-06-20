@@ -249,7 +249,7 @@ class _EditLeadState extends State<EditLead> {
                         backgroundColor: Colors.transparent,
                         (context) => BatchPicker(
                           branchId: branchId!,
-                          status: '',
+                          status: 'ongoing',
                           branchSearch: true,
                           onSelect: (value) {
                             batchId = value;

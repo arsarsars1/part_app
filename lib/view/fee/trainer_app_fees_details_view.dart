@@ -291,7 +291,7 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                             backgroundColor: Colors.transparent,
                             (context) => BatchPicker(
                               branchId: branchId!,
-                              status: '',
+                              status: 'ongoing',
                               onSelect: (value) {
                                 batch = value;
                                 batchController.text = value.name;

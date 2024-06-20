@@ -46,7 +46,7 @@ class _StudentAppDashboardState extends State<StudentAppDashboard> {
             ShowCaseWidget(
               enableAutoScroll: true,
               onFinish: () {
-                Hive.box(Database.userBox).put("Student Showcase", true);
+                Hive.box(Database.userBox).put("Student App Showcase", true);
               },
               builder: Builder(
                 builder: (context) {

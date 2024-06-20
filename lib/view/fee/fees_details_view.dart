@@ -265,7 +265,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                               backgroundColor: Colors.transparent,
                               (context) => BatchPicker(
                                 branchId: branchId!,
-                                status: '',
+                                status: 'ongoing',
                                 onSelect: (value) {
                                   batch = value;
                                   batchController.text = value.name;
