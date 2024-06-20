@@ -56,7 +56,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                   Alert(context).show(message: state.message);
                 }
                 if (state is UpdatedAttendence) {
-                  Alert(context).show(message: 'Attendence Updated');
+                  Alert(context).show(message: 'Attendance Updated');
                 }
                 if (state is AddedForUpdateAttendance) {}
               },
@@ -192,7 +192,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                       ),
                       SizedBox(height: 5.h),
                       Text(
-                        "Attendence: ${cubit.updatedStudents.length} / ${studentCubit.students?.length ?? 0}",
+                        "Attendance: ${cubit.updatedStudents.length} / ${studentCubit.students?.length ?? 0}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -201,7 +201,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                       ),
                       SizedBox(height: 15.h),
                       Text(
-                        "Note: You can update each student's attendence from this page for the following batch on the selected date.",
+                        "Note: You can update each student's attendance from this page for the following batch on the selected date.",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -288,7 +288,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                                   CommonDialog(
                                                     context: context,
                                                     message:
-                                                        'Are You Sure You Want to Update the\nAttendence For ${selectedStudent?.studentDetail?.name} ?',
+                                                        'Are You Sure You Want to Update the\nAttendance For ${selectedStudent?.studentDetail?.name} ?',
                                                     buttonText: 'OK',
                                                     subColor:
                                                         AppColors.primaryColor,

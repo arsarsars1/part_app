@@ -17,7 +17,7 @@ class AttendanceBatchesFetched extends AttendanceState {
   AttendanceBatchesFetched({this.moreItems = false});
 }
 
-//creating attendence
+//creating attendance
 class CreatingAttendance extends AttendanceState {}
 
 class CreatedAttendance extends AttendanceState {}

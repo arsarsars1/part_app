@@ -23,7 +23,7 @@ class DashboardIcons extends StatefulWidget {
 class _DashboardIconsState extends State<DashboardIcons> {
   List<String> titles = [
     'Students',
-    'Attendence',
+    'Attendance',
     'Fees',
     'Trainers',
     'Today\'s Classes',

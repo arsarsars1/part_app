@@ -82,7 +82,7 @@ class _TrainerAppAttendanceAddState extends State<TrainerAppAttendanceAdd> {
                     Alert(context).show(message: state.message);
                   }
                   if (state is CreatedAttendance) {
-                    Alert(context).show(message: 'Attendence Saved');
+                    Alert(context).show(message: 'Attendance Saved');
                     cubit.selectedStudents.clear();
                     cubit.attendance.clear();
                     Navigator.pop(context);
@@ -369,7 +369,7 @@ class _TrainerAppAttendanceAddState extends State<TrainerAppAttendanceAdd> {
                                       0,
                                 );
                               },
-                              title: 'Save Attendence',
+                              title: 'Save Attendance',
                             ),
                           ),
                         )

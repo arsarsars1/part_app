@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:part_app/model/data_model/admission_fee_invoice.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice.dart';
-import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
+import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/fee_detail_history.dart';
 import 'package:part_app/model/data_model/student_app_fee_detail_history.dart';
 import 'package:part_app/model/service/admin/fee_details_service.dart';
@@ -508,10 +508,10 @@ class FeeCubit extends Cubit<FeeState> {
         emit(FeeReminderSent(response?.message ?? 'Message sent'));
       } else {
         emit(FeeReminderSentFailed(
-            response?.message ?? 'Failed to save attendence.'));
+            response?.message ?? 'Failed to save attendance.'));
       }
     } catch (e) {
-      emit(FeeReminderSentFailed('Failed to save attendence.'));
+      emit(FeeReminderSentFailed('Failed to save attendance.'));
     }
   }
 
@@ -525,10 +525,10 @@ class FeeCubit extends Cubit<FeeState> {
         emit(FeeReminderSent(response?.message ?? 'Message sent'));
       } else {
         emit(FeeReminderSentFailed(
-            response?.message ?? 'Failed to save attendence.'));
+            response?.message ?? 'Failed to save attendance.'));
       }
     } catch (e) {
-      emit(FeeReminderSentFailed('Failed to save attendence.'));
+      emit(FeeReminderSentFailed('Failed to save attendance.'));
     }
   }
 
@@ -541,10 +541,10 @@ class FeeCubit extends Cubit<FeeState> {
         emit(FeeReminderSent(response?.message ?? 'Message sent'));
       } else {
         emit(FeeReminderSentFailed(
-            response?.message ?? 'Failed to save attendence.'));
+            response?.message ?? 'Failed to save attendance.'));
       }
     } catch (e) {
-      emit(FeeReminderSentFailed('Failed to save attendence.'));
+      emit(FeeReminderSentFailed('Failed to save attendance.'));
     }
   }
 
@@ -558,10 +558,10 @@ class FeeCubit extends Cubit<FeeState> {
         emit(FeeReminderSent(response?.message ?? 'Message sent'));
       } else {
         emit(FeeReminderSentFailed(
-            response?.message ?? 'Failed to save attendence.'));
+            response?.message ?? 'Failed to save attendance.'));
       }
     } catch (e) {
-      emit(FeeReminderSentFailed('Failed to save attendence.'));
+      emit(FeeReminderSentFailed('Failed to save attendance.'));
     }
   }
 

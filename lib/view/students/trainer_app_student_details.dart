@@ -193,7 +193,7 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                   height: 16,
                 ),
                 LargeButton(
-                  title: 'Attendence Sheet',
+                  title: 'Attendance Sheet',
                   onTap: () {
                     Navigator.pushNamed(
                       context,

@@ -3,16 +3,18 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/model/data_model/attendance_monthly_record.dart';
+import 'package:part_app/model/data_model/attendence_add_request.dart';
 import 'package:part_app/model/data_model/attendence_classes_conducted.dart';
 import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
-import 'package:part_app/model/data_model/attendence_add_request.dart';
 import 'package:part_app/model/data_model/attendence_taken.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/student_attendence_of_month.dart';
+
 import '../../model/service/admin/attendance.dart';
+
 part 'attendance_state.dart';
 
 class AttendanceCubit extends Cubit<AttendanceState> {
@@ -138,10 +140,10 @@ class AttendanceCubit extends Cubit<AttendanceState> {
         emit(CreatedAttendance());
       } else {
         emit(CreateAttendanceFailed(
-            response?.message ?? 'Failed to save attendence.'));
+            response?.message ?? 'Failed to save attendance.'));
       }
     } catch (e) {
-      emit(CreateAttendanceFailed('Failed to save attendence.'));
+      emit(CreateAttendanceFailed('Failed to save attendance.'));
     }
   }
 
@@ -157,10 +159,10 @@ class AttendanceCubit extends Cubit<AttendanceState> {
         emit(CreatedAttendance());
       } else {
         emit(CreateAttendanceFailed(
-            response?.message ?? 'Failed to save attendence.'));
+            response?.message ?? 'Failed to save attendance.'));
       }
     } catch (e) {
-      emit(CreateAttendanceFailed('Failed to save attendence.'));
+      emit(CreateAttendanceFailed('Failed to save attendance.'));
     }
   }
 
@@ -507,7 +509,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }
   }
 
-  /// this method is used to get the attendence of a student in a batch in a particular month
+  /// this method is used to get the attendance of a student in a batch in a particular month
   Future getAttendenceOfStudentOfMonth({
     int? batchId,
     int? studentDetailId,
@@ -526,7 +528,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }
   }
 
-  /// this method is used to get the attendence of a student in a batch in a particular month
+  /// this method is used to get the attendance of a student in a batch in a particular month
   Future getAttendenceOfStudentOfMonthForTrainer({
     required int trainerId,
     int? batchId,

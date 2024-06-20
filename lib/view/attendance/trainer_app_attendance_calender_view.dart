@@ -267,7 +267,7 @@ class _TrainerAppAttendanceCalenderViewState
                                     0) {
                                   Alert(context).show(
                                       message:
-                                          'Cannot add attendence for a future date.');
+                                          'Cannot add attendance for a future date.');
                                 } else {
                                   cubit.dropdownSelectedIndex = 0;
                                   if (events.length > 1) {

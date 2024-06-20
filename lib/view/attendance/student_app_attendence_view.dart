@@ -12,7 +12,7 @@ import 'package:part_app/view_model/attendance/attendance_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class StudentAppAttendanceCalenderView extends StatefulWidget {
-  static const route = '/student-app-attendence-calender-view';
+  static const route = '/student-app-attendance-calender-view';
 
   const StudentAppAttendanceCalenderView({Key? key}) : super(key: key);
 
@@ -49,7 +49,7 @@ class _StudentAppAttendanceCalenderViewState
     return Scaffold(
       key: scaffoldKey,
       appBar: CommonBar(
-        title: 'Attendence',
+        title: 'Attendance',
         onPressed: () {
           attendenceCubit.pre = 0;
           attendenceCubit.abs = 0;
@@ -65,7 +65,7 @@ class _StudentAppAttendanceCalenderViewState
               child: CircularProgressIndicator(),
             );
           }
-    
+
           if (state is FetchBatchFailed) {
             return Center(
               child: Text(state.message),
@@ -112,8 +112,8 @@ class _StudentAppAttendanceCalenderViewState
                       scaffoldKey.currentState?.showBottomSheet(
                         backgroundColor: Colors.transparent,
                         (context) => StudentAppBatchPicker(
-                          studentId: authCubit.user!
-                              .studentDetail![authCubit.studentIndex].id!,
+                          studentId: authCubit
+                              .user!.studentDetail![authCubit.studentIndex].id!,
                           status: '',
                           branchSearch: true,
                           branchId: branchId ?? 0,
@@ -125,16 +125,11 @@ class _StudentAppAttendanceCalenderViewState
                             AttendanceCubit cubit =
                                 context.read<AttendanceCubit>();
                             cubit.id = value.id ?? 0;
-                            await cubit
-                                .getStudentAppAttendenceOfStudentOfMonth(
-                                    studentDetailId: authCubit
-                                        .user
-                                        ?.studentDetail?[
-                                            authCubit.studentIndex]
-                                        .id,
-                                    batchId: cubit.id,
-                                    date:
-                                        DateTime(currentYear, currentMonth));
+                            await cubit.getStudentAppAttendenceOfStudentOfMonth(
+                                studentDetailId: authCubit.user
+                                    ?.studentDetail?[authCubit.studentIndex].id,
+                                batchId: cubit.id,
+                                date: DateTime(currentYear, currentMonth));
                             await cubit.getStudentAppClassesOfMonth(
                               batchId: cubit.id,
                               date: DateTime(currentYear, currentMonth),
@@ -147,15 +142,13 @@ class _StudentAppAttendanceCalenderViewState
                                   DateTime(currentYear, currentMonth).year,
                                   DateTime(currentYear, currentMonth).month);
                               for (ClassDetails element1
-                                  in attendenceCubit.attendenceClasses ??
-                                      []) {
+                                  in attendenceCubit.attendenceClasses ?? []) {
                                 int flag = 0;
                                 int conductedClassId = 0;
                                 for (StudentAttendances element
                                     in cubit.studentClasses ?? []) {
                                   if (element1.date ==
-                                          element
-                                              .conductedClass?.conductedOn &&
+                                          element.conductedClass?.conductedOn &&
                                       element.isPresent == 1) {
                                     flag = 1;
                                     conductedClassId = element.id ?? 0;
@@ -239,7 +232,7 @@ class _StudentAppAttendanceCalenderViewState
                       fontSize: 15.sp,
                       fontWeight: FontWeight.bold,
                     ),
-    
+
                     shouldShowTransform: false,
                     weekDayFormat: WeekdayFormat.narrow,
                     headerTextStyle: TextStyle(
@@ -248,8 +241,7 @@ class _StudentAppAttendanceCalenderViewState
                       fontWeight: FontWeight.bold,
                     ),
                     isScrollable: false,
-                    customGridViewPhysics:
-                        const NeverScrollableScrollPhysics(),
+                    customGridViewPhysics: const NeverScrollableScrollPhysics(),
                     markedDateCustomTextStyle: const TextStyle(
                       fontSize: 18,
                       color: Colors.blue,
@@ -285,8 +277,8 @@ class _StudentAppAttendanceCalenderViewState
                         }
                       });
                       await cubit.getStudentAppAttendenceOfStudentOfMonth(
-                          studentDetailId: authCubit.user
-                              ?.studentDetail?[authCubit.studentIndex].id,
+                          studentDetailId: authCubit
+                              .user?.studentDetail?[authCubit.studentIndex].id,
                           batchId: cubit.id,
                           date: DateTime(currentYear, currentMonth));
                       await cubit.getStudentAppClassesOfMonth(
@@ -329,8 +321,7 @@ class _StudentAppAttendanceCalenderViewState
                                 dot: Container(
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 1.0),
-                                  color:
-                                      flag == 1 ? Colors.green : Colors.red,
+                                  color: flag == 1 ? Colors.green : Colors.red,
                                   height: 5.0,
                                   width: 5.0,
                                 ),
@@ -353,8 +344,8 @@ class _StudentAppAttendanceCalenderViewState
                         }
                       });
                       await cubit.getStudentAppAttendenceOfStudentOfMonth(
-                          studentDetailId: authCubit.user
-                              ?.studentDetail?[authCubit.studentIndex].id,
+                          studentDetailId: authCubit
+                              .user?.studentDetail?[authCubit.studentIndex].id,
                           batchId: cubit.id,
                           date: DateTime(currentYear, currentMonth));
                       await cubit.getStudentAppClassesOfMonth(
@@ -397,8 +388,7 @@ class _StudentAppAttendanceCalenderViewState
                                 dot: Container(
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 1.0),
-                                  color:
-                                      flag == 1 ? Colors.green : Colors.red,
+                                  color: flag == 1 ? Colors.green : Colors.red,
                                   height: 5.0,
                                   width: 5.0,
                                 ),
@@ -411,7 +401,7 @@ class _StudentAppAttendanceCalenderViewState
                   ),
                 ),
                 Text(
-                  'Attendence Summary',
+                  'Attendance Summary',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w700,
@@ -435,24 +425,20 @@ class _StudentAppAttendanceCalenderViewState
                           Text(
                             'Present',
                             textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12.sp,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 12.sp,
+                                    ),
                           ),
                           Text(
                             '${attendenceCubit.pre}',
                             textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14.sp,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp,
+                                    ),
                           ),
                         ],
                       ),
@@ -469,24 +455,20 @@ class _StudentAppAttendanceCalenderViewState
                           Text(
                             'Absent',
                             textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12.sp,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 12.sp,
+                                    ),
                           ),
                           Text(
                             '${attendenceCubit.abs}',
                             textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14.sp,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp,
+                                    ),
                           ),
                         ],
                       ),

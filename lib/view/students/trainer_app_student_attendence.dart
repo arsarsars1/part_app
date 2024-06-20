@@ -126,7 +126,7 @@ class _TrainerAppStudentAttendanceCalenderViewState
       child: Scaffold(
         key: scaffoldKey,
         appBar: CommonBar(
-          title: 'Attendence',
+          title: 'Attendance',
           onPressed: () {
             attendenceCubit.pre = 0;
             attendenceCubit.abs = 0;
@@ -516,7 +516,7 @@ class _TrainerAppStudentAttendanceCalenderViewState
                     ),
                   ),
                   Text(
-                    'Attendence Summary',
+                    'Attendance Summary',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.w700,

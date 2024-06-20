@@ -20,7 +20,7 @@ class StudentAppDashboardIcons extends StatefulWidget {
 }
 
 class _StudentAppDashboardIconsState extends State<StudentAppDashboardIcons> {
-  List<String> titles = ['Attendence', 'Fees', 'Batches'];
+  List<String> titles = ['Attendance', 'Fees', 'Batches'];
   List<String> descriptions = [
     'Check Attendance of each Batch here',
     'View Fees related details here',
