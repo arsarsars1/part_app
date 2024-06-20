@@ -133,7 +133,7 @@ class _TrainerAppDashboardIconsState extends State<TrainerAppDashboardIcons> {
                       height: 4.h,
                     ),
                     Text(
-                      item.title,
+                      "${item.title}\n",
                       textAlign: TextAlign.center,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
