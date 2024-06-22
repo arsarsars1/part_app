@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/trainer_salary_slip.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/trainer/add_or_edit_salary.dart';
 import 'package:part_app/view/trainer/components/trainer_app_salary_list_item.dart';
 import 'package:part_app/view_model/cubits.dart';

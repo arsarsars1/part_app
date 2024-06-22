@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/constants/app_colors.dart';
 
 class MembershipSwitch extends StatefulWidget {
   final ValueChanged<bool> onSelect;

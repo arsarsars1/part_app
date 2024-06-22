@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/service/api.dart';
 import 'package:part_app/view/components/cached_image.dart';
 import 'package:part_app/view/components/image_picker.dart';
-import 'package:part_app/view/constants/constant.dart';
 
 class ProfilePicture extends StatefulWidget {
   final VoidCallback onEdit;

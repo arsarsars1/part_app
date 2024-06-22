@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/components/document_image.dart';
 import 'package:part_app/view/components/image_picker.dart';
-import 'package:part_app/view/constants/constant.dart';
 
 class DocsUpload extends StatefulWidget {
   final ValueChanged<File?> doc1;

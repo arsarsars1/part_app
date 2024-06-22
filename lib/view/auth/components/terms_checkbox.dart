@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TermsCheckBox extends StatefulWidget {

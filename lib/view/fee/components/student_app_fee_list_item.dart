@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/student_app_fee_detail_history.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/user_image.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class StudentAppFeeListItem extends StatefulWidget {
@@ -112,10 +112,10 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                       .textTheme
                                       .bodyLarge
                                       ?.copyWith(
-                                        color: widget.invoice.feeType ==
-                                                'monthly'
-                                            ? AppColors.primaryColor
-                                            : AppColors.green,
+                                        color:
+                                            widget.invoice.feeType == 'monthly'
+                                                ? AppColors.primaryColor
+                                                : AppColors.green,
                                       ),
                                 ),
                                 const SizedBox(
@@ -139,8 +139,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                         Column(
                           children: [
                             Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   '${widget.invoice.batchName}',
@@ -162,8 +161,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                               ],
                             ),
                             Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SizedBox(
                                   width: 150.w,
@@ -198,16 +196,14 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                                 .paymentStatus ==
                                                             'partial'
                                                         ? AppColors.yellow
-                                                        : AppColors
-                                                            .primaryColor
+                                                        : AppColors.primaryColor
                                                 : AppColors.green,
                                           ),
                                     ),
                               ],
                             ),
                             Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   '${widget.invoice.courseName}, ${widget.invoice.subjectName}',
@@ -246,8 +242,8 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                       ?.copyWith(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 15,
-                                        color: widget.invoice
-                                                    .writtenOffStatus !=
+                                        color: widget
+                                                    .invoice.writtenOffStatus !=
                                                 1
                                             ? widget.invoice.paymentStatus ==
                                                     'paid'
@@ -302,20 +298,18 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                         Alignment.centerLeft,
                                                     child: Padding(
                                                       padding:
-                                                          const EdgeInsets
-                                                              .only(
+                                                          const EdgeInsets.only(
                                                               left: 5.0),
                                                       child: Text(
                                                         'Date',
-                                                        style:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyLarge
-                                                                ?.copyWith(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge
+                                                            ?.copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
                                                       ),
                                                     ),
                                                   )),
@@ -328,8 +322,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                       .width /
                                                   3,
                                               child: CustomPaint(
-                                                painter:
-                                                    DottedBorderPainter(),
+                                                painter: DottedBorderPainter(),
                                                 child: Center(
                                                   child: Text(
                                                     'Updated By',
@@ -359,20 +352,18 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                         Alignment.centerRight,
                                                     child: Padding(
                                                       padding:
-                                                          const EdgeInsets
-                                                              .only(
+                                                          const EdgeInsets.only(
                                                               right: 5.0),
                                                       child: Text(
                                                         'Amount',
-                                                        style:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyLarge
-                                                                ?.copyWith(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge
+                                                            ?.copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
                                                       ),
                                                     ),
                                                   )),
@@ -392,8 +383,8 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                     painter:
                                                         DottedBorderPainter(),
                                                     child: Align(
-                                                      alignment: Alignment
-                                                          .centerLeft,
+                                                      alignment:
+                                                          Alignment.centerLeft,
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -457,8 +448,8 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                     painter:
                                                         DottedBorderPainter(),
                                                     child: Align(
-                                                      alignment: Alignment
-                                                          .centerRight,
+                                                      alignment:
+                                                          Alignment.centerRight,
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -493,16 +484,13 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                         .size
                                                         .width /
                                                     5)) +
-                                            (MediaQuery.of(context)
-                                                    .size
-                                                    .width /
+                                            (MediaQuery.of(context).size.width /
                                                 3),
                                         child: CustomPaint(
                                           painter: DottedBorderPainter(),
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 5.0),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5.0),
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.end,
@@ -553,16 +541,13 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                         .size
                                                         .width /
                                                     5)) +
-                                            (MediaQuery.of(context)
-                                                    .size
-                                                    .width /
+                                            (MediaQuery.of(context).size.width /
                                                 3),
                                         child: CustomPaint(
                                           painter: DottedBorderPainter(),
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 5),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5),
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.end,

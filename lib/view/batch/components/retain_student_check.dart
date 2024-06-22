@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/constants/constant.dart';
 
 class RetainStudentCheckButton extends StatefulWidget {
   final ValueChanged<bool> onChange;

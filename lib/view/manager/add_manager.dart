@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/manager_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/trainer/components/docs_upload.dart';
 import 'package:part_app/view/trainer/salary_details.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -239,7 +239,7 @@ class _AddManagerState extends State<AddManager> {
                   },
                 ),
                 SizedBox(
-                  height: 40.h,
+                  height: UIConstants.buttonHeight,
                 ),
                 Center(
                   child: Padding(

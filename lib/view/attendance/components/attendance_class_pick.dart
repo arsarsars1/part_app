@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/constant.dart';
-import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view_model/cubits.dart';
 
 import '../../../model/data_model/event_model.dart';
 import '../../../view_model/attendance/attendance_cubit.dart';
@@ -134,7 +134,7 @@ class _AttendanceClassPickerState extends State<AttendanceClassPicker> {
                     separatorBuilder: (context, index) => const SizedBox(
                           height: 10,
                         ),
-                    itemCount: widget.eventList?.length??0),
+                    itemCount: widget.eventList?.length ?? 0),
               ),
               Button(
                   onTap: () {
@@ -153,6 +153,7 @@ class _AttendanceClassPickerState extends State<AttendanceClassPicker> {
                       );
                     }
                   },
+                  height: UIConstants.buttonHeight,
                   title: 'Continue')
             ],
           ),

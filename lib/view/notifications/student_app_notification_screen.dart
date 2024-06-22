@@ -1,12 +1,10 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/notification_list.dart';
-import 'package:part_app/view/components/alert.dart';
-import 'package:part_app/view/components/common_bar.dart';
-import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/notifications/widgets/custom_container_for_notification.dart';
 import 'package:part_app/view_model/cubits.dart';
 

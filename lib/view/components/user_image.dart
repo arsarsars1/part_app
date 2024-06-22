@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:part_app/view/components/cached_image.dart';
-import '../constants/assets.dart';
+
+import '../../constants/assets.dart';
 
 class UserImage extends StatelessWidget {
   final String? profilePic;

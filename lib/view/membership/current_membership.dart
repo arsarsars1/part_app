@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/membership/membership_home.dart';
 import 'package:part_app/view/membership/membership_home_ios.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -175,9 +175,13 @@ class CurrentMembership extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Button(
-              height: 40.h,
+              height: UIConstants.buttonHeight,
               onTap: () {
-                Navigator.pushNamed(context, Platform.isAndroid ? MembershipHome.route: MembershipHomeIos.route);
+                Navigator.pushNamed(
+                    context,
+                    Platform.isAndroid
+                        ? MembershipHome.route
+                        : MembershipHomeIos.route);
               },
               title: 'Add Plan',
             ),

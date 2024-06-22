@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/components/logo.dart';
-import 'package:part_app/view/constants/assets.dart';
 
 class CommonBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;

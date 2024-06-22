@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/view/components/launcher.dart';
-import 'package:part_app/view/constants/constant.dart';
 
 class ManagerCard extends StatelessWidget {
   final VoidCallback onSelect;

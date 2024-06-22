@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/membership.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/membership/membership_cubit.dart';
 
 class MembershipList extends StatefulWidget {

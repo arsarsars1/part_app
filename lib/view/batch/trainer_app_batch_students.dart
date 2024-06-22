@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/view/components/loader.dart';
 import 'package:part_app/view/components/tab_button.dart';
 import 'package:part_app/view/components/user_image.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/students/trainer_app_student_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 

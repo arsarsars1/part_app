@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/batch/add_batch.dart';
 import 'package:part_app/view/batch/batch_details.dart';
@@ -108,7 +109,7 @@ class _BatchesPageState extends State<BatchesPage>
                   top: 16.h,
                 ),
                 child: Button(
-                  height: 40.h,
+                  height: UIConstants.buttonHeight,
                   onTap: () {
                     cubit.days.clear();
                     Navigator.pushNamed(context, AddBatch.route);

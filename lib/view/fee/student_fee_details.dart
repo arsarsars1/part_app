@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/fee/add_advance_fee.dart';
 import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/components/fee_list_item.dart';
@@ -104,7 +104,6 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Button(
-                      height: 30.h,
                       onTap: () {
                         context.read<StudentCubit>().getStudentBatches();
                         Navigator.pushNamed(
@@ -112,6 +111,7 @@ class _StudentFeeDetailsState extends State<StudentFeeDetails> {
                           AddAdvanceFeePage.route,
                         );
                       },
+                      height: UIConstants.buttonHeight,
                       title: 'Add Advance Fee',
                     ),
                   )

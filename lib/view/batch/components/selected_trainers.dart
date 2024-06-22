@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/cached_image.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/trainer/trainer_picker.dart';
 
 class SelectedTrainers extends StatefulWidget {

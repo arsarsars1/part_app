@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/trainer_salary_slip.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/trainer/components/edit_salary.dart';
 import 'package:part_app/view/trainer/components/salary_list_item.dart';
 import 'package:part_app/view_model/trainer/trainer_cubit.dart';

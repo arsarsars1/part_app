@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
@@ -14,7 +15,6 @@ import 'package:part_app/view/components/document_image.dart';
 import 'package:part_app/view/components/launchers.dart';
 import 'package:part_app/view/components/profile_picture.dart';
 import 'package:part_app/view/components/titled_text.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/trainer/assigned_batches.dart';
 import 'package:part_app/view/trainer/edit_salary_trainer.dart';
 import 'package:part_app/view/trainer/edit_trainer.dart';
@@ -249,6 +249,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                     AssignedBatches.route,
                   ),
                   child: Container(
+                    height: UIConstants.buttonHeight,
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor,
                       borderRadius: BorderRadius.circular(45),
@@ -264,7 +265,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                           'Assigned Batches',
                           style:
                               Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    fontSize: 12,
+                                    color: Colors.white,
                                   ),
                         ),
                         const Spacer(),
@@ -286,6 +287,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                     TrainerSalarySlips.route,
                   ),
                   child: Container(
+                    height: UIConstants.buttonHeight,
                     decoration: BoxDecoration(
                       color: AppColors.defaultBlue,
                       borderRadius: BorderRadius.circular(45),
@@ -301,7 +303,7 @@ class _TrainerDetailsState extends State<TrainerDetails> {
                           'Salary Details',
                           style:
                               Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    fontSize: 12,
+                                    color: Colors.white,
                                   ),
                         ),
                         const Spacer(),

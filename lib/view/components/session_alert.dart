@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 import '../../view_model/profile_pic/cubit/profile_cubit.dart';

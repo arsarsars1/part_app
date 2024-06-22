@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/extensions.dart';
@@ -9,7 +10,6 @@ import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/components/fee_reminder_button.dart';
 import 'package:part_app/view/components/large_button.dart';
 import 'package:part_app/view/components/user_image.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/fee/components/write_off_fees.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 
@@ -277,7 +277,7 @@ class _AdmissionFeeListItemState extends State<AdmissionFeeListItem> {
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .only(
+                                                                .only(
                                                                 left: 5.0),
                                                         child: Text(
                                                           'Date',
@@ -334,7 +334,7 @@ class _AdmissionFeeListItemState extends State<AdmissionFeeListItem> {
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .only(
+                                                                .only(
                                                                 right: 5.0),
                                                         child: Text(
                                                           'Amount',
@@ -371,7 +371,7 @@ class _AdmissionFeeListItemState extends State<AdmissionFeeListItem> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   left: 5.0),
                                                           child:
                                                               row.isDeleted != 1
@@ -436,7 +436,7 @@ class _AdmissionFeeListItemState extends State<AdmissionFeeListItem> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   right: 5.0),
                                                           child:
                                                               row.isDeleted != 1
@@ -666,23 +666,27 @@ class _AdmissionFeeListItemState extends State<AdmissionFeeListItem> {
                                       ),
                                     ],
                                   ),
-                              LargeButton(
-                                title: 'Add Or Edit Fees',
-                                onTap: widget.onTap,
-                                color: AppColors.defaultBlue,
-                                margin: 0,
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              LargeButton(
-                                title: 'Other Payments',
-                                onTap: () {
-                                  Alert(context)
-                                      .show(message: "Coming soon !!");
-                                },
-                                color: AppColors.defaultBlue,
-                                margin: 0,
+                              Row(
+                                children: [
+                                  LargeButton(
+                                    title: 'Add Or Edit Fees',
+                                    onTap: widget.onTap,
+                                    color: AppColors.defaultBlue,
+                                    margin: 0,
+                                  ).expanded(shouldExpand: true),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  LargeButton(
+                                    title: 'Other Payments',
+                                    onTap: () {
+                                      Alert(context)
+                                          .show(message: "Coming soon !!");
+                                    },
+                                    color: AppColors.defaultBlue,
+                                    margin: 0,
+                                  ).expanded(shouldExpand: true),
+                                ],
                               ),
                             ],
                           ),

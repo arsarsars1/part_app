@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/fee/trainer_app_student_admission_fee_details.dart';
 import 'package:part_app/view/fee/trainer_app_student_fee_details.dart';
 import 'package:part_app/view/students/trainer_app_edit_student.dart';
@@ -172,61 +172,76 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                     ],
                   ),
                 ),
-                LargeButton(
-                  title: 'Student Batches',
-                  onTap: () {
-                    context.read<StudentCubit>().getStudentBatchesForTrainer(
-                          trainerId: authCubit
-                                  ?.user
-                                  ?.trainerDetail?[authCubit?.trainerIndex ?? 0]
-                                  .id ??
-                              0,
+                Row(
+                  children: [
+                    LargeButton(
+                      title: 'Student Batches',
+                      marginPadding: UIConstants.largeLeftButtonMargin,
+                      onTap: () {
+                        context
+                            .read<StudentCubit>()
+                            .getStudentBatchesForTrainer(
+                              trainerId: authCubit
+                                      ?.user
+                                      ?.trainerDetail?[
+                                          authCubit?.trainerIndex ?? 0]
+                                      .id ??
+                                  0,
+                            );
+                        Navigator.pushNamed(
+                          context,
+                          TrainerAppEditStudentBatches.route,
+                          arguments: true,
                         );
-                    Navigator.pushNamed(
-                      context,
-                      TrainerAppEditStudentBatches.route,
-                      arguments: true,
-                    );
-                  },
+                      },
+                    ).expanded(shouldExpand: true),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    LargeButton(
+                      title: 'Attendance Sheet',
+                      marginPadding: UIConstants.largeRightButtonMargin,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          TrainerAppStudentAttendanceCalenderView.route,
+                        );
+                      },
+                      color: const Color(0xFFA29CF4),
+                    ).expanded(shouldExpand: true),
+                  ],
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                LargeButton(
-                  title: 'Attendance Sheet',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      TrainerAppStudentAttendanceCalenderView.route,
-                    );
-                  },
-                  color: const Color(0xFFA29CF4),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                LargeButton(
-                  title: 'Fee Details',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      TrainerAppStudentFeeDetails.route,
-                    );
-                  },
-                  color: AppColors.defaultBlue,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                LargeButton(
-                  title: 'Admission Fee Details',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      TrainerAppStudentAdmissionFeeDetails.route,
-                    );
-                  },
-                  color: AppColors.defaultBlue,
+                Row(
+                  children: [
+                    LargeButton(
+                      title: 'Fee Details',
+                      marginPadding: UIConstants.largeLeftButtonMargin,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          TrainerAppStudentFeeDetails.route,
+                        );
+                      },
+                      color: AppColors.defaultBlue,
+                    ).expanded(shouldExpand: true),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    LargeButton(
+                      title: 'Admission Fee Details',
+                      marginPadding: UIConstants.largeRightButtonMargin,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          TrainerAppStudentAdmissionFeeDetails.route,
+                        );
+                      },
+                      color: AppColors.defaultBlue,
+                    ).expanded(shouldExpand: true),
+                  ],
                 ),
                 const SizedBox(
                   height: 16,

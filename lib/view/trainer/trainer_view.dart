@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/components.dart';
@@ -57,7 +58,7 @@ class _TrainerPageState extends State<TrainerPage> {
                       top: 16.h,
                     ),
                     child: Button(
-                      height: 30.h,
+                      height: UIConstants.buttonHeight,
                       onTap: () {
                         cubit.fromBranch = false;
                         cubit.selectedBranches = [];

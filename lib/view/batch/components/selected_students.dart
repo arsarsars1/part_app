@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/trainer/students_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -84,7 +82,7 @@ class _SelectedStudentsState extends State<SelectedStudents> {
                   context,
                   StudentPicker.route,
                 );
-                if(cubit.days.isEmpty) {
+                if (cubit.days.isEmpty) {
                   cubit.days.clear();
                 }
               },

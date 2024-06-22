@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/components/dialog.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 
 class AlertBox {
   AlertBox._();

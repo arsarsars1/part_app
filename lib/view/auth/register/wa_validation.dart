@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/auth/register/admin_details.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 class WAValidation extends StatefulWidget {

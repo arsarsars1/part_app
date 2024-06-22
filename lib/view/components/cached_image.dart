@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/service/api.dart';
-import 'package:part_app/view/constants/constant.dart';
 
 class CachedImage {
   final String imageUrl;

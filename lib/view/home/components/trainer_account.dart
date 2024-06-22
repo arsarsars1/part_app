@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAccount extends StatelessWidget {
@@ -137,7 +137,7 @@ class TrainerAccount extends StatelessWidget {
           // Align(
           //   alignment: Alignment.center,
           //   child: Button(
-          //     height: 40.h,
+          //     height: UIConstants.buttonHeight,
           //     onTap: () {
           //       Navigator.pushNamed(context, DeleteAccount.route);
           //     },

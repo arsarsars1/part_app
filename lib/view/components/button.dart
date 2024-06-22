@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 
 class Button extends StatelessWidget {
   final VoidCallback? onTap;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/components.dart';
@@ -84,6 +85,8 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
                       StudentDetails.route,
                     );
                   },
+                  width: 160,
+                  height: UIConstants.buttonHeight,
                   title: 'View Student Profile',
                 ),
               ),
@@ -125,7 +128,7 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
                         top: 16.h,
                       ),
                       child: Button(
-                        height: 30.h,
+                        height: UIConstants.buttonHeight,
                         width: 200,
                         onTap: () {
                           Navigator.pushNamed(

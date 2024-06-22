@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/class_model.dart';
@@ -10,7 +11,6 @@ import 'package:part_app/view/class_link/trainer_app_edit_class_link.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/round_button.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 

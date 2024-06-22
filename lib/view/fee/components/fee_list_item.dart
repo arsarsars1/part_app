@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/extensions.dart';
@@ -9,7 +10,6 @@ import 'package:part_app/view/components/dialog.dart';
 import 'package:part_app/view/components/fee_reminder_button.dart';
 import 'package:part_app/view/components/large_button.dart';
 import 'package:part_app/view/components/user_image.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/fee/components/write_off_fees.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
 
@@ -698,22 +698,27 @@ class _FeeListItemState extends State<FeeListItem> {
                                     ),
                                   ],
                                 ),
-                            LargeButton(
-                              title: 'Add Or Edit Fees',
-                              onTap: widget.onTap,
-                              color: AppColors.defaultBlue,
-                              margin: 0,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            LargeButton(
-                              title: 'Other Payments',
-                              onTap: () {
-                                Alert(context).show(message: "Coming soon !!");
-                              },
-                              color: AppColors.defaultBlue,
-                              margin: 0,
+                            Row(
+                              children: [
+                                LargeButton(
+                                  title: 'Add Or Edit Fees',
+                                  onTap: widget.onTap,
+                                  color: AppColors.defaultBlue,
+                                  margin: 0,
+                                ).expanded(shouldExpand: true),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                LargeButton(
+                                  title: 'Other Payments',
+                                  onTap: () {
+                                    Alert(context)
+                                        .show(message: "Coming soon !!");
+                                  },
+                                  color: AppColors.defaultBlue,
+                                  margin: 0,
+                                ).expanded(shouldExpand: true),
+                              ],
                             ),
                           ],
                         ),
@@ -807,24 +812,19 @@ class _FeeListItemState extends State<FeeListItem> {
                                   ),
                                 ],
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  FeeReminderButton(
-                                    title: '',
-                                    onTap: () {},
-                                    margin: 0,
-                                    disabled: widget.student.paymentStatus ==
-                                                'paid' ||
+                              FeeReminderButton(
+                                title: '',
+                                onTap: () {},
+                                margin: 0,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 4),
+                                disabled:
+                                    widget.student.paymentStatus == 'paid' ||
                                             widget.student.paymentStatus ==
                                                 'Written Off'
                                         ? true
                                         : false,
-                                    count: widget.student.reminderCount,
-                                  ),
-                                ],
+                                count: widget.student.reminderCount,
                               ),
                             ],
                           ),

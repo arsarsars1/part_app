@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/student_app_batch_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/round_button.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/batch/batch_cubit.dart';
 import 'package:part_app/view_model/branch/branch_cubit.dart';
 

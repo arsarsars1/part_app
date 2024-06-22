@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/leads_response.dart';
 import 'package:part_app/view/components/common_bar.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/leads/lead_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';

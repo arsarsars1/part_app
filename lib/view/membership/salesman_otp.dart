@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/auth/components/resend_otp.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/membership/subscription_success.dart';
 import 'package:part_app/view_model/membership/membership_cubit.dart';
 

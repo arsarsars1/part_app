@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/student_dashboard.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/home/components/student_app_home_fee_list_item.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:url_launcher/url_launcher.dart';

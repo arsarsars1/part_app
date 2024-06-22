@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/account/account_card.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/home/student_app_home.dart';
 import 'package:part_app/view/home/trainer_app_home.dart';
@@ -89,7 +89,7 @@ class SwitchAccount extends StatelessWidget {
                       return AccountCard(
                         onTap: () {
                           cubit.accountType = AccountType.trainer;
-                           database.setUserType('trainer');
+                          database.setUserType('trainer');
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             TrainerAppHome.route,

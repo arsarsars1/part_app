@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/attendance_monthly_record.dart';
 import 'package:part_app/view/components/user_image.dart';
-import 'package:part_app/view/constants/constant.dart';
 
 import '../../../flavors.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/constants/app_colors.dart';
 
 class AlertBar {
   AlertBar._();

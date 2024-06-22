@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class DeleteAccount extends StatelessWidget {
@@ -111,7 +111,7 @@ class DeleteAccount extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: Button(
-                height: 40.h,
+                height: UIConstants.buttonHeight,
                 onTap: () {
                   cubit.phoneNumber = cubit.user?.adminDetail?.whatsappNo;
                   cubit.sendAccountDeleteOTP();

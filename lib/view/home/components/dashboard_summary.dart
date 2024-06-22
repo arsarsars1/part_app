@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class SummaryDashboard extends StatelessWidget {

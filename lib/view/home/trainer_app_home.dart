@@ -2,11 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/calender/trainer_app_calender_view.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/session_alert.dart';
-import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/home/dashboard/trainer_app_dashboard.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/support/trainer_app_support_screen.dart';

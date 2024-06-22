@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 
 class _Cancel extends StatelessWidget {
   final VoidCallback onFree;

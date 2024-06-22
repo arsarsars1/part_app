@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -120,6 +120,7 @@ class _TrainerBranchesState extends State<TrainerBranches> {
                   );
                 }
               },
+              height: UIConstants.buttonHeight,
               title: 'Update',
             ),
           ),

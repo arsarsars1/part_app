@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/country.dart';
 import 'package:part_app/view/auth/components/phone_number.dart';
 import 'package:part_app/view/auth/components/terms_checkbox.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/auth/otp_verify.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class SignUp extends StatefulWidget {
@@ -43,7 +43,8 @@ class _SignUpState extends State<SignUp> {
           // if the OTP is sent show the User with the verification UI
           else if (state is OTPSent && !state.resend && !state.login) {
             Navigator.pop(context);
-            Navigator.pushNamed(context, OTPVerify.route, arguments: OTPRoutes.registration);
+            Navigator.pushNamed(context, OTPVerify.route,
+                arguments: OTPRoutes.registration);
           }
         },
         child: SafeArea(

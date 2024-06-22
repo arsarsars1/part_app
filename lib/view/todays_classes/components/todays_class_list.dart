@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view_model/trainer/trainer_cubit.dart';
+
 import '../../../model/data_model/classes_today.dart';
 
 class TodaysClassList extends StatefulWidget {

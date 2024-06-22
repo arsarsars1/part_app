@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/fee/student_admission_fee_details.dart';
 import 'package:part_app/view/fee/student_fee_details.dart';
 import 'package:part_app/view/students/edit_student.dart';
@@ -162,55 +162,64 @@ class _StudentDetailsState extends State<StudentDetails> {
                     ],
                   ),
                 ),
-                LargeButton(
-                  title: 'Student Batches',
-                  onTap: () {
-                    context.read<StudentCubit>().getStudentBatches();
-                    Navigator.pushNamed(
-                      context,
-                      EditStudentBatches.route,
-                      arguments: true,
-                    );
-                  },
+                Row(
+                  children: [
+                    LargeButton(
+                      title: 'Student Batches',
+                      marginPadding: UIConstants.largeLeftButtonMargin,
+                      onTap: () {
+                        context.read<StudentCubit>().getStudentBatches();
+                        Navigator.pushNamed(
+                          context,
+                          EditStudentBatches.route,
+                          arguments: true,
+                        );
+                      },
+                    ).expanded(shouldExpand: true),
+                    LargeButton(
+                      title: 'Attendance Sheet',
+                      marginPadding: UIConstants.largeRightButtonMargin,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          StudentAttendanceCalenderView.route,
+                        );
+                      },
+                      color: const Color(0xFFA29CF4),
+                    ).expanded(shouldExpand: true),
+                  ],
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                LargeButton(
-                  title: 'Attendance Sheet',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      StudentAttendanceCalenderView.route,
-                    );
-                  },
-                  color: const Color(0xFFA29CF4),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                LargeButton(
-                  title: 'Fee Details',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      StudentFeeDetails.route,
-                    );
-                  },
-                  color: AppColors.defaultBlue,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                LargeButton(
-                  title: 'Admission Fee Details',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      StudentAdmissionFeeDetails.route,
-                    );
-                  },
-                  color: AppColors.defaultBlue,
+                Row(
+                  children: [
+                    LargeButton(
+                      title: 'Fee Details',
+                      marginPadding: UIConstants.largeLeftButtonMargin,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          StudentFeeDetails.route,
+                        );
+                      },
+                      color: AppColors.defaultBlue,
+                    ).expanded(shouldExpand: true),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    LargeButton(
+                      title: 'Admission Fee Details',
+                      marginPadding: UIConstants.largeRightButtonMargin,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          StudentAdmissionFeeDetails.route,
+                        );
+                      },
+                      color: AppColors.defaultBlue,
+                    ).expanded(shouldExpand: true),
+                  ],
                 ),
                 const SizedBox(
                   height: 16,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/data_model/class_model.dart';
@@ -7,7 +8,6 @@ import 'package:part_app/view/batch/components/class_picker.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -97,14 +97,17 @@ class _EditClassLinkState extends State<EditClassLink> {
                   capitalization: TextCapitalization.none,
                   validator: (value) {
                     bool validUrl;
-                    if (value.contains("https://") || value.contains("http://")) {
+                    if (value.contains("https://") ||
+                        value.contains("http://")) {
                       validUrl = Uri.parse(value).isAbsolute;
                     } else {
                       value = "https://$value";
                       validUrl = Uri.parse(value).isAbsolute;
                     }
-      
-                    return !validUrl || value == "https://" || value == "http://"
+
+                    return !validUrl ||
+                            value == "https://" ||
+                            value == "http://"
                         ? 'Please enter a valid class link.'
                         : null;
                   },
@@ -261,8 +264,8 @@ class _EditClassLinkState extends State<EditClassLink> {
                                                   .branches
                                                   .where((element) =>
                                                       element.branchName ==
-                                                      batchCubit
-                                                          .tempClass?.branchName)
+                                                      batchCubit.tempClass
+                                                          ?.branchName)
                                                   .toList())[0]
                                               .id;
                                           tempClass = null;
@@ -292,7 +295,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                         controller: batchController,
                         onTap: () {
                           batchDays?.clear();
-      
+
                           scaffoldKey.currentState?.showBottomSheet(
                             backgroundColor: Colors.transparent,
                             (context) => BatchPicker(
@@ -377,8 +380,8 @@ class _EditClassLinkState extends State<EditClassLink> {
                                                   .branches
                                                   .where((element) =>
                                                       element.branchName ==
-                                                      batchCubit
-                                                          .tempClass?.branchName)
+                                                      batchCubit.tempClass
+                                                          ?.branchName)
                                                   .toList())[0]
                                               .id;
                                           batchController.text =
@@ -447,15 +450,16 @@ class _EditClassLinkState extends State<EditClassLink> {
                             backgroundColor: Colors.transparent,
                             (context) => ClassPicker(
                               branchId: batch?.branchId,
-                              batchId: batch?.id ?? tempClass?.batchId ?? batchId,
+                              batchId:
+                                  batch?.id ?? tempClass?.batchId ?? batchId,
                               date: date?.toServerYMD() ??
                                   tempClass?.classDate?.toServerYMD(),
                               scaffoldKey: scaffoldKey,
                               onSave: (ClassModel value) {
                                 setState(() {
                                   dateController.text = date?.toDDMMYYY() ?? "";
-                                selectedclass = value;
-      });
+                                  selectedclass = value;
+                                });
                               },
                             ),
                           );
@@ -543,7 +547,7 @@ class _EditClassLinkState extends State<EditClassLink> {
                     onTap: () {
                       if (formKey.currentState!.validate()) {
                         // formKey.currentState!.save();
-      
+
                         batchCubit.updateClassLink(
                           batchCubit.tempClass?.batchId,
                           batchCubit.tempClass?.id,
@@ -574,8 +578,8 @@ class _EditClassLinkState extends State<EditClassLink> {
                                             ""
                                         : "https://${classLink ?? batchCubit.tempClass?.link ?? ""}")
                                 .host,
-                            'start_time':
-                                selectedclass?.startTime ?? tempClass?.startTime,
+                            'start_time': selectedclass?.startTime ??
+                                tempClass?.startTime,
                             'end_time':
                                 selectedclass?.endTime ?? tempClass?.endTime,
                             "batch_id":

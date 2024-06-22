@@ -1,15 +1,17 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/alert.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/trainer/trainer_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../../flavors.dart';
 import '../../components/user_image.dart';
 

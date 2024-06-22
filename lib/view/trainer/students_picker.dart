@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -248,7 +247,7 @@ class _StudentPickerState extends State<StudentPicker> {
                                         }
                                       },
                                       child: Container(
-                                        height: 40.h,
+                                        height: UIConstants.buttonHeight,
                                         margin: EdgeInsets.symmetric(
                                             horizontal: 15.w),
                                         padding: EdgeInsets.only(

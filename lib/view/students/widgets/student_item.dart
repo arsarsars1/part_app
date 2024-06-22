@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/view/components/launcher.dart';
 import 'package:part_app/view/components/user_image.dart';
-import 'package:part_app/view/constants/constant.dart';
 
 class StudentItem extends StatelessWidget {
   final StudentModel student;
@@ -38,8 +38,8 @@ class StudentItem extends StatelessWidget {
                   UserImage(
                     profilePic: student.profilePic != ""
                         ? '${F.baseUrl}'
-                        '/admin/images/student/'
-                        '${student.detailId}/${student.profilePic}'
+                            '/admin/images/student/'
+                            '${student.detailId}/${student.profilePic}'
                         : '',
                   ),
                   SizedBox(width: 16.w),

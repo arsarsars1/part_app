@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/models.dart';
@@ -9,7 +10,6 @@ import 'package:part_app/view/batch/components/selected_trainers.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view/trainer/students_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -279,7 +279,7 @@ class _BatchDetailsState extends State<BatchDetails>
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Button(
-                                  height: 40.h,
+                                  height: UIConstants.buttonHeight,
                                   onTap: () => Navigator.pushNamed(
                                     context,
                                     RescheduleClass.route,
@@ -297,7 +297,7 @@ class _BatchDetailsState extends State<BatchDetails>
                                   width: 16,
                                 ),
                                 Button(
-                                  height: 40.h,
+                                  height: UIConstants.buttonHeight,
                                   onTap: () => Navigator.pushNamed(
                                     context,
                                     CancelClass.route,
@@ -317,7 +317,7 @@ class _BatchDetailsState extends State<BatchDetails>
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16.w),
                             child: Button(
-                              height: 40.h,
+                              height: UIConstants.buttonHeight,
                               fullWidget: true,
                               onTap: () {
                                 batchCubit.isFromBatchDetail = true;

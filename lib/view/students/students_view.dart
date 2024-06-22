@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/students/add_student.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
@@ -85,7 +85,7 @@ class _StudentsViewState extends State<StudentsView> {
                             top: 16.h,
                           ),
                           child: Button(
-                            height: 40.h,
+                            height: UIConstants.buttonHeight,
                             onTap: () =>
                                 Navigator.pushNamed(context, AddStudent.route),
                             title: 'Add New Student',

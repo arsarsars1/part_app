@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/student_dashboard.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/user_image.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 
 class StudentAppHomeFeeListItem extends StatefulWidget {

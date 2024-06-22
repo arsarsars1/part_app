@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/constants/constant.dart';
 
 class ListCard extends StatelessWidget {
   final VoidCallback onTap;

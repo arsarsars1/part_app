@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/student_app_fee_detail_history.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view/fee/components/student_app_fee_list_item.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';

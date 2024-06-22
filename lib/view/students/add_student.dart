@@ -2,13 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
-import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/constants/default_values.dart';
-// import 'package:part_app/view/constants/regex.dart';
 import 'package:part_app/view/students/assign_batch.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -299,7 +297,7 @@ class _AddStudentState extends State<AddStudent> {
                 },
               ),
               SizedBox(
-                height: 40.h,
+                height: UIConstants.buttonHeight,
               ),
               Center(
                 child: Padding(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/admission_fee_invoice.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/fee/components/edit_fees.dart';
 import 'package:part_app/view/fee/components/fee_list_item.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';

@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/student_model.dart';
-import 'package:part_app/view/constants/constant.dart';
 import 'package:part_app/view_model/trainer/trainer_cubit.dart';
+
 import '../../../flavors.dart';
 import '../../components/user_image.dart';
 

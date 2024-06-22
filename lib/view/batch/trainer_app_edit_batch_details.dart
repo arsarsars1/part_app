@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
@@ -9,8 +10,6 @@ import 'package:part_app/view/batch/components/retain_student_check.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
 import 'package:part_app/view/batch/trainer_app_batch_details.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
-import 'package:part_app/view/constants/default_values.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAppEditBatchDetails extends StatefulWidget {

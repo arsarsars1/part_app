@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/constant.dart';
 
 class WhatsappCheckButton extends StatefulWidget {
   final ValueChanged<bool> onChange;

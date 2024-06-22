@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:part_app/view/constants/constant.dart';
+import 'package:part_app/constants/constant.dart';
 
 class ResendOtp extends StatefulWidget {
   final VoidCallback onResend;

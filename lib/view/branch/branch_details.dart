@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/app_colors.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/components/trainer_list.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
@@ -219,7 +219,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                           top: 16.h,
                         ),
                         child: Button(
-                          height: 30.h,
+                          height: UIConstants.buttonHeight,
                           width: 100,
                           onTap: () {
                             /// to handle the new trainer addition flow

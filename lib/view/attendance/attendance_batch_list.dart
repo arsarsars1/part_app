@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
+
 import '../../view_model/attendance/attendance_cubit.dart';
 import 'monthly_attendance_view.dart';
 
@@ -74,8 +76,8 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
                       padding: EdgeInsets.only(
                           left: 16.w, right: 16.w, top: 16.h, bottom: 20.h),
                       child: Button(
-                        height: 30.h,
-                        width: 185.w,
+                        height: UIConstants.buttonHeight,
+                        width: 188.w,
                         onTap: () {
                           cubit.days.clear();
                           Navigator.pushNamed(

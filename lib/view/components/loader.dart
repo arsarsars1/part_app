@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:part_app/view/constants/app_colors.dart';
+import 'package:part_app/constants/app_colors.dart';
 
 class LoadingView extends StatelessWidget {
   final String? message;

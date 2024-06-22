@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:part_app/constants/constant.dart';
 
 class TabButton extends StatefulWidget {
   final ValueChanged<String> onChange;
@@ -24,7 +24,7 @@ class _TabButtonState extends State<TabButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40.h,
+      height: UIConstants.buttonHeight,
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.13),
         borderRadius: BorderRadius.circular(4),

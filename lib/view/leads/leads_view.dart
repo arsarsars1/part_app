@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/constants/assets.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/constants/assets.dart';
 import 'package:part_app/view/leads/add_lead.dart';
 import 'package:part_app/view/leads/all_followups_view.dart';
 import 'package:part_app/view/leads/todays_followup_view.dart';
