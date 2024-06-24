@@ -666,10 +666,19 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                             const SizedBox(
                               height: 20,
                             ),
-                            if (widget.student.paymentStatus != "paid")
-                              if (widget.student.writtenOffStatus != 1)
-                                Column(
-                                  children: [
+                            LargeButton(
+                              title: 'Add Or Edit Fees',
+                              onTap: widget.onTap,
+                              color: AppColors.defaultBlue,
+                              margin: 0,
+                            ).expandButton(shouldExpand: true),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: [
+                                if (widget.student.paymentStatus != "paid")
+                                  if (widget.student.writtenOffStatus != 1) ...[
                                     LargeButton(
                                       title: 'Write Off',
                                       onTap: () {
@@ -730,23 +739,11 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                                       },
                                       color: AppColors.lavender,
                                       margin: 0,
-                                    ),
+                                    ).expanded(shouldExpand: true),
                                     const SizedBox(
-                                      height: 20,
+                                      width: 8,
                                     ),
                                   ],
-                                ),
-                            Row(
-                              children: [
-                                LargeButton(
-                                  title: 'Add Or Edit Fees',
-                                  onTap: widget.onTap,
-                                  color: AppColors.defaultBlue,
-                                  margin: 0,
-                                ).expanded(shouldExpand: true),
-                                const SizedBox(
-                                  width: 8,
-                                ),
                                 LargeButton(
                                   title: 'Other Payments',
                                   onTap: () {
