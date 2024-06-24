@@ -36,7 +36,7 @@ class StudentCubit extends Cubit<StudentState> {
   Student? tempStudent;
   bool second = false;
   int? activeStudentsCount;
-
+  int? inactiveStudentsCount;
   Student? get student => _student;
 
   final Map<int?, StudentModel> _studentsMap = {};
@@ -307,6 +307,7 @@ class StudentCubit extends Cubit<StudentState> {
 
       var items = response?.students?.data ?? [];
       activeStudentsCount = response?.activeStudentsCount;
+      inactiveStudentsCount = response?.inactiveStudentsCount;
       List<StudentModel> tempStudents = [];
 
       for (var student in items) {
@@ -369,6 +370,7 @@ class StudentCubit extends Cubit<StudentState> {
 
       var items = response?.students?.data ?? [];
       activeStudentsCount = response?.activeStudentsCount;
+      inactiveStudentsCount = response?.inactiveStudentsCount;
       List<StudentModel> tempStudents = [];
 
       for (var student in items) {

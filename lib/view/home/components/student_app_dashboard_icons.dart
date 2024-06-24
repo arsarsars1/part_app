@@ -85,7 +85,6 @@ class _StudentAppDashboardIconsState extends State<StudentAppDashboardIcons> {
               },
               child: Container(
                 margin: EdgeInsets.all(8.h),
-                padding: EdgeInsets.all(16.h),
                 decoration: BoxDecoration(
                   color: AppColors.liteDark,
                   borderRadius: BorderRadius.circular(5),
@@ -96,9 +95,6 @@ class _StudentAppDashboardIconsState extends State<StudentAppDashboardIcons> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: 10.h,
-                    ),
                     Container(
                       decoration: BoxDecoration(
                         color: item.color,
@@ -118,7 +114,7 @@ class _StudentAppDashboardIconsState extends State<StudentAppDashboardIcons> {
                       height: 4.h,
                     ),
                     Text(
-                      "${item.title}\n",
+                      item.title,
                       textAlign: TextAlign.center,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
