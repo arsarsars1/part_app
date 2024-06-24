@@ -243,12 +243,9 @@ class AuthCubit extends Cubit<AuthState> {
       var user = await getUser();
 
       if (user != null) {
-        emit(
-          UserAvailable(
-            member: _user?.adminDetail?.academy?.membershipId != null ||
-                _user?.studentDetail != null,
-          ),
-        );
+        emit(UserAvailable(
+            isMemberShip: _user?.adminDetail?.academy?.membershipId != null,
+            member: _user?.studentDetail != null));
       } else {
         emit(UserNotAvailable());
       }

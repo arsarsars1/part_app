@@ -32,14 +32,19 @@ class _SplashScreenState extends State<SplashScreen> {
         if (state is NetworkError) {
           AlertBox.showErrorAlert(context);
         } else if (state is UserAvailable) {
-          if (state.member) {
-            cubit.navigateToDashboard(cubit.user?.adminDetail?.academy,
-                cubit.user?.trainerDetail, cubit.user?.studentDetail, context);
-          } else {
+          if (state.isMemberShip == false) {
             Navigator.pushReplacementNamed(
               context,
               Membership.route,
-              // (route) => false,
+            );
+          } else if (state.member) {
+            cubit.navigateToDashboard(cubit.user?.adminDetail?.academy,
+                cubit.user?.trainerDetail, cubit.user?.studentDetail, context);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              Login.route,
+              (route) => false,
             );
           }
         } else {

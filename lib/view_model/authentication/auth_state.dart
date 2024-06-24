@@ -44,8 +44,9 @@ class LoginFailed extends AuthState {
 
 class UserAvailable extends AuthState {
   final bool member;
+  final bool isMemberShip;
 
-  UserAvailable({required this.member});
+  UserAvailable({required this.member, required this.isMemberShip});
 }
 
 class UserNotAvailable extends AuthState {}
