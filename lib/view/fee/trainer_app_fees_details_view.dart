@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
@@ -25,6 +27,7 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
+  Timer? _debounce;
   String? status;
   int? branchId;
   String? query;
@@ -75,6 +78,14 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
       }
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (_debounce != null && _debounce!.isActive) {
+      _debounce!.cancel();
+    }
+    super.dispose();
   }
 
   @override
@@ -426,12 +437,20 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                       title: 'Search',
                       hint: 'Search By Name or Phone Number',
                       onChange: (value) {
+                        if (_debounce != null && _debounce!.isActive) {
+                          _debounce!.cancel();
+                        }
                         if (value.isEmpty) {
                           query = null;
                         } else {
                           query = value;
                         }
-                        doSearch(true);
+                        _debounce =
+                            Timer(const Duration(milliseconds: 500), () {
+                          if (value.length % 2 == 0) {
+                            doSearch(true);
+                          }
+                        });
                       },
                       onSubmit: (value) {
                         if (value.isEmpty) {
@@ -439,6 +458,7 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                         } else {
                           query = value;
                         }
+                        print("heelo===");
                         doSearch(true);
                       },
                       textInputAction: TextInputAction.search,

@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
@@ -272,6 +273,8 @@ class FeeCubit extends Cubit<FeeState> {
           page++;
         }
         batchInvoice.addAll(response?.batchFeeInvoices?.data ?? []);
+
+        batchInvoice = LinkedHashSet<Datum>.from(batchInvoice).toList();
         emit(FeeFetched(moreItems: nextPageUrl != null));
       }
     } catch (e) {
