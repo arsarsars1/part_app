@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/components/alert_box.dart';
@@ -32,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (state is NetworkError) {
           AlertBox.showErrorAlert(context);
         } else if (state is UserAvailable) {
-          if (state.isMemberShip == false) {
+          if (state.isMemberShip == false && Platform.isAndroid) {
             Navigator.pushReplacementNamed(
               context,
               Membership.route,
