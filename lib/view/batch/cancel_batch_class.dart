@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/cancelled_batch_class.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/batch/components/cancel_class.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class CancelClass extends StatefulWidget {
@@ -75,7 +75,7 @@ class _CancelClassState extends State<CancelClass> {
                         top: 16.h,
                       ),
                       child: Button(
-                        height: 30.h,
+                        height: UIConstants.buttonHeight,
                         onTap: () => Navigator.pushNamed(
                           context,
                           CancelledClasses.route,

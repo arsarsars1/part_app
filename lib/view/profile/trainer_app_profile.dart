@@ -159,7 +159,7 @@ class _TrainerAppProfileState extends State<TrainerAppProfile> {
                 child: Button(
                   width: 200.w,
                   disable: true,
-                  height: 30.h,
+                  height: UIConstants.buttonHeight,
                   onTap: () {
                     // Navigator.pushNamed(context, ChangePhoneScreen.route);
                   },

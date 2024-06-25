@@ -70,7 +70,7 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
                   top: 16.h,
                 ),
                 child: Button(
-                  height: 30.h,
+                  height: UIConstants.buttonHeight,
                   onTap: () => Navigator.pushNamed(
                     context,
                     RescheduleClass.route,

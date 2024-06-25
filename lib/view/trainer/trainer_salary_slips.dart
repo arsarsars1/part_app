@@ -105,7 +105,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlips> {
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Button(
-                      height: 30.h,
+                      height: UIConstants.buttonHeight,
                       onTap: () {
                         Navigator.pushNamed(
                           context,

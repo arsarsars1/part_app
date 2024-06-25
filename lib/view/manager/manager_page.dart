@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/manager_response.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/manager/add_manager.dart';
@@ -39,7 +40,7 @@ class _ManagerPageState extends State<ManagerPage> {
                 top: 16.h,
               ),
               child: Button(
-                height: 30.h,
+                height: UIConstants.buttonHeight,
                 width: 203.w,
                 onTap: () => Navigator.pushNamed(context, AddManager.route),
                 title: 'Add New Branch Manager',

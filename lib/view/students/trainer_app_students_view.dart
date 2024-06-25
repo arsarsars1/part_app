@@ -92,7 +92,7 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                             top: 16.h,
                           ),
                           child: Button(
-                            height: 30.h,
+                            height: UIConstants.buttonHeight,
                             onTap: () => Navigator.pushNamed(
                                 context, TrainerAppAddStudent.route),
                             title: 'Add New Student',

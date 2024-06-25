@@ -134,7 +134,7 @@ class _TrainerAppClassLinkViewState extends State<TrainerAppClassLinkView> {
                       top: 16.h,
                     ),
                     child: Button(
-                      height: 30.h,
+                      height: UIConstants.buttonHeight,
                       onTap: () {
                         Navigator.pushNamed(
                             context, TrainerAppClassLinkList.route);
@@ -422,7 +422,7 @@ class _TrainerAppClassLinkViewState extends State<TrainerAppClassLinkView> {
                 ),
                 Center(
                   child: Button(
-                    height: 50.h,
+                    height: UIConstants.buttonHeight,
                     onTap: () {
                       if (formKey.currentState!.validate()) {
                         // formKey.currentState!.save();

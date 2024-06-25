@@ -178,7 +178,7 @@ class _ProfileState extends State<Profile> {
               Center(
                 child: Button(
                   width: 200.w,
-                  height: 30.h,
+                  height: UIConstants.buttonHeight,
                   onTap: () {
                     Navigator.pushNamed(context, ChangePhoneScreen.route);
                   },
