@@ -46,6 +46,7 @@ class TrainingDays extends StatelessWidget {
 
                     return GestureDetector(
                       onTap: () async {
+                        FocusManager.instance.primaryFocus?.unfocus();
                         Days? days;
                         var items = cubit.days
                             .where((element) => element.day == data.key)
@@ -251,10 +252,12 @@ class _ClassTimeState extends State<ClassTime> {
                         return;
                       }
                       timePicker(false).then((value) {
-                        setState(() {
-                          endTime = value;
-                          Database().setPreviousClassEndTime(value!);
-                        });
+                        if (value != null) {
+                          setState(() {
+                            endTime = value;
+                            Database().setPreviousClassEndTime(value);
+                          });
+                        }
                       });
                     },
                     child: Container(
