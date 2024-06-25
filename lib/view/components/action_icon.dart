@@ -17,9 +17,9 @@ class ActionIcon extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8),
-        width: 25.w,
-        height: 25.h,
-        padding: const EdgeInsets.all(4),
+        width: 30.w,
+        height: 30.h,
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: color,
