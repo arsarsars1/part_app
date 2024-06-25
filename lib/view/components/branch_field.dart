@@ -7,14 +7,16 @@ class BranchField extends StatefulWidget {
   final int? initialBranch;
   final String? title;
   final bool isMandatory;
+  final bool isDisable;
 
-  const BranchField(
-      {Key? key,
-      required this.onSelect,
-      this.initialBranch,
-      this.title,
-      this.isMandatory = true})
-      : super(key: key);
+  const BranchField({
+    Key? key,
+    required this.onSelect,
+    this.initialBranch,
+    this.title,
+    this.isMandatory = true,
+    this.isDisable = false,
+  }) : super(key: key);
 
   @override
   State<BranchField> createState() => _BranchFieldState();
@@ -41,11 +43,16 @@ class _BranchFieldState extends State<BranchField> {
           title: widget.title ?? 'Branch ${widget.isMandatory ? "*" : ""}',
           hint: 'Select Branch',
           dropDown: true,
+          disabled: widget.isDisable,
           defaultItem: branchCubit.initialBranch(
             branchCubit.firstBranch?.id,
           ),
           dropDownItems: branchCubit.dropDownBranches(),
-          onChange: (value) => widget.onSelect(value.id),
+          onChange: (value) {
+            if (widget.isDisable == false) {
+              widget.onSelect(value.id);
+            }
+          },
           validator: widget.isMandatory
               ? (value) {
                   if (value == null) {
