@@ -25,6 +25,7 @@ abstract class StudentsResponse with _$StudentsResponse {
   const factory StudentsResponse({
     int? status,
     int? activeStudentsCount,
+    int? inactiveStudentsCount,
     Students? students,
   }) = _StudentsResponse;
 

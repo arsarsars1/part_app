@@ -22,6 +22,7 @@ StudentsResponse _$StudentsResponseFromJson(Map<String, dynamic> json) {
 mixin _$StudentsResponse {
   int? get status => throw _privateConstructorUsedError;
   int? get activeStudentsCount => throw _privateConstructorUsedError;
+  int? get inactiveStudentsCount => throw _privateConstructorUsedError;
   Students? get students => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +37,11 @@ abstract class $StudentsResponseCopyWith<$Res> {
           StudentsResponse value, $Res Function(StudentsResponse) then) =
       _$StudentsResponseCopyWithImpl<$Res, StudentsResponse>;
   @useResult
-  $Res call({int? status, int? activeStudentsCount, Students? students});
+  $Res call(
+      {int? status,
+      int? activeStudentsCount,
+      int? inactiveStudentsCount,
+      Students? students});
 
   $StudentsCopyWith<$Res>? get students;
 }
@@ -56,6 +61,7 @@ class _$StudentsResponseCopyWithImpl<$Res, $Val extends StudentsResponse>
   $Res call({
     Object? status = freezed,
     Object? activeStudentsCount = freezed,
+    Object? inactiveStudentsCount = freezed,
     Object? students = freezed,
   }) {
     return _then(_value.copyWith(
@@ -66,6 +72,10 @@ class _$StudentsResponseCopyWithImpl<$Res, $Val extends StudentsResponse>
       activeStudentsCount: freezed == activeStudentsCount
           ? _value.activeStudentsCount
           : activeStudentsCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      inactiveStudentsCount: freezed == inactiveStudentsCount
+          ? _value.inactiveStudentsCount
+          : inactiveStudentsCount // ignore: cast_nullable_to_non_nullable
               as int?,
       students: freezed == students
           ? _value.students
@@ -95,7 +105,11 @@ abstract class _$$StudentsResponseImplCopyWith<$Res>
       __$$StudentsResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? status, int? activeStudentsCount, Students? students});
+  $Res call(
+      {int? status,
+      int? activeStudentsCount,
+      int? inactiveStudentsCount,
+      Students? students});
 
   @override
   $StudentsCopyWith<$Res>? get students;
@@ -114,6 +128,7 @@ class __$$StudentsResponseImplCopyWithImpl<$Res>
   $Res call({
     Object? status = freezed,
     Object? activeStudentsCount = freezed,
+    Object? inactiveStudentsCount = freezed,
     Object? students = freezed,
   }) {
     return _then(_$StudentsResponseImpl(
@@ -124,6 +139,10 @@ class __$$StudentsResponseImplCopyWithImpl<$Res>
       activeStudentsCount: freezed == activeStudentsCount
           ? _value.activeStudentsCount
           : activeStudentsCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      inactiveStudentsCount: freezed == inactiveStudentsCount
+          ? _value.inactiveStudentsCount
+          : inactiveStudentsCount // ignore: cast_nullable_to_non_nullable
               as int?,
       students: freezed == students
           ? _value.students
@@ -138,7 +157,10 @@ class __$$StudentsResponseImplCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$StudentsResponseImpl implements _StudentsResponse {
   const _$StudentsResponseImpl(
-      {this.status, this.activeStudentsCount, this.students});
+      {this.status,
+      this.activeStudentsCount,
+      this.inactiveStudentsCount,
+      this.students});
 
   factory _$StudentsResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$StudentsResponseImplFromJson(json);
@@ -148,11 +170,13 @@ class _$StudentsResponseImpl implements _StudentsResponse {
   @override
   final int? activeStudentsCount;
   @override
+  final int? inactiveStudentsCount;
+  @override
   final Students? students;
 
   @override
   String toString() {
-    return 'StudentsResponse(status: $status, activeStudentsCount: $activeStudentsCount, students: $students)';
+    return 'StudentsResponse(status: $status, activeStudentsCount: $activeStudentsCount, inactiveStudentsCount: $inactiveStudentsCount, students: $students)';
   }
 
   @override
@@ -163,14 +187,16 @@ class _$StudentsResponseImpl implements _StudentsResponse {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.activeStudentsCount, activeStudentsCount) ||
                 other.activeStudentsCount == activeStudentsCount) &&
+            (identical(other.inactiveStudentsCount, inactiveStudentsCount) ||
+                other.inactiveStudentsCount == inactiveStudentsCount) &&
             (identical(other.students, students) ||
                 other.students == students));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, status, activeStudentsCount, students);
+  int get hashCode => Object.hash(runtimeType, status, activeStudentsCount,
+      inactiveStudentsCount, students);
 
   @JsonKey(ignore: true)
   @override
@@ -191,6 +217,7 @@ abstract class _StudentsResponse implements StudentsResponse {
   const factory _StudentsResponse(
       {final int? status,
       final int? activeStudentsCount,
+      final int? inactiveStudentsCount,
       final Students? students}) = _$StudentsResponseImpl;
 
   factory _StudentsResponse.fromJson(Map<String, dynamic> json) =
@@ -200,6 +227,8 @@ abstract class _StudentsResponse implements StudentsResponse {
   int? get status;
   @override
   int? get activeStudentsCount;
+  @override
+  int? get inactiveStudentsCount;
   @override
   Students? get students;
   @override

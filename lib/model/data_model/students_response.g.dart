@@ -11,6 +11,7 @@ _$StudentsResponseImpl _$$StudentsResponseImplFromJson(
     _$StudentsResponseImpl(
       status: json['status'] as int?,
       activeStudentsCount: json['active_students_count'] as int?,
+      inactiveStudentsCount: json['inactive_students_count'] as int?,
       students: json['students'] == null
           ? null
           : Students.fromJson(json['students'] as Map<String, dynamic>),
@@ -21,6 +22,7 @@ Map<String, dynamic> _$$StudentsResponseImplToJson(
     <String, dynamic>{
       'status': instance.status,
       'active_students_count': instance.activeStudentsCount,
+      'inactive_students_count': instance.inactiveStudentsCount,
       'students': instance.students,
     };
 
