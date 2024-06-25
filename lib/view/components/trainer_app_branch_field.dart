@@ -6,9 +6,14 @@ class TrainerAppBranchField extends StatefulWidget {
   final ValueChanged<int?> onSelect;
   final int? initialBranch;
   final String? title;
+  final bool isDisable;
 
   const TrainerAppBranchField(
-      {Key? key, required this.onSelect, this.initialBranch, this.title})
+      {Key? key,
+      required this.onSelect,
+      this.initialBranch,
+      this.title,
+      this.isDisable = false})
       : super(key: key);
 
   @override
@@ -45,9 +50,12 @@ class _TrainerAppBranchFieldState extends State<TrainerAppBranchField> {
           defaultItem: branchCubit.initialBranch(
             branchCubit.firstBranch?.id,
           ),
+          disabled: widget.isDisable,
           dropDownItems: branchCubit.dropDownBranches(),
           onChange: (value) {
-            widget.onSelect(value.id);
+            if (widget.isDisable == false) {
+              widget.onSelect(value.id);
+            }
           },
           validator: (value) {
             if (value == null) {

@@ -87,10 +87,9 @@ class CommonField extends StatelessWidget {
         if (disabled) {
           Alert(context).show(
               message:
-                  'You don\'t have authersation to change the academy type');
+                  'You don\'t have authorisation to change the academy type');
           return;
-        }
-        if (dropDown && onTap != null) {
+        } else if (dropDown && onTap != null) {
           onTap!();
         }
       },

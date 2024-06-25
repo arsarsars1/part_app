@@ -21,6 +21,7 @@ class TrainerAppStudentAttendanceCalenderView extends StatefulWidget {
 
 class _TrainerAppStudentAttendanceCalenderViewState
     extends State<TrainerAppStudentAttendanceCalenderView> {
+  bool isDisable = false;
   bool isActive = true;
   ScrollController scrollController = ScrollController();
   BatchModel? batch;
@@ -39,6 +40,13 @@ class _TrainerAppStudentAttendanceCalenderViewState
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      try {
+        final arguments = (ModalRoute.of(context)?.settings.arguments ??
+            <String, dynamic>{}) as Map;
+        isDisable = arguments['isDisable'];
+      } catch (e) {
+        isDisable = false;
+      }
       authCubit = context.read<AuthCubit>();
       var branchCubit = context.read<BranchCubit>();
       AttendanceCubit cubit = context.read<AttendanceCubit>();
@@ -163,6 +171,7 @@ class _TrainerAppStudentAttendanceCalenderViewState
                     height: 20.h,
                   ),
                   TrainerAppBranchField(
+                    isDisable: isDisable,
                     onSelect: (value) {
                       setState(() {
                         branchId = value;
@@ -186,103 +195,112 @@ class _TrainerAppStudentAttendanceCalenderViewState
                   ),
                   CommonField(
                     controller: batchController,
-                    onTap: () {
-                      if (branchId != null) {
-                        scaffoldKey.currentState?.showBottomSheet(
-                          backgroundColor: Colors.transparent,
-                          (context) => BatchPicker(
-                            branchId: branchId!,
-                            status: 'ongoing',
-                            branchSearch: true,
-                            onSelect: (value) async {
-                              present = 0;
-                              absent = 0;
-                              batch = value;
-                              batchController.text = value.name;
-                              AttendanceCubit cubit =
-                                  context.read<AttendanceCubit>();
-                              cubit.id = value.id;
-                              await cubit
-                                  .getAttendenceOfStudentOfMonthForTrainer(
-                                      trainerId: authCubit
-                                              ?.user
-                                              ?.trainerDetail?[
-                                                  authCubit?.trainerIndex ?? 0]
-                                              .id ??
-                                          0,
-                                      studentDetailId: studentCubit
-                                          ?.student?.studentDetail?[0].id,
-                                      batchId: cubit.id,
-                                      date:
+                    onTap: isDisable
+                        ? null
+                        : () {
+                            if (branchId != null) {
+                              scaffoldKey.currentState?.showBottomSheet(
+                                backgroundColor: Colors.transparent,
+                                (context) => BatchPicker(
+                                  branchId: branchId!,
+                                  status: 'ongoing',
+                                  branchSearch: true,
+                                  onSelect: (value) async {
+                                    present = 0;
+                                    absent = 0;
+                                    batch = value;
+                                    batchController.text = value.name;
+                                    AttendanceCubit cubit =
+                                        context.read<AttendanceCubit>();
+                                    cubit.id = value.id;
+                                    await cubit
+                                        .getAttendenceOfStudentOfMonthForTrainer(
+                                            trainerId: authCubit
+                                                    ?.user
+                                                    ?.trainerDetail?[
+                                                        authCubit
+                                                                ?.trainerIndex ??
+                                                            0]
+                                                    .id ??
+                                                0,
+                                            studentDetailId: studentCubit
+                                                ?.student?.studentDetail?[0].id,
+                                            batchId: cubit.id,
+                                            date: DateTime(
+                                                currentYear, currentMonth));
+                                    await cubit.getClassesOfMonthForTrainer(
+                                        trainerId: authCubit
+                                                ?.user
+                                                ?.trainerDetail?[
+                                                    authCubit?.trainerIndex ??
+                                                        0]
+                                                .id ??
+                                            0,
+                                        batchId: cubit.id,
+                                        date: DateTime(
+                                            currentYear, currentMonth));
+                                    _markedDateMap.clear();
+                                    setState(() {
+                                      noOfWeeks = getWeeksInMonth(
                                           DateTime(currentYear, currentMonth));
-                              await cubit.getClassesOfMonthForTrainer(
-                                  trainerId: authCubit
-                                          ?.user
-                                          ?.trainerDetail?[
-                                              authCubit?.trainerIndex ?? 0]
-                                          .id ??
-                                      0,
-                                  batchId: cubit.id,
-                                  date: DateTime(currentYear, currentMonth));
-                              _markedDateMap.clear();
-                              setState(() {
-                                noOfWeeks = getWeeksInMonth(
-                                    DateTime(currentYear, currentMonth));
-                                for (ClassDetails element1
-                                    in attendenceCubit.attendenceClasses ??
-                                        []) {
-                                  int flag = 0;
-                                  int conductedClassId = 0;
-                                  for (StudentAttendances element
-                                      in cubit.studentClasses ?? []) {
-                                    if (element1.date ==
-                                            element
-                                                .conductedClass?.conductedOn &&
-                                        element.isPresent == 1) {
-                                      flag = 1;
-                                      conductedClassId = element.id ?? 0;
-                                      break;
-                                    }
-                                  }
-                                  if ((element1.date ?? DateTime.now())
-                                      .isBefore(DateTime.now())) {
-                                    if (flag == 1) {
-                                      present++;
-                                    } else {
-                                      absent++;
-                                    }
-                                    if (element1.conducted == true) {
-                                      _markedDateMap.add(
-                                        element1.date ?? DateTime.now(),
-                                        Event(
-                                          date: element1.date ?? DateTime.now(),
-                                          title: conductedClassId == 0
-                                              ? 'Event 1'
-                                              : '$conductedClassId',
-                                          dot: Container(
-                                            margin: const EdgeInsets.symmetric(
-                                                horizontal: 1.0),
-                                            color: flag == 1
-                                                ? Colors.green
-                                                : Colors.red,
-                                            height: 5.0,
-                                            width: 5.0,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  }
-                                }
-                              });
-                            },
-                          ),
-                        );
-                      } else {
-                        Alert(context).show(
-                          message: 'Please select the Branch.',
-                        );
-                      }
-                    },
+                                      for (ClassDetails element1
+                                          in attendenceCubit
+                                                  .attendenceClasses ??
+                                              []) {
+                                        int flag = 0;
+                                        int conductedClassId = 0;
+                                        for (StudentAttendances element
+                                            in cubit.studentClasses ?? []) {
+                                          if (element1.date ==
+                                                  element.conductedClass
+                                                      ?.conductedOn &&
+                                              element.isPresent == 1) {
+                                            flag = 1;
+                                            conductedClassId = element.id ?? 0;
+                                            break;
+                                          }
+                                        }
+                                        if ((element1.date ?? DateTime.now())
+                                            .isBefore(DateTime.now())) {
+                                          if (flag == 1) {
+                                            present++;
+                                          } else {
+                                            absent++;
+                                          }
+                                          if (element1.conducted == true) {
+                                            _markedDateMap.add(
+                                              element1.date ?? DateTime.now(),
+                                              Event(
+                                                date: element1.date ??
+                                                    DateTime.now(),
+                                                title: conductedClassId == 0
+                                                    ? 'Event 1'
+                                                    : '$conductedClassId',
+                                                dot: Container(
+                                                  margin: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 1.0),
+                                                  color: flag == 1
+                                                      ? Colors.green
+                                                      : Colors.red,
+                                                  height: 5.0,
+                                                  width: 5.0,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        }
+                                      }
+                                    });
+                                  },
+                                ),
+                              );
+                            } else {
+                              Alert(context).show(
+                                message: 'Please select the Branch.',
+                              );
+                            }
+                          },
                     disabled: true,
                     title: 'Batch *',
                     hint: 'Select Batch',

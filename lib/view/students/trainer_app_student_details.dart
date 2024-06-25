@@ -205,6 +205,7 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                         Navigator.pushNamed(
                           context,
                           TrainerAppStudentAttendanceCalenderView.route,
+                          arguments: {'isDisable': true},
                         );
                       },
                       color: const Color(0xFFA29CF4),
