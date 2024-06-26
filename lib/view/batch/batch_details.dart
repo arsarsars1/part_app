@@ -11,6 +11,7 @@ import 'package:part_app/view/batch/edit_batch_details.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/trainer/students_picker.dart';
+import 'package:part_app/view/trainer/trainer_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class BatchDetails extends StatefulWidget {
@@ -346,41 +347,65 @@ class _BatchDetailsState extends State<BatchDetails>
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Batch Trainers'),
+                                Row(
+                                  children: [
+                                    const Text('Batch Trainers')
+                                        .expanded(shouldExpand: true),
+                                    GestureDetector(
+                                      onTap: () {
+                                        List<int?> trainers = [];
+                                        if (true) {
+                                          trainers = batch?.trainers
+                                                  ?.map((e) => e.userId)
+                                                  .toList() ??
+                                              [];
+                                        }
+
+                                        if (batch?.branchId == null) return;
+                                        scaffoldKey.currentState
+                                            ?.showBottomSheet(
+                                          elevation: 10,
+                                          backgroundColor: Colors.transparent,
+                                          (context) => TrainerPicker(
+                                            branchId: batch?.branchId!,
+                                            selectedTrainers: trainers,
+                                            onSave: (List<Trainer?> value) {
+                                              selectedTrainer(value);
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 24.w,
+                                        height: 24.w,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.black54,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2,
+                                          ),
+                                        ),
+                                        child: const Icon(
+                                          Icons.edit_outlined,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 SelectedTrainers(
                                   batchDetails: true,
+                                  showAddButton: false,
                                   branchId: batch?.branchId,
                                   scaffoldKey: scaffoldKey,
                                   trainers: batch?.trainers,
                                   selectedTrainers: (List<Trainer?> value) {
-                                    var trainerList =
-                                        value.map((e) => e?.id).toList();
-                                    if (value.isEmpty) {
-                                      BatchRequest request = const BatchRequest(
-                                        trainers: "",
-                                      );
-                                      context
-                                          .read<BatchCubit>()
-                                          .updateBatch(request);
-                                    } else {
-                                      BatchRequest request = BatchRequest(
-                                        trainers: context
-                                            .read<BranchCubit>()
-                                            .trainers
-                                            ?.where((element) =>
-                                                trainerList.contains(
-                                                  element.id,
-                                                ))
-                                            .map((e) => e.trainerDetail?[0].id)
-                                            .toList(),
-                                      );
-                                      context
-                                          .read<BatchCubit>()
-                                          .updateBatch(request);
-                                    }
+                                    selectedTrainer(value);
                                   },
                                 )
                               ],
@@ -428,4 +453,26 @@ class _BatchDetailsState extends State<BatchDetails>
             activeStatus: active ? null : 'inactive-students',
             clean: clean,
           );
+
+  void selectedTrainer(List<Trainer?> value) {
+    if (value.isEmpty) {
+      BatchRequest request = const BatchRequest(
+        trainers: "",
+      );
+      context.read<BatchCubit>().updateBatch(request);
+    } else {
+      var trainerList = value.map((e) => e?.id).toList();
+      BatchRequest request = BatchRequest(
+        trainers: context
+            .read<BranchCubit>()
+            .trainers
+            ?.where((element) => trainerList.contains(
+                  element.id,
+                ))
+            .map((e) => e.trainerDetail?[0].id)
+            .toList(),
+      );
+      context.read<BatchCubit>().updateBatch(request);
+    }
+  }
 }

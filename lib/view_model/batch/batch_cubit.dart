@@ -279,6 +279,7 @@ class BatchCubit extends Cubit<BatchState> {
       );
       if (response?.status == 1) {
         await getBatches();
+        emit(UpdatingBatch());
         await getBatch(batchId: '${_batchModel?.id}');
         emit(UpdatedBatch());
       } else {

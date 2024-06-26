@@ -10,12 +10,14 @@ class SelectedTrainers extends StatefulWidget {
   final List<Trainer>? trainers;
   final int? branchId;
   final bool batchDetails;
+  final bool showAddButton;
   final GlobalKey<ScaffoldState>? scaffoldKey;
 
   const SelectedTrainers(
       {Key? key,
       required this.selectedTrainers,
       this.trainers,
+      this.showAddButton = true,
       this.batchDetails = false,
       this.scaffoldKey,
       this.branchId})
@@ -79,57 +81,58 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
             );
           },
         ),
-        GestureDetector(
-          onTap: () {
-            List<int?> trainers = [];
-            if (widget.batchDetails) {
-              trainers = widget.trainers?.map((e) => e.userId).toList() ?? [];
-            } else {
-              trainers = widget.trainers
-                      ?.map((e) => e.trainerDetail?[0].userId)
-                      .toList() ??
-                  [];
-            }
+        if (widget.showAddButton)
+          GestureDetector(
+            onTap: () {
+              List<int?> trainers = [];
+              if (widget.batchDetails) {
+                trainers = widget.trainers?.map((e) => e.userId).toList() ?? [];
+              } else {
+                trainers = widget.trainers
+                        ?.map((e) => e.trainerDetail?[0].userId)
+                        .toList() ??
+                    [];
+              }
 
-            if (widget.branchId == null) return;
-            widget.scaffoldKey?.currentState?.showBottomSheet(
-              elevation: 10,
-              backgroundColor: Colors.transparent,
-              (context) => TrainerPicker(
-                branchId: widget.branchId!,
-                selectedTrainers: trainers,
-                onSave: (List<Trainer?> value) {
-                  widget.selectedTrainers(
-                    value,
-                  );
+              if (widget.branchId == null) return;
+              widget.scaffoldKey?.currentState?.showBottomSheet(
+                elevation: 10,
+                backgroundColor: Colors.transparent,
+                (context) => TrainerPicker(
+                  branchId: widget.branchId!,
+                  selectedTrainers: trainers,
+                  onSave: (List<Trainer?> value) {
+                    widget.selectedTrainers(
+                      value,
+                    );
 
-                  // setState(() {
-                  //   widget.trainers = value;
-                  // });
-                },
+                    // setState(() {
+                    //   widget.trainers = value;
+                    // });
+                  },
+                ),
+              );
+            },
+            child: Container(
+              margin: const EdgeInsets.only(
+                right: 16,
+                bottom: 8,
+                left: 16,
+                top: 8,
               ),
-            );
-          },
-          child: Container(
-            margin: const EdgeInsets.only(
-              right: 16,
-              bottom: 8,
-              left: 16,
-              top: 8,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.grey400,
-              border: Border.all(
-                color: AppColors.grey700,
-                width: 2,
+              decoration: BoxDecoration(
+                color: AppColors.grey400,
+                border: Border.all(
+                  color: AppColors.grey700,
+                  width: 2,
+                ),
+                shape: BoxShape.circle,
               ),
-              shape: BoxShape.circle,
+              width: width,
+              height: width,
+              child: const Icon(Icons.add),
             ),
-            width: width,
-            height: width,
-            child: const Icon(Icons.add),
           ),
-        ),
       ],
     );
   }
