@@ -36,8 +36,10 @@ class _FeesDetailsViewState extends State<TrainerAppTrainerSalarySlips> {
   void initState() {
     super.initState();
     authCubit = context.read<AuthCubit>();
+    year = DateTime.now().year;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<TrainerCubit>().clean();
+      doSearch(true);
     });
     // Pagination listener
     scrollController.addListener(() {
@@ -118,6 +120,7 @@ class _FeesDetailsViewState extends State<TrainerAppTrainerSalarySlips> {
                         year = value.year;
                         doSearch(true);
                       },
+                      initialValue: year.toString(),
                       time: false,
                       year: true,
                       selectedDate: finalDate,
