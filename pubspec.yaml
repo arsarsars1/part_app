@@ -80,10 +80,9 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
+  remove_alpha_ios: true
   image_path: "assets/images/launcher_icon.png"
   min_sdk_android: 16 # android min sdk min:16, default 21
-  background_color_ios: "#000000"
-  background_color_android: "#000000"
 
 flavorizr:
   flavors:
