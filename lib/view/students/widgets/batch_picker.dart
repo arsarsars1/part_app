@@ -115,12 +115,12 @@ class _BatchPickerState extends State<BatchPicker> {
               const Divider(
                 color: Colors.white24,
               ),
-              cubit.batches.isEmpty
-                  ? const Center(
-                      child: Text('Sorry, No batches found.'),
-                    )
-                  : state is FetchingBatches
-                      ? const LoadingView()
+              state is FetchingBatches
+                  ? const LoadingView(color: Colors.transparent)
+                  : cubit.batches.isEmpty
+                      ? const Center(
+                          child: Text('Sorry, No batches found.'),
+                        )
                       : ListView.builder(
                           controller: scrollController,
                           shrinkWrap: true,
