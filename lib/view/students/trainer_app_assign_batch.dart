@@ -27,11 +27,11 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
   @override
   void initState() {
     super.initState();
+    var branchCubit = context.read<BranchCubit>();
+    branchId = branchCubit.firstBranch?.id;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       authCubit = context.read<AuthCubit>();
       context.read<BatchCubit>().reset();
-      var branchCubit = context.read<BranchCubit>();
-      branchId = branchCubit.firstBranch?.id;
       context.read<BatchCubit>().getBatchesByStatusForTrainer(
             trainerId: authCubit
                     ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
