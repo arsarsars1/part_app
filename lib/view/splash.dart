@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:part_app/view/auth/login/login.dart';
 import 'package:part_app/view/components/alert_box.dart';
-import 'package:part_app/view/membership/membership.dart';
+import 'package:part_app/view/membership/membership_home_ios.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -34,10 +32,13 @@ class _SplashScreenState extends State<SplashScreen> {
         if (state is NetworkError) {
           AlertBox.showErrorAlert(context);
         } else if (state is UserAvailable) {
-          if (state.isMemberShip == false && Platform.isAndroid) {
+          print(state.isMemberShip);
+          print("state.isMemberShip");
+          if (state.isMemberShip == false) {
+            //&& Platform.isAndroid
             Navigator.pushReplacementNamed(
               context,
-              Membership.route,
+              MembershipHomeIos.route,
             );
           } else if (state.member) {
             cubit.navigateToDashboard(cubit.user?.adminDetail?.academy,

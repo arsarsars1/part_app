@@ -6,6 +6,7 @@ import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/membership/subscription_success.dart';
 import 'package:part_app/view_model/inapp_purchase/inapp_cubit.dart';
 import 'package:part_app/view_model/membership/membership_cubit.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../../constants/app_colors.dart';
 
@@ -42,7 +43,7 @@ class _MembershipHomeIosState extends State<MembershipHomeIos> {
 
     return Scaffold(
       appBar: const CommonBar(
-        title: 'PartApp-membership',
+        title: 'PartApp-membershipios',
       ),
       body: BlocListener<MembershipCubit, MembershipState>(
         listener: (context, state) {
@@ -267,7 +268,7 @@ class _MembershipHomeIosState extends State<MembershipHomeIos> {
                 builder: (context, state) {
                   return Button(
                     disable: cubit.selectedProduct == null,
-                    onTap: () {
+                    onTap: () async {
                       if (cubit.selectedProduct == null) {
                         Alert(context).show(
                           message:
@@ -283,7 +284,20 @@ class _MembershipHomeIosState extends State<MembershipHomeIos> {
                         Navigator.pushNamed(context, SalesManPhone.route);
                       }
                       if (onlinePay) {
-                        context.read<InappCubit>().buy(cubit.selectedProduct!);
+                        try {
+                          var products = await Purchases.getProducts(
+                            ["premium.plan.monthly"],
+                          );
+                          if (products.isNotEmpty) {
+                            print(products.first.toJson());
+                            await Purchases.purchaseStoreProduct(
+                                products.first);
+                          }
+                        } catch (e) {
+                          print(e);
+                          print("error purchaseStoreProduct");
+                        }
+                        // context.read<InappCubit>().buy(cubit.selectedProduct!);
                       }
                     },
                     title: cubit.selectedProduct?.price == '\$0/-'
