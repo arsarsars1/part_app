@@ -11,7 +11,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerAppCancelledClasses extends StatefulWidget {
   static const route = '/trainer-app-batch/cancelled-classes';
 
-  const TrainerAppCancelledClasses({Key? key}) : super(key: key);
+  const TrainerAppCancelledClasses({super.key});
 
   @override
   State<TrainerAppCancelledClasses> createState() =>

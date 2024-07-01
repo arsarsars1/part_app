@@ -10,13 +10,13 @@ class BranchField extends StatefulWidget {
   final bool isDisable;
 
   const BranchField({
-    Key? key,
+    super.key,
     required this.onSelect,
     this.initialBranch,
     this.title,
     this.isMandatory = true,
     this.isDisable = false,
-  }) : super(key: key);
+  });
 
   @override
   State<BranchField> createState() => _BranchFieldState();

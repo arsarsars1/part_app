@@ -14,7 +14,7 @@ import '../../flavors.dart';
 class TrainerAppProfile extends StatefulWidget {
   static const route = '/trainer-app-profile';
 
-  const TrainerAppProfile({Key? key}) : super(key: key);
+  const TrainerAppProfile({super.key});
 
   @override
   State<TrainerAppProfile> createState() => _TrainerAppProfileState();

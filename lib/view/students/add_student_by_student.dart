@@ -14,7 +14,7 @@ class AddStudentByStudent extends StatefulWidget {
   static const route = '/join-batch';
   final String token;
 
-  const AddStudentByStudent({Key? key, required this.token}) : super(key: key);
+  const AddStudentByStudent({super.key, required this.token});
 
   @override
   State<AddStudentByStudent> createState() => _AddStudentByStudentState();

@@ -15,7 +15,7 @@ import 'package:part_app/view_model/cubits.dart';
 
 class ClassLinkView extends StatefulWidget {
   static const route = '/class-link';
-  const ClassLinkView({Key? key}) : super(key: key);
+  const ClassLinkView({super.key});
 
   @override
   State<ClassLinkView> createState() => _ClassLinkViewState();

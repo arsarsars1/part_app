@@ -12,7 +12,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerAppAttendanceUpdate extends StatefulWidget {
   static const route = '/trainer-app-update_attendance';
 
-  const TrainerAppAttendanceUpdate({Key? key}) : super(key: key);
+  const TrainerAppAttendanceUpdate({super.key});
 
   @override
   State<TrainerAppAttendanceUpdate> createState() =>

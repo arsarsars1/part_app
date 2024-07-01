@@ -13,8 +13,7 @@ class AssignStudentBatch extends StatefulWidget {
 
   final bool editStudent;
 
-  const AssignStudentBatch({Key? key, required this.editStudent})
-      : super(key: key);
+  const AssignStudentBatch({super.key, required this.editStudent});
 
   @override
   State<AssignStudentBatch> createState() => _AssignStudentBatchState();

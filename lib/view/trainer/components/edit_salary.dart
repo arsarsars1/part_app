@@ -10,12 +10,12 @@ class EditSalary extends StatefulWidget {
   final ValueChanged<String> amount;
 
   const EditSalary({
-    Key? key,
+    super.key,
     required this.formKey,
     required this.reason,
     required this.date,
     required this.amount,
-  }) : super(key: key);
+  });
 
   @override
   State<EditSalary> createState() => EditSalaryState();

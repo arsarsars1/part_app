@@ -6,7 +6,7 @@ import 'package:part_app/view/calender/student_app_calender_events.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class StudentAppCalender extends StatefulWidget {
-  const StudentAppCalender({Key? key}) : super(key: key);
+  const StudentAppCalender({super.key});
 
   @override
   State<StudentAppCalender> createState() => _StudentAppCalenderState();

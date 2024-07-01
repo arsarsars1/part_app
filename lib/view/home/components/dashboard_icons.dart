@@ -14,7 +14,7 @@ import 'package:part_app/view_model/home/home_cubit.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class DashboardIcons extends StatefulWidget {
-  const DashboardIcons({Key? key}) : super(key: key);
+  const DashboardIcons({super.key});
 
   @override
   State<DashboardIcons> createState() => _DashboardIconsState();

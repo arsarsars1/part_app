@@ -24,7 +24,7 @@ class ScheduleField extends StatefulWidget {
   // final double margin;
 
   const ScheduleField({
-    Key? key,
+    super.key,
     required this.title,
     this.onSelect,
     this.hint,
@@ -40,7 +40,7 @@ class ScheduleField extends StatefulWidget {
 
     // this.padding = 0.0,
     // this.margin = 0.0,
-  }) : super(key: key);
+  });
 
   @override
   State<ScheduleField> createState() => _ScheduleFieldState();

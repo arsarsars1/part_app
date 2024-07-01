@@ -12,7 +12,7 @@ import 'package:part_app/view_model/cubits.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class StudentAppDashboardIcons extends StatefulWidget {
-  const StudentAppDashboardIcons({Key? key}) : super(key: key);
+  const StudentAppDashboardIcons({super.key});
 
   @override
   State<StudentAppDashboardIcons> createState() =>

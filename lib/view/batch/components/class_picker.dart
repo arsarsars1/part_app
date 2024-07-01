@@ -14,14 +14,14 @@ class ClassPicker extends StatefulWidget {
   final ValueChanged<String>? onSelect;
 
   const ClassPicker({
-    Key? key,
+    super.key,
     this.branchId,
     this.date,
     this.onSelect,
     this.batchId,
     this.scaffoldKey,
     required this.onSave,
-  }) : super(key: key);
+  });
 
   @override
   State<ClassPicker> createState() => _ClassPickerState();

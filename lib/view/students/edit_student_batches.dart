@@ -13,8 +13,7 @@ import 'package:part_app/view_model/cubits.dart';
 class EditStudentBatches extends StatefulWidget {
   static const route = '/students/details/assigned-batches';
   final bool editStudent;
-  const EditStudentBatches({Key? key, required this.editStudent})
-      : super(key: key);
+  const EditStudentBatches({super.key, required this.editStudent});
 
   @override
   State<EditStudentBatches> createState() => _EditStudentBatchesState();

@@ -11,8 +11,7 @@ class AddTrainersDialog extends StatefulWidget {
   final List<Trainer> selectedItems;
 
   const AddTrainersDialog(
-      {Key? key, required this.onSave, required this.selectedItems})
-      : super(key: key);
+      {super.key, required this.onSave, required this.selectedItems});
 
   @override
   State<AddTrainersDialog> createState() => _AddTrainersDialogState();

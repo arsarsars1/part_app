@@ -19,11 +19,11 @@ class AdmissionFeeListItem extends StatefulWidget {
   final VoidCallback onTap;
 
   const AdmissionFeeListItem({
-    Key? key,
+    super.key,
     this.isFromAdmission = false,
     required this.student,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   State<AdmissionFeeListItem> createState() => _AdmissionFeeListItemState();

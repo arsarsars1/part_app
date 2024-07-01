@@ -21,7 +21,7 @@ enum MenuItems { profile, account, logout, membership, switchAccount }
 // enum MenuItems { profile, account, logout, switchAccount }
 
 class ProfileButton extends StatefulWidget {
-  const ProfileButton({Key? key}) : super(key: key);
+  const ProfileButton({super.key});
 
   @override
   State<ProfileButton> createState() => _ProfileButtonState();

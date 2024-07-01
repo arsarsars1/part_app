@@ -39,7 +39,7 @@ class ApiClient {
 
     // check for internet connectivity
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.none) {
+    if (connectivityResult.contains(ConnectivityResult.none)) {
       controller?.add(600);
       return null;
     }
@@ -103,7 +103,7 @@ class ApiClient {
 
     // check for internet connectivity
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.none) {
+    if (connectivityResult.contains(ConnectivityResult.none)) {
       controller?.add(600);
       return null;
     }
@@ -151,7 +151,7 @@ class ApiClient {
 
     // check for internet connectivity
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.none) {
+    if (connectivityResult.contains(ConnectivityResult.none)) {
       controller?.add(600);
       return null;
     }

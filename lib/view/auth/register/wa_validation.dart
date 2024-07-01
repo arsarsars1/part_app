@@ -9,7 +9,7 @@ import 'package:part_app/view_model/authentication/auth_cubit.dart';
 class WAValidation extends StatefulWidget {
   static const route = '/auth/wa-validation';
 
-  const WAValidation({Key? key}) : super(key: key);
+  const WAValidation({super.key});
 
   @override
   State<WAValidation> createState() => _WAValidationState();

@@ -11,7 +11,7 @@ import 'package:part_app/view_model/cubits.dart';
 class RescheduledClasses extends StatefulWidget {
   static const route = '/batch/rescheduled-classes';
 
-  const RescheduledClasses({Key? key}) : super(key: key);
+  const RescheduledClasses({super.key});
 
   @override
   State<RescheduledClasses> createState() => _RescheduledClassesState();

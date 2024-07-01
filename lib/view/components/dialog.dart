@@ -64,7 +64,7 @@ class Logout extends StatelessWidget {
   final Widget? subContent;
   final bool? isCancel;
   const Logout({
-    Key? key,
+    super.key,
     required this.message,
     this.subMessage,
     required this.onTap,
@@ -75,7 +75,7 @@ class Logout extends StatelessWidget {
     this.buttonText,
     this.subContent,
     this.isCancel = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import 'package:part_app/view/calender/trainer_app_calender_events.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAppCalender extends StatelessWidget {
-  const TrainerAppCalender({Key? key}) : super(key: key);
+  const TrainerAppCalender({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -10,7 +10,7 @@ class AddBranch extends StatefulWidget {
 
   final bool addBranch;
 
-  const AddBranch({Key? key, this.addBranch = true}) : super(key: key);
+  const AddBranch({super.key, this.addBranch = true});
 
   @override
   State<AddBranch> createState() => _AddBranchState();

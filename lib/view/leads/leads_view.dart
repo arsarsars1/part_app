@@ -9,7 +9,7 @@ import 'package:part_app/view_model/leads/leads_cubit.dart';
 
 class Leads extends StatefulWidget {
   static const route = '/leads';
-  const Leads({Key? key}) : super(key: key);
+  const Leads({super.key});
 
   @override
   State<Leads> createState() => _LeadsState();

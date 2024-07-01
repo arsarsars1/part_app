@@ -11,7 +11,7 @@ import 'package:part_app/view_model/cubits.dart';
 class Login extends StatefulWidget {
   static const route = '/auth/login';
 
-  const Login({Key? key}) : super(key: key);
+  const Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();

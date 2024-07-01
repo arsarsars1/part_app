@@ -15,7 +15,7 @@ import 'package:part_app/view_model/home/home_cubit.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class TrainerAppDashboardIcons extends StatefulWidget {
-  const TrainerAppDashboardIcons({Key? key}) : super(key: key);
+  const TrainerAppDashboardIcons({super.key});
 
   @override
   State<TrainerAppDashboardIcons> createState() =>

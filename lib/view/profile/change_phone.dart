@@ -10,7 +10,7 @@ import '../auth/otp_verify.dart';
 class ChangePhoneScreen extends StatefulWidget {
   static const route = '/change_phone';
 
-  const ChangePhoneScreen({Key? key}) : super(key: key);
+  const ChangePhoneScreen({super.key});
 
   @override
   State<ChangePhoneScreen> createState() => _ChangePhoneScreenState();

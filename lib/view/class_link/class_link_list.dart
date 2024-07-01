@@ -13,7 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ClassLinkList extends StatefulWidget {
   static const route = '/class-link/list';
 
-  const ClassLinkList({Key? key}) : super(key: key);
+  const ClassLinkList({super.key});
 
   @override
   State<ClassLinkList> createState() => _ClassLinkListState();

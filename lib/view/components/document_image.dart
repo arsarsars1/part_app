@@ -5,7 +5,7 @@ import 'package:part_app/view/components/cached_image.dart';
 class DocumentImage extends StatefulWidget {
   final String? imageUrl;
 
-  const DocumentImage({Key? key, this.imageUrl}) : super(key: key);
+  const DocumentImage({super.key, this.imageUrl});
 
   @override
   State<DocumentImage> createState() => _DocumentImageState();

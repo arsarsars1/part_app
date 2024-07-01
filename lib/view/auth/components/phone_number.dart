@@ -10,8 +10,7 @@ class PhoneNumber extends StatelessWidget {
   final ValueChanged<String> onNumberChange;
 
   const PhoneNumber(
-      {Key? key, required this.onCountryChange, required this.onNumberChange})
-      : super(key: key);
+      {super.key, required this.onCountryChange, required this.onNumberChange});
 
   @override
   Widget build(BuildContext context) {

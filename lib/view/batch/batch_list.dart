@@ -11,7 +11,7 @@ import 'package:part_app/view_model/cubits.dart';
 class BatchesPage extends StatefulWidget {
   static const route = '/batches';
 
-  const BatchesPage({Key? key}) : super(key: key);
+  const BatchesPage({super.key});
 
   @override
   State<BatchesPage> createState() => _BatchesPageState();

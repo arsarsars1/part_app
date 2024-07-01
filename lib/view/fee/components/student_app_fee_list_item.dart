@@ -13,11 +13,11 @@ class StudentAppFeeListItem extends StatefulWidget {
   final VoidCallback onTap;
 
   const StudentAppFeeListItem({
-    Key? key,
+    super.key,
     this.isFromAdmission = false,
     required this.invoice,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   State<StudentAppFeeListItem> createState() => _StudentAppFeeListItemState();

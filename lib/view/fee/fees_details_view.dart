@@ -14,7 +14,7 @@ import 'package:part_app/view_model/fee/fee_cubit.dart';
 class FeesDetailsView extends StatefulWidget {
   static const route = '/fees';
 
-  const FeesDetailsView({Key? key}) : super(key: key);
+  const FeesDetailsView({super.key});
 
   @override
   State<FeesDetailsView> createState() => _FeesDetailsViewState();

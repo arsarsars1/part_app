@@ -9,11 +9,10 @@ class Launchers extends StatelessWidget {
   final String email;
 
   const Launchers(
-      {Key? key,
+      {super.key,
       required this.phoneNo,
       required this.whatsappNo,
-      required this.email})
-      : super(key: key);
+      required this.email});
 
   @override
   Widget build(BuildContext context) {

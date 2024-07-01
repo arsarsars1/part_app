@@ -9,7 +9,7 @@ import 'package:part_app/view_model/membership/membership_cubit.dart';
 class SalesManOTP extends StatefulWidget {
   static const route = '/membership/salesman-otp';
 
-  const SalesManOTP({Key? key}) : super(key: key);
+  const SalesManOTP({super.key});
 
   @override
   State<SalesManOTP> createState() => _SalesManOTPState();

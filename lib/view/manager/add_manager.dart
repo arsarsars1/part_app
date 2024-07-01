@@ -13,7 +13,7 @@ import 'package:part_app/view_model/cubits.dart';
 class AddManager extends StatefulWidget {
   static const route = '/manager/update';
 
-  const AddManager({Key? key}) : super(key: key);
+  const AddManager({super.key});
 
   @override
   State<AddManager> createState() => _AddManagerState();

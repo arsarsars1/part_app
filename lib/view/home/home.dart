@@ -15,7 +15,7 @@ import 'package:part_app/view_model/cubits.dart';
 class Home extends StatefulWidget {
   static const route = '/home';
 
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();

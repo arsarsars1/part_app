@@ -5,8 +5,7 @@ class RoundButton extends StatelessWidget {
   final bool edit;
   final VoidCallback onTap;
 
-  const RoundButton({Key? key, this.edit = true, required this.onTap})
-      : super(key: key);
+  const RoundButton({super.key, this.edit = true, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

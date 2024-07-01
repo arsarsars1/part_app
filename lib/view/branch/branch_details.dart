@@ -15,7 +15,7 @@ class BranchDetails extends StatefulWidget {
   static const route = '/branch/details';
   final int id;
 
-  const BranchDetails({Key? key, required this.id}) : super(key: key);
+  const BranchDetails({super.key, required this.id});
 
   @override
   State<BranchDetails> createState() => _BranchDetailsState();

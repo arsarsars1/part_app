@@ -5,7 +5,7 @@ import 'package:part_app/model/data_model/membership.dart';
 import 'package:part_app/view_model/membership/membership_cubit.dart';
 
 class MembershipList extends StatefulWidget {
-  const MembershipList({Key? key}) : super(key: key);
+  const MembershipList({super.key});
 
   @override
   State<MembershipList> createState() => _MembershipListState();

@@ -18,7 +18,7 @@ import '../../../view_model/profile_pic/cubit/profile_cubit.dart';
 enum MenuItems { profile, logout, switchAccount, account }
 
 class StudentProfileButton extends StatefulWidget {
-  const StudentProfileButton({Key? key}) : super(key: key);
+  const StudentProfileButton({super.key});
 
   @override
   State<StudentProfileButton> createState() => _StudentProfileButtonState();

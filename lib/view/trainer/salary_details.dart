@@ -13,7 +13,7 @@ class SalaryDetails extends StatefulWidget {
 
   final bool trainer;
 
-  const SalaryDetails({Key? key, required this.trainer}) : super(key: key);
+  const SalaryDetails({super.key, required this.trainer});
 
   @override
   State<SalaryDetails> createState() => _SalaryDetailsState();

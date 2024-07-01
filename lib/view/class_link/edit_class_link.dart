@@ -14,7 +14,7 @@ import 'package:part_app/view_model/cubits.dart';
 class EditClassLink extends StatefulWidget {
   static const route = '/edit-class-link';
 
-  const EditClassLink({Key? key}) : super(key: key);
+  const EditClassLink({super.key});
 
   @override
   State<EditClassLink> createState() => _EditClassLinkState();

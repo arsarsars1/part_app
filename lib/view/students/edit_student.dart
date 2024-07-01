@@ -11,7 +11,7 @@ import 'package:part_app/view_model/cubits.dart';
 class EditStudent extends StatefulWidget {
   static const route = '/students/edit';
 
-  const EditStudent({Key? key}) : super(key: key);
+  const EditStudent({super.key});
 
   @override
   State<EditStudent> createState() => _EditStudentState();

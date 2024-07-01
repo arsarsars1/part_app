@@ -10,12 +10,12 @@ class EditFees extends StatefulWidget {
   final ValueChanged<String> amount;
 
   const EditFees({
-    Key? key,
+    super.key,
     required this.formKey,
     required this.reason,
     required this.date,
     required this.amount,
-  }) : super(key: key);
+  });
 
   @override
   State<EditFees> createState() => EditFeesState();

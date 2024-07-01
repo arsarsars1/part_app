@@ -15,7 +15,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerAppEditBatchDetails extends StatefulWidget {
   static const route = '/batch/details/traienr-app-edit';
 
-  const TrainerAppEditBatchDetails({Key? key}) : super(key: key);
+  const TrainerAppEditBatchDetails({super.key});
 
   @override
   State<TrainerAppEditBatchDetails> createState() =>

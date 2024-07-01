@@ -10,7 +10,7 @@ import 'package:part_app/view_model/cubits.dart';
 class ManagerPage extends StatefulWidget {
   static const route = '/manager';
 
-  const ManagerPage({Key? key}) : super(key: key);
+  const ManagerPage({super.key});
 
   @override
   State<ManagerPage> createState() => _ManagerPageState();

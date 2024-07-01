@@ -10,8 +10,7 @@ import '../../../model/data_model/classes_today.dart';
 class TodaysClassList extends StatefulWidget {
   final List<Class> classesList;
 
-  const TodaysClassList({Key? key, required this.classesList})
-      : super(key: key);
+  const TodaysClassList({super.key, required this.classesList});
 
   @override
   State<TodaysClassList> createState() => _TodaysClassListState();

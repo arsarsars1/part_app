@@ -14,7 +14,7 @@ import 'package:part_app/view_model/cubits.dart';
 class AddTrainer extends StatefulWidget {
   static const route = '/trainer/add-trainer';
 
-  const AddTrainer({Key? key}) : super(key: key);
+  const AddTrainer({super.key});
 
   @override
   State<AddTrainer> createState() => _AddTrainerState();

@@ -13,8 +13,7 @@ class TrainerAppAssignStudentBatch extends StatefulWidget {
 
   final bool editStudent;
 
-  const TrainerAppAssignStudentBatch({Key? key, required this.editStudent})
-      : super(key: key);
+  const TrainerAppAssignStudentBatch({super.key, required this.editStudent});
 
   @override
   State<TrainerAppAssignStudentBatch> createState() =>

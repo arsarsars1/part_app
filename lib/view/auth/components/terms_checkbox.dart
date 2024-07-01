@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TermsCheckBox extends StatefulWidget {
   final ValueChanged<bool> onChange;
-  const TermsCheckBox({Key? key, required this.onChange}) : super(key: key);
+  const TermsCheckBox({super.key, required this.onChange});
 
   @override
   State<TermsCheckBox> createState() => _TermsCheckBoxState();
@@ -20,7 +20,7 @@ class _TermsCheckBoxState extends State<TermsCheckBox> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Checkbox(
-          fillColor: MaterialStateProperty.all(const Color(0xFF818181)),
+          fillColor: WidgetStateProperty.all(const Color(0xFF818181)),
           // checkColor: AppColors.primaryColor,
           value: checked,
           onChanged: (value) {

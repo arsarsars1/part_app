@@ -5,7 +5,7 @@ import 'package:part_app/view/trainer/students_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class SelectedStudents extends StatefulWidget {
-  const SelectedStudents({Key? key}) : super(key: key);
+  const SelectedStudents({super.key});
 
   @override
   State<SelectedStudents> createState() => _SelectedStudentsState();

@@ -6,7 +6,7 @@ import 'package:part_app/constants/constant.dart';
 class ResendOtp extends StatefulWidget {
   final VoidCallback onResend;
 
-  const ResendOtp({Key? key, required this.onResend}) : super(key: key);
+  const ResendOtp({super.key, required this.onResend});
 
   @override
   State<ResendOtp> createState() => _ResendOtpState();

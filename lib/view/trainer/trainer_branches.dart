@@ -10,7 +10,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerBranches extends StatefulWidget {
   static const route = '/trainer/edit-branches';
 
-  const TrainerBranches({Key? key}) : super(key: key);
+  const TrainerBranches({super.key});
 
   @override
   State<TrainerBranches> createState() => _TrainerBranchesState();

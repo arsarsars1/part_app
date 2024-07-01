@@ -17,7 +17,7 @@ import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 enum MenuItems { profile, logout, switchAccount }
 
 class TrainerProfileButton extends StatefulWidget {
-  const TrainerProfileButton({Key? key}) : super(key: key);
+  const TrainerProfileButton({super.key});
 
   @override
   State<TrainerProfileButton> createState() => _TrainerProfileButtonState();

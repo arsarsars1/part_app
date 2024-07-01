@@ -6,8 +6,7 @@ class WriteOffFeesPopUp extends StatefulWidget {
   final ValueChanged<String> reason;
 
   const WriteOffFeesPopUp(
-      {Key? key, required this.formKey, required this.reason})
-      : super(key: key);
+      {super.key, required this.formKey, required this.reason});
 
   @override
   State<WriteOffFeesPopUp> createState() => WriteOffFeesPopUpState();

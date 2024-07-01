@@ -11,7 +11,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerAppCancelClass extends StatefulWidget {
   static const route = '/trainer-app-batch/cancel-class';
 
-  const TrainerAppCancelClass({Key? key}) : super(key: key);
+  const TrainerAppCancelClass({super.key});
 
   @override
   State<TrainerAppCancelClass> createState() => _TrainerAppCancelClassState();

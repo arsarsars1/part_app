@@ -10,7 +10,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerSalarySlipsHome extends StatefulWidget {
   static const route = '/trainer-salary-slips-home';
 
-  const TrainerSalarySlipsHome({Key? key}) : super(key: key);
+  const TrainerSalarySlipsHome({super.key});
 
   @override
   State<TrainerSalarySlipsHome> createState() => _FeesDetailsViewState();

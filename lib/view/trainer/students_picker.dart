@@ -8,7 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class StudentPicker extends StatefulWidget {
   static const route = '/batch/add-student-contact';
-  const StudentPicker({Key? key}) : super(key: key);
+  const StudentPicker({super.key});
 
   @override
   State<StudentPicker> createState() => _StudentPickerState();

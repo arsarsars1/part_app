@@ -16,8 +16,7 @@ class SubscriptionSuccess extends StatelessWidget {
   static const route = '/membership/success';
   final bool academySuccess;
 
-  const SubscriptionSuccess({Key? key, required this.academySuccess})
-      : super(key: key);
+  const SubscriptionSuccess({super.key, required this.academySuccess});
 
   @override
   Widget build(BuildContext context) {

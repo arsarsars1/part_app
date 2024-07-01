@@ -10,7 +10,7 @@ class FeeReminderButton extends StatelessWidget {
   final bool disabled;
   final EdgeInsets? padding;
   const FeeReminderButton({
-    Key? key,
+    super.key,
     required this.title,
     required this.onTap,
     this.disabled = false,
@@ -18,7 +18,7 @@ class FeeReminderButton extends StatelessWidget {
     this.margin,
     this.count,
     this.padding,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

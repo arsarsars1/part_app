@@ -9,7 +9,7 @@ import 'package:part_app/view_model/cubits.dart';
 class ManagerBranches extends StatefulWidget {
   static const route = '/manager/branches';
 
-  const ManagerBranches({Key? key}) : super(key: key);
+  const ManagerBranches({super.key});
 
   @override
   State<ManagerBranches> createState() => _ManagerBranchesState();

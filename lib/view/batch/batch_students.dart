@@ -14,11 +14,11 @@ class BatchStudents extends StatefulWidget {
   final ValueChanged<bool> onChange;
   final BatchModel? batch;
   const BatchStudents({
-    Key? key,
+    super.key,
     required this.onChange,
     this.batch,
     required this.height,
-  }) : super(key: key);
+  });
 
   @override
   State<BatchStudents> createState() => _BatchStudentsState();

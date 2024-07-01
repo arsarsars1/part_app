@@ -5,7 +5,7 @@ import 'package:part_app/constants/app_colors.dart';
 class MembershipSwitch extends StatefulWidget {
   final ValueChanged<bool> onSelect;
 
-  const MembershipSwitch({Key? key, required this.onSelect}) : super(key: key);
+  const MembershipSwitch({super.key, required this.onSelect});
 
   @override
   State<MembershipSwitch> createState() => _MembershipSwitchState();

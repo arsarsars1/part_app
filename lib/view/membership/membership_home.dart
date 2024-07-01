@@ -11,7 +11,7 @@ import 'package:part_app/view_model/payment/payment_cubit.dart';
 class MembershipHome extends StatefulWidget {
   static const route = '/membership-home';
 
-  const MembershipHome({Key? key}) : super(key: key);
+  const MembershipHome({super.key});
 
   @override
   State<MembershipHome> createState() => _MembershipHomeState();

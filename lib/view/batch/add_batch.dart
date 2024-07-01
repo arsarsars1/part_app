@@ -17,7 +17,7 @@ import 'package:part_app/view_model/cubits.dart';
 class AddBatch extends StatefulWidget {
   static const route = '/batch/add';
 
-  const AddBatch({Key? key}) : super(key: key);
+  const AddBatch({super.key});
 
   @override
   State<AddBatch> createState() => _AddBatchState();

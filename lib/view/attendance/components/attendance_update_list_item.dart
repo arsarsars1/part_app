@@ -14,10 +14,10 @@ class AttendanceUpdateListItem extends StatefulWidget {
   final ValueChanged<StudentModel> onSelect;
 
   const AttendanceUpdateListItem({
-    Key? key,
+    super.key,
     required this.students,
     required this.onSelect,
-  }) : super(key: key);
+  });
 
   @override
   State<AttendanceUpdateListItem> createState() =>

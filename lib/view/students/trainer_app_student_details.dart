@@ -16,7 +16,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerAppStudentDetails extends StatefulWidget {
   static const route = '/trainer-app-student/details';
 
-  const TrainerAppStudentDetails({Key? key}) : super(key: key);
+  const TrainerAppStudentDetails({super.key});
 
   @override
   State<TrainerAppStudentDetails> createState() =>

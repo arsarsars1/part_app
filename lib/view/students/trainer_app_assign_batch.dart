@@ -9,8 +9,7 @@ class TrainerAppAssignBatch extends StatefulWidget {
   static const route = '/trainer-app-students/add/batches';
   final bool editStudent;
 
-  const TrainerAppAssignBatch({Key? key, required this.editStudent})
-      : super(key: key);
+  const TrainerAppAssignBatch({super.key, required this.editStudent});
 
   @override
   State<TrainerAppAssignBatch> createState() => _TrainerAppAssignBatchState();

@@ -8,7 +8,7 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class StudentAppSupportScreen extends StatefulWidget {
-  const StudentAppSupportScreen({Key? key}) : super(key: key);
+  const StudentAppSupportScreen({super.key});
 
   @override
   State<StudentAppSupportScreen> createState() =>

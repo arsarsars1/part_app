@@ -8,7 +8,7 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAppSupportScreen extends StatefulWidget {
-  const TrainerAppSupportScreen({Key? key}) : super(key: key);
+  const TrainerAppSupportScreen({super.key});
 
   @override
   State<TrainerAppSupportScreen> createState() =>

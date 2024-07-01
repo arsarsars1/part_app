@@ -13,7 +13,7 @@ import '../../../model/data_base/data_base.dart';
 class TrainingDays extends StatelessWidget {
   final bool edit;
 
-  const TrainingDays({Key? key, this.edit = false}) : super(key: key);
+  const TrainingDays({super.key, this.edit = false});
 
   @override
   Widget build(BuildContext context) {
@@ -133,13 +133,12 @@ class ClassTime extends StatefulWidget {
   final ValueChanged<TimeOfDay> endTime;
 
   const ClassTime(
-      {Key? key,
+      {super.key,
       required this.startTime,
       required this.endTime,
       required this.day,
       this.start,
-      this.end})
-      : super(key: key);
+      this.end});
 
   @override
   State<ClassTime> createState() => _ClassTimeState();

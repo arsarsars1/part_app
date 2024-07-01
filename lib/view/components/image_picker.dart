@@ -352,8 +352,7 @@ class _PickerList extends StatelessWidget {
   final ValueChanged<ImageType> onSelect;
   final bool documents;
 
-  const _PickerList({Key? key, required this.onSelect, required this.documents})
-      : super(key: key);
+  const _PickerList({required this.onSelect, required this.documents});
 
   @override
   Widget build(BuildContext context) {

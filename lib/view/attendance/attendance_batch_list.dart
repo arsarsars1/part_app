@@ -13,7 +13,7 @@ import 'monthly_attendance_view.dart';
 class AttendanceBatchListPage extends StatefulWidget {
   static const route = '/attendance-batch-list';
 
-  const AttendanceBatchListPage({Key? key}) : super(key: key);
+  const AttendanceBatchListPage({super.key});
 
   @override
   State<AttendanceBatchListPage> createState() =>

@@ -10,7 +10,7 @@ import 'package:part_app/view_model/cubits.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+  const Dashboard({super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -44,29 +44,27 @@ class _DashboardState extends State<Dashboard> {
               onFinish: () {
                 Hive.box(Database.userBox).put("Showcase", true);
               },
-              builder: Builder(
-                builder: (context) {
-                  return Expanded(
-                    child: ListView(
-                      children: const [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        HomeBanner(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        DashboardIcons(),
-                        SummaryDashboard(),
-                        FinanceDashboard(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+              builder: (context) {
+                return Expanded(
+                  child: ListView(
+                    children: const [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      HomeBanner(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      DashboardIcons(),
+                      SummaryDashboard(),
+                      FinanceDashboard(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ],
         ),

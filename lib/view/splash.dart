@@ -9,7 +9,7 @@ import 'package:part_app/view_model/cubits.dart';
 class SplashScreen extends StatefulWidget {
   static const route = '/splash';
 
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();

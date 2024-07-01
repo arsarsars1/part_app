@@ -14,7 +14,7 @@ import 'package:part_app/view_model/leads/leads_cubit.dart';
 class EditLead extends StatefulWidget {
   static const route = '/leads/edit';
 
-  const EditLead({Key? key}) : super(key: key);
+  const EditLead({super.key});
 
   @override
   State<EditLead> createState() => _EditLeadState();

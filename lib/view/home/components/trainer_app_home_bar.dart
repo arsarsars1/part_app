@@ -12,7 +12,7 @@ import 'package:part_app/view_model/home/home_cubit.dart';
 import 'package:part_app/view_model/notification/cubit/notification_cubit.dart';
 
 class TrainerAppHomeBar extends StatelessWidget {
-  const TrainerAppHomeBar({Key? key}) : super(key: key);
+  const TrainerAppHomeBar({super.key});
 
   @override
   Widget build(BuildContext context) {

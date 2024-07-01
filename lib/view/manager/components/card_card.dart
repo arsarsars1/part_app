@@ -10,8 +10,7 @@ class ManagerCard extends StatelessWidget {
   final VoidCallback onSelect;
   final Manager manager;
 
-  const ManagerCard({Key? key, required this.onSelect, required this.manager})
-      : super(key: key);
+  const ManagerCard({super.key, required this.onSelect, required this.manager});
 
   @override
   Widget build(BuildContext context) {

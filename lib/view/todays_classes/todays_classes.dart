@@ -8,7 +8,7 @@ import 'package:part_app/view_model/todays_classes/classes_today_cubit.dart';
 class TodaysClasses extends StatefulWidget {
   static const route = '/todays_classes';
 
-  const TodaysClasses({Key? key}) : super(key: key);
+  const TodaysClasses({super.key});
 
   @override
   State<TodaysClasses> createState() => _TodaysClassesState();

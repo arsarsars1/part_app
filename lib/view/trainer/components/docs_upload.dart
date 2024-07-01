@@ -16,14 +16,14 @@ class DocsUpload extends StatefulWidget {
   final String? document2;
 
   const DocsUpload({
-    Key? key,
+    super.key,
     required this.doc1,
     required this.doc2,
     this.crossAxisAlignment,
     this.mainAxisAlignment,
     this.document1,
     this.document2,
-  }) : super(key: key);
+  });
 
   @override
   State<DocsUpload> createState() => _DocsUploadState();

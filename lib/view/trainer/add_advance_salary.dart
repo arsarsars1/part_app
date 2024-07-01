@@ -12,7 +12,7 @@ import 'package:part_app/view_model/trainer/trainer_cubit.dart';
 
 class AddAdvanceSalaryPage extends StatefulWidget {
   static const route = '/add-advance-salary';
-  const AddAdvanceSalaryPage({Key? key}) : super(key: key);
+  const AddAdvanceSalaryPage({super.key});
 
   @override
   State<AddAdvanceSalaryPage> createState() => _AddAdvanceSalaryPageState();

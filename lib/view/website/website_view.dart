@@ -4,7 +4,7 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class WebsiteView extends StatefulWidget {
-  const WebsiteView({Key? key}) : super(key: key);
+  const WebsiteView({super.key});
 
   @override
   State<WebsiteView> createState() => _WebsiteViewState();

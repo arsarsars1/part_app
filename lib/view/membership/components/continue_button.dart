@@ -5,7 +5,7 @@ import 'package:part_app/view/components/components.dart';
 
 class ContinueButton extends StatefulWidget {
   final VoidCallback onTap;
-  const ContinueButton({Key? key, required this.onTap}) : super(key: key);
+  const ContinueButton({super.key, required this.onTap});
 
   @override
   State<ContinueButton> createState() => _ContinueButtonState();

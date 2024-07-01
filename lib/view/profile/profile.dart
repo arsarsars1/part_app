@@ -17,7 +17,7 @@ import 'change_phone.dart';
 class Profile extends StatefulWidget {
   static const route = '/profile';
 
-  const Profile({Key? key}) : super(key: key);
+  const Profile({super.key});
 
   @override
   State<Profile> createState() => _ProfileState();

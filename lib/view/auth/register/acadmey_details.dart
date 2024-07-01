@@ -6,7 +6,7 @@ import 'package:part_app/view_model/cubits.dart';
 class AcademyDetails extends StatefulWidget {
   static const route = '/auth/academy-details';
 
-  const AcademyDetails({Key? key}) : super(key: key);
+  const AcademyDetails({super.key});
 
   @override
   State<AcademyDetails> createState() => _WAValidationState();

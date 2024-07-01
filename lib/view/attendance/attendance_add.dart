@@ -14,7 +14,7 @@ import 'package:part_app/view_model/cubits.dart';
 class AttendanceAdd extends StatefulWidget {
   static const route = '/add-attendance';
 
-  const AttendanceAdd({Key? key}) : super(key: key);
+  const AttendanceAdd({super.key});
 
   @override
   State<AttendanceAdd> createState() => _AttendanceAddState();

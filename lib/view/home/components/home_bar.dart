@@ -13,7 +13,7 @@ import '../../../model/data_model/notification_list.dart';
 import '../../../view_model/notification/cubit/notification_cubit.dart';
 
 class HomeBar extends StatelessWidget {
-  const HomeBar({Key? key}) : super(key: key);
+  const HomeBar({super.key});
 
   @override
   Widget build(BuildContext context) {

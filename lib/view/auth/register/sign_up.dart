@@ -11,7 +11,7 @@ import 'package:part_app/view_model/cubits.dart';
 class SignUp extends StatefulWidget {
   static const route = '/auth/signUp';
 
-  const SignUp({Key? key}) : super(key: key);
+  const SignUp({super.key});
 
   @override
   State<SignUp> createState() => _SignUpState();

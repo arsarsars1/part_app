@@ -44,7 +44,7 @@ class SessionAlert {
 class _SessionDialog extends StatelessWidget {
   final VoidCallback onTap;
 
-  const _SessionDialog({Key? key, required this.onTap}) : super(key: key);
+  const _SessionDialog({required this.onTap});
 
   @override
   Widget build(BuildContext context) {

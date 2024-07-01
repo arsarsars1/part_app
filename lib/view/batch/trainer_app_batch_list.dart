@@ -9,7 +9,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerAppBatchesPage extends StatefulWidget {
   static const route = '/trainer-app-batches';
 
-  const TrainerAppBatchesPage({Key? key}) : super(key: key);
+  const TrainerAppBatchesPage({super.key});
 
   @override
   State<TrainerAppBatchesPage> createState() => _TrainerAppBatchesPageState();

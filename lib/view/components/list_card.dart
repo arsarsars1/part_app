@@ -10,13 +10,13 @@ class ListCard extends StatelessWidget {
   final Widget? suffix;
 
   const ListCard({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.title,
     required this.subTitle,
     this.suffixText,
     this.suffix,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

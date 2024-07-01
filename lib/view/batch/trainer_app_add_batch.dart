@@ -18,7 +18,7 @@ import 'package:share_plus/share_plus.dart';
 class TrainerAppAddBatch extends StatefulWidget {
   static const route = '/trainer-app-batch/add';
 
-  const TrainerAppAddBatch({Key? key}) : super(key: key);
+  const TrainerAppAddBatch({super.key});
 
   @override
   State<TrainerAppAddBatch> createState() => _TrainerAppAddBatchState();

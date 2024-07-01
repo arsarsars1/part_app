@@ -16,7 +16,7 @@ class TrainerPicker extends StatefulWidget {
   final bool multiPicker;
 
   const TrainerPicker({
-    Key? key,
+    super.key,
     this.branchId,
     this.onSelect,
     this.batchId,
@@ -24,7 +24,7 @@ class TrainerPicker extends StatefulWidget {
     required this.selectedTrainers,
     required this.onSave,
     this.multiPicker = true,
-  }) : super(key: key);
+  });
 
   @override
   State<TrainerPicker> createState() => _TrainerPickerState();

@@ -17,7 +17,7 @@ import 'components/attendance_class_pick.dart';
 class AttendanceCalenderView extends StatefulWidget {
   static const route = '/batch-calender-view';
 
-  const AttendanceCalenderView({Key? key}) : super(key: key);
+  const AttendanceCalenderView({super.key});
 
   @override
   State<AttendanceCalenderView> createState() => _AttendanceCalenderViewState();

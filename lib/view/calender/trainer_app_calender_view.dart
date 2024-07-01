@@ -3,7 +3,7 @@ import 'package:part_app/view/calender/widgets/trainer_app_calender.dart';
 import 'package:part_app/view/components/common_bar.dart';
 
 class TrainerAppCalenderView extends StatefulWidget {
-  const TrainerAppCalenderView({Key? key}) : super(key: key);
+  const TrainerAppCalenderView({super.key});
 
   @override
   State<TrainerAppCalenderView> createState() => _TrainerAppCalenderViewState();

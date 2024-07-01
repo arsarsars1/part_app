@@ -18,7 +18,7 @@ class OTPVerify extends StatefulWidget {
 
   final OTPRoutes otpRoute;
 
-  const OTPVerify({Key? key, required this.otpRoute}) : super(key: key);
+  const OTPVerify({super.key, required this.otpRoute});
 
   @override
   State<OTPVerify> createState() => _OTPVerifyState();

@@ -14,7 +14,7 @@ import 'package:part_app/view_model/cubits.dart';
 class EditManager extends StatefulWidget {
   static const route = '/manager/edit';
 
-  const EditManager({Key? key}) : super(key: key);
+  const EditManager({super.key});
 
   @override
   State<EditManager> createState() => _EditManagerState();

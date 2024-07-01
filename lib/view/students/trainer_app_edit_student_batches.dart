@@ -13,8 +13,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerAppEditStudentBatches extends StatefulWidget {
   static const route = '/trainer-app-students/details/assigned-batches';
   final bool editStudent;
-  const TrainerAppEditStudentBatches({Key? key, required this.editStudent})
-      : super(key: key);
+  const TrainerAppEditStudentBatches({super.key, required this.editStudent});
 
   @override
   State<TrainerAppEditStudentBatches> createState() =>

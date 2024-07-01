@@ -9,7 +9,7 @@ import 'package:part_app/view_model/cubits.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class StudentAppDashboard extends StatefulWidget {
-  const StudentAppDashboard({Key? key}) : super(key: key);
+  const StudentAppDashboard({super.key});
 
   @override
   State<StudentAppDashboard> createState() => _StudentAppDashboardState();
@@ -48,28 +48,26 @@ class _StudentAppDashboardState extends State<StudentAppDashboard> {
               onFinish: () {
                 Hive.box(Database.userBox).put("Student App Showcase", true);
               },
-              builder: Builder(
-                builder: (context) {
-                  return Expanded(
-                    child: ListView(
-                      children: const [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        HomeBanner(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        StudentAppDashboardIcons(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        WhatsHappeningToday()
-                      ],
-                    ),
-                  );
-                },
-              ),
+              builder: (context) {
+                return Expanded(
+                  child: ListView(
+                    children: const [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      HomeBanner(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      StudentAppDashboardIcons(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      WhatsHappeningToday()
+                    ],
+                  ),
+                );
+              },
             ),
           ],
         ),

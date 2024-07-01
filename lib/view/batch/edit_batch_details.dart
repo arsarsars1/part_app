@@ -15,7 +15,7 @@ import 'package:part_app/view_model/cubits.dart';
 class EditBatchDetails extends StatefulWidget {
   static const route = '/batch/details/edit';
 
-  const EditBatchDetails({Key? key}) : super(key: key);
+  const EditBatchDetails({super.key});
 
   @override
   State<EditBatchDetails> createState() => _EditBatchDetailsState();

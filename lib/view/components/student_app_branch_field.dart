@@ -8,8 +8,7 @@ class StudentAppBranchField extends StatefulWidget {
   final String? title;
 
   const StudentAppBranchField(
-      {Key? key, required this.onSelect, this.initialBranch, this.title})
-      : super(key: key);
+      {super.key, required this.onSelect, this.initialBranch, this.title});
 
   @override
   State<StudentAppBranchField> createState() => _StudentAppBranchFieldState();

@@ -16,12 +16,12 @@ class ProfilePicture extends StatefulWidget {
   final String? imageUrl;
 
   const ProfilePicture({
-    Key? key,
+    super.key,
     required this.onEdit,
     required this.onChange,
     required this.onAvatar,
     this.imageUrl,
-  }) : super(key: key);
+  });
 
   @override
   State<ProfilePicture> createState() => _ProfilePictureState();

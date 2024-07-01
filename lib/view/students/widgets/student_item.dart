@@ -11,8 +11,7 @@ class StudentItem extends StatelessWidget {
   final StudentModel student;
   final VoidCallback onTap;
 
-  const StudentItem({Key? key, required this.student, required this.onTap})
-      : super(key: key);
+  const StudentItem({super.key, required this.student, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

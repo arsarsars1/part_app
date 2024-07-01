@@ -13,13 +13,13 @@ class CommonBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget> actions;
 
   const CommonBar({
-    Key? key,
+    super.key,
     this.showLogo = false,
     required this.title,
     this.enableBack = false,
     this.onPressed,
     this.actions = const [],
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

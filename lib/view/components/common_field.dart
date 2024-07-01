@@ -42,7 +42,7 @@ class CommonField extends StatelessWidget {
   final bool enabled;
 
   const CommonField({
-    Key? key,
+    super.key,
     required this.title,
     this.hint,
     this.node,
@@ -77,7 +77,7 @@ class CommonField extends StatelessWidget {
     this.toolTipMessage = 'Info not available.',
     this.verticalPadding = 0,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

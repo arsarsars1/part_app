@@ -6,8 +6,7 @@ class CancelClassPopUp extends StatefulWidget {
   final ValueChanged<String> reason;
 
   const CancelClassPopUp(
-      {Key? key, required this.formKey, required this.reason})
-      : super(key: key);
+      {super.key, required this.formKey, required this.reason});
 
   @override
   State<CancelClassPopUp> createState() => _CancelClassPopUpState();

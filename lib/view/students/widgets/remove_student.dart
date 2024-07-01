@@ -9,11 +9,10 @@ class RemoveStudent extends StatefulWidget {
   final ValueChanged<String> remark;
 
   const RemoveStudent(
-      {Key? key,
+      {super.key,
       required this.formKey,
       required this.rejoiningDate,
-      required this.remark})
-      : super(key: key);
+      required this.remark});
 
   @override
   State<RemoveStudent> createState() => _RemoveStudentState();

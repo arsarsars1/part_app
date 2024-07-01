@@ -7,8 +7,7 @@ class TitledText extends StatelessWidget {
   final Color? titleColor;
 
   const TitledText(
-      {Key? key, required this.title, required this.subText, this.titleColor})
-      : super(key: key);
+      {super.key, required this.title, required this.subText, this.titleColor});
 
   @override
   Widget build(BuildContext context) {

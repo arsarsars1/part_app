@@ -10,13 +10,12 @@ class TextSwitchButton extends StatefulWidget {
   final double horizontalPadding;
 
   const TextSwitchButton(
-      {Key? key,
+      {super.key,
       required this.onChange,
       required this.title,
       this.subTitle,
       required this.selected,
-      this.horizontalPadding = 16})
-      : super(key: key);
+      this.horizontalPadding = 16});
 
   @override
   State<TextSwitchButton> createState() => _TextSwitchButtonState();

@@ -8,8 +8,10 @@ class ActionIcon extends StatelessWidget {
   final VoidCallback onTap;
 
   const ActionIcon(
-      {Key? key, required this.asset, required this.color, required this.onTap})
-      : super(key: key);
+      {super.key,
+      required this.asset,
+      required this.color,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {

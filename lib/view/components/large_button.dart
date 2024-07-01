@@ -10,14 +10,14 @@ class LargeButton extends StatelessWidget {
   final EdgeInsets? marginPadding;
 
   const LargeButton({
-    Key? key,
+    super.key,
     required this.title,
     required this.onTap,
     this.color,
     this.height,
     this.margin,
     this.marginPadding,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

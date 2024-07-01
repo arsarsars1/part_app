@@ -3,7 +3,7 @@ import 'package:part_app/view/components/checkbox_text.dart';
 
 class PayCheckBox extends StatefulWidget {
   final ValueChanged<bool> onChange;
-  const PayCheckBox({Key? key, required this.onChange}) : super(key: key);
+  const PayCheckBox({super.key, required this.onChange});
 
   @override
   State<PayCheckBox> createState() => _PayCheckBoxState();

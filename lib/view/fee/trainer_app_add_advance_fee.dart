@@ -15,7 +15,7 @@ import 'package:part_app/view_model/student/student_cubit.dart';
 
 class TrainerAppAddAdvanceFeePage extends StatefulWidget {
   static const route = '/trainer-app-add-advance-fee';
-  const TrainerAppAddAdvanceFeePage({Key? key}) : super(key: key);
+  const TrainerAppAddAdvanceFeePage({super.key});
 
   @override
   State<TrainerAppAddAdvanceFeePage> createState() =>

@@ -6,8 +6,7 @@ class EnableSwitch extends StatefulWidget {
   final bool enable;
   final ValueChanged<bool> onChange;
 
-  const EnableSwitch({Key? key, required this.enable, required this.onChange})
-      : super(key: key);
+  const EnableSwitch({super.key, required this.enable, required this.onChange});
 
   @override
   State<EnableSwitch> createState() => _EnableSwitchState();

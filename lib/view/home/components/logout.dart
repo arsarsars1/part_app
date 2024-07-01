@@ -6,7 +6,7 @@ import 'package:part_app/view_model/cubits.dart';
 import '../../../view_model/profile_pic/cubit/profile_cubit.dart';
 
 class _Logout extends StatelessWidget {
-  const _Logout({Key? key}) : super(key: key);
+  const _Logout();
 
   @override
   Widget build(BuildContext context) {

@@ -12,7 +12,7 @@ import '../../constants/app_colors.dart';
 class MembershipHomeIos extends StatefulWidget {
   static const route = '/membership-home-ios';
 
-  const MembershipHomeIos({Key? key}) : super(key: key);
+  const MembershipHomeIos({super.key});
 
   @override
   State<MembershipHomeIos> createState() => _MembershipHomeIosState();

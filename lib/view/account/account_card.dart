@@ -8,11 +8,10 @@ class AccountCard extends StatelessWidget {
   final String accountType;
 
   const AccountCard(
-      {Key? key,
+      {super.key,
       required this.onTap,
       required this.accountType,
-      required this.academyName})
-      : super(key: key);
+      required this.academyName});
 
   @override
   Widget build(BuildContext context) {

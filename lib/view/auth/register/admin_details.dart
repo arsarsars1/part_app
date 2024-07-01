@@ -9,7 +9,7 @@ import 'package:part_app/view_model/authentication/auth_cubit.dart';
 class AdminDetails extends StatefulWidget {
   static const route = '/auth/admin-details';
 
-  const AdminDetails({Key? key}) : super(key: key);
+  const AdminDetails({super.key});
 
   @override
   State<AdminDetails> createState() => _WAValidationState();

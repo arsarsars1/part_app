@@ -5,7 +5,7 @@ import 'package:part_app/view/components/alert.dart';
 import 'package:part_app/view/trainer/trainer_salary_slips_home.dart';
 
 class FinanceDashboard extends StatelessWidget {
-  const FinanceDashboard({Key? key}) : super(key: key);
+  const FinanceDashboard({super.key});
 
   @override
   Widget build(BuildContext context) {

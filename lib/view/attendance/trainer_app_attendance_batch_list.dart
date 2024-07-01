@@ -13,7 +13,7 @@ import '../../view_model/attendance/attendance_cubit.dart';
 class TrainerAppAttendanceBatchListPage extends StatefulWidget {
   static const route = '/trainer-app-attendance-batch-list';
 
-  const TrainerAppAttendanceBatchListPage({Key? key}) : super(key: key);
+  const TrainerAppAttendanceBatchListPage({super.key});
 
   @override
   State<TrainerAppAttendanceBatchListPage> createState() =>

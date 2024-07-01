@@ -8,7 +8,7 @@ import 'package:part_app/view_model/cubits.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class TrainerAppDashboard extends StatefulWidget {
-  const TrainerAppDashboard({Key? key}) : super(key: key);
+  const TrainerAppDashboard({super.key});
 
   @override
   State<TrainerAppDashboard> createState() => _TrainerAppDashboardState();
@@ -48,27 +48,25 @@ class _TrainerAppDashboardState extends State<TrainerAppDashboard> {
               onFinish: () {
                 Hive.box(Database.userBox).put("Trainer Showcase", true);
               },
-              builder: Builder(
-                builder: (context) {
-                  return Expanded(
-                    child: ListView(
-                      children: const [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        HomeBanner(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TrainerAppDashboardIcons(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+              builder: (context) {
+                return Expanded(
+                  child: ListView(
+                    children: const [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      HomeBanner(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TrainerAppDashboardIcons(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ],
         ),

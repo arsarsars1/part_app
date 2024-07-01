@@ -14,14 +14,14 @@ class TrainerAppClassPicker extends StatefulWidget {
   final ValueChanged<String>? onSelect;
 
   const TrainerAppClassPicker({
-    Key? key,
+    super.key,
     this.branchId,
     this.date,
     this.onSelect,
     this.batchId,
     this.scaffoldKey,
     required this.onSave,
-  }) : super(key: key);
+  });
 
   @override
   State<TrainerAppClassPicker> createState() => _TrainerAppClassPickerState();

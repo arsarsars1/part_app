@@ -7,7 +7,7 @@ import '../../constants/assets.dart';
 class UserImage extends StatelessWidget {
   final String? profilePic;
 
-  const UserImage({Key? key, this.profilePic}) : super(key: key);
+  const UserImage({super.key, this.profilePic});
 
   @override
   Widget build(BuildContext context) {

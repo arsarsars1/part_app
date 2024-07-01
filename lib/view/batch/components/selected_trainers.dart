@@ -14,14 +14,13 @@ class SelectedTrainers extends StatefulWidget {
   final GlobalKey<ScaffoldState>? scaffoldKey;
 
   const SelectedTrainers(
-      {Key? key,
+      {super.key,
       required this.selectedTrainers,
       this.trainers,
       this.showAddButton = true,
       this.batchDetails = false,
       this.scaffoldKey,
-      this.branchId})
-      : super(key: key);
+      this.branchId});
 
   @override
   State<SelectedTrainers> createState() => _SelectedTrainersState();

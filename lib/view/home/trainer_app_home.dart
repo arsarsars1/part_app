@@ -15,7 +15,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerAppHome extends StatefulWidget {
   static const route = '/trainer-app-home';
 
-  const TrainerAppHome({Key? key}) : super(key: key);
+  const TrainerAppHome({super.key});
 
   @override
   State<TrainerAppHome> createState() => _TrainerAppHomeState();

@@ -7,8 +7,7 @@ class LoadingView extends StatelessWidget {
   final Color? color;
 
   const LoadingView(
-      {Key? key, this.message, this.hideColor = false, this.color})
-      : super(key: key);
+      {super.key, this.message, this.hideColor = false, this.color});
 
   @override
   Widget build(BuildContext context) {

@@ -9,12 +9,11 @@ class RetainStudentCheckButton extends StatefulWidget {
   final bool selected;
 
   const RetainStudentCheckButton(
-      {Key? key,
+      {super.key,
       required this.onChange,
       required this.onNumberChange,
       this.initialValue,
-      this.selected = false})
-      : super(key: key);
+      this.selected = false});
 
   @override
   State<RetainStudentCheckButton> createState() =>

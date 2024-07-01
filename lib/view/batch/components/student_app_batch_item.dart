@@ -22,7 +22,7 @@ class StudentAppBatchItem extends StatelessWidget {
   final VoidCallback? onRemove;
 
   const StudentAppBatchItem({
-    Key? key,
+    super.key,
     required this.batch,
     required this.onTap,
     this.hideTrainer = false,
@@ -33,7 +33,7 @@ class StudentAppBatchItem extends StatelessWidget {
     this.onAddToBatch,
     this.onEdit,
     this.onRemove,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

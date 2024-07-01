@@ -16,7 +16,7 @@ import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAppClassLinkView extends StatefulWidget {
   static const route = '/trainer-app-class-link';
-  const TrainerAppClassLinkView({Key? key}) : super(key: key);
+  const TrainerAppClassLinkView({super.key});
 
   @override
   State<TrainerAppClassLinkView> createState() =>

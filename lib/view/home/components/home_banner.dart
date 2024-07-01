@@ -11,7 +11,7 @@ import 'package:part_app/view_model/cubits.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeBanner extends StatefulWidget {
-  const HomeBanner({Key? key}) : super(key: key);
+  const HomeBanner({super.key});
 
   @override
   State<HomeBanner> createState() => _HomeBannerState();

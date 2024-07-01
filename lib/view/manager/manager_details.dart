@@ -25,7 +25,7 @@ class ManagerDetails extends StatefulWidget {
   static const route = '/manager/details';
   final int managerId;
 
-  const ManagerDetails({Key? key, required this.managerId}) : super(key: key);
+  const ManagerDetails({super.key, required this.managerId});
 
   @override
   State<ManagerDetails> createState() => _ManagerDetailsState();

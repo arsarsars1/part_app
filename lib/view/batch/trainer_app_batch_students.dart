@@ -11,8 +11,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerAppBatchStudents extends StatefulWidget {
   final ValueChanged<bool> onChange;
 
-  const TrainerAppBatchStudents({Key? key, required this.onChange})
-      : super(key: key);
+  const TrainerAppBatchStudents({super.key, required this.onChange});
 
   @override
   State<TrainerAppBatchStudents> createState() =>

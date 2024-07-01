@@ -4,7 +4,7 @@ import 'package:part_app/constants/app_colors.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class SummaryDashboard extends StatelessWidget {
-  const SummaryDashboard({Key? key}) : super(key: key);
+  const SummaryDashboard({super.key});
 
   @override
   Widget build(BuildContext context) {

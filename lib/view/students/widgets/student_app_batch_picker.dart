@@ -13,13 +13,13 @@ class StudentAppBatchPicker extends StatefulWidget {
   final bool branchSearch;
 
   const StudentAppBatchPicker({
-    Key? key,
+    super.key,
     required this.status,
     required this.studentId,
     required this.branchId,
     required this.onSelect,
     this.branchSearch = false,
-  }) : super(key: key);
+  });
 
   @override
   State<StudentAppBatchPicker> createState() => _StudentAppBatchPickerState();

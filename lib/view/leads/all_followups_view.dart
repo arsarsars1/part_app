@@ -14,7 +14,7 @@ import 'package:part_app/view_model/leads/leads_cubit.dart';
 class AllFollowUpView extends StatefulWidget {
   static const route = '/leads/all-followups';
 
-  const AllFollowUpView({Key? key}) : super(key: key);
+  const AllFollowUpView({super.key});
 
   @override
   State<AllFollowUpView> createState() => _TodayFollowViewState();

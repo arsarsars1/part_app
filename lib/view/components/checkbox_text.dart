@@ -6,11 +6,10 @@ class CheckBoxText extends StatefulWidget {
   final VoidCallback onTap;
 
   const CheckBoxText(
-      {Key? key,
+      {super.key,
       required this.checked,
       required this.title,
-      required this.onTap})
-      : super(key: key);
+      required this.onTap});
 
   @override
   State<CheckBoxText> createState() => _CheckBoxTextState();

@@ -10,12 +10,11 @@ class WhatsappCheckButton extends StatefulWidget {
   final bool selected;
 
   const WhatsappCheckButton(
-      {Key? key,
+      {super.key,
       required this.onChange,
       required this.onNumberChange,
       this.initialValue,
-      this.selected = false})
-      : super(key: key);
+      this.selected = false});
 
   @override
   State<WhatsappCheckButton> createState() => _WhatsappCheckButtonState();

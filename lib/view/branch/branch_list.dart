@@ -13,7 +13,7 @@ import 'package:part_app/view_model/branch/branch_cubit.dart';
 class BranchList extends StatefulWidget {
   static const route = '/branches';
 
-  const BranchList({Key? key}) : super(key: key);
+  const BranchList({super.key});
 
   @override
   State<BranchList> createState() => _BranchListState();

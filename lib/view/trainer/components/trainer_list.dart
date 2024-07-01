@@ -19,8 +19,8 @@ class TrainerList extends StatefulWidget {
   final List<Trainer> trainers;
   final ValueChanged<Trainer> onSelect;
 
-  const TrainerList({Key? key, required this.trainers, required this.onSelect})
-      : super(key: key);
+  const TrainerList(
+      {super.key, required this.trainers, required this.onSelect});
 
   @override
   State<TrainerList> createState() => _TrainerListState();

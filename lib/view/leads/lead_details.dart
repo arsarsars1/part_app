@@ -12,7 +12,7 @@ import 'package:part_app/view_model/leads/leads_cubit.dart';
 
 class LeadDetails extends StatefulWidget {
   static const route = '/leads/details';
-  const LeadDetails({Key? key}) : super(key: key);
+  const LeadDetails({super.key});
 
   @override
   State<LeadDetails> createState() => _LeadDetailsState();

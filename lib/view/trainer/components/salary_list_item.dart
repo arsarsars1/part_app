@@ -11,8 +11,7 @@ class SalaryListItem extends StatefulWidget {
   final Data salary;
   final VoidCallback onTap;
 
-  const SalaryListItem({Key? key, required this.salary, required this.onTap})
-      : super(key: key);
+  const SalaryListItem({super.key, required this.salary, required this.onTap});
 
   @override
   State<SalaryListItem> createState() => _FeeListItemState();

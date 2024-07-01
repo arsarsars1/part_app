@@ -9,7 +9,7 @@ import 'package:part_app/view_model/leads/leads_cubit.dart';
 class TodayFollowView extends StatefulWidget {
   static const route = '/leads/followups';
 
-  const TodayFollowView({Key? key}) : super(key: key);
+  const TodayFollowView({super.key});
 
   @override
   State<TodayFollowView> createState() => _TodayFollowViewState();

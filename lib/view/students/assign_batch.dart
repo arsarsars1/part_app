@@ -9,7 +9,7 @@ class AssignBatch extends StatefulWidget {
   static const route = '/students/add/batches';
   final bool editStudent;
 
-  const AssignBatch({Key? key, required this.editStudent}) : super(key: key);
+  const AssignBatch({super.key, required this.editStudent});
 
   @override
   State<AssignBatch> createState() => _AssignBatchState();

@@ -12,12 +12,12 @@ class BatchPicker extends StatefulWidget {
   final bool branchSearch;
 
   const BatchPicker({
-    Key? key,
+    super.key,
     required this.status,
     required this.branchId,
     required this.onSelect,
     this.branchSearch = false,
-  }) : super(key: key);
+  });
 
   @override
   State<BatchPicker> createState() => _BatchPickerState();

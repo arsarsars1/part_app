@@ -12,7 +12,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerAppStudentAttendanceCalenderView extends StatefulWidget {
   static const route = '/trainer-app-student-calender-view';
 
-  const TrainerAppStudentAttendanceCalenderView({Key? key}) : super(key: key);
+  const TrainerAppStudentAttendanceCalenderView({super.key});
 
   @override
   State<TrainerAppStudentAttendanceCalenderView> createState() =>

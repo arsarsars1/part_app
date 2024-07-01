@@ -16,7 +16,7 @@ import '../../model/data_base/data_base.dart';
 class SwitchAccount extends StatelessWidget {
   static const route = '/switch-account';
 
-  const SwitchAccount({Key? key}) : super(key: key);
+  const SwitchAccount({super.key});
 
   @override
   Widget build(BuildContext context) {

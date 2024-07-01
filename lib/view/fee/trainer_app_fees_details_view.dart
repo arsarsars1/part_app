@@ -16,7 +16,7 @@ import 'package:part_app/view_model/fee/fee_cubit.dart';
 class TrainerAppFeesDetailsView extends StatefulWidget {
   static const route = '/trainer-app-fees';
 
-  const TrainerAppFeesDetailsView({Key? key}) : super(key: key);
+  const TrainerAppFeesDetailsView({super.key});
 
   @override
   State<TrainerAppFeesDetailsView> createState() =>
@@ -458,7 +458,6 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                         } else {
                           query = value;
                         }
-                        print("heelo===");
                         doSearch(true);
                       },
                       textInputAction: TextInputAction.search,

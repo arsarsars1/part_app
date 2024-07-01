@@ -13,7 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 class TrainerAppClassLinkList extends StatefulWidget {
   static const route = '/trainer-app-class-link/list';
 
-  const TrainerAppClassLinkList({Key? key}) : super(key: key);
+  const TrainerAppClassLinkList({super.key});
 
   @override
   State<TrainerAppClassLinkList> createState() =>

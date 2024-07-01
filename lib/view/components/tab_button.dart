@@ -5,8 +5,7 @@ class TabButton extends StatefulWidget {
   final ValueChanged<String> onChange;
   final List<String> options;
 
-  const TabButton({Key? key, required this.onChange, required this.options})
-      : super(key: key);
+  const TabButton({super.key, required this.onChange, required this.options});
 
   @override
   State<TabButton> createState() => _TabButtonState();

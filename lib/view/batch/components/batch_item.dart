@@ -21,7 +21,7 @@ class BatchItem extends StatelessWidget {
   final VoidCallback? onRemove;
 
   const BatchItem({
-    Key? key,
+    super.key,
     required this.batch,
     required this.onTap,
     this.hideTrainer = false,
@@ -32,7 +32,7 @@ class BatchItem extends StatelessWidget {
     this.onAddToBatch,
     this.onEdit,
     this.onRemove,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

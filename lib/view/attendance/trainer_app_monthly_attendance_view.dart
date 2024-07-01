@@ -12,7 +12,7 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerAppMonthlyAttendanceView extends StatefulWidget {
   static const route = '/trainer-app-month_or_year_attendance';
 
-  const TrainerAppMonthlyAttendanceView({Key? key}) : super(key: key);
+  const TrainerAppMonthlyAttendanceView({super.key});
 
   @override
   State<TrainerAppMonthlyAttendanceView> createState() =>

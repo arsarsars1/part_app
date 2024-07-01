@@ -10,7 +10,7 @@ import 'package:part_app/view_model/cubits.dart';
 class EditSalaryTrainer extends StatefulWidget {
   static const route = '/trainer/edit-salary-details';
 
-  const EditSalaryTrainer({Key? key}) : super(key: key);
+  const EditSalaryTrainer({super.key});
 
   @override
   State<EditSalaryTrainer> createState() => _EditSalaryTrainerState();

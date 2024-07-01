@@ -5,7 +5,7 @@ import 'package:part_app/view/components/components.dart';
 class _Cancel extends StatelessWidget {
   final VoidCallback onFree;
 
-  const _Cancel({Key? key, required this.onFree}) : super(key: key);
+  const _Cancel({required this.onFree});
 
   @override
   Widget build(BuildContext context) {

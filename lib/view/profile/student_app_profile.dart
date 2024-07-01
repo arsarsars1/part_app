@@ -16,7 +16,7 @@ import '../../flavors.dart';
 class StudentAppProfile extends StatefulWidget {
   static const route = '/student-app-profile';
 
-  const StudentAppProfile({Key? key}) : super(key: key);
+  const StudentAppProfile({super.key});
 
   @override
   State<StudentAppProfile> createState() => _StudentAppProfileState();

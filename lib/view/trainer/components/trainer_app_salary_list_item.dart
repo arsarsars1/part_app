@@ -10,8 +10,7 @@ class TrainerAppSalaryListItem extends StatefulWidget {
   final VoidCallback onTap;
 
   const TrainerAppSalaryListItem(
-      {Key? key, required this.salary, required this.onTap})
-      : super(key: key);
+      {super.key, required this.salary, required this.onTap});
 
   @override
   State<TrainerAppSalaryListItem> createState() => _FeeListItemState();

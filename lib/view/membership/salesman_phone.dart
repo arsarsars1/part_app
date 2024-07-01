@@ -7,7 +7,7 @@ import 'package:part_app/view_model/membership/membership_cubit.dart';
 class SalesManPhone extends StatefulWidget {
   static const route = '/membership/salesman';
 
-  const SalesManPhone({Key? key}) : super(key: key);
+  const SalesManPhone({super.key});
 
   @override
   State<SalesManPhone> createState() => _SalesManPhoneState();

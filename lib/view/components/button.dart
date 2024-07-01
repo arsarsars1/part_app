@@ -16,7 +16,7 @@ class Button extends StatelessWidget {
   final bool fullWidget;
 
   const Button({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.title,
     this.width,
@@ -27,7 +27,7 @@ class Button extends StatelessWidget {
     this.height,
     this.style,
     this.fullWidget = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

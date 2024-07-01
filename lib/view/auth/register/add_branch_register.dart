@@ -9,7 +9,7 @@ import 'package:part_app/view_model/country/country_cubit.dart';
 class AddBranchRegister extends StatefulWidget {
   static const route = '/auth/branch-details';
 
-  const AddBranchRegister({Key? key}) : super(key: key);
+  const AddBranchRegister({super.key});
 
   @override
   State<AddBranchRegister> createState() => _AddBranchRegisterState();

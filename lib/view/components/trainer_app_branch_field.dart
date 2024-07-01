@@ -9,12 +9,11 @@ class TrainerAppBranchField extends StatefulWidget {
   final bool isDisable;
 
   const TrainerAppBranchField(
-      {Key? key,
+      {super.key,
       required this.onSelect,
       this.initialBranch,
       this.title,
-      this.isDisable = false})
-      : super(key: key);
+      this.isDisable = false});
 
   @override
   State<TrainerAppBranchField> createState() => _TrainerAppBranchFieldState();

@@ -9,7 +9,7 @@ import 'package:part_app/view_model/cubits.dart';
 class AssignedBatches extends StatefulWidget {
   static const route = 'trainer/batches';
 
-  const AssignedBatches({Key? key}) : super(key: key);
+  const AssignedBatches({super.key});
 
   @override
   State<AssignedBatches> createState() => _AssignedBatchesState();

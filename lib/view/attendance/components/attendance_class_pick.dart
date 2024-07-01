@@ -14,10 +14,10 @@ class AttendanceClassPicker extends StatefulWidget {
   final List<EventModel>? eventList;
 
   const AttendanceClassPicker({
-    Key? key,
+    super.key,
     required this.date,
     this.eventList,
-  }) : super(key: key);
+  });
 
   @override
   State<AttendanceClassPicker> createState() => _AttendanceClassPickerState();
