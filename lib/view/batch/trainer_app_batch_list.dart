@@ -246,6 +246,7 @@ class _TrainerAppBatchesPageState extends State<TrainerAppBatchesPage> {
                                     return BatchItem(
                                       batch: batch,
                                       onTap: () {
+                                        context.read<StudentCubit>().clean();
                                         context.read<BatchCubit>().isFromBatch =
                                             true;
                                         context.read<BatchCubit>().getBatchForTrainer(

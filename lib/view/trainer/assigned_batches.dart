@@ -62,6 +62,7 @@ class _AssignedBatchesState extends State<AssignedBatches> {
                       hideTrainer: true,
                       batch: batch,
                       onTap: () async {
+                        context.read<StudentCubit>().clean();
                         batchCubit.getBatch(batchId: '${batch.id}');
                         batchCubit.isFromBatch = false;
                         context
