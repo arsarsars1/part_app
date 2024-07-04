@@ -19,7 +19,8 @@ class RescheduledClasses extends StatefulWidget {
 
 class _RescheduledClassesState extends State<RescheduledClasses> {
   TextEditingController controller = TextEditingController();
-  DateTime? finalDate;
+  DateTime finalDate = DateTime.now();
+
   @override
   void initState() {
     super.initState();
@@ -84,7 +85,7 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
             ScheduleField(
               title: 'Month, Year',
               hint: 'Select month & year',
-              initialValue: DateTime.now().toMMMMYYYY(),
+              initialValue: finalDate.toMMMMYYYY(),
               dateMonth: true,
               onDateSelect: (DateTime value) {
                 finalDate = value;
