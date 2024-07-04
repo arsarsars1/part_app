@@ -123,6 +123,41 @@ class StudentService {
     return commonFromJson(jsonEncode(response));
   }
 
+  /// this method will handle four different apis based on
+  /// [ branchId ] , [ status ] , [ search ]
+  Future<StudentsResponse?> getStudentByBatches({
+    int? branchId,
+    String status = 'ongoing',
+    String? search,
+    required int page,
+    bool branchSearch = false,
+  }) async {
+    try {
+      String path = branchId == null
+          ? '/admin/batches/batch-status/$status'
+          : '/admin/branches/$branchId/batches/batch-status/$status';
+
+      if (branchSearch) {
+        path = '/admin/branches/$branchId/batches';
+      }
+
+      /// append the search text if search query is not null
+      if (search != null) {
+        path += '/search/$search';
+      }
+
+      path += '?page=$page';
+
+      var response = await _client.get(
+        queryPath: path,
+      );
+
+      return studentsResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentsResponse?> getStudents({
     String? searchQuery,
     String? activeStatus,

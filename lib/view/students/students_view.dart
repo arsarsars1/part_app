@@ -154,10 +154,11 @@ class _StudentsViewState extends State<StudentsView> {
                                           ),
                                         ),
                                       );
-                                    }).toList()
+                                    })
                                   ],
                                   onChanged: (value) {
                                     if (value?.id == -1) {
+                                      print("test");
                                       setState(() {
                                         branchId = null;
                                         selectedItem = value;
@@ -165,6 +166,7 @@ class _StudentsViewState extends State<StudentsView> {
                                         doSearch(true);
                                       });
                                     } else {
+                                      print("else");
                                       branchId = value?.id;
                                       selectedItem = value;
                                       if (status != null) {

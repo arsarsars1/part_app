@@ -18,6 +18,8 @@ class RescheduledClasses extends StatefulWidget {
 }
 
 class _RescheduledClassesState extends State<RescheduledClasses> {
+  TextEditingController controller = TextEditingController();
+  DateTime? finalDate;
   @override
   void initState() {
     super.initState();
@@ -85,11 +87,15 @@ class _RescheduledClassesState extends State<RescheduledClasses> {
               initialValue: DateTime.now().toMMMMYYYY(),
               dateMonth: true,
               onDateSelect: (DateTime value) {
+                finalDate = value;
+                controller.text = value.toMMMMYYYY();
                 context.read<BatchCubit>().getRescheduledBatches(
                     month: value.month, year: value.year);
               },
               time: false,
+              selectedDate: finalDate,
               onlyMonth: true,
+              controller: controller,
             ),
             BlocBuilder<BatchCubit, BatchState>(
               builder: (context, state) {
