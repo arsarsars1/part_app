@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:part_app/constants/constant.dart';
+import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/trainer_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
@@ -139,19 +140,13 @@ class _AddTrainerState extends State<AddTrainer> {
                     onTap: () async {
                       Contact? contact = await contactPicker.selectContact();
                       setState(() {
-                        phone = contact?.phoneNumbers?.first
-                            .replaceAll('+', '')
-                            .replaceAll(' ', '');
-                        phone =
-                            contact?.phoneNumbers?.first.replaceAll('-', '');
-                        whatsappNo = phone;
-                        phoneController.text =
-                            (contact?.phoneNumbers?.first ?? '')
-                                .replaceAll('+', '')
-                                .replaceAll(' ', '');
-                        phoneController.text =
-                            (contact?.phoneNumbers?.first ?? '')
-                                .replaceAll('-', '');
+                        String phoneNumber = contact?.phoneNumbers?.first ?? "";
+                        if (phoneNumber.isNotEmpty) {
+                          phoneNumber = phoneNumber.cleanPhoneNumber();
+                          phoneController.text = phoneNumber;
+                          phone = phoneNumber;
+                          whatsappNo = phone;
+                        }
                       });
                     },
                     child: Icon(
