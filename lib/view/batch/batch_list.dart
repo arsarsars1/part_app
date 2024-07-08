@@ -36,7 +36,8 @@ class _BatchesPageState extends State<BatchesPage>
     _getSize();
     _getLoadingViewSize();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      var branchCubit = context.read<BranchCubit>();
+      BranchCubit branchCubit = context.read<BranchCubit>();
+      branchCubit.clean();
       await branchCubit.getBranches();
       Future.delayed(const Duration(seconds: 2));
       branchId = branchCubit.firstBranch?.id;
@@ -160,130 +161,141 @@ class _BatchesPageState extends State<BatchesPage>
             const SizedBox(
               height: 20,
             ),
-            branchId != null
-                ? Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: TabButton(
-                          onChange: (String value) {
-                            _getSize();
-                            _getLoadingViewSize();
-                            if (value == 'Ongoing Batches') {
-                              status = 'ongoing';
-                              cubit.tempStatus = status;
-                            } else {
-                              status = 'completed';
-                              cubit.tempStatus = status;
-                            }
-                            cubit.getBatchesByStatus(
-                              branchId: branchId,
-                              status: status,
-                              search: query,
-                              clean: true,
-                            );
-                          },
-                          options: const [
-                            'Ongoing Batches',
-                            'Completed Batches',
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      BlocConsumer<BatchCubit, BatchState>(
-                        listener: (context, state) {},
-                        buildWhen: (prv, crr) =>
-                            crr is BatchesFetched ||
-                            crr is FetchingBatches ||
-                            crr is CreatedBatch,
-                        builder: (context, state) {
-                          if (state is BatchNetworkError) {
-                            AlertBox.showErrorAlert(context);
-                          }
-                          if (state is CreatedBatch) {
-                            cubit.getBatchesByStatus(
-                              branchId: branchId,
-                              status: status,
-                              search: query,
-                              clean: true,
-                            );
-                          }
-                          if (state is FetchingBatches) {
-                            return SizedBox(
-                              height:
-                                  emptyHeight + kToolbarHeight + totalPadding,
-                              child: const LoadingView(
-                                hideColor: true,
-                              ),
-                            );
-                          }
-                          if (cubit.batches.isEmpty) {
-                            return SizedBox(
-                              height: emptyHeight +
-                                  kToolbarHeight +
-                                  totalPadding +
-                                  _loadingHeight,
-                              child: Center(
-                                child: Text(
-                                  branchId == null
-                                      ? 'Add Batch to Get Started'
-                                      : 'Sorry, No Matching Results Found.',
-                                ),
-                              ),
-                            );
-                          }
-                          return ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: cubit.batches.length,
-                            itemBuilder: (context, index) {
-                              BatchModel batch = cubit.batches[index];
-                              return BatchItem(
-                                batch: batch,
-                                onTap: () {
-                                  cubit.isFromBatch = true;
-                                  context
-                                      .read<BatchCubit>()
-                                      .getBatch(batchId: '${batch.id}');
-                                  context.read<BranchCubit>().getBranchTrainers(
-                                        branchId: '${batch.branchId}',
-                                        clean: true,
-                                      );
-                                  Navigator.pushNamed(
-                                      context, BatchDetails.route);
-                                },
+            BlocBuilder<BranchCubit, BranchState>(builder: (context, state) {
+              if (state is BranchesLoading) {
+                return SizedBox(
+                  height: emptyHeight + kToolbarHeight + totalPadding,
+                  child: const LoadingView(hideColor: true),
+                );
+              }
+              return branchId != null
+                  ? Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: TabButton(
+                            onChange: (String value) {
+                              _getSize();
+                              _getLoadingViewSize();
+                              if (value == 'Ongoing Batches') {
+                                status = 'ongoing';
+                                cubit.tempStatus = status;
+                              } else {
+                                status = 'completed';
+                                cubit.tempStatus = status;
+                              }
+                              cubit.getBatchesByStatus(
+                                branchId: branchId,
+                                status: status,
+                                search: query,
+                                clean: true,
                               );
                             },
-                          );
-                        },
+                            options: const [
+                              'Ongoing Batches',
+                              'Completed Batches',
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        BlocConsumer<BatchCubit, BatchState>(
+                          listener: (context, state) {},
+                          buildWhen: (prv, crr) =>
+                              crr is BatchesFetched ||
+                              crr is FetchingBatches ||
+                              crr is CreatedBatch,
+                          builder: (context, state) {
+                            if (state is BatchNetworkError) {
+                              AlertBox.showErrorAlert(context);
+                            }
+                            if (state is CreatedBatch) {
+                              cubit.getBatchesByStatus(
+                                branchId: branchId,
+                                status: status,
+                                search: query,
+                                clean: true,
+                              );
+                            }
+                            if (state is FetchingBatches) {
+                              return SizedBox(
+                                height:
+                                    emptyHeight + kToolbarHeight + totalPadding,
+                                child: const LoadingView(
+                                  hideColor: true,
+                                ),
+                              );
+                            }
+                            if (cubit.batches.isEmpty) {
+                              return SizedBox(
+                                height: emptyHeight +
+                                    kToolbarHeight +
+                                    totalPadding +
+                                    _loadingHeight,
+                                child: Center(
+                                  child: Text(
+                                    branchId == null
+                                        ? 'Add Batch to Get Started'
+                                        : 'Sorry, No Matching Results Found.',
+                                  ),
+                                ),
+                              );
+                            }
+                            return ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: cubit.batches.length,
+                              itemBuilder: (context, index) {
+                                BatchModel batch = cubit.batches[index];
+                                return BatchItem(
+                                  batch: batch,
+                                  onTap: () {
+                                    cubit.isFromBatch = true;
+                                    context
+                                        .read<BatchCubit>()
+                                        .getBatch(batchId: '${batch.id}');
+                                    context
+                                        .read<BranchCubit>()
+                                        .getBranchTrainers(
+                                          branchId: '${batch.branchId}',
+                                          clean: true,
+                                        );
+                                    Navigator.pushNamed(
+                                        context, BatchDetails.route);
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        ),
+                        BlocBuilder<BatchCubit, BatchState>(
+                          builder: (context, state) {
+                            return AnimatedContainer(
+                              height:
+                                  state is FetchingBatches && state.pagination
+                                      ? 30
+                                      : 0,
+                              color: Colors.black,
+                              duration: const Duration(
+                                milliseconds: 250,
+                              ),
+                              child: const Center(
+                                  child: Text('Fetching more items ..')),
+                            );
+                          },
+                        ),
+                      ],
+                    )
+                  : const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(64.0),
+                        child: Text(
+                          'Please select a branch',
+                        ),
                       ),
-                      BlocBuilder<BatchCubit, BatchState>(
-                        builder: (context, state) {
-                          return AnimatedContainer(
-                            height: state is FetchingBatches && state.pagination
-                                ? 30
-                                : 0,
-                            color: Colors.black,
-                            duration: const Duration(
-                              milliseconds: 250,
-                            ),
-                            child: const Center(
-                                child: Text('Fetching more items ..')),
-                          );
-                        },
-                      ),
-                    ],
-                  )
-                : const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(64.0),
-                      child: Text(
-                        'Please select a branch',
-                      ),
-                    ),
-                  ),
+                    );
+            }),
           ],
         ),
       ),

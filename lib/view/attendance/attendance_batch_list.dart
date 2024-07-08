@@ -59,7 +59,6 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AttendanceCubit>();
-    cubit.reset();
 
     return Scaffold(
       appBar: const CommonBar(title: 'Class Attendance'),
@@ -126,76 +125,92 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  branchId != null
-                      ? Column(
-                          children: [
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            BlocConsumer<AttendanceCubit, AttendanceState>(
-                              listener: (context, state) {},
-                              buildWhen: (prv, crr) =>
-                                  crr is FetchingAttendanceBatches ||
-                                  crr is AttendanceBatchesFetched,
-                              builder: (context, state) {
-                                if (state is BatchNetworkError) {
-                                  AlertBox.showErrorAlert(context);
-                                }
-                                if (cubit.batches.isEmpty &&
-                                    state is FetchingBatches) {
-                                  return const Padding(
-                                    padding: EdgeInsets.only(top: 32),
-                                    child: LoadingView(
-                                      hideColor: true,
-                                    ),
-                                  );
-                                }
-                                if (cubit.batches.isEmpty) {
-                                  return Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(64.0),
-                                      child: Text(
-                                        branchId == null
-                                            ? 'Add Batch to Get Started'
-                                            : 'Sorry, No Matching Results Found.',
-                                      ),
-                                    ),
-                                  );
-                                }
-                                return ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: cubit.batches.length,
-                                  itemBuilder: (context, index) {
-                                    BatchModel batch = cubit.batches[index];
-                                    return BatchItem(
-                                      batch: batch,
-                                      onTap: () {
-                                        context
-                                            .read<BatchCubit>()
-                                            .getBatch(batchId: '${batch.id}');
-                                        context.read<AttendanceCubit>().id =
-                                            batch.id;
-                                        Navigator.pushNamed(
-                                          context,
-                                          AttendanceCalenderView.route,
+                  BlocBuilder<BranchCubit, BranchState>(
+                      builder: (context, state) {
+                    if (state is BranchesLoading) {
+                      return const LoadingView(hideColor: true);
+                    }
+                    return Column(
+                      children: [
+                        branchId != null
+                            ? Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  BlocConsumer<AttendanceCubit,
+                                      AttendanceState>(
+                                    listener: (context, state) {},
+                                    buildWhen: (prv, crr) =>
+                                        crr is FetchingAttendanceBatches ||
+                                        crr is AttendanceBatchesFetched,
+                                    builder: (context, state) {
+                                      if (state is BatchNetworkError) {
+                                        AlertBox.showErrorAlert(context);
+                                      }
+                                      if (state is FetchingBatches ||
+                                          state is FetchingAttendanceBatches) {
+                                        return const Padding(
+                                          padding: EdgeInsets.only(top: 32),
+                                          child: LoadingView(
+                                            hideColor: true,
+                                          ),
                                         );
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        )
-                      : const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(64.0),
-                            child: Text(
-                              'Please select a branch',
-                            ),
-                          ),
-                        ),
+                                      }
+                                      if (cubit.batches.isNotEmpty) {
+                                        return ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: cubit.batches.length,
+                                          itemBuilder: (context, index) {
+                                            BatchModel batch =
+                                                cubit.batches[index];
+                                            return BatchItem(
+                                              batch: batch,
+                                              onTap: () {
+                                                context
+                                                    .read<BatchCubit>()
+                                                    .getBatch(
+                                                        batchId: '${batch.id}');
+                                                context
+                                                    .read<AttendanceCubit>()
+                                                    .id = batch.id;
+                                                Navigator.pushNamed(
+                                                  context,
+                                                  AttendanceCalenderView.route,
+                                                );
+                                              },
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        return Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(64.0),
+                                            child: Text(
+                                              branchId == null
+                                                  ? 'Add Batch to Get Started'
+                                                  : 'Sorry, No Matching Results Found.',
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ],
+                              )
+                            : const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(64.0),
+                                  child: Text(
+                                    'Please select a branch',
+                                  ),
+                                ),
+                              ),
+                      ],
+                    );
+                  }),
                 ],
               ),
             ),

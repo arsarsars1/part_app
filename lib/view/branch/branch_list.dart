@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
-import 'package:part_app/view/components/button.dart';
-import 'package:part_app/view/components/common_bar.dart';
+import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/list_card.dart';
 import 'package:part_app/view_model/branch/branch_cubit.dart';
 
@@ -57,6 +55,9 @@ class _BranchListState extends State<BranchList> {
           ),
           BlocBuilder<BranchCubit, BranchState>(
             builder: (context, state) {
+              if (state is BranchesLoading) {
+                return const Expanded(child: LoadingView(hideColor: true));
+              }
               if (cubit.branches.isEmpty) {
                 return const Expanded(
                   child: Padding(

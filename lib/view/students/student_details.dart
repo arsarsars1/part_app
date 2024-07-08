@@ -33,6 +33,9 @@ class _StudentDetailsState extends State<StudentDetails> {
         builder: (context, state) {
           Student? student = context.read<StudentCubit>().student;
           StudentDetail? details = student?.studentDetail![0];
+          if (state is StudentDetailsFetching) {
+            return const LoadingView(hideColor: true);
+          }
           if (student != null) {
             return ListView(
               children: [

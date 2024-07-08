@@ -19,7 +19,7 @@ class BranchCubit extends Cubit<BranchState> {
   final _branchService = BranchService();
 
   List<Branch> _branches = [];
-  final List<Trainer> _trainers = [];
+  List<Trainer> _trainers = [];
   List<ClassModel> _classes = [];
   List<ClassModel> _newClasses = [];
   Branch? firstBranch;
@@ -71,8 +71,13 @@ class BranchCubit extends Cubit<BranchState> {
 
   void clean() {
     page = 1;
+    _branch = null;
     nextPageUrl = '';
-    _trainers.clear();
+    firstBranch = null;
+    _trainers = [];
+    _branches = [];
+    _classes = [];
+    _newClasses = [];
   }
 
   Future getBranches() async {

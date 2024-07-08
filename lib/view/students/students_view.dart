@@ -62,6 +62,11 @@ class _StudentsViewState extends State<StudentsView> {
             doSearch(true);
           }
           var cubit = context.read<StudentCubit>();
+
+          if (state is FetchingStudents) {
+            return const LoadingView(hideColor: true);
+          }
+
           return NotificationListener<ScrollNotification>(
             onNotification: (scrollNotification) {
               if (scrollNotification is ScrollEndNotification) {
@@ -97,6 +102,9 @@ class _StudentsViewState extends State<StudentsView> {
                       ),
                       BlocBuilder<BranchCubit, BranchState>(
                         builder: (context, state) {
+                          if (state is BranchesLoading) {
+                            return const LoadingView(hideColor: true);
+                          }
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Column(
@@ -158,7 +166,6 @@ class _StudentsViewState extends State<StudentsView> {
                                   ],
                                   onChanged: (value) {
                                     if (value?.id == -1) {
-                                      print("test");
                                       setState(() {
                                         branchId = null;
                                         selectedItem = value;
@@ -166,7 +173,6 @@ class _StudentsViewState extends State<StudentsView> {
                                         doSearch(true);
                                       });
                                     } else {
-                                      print("else");
                                       branchId = value?.id;
                                       selectedItem = value;
                                       if (status != null) {

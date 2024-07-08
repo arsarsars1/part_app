@@ -428,6 +428,9 @@ class _ClassLinkViewState extends State<ClassLinkView> {
                 ),
                 BlocBuilder<BatchCubit, BatchState>(
                   builder: (context, state) {
+                    if (state is FetchingBatches) {
+                      return const LoadingView(hideColor: true);
+                    }
                     if (branchId == null || batch == null) {
                       return const Center(
                         child: Padding(

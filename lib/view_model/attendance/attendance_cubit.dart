@@ -202,6 +202,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     String status = "ongoing",
   }) async {
     if (clean) {
+      reset();
       page = 1;
       nextPageUrl = '';
       _batches.clear();

@@ -714,7 +714,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                   },
                                   color: AppColors.defaultBlue,
                                   margin: 0,
-                                ),
+                                ).expanded(shouldExpand: true),
                               ],
                             ),
                           ],

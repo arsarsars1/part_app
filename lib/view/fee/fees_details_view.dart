@@ -107,6 +107,9 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
           }
         },
         builder: (context, state) {
+          if (state is FetchingFee) {
+            return const LoadingView(hideColor: true);
+          }
           var cubit = context.read<FeeCubit>();
           return Column(
             children: [
@@ -155,6 +158,9 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     // ),
                     BlocBuilder<BranchCubit, BranchState>(
                       builder: (context, state) {
+                        if (state is BranchesLoading) {
+                          return const LoadingView(hideColor: true);
+                        }
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Column(
@@ -211,7 +217,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                                         ),
                                       ),
                                     );
-                                  }).toList()
+                                  }),
                                 ],
                                 onChanged: (value) {
                                   if (value?.id == -1) {
