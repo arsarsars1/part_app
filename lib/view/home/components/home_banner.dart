@@ -221,18 +221,22 @@ class _HomeBannerState extends State<HomeBanner> {
   }
 
   void startTimer() {
-    timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-      if (!_isUserHoldingPage) {
-        if (currentPage < scrollLimit) {
-          currentPage++;
-        } else {
-          currentPage = 0;
+    if (context.mounted) {
+      timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+        if (!_isUserHoldingPage) {
+          if (currentPage < scrollLimit) {
+            currentPage++;
+          } else {
+            currentPage = 0;
+          }
+          if (bannerPageController.hasClients) {
+            bannerPageController.animateToPage(currentPage,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeInOut);
+          }
         }
-        bannerPageController.animateToPage(currentPage,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeInOut);
-      }
-    });
+      });
+    }
   }
 
   void stopTimer() {
