@@ -79,7 +79,7 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
                   if (state is UpdatedTrainerStudentBatch) {
                     Alert(context)
                         .show(message: 'Student Updated Successfully.');
-                    doSearch();
+                    doSearch(clean: true);
                   } else if (state is UpdatedBatch) {
                     Alert(context).show(message: 'Batch Updated Successfully.');
                   } else if (state is UpdateBatchFailed) {
@@ -408,9 +408,8 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
                                     var trainerList =
                                         value.map((e) => e?.id).toList();
                                     if (value.isEmpty) {
-                                      BatchRequest request = const BatchRequest(
-                                        trainers: "",
-                                      );
+                                      BatchRequest request =
+                                          const BatchRequest(trainers: "");
                                       context
                                           .read<BatchCubit>()
                                           .updateBatchForTrainer(
@@ -445,6 +444,7 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
                                                       .id ??
                                                   0,
                                               request);
+                                      Navigator.of(context).pop();
                                     }
                                   },
                                 )

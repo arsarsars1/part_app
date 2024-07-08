@@ -34,6 +34,7 @@ class _AddStudentState extends State<AddStudent> {
   String? address;
 
   bool whatsappSelected = false;
+  bool isValueChanged = false;
 
   TextEditingController dobController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -45,7 +46,7 @@ class _AddStudentState extends State<AddStudent> {
   Widget build(BuildContext context) {
     final FlutterContactPicker contactPicker = FlutterContactPicker();
     return Scaffold(
-      appBar: const CommonBar(title: 'Add New Student'),
+      appBar: CommonBar(title: 'Add New Student', result: isValueChanged),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -320,6 +321,7 @@ class _AddStudentState extends State<AddStudent> {
                           isParent: selected == 'parent' ? 1 : 0,
                           parentName: parentName,
                         );
+                        setState(() => isValueChanged = true);
 
                         cubit.setStudent(request);
                         cubit.clearBatches();

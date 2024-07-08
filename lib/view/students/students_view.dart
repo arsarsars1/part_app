@@ -39,12 +39,7 @@ class _StudentsViewState extends State<StudentsView> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<StudentCubit>().clean();
       context.read<BranchCubit>().getBranches();
-      context.read<StudentCubit>().getStudents(
-            batchId: batch?.id,
-            searchQuery: query,
-            activeStatus: activeStatus,
-            clean: true,
-          );
+      doSearch(true);
     });
   }
 
@@ -53,9 +48,7 @@ class _StudentsViewState extends State<StudentsView> {
     var branchCubit = context.read<BranchCubit>();
     return Scaffold(
       key: scaffoldKey,
-      appBar: const CommonBar(
-        title: 'Students List',
-      ),
+      appBar: const CommonBar(title: 'Students List'),
       body: BlocBuilder<StudentCubit, StudentState>(
         builder: (context, state) {
           if (state is CreatedStudent || state is UpdatedStudent) {
@@ -92,7 +85,12 @@ class _StudentsViewState extends State<StudentsView> {
                           child: Button(
                             height: UIConstants.buttonHeight,
                             onTap: () =>
-                                Navigator.pushNamed(context, AddStudent.route),
+                                Navigator.pushNamed(context, AddStudent.route)
+                                    .then((value) {
+                              if (value != null && value == true) {
+                                doSearch(true);
+                              }
+                            }),
                             title: 'Add New Student',
                           ),
                         ),

@@ -57,30 +57,12 @@ class _FeesDetailsViewState extends State<TrainerAppTrainerSalarySlips> {
       listener: (context, state) {
         if (state is AddedSalary) {
           Alert(context).show(message: state.message);
-          trainerCubit.getSalaryDetailsForTrainer(
-            trainerId: authCubit
-                    ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
-                0,
-            month: month,
-            year: year,
-            clean: true,
-            trainerName: authCubit
-                ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].name,
-          );
+          doSearch(true);
         } else if (state is AddSalaryFailed) {
           Alert(context).show(message: state.message);
         } else if (state is ClosedSalary) {
           Alert(context).show(message: state.message);
-          trainerCubit.getSalaryDetailsForTrainer(
-            trainerId: authCubit
-                    ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
-                0,
-            month: month,
-            year: year,
-            clean: true,
-            trainerName: authCubit
-                ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].name,
-          );
+          doSearch(true);
         } else if (state is CloseSalaryFailed) {
           Alert(context).show(message: state.message);
         }
@@ -88,9 +70,7 @@ class _FeesDetailsViewState extends State<TrainerAppTrainerSalarySlips> {
       builder: (context, state) {
         return Scaffold(
           key: scaffoldKey,
-          appBar: const CommonBar(
-            title: 'Salary Details',
-          ),
+          appBar: const CommonBar(title: 'Salary Details'),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -145,49 +125,43 @@ class _FeesDetailsViewState extends State<TrainerAppTrainerSalarySlips> {
                     const SizedBox(
                       height: 10,
                     ),
-                    if (state is FetchingTrainerSalary && !state.pagination)
+                    if (state is FetchingTrainerSalary && !state.pagination ||
+                        state is AddingSalary ||
+                        state is ClosingSalary)
                       Padding(
                         padding: EdgeInsets.only(top: 15.h),
-                        child: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                    if (state is AddingSalary || state is ClosingSalary)
-                      Padding(
-                        padding: EdgeInsets.only(top: 15.h),
-                        child: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                    trainerCubit.salaryInvoice.isEmpty
-                        ? Padding(
-                            padding: const EdgeInsets.all(64),
-                            child: Center(
-                              child: Text(
-                                state is TrainerSalaryFetched
-                                    ? 'Sorry, No matching results found'
-                                    : 'Select a date to list the slips.',
+                        child: const LoadingView(hideColor: true),
+                      )
+                    else
+                      trainerCubit.salaryInvoice.isEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.all(64),
+                              child: Center(
+                                child: Text(
+                                  state is TrainerSalaryFetched
+                                      ? 'Sorry, No matching results found'
+                                      : 'Select a date to list the slips.',
+                                ),
                               ),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: trainerCubit.salaryInvoice.length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                Data studentInvoice =
+                                    trainerCubit.salaryInvoice[index];
+                                return TrainerAppSalaryListItem(
+                                  salary: studentInvoice,
+                                  onTap: () async {
+                                    trainerCubit.slipDetails = studentInvoice;
+                                    await Navigator.pushNamed(
+                                        context, AddOrEditSalary.route);
+                                    doSearch(true);
+                                  },
+                                );
+                              },
                             ),
-                          )
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: trainerCubit.salaryInvoice.length,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              Data studentInvoice =
-                                  trainerCubit.salaryInvoice[index];
-                              return TrainerAppSalaryListItem(
-                                salary: studentInvoice,
-                                onTap: () async {
-                                  trainerCubit.slipDetails = studentInvoice;
-                                  await Navigator.pushNamed(
-                                      context, AddOrEditSalary.route);
-                                  doSearch(true);
-                                },
-                              );
-                            },
-                          ),
                     if (state is FetchingTrainerSalary && state.pagination)
                       const Center(
                         child: Text('Fetching more items ..'),

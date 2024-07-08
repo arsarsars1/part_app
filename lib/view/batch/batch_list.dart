@@ -19,22 +19,15 @@ class BatchesPage extends StatefulWidget {
 
 class _BatchesPageState extends State<BatchesPage>
     with SingleTickerProviderStateMixin {
+  ScrollController scrollController = ScrollController();
   final GlobalKey _widgetKey = GlobalKey();
-  final GlobalKey _loadingKey = GlobalKey();
   int? branchId;
   String? query;
   String status = 'ongoing';
-  double _height = 0;
-  double _loadingHeight = 0;
-
-  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    // initial call to show the batches
-    _getSize();
-    _getLoadingViewSize();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       BranchCubit branchCubit = context.read<BranchCubit>();
       branchCubit.clean();
@@ -63,41 +56,14 @@ class _BatchesPageState extends State<BatchesPage>
     });
   }
 
-  void _getSize() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final RenderBox? renderBox =
-          _widgetKey.currentContext?.findRenderObject() as RenderBox?;
-      final size = renderBox?.size;
-      setState(() => _height = size?.height ?? 0);
-    });
-  }
-
-  void _getLoadingViewSize() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final RenderBox? renderBox =
-          _loadingKey.currentContext?.findRenderObject() as RenderBox?;
-      final size = renderBox?.size;
-      setState(() => _loadingHeight = size?.height ?? 0);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<BatchCubit>();
-    var size = MediaQuery.of(context).size;
-    double emptyHeight = size.height - _height;
-    EdgeInsets padding = MediaQuery.of(context).padding;
-
-    double totalVerticalPadding = padding.top + padding.bottom;
-    double totalHorizontalPadding = padding.left + padding.right;
-    double totalPadding = totalVerticalPadding + totalHorizontalPadding;
 
     return Scaffold(
-      appBar: const CommonBar(
-        title: 'Batches',
-      ),
+      key: _widgetKey,
+      appBar: const CommonBar(title: 'Batches'),
       body: SafeArea(
-        key: _widgetKey,
         child: ListView(
           controller: scrollController,
           children: [
@@ -163,10 +129,7 @@ class _BatchesPageState extends State<BatchesPage>
             ),
             BlocBuilder<BranchCubit, BranchState>(builder: (context, state) {
               if (state is BranchesLoading) {
-                return SizedBox(
-                  height: emptyHeight + kToolbarHeight + totalPadding,
-                  child: const LoadingView(hideColor: true),
-                );
+                return const LoadingView(hideColor: true);
               }
               return branchId != null
                   ? Column(
@@ -175,8 +138,6 @@ class _BatchesPageState extends State<BatchesPage>
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: TabButton(
                             onChange: (String value) {
-                              _getSize();
-                              _getLoadingViewSize();
                               if (value == 'Ongoing Batches') {
                                 status = 'ongoing';
                                 cubit.tempStatus = status;
@@ -219,26 +180,16 @@ class _BatchesPageState extends State<BatchesPage>
                               );
                             }
                             if (state is FetchingBatches) {
-                              return SizedBox(
-                                height:
-                                    emptyHeight + kToolbarHeight + totalPadding,
-                                child: const LoadingView(
-                                  hideColor: true,
-                                ),
+                              return const LoadingView(
+                                hideColor: true,
                               );
                             }
                             if (cubit.batches.isEmpty) {
-                              return SizedBox(
-                                height: emptyHeight +
-                                    kToolbarHeight +
-                                    totalPadding +
-                                    _loadingHeight,
-                                child: Center(
-                                  child: Text(
-                                    branchId == null
-                                        ? 'Add Batch to Get Started'
-                                        : 'Sorry, No Matching Results Found.',
-                                  ),
+                              return Center(
+                                child: Text(
+                                  branchId == null
+                                      ? 'Add Batch to Get Started'
+                                      : 'Sorry, No Matching Results Found.',
                                 ),
                               );
                             }

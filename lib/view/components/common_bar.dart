@@ -8,6 +8,7 @@ class CommonBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showLogo;
   final bool enableBack;
+  final dynamic result;
   final VoidCallback? onPressed;
 
   final List<Widget> actions;
@@ -18,6 +19,7 @@ class CommonBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.enableBack = false,
     this.onPressed,
+    this.result,
     this.actions = const [],
   });
 
@@ -34,7 +36,7 @@ class CommonBar extends StatelessWidget implements PreferredSizeWidget {
                 child: IconButton(
                   onPressed: onPressed ??
                       () {
-                        Navigator.pop(context);
+                        Navigator.pop(context, result);
                       },
                   icon: SvgPicture.asset(
                     Assets.back,

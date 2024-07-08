@@ -24,6 +24,8 @@ class _StudentPickerState extends State<StudentPicker> {
   List<Contact>? filteredData = [];
   bool isTrainer = false;
   late BatchCubit cubit;
+  bool isValueChanged = false;
+
   @override
   void initState() {
     super.initState();
@@ -84,8 +86,8 @@ class _StudentPickerState extends State<StudentPicker> {
       builder: (context, state) {
         return Scaffold(
           appBar: CommonBar(
-            title: 'Select Students ( ${selectedContacts?.length} selected )',
-          ),
+              title: 'Select Students ( ${selectedContacts?.length} selected )',
+              result: isValueChanged),
           bottomNavigationBar: isLoading
               ? const SizedBox.shrink()
               : Padding(
@@ -94,6 +96,7 @@ class _StudentPickerState extends State<StudentPicker> {
                   child: Button(
                     onTap: () {
                       if (cubit.isFromBatchDetail) {
+                        setState(() => isValueChanged = true);
                         selectedContacts?.forEach((element) {
                           cubit.addContact(element);
                         });

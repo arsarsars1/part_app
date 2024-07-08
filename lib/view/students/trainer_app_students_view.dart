@@ -43,15 +43,7 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                     ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
                 0,
           );
-      context.read<StudentCubit>().getStudentsForTrainer(
-            trainerId: authCubit
-                    ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
-                0,
-            batchId: batch?.id,
-            searchQuery: query,
-            activeStatus: activeStatus,
-            clean: true,
-          );
+      doSearch(true);
     });
   }
 
@@ -67,6 +59,10 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
         builder: (context, state) {
           if (state is CreatedStudent || state is UpdatedStudent) {
             doSearch(true);
+          }
+
+          if (state is FetchingStudents) {
+            return const LoadingView(hideColor: true);
           }
           var cubit = context.read<StudentCubit>();
           return NotificationListener<ScrollNotification>(
@@ -94,7 +90,12 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                           child: Button(
                             height: UIConstants.buttonHeight,
                             onTap: () => Navigator.pushNamed(
-                                context, TrainerAppAddStudent.route),
+                                    context, TrainerAppAddStudent.route)
+                                .then((value) {
+                              if (value != null && value == true) {
+                                doSearch(true);
+                              }
+                            }),
                             title: 'Add New Student',
                           ),
                         ),

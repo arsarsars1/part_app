@@ -101,9 +101,7 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                   branchId: widget.branchId!,
                   selectedTrainers: trainers,
                   onSave: (List<Trainer?> value) {
-                    widget.selectedTrainers(
-                      value,
-                    );
+                    widget.selectedTrainers(value);
 
                     // setState(() {
                     //   widget.trainers = value;

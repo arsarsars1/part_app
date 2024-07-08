@@ -415,6 +415,7 @@ class BatchCubit extends Cubit<BatchState> {
     bool branchSearch = false,
   }) async {
     if (clean) {
+      reset();
       page = 1;
       nextPageUrl = '';
       _batches.clear();
