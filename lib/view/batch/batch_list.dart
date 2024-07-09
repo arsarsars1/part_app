@@ -206,6 +206,7 @@ class _BatchesPageState extends State<BatchesPage>
                                     context
                                         .read<BatchCubit>()
                                         .getBatch(batchId: '${batch.id}');
+                                    context.read<StudentCubit>().clean();
                                     context
                                         .read<BranchCubit>()
                                         .getBranchTrainers(

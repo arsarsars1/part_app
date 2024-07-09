@@ -417,7 +417,6 @@ class _BatchDetailsState extends State<BatchDetails>
                             onChange: (bool value) async {
                               isActive = value;
                               await doSearch(value);
-                              _getSize();
                             },
                           ),
                         ],
