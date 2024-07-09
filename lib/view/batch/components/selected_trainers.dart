@@ -3,6 +3,7 @@ import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/components/cached_image.dart';
+import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/trainer/trainer_picker.dart';
 
 class SelectedTrainers extends StatefulWidget {
@@ -33,53 +34,63 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
     return Wrap(
       alignment: WrapAlignment.start,
       children: [
-        ...?widget.trainers?.map(
-          (e) {
-            var detail = e.trainerDetail?[0] ?? e;
-            return Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(
-                    right: 16,
-                    bottom: 8,
-                    left: 16,
-                    top: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: AppColors.grey700,
-                      width: 2,
+        if (widget.trainers != null && widget.trainers!.isEmpty)
+          Text(
+            'No trainer allocated.',
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 14.sp,
+              color: AppColors.primaryColor,
+            ),
+          )
+        else
+          ...?widget.trainers?.map(
+            (e) {
+              var detail = e.trainerDetail?[0] ?? e;
+              return Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(
+                      right: 16,
+                      bottom: 8,
+                      left: 16,
+                      top: 8,
                     ),
-                    shape: BoxShape.circle,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: AppColors.grey700,
+                        width: 2,
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                    width: width,
+                    height: width,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(45),
+                      child: CachedImage(
+                        detail.profilePic != ""
+                            ? '${F.baseUrl}'
+                                '/admin/images/trainer/'
+                                '${detail.id}/${detail.profilePic}'
+                            : '',
+                      ).image(),
+                    ),
                   ),
-                  width: width,
-                  height: width,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(45),
-                    child: CachedImage(
-                      detail.profilePic != ""
-                          ? '${F.baseUrl}'
-                              '/admin/images/trainer/'
-                              '${detail.id}/${detail.profilePic}'
-                          : '',
-                    ).image(),
+                  const SizedBox(
+                    height: 4,
                   ),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                SizedBox(
-                  width: width,
-                  child: Text(
-                    '${detail.name}',
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
+                  SizedBox(
+                    width: width,
+                    child: Text(
+                      '${detail.name}',
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                    ),
                   ),
-                ),
-              ],
-            );
-          },
-        ),
+                ],
+              );
+            },
+          ),
         if (widget.showAddButton)
           GestureDetector(
             onTap: () {
