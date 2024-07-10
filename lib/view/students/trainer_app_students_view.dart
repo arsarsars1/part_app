@@ -52,9 +52,7 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
     var branchCubit = context.read<BranchCubit>();
     return Scaffold(
       key: scaffoldKey,
-      appBar: const CommonBar(
-        title: 'Students List',
-      ),
+      appBar: const CommonBar(title: 'Students List'),
       body: BlocBuilder<StudentCubit, StudentState>(
         builder: (context, state) {
           if (state is CreatedStudent || state is UpdatedStudent) {

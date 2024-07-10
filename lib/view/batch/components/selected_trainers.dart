@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
-import 'package:part_app/view/components/cached_image.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/trainer/trainer_picker.dart';
 
@@ -67,13 +66,13 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
                     height: width,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(45),
-                      child: CachedImage(
-                        detail.profilePic != ""
+                      child: UserImage(
+                        profilePic: detail.profilePic != ""
                             ? '${F.baseUrl}'
                                 '/admin/images/trainer/'
-                                '${detail.id}/${detail.profilePic}'
+                                '${detail.profilePic?.replaceAll(".jpg", "")}/${detail.profilePic}'
                             : '',
-                      ).image(),
+                      ),
                     ),
                   ),
                   const SizedBox(
