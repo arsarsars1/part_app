@@ -6,6 +6,7 @@ class FeeReminderButton extends StatelessWidget {
   final VoidCallback onTap;
   final Color? color;
   final double? margin;
+  final double? height;
   final int? count;
   final bool disabled;
   final EdgeInsets? padding;
@@ -16,6 +17,7 @@ class FeeReminderButton extends StatelessWidget {
     this.disabled = false,
     this.color,
     this.margin,
+    this.height,
     this.count,
     this.padding,
   });
@@ -25,7 +27,7 @@ class FeeReminderButton extends StatelessWidget {
     return GestureDetector(
       onTap: (disabled) ? null : onTap,
       child: Container(
-        height: UIConstants.buttonHeight,
+        height: height ?? UIConstants.buttonHeight,
         decoration: BoxDecoration(
           color: (disabled)
               ? AppColors.primaryColor.withOpacity(.35)

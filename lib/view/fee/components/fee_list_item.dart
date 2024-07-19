@@ -606,6 +606,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                     height: 0.h,
                                   ),
                             FeeReminderButton(
+                              height: 30.0.h,
                               title: 'Send Reminder',
                               onTap: widget.student.paymentStatus == 'paid'
                                   ? () {}
@@ -641,6 +642,7 @@ class _FeeListItemState extends State<FeeListItem> {
                               height: 20,
                             ),
                             LargeButton(
+                              height: 30.0.h,
                               title: 'Add Or Edit Fees',
                               onTap: widget.onTap,
                               color: AppColors.defaultBlue,
@@ -654,6 +656,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                 if (widget.student.paymentStatus != "paid")
                                   if (widget.student.writtenOffStatus != 1) ...[
                                     LargeButton(
+                                      height: 30.0.h,
                                       title: 'Write Off',
                                       onTap: () {
                                         var formKey1 = GlobalKey<FormState>();
@@ -707,6 +710,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                     ),
                                   ],
                                 LargeButton(
+                                  height: 30.0.h,
                                   title: 'Other Payments',
                                   onTap: () {
                                     Alert(context)
@@ -810,6 +814,7 @@ class _FeeListItemState extends State<FeeListItem> {
                                 ],
                               ),
                               FeeReminderButton(
+                                height: 30.0.h,
                                 title: '',
                                 onTap: () {},
                                 margin: 0,

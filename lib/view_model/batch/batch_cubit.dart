@@ -278,9 +278,8 @@ class BatchCubit extends Cubit<BatchState> {
         _batchModel?.id,
       );
       if (response?.status == 1) {
-        await getBatches();
-        emit(UpdatingBatch());
-        await getBatch(batchId: '${_batchModel?.id}');
+        await getBatches(doEmit: false);
+        await getBatch(batchId: '${_batchModel?.id}', doEmit: false);
         emit(UpdatedBatch());
       } else {
         emit(UpdateBatchFailed(response?.message ?? 'Failed to update batch.'));
@@ -332,9 +331,11 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
-  Future getBatches() async {
+  Future getBatches({bool doEmit = true}) async {
     _batches.clear();
-    emit(FetchingBatches(pagination: false));
+    if (doEmit) {
+      emit(FetchingBatches(pagination: false));
+    }
     BatchResponse? response = await _batchService.getBatches();
     if (response?.status == 1) {
       _batches = response?.batches?.data
@@ -342,7 +343,9 @@ class BatchCubit extends Cubit<BatchState> {
               .map((e) => BatchModel.fromEntity(e))
               .toList() ??
           [];
-      emit(BatchesFetched());
+      if (doEmit) {
+        emit(BatchesFetched());
+      }
     }
   }
 
@@ -681,8 +684,10 @@ class BatchCubit extends Cubit<BatchState> {
     emit(BatchesFetched());
   }
 
-  Future getBatch({required String batchId}) async {
-    emit(FetchingBatch());
+  Future getBatch({required String batchId, bool doEmit = true}) async {
+    if (doEmit) {
+      emit(FetchingBatch());
+    }
     BatchResponse? response = await _batchService.getBatch(id: batchId);
     if (response?.status == 1 && response?.batch != null) {
       _batch = response?.batch;
@@ -713,7 +718,9 @@ class BatchCubit extends Cubit<BatchState> {
       if (items != null) {
         _selectedTrainers.addAll(items);
       }
-      emit(FetchedBatch());
+      if (doEmit) {
+        emit(FetchedBatch());
+      }
     } else {
       emit(FetchBatchFailed('Failed to fetch batch details.'));
     }
