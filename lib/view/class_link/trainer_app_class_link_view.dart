@@ -50,7 +50,7 @@ class _TrainerAppClassLinkViewState extends State<TrainerAppClassLinkView> {
                 0,
       );
       branchId = branchCubit.firstBranch?.id;
-      batchCubit.getBatchesByStatusForTrainer(
+      await batchCubit.getBatchesByStatusForTrainer(
         trainerId:
             authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
                 0,
@@ -59,6 +59,7 @@ class _TrainerAppClassLinkViewState extends State<TrainerAppClassLinkView> {
         branchSearch: false,
         status: 'ongoing',
       );
+      setState(() {});
     });
     super.initState();
   }

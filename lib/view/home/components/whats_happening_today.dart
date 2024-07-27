@@ -122,7 +122,15 @@ class WhatsHappeningToday extends StatelessWidget {
                                         classDetails?.classLink != null
                                             ? InkWell(
                                                 child: Text(
-                                                    '${classDetails?.classLink}'),
+                                                  '${classDetails?.classLink}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge
+                                                      ?.copyWith(
+                                                        color: AppColors
+                                                            .defaultBlue,
+                                                      ),
+                                                ),
                                                 onTap: () => launchUrl(
                                                   Uri.parse(
                                                       '${classDetails?.classLink}'),
