@@ -377,7 +377,14 @@ class StudentCubit extends Cubit<StudentState> {
         var details = student.studentDetail;
         if (details != null) {
           for (var details in details) {
-            var newStudent = StudentModel.fromEntity(student, details);
+            StudentModel newStudent;
+            if (activeStatus == null) {
+              newStudent = StudentModel.fromEntity(student, details);
+            } else {
+              newStudent =
+                  StudentModel.fromEntity1(student, details, batchId ?? 0);
+            }
+
             tempStudents.add(newStudent);
           }
         }
