@@ -7,6 +7,8 @@ import 'package:part_app/view_model/cubits.dart';
 class BatchPicker extends StatefulWidget {
   final String status;
   final int branchId;
+  final int? trainerId;
+  final bool isTrainer;
   final ValueChanged<BatchModel> onSelect;
 
   final bool branchSearch;
@@ -17,6 +19,8 @@ class BatchPicker extends StatefulWidget {
     required this.branchId,
     required this.onSelect,
     this.branchSearch = false,
+    this.isTrainer = false,
+    this.trainerId,
   });
 
   @override
@@ -34,13 +38,28 @@ class _BatchPickerState extends State<BatchPicker> {
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        context.read<BatchCubit>().getBatchesByStatus(
-              status: widget.status,
-              branchId: widget.branchId,
-              branchSearch: widget.branchSearch,
-            );
+        doSearch(null);
       }
     });
+  }
+
+  doSearch(String? search) {
+    if (widget.isTrainer) {
+      context.read<BatchCubit>().getBatchesByStatusForTrainer(
+          clean: true,
+          trainerId: widget.trainerId,
+          branchId: widget.branchId,
+          branchSearch: false,
+          status: 'ongoing',
+          search: search);
+    } else {
+      context.read<BatchCubit>().getBatchesByStatus(
+          clean: true,
+          status: widget.status,
+          branchId: widget.branchId,
+          branchSearch: widget.branchSearch,
+          search: search);
+    }
   }
 
   @override
@@ -103,12 +122,7 @@ class _BatchPickerState extends State<BatchPicker> {
                   } else {
                     query = value;
                   }
-                  context.read<BatchCubit>().getBatchesByStatus(
-                        branchId: widget.branchId,
-                        status: widget.status,
-                        search: query,
-                        clean: true,
-                      );
+                  doSearch(query);
                 },
                 textInputAction: TextInputAction.search,
               ),

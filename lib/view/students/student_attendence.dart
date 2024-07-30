@@ -5,7 +5,7 @@ import 'package:part_app/model/data_model/attendence_classes_of_month.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/student_attendence_of_month.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/students/widgets/batch_picker.dart';
+import 'package:part_app/view/students/widgets/trainer_admin_student_batch_picker.dart';
 import 'package:part_app/view_model/attendance/attendance_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -29,22 +29,17 @@ class _StudentAttendanceCalenderViewState
   int currentYear = DateTime.now().year;
   int currentMonth = DateTime.now().month;
   StudentCubit? studentCubit;
-  int? branchId;
   DateTime? date;
-  BatchCubit? batchCubit;
   TextEditingController batchController = TextEditingController();
   int noOfWeeks = 0, present = 0, absent = 0;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      var branchCubit = context.read<BranchCubit>();
       AttendanceCubit cubit = context.read<AttendanceCubit>();
-      branchId = branchCubit.firstBranch?.id;
-      await batchCubit?.getBatchesByStatus(
-        branchId: branchId,
+      var studentCubic = context.read<StudentCubit>();
+      await studentCubic.getStudentAdminBatches(
         clean: true,
-        branchSearch: false,
         status: 'ongoing',
       );
       // batchCubit?.batches.forEach((batch) {
@@ -67,8 +62,8 @@ class _StudentAttendanceCalenderViewState
       //         ),
       //       );
       // });
-      batch = batchCubit?.batches[1];
-      batchController.text = batchCubit?.batches[1].name ?? "";
+      batch = studentCubic.batches.first;
+      batchController.text = studentCubic.batches.first.name;
       cubit.id = batch?.id ?? 0;
       await cubit.getAttendenceOfStudentOfMonth(
           studentDetailId: studentCubit?.student?.studentDetail?[0].id,
@@ -121,13 +116,12 @@ class _StudentAttendanceCalenderViewState
 
   @override
   Widget build(BuildContext context) {
-    batchCubit = context.read<BatchCubit>();
     studentCubit = context.read<StudentCubit>();
-    var attendenceCubit = context.read<AttendanceCubit>();
+    var attendanceCubit = context.read<AttendanceCubit>();
     return WillPopScope(
       onWillPop: () async {
-        attendenceCubit.pre = 0;
-        attendenceCubit.abs = 0;
+        attendanceCubit.pre = 0;
+        attendanceCubit.abs = 0;
         Navigator.pop(context);
         return false;
       },
@@ -136,8 +130,8 @@ class _StudentAttendanceCalenderViewState
         appBar: CommonBar(
           title: 'Attendance',
           onPressed: () {
-            attendenceCubit.pre = 0;
-            attendenceCubit.abs = 0;
+            attendanceCubit.pre = 0;
+            attendanceCubit.abs = 0;
             Navigator.pop(context);
           },
         ),
@@ -170,107 +164,80 @@ class _StudentAttendanceCalenderViewState
                   SizedBox(
                     height: 20.h,
                   ),
-                  BranchField(
-                    onSelect: (value) {
-                      setState(() {
-                        branchId = value;
-                        batchController.text = "";
-                      });
-                      batchCubit?.getBatchesByStatus(
-                        branchId: branchId,
-                        clean: true,
-                        branchSearch: false,
-                        status: 'ongoing',
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
                   CommonField(
                     controller: batchController,
                     onTap: () {
-                      if (branchId != null) {
-                        scaffoldKey.currentState?.showBottomSheet(
-                          backgroundColor: Colors.transparent,
-                          (context) => BatchPicker(
-                            branchId: branchId!,
-                            status: 'ongoing',
-                            branchSearch: true,
-                            onSelect: (value) async {
-                              present = 0;
-                              absent = 0;
-                              batch = value;
-                              batchController.text = value.name;
-                              AttendanceCubit cubit =
-                                  context.read<AttendanceCubit>();
-                              cubit.id = value.id;
-                              await cubit.getAttendenceOfStudentOfMonth(
-                                  studentDetailId: studentCubit
-                                      ?.student?.studentDetail?[0].id,
-                                  batchId: cubit.id,
-                                  date: DateTime(currentYear, currentMonth));
-                              await cubit.getClassesOfMonth(
-                                  batchId: cubit.id,
-                                  date: DateTime(currentYear, currentMonth));
-                              _markedDateMap.clear();
-                              setState(() {
-                                noOfWeeks = getWeeksInMonth(
-                                    DateTime(currentYear, currentMonth));
-                                for (ClassDetails element1
-                                    in attendenceCubit.attendenceClasses ??
-                                        []) {
-                                  int flag = 0;
-                                  int conductedClassId = 0;
-                                  for (StudentAttendances element
-                                      in cubit.studentClasses ?? []) {
-                                    if (element1.date ==
-                                            element
-                                                .conductedClass?.conductedOn &&
-                                        element.isPresent == 1) {
-                                      flag = 1;
-                                      conductedClassId = element.id ?? 0;
-                                      break;
-                                    }
-                                  }
-                                  if ((element1.date ?? DateTime.now())
-                                      .isBefore(DateTime.now())) {
-                                    if (flag == 1) {
-                                      present++;
-                                    } else {
-                                      absent++;
-                                    }
-                                    if (element1.conducted == true) {
-                                      _markedDateMap.add(
-                                        element1.date ?? DateTime.now(),
-                                        Event(
-                                          date: element1.date ?? DateTime.now(),
-                                          title: conductedClassId == 0
-                                              ? 'Event 1'
-                                              : '$conductedClassId',
-                                          dot: Container(
-                                            margin: const EdgeInsets.symmetric(
-                                                horizontal: 1.0),
-                                            color: flag == 1
-                                                ? Colors.green
-                                                : Colors.red,
-                                            height: 5.0,
-                                            width: 5.0,
-                                          ),
-                                        ),
-                                      );
-                                    }
+                      scaffoldKey.currentState?.showBottomSheet(
+                        backgroundColor: Colors.transparent,
+                        (context) => TrainerStudentBatchPicker(
+                          status: 'ongoing',
+                          onSelect: (value) async {
+                            present = 0;
+                            absent = 0;
+                            batch = value;
+                            batchController.text = value.name;
+                            AttendanceCubit cubit =
+                                context.read<AttendanceCubit>();
+                            cubit.id = value.id;
+                            await cubit.getAttendenceOfStudentOfMonth(
+                                studentDetailId:
+                                    studentCubit?.student?.studentDetail?[0].id,
+                                batchId: cubit.id,
+                                date: DateTime(currentYear, currentMonth));
+                            await cubit.getClassesOfMonth(
+                                batchId: cubit.id,
+                                date: DateTime(currentYear, currentMonth));
+                            _markedDateMap.clear();
+                            setState(() {
+                              noOfWeeks = getWeeksInMonth(
+                                  DateTime(currentYear, currentMonth));
+                              for (ClassDetails element1
+                                  in attendanceCubit.attendenceClasses ?? []) {
+                                int flag = 0;
+                                int conductedClassId = 0;
+                                for (StudentAttendances element
+                                    in cubit.studentClasses ?? []) {
+                                  if (element1.date ==
+                                          element.conductedClass?.conductedOn &&
+                                      element.isPresent == 1) {
+                                    flag = 1;
+                                    conductedClassId = element.id ?? 0;
+                                    break;
                                   }
                                 }
-                              });
-                            },
-                          ),
-                        );
-                      } else {
-                        Alert(context).show(
-                          message: 'Please select the Branch.',
-                        );
-                      }
+                                if ((element1.date ?? DateTime.now())
+                                    .isBefore(DateTime.now())) {
+                                  if (flag == 1) {
+                                    present++;
+                                  } else {
+                                    absent++;
+                                  }
+                                  if (element1.conducted == true) {
+                                    _markedDateMap.add(
+                                      element1.date ?? DateTime.now(),
+                                      Event(
+                                        date: element1.date ?? DateTime.now(),
+                                        title: conductedClassId == 0
+                                            ? 'Event 1'
+                                            : '$conductedClassId',
+                                        dot: Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 1.0),
+                                          color: flag == 1
+                                              ? Colors.green
+                                              : Colors.red,
+                                          height: 5.0,
+                                          width: 5.0,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }
+                              }
+                            });
+                          },
+                        ),
+                      );
                     },
                     // disabled: isDisable,
                     title: 'Batch *',
@@ -369,7 +336,7 @@ class _StudentAttendanceCalenderViewState
                           noOfWeeks = getWeeksInMonth(
                               DateTime(currentYear, currentMonth));
                           for (ClassDetails element1
-                              in attendenceCubit.attendenceClasses ?? []) {
+                              in attendanceCubit.attendenceClasses ?? []) {
                             int flag = 0;
                             int conductedClassId = 0;
                             for (StudentAttendances element
@@ -436,7 +403,7 @@ class _StudentAttendanceCalenderViewState
                           noOfWeeks = getWeeksInMonth(
                               DateTime(currentYear, currentMonth));
                           for (ClassDetails element1
-                              in attendenceCubit.attendenceClasses ?? []) {
+                              in attendanceCubit.attendenceClasses ?? []) {
                             int flag = 0;
                             int conductedClassId = 0;
                             for (StudentAttendances element
@@ -514,7 +481,7 @@ class _StudentAttendanceCalenderViewState
                                   ),
                             ),
                             Text(
-                              '${attendenceCubit.pre}',
+                              '${attendanceCubit.pre}',
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
@@ -548,7 +515,7 @@ class _StudentAttendanceCalenderViewState
                                   ),
                             ),
                             Text(
-                              '${attendenceCubit.abs}',
+                              '${attendanceCubit.abs}',
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme

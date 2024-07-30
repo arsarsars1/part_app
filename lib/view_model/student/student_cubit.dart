@@ -466,7 +466,72 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
+  Future getStudentAdminBatches({
+    String? searchQuery,
+    String? status,
+    String? search,
+    int? batchId,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(StudentBatchesFetched());
+    } else {
+      emit(StudentBatchesFetched());
+    }
+
+    emit(StudentBatchesFetching());
+    StudentsBatchResponse? response = await _studentService.getStudentBatches(
+      _student?.studentDetail?[0].id ?? tempStudent?.studentDetail?[0].id,
+    );
+
+    if (response?.status == 1) {
+      var items =
+          response?.batches?.map((e) => BatchModel.fromEntity(e)).toList() ??
+              [];
+      _batches = items;
+      emit(StudentBatchesFetched());
+    } else {
+      emit(StudentBatchesFailed('Failed to fetch batches.'));
+    }
+  }
+
   Future getStudentBatchesForTrainer({required int trainerId}) async {
+    emit(StudentBatchesFetching());
+    StudentsBatchResponse? response =
+        await _studentService.getStudentBatchesForTrainer(
+            _student?.studentDetail?[0].id ?? tempStudent?.studentDetail?[0].id,
+            trainerId);
+
+    if (response?.status == 1) {
+      var items =
+          response?.batches?.map((e) => BatchModel.fromEntity(e)).toList() ??
+              [];
+      _batches = items;
+      emit(StudentBatchesFetched());
+    } else {
+      emit(StudentBatchesFailed('Failed to fetch batches.'));
+    }
+  }
+
+  Future getStudentBatchesForTrainers({
+    required int trainerId,
+    String? searchQuery,
+    String? status,
+    int? batchId,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(StudentBatchesFetched());
+    } else {
+      emit(StudentBatchesFetched());
+    }
+
     emit(StudentBatchesFetching());
     StudentsBatchResponse? response =
         await _studentService.getStudentBatchesForTrainer(
