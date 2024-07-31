@@ -23,12 +23,10 @@ class _StudentsViewState extends State<StudentsView> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String? status;
+  DropDownItem? status;
   int? branchId;
   String? query;
   BatchModel? batch;
-  DropDownItem? selectedItem;
-  String? activeStatus;
 
   TextEditingController batchController = TextEditingController();
 
@@ -100,9 +98,9 @@ class _StudentsViewState extends State<StudentsView> {
                       ),
                       BlocBuilder<BranchCubit, BranchState>(
                         builder: (context, state) {
-                          if (state is BranchesLoading) {
-                            return const LoadingView(hideColor: true);
-                          }
+                          // if (state is BranchesLoading) {
+                          //   return const LoadingView(hideColor: true);
+                          // }
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Column(
@@ -119,8 +117,12 @@ class _StudentsViewState extends State<StudentsView> {
                                   dropdownColor: Theme.of(context)
                                       .inputDecorationTheme
                                       .fillColor,
-                                  value: selectedItem ??
-                                      const DropDownItem(id: -1),
+                                  value: branchId != null
+                                      ? branchCubit
+                                          .dropDownBranches()
+                                          .where((test) => test.id == branchId)
+                                          .first
+                                      : const DropDownItem(id: -1),
                                   decoration: const InputDecoration(
                                     contentPadding:
                                         EdgeInsets.symmetric(horizontal: 32),
@@ -165,27 +167,21 @@ class _StudentsViewState extends State<StudentsView> {
                                   onChanged: (value) {
                                     if (value?.id == -1) {
                                       setState(() {
+                                        batch = null;
                                         branchId = null;
-                                        selectedItem = value;
+                                        query = null;
+                                        status = null;
                                         batchController.clear();
                                         doSearch(true);
                                       });
                                     } else {
                                       branchId = value?.id;
-                                      selectedItem = value;
-                                      if (status != null) {
-                                        context
-                                            .read<BatchCubit>()
-                                            .getBatchesByStatus(
-                                              branchId: branchId,
-                                              status: status!,
-                                              clean: true,
-                                            );
-                                      }
+                                      batch = null;
+                                      query = null;
+                                      status = null;
                                       batchController.clear();
-                                      setState(() {
-                                        doSearch(true);
-                                      });
+                                      doSearch(true);
+                                      setState(() {});
                                     }
                                   },
                                 ),
@@ -207,17 +203,26 @@ class _StudentsViewState extends State<StudentsView> {
                           title: 'Batch Status *',
                           hint: 'Select Batch Status',
                           dropDown: true,
+                          defaultItem: status,
                           dropDownItems: DefaultValues().batchStatus,
-                          onChange: (value) {
-                            status = value.id;
+                          onChange: (value) async {
+                            status = value;
 
-                            context.read<BatchCubit>().getBatchesByStatus(
-                                  branchId: branchId,
-                                  status: status!,
-                                  clean: true,
-                                );
                             batchController.clear();
                             batch = null;
+                            cubit.clean();
+                            await context.read<BatchCubit>().getBatchesByStatus(
+                                  branchId: branchId,
+                                  status: status!.id,
+                                  clean: true,
+                                );
+                            if (context.mounted &&
+                                context.read<BatchCubit>().batches.isNotEmpty) {
+                              batch = context.read<BatchCubit>().batches.first;
+                              batchController.text = batch?.name ?? "";
+                              setState(() {});
+                              doSearch(true);
+                            }
                           },
                           validator: (value) {
                             return value == null
@@ -244,7 +249,7 @@ class _StudentsViewState extends State<StudentsView> {
                                 backgroundColor: Colors.transparent,
                                 (context) => BatchPicker(
                                   branchId: branchId!,
-                                  status: status!,
+                                  status: status!.id,
                                   onSelect: (value) {
                                     batch = value;
                                     batchController.text = value.name;
@@ -289,24 +294,20 @@ class _StudentsViewState extends State<StudentsView> {
                         onChange: (value) {
                           if (value.isEmpty) {
                             query = null;
-                            context.read<StudentCubit>().getStudents(
-                                  batchId: batch?.id,
-                                  searchQuery: query,
-                                  activeStatus: activeStatus,
-                                  clean: true,
-                                );
                           } else {
                             query = value;
-                            doSearch(true);
                           }
+                          setState(() {});
+                          doSearch(true);
                         },
                         onSubmit: (value) {
                           if (value.isEmpty) {
                             query = null;
                           } else {
                             query = value;
-                            doSearch(true);
                           }
+                          setState(() {});
+                          doSearch(true);
                         },
                         textInputAction: TextInputAction.search,
                         prefixIcon: const Icon(Icons.search),
@@ -370,11 +371,12 @@ class _StudentsViewState extends State<StudentsView> {
     );
   }
 
-  void doSearch(bool clean) {
-    context.read<StudentCubit>().getStudents(
+  Future<void> doSearch(bool clean) async {
+    await context.read<StudentCubit>().getStudents(
+          branchId: branchId,
           batchId: batch?.id,
           searchQuery: query,
-          activeStatus: activeStatus,
+          activeStatus: status?.title?.toLowerCase(),
           clean: clean,
         );
   }

@@ -273,9 +273,10 @@ class StudentCubit extends Cubit<StudentState> {
   }
 
   Future<void> getStudents({
+    int? batchId,
+    int? branchId,
     String? searchQuery,
     String? activeStatus,
-    int? batchId,
     bool clean = false,
   }) async {
     if (clean) {
@@ -293,6 +294,7 @@ class StudentCubit extends Cubit<StudentState> {
     }
 
     StudentsResponse? response = await _studentService.getStudents(
+      branchId: branchId,
       batchId: batchId,
       searchQuery: searchQuery,
       activeStatus: activeStatus,
@@ -330,6 +332,8 @@ class StudentCubit extends Cubit<StudentState> {
       _studentsMap.addEntries(tempStudents.map((e) => MapEntry(e.detailId, e)));
 
       emit(StudentsFetched(moreItems: nextPageUrl != null));
+    } else {
+      emit(StudentDetailsFailed(''));
     }
   }
 

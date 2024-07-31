@@ -162,18 +162,19 @@ class StudentService {
     String? searchQuery,
     String? activeStatus,
     int? batchId,
+    int? branchId,
     int? pageNo,
   }) async {
     try {
       String path = '';
-
-      if (batchId == null) {
-        path = '/admin/students';
-      } else {
+      if (branchId != null && batchId != null && activeStatus != null) {
+        path = '/admin/batches/$batchId/students/batch-status/$activeStatus';
+      } else if (branchId != null && batchId != null) {
         path = '/admin/batches/$batchId/students';
-      }
-      if (activeStatus != null) {
-        path = '/admin/batches/$batchId/$activeStatus';
+      } else if (branchId != null) {
+        path = '/admin/branches/$branchId/students';
+      } else {
+        path = '/admin/students';
       }
 
       if (searchQuery != null) {
