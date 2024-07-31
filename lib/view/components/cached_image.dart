@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,11 +18,19 @@ class CachedImage {
 
   var token = 'Bearer ${Database().getToken()}';
 
+  String removeVersionParameter(String url) {
+    if (url.endsWith('?v=1')) {
+      return url.substring(0, url.length - 4);
+    }
+    return url;
+  }
+
   DecorationImage getDecorationImage() {
+    String cleanUrl = removeVersionParameter(imageUrl);
     return DecorationImage(
       fit: BoxFit.cover,
       image: NetworkImage(
-        imageUrl,
+        cleanUrl,
         headers: {
           "Authorization": token,
           'MOBILE-APP-TOKEN': ApiClient().token,
@@ -34,10 +40,11 @@ class CachedImage {
   }
 
   CachedNetworkImage image() {
-    log(imageUrl);
+    String cleanUrl = removeVersionParameter(imageUrl);
     return CachedNetworkImage(
       height: height,
-      imageUrl: imageUrl,
+      imageUrl: cleanUrl,
+      cacheKey: cleanUrl,
       fit: fit,
       errorWidget: (context, str, _) {
         return Padding(
@@ -55,10 +62,11 @@ class CachedImage {
   }
 
   CachedNetworkImage userImage() {
-    log(imageUrl);
+    String cleanUrl = removeVersionParameter(imageUrl);
     return CachedNetworkImage(
       height: height,
-      imageUrl: imageUrl,
+      cacheKey: cleanUrl,
+      imageUrl: cleanUrl,
       fit: fit,
       errorWidget: (context, str, _) {
         return Padding(

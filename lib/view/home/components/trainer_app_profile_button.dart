@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,8 +5,8 @@ import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/user_response.dart';
-import 'package:part_app/model/service/api_client.dart';
 import 'package:part_app/view/account/switch_account.dart';
+import 'package:part_app/view/components/cached_image.dart';
 import 'package:part_app/view/home/components/logout.dart';
 import 'package:part_app/view/profile/trainer_app_profile.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
@@ -78,14 +77,10 @@ class _TrainerProfileButtonState extends State<TrainerProfileButton> {
               url =
                   '${F.baseUrl}/trainers/${authCubit.user?.trainerDetail?[authCubit.trainerIndex].id}/images/profile-pic/${state.profilePic}';
             }
-            return CircleAvatar(
-              backgroundImage: CachedNetworkImageProvider(
-                url,
-                headers: {
-                  "Authorization": token,
-                  'MOBILE-APP-TOKEN': ApiClient().token,
-                },
-              ),
+
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: CachedImage(url).image(),
             );
           },
         ),

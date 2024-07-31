@@ -4,9 +4,11 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/enums.dart';
@@ -427,7 +429,8 @@ class AuthCubit extends Cubit<AuthState> {
   Future updateProfilePicForTrainer(
       {BuildContext? context,
       required File profilePic,
-      required int trainerId}) async {
+      required int trainerId,
+      required String url}) async {
     // emit(UpdatingUser());
     MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
     Map<String, dynamic> request = {
@@ -436,17 +439,29 @@ class AuthCubit extends Cubit<AuthState> {
     UserResponse? response =
         await _authService.updateTrainerProfile(request, trainerId);
 
-    if (response?.status == 1 && context != null && context.mounted) {
+    if (response != null &&
+        response.status == 1 &&
+        context != null &&
+        context.mounted) {
+      await clearCache(url);
       Alert(context).show(message: 'User Profile Updated');
-      String url = '';
-      if (response?.user?.trainerDetail?.first.profilePic?.isNotEmpty ??
-          false) {
-        url = response?.user?.trainerDetail?.first.profilePic ?? '';
-      }
-      context.read<ProfileCubit>().emitProfileLoaded(url);
     } else {
       emit(UpdateUserFailed(response?.message ?? 'Failed to update'));
     }
+  }
+
+  Future<void> clearCache(String url) async {
+    await DefaultCacheManager().removeFile(url);
+    await CachedNetworkImage.evictFromCache(url);
+  }
+
+  updateUrl(BuildContext context, User user) {
+    String url = '';
+    if (user.trainerDetail?.first.profilePic?.isNotEmpty ?? false) {
+      url = user.trainerDetail?.first.profilePic ?? '';
+    }
+
+    context.read<ProfileCubit>().emitProfileLoaded(url);
   }
 
   int daysBetween(DateTime from, DateTime to) {

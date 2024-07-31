@@ -9,8 +9,6 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 
-import '../../flavors.dart';
-
 class TrainerAppProfile extends StatefulWidget {
   static const route = '/trainer-app-profile';
 
@@ -109,29 +107,21 @@ class _TrainerAppProfileState extends State<TrainerAppProfile> {
                     if (state is ProfileInitial) {
                       url = cubit.getUserProfilePic();
                     } else if (state is ProfileLoaded) {
-                      url =
-                          '${F.baseUrl}/trainers/${cubit.user?.trainerDetail?[cubit.trainerIndex].id}/images/profile-pic/${state.profilePic}';
-                      url = cubit.user?.trainerDetail?[cubit.trainerIndex]
-                                  .profilePic !=
-                              ""
-                          ? '${F.baseUrl}/trainers/${cubit.user?.trainerDetail?[cubit.trainerIndex].id}/images/profile-pic/${cubit.user?.trainerDetail?[cubit.trainerIndex].profilePic}'
-                          : cubit.user?.trainerDetail?[cubit.trainerIndex]
-                                      .gender ==
-                                  "male"
-                              ? "https://v1.partapp.in/images/avatars/avatar-5.png"
-                              : "https://v1.partapp.in/images/avatars/avatar-1.png";
+                      url = cubit.getUserProfilePic();
                     }
                     return ProfilePicture(
                       imageUrl: url,
                       onEdit: () {},
                       onAvatar: (File value) {},
-                      onChange: (File value) {
-                        cubit.updateProfilePicForTrainer(
+                      onChange: (File value) async {
+                        await cubit.updateProfilePicForTrainer(
+                            url: url,
                             profilePic: value,
                             trainerId: cubit.user
                                     ?.trainerDetail?[cubit.trainerIndex].id ??
                                 0,
                             context: context);
+                        setState(() {});
                       },
                     );
                   },
