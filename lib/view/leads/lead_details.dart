@@ -8,6 +8,7 @@ import 'package:part_app/model/data_model/leads_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/leads/edit_lead.dart';
+import 'package:part_app/view/leads/lead_follow_up_details.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
 
 class LeadDetails extends StatefulWidget {
@@ -121,7 +122,7 @@ class _LeadDetailsState extends State<LeadDetails> {
                   Launchers(
                     phoneNo: '${cubit.lead?.mobileNo}',
                     whatsappNo: '${cubit.lead?.whatsapp}',
-                    email: 'test@test.com',
+                    email: '',
                   ),
                   SizedBox(
                     height: 16.h,
@@ -278,7 +279,10 @@ class _LeadDetailsState extends State<LeadDetails> {
                                         //       '${followup?.followUpDate?.toDDMMMYYY()}, ${followup?.followUpTime?.toAmPM()}',
                                         // ),
                                         GestureDetector(
-                                          onTap: () {},
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                LeadFollowUpDetails.route);
+                                          },
                                           child: Container(
                                             width: 24.w,
                                             height: 24.w,

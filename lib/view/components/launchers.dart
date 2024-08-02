@@ -41,13 +41,14 @@ class Launchers extends StatelessWidget {
                 context: context, text: '', number: whatsappNo);
           },
         ),
-        ActionIcon(
-          asset: Assets.email,
-          color: const Color(0XFFE56667),
-          onTap: () {
-            Launcher.openEmail(context: context, emailAddress: email);
-          },
-        ),
+        if (email.isNotEmpty)
+          ActionIcon(
+            asset: Assets.email,
+            color: const Color(0XFFE56667),
+            onTap: () {
+              Launcher.openEmail(context: context, emailAddress: email);
+            },
+          ),
       ],
     );
   }

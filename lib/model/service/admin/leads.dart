@@ -38,6 +38,18 @@ class LeadsService {
     }
   }
 
+  Future<Common?> updateFollowUp({int? id}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/admin/leads/$id/follow-ups/$id',
+      );
+      Common common = commonFromJson(jsonEncode(response));
+      return common;
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<LeadsResponse?> todayLeadsList() async {
     try {
       var response = await _apiClient.get(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/account/switch_account.dart';
-import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/attendance/attendance_add.dart';
+import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/attendance/attendance_update.dart';
 import 'package:part_app/view/attendance/student_app_attendence_view.dart';
 import 'package:part_app/view/attendance/trainer_app_attendance_add.dart';
@@ -68,6 +68,7 @@ import 'package:part_app/view/leads/add_lead.dart';
 import 'package:part_app/view/leads/all_followups_view.dart';
 import 'package:part_app/view/leads/edit_lead.dart';
 import 'package:part_app/view/leads/lead_details.dart';
+import 'package:part_app/view/leads/lead_follow_up_details.dart';
 import 'package:part_app/view/leads/leads_view.dart';
 import 'package:part_app/view/leads/todays_followup_view.dart';
 import 'package:part_app/view/manager/add_manager.dart';
@@ -611,6 +612,11 @@ class RouteGenerator {
       case LeadDetails.route:
         return MaterialPageRoute(
           builder: (_) => const LeadDetails(),
+          settings: settings,
+        );
+      case LeadFollowUpDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const LeadFollowUpDetails(),
           settings: settings,
         );
       case AttendanceBatchListPage.route:

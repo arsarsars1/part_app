@@ -68,6 +68,23 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
+  Future<void> updateLeadFollowUpList(int? id) async {
+    emit(FetchingLeads());
+    try {
+      _leads.clear();
+      Common? response = await _api.updateFollowUp(id: id);
+      if (response?.status == 0) {
+        print(response?.toJson());
+        // _leads.addAll(response?.leads?.data ?? []);
+        // emit(FetchedLeads());
+      } else {
+        emit(FetchingLeadsFailed('Failed to fetch followup status.'));
+      }
+    } on Exception catch (e) {
+      emit(FetchingLeadsFailed(e.toString()));
+    }
+  }
+
   Future getLeadsList({
     String? searchQuery,
     int? branchId,
