@@ -61,7 +61,7 @@ class _TodayFollowViewState extends State<TodayFollowView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              lead?.name ?? '',
+                              "Name: ${lead?.name ?? 'Not available'}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge
@@ -73,14 +73,14 @@ class _TodayFollowViewState extends State<TodayFollowView> {
                               height: 8,
                             ),
                             Text(
-                              lead?.leadStatus ?? '',
+                              "Lead Status: ${lead?.leadStatus ?? 'Not available'}",
                             ),
                           ],
                         ),
                       ),
                       Expanded(
                         child: Text(
-                          lead?.assignedTo?.name ?? '',
+                          "Assign to: ${lead?.assignedTo?.name ?? 'Not available'}",
                         ),
                       ),
                       const Icon(

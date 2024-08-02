@@ -38,6 +38,20 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
+  void update(LeadRequest request, int? id) async {
+    emit(CreatingLead());
+    try {
+      Common? common = await _api.update(request: request, id: id);
+      if (common?.status == 1) {
+        emit(CreatedLead());
+      } else {
+        emit(CreateLeadFailed(common?.message ?? 'Failed to create Lead.'));
+      }
+    } on Exception catch (e) {
+      emit(CreateLeadFailed(e.toString()));
+    }
+  }
+
   void todayLeadsList() async {
     emit(FetchingLeads());
     try {

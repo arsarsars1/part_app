@@ -70,7 +70,7 @@ class _EditLeadState extends State<EditLead> {
       mobileNumber = selectedLead.mobileNo;
       whatsappNumber = selectedLead.whatsapp;
       email = selectedLead.email;
-      branchId = selectedLead.batchId ?? 0;
+      branchId = selectedLead.batchId;
       comments = selectedLead.followUps.isNotNullAndNotEmpty
           ? selectedLead.followUps![0].followUpComment
           : null;
@@ -406,7 +406,10 @@ class _EditLeadState extends State<EditLead> {
                               assignedToType: r'\App\Models\TrainerDetail',
                             );
 
-                            context.read<LeadsCubit>().create(request);
+                            var cubit = context.read<LeadsCubit>();
+                            var id = cubit.selectedLead!.id!;
+
+                            context.read<LeadsCubit>().update(request, id);
                           }
                         },
                         title: 'Update Lead',

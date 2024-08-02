@@ -25,6 +25,19 @@ class LeadsService {
     }
   }
 
+  Future<Common?> update({required LeadRequest request, int? id}) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/admin/leads/$id',
+        data: request.toJson().removeNulls(),
+      );
+      Common common = commonFromJson(jsonEncode(response));
+      return common;
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<LeadsResponse?> todayLeadsList() async {
     try {
       var response = await _apiClient.get(

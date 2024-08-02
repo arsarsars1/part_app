@@ -374,7 +374,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            singleLead?.name ?? '',
+                                            "Name: ${singleLead?.name ?? 'Not available'}",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge
@@ -388,13 +388,13 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                                             height: 8,
                                           ),
                                           Text(
-                                            singleLead?.leadStatus ?? '',
+                                            "Lead Status: ${singleLead?.leadStatus ?? 'Not available'}",
                                           ),
                                           const SizedBox(
                                             height: 8,
                                           ),
                                           Text(
-                                            'Next Followup on: ${cubit.checkTime(singleLead?.followUps ?? [])?.followUpDate?.toDateString() == DateTime.now().toDateString() ? "Today" : cubit.checkTime(singleLead?.followUps ?? [])?.followUpDate?.toDateString()} @ ${cubit.checkTime(singleLead?.followUps ?? [])?.followUpTime?.toAmPM()}',
+                                            'Next Followup on: ${cubit.checkTime(singleLead?.followUps ?? [])?.followUpDate?.toDateString() != null ? '${cubit.checkTime(singleLead?.followUps ?? [])?.followUpDate?.toDateString() == DateTime.now().toDateString() ? "Today" : cubit.checkTime(singleLead?.followUps ?? [])?.followUpDate?.toDateString()} @ ${cubit.checkTime(singleLead?.followUps ?? [])?.followUpTime?.toAmPM()}' : "Not available"}',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge
