@@ -9,6 +9,10 @@ class CreatingLead extends LeadsState {}
 
 class CreatedLead extends LeadsState {}
 
+class CreatedFollowUpLead extends LeadsState {}
+
+class UpdateFollowUpLead extends LeadsState {}
+
 class CreateLeadFailed extends LeadsState {
   final String message;
 

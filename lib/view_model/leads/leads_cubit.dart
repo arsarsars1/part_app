@@ -20,6 +20,7 @@ class LeadsCubit extends Cubit<LeadsState> {
   String? nextPageUrl = '';
   List<LeadStatus?>? _statuses = [];
   Lead? selectedLead, lead;
+  FollowUp? selectedFollowUp;
 
   List<Lead?> get leads => _leads;
   List<LeadStatus?>? get statuses => _statuses;
@@ -68,15 +69,22 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  Future<void> updateLeadFollowUpList(int? id) async {
+  Future<void> addUpdateLeadFollowUpList(
+      LeadRequest request, int? leadId, int? id) async {
     emit(FetchingLeads());
     try {
       _leads.clear();
-      Common? response = await _api.updateFollowUp(id: id);
-      if (response?.status == 0) {
-        print(response?.toJson());
-        // _leads.addAll(response?.leads?.data ?? []);
-        // emit(FetchedLeads());
+      Common? response =
+          await _api.updateFollowUp(request: request, leadId: leadId, id: id);
+      if (response != null && response.status == 1) {
+        selectedFollowUp = FollowUp.fromJson(response.toJson());
+        if (id != null && selectedLead != null && selectedFollowUp != null) {
+          await getLeadById(id: "${selectedLead?.id}");
+          emit(UpdateFollowUpLead());
+        } else {
+          await getLeadById(id: "${selectedLead?.id}");
+          emit(CreatedFollowUpLead());
+        }
       } else {
         emit(FetchingLeadsFailed('Failed to fetch followup status.'));
       }

@@ -221,7 +221,11 @@ class _LeadDetailsState extends State<LeadDetails> {
                         Center(
                           child: Button(
                             height: 35.h,
-                            onTap: () {},
+                            onTap: () {
+                              cubit.selectedFollowUp = null;
+                              Navigator.pushNamed(
+                                  context, LeadFollowUpDetails.route);
+                            },
                             title: 'Add New FollowUp',
                           ),
                         ),
@@ -280,6 +284,7 @@ class _LeadDetailsState extends State<LeadDetails> {
                                         // ),
                                         GestureDetector(
                                           onTap: () {
+                                            cubit.selectedFollowUp = followup;
                                             Navigator.pushNamed(context,
                                                 LeadFollowUpDetails.route);
                                           },
@@ -316,9 +321,11 @@ class _LeadDetailsState extends State<LeadDetails> {
                                               ?.copyWith(),
                                         ),
                                         Text(
-                                          followup?.followUpStatus == 'Pending'
-                                              ? 'Upcoming'
-                                              : 'Completed',
+                                          followup?.followUpStatus ?? ""
+                                          // == 'Pending'
+                                          // ? 'Upcoming'
+                                          // : 'Completed'
+                                          ,
                                           textAlign: TextAlign.center,
                                           style: Theme.of(context)
                                               .textTheme

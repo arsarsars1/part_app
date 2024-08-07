@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
+import 'package:part_app/model/data_model/leads_response.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
@@ -19,23 +21,16 @@ class LeadFollowUpDetails extends StatefulWidget {
 
 class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
   String? status;
-  String? name;
-  String? age;
-  String? gender;
-  String? mobileNumber;
-  String? whatsappNumber;
-  int? branchId;
   BatchModel? batchId;
   String? date;
   String? time;
-  String? email;
   String? assign;
   String? comments;
   TrainerModel? trainer;
+  FollowUp? followUp;
 
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
-  TextEditingController batchController = TextEditingController();
   TextEditingController trainerController = TextEditingController();
   TextEditingController leadStatusController = TextEditingController();
 
@@ -50,26 +45,21 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
 
   void initializeValues() {
     final cubit = context.read<LeadsCubit>();
-    final selectedLead = cubit.selectedLead;
+    final FollowUp? selectedLead = cubit.selectedFollowUp;
     if (selectedLead != null) {
-      leadStatusController.text = selectedLead.leadStatus ?? "";
+      followUp = selectedLead;
+      leadStatusController.text = selectedLead.followUpStatus ?? "";
       trainerController.text = selectedLead.assignedTo?.name ?? "";
-      timeController.text = selectedLead.followUps.isNotNullAndNotEmpty
-          ? selectedLead.followUps![0].followUpTime?.toAmPM() ?? ""
+      timeController.text = selectedLead.followUpTime!.isNotEmpty
+          ? selectedLead.followUpTime?.toAmPM() ?? ""
           : "";
-      dateController.text = selectedLead.followUps.isNotNullAndNotEmpty
-          ? selectedLead.followUps![0].followUpDate?.toDDMMMYYY() ?? ""
+      time = timeController.text;
+      dateController.text = selectedLead.followUpDate.toString().isNotEmpty
+          ? selectedLead.followUpDate?.toDDMMMYYY() ?? ""
           : "";
-      batchController.text = selectedLead.batch?.batchName ?? "";
-      name = selectedLead.name;
-      age = selectedLead.age;
-      gender = selectedLead.gender;
-      mobileNumber = selectedLead.mobileNo;
-      whatsappNumber = selectedLead.whatsapp;
-      email = selectedLead.email;
-      branchId = selectedLead.batchId;
-      comments = selectedLead.followUps.isNotNullAndNotEmpty
-          ? selectedLead.followUps![0].followUpComment
+      date = dateController.text;
+      comments = selectedLead.followUpComment.toString().isNotEmpty
+          ? selectedLead.followUpComment
           : null;
     }
   }
@@ -83,11 +73,16 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
       ),
       body: BlocListener<LeadsCubit, LeadsState>(
         listener: (context, state) {
-          if (state is CreatedLead) {
+          if (state is CreatedFollowUpLead) {
+            Alert(context).show(message: 'Followup Created');
+            Navigator.pop(context);
+          } else if (state is UpdateFollowUpLead) {
+            Alert(context).show(message: 'Followup Updated');
+            Navigator.pop(context);
+          } else if (state is CreatedLead) {
             Alert(context).show(message: 'Lead Created');
             Navigator.pop(context);
-          }
-          if (state is CreateLeadFailed) {
+          } else if (state is CreateLeadFailed) {
             Alert(context).show(message: "Failed to create lead");
           }
         },
@@ -203,11 +198,11 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
                       onChange: (value) {
                         status = value.title;
                       },
-                      validator: (value) {
-                        return value == null || value.toString().isEmpty
-                            ? 'Please select lead status.'
-                            : null;
-                      },
+                      // validator: (value) {
+                      //   return value == null || value.toString().isEmpty
+                      //       ? 'Please select lead status.'
+                      //       : null;
+                      // },
                     ),
                     const SizedBox(height: 20),
                     Center(
@@ -215,29 +210,27 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
                         onTap: () {
                           if (formKey.currentState!.validate()) {
                             LeadRequest request = LeadRequest(
-                              name: name,
-                              mobileNo: mobileNumber,
-                              email: email,
-                              whatsappNo: whatsappNumber ?? mobileNumber,
-                              gender: gender,
-                              branchId: branchId,
                               batchId: batchId?.id,
                               leadStatus: status,
-                              followUpDate: date,
-                              followUpTime: time,
-                              age: age,
+                              followUpDate: convertDateString(date ?? ""),
+                              followUpTime: convertTo24HourFormat(time ?? ""),
                               followUpComment: comments,
                               assignedToId: trainer?.detailId,
                               assignedToType: r'\App\Models\TrainerDetail',
                             );
 
-                            var cubit = context.read<LeadsCubit>();
-                            var id = cubit.selectedLead!.id!;
-
-                            cubit.updateLeadFollowUpList(id);
+                            if (followUp != null) {
+                              cubit.addUpdateLeadFollowUpList(
+                                  request, followUp!.leadId, followUp!.id);
+                            } else {
+                              cubit.addUpdateLeadFollowUpList(
+                                  request, cubit.selectedLead?.id, null);
+                            }
                           }
                         },
-                        title: 'Update Lead',
+                        title: followUp == null
+                            ? "Add Followup"
+                            : 'Update Followup',
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -249,6 +242,36 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
         ),
       ),
     );
+  }
+
+  String convertDateString(String dateString) {
+    DateTime dateTime;
+
+    try {
+      DateFormat inputFormat1 = DateFormat('d MMMM, yyyy');
+      dateTime = inputFormat1.parse(dateString);
+    } catch (e) {
+      DateFormat inputFormat2 = DateFormat('yyyy-MM-dd');
+      dateTime = inputFormat2.parse(dateString);
+    }
+
+    // Define the output format
+    DateFormat outputFormat = DateFormat('yyyy-MM-dd');
+
+    // Convert the DateTime object to the desired output format
+    String formattedDate = outputFormat.format(dateTime);
+
+    return formattedDate;
+  }
+
+  String convertTo24HourFormat(String time) {
+    final DateFormat inputFormat = DateFormat.jm(); // For 12-hour format
+    final DateFormat outputFormat = DateFormat('HH:mm'); // For 24-hour format
+
+    final DateTime dateTime = inputFormat.parse(time);
+    final String convertedTime = outputFormat.format(dateTime);
+
+    return convertedTime;
   }
 
   // method to get the date for [ followup date ]
