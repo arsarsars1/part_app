@@ -14,7 +14,7 @@ _$StudentAppBatchResponseImpl _$$StudentAppBatchResponseImplFromJson(
           ?.map(
               (e) => StudentAppBatchDetail.fromJson(e as Map<String, dynamic>))
           .toList(),
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$StudentAppBatchResponseImplToJson(
@@ -28,16 +28,16 @@ Map<String, dynamic> _$$StudentAppBatchResponseImplToJson(
 _$StudentAppBatchDetailImpl _$$StudentAppBatchDetailImplFromJson(
         Map<String, dynamic> json) =>
     _$StudentAppBatchDetailImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       batchName: json['batch_name'] as String?,
-      academyId: json['academy_id'] as int?,
-      branchId: json['branch_id'] as int?,
-      courseId: json['course_id'] as int?,
-      subjectId: json['subject_id'] as int?,
+      academyId: (json['academy_id'] as num?)?.toInt(),
+      branchId: (json['branch_id'] as num?)?.toInt(),
+      courseId: (json['course_id'] as num?)?.toInt(),
+      subjectId: (json['subject_id'] as num?)?.toInt(),
       batchStatus: json['batch_status'] as String?,
-      feeAmount: json['fee_amount'] as int?,
-      admissionFees: json['admission_fees'] as int?,
-      isActive: json['is_active'] as int?,
+      feeAmount: (json['fee_amount'] as num?)?.toInt(),
+      admissionFees: (json['admission_fees'] as num?)?.toInt(),
+      isActive: (json['is_active'] as num?)?.toInt(),
       adminDetail: json['admin_detail'] == null
           ? null
           : AdminDetail.fromJson(json['admin_detail'] as Map<String, dynamic>),
@@ -86,16 +86,16 @@ Map<String, dynamic> _$$StudentAppBatchDetailImplToJson(
 
 _$AdminDetailImpl _$$AdminDetailImplFromJson(Map<String, dynamic> json) =>
     _$AdminDetailImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
-      userId: json['user_id'] as int?,
+      userId: (json['user_id'] as num?)?.toInt(),
       profilePic: json['profile_pic'] as String?,
       whatsappNo: json['whatsapp_no'] as String?,
       email: json['email'] as String?,
       gender: json['gender'] as String?,
       dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String),
       doj: json['doj'] == null ? null : DateTime.parse(json['doj'] as String),
-      isActive: json['is_active'] as int?,
+      isActive: (json['is_active'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$AdminDetailImplToJson(_$AdminDetailImpl instance) =>
@@ -115,9 +115,9 @@ Map<String, dynamic> _$$AdminDetailImplToJson(_$AdminDetailImpl instance) =>
 _$StudentAppBatchInDetailImpl _$$StudentAppBatchInDetailImplFromJson(
         Map<String, dynamic> json) =>
     _$StudentAppBatchInDetailImpl(
-      id: json['id'] as int?,
-      batchId: json['batch_id'] as int?,
-      day: json['day'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      batchId: (json['batch_id'] as num?)?.toInt(),
+      day: (json['day'] as num?)?.toInt(),
       startTime: json['start_time'] as String?,
       endTime: json['end_time'] as String?,
     );
@@ -133,9 +133,9 @@ Map<String, dynamic> _$$StudentAppBatchInDetailImplToJson(
     };
 
 _$BranchImpl _$$BranchImplFromJson(Map<String, dynamic> json) => _$BranchImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       branchName: json['branch_name'] as String?,
-      academyId: json['academy_id'] as int?,
+      academyId: (json['academy_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$BranchImplToJson(_$BranchImpl instance) =>
@@ -147,7 +147,7 @@ Map<String, dynamic> _$$BranchImplToJson(_$BranchImpl instance) =>
 
 _$CourseDetailImpl _$$CourseDetailImplFromJson(Map<String, dynamic> json) =>
     _$CourseDetailImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       courseName: json['course_name'] as String?,
     );
 
@@ -160,12 +160,12 @@ Map<String, dynamic> _$$CourseDetailImplToJson(_$CourseDetailImpl instance) =>
 _$StudentDetailImpl _$$StudentDetailImplFromJson(Map<String, dynamic> json) =>
     _$StudentDetailImpl(
       name: json['name'] as String?,
-      feeAmount: json['fee_amount'] as int?,
+      feeAmount: (json['fee_amount'] as num?)?.toInt(),
       feeType: json['fee_type'] as String?,
-      admissionFees: json['admission_fees'] as int?,
-      noOfClasses: json['no_of_classes'] as int?,
-      cycle: json['cycle'] as int?,
-      paymentDueDate: json['payment_due_date'] as int?,
+      admissionFees: (json['admission_fees'] as num?)?.toInt(),
+      noOfClasses: (json['no_of_classes'] as num?)?.toInt(),
+      cycle: (json['cycle'] as num?)?.toInt(),
+      paymentDueDate: (json['payment_due_date'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$StudentDetailImplToJson(_$StudentDetailImpl instance) =>
@@ -181,7 +181,7 @@ Map<String, dynamic> _$$StudentDetailImplToJson(_$StudentDetailImpl instance) =>
 
 _$SubjectImpl _$$SubjectImplFromJson(Map<String, dynamic> json) =>
     _$SubjectImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       subjectName: json['subject_name'] as String?,
     );
 

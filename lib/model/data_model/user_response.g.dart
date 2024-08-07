@@ -13,7 +13,7 @@ _$UserResponseImpl _$$UserResponseImplFromJson(Map<String, dynamic> json) =>
           : User.fromJson(json['user'] as Map<String, dynamic>),
       token: json['token'] as String?,
       message: json['message'] as String?,
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$UserResponseImplToJson(_$UserResponseImpl instance) =>
@@ -25,12 +25,12 @@ Map<String, dynamic> _$$UserResponseImplToJson(_$UserResponseImpl instance) =>
     };
 
 _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String?,
       countryCode: json['country_code'] as String?,
       mobileNo: json['mobile_no'] as String?,
       firebaseToken: json['firebase_token'] as String?,
-      isActive: json['is_active'] as int?,
+      isActive: (json['is_active'] as num?)?.toInt(),
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -66,9 +66,9 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
     };
 
 _$AdminImpl _$$AdminImplFromJson(Map<String, dynamic> json) => _$AdminImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String?,
-      userId: json['user_id'] as int?,
+      userId: (json['user_id'] as num?)?.toInt(),
       whatsappNo: json['whatsapp_no'] as String?,
       email: json['email'] as String?,
       gender: json['gender'] as String?,
@@ -76,7 +76,7 @@ _$AdminImpl _$$AdminImplFromJson(Map<String, dynamic> json) => _$AdminImpl(
       doj: json['doj'] == null ? null : DateTime.parse(json['doj'] as String),
       profilePic: json['profile_pic'] as String?,
       profilePicType: json['profile_pic_type'] as String?,
-      isActive: json['is_active'] as int?,
+      isActive: (json['is_active'] as num?)?.toInt(),
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -108,14 +108,14 @@ Map<String, dynamic> _$$AdminImplToJson(_$AdminImpl instance) =>
 
 _$AcademyImpl _$$AcademyImplFromJson(Map<String, dynamic> json) =>
     _$AcademyImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       academyName: json['academy_name'] as String?,
-      countryId: json['country_id'] as int?,
-      userId: json['user_id'] as int?,
-      stateId: json['state_id'] as int?,
-      districtId: json['district_id'] as int?,
-      academyTypeId: json['academy_type_id'] as int?,
-      membershipId: json['membership_id'] as int?,
+      countryId: (json['country_id'] as num?)?.toInt(),
+      userId: (json['user_id'] as num?)?.toInt(),
+      stateId: (json['state_id'] as num?)?.toInt(),
+      districtId: (json['district_id'] as num?)?.toInt(),
+      academyTypeId: (json['academy_type_id'] as num?)?.toInt(),
+      membershipId: (json['membership_id'] as num?)?.toInt(),
       subscriptionDateTime: json['subscription_date_time'] == null
           ? null
           : DateTime.parse(json['subscription_date_time'] as String),
@@ -125,12 +125,12 @@ _$AcademyImpl _$$AcademyImplFromJson(Map<String, dynamic> json) =>
       validTillDate: json['valid_till_date'] == null
           ? null
           : DateTime.parse(json['valid_till_date'] as String),
-      maxNoOfStudents: json['max_no_of_students'] as int?,
-      maxNoOfBranches: json['max_no_of_branches'] as int?,
-      createdBy: json['created_by'] as int?,
+      maxNoOfStudents: (json['max_no_of_students'] as num?)?.toInt(),
+      maxNoOfBranches: (json['max_no_of_branches'] as num?)?.toInt(),
+      createdBy: (json['created_by'] as num?)?.toInt(),
       updatedBy: json['updated_by'],
       createdFrom: json['created_from'] as String?,
-      isActive: json['is_active'] as int?,
+      isActive: (json['is_active'] as num?)?.toInt(),
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -171,24 +171,24 @@ Map<String, dynamic> _$$AcademyImplToJson(_$AcademyImpl instance) =>
 _$MembershipDetailsImpl _$$MembershipDetailsImplFromJson(
         Map<String, dynamic> json) =>
     _$MembershipDetailsImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       membershipType: json['membership_type'] as String?,
-      countryId: json['country_id'] as int?,
+      countryId: (json['country_id'] as num?)?.toInt(),
       period: json['period'] as String?,
       paymentType: json['payment_type'] as String?,
-      duration: json['duration'] as int?,
-      amount: json['amount'] as int?,
-      maxNoOfStudents: json['max_no_of_students'] as int?,
-      maxNoOfBatches: json['max_no_of_batches'] as int?,
-      maxNoOfBranches: json['max_no_of_branches'] as int?,
-      isDiscounted: json['is_discounted'] as int?,
+      duration: (json['duration'] as num?)?.toInt(),
+      amount: (json['amount'] as num?)?.toInt(),
+      maxNoOfStudents: (json['max_no_of_students'] as num?)?.toInt(),
+      maxNoOfBatches: (json['max_no_of_batches'] as num?)?.toInt(),
+      maxNoOfBranches: (json['max_no_of_branches'] as num?)?.toInt(),
+      isDiscounted: (json['is_discounted'] as num?)?.toInt(),
       discountType: json['discount_type'],
-      discountAmount: json['discount_amount'] as int?,
+      discountAmount: (json['discount_amount'] as num?)?.toInt(),
       discountPercentage: json['discount_percentage'],
-      sgst: json['sgst'] as int?,
-      cgst: json['cgst'] as int?,
-      finalAmount: json['final_amount'] as int?,
-      isActive: json['is_active'] as int?,
+      sgst: (json['sgst'] as num?)?.toInt(),
+      cgst: (json['cgst'] as num?)?.toInt(),
+      finalAmount: (json['final_amount'] as num?)?.toInt(),
+      isActive: (json['is_active'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$MembershipDetailsImplToJson(

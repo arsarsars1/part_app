@@ -11,13 +11,13 @@ _$StudentRequestForStudentImpl _$$StudentRequestForStudentImplFromJson(
     _$StudentRequestForStudentImpl(
       name: json['name'] as String?,
       mobileNo: json['mobile_no'] as String?,
-      countryCode: json['country_code'] as int?,
+      countryCode: (json['country_code'] as num?)?.toInt(),
       gender: json['gender'] as String?,
       dob: json['dob'] as String?,
       whatsappNo: json['whatsapp_no'] as String?,
       email: json['email'] as String?,
       address: json['address'] as String?,
-      isParent: json['is_parent'] as int?,
+      isParent: (json['is_parent'] as num?)?.toInt(),
       parentName: json['parent_name'] as String?,
     );
 

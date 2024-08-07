@@ -8,7 +8,7 @@ part of 'leads_response.dart';
 
 _$LeadsResponseImpl _$$LeadsResponseImplFromJson(Map<String, dynamic> json) =>
     _$LeadsResponseImpl(
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
       leads: json['leads'] == null
           ? null
           : Leads.fromJson(json['leads'] as Map<String, dynamic>),
@@ -21,17 +21,17 @@ Map<String, dynamic> _$$LeadsResponseImplToJson(_$LeadsResponseImpl instance) =>
     };
 
 _$LeadsImpl _$$LeadsImplFromJson(Map<String, dynamic> json) => _$LeadsImpl(
-      currentPage: json['current_page'] as int?,
+      currentPage: (json['current_page'] as num?)?.toInt(),
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => Lead.fromJson(e as Map<String, dynamic>))
           .toList(),
       firstPageUrl: json['first_page_url'] as String?,
-      from: json['from'] as int?,
+      from: (json['from'] as num?)?.toInt(),
       nextPageUrl: json['next_page_url'],
       path: json['path'] as String?,
-      perPage: json['per_page'] as int?,
+      perPage: (json['per_page'] as num?)?.toInt(),
       prevPageUrl: json['prev_page_url'],
-      to: json['to'] as int?,
+      to: (json['to'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$LeadsImplToJson(_$LeadsImpl instance) =>
@@ -48,8 +48,8 @@ Map<String, dynamic> _$$LeadsImplToJson(_$LeadsImpl instance) =>
     };
 
 _$LeadImpl _$$LeadImplFromJson(Map<String, dynamic> json) => _$LeadImpl(
-      id: json['id'] as int?,
-      academyId: json['academy_id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      academyId: (json['academy_id'] as num?)?.toInt(),
       name: json['name'] as String?,
       age: json['age'] as String?,
       gender: json['gender'] as String?,
@@ -57,12 +57,12 @@ _$LeadImpl _$$LeadImplFromJson(Map<String, dynamic> json) => _$LeadImpl(
       countryCode: json['country_code'] as String?,
       mobileNo: json['mobile_no'] as String?,
       whatsapp: json['whatsapp'],
-      branchId: json['branch_id'] as int?,
-      batchId: json['batch_id'] as int?,
+      branchId: (json['branch_id'] as num?)?.toInt(),
+      batchId: (json['batch_id'] as num?)?.toInt(),
       email: json['email'] as String?,
       leadStatus: json['lead_status'] as String?,
       assignedToType: json['assigned_to_type'] as String?,
-      assignedToId: json['assigned_to_id'] as int?,
+      assignedToId: (json['assigned_to_id'] as num?)?.toInt(),
       addedOn: json['added_on'] == null
           ? null
           : DateTime.parse(json['added_on'] as String),
@@ -106,7 +106,7 @@ Map<String, dynamic> _$$LeadImplToJson(_$LeadImpl instance) =>
 
 _$AssignedToImpl _$$AssignedToImplFromJson(Map<String, dynamic> json) =>
     _$AssignedToImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       branches: (json['branches'] as List<dynamic>?)
           ?.map((e) => BranchElement.fromJson(e as Map<String, dynamic>))
@@ -122,17 +122,17 @@ Map<String, dynamic> _$$AssignedToImplToJson(_$AssignedToImpl instance) =>
 
 _$BranchElementImpl _$$BranchElementImplFromJson(Map<String, dynamic> json) =>
     _$BranchElementImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       branchName: json['branch_name'] as String?,
-      academyId: json['academy_id'] as int?,
-      countryId: json['country_id'] as int?,
+      academyId: (json['academy_id'] as num?)?.toInt(),
+      countryId: (json['country_id'] as num?)?.toInt(),
       managerDetailId: json['manager_detail_id'],
-      stateId: json['state_id'] as int?,
-      districtId: json['district_id'] as int?,
+      stateId: (json['state_id'] as num?)?.toInt(),
+      districtId: (json['district_id'] as num?)?.toInt(),
       address: json['address'] as String?,
-      pincode: json['pincode'] as int?,
+      pincode: (json['pincode'] as num?)?.toInt(),
       currency: json['currency'] as String?,
-      isActive: json['is_active'] as int?,
+      isActive: (json['is_active'] as num?)?.toInt(),
       pivot: json['pivot'] == null
           ? null
           : Pivot.fromJson(json['pivot'] as Map<String, dynamic>),
@@ -172,7 +172,7 @@ Map<String, dynamic> _$$BranchElementImplToJson(_$BranchElementImpl instance) =>
 
 _$CountryImpl _$$CountryImplFromJson(Map<String, dynamic> json) =>
     _$CountryImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       currency: json['currency'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
@@ -194,7 +194,7 @@ Map<String, dynamic> _$$CountryImplToJson(_$CountryImpl instance) =>
 
 _$DistrictImpl _$$DistrictImplFromJson(Map<String, dynamic> json) =>
     _$DistrictImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       districtName: json['district_name'] as String?,
     );
 
@@ -205,8 +205,8 @@ Map<String, dynamic> _$$DistrictImplToJson(_$DistrictImpl instance) =>
     };
 
 _$PivotImpl _$$PivotImplFromJson(Map<String, dynamic> json) => _$PivotImpl(
-      trainerDetailId: json['trainer_detail_id'] as int?,
-      branchId: json['branch_id'] as int?,
+      trainerDetailId: (json['trainer_detail_id'] as num?)?.toInt(),
+      branchId: (json['branch_id'] as num?)?.toInt(),
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -225,7 +225,7 @@ Map<String, dynamic> _$$PivotImplToJson(_$PivotImpl instance) =>
 
 _$StateDetailImpl _$$StateDetailImplFromJson(Map<String, dynamic> json) =>
     _$StateDetailImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       stateName: json['state_name'] as String?,
     );
 
@@ -237,7 +237,7 @@ Map<String, dynamic> _$$StateDetailImplToJson(_$StateDetailImpl instance) =>
 
 _$TimezoneImpl _$$TimezoneImplFromJson(Map<String, dynamic> json) =>
     _$TimezoneImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       timezone: json['timezone'] as String?,
     );
 
@@ -248,7 +248,7 @@ Map<String, dynamic> _$$TimezoneImplToJson(_$TimezoneImpl instance) =>
     };
 
 _$BatchImpl _$$BatchImplFromJson(Map<String, dynamic> json) => _$BatchImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       batchName: json['batch_name'] as String?,
     );
 
@@ -260,10 +260,10 @@ Map<String, dynamic> _$$BatchImplToJson(_$BatchImpl instance) =>
 
 _$DatumBranchImpl _$$DatumBranchImplFromJson(Map<String, dynamic> json) =>
     _$DatumBranchImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       branchName: json['branch_name'] as String?,
-      stateId: json['state_id'] as int?,
-      districtId: json['district_id'] as int?,
+      stateId: (json['state_id'] as num?)?.toInt(),
+      districtId: (json['district_id'] as num?)?.toInt(),
       state: json['state'] == null
           ? null
           : StateDetail.fromJson(json['state'] as Map<String, dynamic>),
@@ -286,10 +286,10 @@ Map<String, dynamic> _$$DatumBranchImplToJson(_$DatumBranchImpl instance) =>
 
 _$FollowUpImpl _$$FollowUpImplFromJson(Map<String, dynamic> json) =>
     _$FollowUpImpl(
-      id: json['id'] as int?,
-      leadId: json['lead_id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      leadId: (json['lead_id'] as num?)?.toInt(),
       assignedToType: json['assigned_to_type'] as String?,
-      assignedToId: json['assigned_to_id'] as int?,
+      assignedToId: (json['assigned_to_id'] as num?)?.toInt(),
       followUpDate: json['follow_up_date'] == null
           ? null
           : DateTime.parse(json['follow_up_date'] as String),

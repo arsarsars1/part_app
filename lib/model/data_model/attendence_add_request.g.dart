@@ -28,8 +28,8 @@ Map<String, dynamic> _$$AttendenceAddRequestImplToJson(
 
 _$AttendanceImpl _$$AttendanceImplFromJson(Map<String, dynamic> json) =>
     _$AttendanceImpl(
-      studentDetailId: json['student_detail_id'] as int?,
-      isPresent: json['is_present'] as int?,
+      studentDetailId: (json['student_detail_id'] as num?)?.toInt(),
+      isPresent: (json['is_present'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$AttendanceImplToJson(_$AttendanceImpl instance) =>

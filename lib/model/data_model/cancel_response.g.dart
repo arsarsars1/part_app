@@ -8,7 +8,7 @@ part of 'cancel_response.dart';
 
 _$CancelResponseImpl _$$CancelResponseImplFromJson(Map<String, dynamic> json) =>
     _$CancelResponseImpl(
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
       cancelledClasses: (json['cancelled_classes'] as List<dynamic>?)
           ?.map((e) => CancelledClass.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -23,8 +23,8 @@ Map<String, dynamic> _$$CancelResponseImplToJson(
 
 _$CancelledClassImpl _$$CancelledClassImplFromJson(Map<String, dynamic> json) =>
     _$CancelledClassImpl(
-      id: json['id'] as int?,
-      batchId: json['batch_id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      batchId: (json['batch_id'] as num?)?.toInt(),
       classDate: json['class_date'] == null
           ? null
           : DateTime.parse(json['class_date'] as String),
@@ -32,7 +32,7 @@ _$CancelledClassImpl _$$CancelledClassImplFromJson(Map<String, dynamic> json) =>
       endTime: json['end_time'] as String?,
       reason: json['reason'] as String?,
       cancelledByType: json['cancelled_by_type'] as String?,
-      cancelledById: json['cancelled_by_id'] as int?,
+      cancelledById: (json['cancelled_by_id'] as num?)?.toInt(),
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -62,16 +62,16 @@ Map<String, dynamic> _$$CancelledClassImplToJson(
 
 _$CancelledByImpl _$$CancelledByImplFromJson(Map<String, dynamic> json) =>
     _$CancelledByImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
-      userId: json['user_id'] as int?,
+      userId: (json['user_id'] as num?)?.toInt(),
       whatsappNo: json['whatsapp_no'] as String?,
       email: json['email'] as String?,
       gender: json['gender'] as String?,
       dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String),
       doj: json['doj'] == null ? null : DateTime.parse(json['doj'] as String),
       profilePic: json['profile_pic'] as String?,
-      isActive: json['is_active'] as int?,
+      isActive: (json['is_active'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$CancelledByImplToJson(_$CancelledByImpl instance) =>

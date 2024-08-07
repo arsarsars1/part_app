@@ -9,7 +9,7 @@ part of 'notification_list.dart';
 _$NotificationListImpl _$$NotificationListImplFromJson(
         Map<String, dynamic> json) =>
     _$NotificationListImpl(
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
       notifications: json['notifications'] == null
           ? null
           : Notifications.fromJson(
@@ -25,17 +25,17 @@ Map<String, dynamic> _$$NotificationListImplToJson(
 
 _$NotificationsImpl _$$NotificationsImplFromJson(Map<String, dynamic> json) =>
     _$NotificationsImpl(
-      currentPage: json['current_page'] as int?,
+      currentPage: (json['current_page'] as num?)?.toInt(),
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => NotificationData.fromJson(e as Map<String, dynamic>))
           .toList(),
       firstPageUrl: json['first_page_url'] as String?,
-      from: json['from'] as int?,
+      from: (json['from'] as num?)?.toInt(),
       nextPageUrl: json['next_page_url'] as String?,
       path: json['path'] as String?,
-      perPage: json['per_page'] as int?,
+      perPage: (json['per_page'] as num?)?.toInt(),
       prevPageUrl: json['prev_page_url'],
-      to: json['to'] as int?,
+      to: (json['to'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$NotificationsImplToJson(_$NotificationsImpl instance) =>
@@ -57,10 +57,10 @@ _$NotificationDataImpl _$$NotificationDataImplFromJson(
       id: json['id'] as String?,
       screen: json['screen'] as String?,
       entityType: json['entity_type'] as String?,
-      entityId: json['entity_id'] as int?,
+      entityId: (json['entity_id'] as num?)?.toInt(),
       type: json['type'] as String?,
       notifiableType: json['notifiable_type'] as String?,
-      notifiableId: json['notifiable_id'] as int?,
+      notifiableId: (json['notifiable_id'] as num?)?.toInt(),
       data: json['data'] == null
           ? null
           : Data.fromJson(json['data'] as Map<String, dynamic>),
@@ -98,7 +98,7 @@ _$DataImpl _$$DataImplFromJson(Map<String, dynamic> json) => _$DataImpl(
       message: json['message'] as String?,
       screen: json['screen'] as String?,
       entityType: json['entity_type'] as String?,
-      entityId: json['entity_id'] as int?,
+      entityId: (json['entity_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$DataImplToJson(_$DataImpl instance) =>

@@ -8,8 +8,8 @@ part of 'lead_request.dart';
 
 _$LeadRequestImpl _$$LeadRequestImplFromJson(Map<String, dynamic> json) =>
     _$LeadRequestImpl(
-      branchId: json['branch_id'] as int?,
-      batchId: json['batch_id'] as int?,
+      branchId: (json['branch_id'] as num?)?.toInt(),
+      batchId: (json['batch_id'] as num?)?.toInt(),
       leadStatus: json['lead_status'] as String?,
       name: json['name'] as String?,
       mobileNo: json['mobile_no'] as String?,
@@ -19,7 +19,7 @@ _$LeadRequestImpl _$$LeadRequestImplFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String?,
       followUpDate: json['follow_up_date'] as String?,
       followUpTime: json['follow_up_time'] as String?,
-      assignedToId: json['assigned_to_id'] as int?,
+      assignedToId: (json['assigned_to_id'] as num?)?.toInt(),
       assignedToType: json['assigned_to_type'] as String?,
       followUpComment: json['follow_up_comment'] as String?,
     );

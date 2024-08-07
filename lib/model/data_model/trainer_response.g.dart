@@ -9,7 +9,7 @@ part of 'trainer_response.dart';
 _$TrainerResponseImpl _$$TrainerResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$TrainerResponseImpl(
-      status: json['status'] as int,
+      status: (json['status'] as num).toInt(),
       trainers: json['trainers'] == null
           ? null
           : Datum.fromJson(json['trainers'] as Map<String, dynamic>),
@@ -27,13 +27,13 @@ Map<String, dynamic> _$$TrainerResponseImplToJson(
     };
 
 _$DatumImpl _$$DatumImplFromJson(Map<String, dynamic> json) => _$DatumImpl(
-      currentPage: json['current_page'] as int?,
+      currentPage: (json['current_page'] as num?)?.toInt(),
       data: (json['data'] as List<dynamic>)
           .map((e) => Trainer.fromJson(e as Map<String, dynamic>))
           .toList(),
-      from: json['from'] as int?,
-      perPage: json['per_page'] as int?,
-      to: json['to'] as int?,
+      from: (json['from'] as num?)?.toInt(),
+      perPage: (json['per_page'] as num?)?.toInt(),
+      to: (json['to'] as num?)?.toInt(),
       nextPageUrl: json['next_page_url'] as String?,
     );
 
@@ -49,9 +49,9 @@ Map<String, dynamic> _$$DatumImplToJson(_$DatumImpl instance) =>
 
 _$TrainerImpl _$$TrainerImplFromJson(Map<String, dynamic> json) =>
     _$TrainerImpl(
-      id: json['id'] as int,
-      userId: json['user_id'] as int?,
-      academyId: json['academy_id'] as int?,
+      id: (json['id'] as num).toInt(),
+      userId: (json['user_id'] as num?)?.toInt(),
+      academyId: (json['academy_id'] as num?)?.toInt(),
       gender: json['gender'] as String?,
       dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String),
       doj: json['doj'] == null ? null : DateTime.parse(json['doj'] as String),
@@ -64,12 +64,12 @@ _$TrainerImpl _$$TrainerImplFromJson(Map<String, dynamic> json) =>
       salaryType: json['salary_type'] as String?,
       address: json['address'] as String?,
       expertise: json['expertise'] as String?,
-      salaryDate: json['salary_date'] as int?,
-      salaryAmount: json['salary_amount'] as int?,
+      salaryDate: (json['salary_date'] as num?)?.toInt(),
+      salaryAmount: (json['salary_amount'] as num?)?.toInt(),
       profilePic: json['profile_pic'] as String?,
       profilePicType: json['profile_pic_type'] as String?,
-      trainerDetailId: json['trainer_detail_id'] as int?,
-      isActive: json['is_active'] as int?,
+      trainerDetailId: (json['trainer_detail_id'] as num?)?.toInt(),
+      isActive: (json['is_active'] as num?)?.toInt(),
       user: json['user'] == null
           ? null
           : User.fromJson(json['user'] as Map<String, dynamic>),
@@ -119,12 +119,12 @@ Map<String, dynamic> _$$TrainerImplToJson(_$TrainerImpl instance) =>
 
 _$DocumentImpl _$$DocumentImplFromJson(Map<String, dynamic> json) =>
     _$DocumentImpl(
-      id: json['id'] as int?,
-      documentIndex: json['documentIndex'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      documentIndex: (json['documentIndex'] as num?)?.toInt(),
       image: json['image'] as String?,
       ofType: json['ofType'] as String?,
-      ofId: json['ofId'] as int?,
-      isAvailable: json['isAvailable'] as int?,
+      ofId: (json['ofId'] as num?)?.toInt(),
+      isAvailable: (json['isAvailable'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$DocumentImplToJson(_$DocumentImpl instance) =>

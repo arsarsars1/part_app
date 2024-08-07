@@ -153,6 +153,18 @@ extension NullRemovalExtension on Map<String, dynamic> {
 }
 
 extension ListExtensions<T> on List<T>? {
+  List<T>? updateWhere(bool Function(T) test, T newValue) {
+    if (isNotNullAndNotEmpty) {
+      for (int i = 0; i < this!.length; i++) {
+        if (test(this![i])) {
+          this![i] = newValue;
+          return this;
+        }
+      }
+    }
+    return null;
+  }
+
   bool get isNotNullAndNotEmpty {
     return this != null && this!.isNotEmpty;
   }

@@ -8,7 +8,7 @@ part of 'country.dart';
 
 _$CountryImpl _$$CountryImplFromJson(Map<String, dynamic> json) =>
     _$CountryImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       capital: json['capital'] as String?,
       citizenship: json['citizenship'] as String?,
       countryCode: json['country_code'] as String?,
@@ -16,18 +16,18 @@ _$CountryImpl _$$CountryImplFromJson(Map<String, dynamic> json) =>
       currencyCode: json['currency_code'] as String?,
       currencySubUnit: json['currency_sub_unit'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimals: json['currency_decimals'] as int?,
+      currencyDecimals: (json['currency_decimals'] as num?)?.toInt(),
       fullName: json['full_name'] as String?,
       iso31662: json['iso31662'] as String?,
       iso31663: json['iso31663'] as String?,
       name: json['name'] as String?,
       regionCode: json['region_code'] as String?,
       subRegionCode: json['sub_region_code'] as String?,
-      eea: json['eea'] as int?,
+      eea: (json['eea'] as num?)?.toInt(),
       callingCode: json['calling_code'] as String?,
       flag: json['flag'] as String?,
       timezone: json['timezone'] as String?,
-      isActive: json['is_active'] as int?,
+      isActive: (json['is_active'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$CountryImplToJson(_$CountryImpl instance) =>

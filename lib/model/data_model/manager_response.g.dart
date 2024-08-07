@@ -9,7 +9,7 @@ part of 'manager_response.dart';
 _$ManagerResponseImpl _$$ManagerResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$ManagerResponseImpl(
-      status: json['status'] as int,
+      status: (json['status'] as num).toInt(),
       managers: json['managers'] == null
           ? null
           : Datum.fromJson(json['managers'] as Map<String, dynamic>),
@@ -27,13 +27,13 @@ Map<String, dynamic> _$$ManagerResponseImplToJson(
     };
 
 _$DatumImpl _$$DatumImplFromJson(Map<String, dynamic> json) => _$DatumImpl(
-      currentPage: json['current_page'] as int?,
+      currentPage: (json['current_page'] as num?)?.toInt(),
       data: (json['data'] as List<dynamic>)
           .map((e) => Manager.fromJson(e as Map<String, dynamic>))
           .toList(),
-      from: json['from'] as int?,
-      perPage: json['per_page'] as int?,
-      to: json['to'] as int?,
+      from: (json['from'] as num?)?.toInt(),
+      perPage: (json['per_page'] as num?)?.toInt(),
+      to: (json['to'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$DatumImplToJson(_$DatumImpl instance) =>
@@ -47,9 +47,9 @@ Map<String, dynamic> _$$DatumImplToJson(_$DatumImpl instance) =>
 
 _$ManagerImpl _$$ManagerImplFromJson(Map<String, dynamic> json) =>
     _$ManagerImpl(
-      id: json['id'] as int,
-      userId: json['user_id'] as int?,
-      academyId: json['academy_id'] as int?,
+      id: (json['id'] as num).toInt(),
+      userId: (json['user_id'] as num?)?.toInt(),
+      academyId: (json['academy_id'] as num?)?.toInt(),
       gender: json['gender'] as String?,
       name: json['name'] as String?,
       mobileNo: json['mobile_no'] as String?,
@@ -60,14 +60,14 @@ _$ManagerImpl _$$ManagerImplFromJson(Map<String, dynamic> json) =>
       whatsappNo: json['whatsapp_no'] as String?,
       email: json['email'] as String?,
       salaryType: json['salary_type'] as String?,
-      salaryDate: json['salary_date'] as int?,
-      salaryAmount: json['salary_amount'] as int?,
+      salaryDate: (json['salary_date'] as num?)?.toInt(),
+      salaryAmount: (json['salary_amount'] as num?)?.toInt(),
       profilePic: json['profile_pic'] as String?,
       profilePicType: json['profile_pic_type'] as String?,
       address: json['address'] as String?,
       document_1: json['document_1'] as String?,
       document_2: json['document_2'] as String?,
-      isActive: json['is_active'] as int?,
+      isActive: (json['is_active'] as num?)?.toInt(),
       managerDetail: (json['manager_detail'] as List<dynamic>?)
           ?.map((e) => Manager.fromJson(e as Map<String, dynamic>))
           .toList(),

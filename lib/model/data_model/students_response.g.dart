@@ -9,9 +9,9 @@ part of 'students_response.dart';
 _$StudentsResponseImpl _$$StudentsResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$StudentsResponseImpl(
-      status: json['status'] as int?,
-      activeStudentsCount: json['active_students_count'] as int?,
-      inactiveStudentsCount: json['inactive_students_count'] as int?,
+      status: (json['status'] as num?)?.toInt(),
+      activeStudentsCount: (json['active_students_count'] as num?)?.toInt(),
+      inactiveStudentsCount: (json['inactive_students_count'] as num?)?.toInt(),
       students: json['students'] == null
           ? null
           : Students.fromJson(json['students'] as Map<String, dynamic>),
@@ -28,16 +28,16 @@ Map<String, dynamic> _$$StudentsResponseImplToJson(
 
 _$StudentsImpl _$$StudentsImplFromJson(Map<String, dynamic> json) =>
     _$StudentsImpl(
-      currentPage: json['current_page'] as int?,
+      currentPage: (json['current_page'] as num?)?.toInt(),
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => Student.fromJson(e as Map<String, dynamic>))
           .toList(),
       firstPageUrl: json['first_page_url'] as String?,
       nextPageUrl: json['next_page_url'] as String?,
-      from: json['from'] as int?,
+      from: (json['from'] as num?)?.toInt(),
       path: json['path'] as String?,
-      perPage: json['per_page'] as int?,
-      to: json['to'] as int?,
+      perPage: (json['per_page'] as num?)?.toInt(),
+      to: (json['to'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$StudentsImplToJson(_$StudentsImpl instance) =>
@@ -55,7 +55,7 @@ Map<String, dynamic> _$$StudentsImplToJson(_$StudentsImpl instance) =>
 _$StudentResponseImpl _$$StudentResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$StudentResponseImpl(
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
       student: json['student'] == null
           ? null
           : Student.fromJson(json['student'] as Map<String, dynamic>),
@@ -72,10 +72,10 @@ Map<String, dynamic> _$$StudentResponseImplToJson(
 
 _$StudentImpl _$$StudentImplFromJson(Map<String, dynamic> json) =>
     _$StudentImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       countryCode: json['country_code'] as String?,
       mobileNo: json['mobile_no'] as String?,
-      isActive: json['is_active'] as int?,
+      isActive: (json['is_active'] as num?)?.toInt(),
       mobileUnique: json['mobile_unique'] as String?,
       studentDetail: (json['student_detail'] as List<dynamic>?)
           ?.map((e) => StudentDetail.fromJson(e as Map<String, dynamic>))
@@ -94,11 +94,11 @@ Map<String, dynamic> _$$StudentImplToJson(_$StudentImpl instance) =>
 
 _$StudentDetailImpl _$$StudentDetailImplFromJson(Map<String, dynamic> json) =>
     _$StudentDetailImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       parentName: json['parent_name'] as String?,
-      userId: json['user_id'] as int?,
-      academyId: json['academy_id'] as int?,
+      userId: (json['user_id'] as num?)?.toInt(),
+      academyId: (json['academy_id'] as num?)?.toInt(),
       gender: json['gender'] as String?,
       dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String),
       doj: json['doj'] == null ? null : DateTime.parse(json['doj'] as String),
@@ -106,7 +106,7 @@ _$StudentDetailImpl _$$StudentDetailImplFromJson(Map<String, dynamic> json) =>
       whatsappNo: json['whatsapp_no'] as String?,
       address: json['address'] as String?,
       profilePic: json['profile_pic'] as String?,
-      isActive: json['is_active'] as int?,
+      isActive: (json['is_active'] as num?)?.toInt(),
       batches: (json['batches'] as List<dynamic>?)
           ?.map((e) => Batch.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -145,17 +145,17 @@ Map<String, dynamic> _$$StudentDetailImplToJson(_$StudentDetailImpl instance) =>
 _$DiscontinuedBatchImpl _$$DiscontinuedBatchImplFromJson(
         Map<String, dynamic> json) =>
     _$DiscontinuedBatchImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       batchName: json['batchName'] as String?,
-      academyId: json['academyId'] as int?,
-      branchId: json['branchId'] as int?,
-      courseId: json['courseId'] as int?,
-      subjectId: json['subjectId'] as int?,
+      academyId: (json['academyId'] as num?)?.toInt(),
+      branchId: (json['branchId'] as num?)?.toInt(),
+      courseId: (json['courseId'] as num?)?.toInt(),
+      subjectId: (json['subjectId'] as num?)?.toInt(),
       batchStatus: json['batchStatus'] as String?,
-      feeAmount: json['feeAmount'] as int?,
-      admissionFees: json['admissionFees'] as int?,
+      feeAmount: (json['feeAmount'] as num?)?.toInt(),
+      admissionFees: (json['admissionFees'] as num?)?.toInt(),
       shareToken: json['shareToken'] as String?,
-      isActive: json['isActive'] as int?,
+      isActive: (json['isActive'] as num?)?.toInt(),
       pivot: json['pivot'] == null
           ? null
           : PivotClass.fromJson(json['pivot'] as Map<String, dynamic>),
@@ -188,10 +188,10 @@ Map<String, dynamic> _$$DiscontinuedBatchImplToJson(
 
 _$Course1Impl _$$Course1ImplFromJson(Map<String, dynamic> json) =>
     _$Course1Impl(
-      id: json['id'] as int?,
-      academyTypeId: json['academyTypeId'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      academyTypeId: (json['academyTypeId'] as num?)?.toInt(),
       courseName: json['courseName'] as String?,
-      isActive: json['isActive'] as int?,
+      isActive: (json['isActive'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$Course1ImplToJson(_$Course1Impl instance) =>
@@ -204,10 +204,10 @@ Map<String, dynamic> _$$Course1ImplToJson(_$Course1Impl instance) =>
 
 _$Subject1Impl _$$Subject1ImplFromJson(Map<String, dynamic> json) =>
     _$Subject1Impl(
-      id: json['id'] as int?,
-      courseId: json['courseId'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      courseId: (json['courseId'] as num?)?.toInt(),
       subjectName: json['subjectName'] as String?,
-      isActive: json['isActive'] as int?,
+      isActive: (json['isActive'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$Subject1ImplToJson(_$Subject1Impl instance) =>

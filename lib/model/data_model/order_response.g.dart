@@ -10,15 +10,15 @@ _$OrderResponseImpl _$$OrderResponseImplFromJson(Map<String, dynamic> json) =>
     _$OrderResponseImpl(
       id: json['id'] as String,
       entity: json['entity'] as String?,
-      amount: json['amount'] as int?,
-      amountPaid: json['amountPaid'] as int?,
-      amountDue: json['amountDue'] as int?,
+      amount: (json['amount'] as num?)?.toInt(),
+      amountPaid: (json['amountPaid'] as num?)?.toInt(),
+      amountDue: (json['amountDue'] as num?)?.toInt(),
       currency: json['currency'] as String?,
       receipt: json['receipt'] as String?,
       offerId: json['offerId'],
       status: json['status'] as String?,
-      attempts: json['attempts'] as int?,
-      createdAt: json['createdAt'] as int?,
+      attempts: (json['attempts'] as num?)?.toInt(),
+      createdAt: (json['createdAt'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$OrderResponseImplToJson(_$OrderResponseImpl instance) =>

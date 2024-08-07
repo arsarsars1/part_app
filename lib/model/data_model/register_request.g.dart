@@ -23,11 +23,11 @@ _$RegisterRequestImpl _$$RegisterRequestImplFromJson(
       branchAddress: json['branch_address'] as String?,
       branchPincode: json['branch_pincode'] as String?,
       firebaseToken: json['firebase_token'] as String?,
-      academyTypeId: json['academy_type_id'] as int?,
+      academyTypeId: (json['academy_type_id'] as num?)?.toInt(),
       name: json['name'] as String?,
-      countryId: json['country_id'] as int?,
-      stateId: json['state_id'] as int?,
-      districtId: json['district_id'] as int?,
+      countryId: (json['country_id'] as num?)?.toInt(),
+      stateId: (json['state_id'] as num?)?.toInt(),
+      districtId: (json['district_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$RegisterRequestImplToJson(

@@ -8,16 +8,16 @@ part of 'membership.dart';
 
 _$MembershipImpl _$$MembershipImplFromJson(Map<String, dynamic> json) =>
     _$MembershipImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       membershipType: json['membership_type'] as String?,
       period: json['period'] as String?,
       paymentType: json['payment_type'] as String?,
-      duration: json['duration'] as int?,
-      amount: json['amount'] as int?,
-      finalAmount: json['final_amount'] as int?,
-      maxNoOfStudents: json['max_no_of_students'] as int?,
-      maxNoOfBranches: json['max_no_of_branches'] as int?,
-      isActive: json['is_active'] as int?,
+      duration: (json['duration'] as num?)?.toInt(),
+      amount: (json['amount'] as num?)?.toInt(),
+      finalAmount: (json['final_amount'] as num?)?.toInt(),
+      maxNoOfStudents: (json['max_no_of_students'] as num?)?.toInt(),
+      maxNoOfBranches: (json['max_no_of_branches'] as num?)?.toInt(),
+      isActive: (json['is_active'] as num?)?.toInt(),
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),

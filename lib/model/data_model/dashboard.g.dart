@@ -8,8 +8,8 @@ part of 'dashboard.dart';
 
 _$DashboardImpl _$$DashboardImplFromJson(Map<String, dynamic> json) =>
     _$DashboardImpl(
-      status: json['status'] as int?,
-      totalStudents: json['total_students'] as int?,
+      status: (json['status'] as num?)?.toInt(),
+      totalStudents: (json['total_students'] as num?)?.toInt(),
       totalPaymentsDaily: json['total_payments_daily'] as String?,
       totalPaymentsMonthly: json['total_payments_monthly'] as String?,
       banners: (json['banners'] as List<dynamic>?)
@@ -27,7 +27,7 @@ Map<String, dynamic> _$$DashboardImplToJson(_$DashboardImpl instance) =>
     };
 
 _$BannerImpl _$$BannerImplFromJson(Map<String, dynamic> json) => _$BannerImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       description: json['description'] as String?,
       imageUrl: json['image_url'] as String?,
       extUrl: json['ext_url'] as String?,
@@ -38,9 +38,9 @@ _$BannerImpl _$$BannerImplFromJson(Map<String, dynamic> json) => _$BannerImpl(
       endTime: json['end_time'] == null
           ? null
           : DateTime.parse(json['end_time'] as String),
-      order: json['order'] as int?,
-      academyTypeId: json['academy_type_id'] as int?,
-      isActive: json['is_active'] as int?,
+      order: (json['order'] as num?)?.toInt(),
+      academyTypeId: (json['academy_type_id'] as num?)?.toInt(),
+      isActive: (json['is_active'] as num?)?.toInt(),
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),

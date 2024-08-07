@@ -9,7 +9,7 @@ part of 'reschedule_response.dart';
 _$RescheduleResponseImpl _$$RescheduleResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$RescheduleResponseImpl(
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
       rescheduledClasses: (json['rescheduled_classes'] as List<dynamic>?)
           ?.map((e) => RescheduledClass.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -25,16 +25,16 @@ Map<String, dynamic> _$$RescheduleResponseImplToJson(
 _$RescheduledClassesImpl _$$RescheduledClassesImplFromJson(
         Map<String, dynamic> json) =>
     _$RescheduledClassesImpl(
-      currentPage: json['current_page'] as int?,
+      currentPage: (json['current_page'] as num?)?.toInt(),
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => RescheduledClass.fromJson(e as Map<String, dynamic>))
           .toList(),
       firstPageUrl: json['first_page_url'] as String?,
       nextPageUrl: json['next_page_url'] as String?,
-      from: json['from'] as int?,
+      from: (json['from'] as num?)?.toInt(),
       path: json['path'] as String?,
-      perPage: json['per_page'] as int?,
-      to: json['to'] as int?,
+      perPage: (json['per_page'] as num?)?.toInt(),
+      to: (json['to'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$RescheduledClassesImplToJson(
@@ -53,8 +53,8 @@ Map<String, dynamic> _$$RescheduledClassesImplToJson(
 _$RescheduledClassImpl _$$RescheduledClassImplFromJson(
         Map<String, dynamic> json) =>
     _$RescheduledClassImpl(
-      id: json['id'] as int?,
-      batchId: json['batch_id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      batchId: (json['batch_id'] as num?)?.toInt(),
       oldDate: json['old_date'] == null
           ? null
           : DateTime.parse(json['old_date'] as String),
@@ -66,7 +66,7 @@ _$RescheduledClassImpl _$$RescheduledClassImplFromJson(
       newStartTime: json['new_start_time'] as String?,
       newEndTime: json['new_end_time'] as String?,
       rescheduledByType: json['rescheduled_by_type'] as String?,
-      rescheduledById: json['rescheduled_by_id'] as int?,
+      rescheduledById: (json['rescheduled_by_id'] as num?)?.toInt(),
       cancelledDate: json['cancelled_date'],
       cancelledStartTime: json['cancelled_start_time'],
       cancelledEndTime: json['cancelled_end_time'],

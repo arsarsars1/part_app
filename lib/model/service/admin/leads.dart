@@ -38,16 +38,31 @@ class LeadsService {
     }
   }
 
-  Future<Common?> updateFollowUp({int? id}) async {
+  Future<Common?> updateFollowUp(
+      {required LeadRequest request, int? leadId, int? id}) async {
     try {
-      var response = await _apiClient.get(
-        queryPath: '/admin/leads/$id/follow-ups/$id',
+      String path;
+      if (id != null) {
+        path = '/admin/leads/$leadId/follow-ups/$id';
+      } else {
+        path = '/admin/leads/$leadId/follow-ups';
+      }
+      var response = await _apiClient.post(
+        postPath: path,
+        data: updateLeadStatus(request.toJson()).removeNulls(),
       );
       Common common = commonFromJson(jsonEncode(response));
       return common;
     } catch (e) {
       return null;
     }
+  }
+
+  Map<String, dynamic> updateLeadStatus(Map<String, dynamic> json) {
+    if (json.containsKey('lead_status')) {
+      json['follow_up_status'] = json.remove('lead_status');
+    }
+    return json;
   }
 
   Future<LeadsResponse?> todayLeadsList() async {

@@ -9,7 +9,7 @@ part of 'district.dart';
 _$DistrictImpl _$$DistrictImplFromJson(Map<String, dynamic> json) =>
     _$DistrictImpl(
       message: json['message'] as String?,
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       districtName: json['district_name'] as String?,
       stateName: json['state_name'] as String?,
     );

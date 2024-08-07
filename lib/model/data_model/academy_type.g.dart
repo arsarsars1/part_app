@@ -8,7 +8,7 @@ part of 'academy_type.dart';
 
 _$AcademyTypeImpl _$$AcademyTypeImplFromJson(Map<String, dynamic> json) =>
     _$AcademyTypeImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       academyType: json['academy_type'] as String,
     );
 

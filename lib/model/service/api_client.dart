@@ -58,11 +58,8 @@ class ApiClient {
           },
         ),
       );
-
-      log(json.encode(response.data));
-      return _handleResponse(
-        response,
-      );
+      debugResponse(response);
+      return _handleResponse(response);
     } catch (e) {
       return e;
     }
@@ -126,14 +123,7 @@ class ApiClient {
               },
         ),
       );
-      if (kDebugMode) {
-        debugPrint('********** API END ***********');
-        debugPrint(
-          'STATUS -> Code : ${response.statusCode}, Status : ${response.statusMessage}',
-        );
-        // log(json.encode(response.data));
-        debugPrint('**********         ***********');
-      }
+      debugResponse(response);
       return _handleResponse(response);
     } catch (e) {
       log(e.toString());
@@ -185,5 +175,18 @@ class ApiClient {
       controller?.add(401);
     }
     return response.data;
+  }
+
+  void debugResponse(Response<dynamic> response) {
+    if (kDebugMode) {
+      debugPrint('********** API END ***********');
+      debugPrint(
+        'STATUS -> Code : ${response.statusCode}, Status : ${response.statusMessage}',
+      );
+      debugPrint(response.statusMessage);
+      debugPrint(json.encode(response.data));
+
+      debugPrint('**********         ***********');
+    }
   }
 }

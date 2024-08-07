@@ -9,10 +9,10 @@ part of 'batch_request.dart';
 _$BatchRequestImpl _$$BatchRequestImplFromJson(Map<String, dynamic> json) =>
     _$BatchRequestImpl(
       batchName: json['batch_name'] as String?,
-      branchId: json['branch_id'] as int?,
-      courseId: json['course_id'] as int?,
-      subjectId: json['subject_id'] as int?,
-      retainStudents: json['retain_students'] as int?,
+      branchId: (json['branch_id'] as num?)?.toInt(),
+      courseId: (json['course_id'] as num?)?.toInt(),
+      subjectId: (json['subject_id'] as num?)?.toInt(),
+      retainStudents: (json['retain_students'] as num?)?.toInt(),
       batchStatus: json['batch_status'] as String?,
       feeAmount: json['fee_amount'],
       admissionFees: json['admission_fees'],
@@ -40,7 +40,7 @@ Map<String, dynamic> _$$BatchRequestImplToJson(_$BatchRequestImpl instance) =>
     };
 
 _$DaysImpl _$$DaysImplFromJson(Map<String, dynamic> json) => _$DaysImpl(
-      day: json['day'] as int?,
+      day: (json['day'] as num?)?.toInt(),
       startTime: json['start_time'] as String?,
       endTime: json['end_time'] as String?,
     );

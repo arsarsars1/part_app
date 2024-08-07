@@ -8,7 +8,7 @@ part of 'branch_response.dart';
 
 _$BranchResponseImpl _$$BranchResponseImplFromJson(Map<String, dynamic> json) =>
     _$BranchResponseImpl(
-      status: json['status'] as int,
+      status: (json['status'] as num).toInt(),
       branches: (json['branches'] as List<dynamic>?)
           ?.map((e) => Branch.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -26,16 +26,16 @@ Map<String, dynamic> _$$BranchResponseImplToJson(
     };
 
 _$BranchImpl _$$BranchImplFromJson(Map<String, dynamic> json) => _$BranchImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       branchName: json['branch_name'] as String?,
-      academyId: json['academy_id'] as int?,
-      countryId: json['country_id'] as int?,
-      stateId: json['state_id'] as int?,
-      districtId: json['district_id'] as int?,
+      academyId: (json['academy_id'] as num?)?.toInt(),
+      countryId: (json['country_id'] as num?)?.toInt(),
+      stateId: (json['state_id'] as num?)?.toInt(),
+      districtId: (json['district_id'] as num?)?.toInt(),
       address: json['address'] as String?,
-      pincode: json['pincode'] as int?,
+      pincode: (json['pincode'] as num?)?.toInt(),
       currency: json['currency'] as String?,
-      isActive: json['is_active'] as int?,
+      isActive: (json['is_active'] as num?)?.toInt(),
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),

@@ -9,7 +9,7 @@ part of 'branch_trainer_response.dart';
 _$BranchTrainerResponseImpl _$$BranchTrainerResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$BranchTrainerResponseImpl(
-      status: json['status'] as int,
+      status: (json['status'] as num).toInt(),
       trainers: (json['trainers'] as List<dynamic>?)
           ?.map((e) => Trainer.fromJson(e as Map<String, dynamic>))
           .toList(),

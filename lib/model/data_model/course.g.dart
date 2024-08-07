@@ -7,7 +7,7 @@ part of 'course.dart';
 // **************************************************************************
 
 _$CourseImpl _$$CourseImplFromJson(Map<String, dynamic> json) => _$CourseImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       courseName: json['course_name'] as String?,
       subjectName: json['subject_name'] as String?,
     );

@@ -9,7 +9,7 @@ part of 'shop_url.dart';
 _$ShopUrlImpl _$$ShopUrlImplFromJson(Map<String, dynamic> json) =>
     _$ShopUrlImpl(
       url: json['url'] as String?,
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$ShopUrlImplToJson(_$ShopUrlImpl instance) =>

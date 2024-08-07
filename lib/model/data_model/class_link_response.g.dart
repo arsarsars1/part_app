@@ -9,7 +9,7 @@ part of 'class_link_response.dart';
 _$ClassLinkResponseImpl _$$ClassLinkResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$ClassLinkResponseImpl(
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
       classLinks: (json['class_links'] as List<dynamic>?)
           ?.map((e) => ClassLink.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -24,8 +24,8 @@ Map<String, dynamic> _$$ClassLinkResponseImplToJson(
 
 _$ClassLinkImpl _$$ClassLinkImplFromJson(Map<String, dynamic> json) =>
     _$ClassLinkImpl(
-      id: json['id'] as int?,
-      batchId: json['batch_id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      batchId: (json['batch_id'] as num?)?.toInt(),
       link: json['link'] as String?,
       service: json['service'] as String?,
       classDate: json['class_date'] == null
@@ -34,7 +34,7 @@ _$ClassLinkImpl _$$ClassLinkImplFromJson(Map<String, dynamic> json) =>
       startTime: json['start_time'] as String?,
       endTime: json['end_time'] as String?,
       addedByType: json['added_by_type'] as String?,
-      addedById: json['added_by_id'] as int?,
+      addedById: (json['added_by_id'] as num?)?.toInt(),
       batchName: json['batch_name'] as String?,
       branchName: json['branch_name'] as String?,
       courseName: json['course_name'] as String?,

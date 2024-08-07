@@ -8,7 +8,7 @@ part of 'class_response.dart';
 
 _$ClassResponseImpl _$$ClassResponseImplFromJson(Map<String, dynamic> json) =>
     _$ClassResponseImpl(
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
       classes: (json['classes'] as List<dynamic>?)
           ?.map((e) => Class.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -27,10 +27,10 @@ _$ClassImpl _$$ClassImplFromJson(Map<String, dynamic> json) => _$ClassImpl(
       oldDate: json['old_date'] == null
           ? null
           : DateTime.parse(json['old_date'] as String),
-      batchId: json['batch_id'] as int?,
+      batchId: (json['batch_id'] as num?)?.toInt(),
       batchName: json['batch_name'] as String?,
-      activeStudentsCount: json['active_students_count'] as int?,
-      inactiveStudentsCount: json['inactive_students_count'] as int?,
+      activeStudentsCount: (json['active_students_count'] as num?)?.toInt(),
+      inactiveStudentsCount: (json['inactive_students_count'] as num?)?.toInt(),
       courseName: json['course_name'] as String?,
       subjectName: json['subject_name'] as String?,
       branchName: json['branch_name'] as String?,

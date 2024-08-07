@@ -9,12 +9,12 @@ part of 'student_attendence_of_month.dart';
 _$StudentAttendenceOfMonthImpl _$$StudentAttendenceOfMonthImplFromJson(
         Map<String, dynamic> json) =>
     _$StudentAttendenceOfMonthImpl(
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
       studentAttendance: (json['student_attendance'] as List<dynamic>?)
           ?.map((e) => StudentAttendances.fromJson(e as Map<String, dynamic>))
           .toList(),
-      presentCount: json['present_count'] as int?,
-      absentCount: json['absent_count'] as int?,
+      presentCount: (json['present_count'] as num?)?.toInt(),
+      absentCount: (json['absent_count'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$StudentAttendenceOfMonthImplToJson(
@@ -29,12 +29,12 @@ Map<String, dynamic> _$$StudentAttendenceOfMonthImplToJson(
 _$StudentAttendancesImpl _$$StudentAttendancesImplFromJson(
         Map<String, dynamic> json) =>
     _$StudentAttendancesImpl(
-      id: json['id'] as int?,
-      conductedClassId: json['conducted_class_id'] as int?,
-      studentDetailId: json['student_detail_id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      conductedClassId: (json['conducted_class_id'] as num?)?.toInt(),
+      studentDetailId: (json['student_detail_id'] as num?)?.toInt(),
       feeType: json['fee_type'] as String?,
-      cycle: json['cycle'] as int?,
-      isPresent: json['is_present'] as int?,
+      cycle: (json['cycle'] as num?)?.toInt(),
+      isPresent: (json['is_present'] as num?)?.toInt(),
       conductedClass: json['conducted_class'] == null
           ? null
           : ConductedClasses.fromJson(
@@ -56,12 +56,12 @@ Map<String, dynamic> _$$StudentAttendancesImplToJson(
 _$ConductedClassesImpl _$$ConductedClassesImplFromJson(
         Map<String, dynamic> json) =>
     _$ConductedClassesImpl(
-      id: json['id'] as int?,
-      batchId: json['batch_id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      batchId: (json['batch_id'] as num?)?.toInt(),
       takenByType: json['taken_by_type'] as String?,
-      takenById: json['taken_by_id'] as int?,
+      takenById: (json['taken_by_id'] as num?)?.toInt(),
       updatedByType: json['updated_by_type'] as String?,
-      updatedById: json['updated_by_id'] as int?,
+      updatedById: (json['updated_by_id'] as num?)?.toInt(),
       conductedOn: json['conducted_on'] == null
           ? null
           : DateTime.parse(json['conducted_on'] as String),
@@ -100,7 +100,7 @@ Map<String, dynamic> _$$ConductedClassesImplToJson(
     };
 
 _$ByImpl _$$ByImplFromJson(Map<String, dynamic> json) => _$ByImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
     );
 

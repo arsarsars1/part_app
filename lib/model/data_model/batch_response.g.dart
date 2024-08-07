@@ -8,7 +8,7 @@ part of 'batch_response.dart';
 
 _$BatchResponseImpl _$$BatchResponseImplFromJson(Map<String, dynamic> json) =>
     _$BatchResponseImpl(
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
       batches: json['batches'] == null
           ? null
           : Datum.fromJson(json['batches'] as Map<String, dynamic>),
@@ -27,7 +27,7 @@ Map<String, dynamic> _$$BatchResponseImplToJson(_$BatchResponseImpl instance) =>
 _$StudentsBatchResponseImpl _$$StudentsBatchResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$StudentsBatchResponseImpl(
-      status: json['status'] as int?,
+      status: (json['status'] as num?)?.toInt(),
       batches: (json['batches'] as List<dynamic>?)
           ?.map((e) => Batch.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -41,14 +41,14 @@ Map<String, dynamic> _$$StudentsBatchResponseImplToJson(
     };
 
 _$DatumImpl _$$DatumImplFromJson(Map<String, dynamic> json) => _$DatumImpl(
-      currentPage: json['current_page'] as int?,
+      currentPage: (json['current_page'] as num?)?.toInt(),
       data: (json['data'] as List<dynamic>)
           .map((e) => Batch.fromJson(e as Map<String, dynamic>))
           .toList(),
-      from: json['from'] as int?,
-      perPage: json['per_page'] as int?,
+      from: (json['from'] as num?)?.toInt(),
+      perPage: (json['per_page'] as num?)?.toInt(),
       nextPageUrl: json['next_page_url'] as String?,
-      to: json['to'] as int?,
+      to: (json['to'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$DatumImplToJson(_$DatumImpl instance) =>
@@ -62,19 +62,19 @@ Map<String, dynamic> _$$DatumImplToJson(_$DatumImpl instance) =>
     };
 
 _$BatchImpl _$$BatchImplFromJson(Map<String, dynamic> json) => _$BatchImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       batchName: json['batch_name'] as String?,
-      academyId: json['academy_id'] as int?,
-      branchId: json['branch_id'] as int?,
-      courseId: json['course_id'] as int?,
-      subjectId: json['subject_id'] as int?,
+      academyId: (json['academy_id'] as num?)?.toInt(),
+      branchId: (json['branch_id'] as num?)?.toInt(),
+      courseId: (json['course_id'] as num?)?.toInt(),
+      subjectId: (json['subject_id'] as num?)?.toInt(),
       batchStatus: json['batch_status'] as String?,
       shareToken: json['share_token'] as String?,
-      feeAmount: json['fee_amount'] as int?,
-      activeStudentsCount: json['active_students_count'] as int?,
-      inactiveStudentsCount: json['inactive_students_count'] as int?,
-      admissionFees: json['admission_fees'] as int?,
-      isActive: json['is_active'] as int?,
+      feeAmount: (json['fee_amount'] as num?)?.toInt(),
+      activeStudentsCount: (json['active_students_count'] as num?)?.toInt(),
+      inactiveStudentsCount: (json['inactive_students_count'] as num?)?.toInt(),
+      admissionFees: (json['admission_fees'] as num?)?.toInt(),
+      isActive: (json['is_active'] as num?)?.toInt(),
       pivot: json['pivot'] == null
           ? null
           : PivotClass.fromJson(json['pivot'] as Map<String, dynamic>),
@@ -120,9 +120,9 @@ Map<String, dynamic> _$$BatchImplToJson(_$BatchImpl instance) =>
 
 _$BatchDetailImpl _$$BatchDetailImplFromJson(Map<String, dynamic> json) =>
     _$BatchDetailImpl(
-      id: json['id'] as int?,
-      batchId: json['batch_id'] as int?,
-      day: json['day'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      batchId: (json['batch_id'] as num?)?.toInt(),
+      day: (json['day'] as num?)?.toInt(),
       previousDate: json['previous_date'] == null
           ? null
           : DateTime.parse(json['previous_date'] as String),
@@ -131,7 +131,7 @@ _$BatchDetailImpl _$$BatchDetailImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['new_date'] as String),
       startTime: json['start_time'] as String?,
       endTime: json['end_time'] as String?,
-      isActive: json['is_active'] as int?,
+      isActive: (json['is_active'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$BatchDetailImplToJson(_$BatchDetailImpl instance) =>
@@ -148,13 +148,13 @@ Map<String, dynamic> _$$BatchDetailImplToJson(_$BatchDetailImpl instance) =>
 
 _$PivotClassImpl _$$PivotClassImplFromJson(Map<String, dynamic> json) =>
     _$PivotClassImpl(
-      studentDetailId: json['student_detail_id'] as int?,
-      batchId: json['batch_id'] as int?,
+      studentDetailId: (json['student_detail_id'] as num?)?.toInt(),
+      batchId: (json['batch_id'] as num?)?.toInt(),
       noOfClasses: json['no_of_classes'],
       feeType: json['fee_type'] as String?,
-      feeAmount: json['fee_amount'] as int?,
-      admissionFees: json['admission_fees'] as int?,
-      cycle: json['cycle'] as int?,
+      feeAmount: (json['fee_amount'] as num?)?.toInt(),
+      admissionFees: (json['admission_fees'] as num?)?.toInt(),
+      cycle: (json['cycle'] as num?)?.toInt(),
       doj: json['doj'] == null ? null : DateTime.parse(json['doj'] as String),
       createdAt: json['created_at'] == null
           ? null
