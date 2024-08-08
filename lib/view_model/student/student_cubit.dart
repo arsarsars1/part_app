@@ -415,6 +415,8 @@ class StudentCubit extends Cubit<StudentState> {
       page = 1;
       nextPageUrl = '';
       _studentsMap.clear();
+      activeStudentsCount = null;
+      inactiveStudentsCount = null;
       emit(FetchingStudents());
     } else {
       emit(FetchingStudents(pagination: true));

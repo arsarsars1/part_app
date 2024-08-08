@@ -452,9 +452,9 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
                             ),
                           ),
                           TrainerAppBatchStudents(
-                            onChange: (bool value) {
+                            onChange: (bool value) async {
                               isActive = value;
-                              doSearch();
+                              await doSearch(clean: true);
                             },
                           ),
                         ],
@@ -483,8 +483,8 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
     );
   }
 
-  void doSearch({bool clean = true}) {
-    context.read<StudentCubit>().getStudentsForTrainer(
+  Future<void> doSearch({bool clean = true}) async {
+    await context.read<StudentCubit>().getStudentsForTrainer(
           trainerId: authCubit
                   ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
               0,
