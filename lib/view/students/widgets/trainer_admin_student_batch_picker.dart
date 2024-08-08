@@ -27,6 +27,7 @@ class TrainerStudentBatchPicker extends StatefulWidget {
 
 class _TrainerStudentBatchPickerState extends State<TrainerStudentBatchPicker> {
   ScrollController scrollController = ScrollController();
+  List<BatchModel>? searchBatches;
   String? query;
 
   @override
@@ -41,7 +42,7 @@ class _TrainerStudentBatchPickerState extends State<TrainerStudentBatchPicker> {
     });
   }
 
-  doSearch(String? search) async {
+  Future<void> doSearch(String? search) async {
     if (widget.isTrainer && widget.trainerId != null) {
       await context.read<StudentCubit>().getStudentBatchesForTrainers(
             clean: true,
@@ -109,16 +110,23 @@ class _TrainerStudentBatchPickerState extends State<TrainerStudentBatchPicker> {
               CommonField(
                 title: '',
                 hint: 'Search Batch',
-                onChange: (value) {},
-                prefixIcon: const Icon(Icons.search),
-                onSubmit: (value) {
+                onChange: (value) {
                   if (value.isEmpty) {
                     query = null;
+                    searchBatches = null;
                   } else {
+                    searchBatches = [];
                     query = value;
+                    if (cubit.batches.isNotEmpty) {
+                      searchBatches = searchBatchesFun(query, cubit.batches);
+                    } else {
+                      query = null;
+                      searchBatches = null;
+                    }
                   }
-                  doSearch(query);
+                  setState(() {});
                 },
+                prefixIcon: const Icon(Icons.search),
                 textInputAction: TextInputAction.search,
               ),
               const Divider(
@@ -126,16 +134,19 @@ class _TrainerStudentBatchPickerState extends State<TrainerStudentBatchPicker> {
               ),
               state is FetchingBatches
                   ? const LoadingView(color: Colors.transparent)
-                  : cubit.batches.isEmpty
+                  : cubit.batches.isEmpty ||
+                          (searchBatches != null && searchBatches!.isEmpty)
                       ? const Center(
                           child: Text('Sorry, No batches found.'),
                         )
                       : ListView.builder(
                           controller: scrollController,
                           shrinkWrap: true,
-                          itemCount: cubit.batches.length,
+                          itemCount:
+                              searchBatches?.length ?? cubit.batches.length,
                           itemBuilder: (context, index) {
-                            BatchModel batch = cubit.batches[index];
+                            BatchModel batch =
+                                searchBatches?[index] ?? cubit.batches[index];
                             return ListTile(
                               onTap: () {
                                 Navigator.pop(context);
@@ -182,6 +193,19 @@ class _TrainerStudentBatchPickerState extends State<TrainerStudentBatchPicker> {
         );
       },
     );
+  }
+
+  List<BatchModel>? searchBatchesFun(String? query, List<BatchModel> batches) {
+    if (query == null) {
+      return null;
+    }
+    List<String> queryWords = query.toLowerCase().split(' ');
+
+    return batches.where((batch) {
+      List<String> batchNameWords = batch.name.toLowerCase().split(' ');
+      return queryWords.every((queryWord) =>
+          batchNameWords.any((batchWord) => batchWord.contains(queryWord)));
+    }).toList();
   }
 
   @override
