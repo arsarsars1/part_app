@@ -70,6 +70,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
   @override
   Widget build(BuildContext context) {
     var branchCubit = context.read<BranchCubit>();
+    var cubit = context.read<FeeCubit>();
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
@@ -107,10 +108,9 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
           }
         },
         builder: (context, state) {
-          if (state is FetchingFee) {
+          if (state is FetchingFee && cubit.batchInvoice.isEmpty) {
             return const LoadingView(hideColor: true);
           }
-          var cubit = context.read<FeeCubit>();
           return Column(
             children: [
               SizedBox(
