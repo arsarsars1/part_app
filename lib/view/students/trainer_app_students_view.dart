@@ -50,6 +50,7 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
   @override
   Widget build(BuildContext context) {
     var branchCubit = context.read<BranchCubit>();
+    var cubit = context.read<StudentCubit>();
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(title: 'Students List'),
@@ -59,10 +60,10 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
             doSearch(true);
           }
 
-          if (state is FetchingStudents) {
+          if (state is FetchingStudents && cubit.students == null ||
+              cubit.students!.isEmpty) {
             return const LoadingView(hideColor: true);
           }
-          var cubit = context.read<StudentCubit>();
           return NotificationListener<ScrollNotification>(
             onNotification: (scrollNotification) {
               if (scrollNotification is ScrollEndNotification) {
