@@ -282,6 +282,8 @@ class StudentCubit extends Cubit<StudentState> {
     if (clean) {
       page = 1;
       nextPageUrl = '';
+      activeStudentsCount = null;
+      inactiveStudentsCount = null;
       _studentsMap.clear();
       emit(FetchingStudents());
     } else {
@@ -295,6 +297,71 @@ class StudentCubit extends Cubit<StudentState> {
 
     StudentsResponse? response = await _studentService.getStudents(
       branchId: branchId,
+      batchId: batchId,
+      searchQuery: searchQuery,
+      activeStatus: activeStatus,
+      pageNo: page,
+    );
+
+    if (response?.status == 1) {
+      nextPageUrl = response?.students?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      var items = response?.students?.data ?? [];
+      activeStudentsCount = response?.activeStudentsCount;
+      inactiveStudentsCount = response?.inactiveStudentsCount;
+      List<StudentModel> tempStudents = [];
+
+      for (var student in items) {
+        var details = student.studentDetail;
+        if (details != null) {
+          for (var details in details) {
+            StudentModel newStudent;
+            if (activeStatus == null) {
+              newStudent = StudentModel.fromEntity(student, details);
+            } else {
+              newStudent =
+                  StudentModel.fromEntity1(student, details, batchId ?? 0);
+            }
+
+            tempStudents.add(newStudent);
+          }
+        }
+      }
+
+      _studentsMap.addEntries(tempStudents.map((e) => MapEntry(e.detailId, e)));
+
+      emit(StudentsFetched(moreItems: nextPageUrl != null));
+    } else {
+      emit(StudentDetailsFailed(''));
+    }
+  }
+
+  Future<void> getBatchStudents({
+    int? batchId,
+    String? searchQuery,
+    String? activeStatus,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      activeStudentsCount = null;
+      inactiveStudentsCount = null;
+      _studentsMap.clear();
+      emit(FetchingStudents());
+    } else {
+      emit(FetchingStudents(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(StudentsFetched());
+      return;
+    }
+
+    StudentsResponse? response = await _studentService.getBatchStudents(
       batchId: batchId,
       searchQuery: searchQuery,
       activeStatus: activeStatus,
@@ -471,7 +538,6 @@ class StudentCubit extends Cubit<StudentState> {
   }
 
   Future getStudentAdminBatches({
-    String? searchQuery,
     String? status,
     String? search,
     int? batchId,
@@ -522,7 +588,6 @@ class StudentCubit extends Cubit<StudentState> {
 
   Future getStudentBatchesForTrainers({
     required int trainerId,
-    String? searchQuery,
     String? status,
     int? batchId,
     bool clean = false,

@@ -81,7 +81,7 @@ class _BatchStudentsState extends State<BatchStudents>
                 Padding(
                   padding: const EdgeInsets.only(left: 16, top: 16),
                   child: Text(
-                      '$studentText : ${studentCubit.activeStudentsCount}'),
+                      '$studentText : ${studentText == 'Active Students' ? studentCubit.activeStudentsCount ?? 0 : studentCubit.inactiveStudentsCount ?? 0}'),
                 ),
                 ListView.builder(
                   shrinkWrap: true,

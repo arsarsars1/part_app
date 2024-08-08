@@ -416,7 +416,7 @@ class _BatchDetailsState extends State<BatchDetails>
                             height: emptyHeight,
                             onChange: (bool value) async {
                               isActive = value;
-                              await doSearch(value);
+                              await doSearch(value, clean: true);
                             },
                           ),
                         ],
@@ -446,7 +446,7 @@ class _BatchDetailsState extends State<BatchDetails>
   }
 
   Future<void> doSearch(bool active, {bool clean = true}) async =>
-      await context.read<StudentCubit>().getStudents(
+      await context.read<StudentCubit>().getBatchStudents(
             batchId: batch?.id,
             searchQuery: null,
             activeStatus: active ? null : 'inactive-students',

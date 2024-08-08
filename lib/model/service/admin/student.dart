@@ -190,6 +190,33 @@ class StudentService {
     }
   }
 
+  Future<StudentsResponse?> getBatchStudents({
+    String? searchQuery,
+    String? activeStatus,
+    int? batchId,
+    int? pageNo,
+  }) async {
+    try {
+      String path = '';
+      if (activeStatus != null) {
+        path = '/admin/batches/$batchId/inactive-students';
+      } else {
+        path = '/admin/batches/$batchId/students';
+      }
+
+      if (searchQuery != null) {
+        path += '/search/$searchQuery';
+      }
+
+      path += '?page=$pageNo';
+
+      var response = await _client.get(queryPath: path);
+      return studentsResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentsResponse?> getStudentsForTrainer({
     int? trainerId,
     String? searchQuery,
