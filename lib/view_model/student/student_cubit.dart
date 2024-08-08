@@ -268,6 +268,8 @@ class StudentCubit extends Cubit<StudentState> {
   void clean() {
     page = 1;
     nextPageUrl = '';
+    activeStudentsCount = null;
+    inactiveStudentsCount = null;
     _studentsMap.clear();
     emit(StudentInitial());
   }
