@@ -369,14 +369,14 @@ class _StudentAppProfileState extends State<StudentAppProfile> {
                     Alert(context).show(message: 'Error enter a valid email');
                     return;
                   }
-                  if (!isAdmin &&
-                      !RegExp(emailRegex).hasMatch(email ??
-                          cubit
-                              .user?.studentDetail?[cubit.studentIndex].email ??
-                          "")) {
-                    Alert(context).show(message: 'Error enter a valid email');
-                    return;
-                  }
+                  // if (!isAdmin &&
+                  //     !RegExp(emailRegex).hasMatch(email ??
+                  //         cubit
+                  //             .user?.studentDetail?[cubit.studentIndex].email ??
+                  //         "")) {
+                  //   Alert(context).show(message: 'Error enter a valid email');
+                  //   return;
+                  // }
                   ProfileUpdateRequest request = ProfileUpdateRequest(
                     name: name,
                     email: email,
