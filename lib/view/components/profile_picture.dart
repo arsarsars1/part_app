@@ -64,10 +64,12 @@ class _ProfilePictureState extends State<ProfilePicture> {
           ClipRRect(
             borderRadius: BorderRadius.circular(100),
             child: file == null
-                ? CachedImage(
-                    widget.imageUrl!,
-                    height: MediaQuery.of(context).size.width * 0.75,
-                  ).image()
+                ? widget.imageUrl != null
+                    ? CachedImage(
+                        widget.imageUrl!,
+                        height: MediaQuery.of(context).size.width * 0.75,
+                      ).image()
+                    : const SizedBox.shrink()
                 : Image.file(file!),
           ),
           Align(
