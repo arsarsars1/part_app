@@ -11,12 +11,14 @@ class SelectedTrainers extends StatefulWidget {
   final int? branchId;
   final bool batchDetails;
   final bool showAddButton;
+  final bool showMessage;
   final GlobalKey<ScaffoldState>? scaffoldKey;
 
   const SelectedTrainers(
       {super.key,
       required this.selectedTrainers,
       this.trainers,
+      this.showMessage = true,
       this.showAddButton = true,
       this.batchDetails = false,
       this.scaffoldKey,
@@ -33,7 +35,9 @@ class _SelectedTrainersState extends State<SelectedTrainers> {
     return Wrap(
       alignment: WrapAlignment.start,
       children: [
-        if (widget.trainers != null && widget.trainers!.isEmpty)
+        if (widget.showMessage &&
+            widget.trainers != null &&
+            widget.trainers!.isEmpty)
           Text(
             'No trainer allocated.',
             style: TextStyle(

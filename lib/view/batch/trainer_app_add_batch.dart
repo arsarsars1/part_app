@@ -261,6 +261,7 @@ class _TrainerAppAddBatchState extends State<TrainerAppAddBatch> {
                               height: 16,
                             ),
                             SelectedTrainers(
+                              showMessage: false,
                               trainers: context
                                   .read<BranchCubit>()
                                   .trainers
