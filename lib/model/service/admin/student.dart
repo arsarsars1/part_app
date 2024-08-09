@@ -167,9 +167,9 @@ class StudentService {
   }) async {
     try {
       String path = '';
-      if (branchId != null && batchId != null && activeStatus != null) {
+      if (batchId != null && activeStatus != null) {
         path = '/admin/batches/$batchId/students/batch-status/$activeStatus';
-      } else if (branchId != null && batchId != null) {
+      } else if (batchId != null) {
         path = '/admin/batches/$batchId/students';
       } else if (branchId != null) {
         path = '/admin/branches/$branchId/students';
