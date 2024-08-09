@@ -62,8 +62,11 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
 
           if (state is FetchingStudents && cubit.students == null ||
               cubit.students!.isEmpty) {
+            // if (query == null) {
             return const LoadingView(hideColor: true);
+            // }
           }
+
           return NotificationListener<ScrollNotification>(
             onNotification: (scrollNotification) {
               if (scrollNotification is ScrollEndNotification) {
@@ -107,49 +110,33 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Branch',
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                DropdownButtonFormField<DropDownItem>(
-                                  dropdownColor: Theme.of(context)
-                                      .inputDecorationTheme
-                                      .fillColor,
-                                  value: selectedItem ??
-                                      const DropDownItem(id: -1),
-                                  decoration: const InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 32),
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Branch',
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
                                   ),
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: const DropDownItem(id: -1),
-                                      child: SizedBox(
-                                        width: 200.w,
-                                        child: Text(
-                                          'All',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                color: Colors.white,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                        ),
-                                      ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  DropdownButtonFormField<DropDownItem>(
+                                    dropdownColor: Theme.of(context)
+                                        .inputDecorationTheme
+                                        .fillColor,
+                                    value: selectedItem ??
+                                        const DropDownItem(id: -1),
+                                    decoration: const InputDecoration(
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 32),
                                     ),
-                                    ...branchCubit.dropDownBranches().map((e) {
-                                      return DropdownMenuItem(
-                                        value: e,
+                                    items: [
+                                      DropdownMenuItem(
+                                        value: const DropDownItem(id: -1),
                                         child: SizedBox(
                                           width: 200.w,
                                           child: Text(
-                                            e.title ?? '',
+                                            'All',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge
@@ -160,29 +147,48 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                                                 ),
                                           ),
                                         ),
-                                      );
-                                    }).toList()
-                                  ],
-                                  onChanged: (value) {
-                                    if (value?.id == -1) {
-                                      setState(() {
-                                        branchId = null;
+                                      ),
+                                      ...branchCubit
+                                          .dropDownBranches()
+                                          .map((e) {
+                                        return DropdownMenuItem(
+                                          value: e,
+                                          child: SizedBox(
+                                            width: 200.w,
+                                            child: Text(
+                                              e.title ?? '',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge
+                                                  ?.copyWith(
+                                                    color: Colors.white,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                    ],
+                                    onChanged: (value) {
+                                      if (value?.id == -1) {
+                                        setState(() {
+                                          branchId = null;
+                                          selectedItem = value;
+                                          batchController.clear();
+                                          doSearch(true);
+                                        });
+                                      } else {
+                                        branchId = value?.id;
                                         selectedItem = value;
                                         batchController.clear();
-                                        doSearch(true);
-                                      });
-                                    } else {
-                                      branchId = value?.id;
-                                      selectedItem = value;
-                                      batchController.clear();
-                                      setState(() {
-                                        doSearch(true);
-                                      });
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
+                                        setState(() {
+                                          doSearch(true);
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ]),
                           );
                         },
                       ),

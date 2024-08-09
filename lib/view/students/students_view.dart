@@ -44,6 +44,8 @@ class _StudentsViewState extends State<StudentsView> {
   @override
   Widget build(BuildContext context) {
     var branchCubit = context.read<BranchCubit>();
+    var cubit = context.read<StudentCubit>();
+
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(title: 'Students List'),
@@ -52,11 +54,12 @@ class _StudentsViewState extends State<StudentsView> {
           if (state is CreatedStudent || state is UpdatedStudent) {
             doSearch(true);
           }
-          var cubit = context.read<StudentCubit>();
 
           if (state is FetchingStudents && cubit.students == null ||
               cubit.students!.isEmpty) {
+            // if (query == null) {
             return const LoadingView(hideColor: true);
+            // }
           }
 
           return NotificationListener<ScrollNotification>(
