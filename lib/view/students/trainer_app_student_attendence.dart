@@ -275,6 +275,7 @@ class _TrainerAppStudentAttendanceCalenderViewState
                         ),
                       );
                     },
+                    disabled: true,
                     title: 'Batch *',
                     hint: 'Select Batch',
                     onChange: (value) {},

@@ -239,7 +239,7 @@ class _StudentAttendanceCalenderViewState
                         ),
                       );
                     },
-                    // disabled: isDisable,
+                    disabled: true,
                     title: 'Batch *',
                     hint: 'Select Batch',
                     onChange: (value) {},
