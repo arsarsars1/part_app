@@ -62,9 +62,9 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
 
           if (state is FetchingStudents && cubit.students == null ||
               cubit.students!.isEmpty) {
-            // if (query == null) {
-            return const LoadingView(hideColor: true);
-            // }
+            if (query == null) {
+              return const LoadingView(hideColor: true);
+            }
           }
 
           return NotificationListener<ScrollNotification>(

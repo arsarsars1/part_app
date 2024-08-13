@@ -109,7 +109,9 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
         },
         builder: (context, state) {
           if (state is FetchingFee && cubit.batchInvoice.isEmpty) {
-            return const LoadingView(hideColor: true);
+            if (query == null) {
+              return const LoadingView(hideColor: true);
+            }
           }
           return Column(
             children: [
