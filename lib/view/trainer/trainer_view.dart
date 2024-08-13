@@ -128,7 +128,7 @@ class _TrainerPageState extends State<TrainerPage> {
                                     ),
                                   ),
                                 );
-                              }).toList()
+                              })
                             ],
                             onChanged: (value) {
                               if (value?.id == -1) {
@@ -175,14 +175,25 @@ class _TrainerPageState extends State<TrainerPage> {
                     } else {
                       query = null;
                       cubit.getActiveInactiveTrainers(
-                          branchId: branchId, active: true);
+                          branchId: branchId,
+                          active: temp != null
+                              ? temp == "Active Trainers"
+                                  ? true
+                                  : false
+                              : true);
                     }
                   },
                   onChange: (value) {
-                    /*if (value.toString().isEmpty) {
+                    if (value.toString().isEmpty) {
                       query = null;
-                      cubit.getTrainers();
-                    }*/
+                      cubit.getActiveInactiveTrainers(
+                          branchId: branchId,
+                          active: temp != null
+                              ? temp == "Active Trainers"
+                                  ? true
+                                  : false
+                              : true);
+                    }
                   },
                 ),
                 SizedBox(
