@@ -5,9 +5,9 @@ import 'package:part_app/model/data_model/lead_request.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/lead_utils.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
-import 'package:part_app/view/trainer/trainer_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
 
@@ -33,7 +33,7 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
   String? email;
   String? assign;
   String? comments;
-  TrainerModel? trainer;
+  Trainer? trainer;
 
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
@@ -347,21 +347,17 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
                       maxLines: 1,
                       disabled: true,
                       onTap: () {
-                        scaffoldKey.currentState?.showBottomSheet(
-                          elevation: 10,
-                          backgroundColor: Colors.transparent,
-                          (context) => TrainerPicker(
-                            isBatch: true,
-                            multiPicker: false,
-                            batchId: batchId?.id,
-                            selectedTrainers: const [],
-                            onSave: (List<Trainer?> value) {},
-                            onSelect: (TrainerModel? trainer) {
-                              this.trainer = trainer;
-                              trainerController.text =
-                                  trainer?.trainerName ?? '';
-                            },
-                          ),
+                        AuthCubit? authCubit = context.read<AuthCubit>();
+                        int trainerId = authCubit.user
+                                ?.trainerDetail?[authCubit.trainerIndex].id ??
+                            0;
+                        LeadUtils().getAssignable(
+                          scaffoldKey,
+                          trainerId: trainerId,
+                          onSelect: (Trainer? trainer) {
+                            this.trainer = trainer;
+                            trainerController.text = trainer?.name ?? '';
+                          },
                         );
                       },
                       textInputAction: TextInputAction.next,
@@ -405,7 +401,7 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
                               followUpTime: time,
                               age: age,
                               followUpComment: comments,
-                              assignedToId: trainer?.detailId,
+                              assignedToId: trainer?.id,
                               assignedToType: r'\App\Models\TrainerDetail',
                             );
 

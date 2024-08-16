@@ -11,14 +11,12 @@ class AssignablePicker extends StatefulWidget {
   final ValueChanged<List<Trainer?>> onSave;
   final ValueChanged<Trainer?>? onSelect;
 
-  final bool getAssignableTrainerLead;
   final bool multiPicker;
 
   const AssignablePicker({
     super.key,
     this.trainerId,
     this.onSelect,
-    this.getAssignableTrainerLead = false,
     required this.selectedTrainers,
     required this.onSave,
     this.multiPicker = true,
@@ -38,23 +36,22 @@ class _AssignablePickerState extends State<AssignablePicker> {
   void initState() {
     super.initState();
 
-    if (widget.getAssignableTrainerLead && widget.trainerId != null) {
-      context
-          .read<BranchCubit>()
-          .getAssignable(clean: true, trainerId: widget.trainerId!);
-    }
+    context
+        .read<BranchCubit>()
+        .getAssignable(clean: true, trainerId: widget.trainerId);
+
     trainers.addAll(widget.selectedTrainers);
     // Pagination listener
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        if (widget.getAssignableTrainerLead && widget.trainerId != null) {
-          context
-              .read<BranchCubit>()
-              .getAssignable(clean: true, trainerId: widget.trainerId!);
-        }
-      }
-    });
+    // scrollController.addListener(() {
+    //   if (scrollController.position.pixels ==
+    //       scrollController.position.maxScrollExtent) {
+    //     if (widget.getAssignableTrainerLead && widget.trainerId != null) {
+    //       context
+    //           .read<BranchCubit>()
+    //           .getAssignable(clean: true, trainerId: widget.trainerId!);
+    //     }
+    //   }
+    // });
   }
 
   @override

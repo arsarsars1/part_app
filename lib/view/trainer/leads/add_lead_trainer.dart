@@ -4,8 +4,8 @@ import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/components/assignable_picker.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/lead_utils.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -312,20 +312,13 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
                       int trainerId = authCubit.user
                               ?.trainerDetail?[authCubit.trainerIndex].id ??
                           0;
-                      scaffoldKey.currentState?.showBottomSheet(
-                        elevation: 10,
-                        backgroundColor: Colors.transparent,
-                        (context) => AssignablePicker(
-                          getAssignableTrainerLead: true,
-                          trainerId: trainerId,
-                          multiPicker: false,
-                          selectedTrainers: const [],
-                          onSave: (List<Trainer?> value) {},
-                          onSelect: (Trainer? trainer) {
-                            this.trainer = trainer;
-                            trainerController.text = trainer?.name ?? '';
-                          },
-                        ),
+                      LeadUtils().getAssignable(
+                        scaffoldKey,
+                        trainerId: trainerId,
+                        onSelect: (Trainer? trainer) {
+                          this.trainer = trainer;
+                          trainerController.text = trainer?.name ?? '';
+                        },
                       );
                     },
                     textInputAction: TextInputAction.next,

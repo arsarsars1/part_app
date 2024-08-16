@@ -5,9 +5,9 @@ import 'package:part_app/model/data_model/lead_request.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/lead_utils.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
-import 'package:part_app/view/trainer/trainer_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
 
@@ -33,7 +33,7 @@ class _AddLeadState extends State<AddLead> {
   String? time;
   String? email;
   String? assign;
-  TrainerModel? trainer;
+  Trainer? trainer;
 
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
@@ -309,20 +309,12 @@ class _AddLeadState extends State<AddLead> {
                     maxLines: 1,
                     disabled: true,
                     onTap: () {
-                      scaffoldKey.currentState?.showBottomSheet(
-                        elevation: 10,
-                        backgroundColor: Colors.transparent,
-                        (context) => TrainerPicker(
-                          isBatch: true,
-                          multiPicker: false,
-                          batchId: batchId?.id,
-                          selectedTrainers: const [],
-                          onSave: (List<Trainer?> value) {},
-                          onSelect: (TrainerModel? trainer) {
-                            this.trainer = trainer;
-                            trainerController.text = trainer?.trainerName ?? '';
-                          },
-                        ),
+                      LeadUtils().getAssignable(
+                        scaffoldKey,
+                        onSelect: (Trainer? trainer) {
+                          this.trainer = trainer;
+                          trainerController.text = trainer?.name ?? '';
+                        },
                       );
                     },
                     textInputAction: TextInputAction.next,
@@ -366,7 +358,7 @@ class _AddLeadState extends State<AddLead> {
                             followUpTime: time,
                             age: age,
                             followUpComment: commentController.text,
-                            assignedToId: trainer?.detailId,
+                            assignedToId: trainer?.id,
                             assignedToType: r'\App\Models\TrainerDetail',
                           );
 

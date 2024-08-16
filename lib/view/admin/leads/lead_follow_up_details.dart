@@ -7,7 +7,7 @@ import 'package:part_app/model/data_model/leads_response.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/trainer/trainer_picker.dart';
+import 'package:part_app/view/components/lead_utils.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
 
@@ -26,7 +26,7 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
   String? time;
   String? assign;
   String? comments;
-  TrainerModel? trainer;
+  Trainer? trainer;
   FollowUp? followUp;
 
   TextEditingController dateController = TextEditingController();
@@ -108,21 +108,12 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
                       maxLines: 1,
                       disabled: true,
                       onTap: () {
-                        scaffoldKey.currentState?.showBottomSheet(
-                          elevation: 10,
-                          backgroundColor: Colors.transparent,
-                          (context) => TrainerPicker(
-                            isBatch: true,
-                            multiPicker: false,
-                            batchId: batchId?.id,
-                            selectedTrainers: const [],
-                            onSave: (List<Trainer?> value) {},
-                            onSelect: (TrainerModel? trainer) {
-                              this.trainer = trainer;
-                              trainerController.text =
-                                  trainer?.trainerName ?? '';
-                            },
-                          ),
+                        LeadUtils().getAssignable(
+                          scaffoldKey,
+                          onSelect: (Trainer? trainer) {
+                            this.trainer = trainer;
+                            trainerController.text = trainer?.name ?? '';
+                          },
                         );
                       },
                       textInputAction: TextInputAction.next,
@@ -215,7 +206,7 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
                               followUpDate: convertDateString(date ?? ""),
                               followUpTime: convertTo24HourFormat(time ?? ""),
                               followUpComment: comments,
-                              assignedToId: trainer?.detailId,
+                              assignedToId: trainer?.id,
                               assignedToType: r'\App\Models\TrainerDetail',
                             );
 
