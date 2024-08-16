@@ -147,7 +147,7 @@ extension ExpandableWidget on Widget {
 
 extension NullRemovalExtension on Map<String, dynamic> {
   Map<String, dynamic> removeNulls() {
-    removeWhere((key, value) => value == null);
+    removeWhere((key, value) => value == null || value.toString().isEmpty);
     return this;
   }
 }

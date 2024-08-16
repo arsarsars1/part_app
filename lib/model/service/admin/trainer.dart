@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:part_app/model/data_model/assignable_model.dart';
 import 'package:part_app/model/data_model/branch_trainer_response.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/salary_slip.dart';
@@ -30,6 +31,22 @@ class TrainerService {
 
     try {
       TrainerResponse trainerResponse = trainerResponseFromJson(
+        jsonEncode(response),
+      );
+      return trainerResponse;
+    } on Exception {
+      return null;
+    }
+  }
+
+  Future<AssignableModel?> getAssignable({int? trainerId}) async {
+    var response = await _client.get(
+        queryPath: trainerId != null
+            ? '/trainers/$trainerId/assignable'
+            : '/admin/assignable');
+
+    try {
+      AssignableModel trainerResponse = assignableModelFromJson(
         jsonEncode(response),
       );
       return trainerResponse;

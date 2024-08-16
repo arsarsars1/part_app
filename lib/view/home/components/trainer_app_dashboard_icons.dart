@@ -90,7 +90,7 @@ class _TrainerAppDashboardIconsState extends State<TrainerAppDashboardIcons> {
             description: descriptions[index],
             child: InkWell(
               onTap: () async {
-                if (item.title == 'Branch Manager' || item.title == 'Leads') {
+                if (item.title == 'Branch Manager') {
                   Alert(context).show(message: "Coming soon !!");
                 } else {
                   await Navigator.pushNamed(context, item.route);

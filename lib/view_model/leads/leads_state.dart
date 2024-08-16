@@ -9,6 +9,8 @@ class CreatingLead extends LeadsState {}
 
 class CreatedLead extends LeadsState {}
 
+class UpdatedLead extends LeadsState {}
+
 class CreatedFollowUpLead extends LeadsState {}
 
 class UpdateFollowUpLead extends LeadsState {}

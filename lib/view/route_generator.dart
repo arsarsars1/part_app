@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/view/account/switch_account.dart';
+import 'package:part_app/view/admin/leads/add_lead.dart';
+import 'package:part_app/view/admin/leads/all_followups_view.dart';
+import 'package:part_app/view/admin/leads/edit_lead.dart';
+import 'package:part_app/view/admin/leads/lead_details.dart';
+import 'package:part_app/view/admin/leads/lead_follow_up_details.dart';
+import 'package:part_app/view/admin/leads/leads_view.dart';
+import 'package:part_app/view/admin/leads/todays_followup_view.dart';
 import 'package:part_app/view/attendance/attendance_add.dart';
 import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/attendance/attendance_update.dart';
@@ -64,13 +71,6 @@ import 'package:part_app/view/home/components/student_account.dart';
 import 'package:part_app/view/home/home.dart';
 import 'package:part_app/view/home/student_app_home.dart';
 import 'package:part_app/view/home/trainer_app_home.dart';
-import 'package:part_app/view/leads/add_lead.dart';
-import 'package:part_app/view/leads/all_followups_view.dart';
-import 'package:part_app/view/leads/edit_lead.dart';
-import 'package:part_app/view/leads/lead_details.dart';
-import 'package:part_app/view/leads/lead_follow_up_details.dart';
-import 'package:part_app/view/leads/leads_view.dart';
-import 'package:part_app/view/leads/todays_followup_view.dart';
 import 'package:part_app/view/manager/add_manager.dart';
 import 'package:part_app/view/manager/edit_manager.dart';
 import 'package:part_app/view/manager/edit_salary.dart';
@@ -117,6 +117,13 @@ import 'package:part_app/view/trainer/add_trainer_branches.dart';
 import 'package:part_app/view/trainer/assigned_batches.dart';
 import 'package:part_app/view/trainer/edit_salary_trainer.dart';
 import 'package:part_app/view/trainer/edit_trainer.dart';
+import 'package:part_app/view/trainer/leads/add_lead_trainer.dart';
+import 'package:part_app/view/trainer/leads/all_followups_view_trainer.dart';
+import 'package:part_app/view/trainer/leads/edit_lead_trainer.dart';
+import 'package:part_app/view/trainer/leads/lead_details_trainer.dart';
+import 'package:part_app/view/trainer/leads/lead_follow_up_details_trainer.dart';
+import 'package:part_app/view/trainer/leads/leads_view_trainer.dart';
+import 'package:part_app/view/trainer/leads/todays_followup_view_trainer.dart';
 import 'package:part_app/view/trainer/salary_details.dart';
 import 'package:part_app/view/trainer/students_picker.dart';
 import 'package:part_app/view/trainer/trainer_app_trainer_salary_slips.dart';
@@ -334,6 +341,11 @@ class RouteGenerator {
       case Leads.route:
         return MaterialPageRoute(
           builder: (_) => const Leads(),
+          settings: settings,
+        );
+      case LeadsViewTrainer.route:
+        return MaterialPageRoute(
+          builder: (_) => const LeadsViewTrainer(),
           settings: settings,
         );
       case ManagerBranches.route:
@@ -617,6 +629,36 @@ class RouteGenerator {
       case LeadFollowUpDetails.route:
         return MaterialPageRoute(
           builder: (_) => const LeadFollowUpDetails(),
+          settings: settings,
+        );
+      case AddTrainerLead.route:
+        return MaterialPageRoute(
+          builder: (_) => const AddTrainerLead(),
+          settings: settings,
+        );
+      case EditTrainerLead.route:
+        return MaterialPageRoute(
+          builder: (_) => const EditTrainerLead(),
+          settings: settings,
+        );
+      case TodayTrainerFollowView.route:
+        return MaterialPageRoute(
+          builder: (_) => const TodayTrainerFollowView(),
+          settings: settings,
+        );
+      case AllTrainerFollowUpView.route:
+        return MaterialPageRoute(
+          builder: (_) => const AllTrainerFollowUpView(),
+          settings: settings,
+        );
+      case LeadTrainerDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const LeadTrainerDetails(),
+          settings: settings,
+        );
+      case LeadTrainerFollowUpDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const LeadTrainerFollowUpDetails(),
           settings: settings,
         );
       case AttendanceBatchListPage.route:

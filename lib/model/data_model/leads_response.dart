@@ -4,8 +4,9 @@
 
 // ignore_for_file: invalid_annotation_target
 
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
+
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'leads_response.freezed.dart';
 part 'leads_response.g.dart';
@@ -21,6 +22,7 @@ class LeadsResponse with _$LeadsResponse {
   const factory LeadsResponse({
     int? status,
     Leads? leads,
+    Lead? lead,
   }) = _LeadsResponse;
 
   factory LeadsResponse.fromJson(Map<String, dynamic> json) =>

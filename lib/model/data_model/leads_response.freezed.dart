@@ -22,6 +22,7 @@ LeadsResponse _$LeadsResponseFromJson(Map<String, dynamic> json) {
 mixin _$LeadsResponse {
   int? get status => throw _privateConstructorUsedError;
   Leads? get leads => throw _privateConstructorUsedError;
+  Lead? get lead => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,9 +36,10 @@ abstract class $LeadsResponseCopyWith<$Res> {
           LeadsResponse value, $Res Function(LeadsResponse) then) =
       _$LeadsResponseCopyWithImpl<$Res, LeadsResponse>;
   @useResult
-  $Res call({int? status, Leads? leads});
+  $Res call({int? status, Leads? leads, Lead? lead});
 
   $LeadsCopyWith<$Res>? get leads;
+  $LeadCopyWith<$Res>? get lead;
 }
 
 /// @nodoc
@@ -55,6 +57,7 @@ class _$LeadsResponseCopyWithImpl<$Res, $Val extends LeadsResponse>
   $Res call({
     Object? status = freezed,
     Object? leads = freezed,
+    Object? lead = freezed,
   }) {
     return _then(_value.copyWith(
       status: freezed == status
@@ -65,6 +68,10 @@ class _$LeadsResponseCopyWithImpl<$Res, $Val extends LeadsResponse>
           ? _value.leads
           : leads // ignore: cast_nullable_to_non_nullable
               as Leads?,
+      lead: freezed == lead
+          ? _value.lead
+          : lead // ignore: cast_nullable_to_non_nullable
+              as Lead?,
     ) as $Val);
   }
 
@@ -79,6 +86,18 @@ class _$LeadsResponseCopyWithImpl<$Res, $Val extends LeadsResponse>
       return _then(_value.copyWith(leads: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $LeadCopyWith<$Res>? get lead {
+    if (_value.lead == null) {
+      return null;
+    }
+
+    return $LeadCopyWith<$Res>(_value.lead!, (value) {
+      return _then(_value.copyWith(lead: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -89,10 +108,12 @@ abstract class _$$LeadsResponseImplCopyWith<$Res>
       __$$LeadsResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? status, Leads? leads});
+  $Res call({int? status, Leads? leads, Lead? lead});
 
   @override
   $LeadsCopyWith<$Res>? get leads;
+  @override
+  $LeadCopyWith<$Res>? get lead;
 }
 
 /// @nodoc
@@ -108,6 +129,7 @@ class __$$LeadsResponseImplCopyWithImpl<$Res>
   $Res call({
     Object? status = freezed,
     Object? leads = freezed,
+    Object? lead = freezed,
   }) {
     return _then(_$LeadsResponseImpl(
       status: freezed == status
@@ -118,6 +140,10 @@ class __$$LeadsResponseImplCopyWithImpl<$Res>
           ? _value.leads
           : leads // ignore: cast_nullable_to_non_nullable
               as Leads?,
+      lead: freezed == lead
+          ? _value.lead
+          : lead // ignore: cast_nullable_to_non_nullable
+              as Lead?,
     ));
   }
 }
@@ -126,7 +152,7 @@ class __$$LeadsResponseImplCopyWithImpl<$Res>
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$LeadsResponseImpl implements _LeadsResponse {
-  const _$LeadsResponseImpl({this.status, this.leads});
+  const _$LeadsResponseImpl({this.status, this.leads, this.lead});
 
   factory _$LeadsResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$LeadsResponseImplFromJson(json);
@@ -135,10 +161,12 @@ class _$LeadsResponseImpl implements _LeadsResponse {
   final int? status;
   @override
   final Leads? leads;
+  @override
+  final Lead? lead;
 
   @override
   String toString() {
-    return 'LeadsResponse(status: $status, leads: $leads)';
+    return 'LeadsResponse(status: $status, leads: $leads, lead: $lead)';
   }
 
   @override
@@ -147,12 +175,13 @@ class _$LeadsResponseImpl implements _LeadsResponse {
         (other.runtimeType == runtimeType &&
             other is _$LeadsResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.leads, leads) || other.leads == leads));
+            (identical(other.leads, leads) || other.leads == leads) &&
+            (identical(other.lead, lead) || other.lead == lead));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, status, leads);
+  int get hashCode => Object.hash(runtimeType, status, leads, lead);
 
   @JsonKey(ignore: true)
   @override
@@ -169,8 +198,10 @@ class _$LeadsResponseImpl implements _LeadsResponse {
 }
 
 abstract class _LeadsResponse implements LeadsResponse {
-  const factory _LeadsResponse({final int? status, final Leads? leads}) =
-      _$LeadsResponseImpl;
+  const factory _LeadsResponse(
+      {final int? status,
+      final Leads? leads,
+      final Lead? lead}) = _$LeadsResponseImpl;
 
   factory _LeadsResponse.fromJson(Map<String, dynamic> json) =
       _$LeadsResponseImpl.fromJson;
@@ -179,6 +210,8 @@ abstract class _LeadsResponse implements LeadsResponse {
   int? get status;
   @override
   Leads? get leads;
+  @override
+  Lead? get lead;
   @override
   @JsonKey(ignore: true)
   _$$LeadsResponseImplCopyWith<_$LeadsResponseImpl> get copyWith =>

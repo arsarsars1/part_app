@@ -25,6 +25,20 @@ class LeadsService {
     }
   }
 
+  Future<Common?> createTrainerLead(
+      {required LeadRequest request, int? idTrainer}) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/trainers/$idTrainer/leads',
+        data: request.toJson().removeNulls(),
+      );
+      Common common = commonFromJson(jsonEncode(response));
+      return common;
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> update({required LeadRequest request, int? id}) async {
     try {
       var response = await _apiClient.post(
@@ -32,6 +46,20 @@ class LeadsService {
         data: request.toJson().removeNulls(),
       );
       Common common = commonFromJson(jsonEncode(response));
+      return common;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<LeadsResponse?> updateTrainerLead(
+      {int? trainerId, required LeadRequest request, int? id}) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/trainers/$trainerId/leads/$id',
+        data: request.toJson().removeNulls(),
+      );
+      LeadsResponse common = leadsResponseFromJson(jsonEncode(response));
       return common;
     } catch (e) {
       return null;
@@ -46,6 +74,29 @@ class LeadsService {
         path = '/admin/leads/$leadId/follow-ups/$id';
       } else {
         path = '/admin/leads/$leadId/follow-ups';
+      }
+      var response = await _apiClient.post(
+        postPath: path,
+        data: updateLeadStatus(request.toJson()).removeNulls(),
+      );
+      Common common = commonFromJson(jsonEncode(response));
+      return common;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> updateTrainerFollowUp(
+      {int? trainerId,
+      required LeadRequest request,
+      int? leadId,
+      int? id}) async {
+    try {
+      String path;
+      if (id != null) {
+        path = '/trainers/$trainerId/leads/$leadId/follow-ups/$id';
+      } else {
+        path = '/trainers/$trainerId/leads/$leadId/follow-ups';
       }
       var response = await _apiClient.post(
         postPath: path,
@@ -78,9 +129,34 @@ class LeadsService {
     }
   }
 
+  Future<LeadsResponse?> todayTrainerLeadsList(int? trainerId) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/trainers/$trainerId/leads/?follow_up_date=${DateTime.now().toServerYMD()}',
+      );
+      LeadsResponse leadsResponse = leadsResponseFromJson(jsonEncode(response));
+      return leadsResponse;
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Lead?> getLeadById({required String id}) async {
     try {
       var response = await _apiClient.get(queryPath: '/admin/leads/$id');
+      return Lead.fromJson(response["lead"]);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return null;
+  }
+
+  Future<Lead?> getTrainerLeadById(
+      {required int trainerId, required String id}) async {
+    try {
+      var response =
+          await _apiClient.get(queryPath: '/trainers/$trainerId/leads/$id');
       return Lead.fromJson(response["lead"]);
     } catch (e) {
       debugPrint(e.toString());
@@ -111,10 +187,46 @@ class LeadsService {
     }
   }
 
+  Future<LeadsResponse?> getTrainerLeadList(
+      {required int trainerId,
+      int? branchId,
+      int? batchId,
+      String? date,
+      String? leadStatus,
+      String? searchQuery,
+      required int pageNo}) async {
+    try {
+      var response = await _apiClient.get(
+          queryPath: date == null
+              ? searchQuery == '' || searchQuery == null
+                  ? '/trainers/$trainerId/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&page=$pageNo'
+                  : '/trainers/$trainerId/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&search=$searchQuery&page=$pageNo'
+              : searchQuery == '' || searchQuery == null
+                  ? '/trainers/$trainerId/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&follow_up_date=$date&page=$pageNo'
+                  : '/trainers/$trainerId/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&search=$searchQuery&follow_up_date=$date&page=$pageNo');
+      return leadsResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
   Future<LeadsResponse?> getLeadLists({required int pageNo}) async {
     try {
       var response =
           await _apiClient.get(queryPath: '/admin/leads/?page=$pageNo');
+      return leadsResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  Future<LeadsResponse?> getTrainerLeadLists(
+      {required int pageNo, required int trainerId}) async {
+    try {
+      var response = await _apiClient.get(
+          queryPath: '/trainers/$trainerId/leads/?page=$pageNo');
       return leadsResponseFromJson(jsonEncode(response));
     } catch (e) {
       log(e.toString());

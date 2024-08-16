@@ -301,7 +301,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Leads',
-      route: '/leads',
+      route: '/leads-trainer',
       asset: Assets.leads,
       color: Color(0xFF6100FF),
     ),

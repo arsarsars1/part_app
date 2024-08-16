@@ -254,6 +254,23 @@ class BranchCubit extends Cubit<BranchState> {
     }
   }
 
+  Future getAssignable({bool clean = false, int? trainerId}) async {
+    if (clean) {
+      _trainers.clear();
+      emit(TrainersLoading());
+    } else {
+      emit(TrainersLoading(pagination: true));
+    }
+
+    var temp = await TrainerService().getAssignable(trainerId: trainerId);
+    if (temp?.status == 1) {
+      _trainers.addAll(temp!.assignable);
+      emit(TrainersLoaded());
+    } else {
+      emit(TrainersFailed('Failed to get the assignable list'));
+    }
+  }
+
   Future getBatchClassesOfDate({
     required String batchId,
     required String branchId,

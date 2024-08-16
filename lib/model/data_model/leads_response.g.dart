@@ -12,12 +12,16 @@ _$LeadsResponseImpl _$$LeadsResponseImplFromJson(Map<String, dynamic> json) =>
       leads: json['leads'] == null
           ? null
           : Leads.fromJson(json['leads'] as Map<String, dynamic>),
+      lead: json['lead'] == null
+          ? null
+          : Lead.fromJson(json['lead'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$LeadsResponseImplToJson(_$LeadsResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'leads': instance.leads,
+      'lead': instance.lead,
     };
 
 _$LeadsImpl _$$LeadsImplFromJson(Map<String, dynamic> json) => _$LeadsImpl(
