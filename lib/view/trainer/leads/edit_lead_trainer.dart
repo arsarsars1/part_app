@@ -220,6 +220,7 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
                       },
                     ),
                     WhatsappCheckButton(
+                      isMandatory: false,
                       initialValue: whatsappNumber,
                       selected: whatsappNumber == null,
                       onChange: (value) {
@@ -230,27 +231,27 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    CommonField(
-                      initialValue: cubit.selectedLead?.email,
-                      inputType: TextInputType.emailAddress,
-                      length: 50,
-                      title: 'Email ID',
-                      hint: 'Eg: contact@polestar.com',
-                      capitalization: TextCapitalization.none,
-                      // validator: (value) {
-                      //   if (value == null || value.toString().isEmpty) {
-                      //     return 'Please enter email';
-                      //   } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                      //     return 'Invalid email address.';
-                      //   } else {
-                      //     return null;
-                      //   }
-                      // },
-                      onChange: (value) {
-                        email = value;
-                      },
-                    ),
-                    const SizedBox(height: 20),
+                    // CommonField(
+                    //   initialValue: cubit.selectedLead?.email,
+                    //   inputType: TextInputType.emailAddress,
+                    //   length: 50,
+                    //   title: 'Email ID',
+                    //   hint: 'Eg: contact@polestar.com',
+                    //   capitalization: TextCapitalization.none,
+                    //   // validator: (value) {
+                    //   //   if (value == null || value.toString().isEmpty) {
+                    //   //     return 'Please enter email';
+                    //   //   } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                    //   //     return 'Invalid email address.';
+                    //   //   } else {
+                    //   //     return null;
+                    //   //   }
+                    //   // },
+                    //   onChange: (value) {
+                    //     email = value;
+                    //   },
+                    // ),
+                    // const SizedBox(height: 20),
                     BranchField(
                       isMandatory: false,
                       initialBranch: cubit.selectedLead?.branchId,

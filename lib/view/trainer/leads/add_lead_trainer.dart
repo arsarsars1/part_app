@@ -172,6 +172,7 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
                     },
                   ),
                   WhatsappCheckButton(
+                    isMandatory: false,
                     onChange: (value) {
                       whatsappNumber = null;
                     },
@@ -182,29 +183,29 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
                   const SizedBox(
                     height: 20,
                   ),
-                  CommonField(
-                    initialValue: email,
-                    inputType: TextInputType.emailAddress,
-                    length: 50,
-                    title: 'Email ID',
-                    hint: 'Eg: contact@polestar.com',
-                    capitalization: TextCapitalization.none,
-                    // validator: (value) {
-                    //   if (value == null || value.toString().isEmpty) {
-                    //     return 'Please enter email';
-                    //   } else if (!RegExp(emailRegex).hasMatch(value!)) {
-                    //     return 'Invalid email address.';
-                    //   } else {
-                    //     return null;
-                    //   }
-                    // },
-                    onChange: (value) {
-                      email = value;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  // CommonField(
+                  //   initialValue: email,
+                  //   inputType: TextInputType.emailAddress,
+                  //   length: 50,
+                  //   title: 'Email ID',
+                  //   hint: 'Eg: contact@polestar.com',
+                  //   capitalization: TextCapitalization.none,
+                  //   // validator: (value) {
+                  //   //   if (value == null || value.toString().isEmpty) {
+                  //   //     return 'Please enter email';
+                  //   //   } else if (!RegExp(emailRegex).hasMatch(value!)) {
+                  //   //     return 'Invalid email address.';
+                  //   //   } else {
+                  //   //     return null;
+                  //   //   }
+                  //   // },
+                  //   onChange: (value) {
+                  //     email = value;
+                  //   },
+                  // ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
                   BranchField(
                     isMandatory: false,
                     onSelect: (value) {

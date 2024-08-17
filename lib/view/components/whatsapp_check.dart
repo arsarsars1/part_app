@@ -8,13 +8,16 @@ class WhatsappCheckButton extends StatefulWidget {
   final ValueChanged<String> onNumberChange;
   final String? initialValue;
   final bool selected;
+  final bool isMandatory;
 
-  const WhatsappCheckButton(
-      {super.key,
-      required this.onChange,
-      required this.onNumberChange,
-      this.initialValue,
-      this.selected = false});
+  const WhatsappCheckButton({
+    super.key,
+    required this.onChange,
+    required this.onNumberChange,
+    this.initialValue,
+    this.selected = false,
+    this.isMandatory = true,
+  });
 
   @override
   State<WhatsappCheckButton> createState() => _WhatsappCheckButtonState();
@@ -78,16 +81,18 @@ class _WhatsappCheckButtonState extends State<WhatsappCheckButton> {
             : CommonField(
                 phoneField: true,
                 initialValue: widget.initialValue,
-                validator: (value) {
-                  if (value == null || value.toString().isEmpty) {
-                    return 'Please enter Whatsapp number.';
-                  } else if (value.toString().length < 10) {
-                    return 'Invalid Whatsapp number.';
-                  }
-                  return null;
-                },
+                validator: widget.isMandatory
+                    ? (value) {
+                        if (value == null || value.toString().isEmpty) {
+                          return 'Please enter Whatsapp number.';
+                        } else if (value.toString().length < 10) {
+                          return 'Invalid Whatsapp number.';
+                        }
+                        return null;
+                      }
+                    : null,
                 inputType: TextInputType.phone,
-                title: 'Whatsapp Phone Number *',
+                title: 'Whatsapp Phone Number ${widget.isMandatory ? '*' : ""}',
                 onChange: (value) {
                   widget.onNumberChange(value);
                   if (value.length >= 10) {
