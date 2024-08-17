@@ -11,6 +11,7 @@ class ProfilePicture extends StatefulWidget {
   final ValueChanged<File> onChange;
   final ValueChanged<File> onAvatar;
   final String? imageUrl;
+  final bool showEdit;
 
   const ProfilePicture({
     super.key,
@@ -18,6 +19,7 @@ class ProfilePicture extends StatefulWidget {
     required this.onChange,
     required this.onAvatar,
     this.imageUrl,
+    this.showEdit = true,
   });
 
   @override
@@ -72,36 +74,37 @@ class _ProfilePictureState extends State<ProfilePicture> {
                     : const SizedBox.shrink()
                 : Image.file(file!),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: InkWell(
-              onTap: () {
-                ImagePickerDialog(context).open(onSelect: (File value) {
-                  setState(() {
-                    file = value;
+          if (widget.showEdit)
+            Align(
+              alignment: Alignment.bottomRight,
+              child: InkWell(
+                onTap: () {
+                  ImagePickerDialog(context).open(onSelect: (File value) {
+                    setState(() {
+                      file = value;
+                    });
+                    widget.onChange(file!);
                   });
-                  widget.onChange(file!);
-                });
-              },
-              child: Container(
-                width: 24.w,
-                height: 24.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.black54,
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 2,
+                },
+                child: Container(
+                  width: 24.w,
+                  height: 24.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.black54,
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 2,
+                    ),
                   ),
-                ),
-                child: const Icon(
-                  Icons.edit_outlined,
-                  size: 16,
-                  color: Colors.white,
+                  child: const Icon(
+                    Icons.edit_outlined,
+                    size: 16,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          ),
         ]),
       ),
     );

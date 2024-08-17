@@ -37,14 +37,20 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      fetchLead();
+    });
+  }
+
+  fetchLead({bool getStatus = true}) {
     AuthCubit? authCubit = context.read<AuthCubit>();
     trainerId = authCubit.user?.trainerDetail?[authCubit.trainerIndex].id ?? 0;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {});
-      var lead = context.read<LeadsCubit>();
-      lead.getTrainerLeadsLists(trainerId: trainerId, clean: true);
-      lead.getLeadStatuses();
-    });
+    var lead = context.read<LeadsCubit>();
+    lead.getTrainerLeadsLists(trainerId: trainerId, clean: true);
+    lead.getLeadStatuses();
+    if (getStatus) {
+      lead.getLeadsLists(clean: true);
+    }
   }
 
   @override
@@ -89,16 +95,39 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                     SafeArea(
                       child: SizedBox(
                         height: kToolbarHeight,
-                        child: Text(
-                          'Filter',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .appBarTheme
-                              .titleTextStyle
-                              ?.copyWith(
-                                color: Colors.white,
-                                fontSize: 16,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Filter',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .appBarTheme
+                                    .titleTextStyle
+                                    ?.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
                               ),
+                            ),
+                            // IconButton(
+                            //     onPressed: () {
+                            //       setState(() {
+                            //         leadStatus = null;
+                            //         branchId = null;
+                            //         batchController.clear();
+                            //         date = null;
+                            //         query = null;
+                            //       });
+                            //       fetchLead(getStatus: false);
+                            //
+                            //       scaffoldKey.currentState?.closeDrawer();
+                            //     },
+                            //     icon: const Icon(
+                            //       Icons.filter_alt_off,
+                            //       color: Colors.white,
+                            //     ))
+                          ],
                         ),
                       ),
                     ),
@@ -169,6 +198,7 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                     ),
                     SizedBox(height: 20.h),
                     BranchField(
+                      clearInitial: true,
                       onSelect: (value) {
                         setState(() {
                           branchId = value;
@@ -324,7 +354,6 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                       height: 16,
                     ),
                     CommonField(
-                      disabled: batch == null,
                       title: 'Search',
                       hint: 'Search By Name or Phone Number',
                       onChange: (value) {

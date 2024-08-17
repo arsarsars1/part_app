@@ -61,6 +61,7 @@ class _LeadTrainerDetailsState extends State<LeadTrainerDetails> {
                 children: [
                   Center(
                     child: ProfilePicture(
+                      showEdit: false,
                       imageUrl: cubit.lead?.profilePic != "" &&
                               cubit.lead?.profilePic != null
                           ? '${F.baseUrl}/admin/images/lead/${cubit.lead?.id}'
@@ -78,7 +79,7 @@ class _LeadTrainerDetailsState extends State<LeadTrainerDetails> {
                   ),
                   Center(
                     child: Text(
-                      '${cubit.lead?.name} *',
+                      cubit.lead?.name ?? "Not Available",
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
@@ -91,7 +92,7 @@ class _LeadTrainerDetailsState extends State<LeadTrainerDetails> {
                   ),
                   Center(
                     child: Text(
-                      '${cubit.lead?.leadStatus}',
+                      cubit.lead?.leadStatus ?? "Not Available",
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
@@ -112,7 +113,7 @@ class _LeadTrainerDetailsState extends State<LeadTrainerDetails> {
                             Theme.of(context).textTheme.bodyLarge?.copyWith(),
                       ),
                       Text(
-                        '${cubit.lead?.assignedTo?.name}',
+                        cubit.lead?.assignedTo?.name ?? "Not Available",
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -146,7 +147,8 @@ class _LeadTrainerDetailsState extends State<LeadTrainerDetails> {
                           children: [
                             TitledText(
                               title: 'Status *',
-                              subText: '${cubit.lead?.leadStatus}',
+                              subText:
+                                  cubit.lead?.leadStatus ?? "Not Available",
                             ),
                             GestureDetector(
                               onTap: () {
@@ -176,21 +178,22 @@ class _LeadTrainerDetailsState extends State<LeadTrainerDetails> {
                         ),
                         TitledText(
                           title: 'Mobile No *',
-                          subText: '${cubit.lead?.mobileNo}',
+                          subText: cubit.lead?.mobileNo ?? "Not Available",
                         ),
                         if (cubit.lead?.whatsapp != null)
                           TitledText(
                             title: 'Whatsapp No',
-                            subText: '${cubit.lead?.whatsapp}',
+                            subText:
+                                '${cubit.lead?.whatsapp ?? "Not Available"}',
                           ),
                         TitledText(
                           title: 'Age',
-                          subText: '${cubit.lead?.age}',
+                          subText: cubit.lead?.age ?? "Not Available",
                         ),
 
                         TitledText(
                           title: 'Gender',
-                          subText: '${cubit.lead?.gender}',
+                          subText: cubit.lead?.gender ?? "Not Available",
                         ),
                         // TitledText(
                         //   title: 'Email Id',
@@ -198,11 +201,13 @@ class _LeadTrainerDetailsState extends State<LeadTrainerDetails> {
                         // ),
                         TitledText(
                           title: 'Branch',
-                          subText: '${cubit.lead?.branch?.branchName}',
+                          subText:
+                              cubit.lead?.branch?.branchName ?? "Not Available",
                         ),
                         TitledText(
                           title: 'Batch',
-                          subText: '${cubit.lead?.batch?.batchName}',
+                          subText:
+                              cubit.lead?.batch?.batchName ?? "Not Available",
                         ),
                       ],
                     ),
@@ -210,159 +215,177 @@ class _LeadTrainerDetailsState extends State<LeadTrainerDetails> {
                   SizedBox(
                     height: 16.h,
                   ),
-                  if ((cubit.lead?.followUps ?? []).isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Follow up Details',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge
-                              ?.copyWith(fontWeight: FontWeight.w700),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Follow up Details',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge
+                            ?.copyWith(fontWeight: FontWeight.w700),
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      Center(
+                        child: Button(
+                          height: 35.h,
+                          onTap: () {
+                            cubit.selectedFollowUp = null;
+                            Navigator.pushNamed(
+                                context, LeadTrainerFollowUpDetails.route);
+                          },
+                          title: 'Add New FollowUp',
                         ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        Center(
-                          child: Button(
-                            height: 35.h,
-                            onTap: () {
-                              cubit.selectedFollowUp = null;
-                              Navigator.pushNamed(
-                                  context, LeadTrainerFollowUpDetails.route);
-                            },
-                            title: 'Add New FollowUp',
-                          ),
-                        ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: cubit.lead?.followUps?.length,
-                          itemBuilder: (context, index) {
-                            FollowUp? followup = cubit.lead?.followUps?[index];
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.liteDark,
-                                  borderRadius: BorderRadius.circular(4),
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      ((cubit.lead?.followUps ?? []).isEmpty)
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'No follow up available',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(fontWeight: FontWeight.w700),
                                 ),
-                                padding: const EdgeInsets.all(16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                              ],
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: cubit.lead?.followUps?.length,
+                              itemBuilder: (context, index) {
+                                FollowUp? followup =
+                                    cubit.lead?.followUps?[index];
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.liteDark,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    padding: const EdgeInsets.all(16),
+                                    child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Column(
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Follow Up Date And Time',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge
+                                                      ?.copyWith(
+                                                        color: AppColors
+                                                            .primaryColor,
+                                                        fontSize: 12,
+                                                      ),
+                                                ),
+                                                SizedBox(
+                                                  height: 8.h,
+                                                ),
+                                                Text(
+                                                    '${followup?.followUpDate?.toDDMMMYYY()}, ${followup?.followUpTime?.toAmPM()}'),
+                                              ],
+                                            ),
+                                            // TitledText(
+                                            //   title: 'Follow Up Date And Time',
+                                            //   subText:
+                                            //       '${followup?.followUpDate?.toDDMMMYYY()}, ${followup?.followUpTime?.toAmPM()}',
+                                            // ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                cubit.selectedFollowUp =
+                                                    followup;
+                                                Navigator.pushNamed(
+                                                    context,
+                                                    LeadTrainerFollowUpDetails
+                                                        .route);
+                                              },
+                                              child: Container(
+                                                width: 24.w,
+                                                height: 24.w,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.black54,
+                                                  border: Border.all(
+                                                    color: Colors.white,
+                                                    width: 2,
+                                                  ),
+                                                ),
+                                                child: const Icon(
+                                                  Icons.edit_outlined,
+                                                  size: 16,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 5.h,
+                                        ),
+                                        Row(
+                                          children: [
                                             Text(
-                                              'Follow Up Date And Time',
+                                              'Followup Status:  ',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyLarge
-                                                  ?.copyWith(
-                                                    color:
-                                                        AppColors.primaryColor,
-                                                    fontSize: 12,
-                                                  ),
-                                            ),
-                                            SizedBox(
-                                              height: 8.h,
+                                                  ?.copyWith(),
                                             ),
                                             Text(
-                                                '${followup?.followUpDate?.toDDMMMYYY()}, ${followup?.followUpTime?.toAmPM()}'),
+                                                followup?.followUpStatus ??
+                                                    "Not Available"
+                                                // == 'Pending'
+                                                // ? 'Upcoming'
+                                                // : 'Completed'
+                                                ,
+                                                textAlign: TextAlign.center,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                                // ?.copyWith(
+                                                //   color: followup
+                                                //               ?.followUpStatus ==
+                                                //           'Pending'
+                                                //       ? AppColors.primaryColor
+                                                //       : AppColors.green,
+                                                // ),
+                                                ),
                                           ],
                                         ),
-                                        // TitledText(
-                                        //   title: 'Follow Up Date And Time',
-                                        //   subText:
-                                        //       '${followup?.followUpDate?.toDDMMMYYY()}, ${followup?.followUpTime?.toAmPM()}',
-                                        // ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            cubit.selectedFollowUp = followup;
-                                            Navigator.pushNamed(
-                                                context,
-                                                LeadTrainerFollowUpDetails
-                                                    .route);
-                                          },
-                                          child: Container(
-                                            width: 24.w,
-                                            height: 24.w,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.black54,
-                                              border: Border.all(
-                                                color: Colors.white,
-                                                width: 2,
-                                              ),
-                                            ),
-                                            child: const Icon(
-                                              Icons.edit_outlined,
-                                              size: 16,
-                                              color: Colors.white,
-                                            ),
-                                          ),
+                                        SizedBox(height: 15.h),
+                                        TitledText(
+                                          title: 'Comments',
+                                          subText:
+                                              '${followup?.followUpComment ?? 'No Comment Added'}',
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
-                                      height: 5.h,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'Followup Status:  ',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(),
-                                        ),
-                                        Text(
-                                          followup?.followUpStatus ?? ""
-                                          // == 'Pending'
-                                          // ? 'Upcoming'
-                                          // : 'Completed'
-                                          ,
-                                          textAlign: TextAlign.center,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                color:
-                                                    followup?.followUpStatus ==
-                                                            'Pending'
-                                                        ? AppColors.primaryColor
-                                                        : AppColors.green,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 15.h),
-                                    TitledText(
-                                      title: 'Comments',
-                                      subText:
-                                          '${followup?.followUpComment ?? 'No Comment Added'}',
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                    ],
+                  ),
                 ],
               ),
             ),

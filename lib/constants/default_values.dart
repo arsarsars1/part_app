@@ -184,6 +184,19 @@ class DefaultValues {
     ),
   ];
 
+  static List<DropDownItem> leadFollowUpStatus = [
+    const DropDownItem(
+      id: 'Pending',
+      title: 'Pending',
+      item: 'Pending',
+    ),
+    const DropDownItem(
+      id: 'Completed',
+      title: 'Completed',
+      item: 'Completed',
+    ),
+  ];
+
   static const dashboardItems = [
     DashboardItem(
       title: 'Students',

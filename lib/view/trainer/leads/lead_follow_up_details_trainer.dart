@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
 import 'package:part_app/model/data_model/leads_response.dart';
@@ -60,6 +59,9 @@ class _LeadTrainerFollowUpDetailsState
       date = dateController.text;
       comments = selectedLead.followUpComment.toString().isNotEmpty
           ? selectedLead.followUpComment
+          : null;
+      status = selectedLead.followUpStatus.toString().isNotEmpty
+          ? selectedLead.followUpStatus
           : null;
     }
   }
@@ -189,7 +191,18 @@ class _LeadTrainerFollowUpDetailsState
                       length: 50,
                       maxLines: 1,
                       dropDown: true,
-                      dropDownItems: DefaultValues.leadStatus,
+                      defaultItem: cubit.selectedFollowUp != null &&
+                              cubit.selectedFollowUp!.followUpStatus
+                                  .toString()
+                                  .isNotEmpty
+                          ? DefaultValues.leadFollowUpStatus
+                              .where((test) =>
+                                  test.title ==
+                                  cubit.selectedFollowUp!.followUpStatus
+                                      .toString())
+                              .first
+                          : null,
+                      dropDownItems: DefaultValues.leadFollowUpStatus,
                       textInputAction: TextInputAction.next,
                       onChange: (value) {
                         status = value.title;
@@ -207,8 +220,10 @@ class _LeadTrainerFollowUpDetailsState
                           if (formKey.currentState!.validate()) {
                             LeadRequest request = LeadRequest(
                               leadStatus: status,
-                              followUpDate: convertDateString(date ?? ""),
-                              followUpTime: convertTo24HourFormat(time ?? ""),
+                              followUpDate:
+                                  LeadUtils().convertDateString(date ?? ""),
+                              followUpTime:
+                                  LeadUtils().convertTo24HourFormat(time ?? ""),
                               followUpComment: comments,
                               assignedToId: trainer?.id,
                               assignedToType: r'\App\Models\TrainerDetail',
@@ -242,43 +257,6 @@ class _LeadTrainerFollowUpDetailsState
         ),
       ),
     );
-  }
-
-  String convertDateString(String dateString) {
-    DateTime dateTime;
-
-    try {
-      DateFormat inputFormat1 = DateFormat('d MMMM, yyyy');
-      dateTime = inputFormat1.parse(dateString);
-    } catch (e) {
-      DateFormat inputFormat2 = DateFormat('yyyy-MM-dd');
-      dateTime = inputFormat2.parse(dateString);
-    }
-
-    // Define the output format
-    DateFormat outputFormat = DateFormat('yyyy-MM-dd');
-
-    // Convert the DateTime object to the desired output format
-    String formattedDate = outputFormat.format(dateTime);
-
-    return formattedDate;
-  }
-
-  String convertTo24HourFormat(String time) {
-    try {
-      final DateFormat inputFormat12Hour = DateFormat.jm();
-      final DateTime dateTime = inputFormat12Hour.parse(time);
-      final DateFormat outputFormat = DateFormat('HH:mm');
-      return outputFormat.format(dateTime);
-    } catch (e) {
-      try {
-        final DateFormat inputFormat24Hour = DateFormat('HH:mm');
-        final DateTime dateTime = inputFormat24Hour.parse(time);
-        return inputFormat24Hour.format(dateTime);
-      } catch (e) {
-        throw FormatException("Invalid time format: $time");
-      }
-    }
   }
 
   void datePicker() {

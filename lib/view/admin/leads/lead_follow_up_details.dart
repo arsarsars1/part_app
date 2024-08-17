@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
@@ -60,6 +59,9 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
       date = dateController.text;
       comments = selectedLead.followUpComment.toString().isNotEmpty
           ? selectedLead.followUpComment
+          : null;
+      status = selectedLead.followUpStatus.toString().isNotEmpty
+          ? selectedLead.followUpStatus
           : null;
     }
   }
@@ -184,7 +186,18 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
                       length: 50,
                       maxLines: 1,
                       dropDown: true,
-                      dropDownItems: DefaultValues.leadStatus,
+                      defaultItem: cubit.selectedFollowUp != null &&
+                              cubit.selectedFollowUp!.followUpStatus
+                                  .toString()
+                                  .isNotEmpty
+                          ? DefaultValues.leadFollowUpStatus
+                              .where((test) =>
+                                  test.title ==
+                                  cubit.selectedFollowUp!.followUpStatus
+                                      .toString())
+                              .first
+                          : null,
+                      dropDownItems: DefaultValues.leadFollowUpStatus,
                       textInputAction: TextInputAction.next,
                       onChange: (value) {
                         status = value.title;
@@ -203,8 +216,10 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
                             LeadRequest request = LeadRequest(
                               batchId: batchId?.id,
                               leadStatus: status,
-                              followUpDate: convertDateString(date ?? ""),
-                              followUpTime: convertTo24HourFormat(time ?? ""),
+                              followUpDate:
+                                  LeadUtils().convertDateString(date ?? ""),
+                              followUpTime:
+                                  LeadUtils().convertTo24HourFormat(time ?? ""),
                               followUpComment: comments,
                               assignedToId: trainer?.id,
                               assignedToType: r'\App\Models\TrainerDetail',
@@ -233,36 +248,6 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
         ),
       ),
     );
-  }
-
-  String convertDateString(String dateString) {
-    DateTime dateTime;
-
-    try {
-      DateFormat inputFormat1 = DateFormat('d MMMM, yyyy');
-      dateTime = inputFormat1.parse(dateString);
-    } catch (e) {
-      DateFormat inputFormat2 = DateFormat('yyyy-MM-dd');
-      dateTime = inputFormat2.parse(dateString);
-    }
-
-    // Define the output format
-    DateFormat outputFormat = DateFormat('yyyy-MM-dd');
-
-    // Convert the DateTime object to the desired output format
-    String formattedDate = outputFormat.format(dateTime);
-
-    return formattedDate;
-  }
-
-  String convertTo24HourFormat(String time) {
-    final DateFormat inputFormat = DateFormat.jm(); // For 12-hour format
-    final DateFormat outputFormat = DateFormat('HH:mm'); // For 24-hour format
-
-    final DateTime dateTime = inputFormat.parse(time);
-    final String convertedTime = outputFormat.format(dateTime);
-
-    return convertedTime;
   }
 
   // method to get the date for [ followup date ]
@@ -339,10 +324,7 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
     ).then((value) {
       if (value != null) {
         final localizations = MaterialLocalizations.of(context);
-        final formattedTimeOfDay = localizations.formatTimeOfDay(
-          value,
-          alwaysUse24HourFormat: true,
-        );
+        final formattedTimeOfDay = localizations.formatTimeOfDay(value);
         time = formattedTimeOfDay;
         timeController.text = formattedTimeOfDay;
       }
