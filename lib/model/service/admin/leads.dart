@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:part_app/model/data_model/chart_data_model.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
 import 'package:part_app/model/data_model/lead_statuses.dart';
@@ -146,6 +147,19 @@ class LeadsService {
     try {
       var response = await _apiClient.get(queryPath: '/admin/leads/$id');
       return Lead.fromJson(response["lead"]);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return null;
+  }
+
+  Future<ChartDataModel?> getChartData({int? trainerId}) async {
+    try {
+      var response = await _apiClient.get(
+          queryPath: trainerId != null
+              ? "/trainers/$trainerId/leads/chart-data"
+              : '/admin/leads/chart-data');
+      return chartDataModelFromJson(jsonEncode(response));
     } catch (e) {
       debugPrint(e.toString());
     }

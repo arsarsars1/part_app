@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_app/constants/assets.dart';
+import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/trainer/leads/add_lead_trainer.dart';
 import 'package:part_app/view/trainer/leads/all_followups_view_trainer.dart';
 import 'package:part_app/view/trainer/leads/todays_followup_view_trainer.dart';
+import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
 
 class LeadsViewTrainer extends StatefulWidget {
@@ -16,6 +17,19 @@ class LeadsViewTrainer extends StatefulWidget {
 }
 
 class _LeadsViewTrainerState extends State<LeadsViewTrainer> {
+  @override
+  void initState() {
+    var cubit = context.read<LeadsCubit>();
+    AuthCubit? authCubit = context.read<AuthCubit>();
+    int trainerId =
+        authCubit.user?.trainerDetail?[authCubit.trainerIndex].id ?? 0;
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      cubit.getChartData(trainerId: trainerId);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,40 +230,90 @@ class _LeadsViewTrainerState extends State<LeadsViewTrainer> {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              context.read<LeadsCubit>().leads.clear();
-              Navigator.pushNamed(context, TodayTrainerFollowView.route);
-            },
-            child: Container(
-              margin: EdgeInsets.all(16.r),
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              height: 90.h,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                gradient: const LinearGradient(
-                  colors: [
-                    Color(0xFFC6C6C6),
-                    Color(0xFFffffff),
-                    Color(0xFFffffff),
-                  ],
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Today\'s Follow Up',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
+          BlocListener<LeadsCubit, LeadsState>(
+            listener: (context, state) {},
+            child: BlocBuilder<LeadsCubit, LeadsState>(
+              builder: (context, state) {
+                var cubit = context.read<LeadsCubit>();
+                // if (state is CreatingLead) {
+                //   return const Center(
+                //     child: CircularProgressIndicator(),
+                //   );
+                // }
+                return GestureDetector(
+                  onTap: () {
+                    cubit.leads.clear();
+                    Navigator.pushNamed(context, TodayTrainerFollowView.route);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(16.r),
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    height: 90.h,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xFFC6C6C6),
+                          Color(0xFFffffff),
+                          Color(0xFFffffff),
+                        ],
+                      ),
+                    ),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Today\'s Follow Up',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                if (cubit.chartDataModel != null &&
+                                    cubit.chartDataModel?.todaysFollowUp != 0)
+                                  Container(
+                                    height: 18.r,
+                                    width: 18.r,
+                                    padding: const EdgeInsets.all(2),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: AppColors.primaryColor,
+                                    ),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 8),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Center(
+                                        child: Text(
+                                          "${cubit.chartDataModel?.todaysFollowUp ?? ""}",
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ]),
+                          Image.asset(Assets.todayFollowUp),
+                        ]),
                   ),
-                  Image.asset(Assets.todayFollowUp),
-                ],
-              ),
+                );
+              },
             ),
           ),
           GestureDetector(

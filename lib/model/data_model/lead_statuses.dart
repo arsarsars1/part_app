@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final leadsStatuses = leadsStatusesFromJson(jsonString);
-
 import 'dart:convert';
 
 LeadsStatuses leadsStatusesFromJson(String str) =>
@@ -37,23 +33,27 @@ class LeadsStatuses {
 class LeadStatus {
   int? id;
   String? leadStatus;
+  int? leadsCount;
   String? slug;
 
   LeadStatus({
     this.id,
     this.leadStatus,
+    this.leadsCount,
     this.slug,
   });
 
   factory LeadStatus.fromJson(Map<String, dynamic> json) => LeadStatus(
         id: json["id"],
         leadStatus: json["lead_status"],
+        leadsCount: json["leads_count"],
         slug: json["slug"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "lead_status": leadStatus,
+        "leads_count": leadsCount,
         "slug": slug,
       };
 }

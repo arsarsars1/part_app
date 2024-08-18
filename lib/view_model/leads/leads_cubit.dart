@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
+import 'package:part_app/model/data_model/chart_data_model.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
 import 'package:part_app/model/data_model/lead_statuses.dart';
@@ -20,6 +21,7 @@ class LeadsCubit extends Cubit<LeadsState> {
   String? nextPageUrl = '';
   List<LeadStatus?>? _statuses = [];
   Lead? selectedLead, lead;
+  ChartDataModel? chartDataModel;
   FollowUp? selectedFollowUp;
 
   List<Lead?> get leads => _leads;
@@ -352,6 +354,20 @@ class LeadsCubit extends Cubit<LeadsState> {
       lead = temp;
       emit(FetchedLead());
     } else {
+      emit(FetchingLeadFailed("Error Fetching the lead"));
+    }
+  }
+
+  Future getChartData({int? trainerId}) async {
+    chartDataModel = null;
+    emit(FetchingLead());
+    ChartDataModel? response = await _api.getChartData(trainerId: trainerId);
+
+    if (response?.status == 1) {
+      chartDataModel = response;
+      emit(FetchedLead());
+    } else {
+      chartDataModel = null;
       emit(FetchingLeadFailed("Error Fetching the lead"));
     }
   }
