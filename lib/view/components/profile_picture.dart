@@ -69,10 +69,16 @@ class _ProfilePictureState extends State<ProfilePicture> {
                 ? widget.imageUrl != null
                     ? CachedImage(
                         widget.imageUrl!,
+                        width: 70.w,
                         height: MediaQuery.of(context).size.width * 0.75,
                       ).image()
                     : const SizedBox.shrink()
-                : Image.file(file!),
+                : Image.file(
+                    file!,
+                    fit: BoxFit.cover,
+                    width: 70.w,
+                    height: 70.w,
+                  ),
           ),
           if (widget.showEdit)
             Align(

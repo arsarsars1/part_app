@@ -432,6 +432,7 @@ class AuthCubit extends Cubit<AuthState> {
       required int trainerId,
       required String url}) async {
     // emit(UpdatingUser());
+    await clearCache(url);
     MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
     Map<String, dynamic> request = {
       'profile_pic': picFile,

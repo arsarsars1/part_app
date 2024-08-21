@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_base/data_base.dart';
@@ -8,11 +8,13 @@ import 'package:part_app/model/service/api.dart';
 class CachedImage {
   final String imageUrl;
   final double? height;
+  final double? width;
   final BoxFit fit;
 
   CachedImage(
     this.imageUrl, {
     this.height,
+    this.width,
     this.fit = BoxFit.cover,
   });
 
@@ -43,6 +45,7 @@ class CachedImage {
     String cleanUrl = removeVersionParameter(imageUrl);
     return CachedNetworkImage(
       height: height,
+      width: width,
       imageUrl: cleanUrl,
       cacheKey: cleanUrl,
       fit: fit,
@@ -65,6 +68,7 @@ class CachedImage {
     String cleanUrl = removeVersionParameter(imageUrl);
     return CachedNetworkImage(
       height: height,
+      width: width,
       cacheKey: cleanUrl,
       imageUrl: cleanUrl,
       fit: fit,
