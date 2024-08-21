@@ -278,8 +278,7 @@ class _LeadsViewTrainerState extends State<LeadsViewTrainer> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                 ),
-                                if (cubit.chartDataModel != null &&
-                                    cubit.chartDataModel?.todaysFollowUp != 0)
+                                if (cubit.chartDataModel != null)
                                   Container(
                                     height: 18.r,
                                     width: 18.r,
