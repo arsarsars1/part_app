@@ -426,8 +426,8 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                           doSearch(true);
                         } else {
                           query = value;
-                          doSearch(true);
                         }
+                        doSearch(true);
                       },
                       onSubmit: (value) {
                         if (value.isEmpty) {
