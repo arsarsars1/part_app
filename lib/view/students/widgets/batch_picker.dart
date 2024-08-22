@@ -38,15 +38,15 @@ class _BatchPickerState extends State<BatchPicker> {
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        doSearch(null);
+        doSearch(null, false);
       }
     });
   }
 
-  doSearch(String? search) {
+  doSearch(String? search, bool clean) {
     if (widget.isTrainer) {
       context.read<BatchCubit>().getBatchesByStatusForTrainer(
-          clean: true,
+          clean: clean,
           trainerId: widget.trainerId,
           branchId: widget.branchId,
           branchSearch: false,
@@ -54,7 +54,7 @@ class _BatchPickerState extends State<BatchPicker> {
           search: search);
     } else {
       context.read<BatchCubit>().getBatchesByStatus(
-          clean: true,
+          clean: clean,
           status: widget.status,
           branchId: widget.branchId,
           branchSearch: widget.branchSearch,
@@ -122,51 +122,58 @@ class _BatchPickerState extends State<BatchPicker> {
                   } else {
                     query = value;
                   }
-                  doSearch(query);
+                  doSearch(query, true);
                 },
                 textInputAction: TextInputAction.search,
               ),
               const Divider(
                 color: Colors.white24,
               ),
-              state is FetchingBatches
-                  ? const LoadingView(color: Colors.transparent)
-                  : cubit.batches.isEmpty
-                      ? const Center(
-                          child: Text('Sorry, No batches found.'),
-                        )
-                      : ListView.builder(
-                          controller: scrollController,
-                          shrinkWrap: true,
-                          itemCount: cubit.batches.length,
-                          itemBuilder: (context, index) {
-                            BatchModel batch = cubit.batches[index];
-                            return ListTile(
-                              onTap: () {
-                                Navigator.pop(context);
-                                widget.onSelect(batch);
-                              },
-                              title: Text(
-                                batch.name,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      fontSize: 15,
-                                    ),
-                              ),
-                              subtitle: Text(
-                                '${batch.courseName}, ${batch.subjectName}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: AppColors.primaryColor,
-                                    ),
-                              ),
-                            );
-                          },
-                        ),
+              Expanded(
+                child: state is FetchingBatches &&
+                        (scrollController.hasClients &&
+                                scrollController.position.pixels ==
+                                    scrollController
+                                        .position.maxScrollExtent) ==
+                            false
+                    ? const LoadingView(color: Colors.transparent)
+                    : cubit.batches.isEmpty
+                        ? const Center(
+                            child: Text('Sorry, No batches found.'),
+                          )
+                        : ListView.builder(
+                            controller: scrollController,
+                            shrinkWrap: true,
+                            itemCount: cubit.batches.length,
+                            itemBuilder: (context, index) {
+                              BatchModel batch = cubit.batches[index];
+                              return ListTile(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  widget.onSelect(batch);
+                                },
+                                title: Text(
+                                  batch.name,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        fontSize: 15,
+                                      ),
+                                ),
+                                subtitle: Text(
+                                  '${batch.courseName}, ${batch.subjectName}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: AppColors.primaryColor,
+                                      ),
+                                ),
+                              );
+                            },
+                          ),
+              ),
               BlocBuilder<BatchCubit, BatchState>(
                 builder: (context, state) {
                   return AnimatedContainer(
