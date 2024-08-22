@@ -3,6 +3,7 @@ import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/fee/add_or_edit_fees.dart';
@@ -37,9 +38,10 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
   String? feeType;
   final _dropDownKey = GlobalKey<FormFieldState>();
   bool branchSelected = false;
+  TextEditingController branchController = TextEditingController();
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
-  TextEditingController feeTypeController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -223,29 +225,35 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                                 ],
                                 onChanged: (value) {
                                   if (value?.id == -1) {
+                                    selectedItem = null;
                                     branchSelected = false;
                                     batchController.text = 'All';
+                                    branchId = null;
+                                    batch = null;
+                                    feeType = null;
+                                    _dropDownKey.currentState?.reset();
+                                    cubit.batchInvoice.clear();
+                                    setState(() {});
                                   } else {
                                     branchSelected = true;
+                                    selectedItem = value;
                                     setState(() {
                                       branchId = value?.id;
                                     });
                                     batchController.clear();
-                                    feeTypeController.clear();
                                     dateController.clear();
                                     batch = null;
-                                    // feeType = null;
+                                    feeType = null;
                                     _dropDownKey.currentState?.reset();
                                     cubit.batchInvoice.clear();
-                                    feeTypeController.clear();
                                     context
                                         .read<BatchCubit>()
                                         .getBatchesByBranch(
                                           branchId: branchId,
                                           clean: true,
                                         );
-                                    doSearch(true);
                                   }
+                                  doSearch(true);
                                 },
                               ),
                             ],
@@ -265,7 +273,6 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                           );
                         } else {
                           dateController.clear();
-                          feeTypeController.clear();
                           feeType = null;
                           if (branchId != null) {
                             scaffoldKey.currentState?.showBottomSheet(
@@ -384,7 +391,13 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                       hint: 'Select a fee type',
                       dropDown: true,
                       dropDownItems: DefaultValues().feeType,
-                      defaultItem: DefaultValues().feeType[0],
+                      defaultItem:
+                          feeType != null && DefaultValues().feeType.isNotEmpty
+                              ? DefaultValues()
+                                  .feeType
+                                  .where((test) => test.id == feeType)
+                                  .first
+                              : DefaultValues().feeType[0],
                       onChange: (value) {
                         feeType = value?.id;
                         doSearch(true);
@@ -404,7 +417,9 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                               year = value.year;
                               month = value.month;
                               finalDate = value;
+                              dateController.text = value.toMMMMYYYY();
                               cubit.batchInvoice.clear();
+                              setState(() {});
                               doSearch(true);
                             },
                             time: false,
@@ -420,6 +435,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                     CommonField(
                       title: 'Search',
                       hint: 'Search By Name or Phone Number',
+                      controller: searchController,
                       onChange: (value) {
                         if (value.isEmpty) {
                           query = null;

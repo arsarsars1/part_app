@@ -1,10 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/fee/components/trainer_app_fee_list_item.dart';
@@ -27,7 +26,6 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Timer? _debounce;
   String? status;
   int? branchId;
   String? query;
@@ -41,9 +39,11 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
   bool branchSelected = false;
   DropDownItem? selectedItem;
   BranchCubit? branchCubit;
+  TextEditingController branchController = TextEditingController();
   TextEditingController batchController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController feeTypeController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -78,14 +78,6 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
       }
     });
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    if (_debounce != null && _debounce!.isActive) {
-      _debounce!.cancel();
-    }
-    super.dispose();
   }
 
   @override
@@ -250,10 +242,18 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                                 ],
                                 onChanged: (value) {
                                   if (value?.id == -1) {
+                                    selectedItem = null;
                                     branchSelected = false;
                                     batchController.text = 'All';
+                                    branchId = null;
+                                    batch = null;
+                                    feeType = null;
+                                    _dropDownKey.currentState?.reset();
+                                    cubit.batchInvoice.clear();
+                                    setState(() {});
                                   } else {
                                     branchSelected = true;
+                                    selectedItem = value;
                                     setState(() {
                                       branchId = value?.id;
                                     });
@@ -364,7 +364,12 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                             dropdownColor: Theme.of(context)
                                 .inputDecorationTheme
                                 .fillColor,
-                            value: DefaultValues().feeType[0],
+                            value: feeType != null
+                                ? DefaultValues()
+                                    .feeType
+                                    .where((test) => test.id == feeType)
+                                    .first
+                                : DefaultValues().feeType[0],
                             decoration: const InputDecoration(
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 32),
@@ -420,7 +425,9 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                               year = value.year;
                               month = value.month;
                               finalDate = value;
+                              dateController.text = value.toMMMMYYYY();
                               cubit.batchInvoice.clear();
+                              setState(() {});
                               doSearch(true);
                             },
                             time: false,
@@ -436,22 +443,8 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                     CommonField(
                       title: 'Search',
                       hint: 'Search By Name or Phone Number',
-                      onChange: (value) {
-                        if (_debounce != null && _debounce!.isActive) {
-                          _debounce!.cancel();
-                        }
-                        if (value.isEmpty) {
-                          query = null;
-                        } else {
-                          query = value;
-                        }
-                        _debounce =
-                            Timer(const Duration(milliseconds: 500), () {
-                          if (value.length % 2 == 0) {
-                            doSearch(true);
-                          }
-                        });
-                      },
+                      controller: searchController,
+                      onChange: (value) {},
                       onSubmit: (value) {
                         if (value.isEmpty) {
                           query = null;
