@@ -248,10 +248,12 @@ class LeadsService {
     }
   }
 
-  Future<LeadsStatuses?> getLeadStatuses() async {
+  Future<LeadsStatuses?> getLeadStatuses({int? trainerId}) async {
     try {
       var response = await _apiClient.get(
-        queryPath: '/admin/lead-status',
+        queryPath: trainerId != null
+            ? "/trainers/$trainerId/lead-status"
+            : '/admin/lead-status',
       );
       LeadsStatuses leadsResponse = leadsStatusesFromJson(jsonEncode(response));
       return leadsResponse;

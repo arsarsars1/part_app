@@ -42,15 +42,12 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
     });
   }
 
-  fetchLead({bool getStatus = true}) {
+  fetchLead() {
     AuthCubit? authCubit = context.read<AuthCubit>();
     trainerId = authCubit.user?.trainerDetail?[authCubit.trainerIndex].id ?? 0;
     var lead = context.read<LeadsCubit>();
     lead.getTrainerLeadsLists(trainerId: trainerId, clean: true);
-    lead.getLeadStatuses();
-    if (getStatus) {
-      lead.getLeadsLists(clean: true);
-    }
+    lead.getLeadStatuses(trainerId: trainerId);
   }
 
   @override
@@ -197,7 +194,7 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                       ),
                     ),
                     SizedBox(height: 20.h),
-                    BranchField(
+                    TrainerAppBranchField(
                       clearInitial: true,
                       onSelect: (value) {
                         setState(() {
@@ -206,8 +203,9 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                         batchController.clear();
                         batch = null;
                         date = null;
-                        context.read<BatchCubit>().getBatchesByBranch(
+                        context.read<BatchCubit>().getBatchesByStatusForTrainer(
                               branchId: branchId,
+                              trainerId: trainerId,
                               clean: true,
                             );
                         cubit.leads.clear();
@@ -244,6 +242,8 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                               builder: (context) => Container(
                                 color: Colors.transparent,
                                 child: BatchPicker(
+                                  isTrainer: true,
+                                  trainerId: trainerId,
                                   branchId: branchId ?? 0,
                                   status: 'ongoing',
                                   onSelect: (value) {

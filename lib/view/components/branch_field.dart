@@ -42,7 +42,7 @@ class _BranchFieldState extends State<BranchField> {
           return const SizedBox();
         }
         return CommonField(
-          title: widget.title ?? 'Branch ${widget.isMandatory ? "*" : ""}',
+          title: widget.title ?? 'Branch${widget.isMandatory ? " *" : ""}',
           hint: 'Select Branch',
           dropDown: true,
           disabled: widget.isDisable,

@@ -34,6 +34,7 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
   String? assign;
   String? comments;
   Trainer? trainer;
+  int trainerId = 0;
 
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
@@ -47,7 +48,13 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
   @override
   void initState() {
     super.initState();
-    initializeValues();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AuthCubit? authCubit = context.read<AuthCubit>();
+      trainerId =
+          authCubit.user?.trainerDetail?[authCubit.trainerIndex].id ?? 0;
+      setState(() {});
+      initializeValues();
+    });
   }
 
   void initializeValues() {
@@ -252,15 +259,16 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
                     //   },
                     // ),
                     // const SizedBox(height: 20),
-                    BranchField(
+                    TrainerAppBranchField(
                       isMandatory: false,
                       initialBranch: cubit.selectedLead?.branchId,
                       onSelect: (value) {
-                        branchId = value;
-                        context.read<BatchCubit>().getBatchesByStatus(
-                              branchId: branchId,
+                        setState(() => branchId = value);
+                        context.read<BatchCubit>().getBatchesByStatusForTrainer(
+                              trainerId: trainerId,
+                              branchId: value,
                               clean: true,
-                              branchSearch: true,
+                              branchSearch: false,
                             );
                       },
                     ),
@@ -286,6 +294,8 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
                         scaffoldKey.currentState?.showBottomSheet(
                           backgroundColor: Colors.transparent,
                           (context) => BatchPicker(
+                            isTrainer: true,
+                            trainerId: trainerId,
                             branchId: branchId!,
                             status: '',
                             branchSearch: true,

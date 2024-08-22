@@ -5,15 +5,20 @@ import 'package:part_app/view_model/cubits.dart';
 class TrainerAppBranchField extends StatefulWidget {
   final ValueChanged<int?> onSelect;
   final int? initialBranch;
+  final bool isMandatory;
   final String? title;
   final bool isDisable;
+  final bool clearInitial;
 
-  const TrainerAppBranchField(
-      {super.key,
-      required this.onSelect,
-      this.initialBranch,
-      this.title,
-      this.isDisable = false});
+  const TrainerAppBranchField({
+    super.key,
+    required this.onSelect,
+    this.initialBranch,
+    this.title,
+    this.isMandatory = true,
+    this.isDisable = false,
+    this.clearInitial = false,
+  });
 
   @override
   State<TrainerAppBranchField> createState() => _TrainerAppBranchFieldState();
@@ -43,12 +48,14 @@ class _TrainerAppBranchFieldState extends State<TrainerAppBranchField> {
           return const SizedBox();
         }
         return CommonField(
-          title: widget.title ?? 'Branch *',
+          title: widget.title ?? 'Branch${widget.isMandatory ? " *" : ""}',
           hint: 'Select Branch',
           dropDown: true,
-          defaultItem: branchCubit.initialBranch(
-            branchCubit.firstBranch?.id,
-          ),
+          defaultItem: widget.clearInitial
+              ? null
+              : branchCubit.initialBranch(
+                  branchCubit.firstBranch?.id,
+                ),
           disabled: widget.isDisable,
           dropDownItems: branchCubit.dropDownBranches(),
           onChange: (value) {
@@ -56,12 +63,14 @@ class _TrainerAppBranchFieldState extends State<TrainerAppBranchField> {
               widget.onSelect(value.id);
             }
           },
-          validator: (value) {
-            if (value == null) {
-              return 'Please select branch.';
-            }
-            return null;
-          },
+          validator: widget.isMandatory
+              ? (value) {
+                  if (value == null) {
+                    return 'Please select branch.';
+                  }
+                  return null;
+                }
+              : null,
         );
       },
     );

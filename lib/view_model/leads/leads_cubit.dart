@@ -330,11 +330,12 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  void getLeadStatuses() async {
+  void getLeadStatuses({int? trainerId}) async {
     emit(FetchingLeadStatuses());
     try {
       _statuses?.clear();
-      LeadsStatuses? response = await _api.getLeadStatuses();
+      LeadsStatuses? response =
+          await _api.getLeadStatuses(trainerId: trainerId);
       if (response?.status == 1) {
         _statuses = response?.leadStatuses ?? [];
         emit(FetchedLeadStatuses());
