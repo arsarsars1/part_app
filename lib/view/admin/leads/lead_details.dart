@@ -33,13 +33,7 @@ class _LeadDetailsState extends State<LeadDetails> {
   Widget build(BuildContext context) {
     var cubit = context.read<LeadsCubit>();
     return Scaffold(
-      appBar: CommonBar(
-        title: 'Lead Details',
-        // onPressed: () async {
-        //   cubit.getLeadsLists(clean: true);
-        //   Navigator.pop(context);
-        // },
-      ),
+      appBar: const CommonBar(title: 'Lead Details'),
       body: BlocConsumer<LeadsCubit, LeadsState>(
         listener: (context, state) {
           if (state is FetchingLeadFailed) {
@@ -125,8 +119,8 @@ class _LeadDetailsState extends State<LeadDetails> {
                     height: 16.h,
                   ),
                   Launchers(
-                    phoneNo: '${cubit.lead?.mobileNo}',
-                    whatsappNo: '${cubit.lead?.whatsapp}',
+                    phoneNo: cubit.lead?.mobileNo ?? "",
+                    whatsappNo: cubit.lead?.whatsapp ?? "",
                     email: '',
                   ),
                   SizedBox(
@@ -151,6 +145,7 @@ class _LeadDetailsState extends State<LeadDetails> {
                             ),
                             GestureDetector(
                               onTap: () {
+                                cubit.selectedLead = cubit.lead;
                                 Navigator.pushNamed(context, EditLead.route);
                               },
                               child: Container(

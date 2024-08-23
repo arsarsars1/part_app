@@ -34,6 +34,7 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
   String? assign;
   AssignableTrainer? assignableTrainer;
   int trainerId = 0;
+  bool sameWhatsapp = false;
 
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
@@ -185,8 +186,15 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
                   ),
                   WhatsappCheckButton(
                     isMandatory: false,
+                    selected: sameWhatsapp,
                     onChange: (value) {
-                      whatsappNumber = null;
+                      sameWhatsapp = value;
+                      if (value) {
+                        whatsappNumber = mobileNumber;
+                      } else {
+                        whatsappNumber = null;
+                      }
+                      setState(() {});
                     },
                     onNumberChange: (value) {
                       whatsappNumber = value;
@@ -369,7 +377,8 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
                             name: name,
                             mobileNo: mobileNumber,
                             email: email,
-                            whatsappNo: whatsappNumber ?? mobileNumber,
+                            whatsappNo:
+                                sameWhatsapp ? mobileNumber : whatsappNumber,
                             gender: gender,
                             branchId: branchId,
                             batchId: batchId?.id,

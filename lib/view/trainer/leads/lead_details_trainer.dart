@@ -20,13 +20,13 @@ class LeadTrainerDetails extends StatefulWidget {
 }
 
 class _LeadTrainerDetailsState extends State<LeadTrainerDetails> {
-  int trainerId = 0;
   @override
   void initState() {
     var cubit = context.read<LeadsCubit>();
 
     AuthCubit? authCubit = context.read<AuthCubit>();
-    trainerId = authCubit.user?.trainerDetail?[authCubit.trainerIndex].id ?? 0;
+    int trainerId =
+        authCubit.user?.trainerDetail?[authCubit.trainerIndex].id ?? 0;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       cubit.getTrainerLeadById(
           id: "${cubit.selectedLead?.id}", trainerId: trainerId);
@@ -38,13 +38,7 @@ class _LeadTrainerDetailsState extends State<LeadTrainerDetails> {
   Widget build(BuildContext context) {
     var cubit = context.read<LeadsCubit>();
     return Scaffold(
-      appBar: CommonBar(
-        title: 'Lead Details',
-        // onPressed: () async {
-        //   cubit.getTrainerLeadsLists(trainerId: trainerId, clean: true);
-        //   Navigator.pop(context);
-        // },
-      ),
+      appBar: const CommonBar(title: 'Lead Details'),
       body: BlocConsumer<LeadsCubit, LeadsState>(
         listener: (context, state) {
           if (state is FetchingLeadFailed) {
@@ -130,8 +124,8 @@ class _LeadTrainerDetailsState extends State<LeadTrainerDetails> {
                     height: 16.h,
                   ),
                   Launchers(
-                    phoneNo: '${cubit.lead?.mobileNo}',
-                    whatsappNo: '${cubit.lead?.whatsapp}',
+                    phoneNo: cubit.lead?.mobileNo ?? "",
+                    whatsappNo: cubit.lead?.whatsapp ?? "",
                     email: '',
                   ),
                   SizedBox(

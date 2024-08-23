@@ -27,7 +27,7 @@ class LeadsCubit extends Cubit<LeadsState> {
   List<Lead?> get leads => _leads;
   List<LeadStatus?>? get statuses => _statuses;
 
-  void create(LeadRequest request) async {
+  Future<void> create(LeadRequest request) async {
     emit(CreatingLead());
     try {
       Common? common = await _api.create(request: request);
@@ -41,7 +41,7 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  void createTrainerLead(LeadRequest request, {int? idTrainer}) async {
+  Future<void> createTrainerLead(LeadRequest request, {int? idTrainer}) async {
     emit(CreatingLead());
     try {
       Common? common =
@@ -56,12 +56,12 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  void update(LeadRequest request, int? id) async {
+  Future<void> update(LeadRequest request, int? id) async {
     emit(CreatingLead());
     try {
       Common? common = await _api.update(request: request, id: id);
       if (common?.status == 1) {
-        selectedLead = Lead.fromJson(common!.toJson());
+        await getLeadById(id: "${selectedLead?.id}");
         emit(UpdatedLead());
       } else {
         emit(CreateLeadFailed('Failed to update Lead.'));
@@ -71,14 +71,15 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  void updateTrainerLead(LeadRequest request, int? id, int? trainerId) async {
+  Future<void> updateTrainerLead(
+      LeadRequest request, int? id, int? trainerId) async {
     emit(CreatingLead());
     try {
       LeadsResponse? common = await _api.updateTrainerLead(
           trainerId: trainerId, request: request, id: id);
       if (common?.status == 1) {
-        selectedLead = common!.lead;
-        lead = selectedLead;
+        await getTrainerLeadById(
+            id: "${selectedLead?.id}", trainerId: trainerId ?? 0);
         emit(UpdatedLead());
       } else {
         emit(CreateLeadFailed('Failed to update Lead.'));
@@ -88,7 +89,7 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  void todayLeadsList() async {
+  Future<void> todayLeadsList() async {
     emit(FetchingLeads());
     try {
       _leads.clear();
@@ -104,7 +105,7 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  void todayTrainerLeadsList(int? trainerId) async {
+  Future<void> todayTrainerLeadsList(int? trainerId) async {
     emit(FetchingLeads());
     try {
       _leads.clear();
@@ -167,7 +168,7 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  Future getLeadsList({
+  Future<void> getLeadsList({
     String? searchQuery,
     int? branchId,
     int? batchId,
@@ -327,7 +328,7 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  void getLeadStatuses({int? trainerId}) async {
+  Future<void> getLeadStatuses({int? trainerId}) async {
     emit(FetchingLeadStatuses());
     try {
       _statuses?.clear();
