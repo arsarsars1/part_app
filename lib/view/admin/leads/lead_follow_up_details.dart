@@ -131,7 +131,7 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
                     ),
                     const SizedBox(height: 20),
                     CommonField(
-                      title: 'Followup Date',
+                      title: 'Followup Date *',
                       hint: 'Please select date',
                       controller: dateController,
                       length: 50,
@@ -142,11 +142,11 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
                       },
                       textInputAction: TextInputAction.next,
                       onChange: (value) {},
-                      // validator: (value) {
-                      //   return value == null || value.toString().isEmpty
-                      //       ? 'Please select date'
-                      //       : null;
-                      // },
+                      validator: (value) {
+                        return value == null || value.toString().isEmpty
+                            ? 'Please select date'
+                            : null;
+                      },
                     ),
                     const SizedBox(height: 20),
                     CommonField(

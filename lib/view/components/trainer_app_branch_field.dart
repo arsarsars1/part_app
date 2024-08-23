@@ -25,16 +25,14 @@ class TrainerAppBranchField extends StatefulWidget {
 }
 
 class _TrainerAppBranchFieldState extends State<TrainerAppBranchField> {
-  AuthCubit? authCubit;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      authCubit = context.read<AuthCubit>();
+      AuthCubit? authCubit = context.read<AuthCubit>();
       context.read<BranchCubit>().getBranchesForTrainer(
-            trainerId: authCubit
-                    ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
-                0,
+            trainerId:
+                authCubit.user?.trainerDetail?[authCubit.trainerIndex].id ?? 0,
           );
     });
   }

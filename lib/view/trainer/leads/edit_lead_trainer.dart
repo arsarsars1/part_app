@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/assignable_model.dart';
-import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/components/lead_utils.dart';
 import 'package:part_app/view/components/whatsapp_check.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
+
+import '../../../model/data_model/leads_response.dart';
 
 class EditTrainerLead extends StatefulWidget {
   static const route = '/leads/edit-trainer';
@@ -27,7 +27,7 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
   String? mobileNumber;
   String? whatsappNumber;
   int? branchId;
-  BatchModel? batchId;
+  Batch? batchId;
   String? date;
   String? time;
   String? email;
@@ -76,7 +76,8 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
       mobileNumber = selectedLead.mobileNo;
       whatsappNumber = selectedLead.whatsapp;
       email = selectedLead.email;
-      branchId = selectedLead.batchId;
+      branchId = selectedLead.branchId;
+      batchId = selectedLead.batch;
       comments = selectedLead.followUps.isNotNullAndNotEmpty
           ? selectedLead.followUps![0].followUpComment
           : null;
@@ -300,7 +301,8 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
                             status: '',
                             branchSearch: true,
                             onSelect: (value) {
-                              batchId = value;
+                              batchId =
+                                  Batch(id: value.id, batchName: value.name);
                               batchController.text = value.name;
                             },
                           ),
@@ -312,88 +314,88 @@ class _EditTrainerLeadState extends State<EditTrainerLead> {
                       //       : null;
                       // },
                     ),
-                    const SizedBox(height: 20),
-                    CommonField(
-                      title: 'Followup Date',
-                      hint: 'Please select date',
-                      controller: dateController,
-                      length: 50,
-                      maxLines: 1,
-                      disabled: true,
-                      onTap: () {
-                        datePicker();
-                      },
-                      textInputAction: TextInputAction.next,
-                      onChange: (value) {},
-                      // validator: (value) {
-                      //   return value == null || value.toString().isEmpty
-                      //       ? 'Please select date'
-                      //       : null;
-                      // },
-                    ),
-                    const SizedBox(height: 20),
-                    CommonField(
-                      title: 'Followup time',
-                      hint: 'Please select time',
-                      controller: timeController,
-                      onTap: () {
-                        timePicker();
-                      },
-                      length: 50,
-                      maxLines: 1,
-                      disabled: true,
-                      textInputAction: TextInputAction.next,
-                      onChange: (value) {},
-                      // validator: (value) {
-                      //   return value == null || value.toString().isEmpty
-                      //       ? 'Please select time'
-                      //       : null;
-                      // },
-                    ),
-                    const SizedBox(height: 20),
-                    CommonField(
-                      controller: trainerController,
-                      title: 'Assign',
-                      hint: 'Please select Trainer or Branch Admin',
-                      maxLines: 1,
-                      disabled: true,
-                      onTap: () {
-                        AuthCubit? authCubit = context.read<AuthCubit>();
-                        int trainerId = authCubit.user
-                                ?.trainerDetail?[authCubit.trainerIndex].id ??
-                            0;
-                        LeadUtils().getAssignable(
-                          scaffoldKey,
-                          trainerId: trainerId,
-                          onSelect: (AssignableTrainer? trainer) {
-                            assignableTrainer = trainer;
-                            trainerController.text = trainer?.name ?? '';
-                          },
-                        );
-                      },
-                      textInputAction: TextInputAction.next,
-                      onChange: (value) {},
-                      // validator: (value) {
-                      //   return value == null || value.toString().isEmpty
-                      //       ? 'Please select trainer'
-                      //       : null;
-                      // },
-                    ),
-                    const SizedBox(height: 20),
-                    CommonField(
-                      title: 'Comments',
-                      verticalPadding: 10,
-                      hint: 'Enter Comments',
-                      initialValue: cubit.selectedLead != null &&
-                              cubit.selectedLead!.followUps.isNotNullAndNotEmpty
-                          ? cubit.selectedLead!.followUps![0].followUpComment
-                          : null,
-                      maxLines: 5,
-                      textInputAction: TextInputAction.next,
-                      onChange: (value) {
-                        comments = value;
-                      },
-                    ),
+                    // const SizedBox(height: 20),
+                    // CommonField(
+                    //   title: 'Followup Date',
+                    //   hint: 'Please select date',
+                    //   controller: dateController,
+                    //   length: 50,
+                    //   maxLines: 1,
+                    //   disabled: true,
+                    //   onTap: () {
+                    //     datePicker();
+                    //   },
+                    //   textInputAction: TextInputAction.next,
+                    //   onChange: (value) {},
+                    //   // validator: (value) {
+                    //   //   return value == null || value.toString().isEmpty
+                    //   //       ? 'Please select date'
+                    //   //       : null;
+                    //   // },
+                    // ),
+                    // const SizedBox(height: 20),
+                    // CommonField(
+                    //   title: 'Followup time',
+                    //   hint: 'Please select time',
+                    //   controller: timeController,
+                    //   onTap: () {
+                    //     timePicker();
+                    //   },
+                    //   length: 50,
+                    //   maxLines: 1,
+                    //   disabled: true,
+                    //   textInputAction: TextInputAction.next,
+                    //   onChange: (value) {},
+                    //   // validator: (value) {
+                    //   //   return value == null || value.toString().isEmpty
+                    //   //       ? 'Please select time'
+                    //   //       : null;
+                    //   // },
+                    // ),
+                    // const SizedBox(height: 20),
+                    // CommonField(
+                    //   controller: trainerController,
+                    //   title: 'Assign',
+                    //   hint: 'Please select Trainer or Branch Admin',
+                    //   maxLines: 1,
+                    //   disabled: true,
+                    //   onTap: () {
+                    //     AuthCubit? authCubit = context.read<AuthCubit>();
+                    //     int trainerId = authCubit.user
+                    //             ?.trainerDetail?[authCubit.trainerIndex].id ??
+                    //         0;
+                    //     LeadUtils().getAssignable(
+                    //       scaffoldKey,
+                    //       trainerId: trainerId,
+                    //       onSelect: (AssignableTrainer? trainer) {
+                    //         assignableTrainer = trainer;
+                    //         trainerController.text = trainer?.name ?? '';
+                    //       },
+                    //     );
+                    //   },
+                    //   textInputAction: TextInputAction.next,
+                    //   onChange: (value) {},
+                    //   // validator: (value) {
+                    //   //   return value == null || value.toString().isEmpty
+                    //   //       ? 'Please select trainer'
+                    //   //       : null;
+                    //   // },
+                    // ),
+                    // const SizedBox(height: 20),
+                    // CommonField(
+                    //   title: 'Comments',
+                    //   verticalPadding: 10,
+                    //   hint: 'Enter Comments',
+                    //   initialValue: cubit.selectedLead != null &&
+                    //           cubit.selectedLead!.followUps.isNotNullAndNotEmpty
+                    //       ? cubit.selectedLead!.followUps![0].followUpComment
+                    //       : null,
+                    //   maxLines: 5,
+                    //   textInputAction: TextInputAction.next,
+                    //   onChange: (value) {
+                    //     comments = value;
+                    //   },
+                    // ),
                     const SizedBox(height: 20),
                     Center(
                       child: Button(
