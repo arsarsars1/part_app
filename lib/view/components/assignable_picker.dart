@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/constants/constant.dart';
-import 'package:part_app/model/data_model/models.dart';
+import 'package:part_app/model/data_model/assignable_model.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -8,8 +8,8 @@ class AssignablePicker extends StatefulWidget {
   final int? trainerId;
   final List<int?> selectedTrainers;
 
-  final ValueChanged<List<Trainer?>> onSave;
-  final ValueChanged<Trainer?>? onSelect;
+  final ValueChanged<List<AssignableTrainer?>> onSave;
+  final ValueChanged<AssignableTrainer?>? onSelect;
 
   final bool multiPicker;
 
@@ -116,16 +116,18 @@ class _AssignablePickerState extends State<AssignablePicker> {
                   const Divider(
                     color: Colors.white24,
                   ),
-                  cubit.trainers != null && cubit.trainers!.isNotEmpty
+                  cubit.trainersAssignable != null &&
+                          cubit.trainersAssignable!.isNotEmpty
                       ? Expanded(
                           child: state is! TrainersLoaded
                               ? const LoadingView(color: Colors.transparent)
                               : ListView.builder(
                                   controller: scrollController,
                                   shrinkWrap: true,
-                                  itemCount: cubit.trainers!.length,
+                                  itemCount: cubit.trainersAssignable!.length,
                                   itemBuilder: (context, index) {
-                                    Trainer trainer = cubit.trainers![index];
+                                    AssignableTrainer trainer =
+                                        cubit.trainersAssignable![index];
                                     return ListTile(
                                       onTap: () {
                                         if (widget.onSelect != null) {
@@ -159,12 +161,12 @@ class _AssignablePickerState extends State<AssignablePicker> {
                                                         AppColors.primaryColor,
                                                   ),
                                             ),
-                                      leading: trainer.profilePic != null &&
-                                              trainer.profilePic!.isNotEmpty
-                                          ? UserImage(
-                                              profilePic: trainer.profilePic,
-                                            )
-                                          : null,
+                                      // leading: trainer.profilePic != null &&
+                                      //         trainer.profilePic!.isNotEmpty
+                                      //     ? UserImage(
+                                      //         profilePic: trainer.profilePic,
+                                      //       )
+                                      //     : null,
                                     );
                                   },
                                 ),
@@ -195,9 +197,10 @@ class _AssignablePickerState extends State<AssignablePicker> {
                       child: Button(
                         onTap: () {
                           var cubit = context.read<BranchCubit>();
-                          List<Trainer>? tempTrainers = cubit.trainers
-                              ?.where((element) => trainers
-                                  .contains(element.trainerDetail?[0].userId))
+                          List<AssignableTrainer>? tempTrainers = cubit
+                              .trainersAssignable
+                              ?.where(
+                                  (element) => trainers.contains(element.id))
                               .toList();
                           widget.onSave(tempTrainers ?? []);
                           Navigator.pop(context);

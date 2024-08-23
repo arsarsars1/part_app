@@ -97,6 +97,10 @@ extension DateExtension on DateTime {
   }
 }
 
+extension StringExtensions on String? {
+  bool isNotNullOrEmpty() => this != null && this!.isNotEmpty;
+}
+
 extension StringExtension on String {
   String currencyFormat() {
     return NumberFormat("#,##,###", "en_US").format(double.parse(this));

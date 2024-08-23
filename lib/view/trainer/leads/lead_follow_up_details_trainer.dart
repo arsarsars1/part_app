@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/constants/constant.dart';
+import 'package:part_app/model/data_model/assignable_model.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
 import 'package:part_app/model/data_model/leads_response.dart';
-import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/lead_utils.dart';
@@ -25,12 +25,13 @@ class _LeadTrainerFollowUpDetailsState
   String? time;
   String? assign;
   String? comments;
-  Trainer? trainer;
+  AssignableTrainer? assignableTrainer;
   FollowUp? followUp;
 
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController trainerController = TextEditingController();
+  TextEditingController commentController = TextEditingController();
   TextEditingController leadStatusController = TextEditingController();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -57,9 +58,11 @@ class _LeadTrainerFollowUpDetailsState
           ? selectedLead.followUpDate?.toDDMMMYYY() ?? ""
           : "";
       date = dateController.text;
-      comments = selectedLead.followUpComment.toString().isNotEmpty
-          ? selectedLead.followUpComment
-          : null;
+      commentController.text =
+          selectedLead.followUpComment.toString().isNotEmpty
+              ? selectedLead.followUpComment
+              : null;
+      comments = commentController.text;
       status = selectedLead.followUpStatus.toString().isNotEmpty
           ? selectedLead.followUpStatus
           : null;
@@ -117,8 +120,8 @@ class _LeadTrainerFollowUpDetailsState
                         LeadUtils().getAssignable(
                           scaffoldKey,
                           trainerId: trainerId,
-                          onSelect: (Trainer? trainer) {
-                            this.trainer = trainer;
+                          onSelect: (AssignableTrainer? trainer) {
+                            assignableTrainer = trainer;
                             trainerController.text = trainer?.name ?? '';
                           },
                         );
@@ -174,10 +177,7 @@ class _LeadTrainerFollowUpDetailsState
                       title: 'Comments',
                       verticalPadding: 10,
                       hint: 'Enter Comments',
-                      initialValue: cubit.selectedLead != null &&
-                              cubit.selectedLead!.followUps.isNotNullAndNotEmpty
-                          ? cubit.selectedLead!.followUps![0].followUpComment
-                          : null,
+                      controller: commentController,
                       maxLines: 5,
                       textInputAction: TextInputAction.next,
                       onChange: (value) {
@@ -193,8 +193,7 @@ class _LeadTrainerFollowUpDetailsState
                       dropDown: true,
                       defaultItem: cubit.selectedFollowUp != null &&
                               cubit.selectedFollowUp!.followUpStatus
-                                  .toString()
-                                  .isNotEmpty
+                                  .isNotNullOrEmpty()
                           ? DefaultValues.leadFollowUpStatus
                               .where((test) =>
                                   test.title ==
@@ -225,8 +224,8 @@ class _LeadTrainerFollowUpDetailsState
                               followUpTime:
                                   LeadUtils().convertTo24HourFormat(time ?? ""),
                               followUpComment: comments,
-                              assignedToId: trainer?.id,
-                              assignedToType: r'\App\Models\TrainerDetail',
+                              assignedToId: assignableTrainer?.id,
+                              assignedToType: assignableTrainer?.morphClass,
                             );
                             AuthCubit? authCubit = context.read<AuthCubit>();
                             int trainerId = authCubit

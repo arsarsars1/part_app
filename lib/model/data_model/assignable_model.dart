@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:part_app/model/data_model/trainer_response.dart';
-
 AssignableModel assignableModelFromJson(String str) =>
     AssignableModel.fromJson(json.decode(str));
 
@@ -13,7 +11,7 @@ String assignableModelToJson(AssignableModel data) =>
     json.encode(data.toJson());
 
 class AssignableModel {
-  List<Trainer> assignable;
+  List<AssignableTrainer> assignable;
   int status;
 
   AssignableModel({
@@ -23,8 +21,8 @@ class AssignableModel {
 
   factory AssignableModel.fromJson(Map<String, dynamic> json) =>
       AssignableModel(
-        assignable: List<Trainer>.from(
-            json["assignable"].map((x) => Trainer.fromJson(x))),
+        assignable: List<AssignableTrainer>.from(
+            json["assignable"].map((x) => AssignableTrainer.fromJson(x))),
         status: json["status"],
       );
 

@@ -33,8 +33,12 @@ class _LeadDetailsState extends State<LeadDetails> {
   Widget build(BuildContext context) {
     var cubit = context.read<LeadsCubit>();
     return Scaffold(
-      appBar: const CommonBar(
+      appBar: CommonBar(
         title: 'Lead Details',
+        // onPressed: () async {
+        //   cubit.getLeadsLists(clean: true);
+        //   Navigator.pop(context);
+        // },
       ),
       body: BlocConsumer<LeadsCubit, LeadsState>(
         listener: (context, state) {

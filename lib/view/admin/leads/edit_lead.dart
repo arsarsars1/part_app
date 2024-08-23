@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/constants/constant.dart';
+import 'package:part_app/model/data_model/assignable_model.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
-import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/lead_utils.dart';
@@ -34,7 +34,7 @@ class _EditLeadState extends State<EditLead> {
   String? email;
   String? assign;
   String? comments;
-  Trainer? trainer;
+  AssignableTrainer? assignableTrainer;
 
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
@@ -351,8 +351,8 @@ class _EditLeadState extends State<EditLead> {
                       onTap: () {
                         LeadUtils().getAssignable(
                           scaffoldKey,
-                          onSelect: (Trainer? trainer) {
-                            this.trainer = trainer;
+                          onSelect: (AssignableTrainer? trainer) {
+                            assignableTrainer = trainer;
                             trainerController.text = trainer?.name ?? '';
                           },
                         );
@@ -398,8 +398,8 @@ class _EditLeadState extends State<EditLead> {
                               followUpTime: time,
                               age: age,
                               followUpComment: comments,
-                              assignedToId: trainer?.id,
-                              assignedToType: r'\App\Models\TrainerDetail',
+                              assignedToId: assignableTrainer?.id,
+                              assignedToType: assignableTrainer?.morphClass,
                             );
 
                             var cubit = context.read<LeadsCubit>();

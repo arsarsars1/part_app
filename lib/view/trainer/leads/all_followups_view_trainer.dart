@@ -388,12 +388,7 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                                 onTap: () {
                                   cubit.selectedLead = singleLead;
                                   Navigator.pushNamed(
-                                          context, LeadTrainerDetails.route)
-                                      .then((onValue) {
-                                    var lead = context.read<LeadsCubit>();
-                                    lead.getTrainerLeadsLists(
-                                        clean: true, trainerId: trainerId);
-                                  });
+                                      context, LeadTrainerDetails.route);
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.symmetric(

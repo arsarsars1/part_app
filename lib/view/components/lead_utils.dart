@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:part_app/model/data_model/trainer_response.dart';
+import 'package:part_app/model/data_model/assignable_model.dart';
 import 'package:part_app/view/components/assignable_picker.dart';
 
 class LeadUtils {
   getAssignable(GlobalKey<ScaffoldState> scaffoldKey,
-      {ValueChanged<Trainer?>? onSelect, int? trainerId}) async {
+      {ValueChanged<AssignableTrainer?>? onSelect, int? trainerId}) async {
     scaffoldKey.currentState?.showBottomSheet(
       elevation: 10,
       backgroundColor: Colors.transparent,
@@ -13,7 +13,7 @@ class LeadUtils {
         trainerId: trainerId,
         multiPicker: false,
         selectedTrainers: const [],
-        onSave: (List<Trainer?> value) {},
+        onSave: (List<AssignableTrainer?> value) {},
         onSelect: onSelect,
       ),
     );

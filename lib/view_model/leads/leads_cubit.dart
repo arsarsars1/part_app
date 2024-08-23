@@ -124,16 +124,15 @@ class LeadsCubit extends Cubit<LeadsState> {
       LeadRequest request, int? leadId, int? id) async {
     emit(FetchingLeads());
     try {
-      _leads.clear();
       Common? response =
           await _api.updateFollowUp(request: request, leadId: leadId, id: id);
       if (response != null && response.status == 1) {
-        selectedFollowUp = FollowUp.fromJson(response.toJson());
-        if (id != null && selectedLead != null && selectedFollowUp != null) {
+        if (selectedLead != null) {
           await getLeadById(id: "${selectedLead?.id}");
+        }
+        if (id != null) {
           emit(UpdateFollowUpLead());
         } else {
-          await getLeadById(id: "${selectedLead?.id}");
           emit(CreatedFollowUpLead());
         }
       } else {
@@ -148,18 +147,16 @@ class LeadsCubit extends Cubit<LeadsState> {
       LeadRequest request, int? leadId, int? id, int trainerId) async {
     emit(FetchingLeads());
     try {
-      _leads.clear();
       Common? response = await _api.updateTrainerFollowUp(
           trainerId: trainerId, request: request, leadId: leadId, id: id);
       if (response != null && response.status == 1) {
-        selectedFollowUp = FollowUp.fromJson(response.toJson());
-        if (id != null && selectedLead != null && selectedFollowUp != null) {
+        if (selectedLead != null) {
           await getTrainerLeadById(
               id: "${selectedLead?.id}", trainerId: trainerId);
+        }
+        if (id != null) {
           emit(UpdateFollowUpLead());
         } else {
-          await getTrainerLeadById(
-              id: "${selectedLead?.id}", trainerId: trainerId);
           emit(CreatedFollowUpLead());
         }
       } else {

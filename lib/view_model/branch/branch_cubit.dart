@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_app/model/data_model/assignable_model.dart';
 import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/data_model/class_response.dart';
@@ -20,6 +21,7 @@ class BranchCubit extends Cubit<BranchState> {
 
   List<Branch> _branches = [];
   List<Trainer> _trainers = [];
+  List<AssignableTrainer> _trainersAssignable = [];
   List<ClassModel> _classes = [];
   List<ClassModel> _newClasses = [];
   Branch? firstBranch;
@@ -32,6 +34,8 @@ class BranchCubit extends Cubit<BranchState> {
       _branches.where((element) => element.isActive == 1).toList();
 
   List<Trainer>? get trainers => _trainers;
+
+  List<AssignableTrainer>? get trainersAssignable => _trainersAssignable;
 
   List<ClassModel>? get classes => _classes;
 
@@ -256,15 +260,15 @@ class BranchCubit extends Cubit<BranchState> {
 
   Future getAssignable({bool clean = false, int? trainerId}) async {
     if (clean) {
-      _trainers.clear();
+      _trainersAssignable.clear();
       emit(TrainersLoading());
     } else {
-      emit(TrainersLoading(pagination: true));
+      emit(TrainersLoading(pagination: false));
     }
 
     var temp = await TrainerService().getAssignable(trainerId: trainerId);
     if (temp?.status == 1) {
-      _trainers.addAll(temp!.assignable);
+      _trainersAssignable.addAll(temp!.assignable);
       emit(TrainersLoaded());
     } else {
       emit(TrainersFailed('Failed to get the assignable list'));

@@ -384,11 +384,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                                 onTap: () {
                                   cubit.selectedLead = singleLead;
                                   Navigator.pushNamed(
-                                          context, LeadDetails.route)
-                                      .then((onValue) {
-                                    var lead = context.read<LeadsCubit>();
-                                    lead.getLeadsLists(clean: true);
-                                  });
+                                      context, LeadDetails.route);
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.symmetric(
