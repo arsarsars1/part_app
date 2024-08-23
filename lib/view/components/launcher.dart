@@ -18,31 +18,57 @@ class Launcher {
     }
   }
 
-  static void openWhatsapp(
-      {required BuildContext context,
-      required String text,
-      required String number}) async {
-    var whatsapp = number; //+92xx enter like this
-    var whatsappURlAndroid = "whatsapp://send?phone=$whatsapp&text=$text";
-    var whatsappURLIos = "https://wa.me/$whatsapp?text=${Uri.tryParse(text)}";
+  static void openWhatsapp({
+    required BuildContext context,
+    required String text,
+    required String number,
+  }) async {
+    var whatsapp = number.startsWith('+') ? number : '+$number';
+    var encodedText = Uri.encodeComponent(text);
+    var whatsappURlAndroid =
+        "whatsapp://send?phone=$whatsapp&text=$encodedText";
+    var whatsappURLIos = "https://wa.me/$whatsapp?text=$encodedText";
+
     if (Platform.isIOS) {
-      // for iOS phone only
       if (await canLaunchUrl(Uri.parse(whatsappURLIos))) {
-        await launchUrl(Uri.parse(
-          whatsappURLIos,
-        ));
+        await launchUrl(Uri.parse(whatsappURLIos));
       } else {
-        Alert(context).show(message: "Whatsapp not installed");
+        Alert(context).show(message: "WhatsApp is not installed.");
       }
     } else {
-      // android , web
       if (await canLaunchUrl(Uri.parse(whatsappURlAndroid))) {
         await launchUrl(Uri.parse(whatsappURlAndroid));
       } else {
-        Alert(context).show(message: "Whatsapp not installed");
+        Alert(context).show(message: "WhatsApp is not installed.");
       }
     }
   }
+
+  // static void openWhatsapp(
+  //     {required BuildContext context,
+  //     required String text,
+  //     required String number}) async {
+  //   var whatsapp = number; //+92xx enter like this
+  //   var whatsappURlAndroid = "whatsapp://send?phone=$whatsapp&text=$text";
+  //   var whatsappURLIos = "https://wa.me/$whatsapp?text=${Uri.tryParse(text)}";
+  //   if (Platform.isIOS) {
+  //     // for iOS phone only
+  //     if (await canLaunchUrl(Uri.parse(whatsappURLIos))) {
+  //       await launchUrl(Uri.parse(
+  //         whatsappURLIos,
+  //       ));
+  //     } else {
+  //       Alert(context).show(message: "Whatsapp not installed");
+  //     }
+  //   } else {
+  //     // android , web
+  //     if (await canLaunchUrl(Uri.parse(whatsappURlAndroid))) {
+  //       await launchUrl(Uri.parse(whatsappURlAndroid));
+  //     } else {
+  //       Alert(context).show(message: "Whatsapp not installed");
+  //     }
+  //   }
+  // }
 
   static void openEmail({
     required BuildContext context,

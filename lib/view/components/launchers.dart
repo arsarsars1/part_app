@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/constants/constant.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/action_icon.dart';
 import 'package:part_app/view/components/launcher.dart';
 
@@ -37,8 +38,10 @@ class Launchers extends StatelessWidget {
           asset: Assets.whatsApp,
           color: const Color(0XFF00F260),
           onTap: () {
-            Launcher.openWhatsapp(
-                context: context, text: '', number: whatsappNo);
+            if (whatsappNo.isNotNullOrEmpty()) {
+              Launcher.openWhatsapp(
+                  context: context, text: '', number: whatsappNo);
+            }
           },
         ),
         if (email.isNotEmpty)
