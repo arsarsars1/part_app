@@ -34,7 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
         if (state is NetworkError) {
           AlertBox.showErrorAlert(context);
         } else if (state is UserAvailable) {
-          if (state.isMemberShip == false && Platform.isAndroid) {
+          if (state.isAdmin &&
+              state.isMemberShip == false &&
+              Platform.isAndroid) {
             Navigator.pushReplacementNamed(
               context,
               Membership.route,

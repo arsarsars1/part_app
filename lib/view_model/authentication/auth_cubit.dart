@@ -246,6 +246,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       if (user != null) {
         emit(UserAvailable(
+            isAdmin: user.adminDetail != null,
             isMemberShip: _user?.adminDetail?.academy?.membershipId != null,
             member: _user?.studentDetail != null));
       } else {
