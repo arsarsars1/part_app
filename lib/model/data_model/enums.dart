@@ -17,6 +17,13 @@ extension PhoneNumberCleaner on String {
         .replaceAll(PhoneNumberCharacter.openParen.char, '')
         .replaceAll(PhoneNumberCharacter.closeParen.char, '');
   }
+
+  String removeCountryCode(String code) {
+    if (startsWith(code)) {
+      return substring(code.length);
+    }
+    return this;
+  }
 }
 
 extension PhoneNumberCharacterExtension on PhoneNumberCharacter {
