@@ -3,6 +3,7 @@ import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAppBranchField extends StatefulWidget {
+  final EdgeInsets? contentPaddingField;
   final ValueChanged<int?> onSelect;
   final int? initialBranch;
   final bool isMandatory;
@@ -15,6 +16,7 @@ class TrainerAppBranchField extends StatefulWidget {
     required this.onSelect,
     this.initialBranch,
     this.title,
+    this.contentPaddingField,
     this.isMandatory = true,
     this.isDisable = false,
     this.clearInitial = false,
@@ -54,6 +56,7 @@ class _TrainerAppBranchFieldState extends State<TrainerAppBranchField> {
               : branchCubit.initialBranch(
                   branchCubit.firstBranch?.id,
                 ),
+          contentPaddingField: widget.contentPaddingField,
           disabled: widget.isDisable,
           dropDownItems: branchCubit.dropDownBranches(),
           onChange: (value) {

@@ -196,6 +196,8 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                     SizedBox(height: 20.h),
                     TrainerAppBranchField(
                       clearInitial: true,
+                      contentPaddingField:
+                          const EdgeInsets.symmetric(horizontal: 28),
                       onSelect: (value) {
                         setState(() {
                           branchId = value;
@@ -216,6 +218,8 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                     ),
                     CommonField(
                       controller: batchController,
+                      contentPaddingField:
+                          const EdgeInsets.symmetric(horizontal: 28),
                       onTap: () {
                         if (branchId != null) {
                           // if (_scaffoldKey.currentState != null && _scaffoldKey.currentState!.isDrawerOpen) {

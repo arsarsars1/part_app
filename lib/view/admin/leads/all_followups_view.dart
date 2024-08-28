@@ -195,6 +195,8 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                     SizedBox(height: 20.h),
                     BranchField(
                       clearInitial: true,
+                      contentPaddingField:
+                          const EdgeInsets.symmetric(horizontal: 28),
                       onSelect: (value) {
                         setState(() {
                           branchId = value;
@@ -261,6 +263,8 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                           );
                         }
                       },
+                      contentPaddingField:
+                          const EdgeInsets.symmetric(horizontal: 28),
                       disabled: true,
                       title: 'Batch *',
                       hint: 'Select Batch',

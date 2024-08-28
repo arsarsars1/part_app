@@ -29,6 +29,7 @@ class CommonField extends StatelessWidget {
   final FormFieldValidator? validator;
   final CrossAxisAlignment crossAxisAlignment;
   final EdgeInsets? padding;
+  final EdgeInsets? contentPaddingField;
   final FocusNode? node;
   final ValueChanged<String>? onSubmit;
   final bool showInfo;
@@ -57,6 +58,7 @@ class CommonField extends StatelessWidget {
     this.controller,
     this.inputType,
     this.textAlign,
+    this.contentPadding,
     this.textInputAction = TextInputAction.next,
     this.letterSpacing,
     this.suffixIcon,
@@ -70,7 +72,7 @@ class CommonField extends StatelessWidget {
     required this.onChange,
     this.disabled = false,
     this.onSubmit,
-    this.contentPadding,
+    this.contentPaddingField,
     this.prefixIcon,
     this.showInfo = false,
     this.capitalization = TextCapitalization.sentences,
@@ -119,8 +121,9 @@ class CommonField extends StatelessWidget {
                     dropdownColor:
                         Theme.of(context).inputDecorationTheme.fillColor,
                     value: selectedItem ?? defaultItem,
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 32),
+                    decoration: InputDecoration(
+                      contentPadding: contentPaddingField ??
+                          const EdgeInsets.symmetric(horizontal: 32),
                     ),
                     items: dropDownItems?.map((e) {
                       return DropdownMenuItem(
