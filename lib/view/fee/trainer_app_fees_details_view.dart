@@ -247,8 +247,10 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                                     batchController.text = 'All';
                                     branchId = null;
                                     batch = null;
-                                    feeType = null;
+                                    year = month =
+                                        finalDate = feeType = query = null;
                                     _dropDownKey.currentState?.reset();
+                                    searchController.clear();
                                     cubit.batchInvoice.clear();
                                     setState(() {});
                                   } else {
@@ -261,7 +263,6 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                                     feeTypeController.clear();
                                     dateController.clear();
                                     batch = null;
-                                    // feeType = null;
                                     _dropDownKey.currentState?.reset();
                                     cubit.batchInvoice.clear();
                                     feeTypeController.clear();
@@ -293,9 +294,6 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                     CommonField(
                       controller: batchController,
                       onTap: () {
-                        dateController.clear();
-                        feeTypeController.clear();
-                        feeType = null;
                         if (branchId != null) {
                           scaffoldKey.currentState?.showBottomSheet(
                             elevation: 10,
@@ -307,6 +305,13 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                                 batch = value;
                                 batchController.text = value.name;
                                 cubit.batchInvoice.clear();
+                                year =
+                                    month = finalDate = feeType = query = null;
+                                searchController.clear();
+                                dateController.clear();
+                                feeTypeController.clear();
+                                feeType = null;
+                                doSearch(true);
                                 // setState(() {});
                               },
                             ),
@@ -390,22 +395,12 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                               );
                             }).toList(),
                             onChanged: (value) {
-                              if (value?.id == 'monthly') {
-                                setState(() {
-                                  feeType = value?.id;
-                                  dateController.clear();
-                                  cubit.batchInvoice.clear();
-                                });
-                              } else {
-                                setState(() {
-                                  feeType = value?.id;
-                                  dateController.clear();
-                                  month = null;
-                                  year = null;
-                                  cubit.batchInvoice.clear();
-                                });
-                                doSearch(true);
-                              }
+                              dateController.clear();
+                              searchController.clear();
+                              year = month = finalDate = query = null;
+                              feeType = value?.id;
+                              cubit.batchInvoice.clear();
+                              doSearch(true);
                             },
                           ),
                         ],
@@ -420,6 +415,7 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                           ScheduleField(
                             title: 'Month, Year',
                             hint: 'Select month & year',
+                            initialValue: dateController.text,
                             dateMonth: true,
                             onDateSelect: (DateTime value) {
                               year = value.year;
@@ -427,6 +423,8 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                               finalDate = value;
                               dateController.text = value.toMMMMYYYY();
                               cubit.batchInvoice.clear();
+                              searchController.clear();
+                              query = null;
                               setState(() {});
                               doSearch(true);
                             },

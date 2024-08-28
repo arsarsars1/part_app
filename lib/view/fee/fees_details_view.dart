@@ -230,7 +230,10 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                                     batchController.text = 'All';
                                     branchId = null;
                                     batch = null;
-                                    feeType = null;
+                                    dateController.clear();
+                                    searchController.clear();
+                                    year = month =
+                                        finalDate = feeType = query = null;
                                     _dropDownKey.currentState?.reset();
                                     cubit.batchInvoice.clear();
                                     setState(() {});
@@ -242,8 +245,10 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                                     });
                                     batchController.clear();
                                     dateController.clear();
+                                    searchController.clear();
                                     batch = null;
-                                    feeType = null;
+                                    year = month =
+                                        finalDate = feeType = query = null;
                                     _dropDownKey.currentState?.reset();
                                     cubit.batchInvoice.clear();
                                     context
@@ -272,8 +277,6 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                             message: 'Please select Branch To Proceed',
                           );
                         } else {
-                          dateController.clear();
-                          feeType = null;
                           if (branchId != null) {
                             scaffoldKey.currentState?.showBottomSheet(
                               elevation: 10,
@@ -282,6 +285,10 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                                 branchId: branchId!,
                                 status: 'ongoing',
                                 onSelect: (value) {
+                                  year = month =
+                                      finalDate = feeType = query = null;
+                                  searchController.clear();
+                                  dateController.clear();
                                   batch = value;
                                   batchController.text = value.name;
                                   cubit.batchInvoice.clear();
@@ -400,6 +407,9 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                               : DefaultValues().feeType[0],
                       onChange: (value) {
                         feeType = value?.id;
+                        year = month = finalDate = query = null;
+                        searchController.clear();
+                        dateController.clear();
                         doSearch(true);
                       },
                     ),
@@ -412,6 +422,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                           ScheduleField(
                             title: 'Month, Year',
                             hint: 'Select month & year',
+                            initialValue: dateController.text,
                             dateMonth: true,
                             onDateSelect: (DateTime value) {
                               year = value.year;
@@ -419,6 +430,8 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                               finalDate = value;
                               dateController.text = value.toMMMMYYYY();
                               cubit.batchInvoice.clear();
+                              searchController.clear();
+                              query = null;
                               setState(() {});
                               doSearch(true);
                             },

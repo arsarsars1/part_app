@@ -3,8 +3,8 @@ import 'dart:developer';
 
 import 'package:part_app/model/data_model/admission_fee_invoice.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice.dart';
-import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
+import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/fee_detail_history.dart';
 import 'package:part_app/model/data_model/student_app_fee_detail_history.dart';
 import 'package:part_app/model/service/api_client.dart';
@@ -113,6 +113,12 @@ class FeeDetailsService {
         if ((feeType != null || feeType != 'all') &&
             (feeType == 'class' || feeType == 'monthly')) {
           queryPath += '&fee_type=$feeType';
+          if (month != null) {
+            queryPath += '&month=$month';
+          }
+          if (year != null) {
+            queryPath += '&year=$year';
+          }
           if (searchQuery == '' || searchQuery == null) {
             queryPath += '&page=$pageNo';
           } else {
@@ -131,6 +137,12 @@ class FeeDetailsService {
         if ((feeType != null || feeType != 'all') &&
             (feeType == 'class' || feeType == 'monthly')) {
           queryPath += 'fee_type=$feeType';
+          if (month != null) {
+            queryPath += '&month=$month';
+          }
+          if (year != null) {
+            queryPath += '&year=$year';
+          }
           if (searchQuery == '' || searchQuery == null) {
             queryPath += '&page=$pageNo';
           } else {
@@ -175,6 +187,12 @@ class FeeDetailsService {
         if ((feeType != null || feeType != 'all') &&
             (feeType == 'class' || feeType == 'monthly')) {
           queryPath += '&fee_type=$feeType';
+          if (month != null) {
+            queryPath += '&month=$month';
+          }
+          if (year != null) {
+            queryPath += '&year=$year';
+          }
           if (searchQuery == '' || searchQuery == null) {
             queryPath += '&page=$pageNo';
           } else {
@@ -193,6 +211,12 @@ class FeeDetailsService {
         if ((feeType != null || feeType != 'all') &&
             (feeType == 'class' || feeType == 'monthly')) {
           queryPath += 'fee_type=$feeType';
+          if (month != null) {
+            queryPath += '&month=$month';
+          }
+          if (year != null) {
+            queryPath += '&year=$year';
+          }
           if (searchQuery == '' || searchQuery == null) {
             queryPath += '&page=$pageNo';
           } else {
