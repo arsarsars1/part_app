@@ -47,7 +47,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FeeCubit>().clean();
-      doSearch(false);
+      doSearch(true);
       var branchCubit = context.read<BranchCubit>();
       branchCubit.getBranches();
       // branchId = branchCubit.firstBranch?.id;
@@ -436,15 +436,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                       title: 'Search',
                       hint: 'Search By Name or Phone Number',
                       controller: searchController,
-                      onChange: (value) {
-                        if (value.isEmpty) {
-                          query = null;
-                          doSearch(true);
-                        } else {
-                          query = value;
-                        }
-                        doSearch(true);
-                      },
+                      onChange: (value) {},
                       onSubmit: (value) {
                         if (value.isEmpty) {
                           query = null;
