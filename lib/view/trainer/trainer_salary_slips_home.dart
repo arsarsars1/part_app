@@ -141,14 +141,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
                     CommonField(
                       title: 'Search',
                       hint: 'Search By Name or Phone Number',
-                      onChange: (value) {
-                        if (value.isEmpty) {
-                          query = null;
-                        } else {
-                          query = value;
-                        }
-                        doSearch(true);
-                      },
+                      onChange: (value) {},
                       onSubmit: (value) {
                         if (value.isEmpty) {
                           query = null;
