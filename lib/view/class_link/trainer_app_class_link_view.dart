@@ -8,7 +8,6 @@ import 'package:part_app/view/batch/components/class_picker.dart';
 import 'package:part_app/view/batch/components/trainer_app_class_picker.dart';
 import 'package:part_app/view/class_link/trainer_app_class_link_list.dart';
 import 'package:part_app/view/class_link/trainer_app_edit_class_link.dart';
-import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
@@ -178,31 +177,35 @@ class _TrainerAppClassLinkViewState extends State<TrainerAppClassLinkView> {
                 SizedBox(
                   height: 20.h,
                 ),
-                BranchField(
+                TrainerAppBranchField(
                   onSelect: (value) {
-                    if (branchId != null) {
-                      AlertBox.showConfirmation(
-                        message:
-                            'Are your sure, that you need to change the branch',
-                        subMessage:
-                            'Note: Please be aware that when you change the branch, the underlying batch, date and selected class will be also cleared',
-                        buttonText: 'OK',
-                        onTap: () {
-                          Navigator.pop(context);
-                          setState(() {
-                            batch = null;
-                            batchController.text = "";
-                            dateController.text = "";
-                            selectedclass = null;
-                            date = null;
-                          });
-                        },
-                        hasClose: true,
-                        context,
-                      );
-                    }
+                    // if (branchId != null) {
+                    //   AlertBox.showConfirmation(
+                    //     message:
+                    //         'Are your sure, that you need to change the branch',
+                    //     subMessage:
+                    //         'Note: Please be aware that when you change the branch, the underlying batch, date and selected class will be also cleared',
+                    //     buttonText: 'OK',
+                    //     onTap: () {
+                    //       Navigator.pop(context);
+                    //       setState(() {
+                    //         batch = null;
+                    //         batchController.text = "";
+                    //         dateController.text = "";
+                    //         selectedclass = null;
+                    //         date = null;
+                    //       });
+                    //     },
+                    //     hasClose: true,
+                    //     context,
+                    //   );
+                    // }
                     setState(() {
                       branchId = value;
+                      batch = null;
+                      batchController.text = "";
+                      dateController.text = "";
+                      selectedclass = null;
                       date = null;
                     });
                     batchCubit.getBatchesByStatusForTrainer(
