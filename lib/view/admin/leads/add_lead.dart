@@ -216,7 +216,9 @@ class _AddLeadState extends State<AddLead> {
                   //   height: 20,
                   // ),
                   BranchField(
+                    clearInitial: true,
                     isMandatory: false,
+                    initialBranch: branchId,
                     onSelect: (value) {
                       branchId = value;
                       batchCubit.getBatchesByStatus(

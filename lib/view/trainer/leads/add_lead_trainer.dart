@@ -228,6 +228,8 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
                   // ),
                   TrainerAppBranchField(
                     isMandatory: false,
+                    clearInitial: true,
+                    initialBranch: branchId,
                     onSelect: (value) {
                       setState(() => branchId = value);
                       context.read<BatchCubit>().getBatchesByStatusForTrainer(
