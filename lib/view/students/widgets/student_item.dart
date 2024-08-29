@@ -8,10 +8,12 @@ import 'package:part_app/view/components/launcher.dart';
 import 'package:part_app/view/components/user_image.dart';
 
 class StudentItem extends StatelessWidget {
+  final int? trainerId;
   final StudentModel student;
   final VoidCallback onTap;
 
-  const StudentItem({super.key, required this.student, required this.onTap});
+  const StudentItem(
+      {super.key, required this.student, required this.onTap, this.trainerId});
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +38,13 @@ class StudentItem extends StatelessWidget {
                 children: [
                   UserImage(
                     profilePic: student.profilePic != ""
-                        ? '${F.baseUrl}'
-                            '/admin/images/student/'
-                            '${student.detailId}/${student.profilePic}'
+                        ? trainerId != null
+                            ? '${F.baseUrl}'
+                                '/trainers/$trainerId/images/student/'
+                                '${student.detailId}/${student.profilePic}'
+                            : '${F.baseUrl}'
+                                '/admin/images/student/'
+                                '${student.detailId}/${student.profilePic}'
                         : '',
                   ),
                   SizedBox(width: 16.w),

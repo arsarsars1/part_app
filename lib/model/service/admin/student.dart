@@ -85,12 +85,14 @@ class StudentService {
     }
   }
 
-  Future<StudentResponse?> updateStudent(
-      Map<String, dynamic> request, int? id) async {
+  Future<StudentResponse?> updateStudent(Map<String, dynamic> request, int? id,
+      {int? trainerId}) async {
     try {
       request.removeWhere((key, value) => value == null);
       var response = await _client.post(
-        postPath: '/admin/students/$id',
+        postPath: trainerId != null
+            ? '/trainers/$trainerId/students/$id'
+            : '/admin/students/$id',
         data: request,
         formData: true,
       );

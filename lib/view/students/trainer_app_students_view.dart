@@ -349,6 +349,12 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                                     StudentModel student =
                                         cubit.students![index];
                                     return StudentItem(
+                                      trainerId: authCubit
+                                              ?.user
+                                              ?.trainerDetail?[
+                                                  authCubit?.trainerIndex ?? 0]
+                                              .id ??
+                                          0,
                                       student: student,
                                       onTap: () {
                                         cubit.studentDetailsForTrainer(

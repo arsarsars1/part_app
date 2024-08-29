@@ -50,7 +50,8 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                 Center(
                   child: ProfilePicture(
                     imageUrl: details?.profilePic != ""
-                        ? '${F.baseUrl}/admin/images/student/${details?.id}'
+                        ? '${F.baseUrl}/trainers/${authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ?? 0}'
+                            '/images/student/${details?.id}'
                             '/${details?.profilePic}'
                         : details?.gender == "male"
                             ? "https://v1.partapp.in/images/avatars/avatar-5.png"
@@ -58,9 +59,15 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                     onEdit: () {},
                     onAvatar: (File value) {},
                     onChange: (File value) {
-                      context
-                          .read<StudentCubit>()
-                          .updateProfilePic(profilePic: value);
+                      context.read<StudentCubit>().updateProfilePic(
+                            profilePic: value,
+                            trainerId: authCubit
+                                    ?.user
+                                    ?.trainerDetail?[
+                                        authCubit?.trainerIndex ?? 0]
+                                    .id ??
+                                0,
+                          );
                     },
                   ),
                 ),

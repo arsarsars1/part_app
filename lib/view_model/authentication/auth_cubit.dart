@@ -475,6 +475,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future logout() async {
     try {
       await _authService.logout();
+      await DefaultCacheManager().emptyCache();
     } catch (e) {
       log("$e");
     }

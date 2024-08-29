@@ -219,7 +219,7 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
-  Future updateProfilePic({required File profilePic}) async {
+  Future updateProfilePic({required File profilePic, int? trainerId}) async {
     emit(UpdatingStudent());
     MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
     Map<String, dynamic> data = {
@@ -230,12 +230,15 @@ class StudentCubit extends Cubit<StudentState> {
     StudentResponse? response = await _studentService.updateStudent(
       data,
       _student?.studentDetail?[0].id,
+      trainerId: trainerId,
     );
     if (response?.status == 1) {
       _student = response?.student;
-      String url =
-          '${F.baseUrl}/admin/images/student/${_student?.studentDetail?[0].id}'
-          '/${_student?.studentDetail?[0].profilePic}';
+      String url = trainerId != null
+          ? '${F.baseUrl}/trainers/$trainerId/images/student/'
+              '${_student?.studentDetail?[0].id}/${_student?.studentDetail?[0].profilePic}'
+          : '${F.baseUrl}/admin/images/student/${_student?.studentDetail?[0].id}'
+              '/${_student?.studentDetail?[0].profilePic}';
       await CachedNetworkImage.evictFromCache(url);
       updateStudentsList();
       emit(UpdatedStudent());
