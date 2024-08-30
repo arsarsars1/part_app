@@ -186,14 +186,25 @@ class LeadsService {
       String? searchQuery,
       required int pageNo}) async {
     try {
-      var response = await _apiClient.get(
-          queryPath: date == null
-              ? searchQuery == '' || searchQuery == null
-                  ? '/admin/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&page=$pageNo'
-                  : '/admin/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&search=$searchQuery&page=$pageNo'
-              : searchQuery == '' || searchQuery == null
-                  ? '/admin/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&follow_up_date=$date&page=$pageNo'
-                  : '/admin/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&search=$searchQuery&follow_up_date=$date&page=$pageNo');
+      String path = '/admin/leads/?page=$pageNo';
+
+      if (branchId != null) {
+        path += '&branch_id=$branchId';
+      }
+      if (batchId != null) {
+        path += '&batch_id=$batchId';
+      }
+      if (leadStatus != null) {
+        path += '&lead_status=$leadStatus';
+      }
+      if (date != null) {
+        path += '&follow_up_date=$date';
+      }
+      if (searchQuery != null && searchQuery.isNotEmpty) {
+        path += '&search=$searchQuery';
+      }
+
+      var response = await _apiClient.get(queryPath: path);
       return leadsResponseFromJson(jsonEncode(response));
     } catch (e) {
       log(e.toString());
@@ -210,14 +221,25 @@ class LeadsService {
       String? searchQuery,
       required int pageNo}) async {
     try {
-      var response = await _apiClient.get(
-          queryPath: date == null
-              ? searchQuery == '' || searchQuery == null
-                  ? '/trainers/$trainerId/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&page=$pageNo'
-                  : '/trainers/$trainerId/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&search=$searchQuery&page=$pageNo'
-              : searchQuery == '' || searchQuery == null
-                  ? '/trainers/$trainerId/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&follow_up_date=$date&page=$pageNo'
-                  : '/trainers/$trainerId/leads/?branch_id=$branchId&batch_id=$batchId&lead_status=$leadStatus&search=$searchQuery&follow_up_date=$date&page=$pageNo');
+      String path = '/trainers/$trainerId/leads/?page=$pageNo';
+
+      if (branchId != null) {
+        path += '&branch_id=$branchId';
+      }
+      if (batchId != null) {
+        path += '&batch_id=$batchId';
+      }
+      if (leadStatus != null) {
+        path += '&lead_status=$leadStatus';
+      }
+      if (date != null) {
+        path += '&follow_up_date=$date';
+      }
+      if (searchQuery != null && searchQuery.isNotEmpty) {
+        path += '&search=$searchQuery';
+      }
+
+      var response = await _apiClient.get(queryPath: path);
       return leadsResponseFromJson(jsonEncode(response));
     } catch (e) {
       log(e.toString());

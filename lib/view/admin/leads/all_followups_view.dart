@@ -183,10 +183,11 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                               setState(() {
                                 leadStatus = value?.title;
                                 branchId = null;
+                                batch = null;
                                 batchController.clear();
                                 date = null;
-                                cubit.leads.clear();
                               });
+                              doSearch(true);
                             },
                           ),
                         ],
@@ -195,6 +196,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                     SizedBox(height: 20.h),
                     BranchField(
                       clearInitial: true,
+                      initialBranch: branchId,
                       contentPaddingField:
                           const EdgeInsets.symmetric(horizontal: 28),
                       onSelect: (value) {
@@ -247,8 +249,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                                   onSelect: (value) {
                                     batch = value;
                                     batchController.text = value.name;
-                                    cubit.leads.clear();
-                                    // setState(() {});
+                                    doSearch(true);
                                   },
                                 ),
                               ),
@@ -330,7 +331,6 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                                   await datePicker();
                                   dateController.text =
                                       date?.toDateString() ?? "";
-                                  cubit.leads.clear();
                                 },
                                 child: const Icon(
                                   Icons.calendar_month,
@@ -357,10 +357,10 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                       title: 'Search',
                       hint: 'Search By Name or Phone Number',
                       onChange: (value) {
-                        if (value.isEmpty) {
-                          query = null;
-                          doSearch(true);
-                        }
+                        // if (value.isEmpty) {
+                        //   query = null;
+                        //   doSearch(true);
+                        // }
                       },
                       onSubmit: (value) {
                         if (value.isEmpty) {

@@ -184,10 +184,11 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                               setState(() {
                                 leadStatus = value?.title;
                                 branchId = null;
+                                batch = null;
                                 batchController.clear();
                                 date = null;
-                                cubit.leads.clear();
                               });
+                              doSearch(true);
                             },
                           ),
                         ],
@@ -196,6 +197,7 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                     SizedBox(height: 20.h),
                     TrainerAppBranchField(
                       clearInitial: true,
+                      initialBranch: branchId,
                       contentPaddingField:
                           const EdgeInsets.symmetric(horizontal: 28),
                       onSelect: (value) {
@@ -253,8 +255,7 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                                   onSelect: (value) {
                                     batch = value;
                                     batchController.text = value.name;
-                                    cubit.leads.clear();
-                                    // setState(() {});
+                                    doSearch(true);
                                   },
                                 ),
                               ),
@@ -334,7 +335,6 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                                   await datePicker();
                                   dateController.text =
                                       date?.toDateString() ?? "";
-                                  cubit.leads.clear();
                                 },
                                 child: const Icon(
                                   Icons.calendar_month,
@@ -361,10 +361,10 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                       title: 'Search',
                       hint: 'Search By Name or Phone Number',
                       onChange: (value) {
-                        if (value.isEmpty) {
-                          query = null;
-                          doSearch(true);
-                        }
+                        //   if (value.isEmpty) {
+                        //     query = null;
+                        //     doSearch(true);
+                        //   }
                       },
                       onSubmit: (value) {
                         if (value.isEmpty) {
