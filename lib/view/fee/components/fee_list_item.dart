@@ -213,13 +213,18 @@ class _FeeListItemState extends State<FeeListItem> {
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  '${widget.student.courseName}, ${widget.student.subjectName}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(),
+                                Expanded(
+                                  child: Text(
+                                    '${widget.student.courseName}, ${widget.student.subjectName}',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 10.w,
