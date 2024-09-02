@@ -300,7 +300,7 @@ class _LeadsViewTrainerState extends State<LeadsViewTrainer> {
                                               .bodyLarge
                                               ?.copyWith(
                                                 color: Colors.black,
-                                                fontSize: 14,
+                                                fontSize: 12,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                         ),

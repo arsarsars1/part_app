@@ -193,7 +193,12 @@ class _LeadsState extends State<Leads> {
           //   ),
           // ),
           GestureDetector(
-            onTap: () => Navigator.pushNamed(context, AddLead.route),
+            onTap: () async {
+              await Navigator.pushNamed(context, AddLead.route);
+              if (context.mounted) {
+                context.read<LeadsCubit>().getChartData();
+              }
+            },
             child: Container(
               margin: EdgeInsets.all(16.r),
               padding: const EdgeInsets.only(left: 16, right: 16),
@@ -236,9 +241,12 @@ class _LeadsState extends State<Leads> {
                 //   );
                 // }
                 return GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     cubit.leads.clear();
-                    Navigator.pushNamed(context, TodayFollowView.route);
+                    await Navigator.pushNamed(context, TodayFollowView.route);
+                    if (context.mounted) {
+                      context.read<LeadsCubit>().getChartData();
+                    }
                   },
                   child: Container(
                     margin: EdgeInsets.all(16.r),
@@ -295,7 +303,7 @@ class _LeadsState extends State<Leads> {
                                               .bodyLarge
                                               ?.copyWith(
                                                 color: Colors.black,
-                                                fontSize: 14,
+                                                fontSize: 12,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                         ),
@@ -311,9 +319,12 @@ class _LeadsState extends State<Leads> {
             ),
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
               context.read<LeadsCubit>().leads.clear();
-              Navigator.pushNamed(context, AllFollowUpView.route);
+              await Navigator.pushNamed(context, AllFollowUpView.route);
+              if (context.mounted) {
+                context.read<LeadsCubit>().getChartData();
+              }
             },
             child: Container(
               margin: EdgeInsets.all(16.r),

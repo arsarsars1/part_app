@@ -145,14 +145,14 @@ class _AssignablePickerState extends State<AssignablePicker> {
                                                 }
                                                 setState(() {});
                                               },
-                                              title: trainer.name ?? 'NA',
+                                              title: trainer.name,
                                               selected: trainers.contains(
                                                 trainer.id,
                                               ),
                                               horizontalPadding: 0,
                                             )
                                           : Text(
-                                              trainer.name ?? 'NA',
+                                              trainer.name,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyLarge
