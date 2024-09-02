@@ -48,6 +48,7 @@ class LeadsCubit extends Cubit<LeadsState> {
       Common? common =
           await _api.createTrainerLead(request: request, idTrainer: idTrainer);
       if (common?.status == 1) {
+        // await _api.getChartData(trainerId: idTrainer);
         emit(CreatedLead());
       } else {
         emit(CreateLeadFailed(common?.message ?? 'Failed to create Lead.'));
@@ -82,6 +83,7 @@ class LeadsCubit extends Cubit<LeadsState> {
       if (common?.status == 1) {
         await getTrainerLeadById(
             id: "${selectedLead?.id}", trainerId: trainerId ?? 0);
+        // await _api.getChartData(trainerId: trainerId);
         emit(UpdatedLead());
       } else {
         emit(CreateLeadFailed('Failed to update Lead.'));
@@ -158,6 +160,7 @@ class LeadsCubit extends Cubit<LeadsState> {
           await getTrainerLeadById(
               id: "${selectedLead?.id}", trainerId: trainerId);
         }
+        // await _api.getChartData(trainerId: trainerId);
         if (id != null) {
           emit(UpdateFollowUpLead());
         } else {
