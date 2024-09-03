@@ -9,7 +9,6 @@ import 'package:lottie/lottie.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/membership/components/continue_button.dart';
-import 'package:part_app/view/membership/membership.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class SubscriptionSuccess extends StatelessWidget {
@@ -58,29 +57,29 @@ class SubscriptionSuccess extends StatelessWidget {
               if (academySuccess) {
                 /// The Platform condition check which is added below is added to remove the membership for ios
                 /// This will be removed in the future
-                if (Platform.isAndroid) {
+                // if (Platform.isAndroid) {
+                //   Navigator.pushNamedAndRemoveUntil(
+                //     context,
+                //     Membership.route,
+                //     (value) => false,
+                //   );
+                //   return;
+                // } else {
+                await context.read<MembershipCubit>().getMembership();
+                Future.delayed(const Duration(seconds: 3)).then((value) {
+                  context.read<MembershipCubit>().selectedMembership =
+                      context.read<MembershipCubit>().memberships.first;
+                  log('${context.read<MembershipCubit>().selectedMembership?.paymentType}   ${context.read<MembershipCubit>().selectedMembership?.period}');
+                  context
+                      .read<MembershipCubit>()
+                      .addMemberShip(paymentMethod: null);
                   Navigator.pushNamedAndRemoveUntil(
                     context,
-                    Membership.route,
+                    SwitchAccount.route,
                     (value) => false,
                   );
-                  return;
-                } else {
-                  await context.read<MembershipCubit>().getMembership();
-                  Future.delayed(const Duration(seconds: 3)).then((value) {
-                    context.read<MembershipCubit>().selectedMembership =
-                        context.read<MembershipCubit>().memberships.first;
-                    log('${context.read<MembershipCubit>().selectedMembership?.paymentType}   ${context.read<MembershipCubit>().selectedMembership?.period}');
-                    context
-                        .read<MembershipCubit>()
-                        .addMemberShip(paymentMethod: null);
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      SwitchAccount.route,
-                      (value) => false,
-                    );
-                  });
-                }
+                });
+                // }
               } else {
                 Navigator.pushNamedAndRemoveUntil(
                   context,

@@ -77,10 +77,6 @@ import 'package:part_app/view/manager/edit_salary.dart';
 import 'package:part_app/view/manager/manager_branches.dart';
 import 'package:part_app/view/manager/manager_details.dart';
 import 'package:part_app/view/manager/manager_page.dart';
-import 'package:part_app/view/membership/current_membership.dart';
-import 'package:part_app/view/membership/membership.dart';
-import 'package:part_app/view/membership/membership_home.dart';
-import 'package:part_app/view/membership/membership_home_ios.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
 import 'package:part_app/view/notifications/notification_screen.dart';
@@ -210,21 +206,21 @@ class RouteGenerator {
           builder: (_) => const AddBranchRegister(),
           settings: settings,
         );
-      case Membership.route:
-        return MaterialPageRoute(
-          builder: (_) => const Membership(),
-          settings: settings,
-        );
-      case MembershipHome.route:
-        return MaterialPageRoute(
-          builder: (_) => const MembershipHome(),
-          settings: settings,
-        );
-      case MembershipHomeIos.route:
-        return MaterialPageRoute(
-          builder: (_) => const MembershipHomeIos(),
-          settings: settings,
-        );
+      // case Membership.route:
+      //   return MaterialPageRoute(
+      //     builder: (_) => const Membership(),
+      //     settings: settings,
+      //   );
+      // case MembershipHome.route:
+      //   return MaterialPageRoute(
+      //     builder: (_) => const MembershipHome(),
+      //     settings: settings,
+      //   );
+      // case MembershipHomeIos.route:
+      //   return MaterialPageRoute(
+      //     builder: (_) => const MembershipHomeIos(),
+      //     settings: settings,
+      //   );
       case SalesManPhone.route:
         return MaterialPageRoute(
           builder: (_) => const SalesManPhone(),
@@ -851,11 +847,11 @@ class RouteGenerator {
           builder: (_) => const StudentAppNotificationScreen(),
           settings: settings,
         );
-      case CurrentMembership.route:
-        return MaterialPageRoute(
-          builder: (_) => const CurrentMembership(),
-          settings: settings,
-        );
+      // case CurrentMembership.route:
+      //   return MaterialPageRoute(
+      //     builder: (_) => const CurrentMembership(),
+      //     settings: settings,
+      //   );
       case ChangePhoneScreen.route:
         return MaterialPageRoute(
           builder: (_) => const ChangePhoneScreen(),

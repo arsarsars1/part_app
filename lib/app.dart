@@ -12,7 +12,6 @@ import 'package:part_app/view/route_generator.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
-import 'package:part_app/view_model/inapp_purchase/inapp_cubit.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
 import 'package:part_app/view_model/notification/cubit/notification_cubit.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
@@ -55,11 +54,11 @@ class _AppState extends State<App> {
         BlocProvider<HomeCubit>(
           create: (context) => HomeCubit(),
         ),
-        BlocProvider<PaymentCubit>(
-          create: (context) => PaymentCubit(
-            membershipCubit: context.read<MembershipCubit>(),
-          ),
-        ),
+        // BlocProvider<PaymentCubit>(
+        //   create: (context) => PaymentCubit(
+        //     membershipCubit: context.read<MembershipCubit>(),
+        //   ),
+        // ),
         BlocProvider<BranchCubit>(
           create: (context) => BranchCubit(),
         ),
@@ -93,9 +92,9 @@ class _AppState extends State<App> {
         BlocProvider<ProfileCubit>(
           create: (context) => ProfileCubit(),
         ),
-        BlocProvider<InappCubit>(
-          create: (context) => InappCubit(context.read<MembershipCubit>()),
-        ),
+        // BlocProvider<InappCubit>(
+        //   create: (context) => InappCubit(context.read<MembershipCubit>()),
+        // ),
       ],
       child: GestureDetector(
         onTap: () {

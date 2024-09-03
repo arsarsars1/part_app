@@ -12,7 +12,6 @@ import 'package:part_app/model/service/api_client.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/home/components/account.dart';
 import 'package:part_app/view/home/components/logout.dart';
-import 'package:part_app/view/membership/current_membership.dart';
 import 'package:part_app/view/profile/profile.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
@@ -46,7 +45,7 @@ class _ProfileButtonState extends State<ProfileButton> {
             break;
           case MenuItems.membership:
             if (Platform.isAndroid) {
-              Navigator.pushNamed(context, CurrentMembership.route);
+              // Navigator.pushNamed(context, CurrentMembership.route);
               break;
             } else {
               break;
