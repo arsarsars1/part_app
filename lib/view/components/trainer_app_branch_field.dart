@@ -54,7 +54,7 @@ class _TrainerAppBranchFieldState extends State<TrainerAppBranchField> {
           defaultItem: widget.clearInitial
               ? null
               : branchCubit.initialBranch(
-                  branchCubit.firstBranch?.id,
+                  widget.initialBranch ?? branchCubit.firstBranch?.id,
                 ),
           contentPaddingField: widget.contentPaddingField,
           disabled: widget.isDisable,

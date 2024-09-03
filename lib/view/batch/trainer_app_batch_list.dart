@@ -96,6 +96,7 @@ class _TrainerAppBatchesPageState extends State<TrainerAppBatchesPage> {
                     height: 20,
                   ),
                   TrainerAppBranchField(
+                    initialBranch: branchId,
                     title: 'Select A Branch To List Batches',
                     onSelect: (value) {
                       branchId = value;
@@ -125,7 +126,7 @@ class _TrainerAppBatchesPageState extends State<TrainerAppBatchesPage> {
                   ),
                   BlocBuilder<BranchCubit, BranchState>(
                       builder: (context, state) {
-                    if (state is BranchesLoading) {
+                    if (state is BranchesLoading && cubit.nextPageUrl == '') {
                       return const Center(child: LoadingView(hideColor: true));
                     }
                     return branchId != null
@@ -167,7 +168,8 @@ class _TrainerAppBatchesPageState extends State<TrainerAppBatchesPage> {
                                   if (state is CreatedBatch) {
                                     doSearch(true);
                                   }
-                                  if (state is FetchingBatches) {
+                                  if (state is FetchingBatches &&
+                                      cubit.nextPageUrl == '') {
                                     return const Center(
                                       child: Padding(
                                         padding: EdgeInsets.only(top: 32),

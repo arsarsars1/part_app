@@ -35,11 +35,7 @@ class _BatchesPageState extends State<BatchesPage>
       Future.delayed(const Duration(seconds: 2));
       branchId = branchCubit.firstBranch?.id;
       setState(() {
-        context.read<BatchCubit>().getBatchesByStatus(
-              branchId: branchId,
-              status: status,
-              clean: true,
-            );
+        doSearch(true);
       });
     });
 
@@ -47,11 +43,7 @@ class _BatchesPageState extends State<BatchesPage>
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        context.read<BatchCubit>().getBatchesByStatus(
-              status: status,
-              branchId: branchId,
-              search: query,
-            );
+        doSearch(false);
       }
     });
   }
@@ -89,16 +81,15 @@ class _BatchesPageState extends State<BatchesPage>
               height: 20,
             ),
             BranchField(
+              initialBranch: branchId,
               title: 'Select A Branch To List Batches',
               onSelect: (value) {
                 branchId = value;
-                setState(() {
-                  cubit.getBatchesByStatus(
-                    branchId: branchId,
-                    status: status,
-                    clean: true,
-                  );
-                });
+                setState(() => cubit.getBatchesByStatus(
+                      branchId: branchId,
+                      status: status,
+                      clean: true,
+                    ));
               },
             ),
             const SizedBox(
@@ -115,12 +106,7 @@ class _BatchesPageState extends State<BatchesPage>
                 } else {
                   query = value;
                 }
-                cubit.getBatchesByStatus(
-                  branchId: branchId,
-                  status: status,
-                  search: query,
-                  clean: true,
-                );
+                doSearch(true);
               },
               textInputAction: TextInputAction.search,
             ),
@@ -128,7 +114,7 @@ class _BatchesPageState extends State<BatchesPage>
               height: 20,
             ),
             BlocBuilder<BranchCubit, BranchState>(builder: (context, state) {
-              if (state is BranchesLoading) {
+              if (state is BranchesLoading && cubit.nextPageUrl == '') {
                 return const LoadingView(hideColor: true);
               }
               return branchId != null
@@ -145,12 +131,7 @@ class _BatchesPageState extends State<BatchesPage>
                                 status = 'completed';
                                 cubit.tempStatus = status;
                               }
-                              cubit.getBatchesByStatus(
-                                branchId: branchId,
-                                status: status,
-                                search: query,
-                                clean: true,
-                              );
+                              doSearch(true);
                             },
                             options: const [
                               'Ongoing Batches',
@@ -172,14 +153,10 @@ class _BatchesPageState extends State<BatchesPage>
                               AlertBox.showErrorAlert(context);
                             }
                             if (state is CreatedBatch) {
-                              cubit.getBatchesByStatus(
-                                branchId: branchId,
-                                status: status,
-                                search: query,
-                                clean: true,
-                              );
+                              doSearch(true);
                             }
-                            if (state is FetchingBatches) {
+                            if (state is FetchingBatches &&
+                                cubit.nextPageUrl == '') {
                               return const LoadingView(
                                 hideColor: true,
                               );
@@ -252,5 +229,14 @@ class _BatchesPageState extends State<BatchesPage>
         ),
       ),
     );
+  }
+
+  void doSearch(bool clear) async {
+    context.read<BatchCubit>().getBatchesByStatus(
+          branchId: branchId,
+          status: status,
+          search: query,
+          clean: clear,
+        );
   }
 }

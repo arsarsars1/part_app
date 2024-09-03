@@ -51,7 +51,7 @@ class _BranchFieldState extends State<BranchField> {
           defaultItem: widget.clearInitial
               ? null
               : branchCubit.initialBranch(
-                  branchCubit.firstBranch?.id,
+                  widget.initialBranch ?? branchCubit.firstBranch?.id,
                 ),
           contentPaddingField: widget.contentPaddingField,
           dropDownItems: branchCubit.dropDownBranches(),
