@@ -229,7 +229,7 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                         }
                       },
                       disabled: true,
-                      title: 'Batch *',
+                      title: 'Batch',
                       hint: 'Select Batch',
                       onChange: (value) {},
                       suffixIcon: const Padding(
@@ -251,7 +251,7 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                         Padding(
                           padding: EdgeInsets.only(left: 16.w),
                           child: Text(
-                            'Date *',
+                            'Date',
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
