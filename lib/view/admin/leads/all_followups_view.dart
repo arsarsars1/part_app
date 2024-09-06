@@ -7,6 +7,7 @@ import 'package:part_app/model/data_model/leads_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/admin/leads/lead_details.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/lead_utils.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
@@ -21,7 +22,6 @@ class AllFollowUpView extends StatefulWidget {
 }
 
 class _TodayFollowViewState extends State<AllFollowUpView> {
-  final _dropDownKey = GlobalKey<FormFieldState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   List<LeadStatus?>? status;
 
@@ -127,85 +127,44 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Lead Status *',
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          DropdownButtonFormField<DropDownItem>(
-                            decoration: const InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 32),
-                            ),
-                            key: _dropDownKey,
-                            validator: (value) {
-                              return value == null
-                                  ? 'Please select lead status.'
-                                  : null;
-                            },
-                            hint: Text(
-                              'Select Lead Status',
-                              style: Theme.of(context)
-                                  .inputDecorationTheme
-                                  .hintStyle,
-                            ),
-                            dropdownColor: Theme.of(context)
-                                .inputDecorationTheme
-                                .fillColor,
-                            value: null,
-                            items: status
-                                ?.map((e) => DropDownItem(
-                                    id: e?.slug, title: e?.leadStatus, item: e))
-                                .toList()
-                                .map((e) {
-                              return DropdownMenuItem(
-                                value: e,
-                                child: Text(
-                                  e.title ?? '',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        color: Colors.white,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                leadStatus = value?.title;
-                                branchId = null;
-                                batch = null;
-                                batchController.clear();
-                                date = null;
-                              });
-                              doSearch(true);
-                            },
-                          ),
-                        ],
-                      ),
+                    CommonField(
+                      title: 'Lead Status',
+                      hint: 'Select status',
+                      length: 50,
+                      maxLines: 1,
+                      dropDown: true,
+                      defaultItem:
+                          LeadUtils().getSelectedItem(leadStatus, status),
+                      dropDownItems: status
+                          ?.map((e) => DropDownItem(
+                              id: e?.slug, title: e?.leadStatus, item: e))
+                          .toList(),
+                      textInputAction: TextInputAction.next,
+                      onChange: (value) {
+                        setState(() {
+                          leadStatus = value?.title;
+                          branchId = null;
+                          batch = null;
+                          batchController.clear();
+                          date = null;
+                        });
+                        doSearch(true);
+                      },
                     ),
                     SizedBox(height: 20.h),
                     BranchField(
-                      clearInitial: true,
+                      clearInitial: branchId == null,
+                      isMandatory: false,
                       initialBranch: branchId,
                       contentPaddingField:
                           const EdgeInsets.symmetric(horizontal: 28),
                       onSelect: (value) {
-                        setState(() {
-                          branchId = value;
-                        });
+                        branchId = value;
                         batchController.clear();
                         batch = null;
                         date = null;
+
+                        setState(() {});
                         context.read<BatchCubit>().getBatchesByBranch(
                               branchId: branchId,
                               clean: true,
@@ -267,7 +226,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                       contentPaddingField:
                           const EdgeInsets.symmetric(horizontal: 28),
                       disabled: true,
-                      title: 'Batch *',
+                      title: 'Batch',
                       hint: 'Select Batch',
                       onChange: (value) {},
                       suffixIcon: const Padding(
@@ -289,7 +248,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                         Padding(
                           padding: EdgeInsets.only(left: 16.w),
                           child: Text(
-                            'Date *',
+                            'Date',
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),

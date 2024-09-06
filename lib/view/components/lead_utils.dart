@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:part_app/model/data_model/assignable_model.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
+import 'package:part_app/model/data_model/lead_statuses.dart';
 import 'package:part_app/view/components/assignable_picker.dart';
 
 class LeadUtils {
@@ -62,5 +64,15 @@ class LeadUtils {
     } else {
       return "";
     }
+  }
+
+  DropDownItem? getSelectedItem(String? leadStatus, List<LeadStatus?>? status) {
+    if (leadStatus == null || status == null) {
+      return null;
+    }
+    LeadStatus? leadStats =
+        status.where((e) => e?.leadStatus == leadStatus).first;
+    return DropDownItem(
+        id: leadStats?.slug, title: leadStats?.leadStatus, item: leadStats);
   }
 }
