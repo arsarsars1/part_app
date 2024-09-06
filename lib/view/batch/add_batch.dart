@@ -127,7 +127,7 @@ class _AddBatchState extends State<AddBatch> {
                         height: 20,
                       ),
                       CommonField(
-                        length: 100,
+                        length: 39,
                         title: 'Batch Name *',
                         hint: 'Enter Batch Name',
                         onChange: (value) {
@@ -306,6 +306,13 @@ class _AddBatchState extends State<AddBatch> {
                             child: Button(
                               onTap: () {
                                 if (formKey.currentState!.validate()) {
+                                  if (batchName!.length > 40) {
+                                    Alert(context).show(
+                                      message:
+                                          'The batch name must not be greater than 40 characters.',
+                                    );
+                                    return;
+                                  }
                                   if (cubit.days.isEmpty) {
                                     Alert(context).show(
                                       message:
