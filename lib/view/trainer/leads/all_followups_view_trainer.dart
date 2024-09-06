@@ -156,6 +156,7 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                     TrainerAppBranchField(
                       clearInitial: branchId == null,
                       initialBranch: branchId,
+                      isMandatory: false,
                       contentPaddingField:
                           const EdgeInsets.symmetric(horizontal: 28),
                       onSelect: (value) {
