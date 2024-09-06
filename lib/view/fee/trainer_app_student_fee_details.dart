@@ -54,6 +54,7 @@ class _TrainerAppStudentFeeDetailsState
 
   @override
   Widget build(BuildContext context) {
+    print(feeType);
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
@@ -143,6 +144,8 @@ class _TrainerAppStudentFeeDetailsState
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TabButton(
+                        selectedOption:
+                            feeType == 'monthly' ? 'Monthly' : 'Class Based',
                         onChange: (String value) {
                           if (value == 'Monthly') {
                             setState(() {

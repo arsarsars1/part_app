@@ -4,8 +4,13 @@ import 'package:part_app/constants/constant.dart';
 class TabButton extends StatefulWidget {
   final ValueChanged<String> onChange;
   final List<String> options;
+  final String? selectedOption;
 
-  const TabButton({super.key, required this.onChange, required this.options});
+  const TabButton(
+      {super.key,
+      required this.onChange,
+      required this.options,
+      this.selectedOption});
 
   @override
   State<TabButton> createState() => _TabButtonState();
@@ -45,7 +50,7 @@ class _TabButtonState extends State<TabButton> {
                     horizontal: 16,
                     vertical: 5,
                   ),
-                  decoration: e == selectedIndex
+                  decoration: e == (widget.selectedOption ?? selectedIndex)
                       ? BoxDecoration(
                           color: Colors.white.withOpacity(0.28),
                           borderRadius: BorderRadius.circular(5),
