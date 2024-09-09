@@ -217,58 +217,55 @@ class _FeeListItemState extends State<FeeListItem> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    '${widget.student.courseName}, ${widget.student.subjectName}',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
+                                    '${widget.student.courseName}, ${widget.student.subjectName}${widget.student.courseName}, ${widget.student.subjectName}',
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
                                   ),
                                 ),
                                 SizedBox(
                                   width: 10.w,
                                 ),
-                                Text(
-                                  "Payment Status :",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  widget.student.writtenOffStatus != 1
-                                      ? widget.student.paymentStatus == 'paid'
-                                          ? "Completely Paid"
-                                          : widget.student.paymentStatus ==
-                                                  'partial'
-                                              ? "Partially Paid"
-                                              : "Not Paid"
-                                      : "Written Off",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15,
-                                        color: widget
-                                                    .student.writtenOffStatus !=
-                                                1
-                                            ? widget.student.paymentStatus ==
-                                                    'paid'
-                                                ? AppColors.green
-                                                : widget.student
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "Payment Status :",
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                    Text(
+                                      widget.student.writtenOffStatus != 1
+                                          ? widget.student.paymentStatus ==
+                                                  'paid'
+                                              ? "Completely Paid"
+                                              : widget.student.paymentStatus ==
+                                                      'partial'
+                                                  ? "Partially Paid"
+                                                  : "Not Paid"
+                                          : "Written Off",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 15,
+                                            color: widget.student
+                                                        .writtenOffStatus !=
+                                                    1
+                                                ? widget.student
                                                             .paymentStatus ==
-                                                        'partial'
-                                                    ? AppColors.yellow
-                                                    : AppColors.primaryColor
-                                            : AppColors.green,
-                                      ),
+                                                        'paid'
+                                                    ? AppColors.green
+                                                    : widget.student
+                                                                .paymentStatus ==
+                                                            'partial'
+                                                        ? AppColors.yellow
+                                                        : AppColors.primaryColor
+                                                : AppColors.green,
+                                          ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
