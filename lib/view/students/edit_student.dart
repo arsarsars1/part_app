@@ -205,9 +205,15 @@ class _EditStudentState extends State<EditStudent> {
               ),
               WhatsappCheckButton(
                 initialValue: details?.whatsappNo,
-                selected: student?.mobileNo == details?.whatsappNo,
+                selected: whatsappSelected,
                 onChange: (bool value) {
-                  whatsappNo = null;
+                  whatsappSelected = value;
+                  if (value) {
+                    whatsappNo = phone;
+                  } else {
+                    whatsappNo = null;
+                  }
+                  setState(() {});
                 },
                 onNumberChange: (String value) {
                   whatsappNo = value;
@@ -314,7 +320,7 @@ class _EditStudentState extends State<EditStudent> {
                         StudentRequest request = StudentRequest(
                           name: name,
                           mobileNo: phone,
-                          whatsappNo: whatsappNo ?? phone,
+                          whatsappNo: whatsappSelected ? phone : whatsappNo,
                           dob: dob,
                           gender: gender,
                           email: email,
