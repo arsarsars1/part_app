@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_app/model/data_model/faq_list.dart';
 import 'package:part_app/model/data_model/calender_events_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/dashboard.dart' as tempbanner;
+import 'package:part_app/model/data_model/faq_list.dart';
 import 'package:part_app/model/data_model/notification_list.dart';
 import 'package:part_app/model/data_model/shop_url.dart';
 import 'package:part_app/model/data_model/student_app_calender_events.dart';
