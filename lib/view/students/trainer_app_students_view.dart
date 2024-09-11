@@ -23,12 +23,11 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String? status;
+  DropDownItem? status;
   int? branchId;
   String? query;
   BatchModel? batch;
   DropDownItem? selectedItem;
-  String? activeStatus;
   AuthCubit? authCubit;
   TextEditingController batchController = TextEditingController();
 
@@ -61,7 +60,7 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
           }
 
           if (state is FetchingStudents && cubit.students == null ||
-              cubit.students!.isEmpty) {
+              state is! StudentsFetched && cubit.students!.isEmpty) {
             if (query == null) {
               return const LoadingView(hideColor: true);
             }
@@ -205,25 +204,32 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                           title: 'Batch Status *',
                           hint: 'Select Batch Status',
                           dropDown: true,
+                          defaultItem: status,
                           dropDownItems: DefaultValues().batchStatus,
                           onChange: (value) {
-                            status = value.id;
+                            status = value;
 
+                            batchController.clear();
+                            batch = null;
                             context
                                 .read<BatchCubit>()
                                 .getBatchesByStatusForTrainer(
-                                  trainerId: authCubit
-                                          ?.user
-                                          ?.trainerDetail?[
-                                              authCubit?.trainerIndex ?? 0]
-                                          .id ??
-                                      0,
-                                  branchId: branchId,
-                                  status: status!,
-                                  clean: true,
-                                );
-                            batchController.clear();
-                            batch = null;
+                                    trainerId: authCubit
+                                            ?.user
+                                            ?.trainerDetail?[
+                                                authCubit?.trainerIndex ?? 0]
+                                            .id ??
+                                        0,
+                                    branchId: branchId,
+                                    status: status!.id,
+                                    clean: true);
+                            if (context.mounted &&
+                                context.read<BatchCubit>().batches.isNotEmpty) {
+                              batch = context.read<BatchCubit>().batches.first;
+                              batchController.text = batch?.name ?? "";
+                              setState(() {});
+                              doSearch(true);
+                            }
                           },
                           validator: (value) {
                             return value == null
@@ -250,7 +256,7 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                                 backgroundColor: Colors.transparent,
                                 (context) => BatchPicker(
                                   branchId: branchId!,
-                                  status: status!,
+                                  status: status!.id,
                                   onSelect: (value) {
                                     batch = value;
                                     batchController.text = value.name;
@@ -295,18 +301,7 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                         onChange: (value) {
                           if (value.isEmpty) {
                             query = null;
-                            context.read<StudentCubit>().getStudentsForTrainer(
-                                  trainerId: authCubit
-                                          ?.user
-                                          ?.trainerDetail?[
-                                              authCubit?.trainerIndex ?? 0]
-                                          .id ??
-                                      0,
-                                  batchId: batch?.id,
-                                  searchQuery: query,
-                                  activeStatus: activeStatus,
-                                  clean: true,
-                                );
+                            doSearch(true);
                           } else {
                             query = value;
                             doSearch(true);
@@ -403,7 +398,7 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
               0,
           batchId: batch?.id,
           searchQuery: query,
-          activeStatus: activeStatus,
+          activeStatus: status?.title?.toLowerCase(),
           clean: clean,
         );
   }
