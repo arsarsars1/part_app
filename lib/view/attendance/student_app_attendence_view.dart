@@ -99,6 +99,9 @@ class _StudentAppAttendanceCalenderViewState
                           status: status,
                           clean: true,
                         );
+                    batchController.clear();
+                    batch = null;
+                    _markedDateMap.clear();
                     setState(() {});
                   },
                 ),
@@ -125,18 +128,8 @@ class _StudentAppAttendanceCalenderViewState
                             AttendanceCubit cubit =
                                 context.read<AttendanceCubit>();
                             cubit.id = value.id ?? 0;
-                            await cubit.getStudentAppAttendenceOfStudentOfMonth(
-                                studentDetailId: authCubit.user
-                                    ?.studentDetail?[authCubit.studentIndex].id,
-                                batchId: cubit.id,
-                                date: DateTime(currentYear, currentMonth));
-                            await cubit.getStudentAppClassesOfMonth(
-                              batchId: cubit.id,
-                              date: DateTime(currentYear, currentMonth),
-                              studentId: authCubit.user
-                                  ?.studentDetail?[authCubit.studentIndex].id,
-                            );
-                            _markedDateMap.clear();
+                            setState(() {});
+                            await doSearch(true, authCubit);
                             setState(() {
                               noOfWeeks = getWeeksInMonth(
                                   DateTime(currentYear, currentMonth).year,
@@ -276,18 +269,8 @@ class _StudentAppAttendanceCalenderViewState
                           currentMonth--;
                         }
                       });
-                      await cubit.getStudentAppAttendenceOfStudentOfMonth(
-                          studentDetailId: authCubit
-                              .user?.studentDetail?[authCubit.studentIndex].id,
-                          batchId: cubit.id,
-                          date: DateTime(currentYear, currentMonth));
-                      await cubit.getStudentAppClassesOfMonth(
-                        batchId: cubit.id,
-                        date: DateTime(currentYear, currentMonth),
-                        studentId: authCubit
-                            .user?.studentDetail?[authCubit.studentIndex].id,
-                      );
-                      _markedDateMap.clear();
+                      setState(() {});
+                      await doSearch(true, authCubit);
                       setState(() {
                         noOfWeeks = getWeeksInMonth(
                             DateTime(currentYear, currentMonth).year,
@@ -343,18 +326,8 @@ class _StudentAppAttendanceCalenderViewState
                           currentMonth++;
                         }
                       });
-                      await cubit.getStudentAppAttendenceOfStudentOfMonth(
-                          studentDetailId: authCubit
-                              .user?.studentDetail?[authCubit.studentIndex].id,
-                          batchId: cubit.id,
-                          date: DateTime(currentYear, currentMonth));
-                      await cubit.getStudentAppClassesOfMonth(
-                        batchId: cubit.id,
-                        date: DateTime(currentYear, currentMonth),
-                        studentId: authCubit
-                            .user?.studentDetail?[authCubit.studentIndex].id,
-                      );
-                      _markedDateMap.clear();
+                      setState(() {});
+                      await doSearch(true, authCubit);
                       setState(() {
                         noOfWeeks = getWeeksInMonth(
                             DateTime(currentYear, currentMonth).year,
@@ -484,6 +457,21 @@ class _StudentAppAttendanceCalenderViewState
         },
       ),
     );
+  }
+
+  Future<void> doSearch(bool clean, AuthCubit authCubit) async {
+    AttendanceCubit cubit = context.read<AttendanceCubit>();
+    await cubit.getStudentAppAttendenceOfStudentOfMonth(
+        studentDetailId:
+            authCubit.user?.studentDetail?[authCubit.studentIndex].id,
+        batchId: batch?.id ?? cubit.id,
+        date: DateTime(currentYear, currentMonth));
+    await cubit.getStudentAppClassesOfMonth(
+      batchId: batch?.id ?? cubit.id,
+      date: DateTime(currentYear, currentMonth),
+      studentId: authCubit.user?.studentDetail?[authCubit.studentIndex].id,
+    );
+    _markedDateMap.clear();
   }
 
   int getWeeksInMonth(int year, int month) {
