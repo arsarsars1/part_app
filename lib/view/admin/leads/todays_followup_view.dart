@@ -54,10 +54,9 @@ class _TodayFollowViewState extends State<TodayFollowView> {
                   decoration: BoxDecoration(
                       color: AppColors.liteDark,
                       borderRadius: BorderRadius.circular(4)),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
+                  child: Row(children: [
+                    Expanded(
+                      child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -75,21 +74,20 @@ class _TodayFollowViewState extends State<TodayFollowView> {
                             Text(
                               "Lead Status: ${lead?.leadStatus ?? 'Not available'}",
                             ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          "Assign to: ${lead?.assignedTo?.name ?? 'Not available'}",
-                        ),
-                      ),
-                      const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.white,
-                        size: 20,
-                      )
-                    ],
-                  ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            Text(
+                              "Assign to: ${lead?.assignedTo?.name ?? 'Not available'}",
+                            ),
+                          ]),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                      size: 20,
+                    )
+                  ]),
                 ),
               );
             },
