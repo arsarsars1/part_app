@@ -134,71 +134,75 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: 200,
-                              child: Text(
-                                "${feeCubit.batchFeeInvoice?.batchName}",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      fontSize: 11.sp,
-                                    ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 200,
-                              child: Text(
-                                "${feeCubit.batchFeeInvoice?.branchName}",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      fontSize: 11.sp,
-                                    ),
-                              ),
-                            ),
-                            Text(
-                              "${feeCubit.batchFeeInvoice?.courseName}, ${feeCubit.batchFeeInvoice?.subjectName}",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 11.sp,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        if (feeCubit.batchFeeInvoice?.feeType == "monthly")
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Payment Due Date: ',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(),
+                              SizedBox(
+                                width: 200,
+                                child: Text(
+                                  "${feeCubit.batchFeeInvoice?.batchName}",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        fontSize: 11.sp,
+                                      ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 200,
+                                child: Text(
+                                  "${feeCubit.batchFeeInvoice?.branchName}",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        fontSize: 11.sp,
+                                      ),
+                                ),
                               ),
                               Text(
-                                "${feeCubit.batchFeeInvoice?.paymentDueDate?.toDDMMMYYY()}",
+                                "${feeCubit.batchFeeInvoice?.courseName}, ${feeCubit.batchFeeInvoice?.subjectName}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge
                                     ?.copyWith(
-                                      color: AppColors.primaryColor,
+                                      fontSize: 11.sp,
                                     ),
                               ),
                             ],
+                          ),
+                        ),
+                        if (feeCubit.batchFeeInvoice?.feeType == "monthly")
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Payment Due Date: ',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(),
+                                ),
+                                Text(
+                                  "${feeCubit.batchFeeInvoice?.paymentDueDate?.toDDMMMYYY()}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: AppColors.primaryColor,
+                                      ),
+                                ),
+                              ],
+                            ),
                           )
                       ],
                     ),
