@@ -139,125 +139,137 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                         Column(
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '${widget.invoice.batchName}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(),
-                                ),
-                                if (widget.invoice.writtenOffStatus != 1 &&
-                                    widget.invoice.paymentStatus != 'paid')
-                                  if (widget.invoice.feeType == "monthly")
-                                    Text(
-                                      'Payment Due Date:',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: 150.w,
-                                  child: Text(
-                                    '${widget.invoice.branchName}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${widget.invoice.batchName}',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(),
+                                          ),
+                                          Text(
+                                            '${widget.invoice.branchName}',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                          ),
+                                          Text(
+                                            '${widget.invoice.courseName}, ${widget.invoice.subjectName}',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(),
+                                          ),
+                                        ]),
                                   ),
-                                ),
-                                if (widget.invoice.writtenOffStatus != 1 &&
-                                    widget.invoice.paymentStatus != 'paid')
-                                  if (widget.invoice.feeType == "monthly")
-                                    Text(
-                                      "${widget.invoice.paymentDueDate?.toDDMMMYYY()}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontSize: 13,
-                                            color: widget.invoice
-                                                        .writtenOffStatus !=
-                                                    1
+                                  Expanded(
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          if (widget.invoice.writtenOffStatus !=
+                                                  1 &&
+                                              widget.invoice.paymentStatus !=
+                                                  'paid')
+                                            if (widget.invoice.feeType ==
+                                                "monthly")
+                                              Text(
+                                                'Payment Due Date:',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                                    ?.copyWith(),
+                                              ),
+                                          if (widget.invoice.writtenOffStatus !=
+                                                  1 &&
+                                              widget.invoice.paymentStatus !=
+                                                  'paid')
+                                            if (widget.invoice.feeType ==
+                                                "monthly")
+                                              Text(
+                                                "${widget.invoice.paymentDueDate?.toDDMMMYYY()}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                                    ?.copyWith(
+                                                      fontSize: 13,
+                                                      color: widget.invoice
+                                                                  .writtenOffStatus !=
+                                                              1
+                                                          ? widget.invoice
+                                                                      .paymentStatus ==
+                                                                  'paid'
+                                                              ? AppColors.green
+                                                              : widget.invoice
+                                                                          .paymentStatus ==
+                                                                      'partial'
+                                                                  ? AppColors
+                                                                      .yellow
+                                                                  : AppColors
+                                                                      .primaryColor
+                                                          : AppColors.green,
+                                                    ),
+                                              ),
+                                          Text(
+                                            "Payment Status :",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(),
+                                          ),
+                                          Text(
+                                            widget.invoice.writtenOffStatus != 1
                                                 ? widget.invoice
                                                             .paymentStatus ==
                                                         'paid'
-                                                    ? AppColors.green
+                                                    ? "Completely Paid"
                                                     : widget.invoice
                                                                 .paymentStatus ==
                                                             'partial'
-                                                        ? AppColors.yellow
-                                                        : AppColors.primaryColor
-                                                : AppColors.green,
+                                                        ? "Partially Paid"
+                                                        : "Not Paid"
+                                                : "Written Off",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 15,
+                                                  color: widget.invoice
+                                                              .writtenOffStatus !=
+                                                          1
+                                                      ? widget.invoice
+                                                                  .paymentStatus ==
+                                                              'paid'
+                                                          ? AppColors.green
+                                                          : widget.invoice
+                                                                      .paymentStatus ==
+                                                                  'partial'
+                                                              ? AppColors.yellow
+                                                              : AppColors
+                                                                  .primaryColor
+                                                      : AppColors.green,
+                                                ),
                                           ),
-                                    ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '${widget.invoice.courseName}, ${widget.invoice.subjectName}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(),
-                                ),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Text(
-                                  "Payment Status :",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  widget.invoice.writtenOffStatus != 1
-                                      ? widget.invoice.paymentStatus == 'paid'
-                                          ? "Completely Paid"
-                                          : widget.invoice.paymentStatus ==
-                                                  'partial'
-                                              ? "Partially Paid"
-                                              : "Not Paid"
-                                      : "Written Off",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15,
-                                        color: widget
-                                                    .invoice.writtenOffStatus !=
-                                                1
-                                            ? widget.invoice.paymentStatus ==
-                                                    'paid'
-                                                ? AppColors.green
-                                                : widget.invoice
-                                                            .paymentStatus ==
-                                                        'partial'
-                                                    ? AppColors.yellow
-                                                    : AppColors.primaryColor
-                                            : AppColors.green,
-                                      ),
-                                ),
-                              ],
-                            ),
+                                        ]),
+                                  )
+                                ]),
                             SizedBox(
                               height: 10.h,
                             ),
