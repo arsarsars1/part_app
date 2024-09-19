@@ -225,8 +225,8 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                                     clean: true);
                             if (context.mounted &&
                                 context.read<BatchCubit>().batches.isNotEmpty) {
-                              // batch = context.read<BatchCubit>().batches.first;
-                              // batchController.text = batch?.name ?? "";
+                              batch = context.read<BatchCubit>().batches.first;
+                              batchController.text = batch?.name ?? "";
                               setState(() {});
                             }
                             doSearch(true);
