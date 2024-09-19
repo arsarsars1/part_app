@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/constants/constant.dart';
+import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/extensions.dart';
@@ -319,12 +320,14 @@ class _EditStudentState extends State<EditStudent> {
 
                         StudentRequest request = StudentRequest(
                           name: name,
-                          mobileNo: phone,
-                          whatsappNo: whatsappSelected ? phone : whatsappNo,
+                          mobileNo: phone?.removeCountryCode(),
+                          whatsappNo: whatsappSelected
+                              ? phone?.removeCountryCode()
+                              : whatsappNo?.removeCountryCode(),
                           dob: dob,
                           gender: gender,
                           email: email,
-                          countryCode: 91,
+                          countryCode: phone?.getCountryCode(),
                           address: address,
                           isParent: selected == 'parent' ? 1 : 0,
                           parentName: parentName,

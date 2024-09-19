@@ -18,11 +18,25 @@ extension PhoneNumberCleaner on String {
         .replaceAll(PhoneNumberCharacter.closeParen.char, '');
   }
 
-  String removeCountryCode(String code) {
-    if (startsWith(code)) {
-      return substring(code.length);
+  int getCountryCode() {
+    if (startsWith('+')) {
+      String possibleCountryCode = substring(1, 3);
+      if (RegExp(r'^\d+$').hasMatch(possibleCountryCode)) {
+        return int.parse(possibleCountryCode);
+      }
     }
-    return this;
+    return 91;
+  }
+
+  String removeCountryCode() {
+    String cleanedPhone = cleanPhoneNumber();
+    String countryCode = "+${getCountryCode().toString()}";
+
+    if (cleanedPhone.startsWith(countryCode.substring(1))) {
+      return cleanedPhone.substring(countryCode.length - 1);
+    }
+
+    return cleanedPhone;
   }
 }
 
