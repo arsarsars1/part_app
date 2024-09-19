@@ -169,20 +169,23 @@ class StudentService {
   }) async {
     try {
       String path = '';
-      if (batchId != null && activeStatus != null) {
-        path = '/admin/batches/$batchId/students/batch-status/$activeStatus';
+      if (batchId != null && activeStatus != null && searchQuery != null) {
+        path = '/admin/batches/$batchId/students/search/$searchQuery';
+      } else if (branchId != null && searchQuery != null) {
+        path = '/admin/students/search/$searchQuery?branch_id=$branchId';
+      } else if (batchId != null && activeStatus != null) {
+        path = '/admin/batches/$batchId/students'; //batch-status/$activeStatus
       } else if (batchId != null) {
         path = '/admin/batches/$batchId/students';
+      } else if (searchQuery != null) {
+        path = '/admin/students/search/$searchQuery';
       } else if (branchId != null) {
         path = '/admin/branches/$branchId/students';
       } else {
         path = '/admin/students';
       }
 
-      if (searchQuery != null) {
-        path += '/search/$searchQuery';
-      }
-
+      // Append page number to all paths
       path += '?page=$pageNo';
 
       var response = await _client.get(queryPath: path);
