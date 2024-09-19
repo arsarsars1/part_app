@@ -271,9 +271,9 @@ class _AddTrainerState extends State<AddTrainer> {
                             name: name,
                             email: email == '' ? null : email,
                             countryCode: 91,
-                            whatsappNo: whatsappNo?.removeCountryCode("91") ??
-                                phone?.removeCountryCode("91"),
-                            mobileNo: phone?.removeCountryCode("91"),
+                            whatsappNo: whatsappNo?.removeCountryCode() ??
+                                phone?.removeCountryCode(),
+                            mobileNo: phone?.removeCountryCode(),
                             expertise: areaOfExpertise,
                             dob: dob,
                             gender: gender,
