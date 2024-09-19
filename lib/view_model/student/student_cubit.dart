@@ -414,6 +414,7 @@ class StudentCubit extends Cubit<StudentState> {
     String? searchQuery,
     String? activeStatus,
     int? batchId,
+    int? branchId,
     bool clean = false,
   }) async {
     if (clean) {
@@ -435,6 +436,7 @@ class StudentCubit extends Cubit<StudentState> {
     StudentsResponse? response = await _studentService.getStudentsForTrainer(
       trainerId: trainerId,
       batchId: batchId,
+      branchId: branchId,
       searchQuery: searchQuery,
       activeStatus: activeStatus,
       pageNo: page,

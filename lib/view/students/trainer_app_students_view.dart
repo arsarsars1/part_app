@@ -206,12 +206,12 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                           dropDown: true,
                           defaultItem: status,
                           dropDownItems: DefaultValues().batchStatus,
-                          onChange: (value) {
+                          onChange: (value) async {
                             status = value;
 
                             batchController.clear();
                             batch = null;
-                            context
+                            await context
                                 .read<BatchCubit>()
                                 .getBatchesByStatusForTrainer(
                                     trainerId: authCubit
@@ -225,11 +225,11 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                                     clean: true);
                             if (context.mounted &&
                                 context.read<BatchCubit>().batches.isNotEmpty) {
-                              batch = context.read<BatchCubit>().batches.first;
-                              batchController.text = batch?.name ?? "";
+                              // batch = context.read<BatchCubit>().batches.first;
+                              // batchController.text = batch?.name ?? "";
                               setState(() {});
-                              doSearch(true);
                             }
+                            doSearch(true);
                           },
                           validator: (value) {
                             return value == null
@@ -397,6 +397,7 @@ class _TrainerAppStudentsViewState extends State<TrainerAppStudentsView> {
                   ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??
               0,
           batchId: batch?.id,
+          branchId: branchId,
           searchQuery: query,
           activeStatus: status?.title?.toLowerCase(),
           clean: clean,

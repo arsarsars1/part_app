@@ -219,23 +219,25 @@ class StudentService {
     }
   }
 
-  Future<StudentsResponse?> getStudentsForTrainer({
-    int? trainerId,
-    String? searchQuery,
-    String? activeStatus,
-    int? batchId,
-    int? pageNo,
-  }) async {
+  Future<StudentsResponse?> getStudentsForTrainer(
+      {int? trainerId,
+      String? searchQuery,
+      String? activeStatus,
+      int? batchId,
+      int? branchId,
+      int? pageNo}) async {
     try {
       String path = '';
 
-      if (batchId == null) {
-        path = '/trainers/$trainerId/students';
-      } else {
+      if (branchId != null && activeStatus != null && batchId == null) {
+        path =
+            '/trainers/$trainerId/branches/$branchId/students/batch-status/$activeStatus';
+      } else if (branchId != null && batchId == null) {
+        path = '/trainers/$trainerId/branches/$branchId/students';
+      } else if (batchId != null) {
         path = '/trainers/$trainerId/batches/$batchId/students';
-      }
-      if (activeStatus != null) {
-        path = '/trainers/$trainerId/batches/$batchId/$activeStatus';
+      } else {
+        path = '/trainers/$trainerId/students';
       }
 
       if (searchQuery != null) {
