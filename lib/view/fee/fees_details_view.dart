@@ -137,6 +137,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
               Expanded(
                 child: ListView(
                   controller: scrollController,
+                  physics: const ClampingScrollPhysics(),
                   children: [
                     SizedBox(
                       height: 20.h,
