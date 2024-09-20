@@ -89,6 +89,7 @@ class _BatchDetailsState extends State<BatchDetails>
                   if (state is UpdatedBatch) {
                     Alert(context).show(message: 'Batch Updated Successfully.');
                     batchCubit.studentData.clear();
+                    doSearch(true, clean: true);
                   } else if (state is UpdateBatchFailed) {
                     Alert(context).show(message: state.message);
                   }
@@ -320,9 +321,9 @@ class _BatchDetailsState extends State<BatchDetails>
                             child: Button(
                               height: UIConstants.buttonHeight,
                               fullWidget: true,
-                              onTap: () {
+                              onTap: () async {
                                 batchCubit.isFromBatchDetail = true;
-                                Navigator.pushNamed(
+                                await Navigator.pushNamed(
                                     context, StudentPicker.route,
                                     arguments: {"isTrainer": false});
                               },
