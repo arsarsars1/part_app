@@ -20,31 +20,31 @@ class StudentAppDashboardIcons extends StatefulWidget {
 }
 
 class _StudentAppDashboardIconsState extends State<StudentAppDashboardIcons> {
-  List<String> titles = ['Attendance', 'Fees', 'Batches'];
+  List<String> titles = ['Fees', 'Batches', 'Attendance'];
   List<String> descriptions = [
-    'Check Attendance of each Batch here',
     'View Fees related details here',
     'See Batch details here',
+    'Check Attendance of each Batch here',
   ];
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      List<GlobalKey> tempkey = [];
-      for (int i = 0; i < 3; i++) {
-        tempkey.add(context.read<HomeCubit>().studentkKeyCap[i]);
+      List<GlobalKey> tempKey = [];
+      for (int i = 0; i < titles.length; i++) {
+        tempKey.add(context.read<HomeCubit>().studentkKeyCap[i]);
       }
       bool temp =
           Hive.box(Database.userBox).get("Student App Showcase") ?? false;
       if (temp == false) {
         CommonDialog(
           context: context,
-          message: 'Do you want to see the features available in the app ?',
+          message: 'Do you want to see the features available in the app?',
           buttonText: 'Proceed',
           subColor: AppColors.primaryColor,
           onTap: () {
             Navigator.pop(context);
-            ShowCaseWidget.of(context).startShowCase(tempkey);
+            ShowCaseWidget.of(context).startShowCase(tempKey);
           },
           onCancelTap: () {
             Hive.box(Database.userBox).put("Student App Showcase", true);
@@ -69,10 +69,13 @@ class _StudentAppDashboardIconsState extends State<StudentAppDashboardIcons> {
         itemCount: DefaultValues.studentDashboardItems.length,
         itemBuilder: (context, index) {
           DashboardItem item = DefaultValues.studentDashboardItems[index];
+
+          int showcaseIndex = titles.indexOf(item.title);
+
           return Showcase(
-            key: context.read<HomeCubit>().studentkKeyCap[index],
-            title: titles[index],
-            description: descriptions[index],
+            key: context.read<HomeCubit>().studentkKeyCap[showcaseIndex],
+            title: titles[showcaseIndex],
+            description: descriptions[showcaseIndex],
             child: InkWell(
               onTap: () async {
                 await Navigator.pushNamed(context, item.route);
