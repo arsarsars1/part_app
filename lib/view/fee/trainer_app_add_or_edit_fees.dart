@@ -158,12 +158,11 @@ class _TrainerAppAddOrEditFeesState extends State<TrainerAppAddOrEditFees> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: 200,
-                              child: Text(
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
                                 "${feeCubit?.batchFeeInvoice?.batchName}",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -174,10 +173,7 @@ class _TrainerAppAddOrEditFeesState extends State<TrainerAppAddOrEditFees> {
                                       fontSize: 11.sp,
                                     ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 200,
-                              child: Text(
+                              Text(
                                 "${feeCubit?.batchFeeInvoice?.branchName}",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -188,41 +184,43 @@ class _TrainerAppAddOrEditFeesState extends State<TrainerAppAddOrEditFees> {
                                       fontSize: 11.sp,
                                     ),
                               ),
-                            ),
-                            Text(
-                              "${feeCubit?.batchFeeInvoice?.courseName}, ${feeCubit?.batchFeeInvoice?.subjectName}",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 11.sp,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        if (feeCubit?.batchFeeInvoice?.feeType == "monthly")
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
                               Text(
-                                'Payment Due Date: ',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(),
-                              ),
-                              Text(
-                                "${feeCubit?.batchFeeInvoice?.paymentDueDate?.toDDMMMYYY()}",
+                                "${feeCubit?.batchFeeInvoice?.courseName}, ${feeCubit?.batchFeeInvoice?.subjectName}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge
                                     ?.copyWith(
-                                      color: AppColors.primaryColor,
+                                      fontSize: 11.sp,
                                     ),
                               ),
                             ],
+                          ),
+                        ),
+                        if (feeCubit?.batchFeeInvoice?.feeType == "monthly")
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Payment Due Date: ',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(),
+                                ),
+                                Text(
+                                  "${feeCubit?.batchFeeInvoice?.paymentDueDate?.toDDMMMYYY()}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: AppColors.primaryColor,
+                                      ),
+                                ),
+                              ],
+                            ),
                           )
                       ],
                     ),
