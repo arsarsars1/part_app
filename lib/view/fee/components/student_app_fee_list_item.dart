@@ -93,10 +93,8 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                     maxLines: 2,
                                     softWrap: true,
                                     overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
                                   ),
                                 ),
                               ],
@@ -124,10 +122,8 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                 if (widget.invoice.feeType == "class")
                                   Text(
                                     "Class Attended: ${widget.invoice.cycleAttendancePresentCount}/${widget.invoice.totalNoOfClasses}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
                                   ),
                               ],
                             ),
@@ -154,25 +150,19 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                             '${widget.invoice.batchName}',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(),
+                                                .bodyLarge,
                                           ),
                                           Text(
                                             '${widget.invoice.branchName}',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
+                                                .bodyLarge,
                                           ),
                                           Text(
                                             '${widget.invoice.courseName}, ${widget.invoice.subjectName}',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(),
+                                                .bodyLarge,
                                           ),
                                         ]),
                                   ),
@@ -193,8 +183,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                 'Payment Due Date:',
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyLarge
-                                                    ?.copyWith(),
+                                                    .bodyLarge,
                                               ),
                                           if (widget.invoice.writtenOffStatus !=
                                                   1 &&
@@ -230,8 +219,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                             "Payment Status :",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(),
+                                                .bodyLarge,
                                           ),
                                           Text(
                                             widget.invoice.writtenOffStatus != 1
@@ -276,10 +264,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                             Text(
                               'Fees :  ₹${widget.invoice.payableAmount}',
                               textAlign: TextAlign.right,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(),
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             SizedBox(
                               height: 10.h,
@@ -511,8 +496,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                   'Total Amount Paid : ',
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .bodyLarge
-                                                      ?.copyWith(),
+                                                      .bodyLarge,
                                                 ),
                                                 // Text(
                                                 //   (widget.invoice.paymentsTotal ??
@@ -568,8 +552,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                   'Amount Payable : ',
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .bodyLarge
-                                                      ?.copyWith(),
+                                                      .bodyLarge,
                                                 ),
                                                 Text(
                                                   '₹ ${widget.invoice.pendingAmount}',
@@ -682,10 +665,8 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                       maxLines: 2,
                                       softWrap: true,
                                       overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
                                     ),
                                   ),
                                 ],
