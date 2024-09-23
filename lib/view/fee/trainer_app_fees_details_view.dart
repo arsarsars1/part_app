@@ -37,7 +37,7 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
   String? feeType;
   final _dropDownKey = GlobalKey<FormFieldState>();
   bool branchSelected = false;
-  DropDownItem? selectedItem;
+  int? selectedItemValue;
   BranchCubit? branchCubit;
   TextEditingController branchController = TextEditingController();
   TextEditingController batchController = TextEditingController();
@@ -149,143 +149,48 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
                 child: ListView(
                   controller: scrollController,
                   children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    // TrainerAppBranchField(
-                    //   onSelect: (value) {
-                    //     setState(() {
-                    //       branchId = value;
-                    //     });
-                    //     batchController.clear();
-                    //     feeTypeController.clear();
-                    //     dateController.clear();
-                    //     batch = null;
-                    //     feeType = null;
-                    //     _dropDownKey.currentState?.reset();
-                    //     cubit.batchInvoice.clear();
-                    //     feeTypeController.clear();
-                    //     context.read<BatchCubit>().getBatchesByBranchForTrainer(
-                    //           trainerId: authCubit
-                    //                   ?.user
-                    //                   ?.trainerDetail?[
-                    //                       authCubit?.trainerIndex ?? 0]
-                    //                   .id ??
-                    //               0,
-                    //           branchId: branchId,
-                    //           clean: true,
-                    //         );
-                    //   },
-                    // ),
-                    BlocBuilder<BranchCubit, BranchState>(
-                      builder: (context, state) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Branch *',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              DropdownButtonFormField<DropDownItem>(
-                                dropdownColor: Theme.of(context)
-                                    .inputDecorationTheme
-                                    .fillColor,
-                                value:
-                                    selectedItem ?? const DropDownItem(id: -1),
-                                decoration: const InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 32),
-                                ),
-                                items: [
-                                  DropdownMenuItem(
-                                    value: const DropDownItem(id: -1),
-                                    child: SizedBox(
-                                      width: 200.w,
-                                      child: Text(
-                                        'All',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(
-                                              color: Colors.white,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                      ),
-                                    ),
-                                  ),
-                                  ...(branchCubit?.dropDownBranches().map((e) {
-                                            return DropdownMenuItem(
-                                              value: e,
-                                              child: SizedBox(
-                                                width: 200.w,
-                                                child: Text(
-                                                  e.title ?? '',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge
-                                                      ?.copyWith(
-                                                        color: Colors.white,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                ),
-                                              ),
-                                            );
-                                          }) ??
-                                          [])
-                                      .toList()
-                                ],
-                                onChanged: (value) {
-                                  if (value?.id == -1) {
-                                    selectedItem = null;
-                                    branchSelected = false;
-                                    batchController.text = 'All';
-                                    branchId = null;
-                                    batch = null;
-                                    year = month =
-                                        finalDate = feeType = query = null;
-                                    _dropDownKey.currentState?.reset();
-                                    searchController.clear();
-                                    cubit.batchInvoice.clear();
-                                    setState(() {});
-                                  } else {
-                                    branchSelected = true;
-                                    selectedItem = value;
-                                    setState(() {
-                                      branchId = value?.id;
-                                    });
-                                    batchController.clear();
-                                    feeTypeController.clear();
-                                    dateController.clear();
-                                    batch = null;
-                                    _dropDownKey.currentState?.reset();
-                                    cubit.batchInvoice.clear();
-                                    feeTypeController.clear();
-                                    context
-                                        .read<BatchCubit>()
-                                        .getBatchesByBranchForTrainer(
-                                          trainerId: authCubit
-                                                  ?.user
-                                                  ?.trainerDetail?[
-                                                      authCubit?.trainerIndex ??
-                                                          0]
-                                                  .id ??
-                                              0,
-                                          branchId: branchId,
-                                          clean: true,
-                                        );
-                                    doSearch(true);
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
-                        );
+                    SizedBox(height: 20.h),
+                    TrainerAppBranchField(
+                      addAllItem: true,
+                      initialBranch: selectedItemValue ?? -1,
+                      onSelect: (value) {
+                        if (value == -1) {
+                          branchSelected = false;
+                          batchController.text = 'All';
+                          branchId = null;
+                          batch = null;
+                          year = month = finalDate = feeType = query = null;
+                          _dropDownKey.currentState?.reset();
+                          searchController.clear();
+                          cubit.batchInvoice.clear();
+                          setState(() {});
+                        } else {
+                          branchSelected = true;
+                          selectedItemValue = value;
+                          setState(() {
+                            branchId = value;
+                          });
+                          batchController.clear();
+                          feeTypeController.clear();
+                          dateController.clear();
+                          batch = null;
+                          _dropDownKey.currentState?.reset();
+                          cubit.batchInvoice.clear();
+                          feeTypeController.clear();
+                          context
+                              .read<BatchCubit>()
+                              .getBatchesByBranchForTrainer(
+                                trainerId: authCubit
+                                        ?.user
+                                        ?.trainerDetail?[
+                                            authCubit?.trainerIndex ?? 0]
+                                        .id ??
+                                    0,
+                                branchId: branchId,
+                                clean: true,
+                              );
+                          doSearch(true);
+                        }
                       },
                     ),
                     const SizedBox(

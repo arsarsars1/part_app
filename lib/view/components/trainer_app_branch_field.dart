@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -7,6 +8,7 @@ class TrainerAppBranchField extends StatefulWidget {
   final ValueChanged<int?> onSelect;
   final int? initialBranch;
   final bool isMandatory;
+  final bool addAllItem;
   final String? title;
   final bool isDisable;
   final bool clearInitial;
@@ -20,6 +22,7 @@ class TrainerAppBranchField extends StatefulWidget {
     this.isMandatory = true,
     this.isDisable = false,
     this.clearInitial = false,
+    this.addAllItem = false,
   });
 
   @override
@@ -53,12 +56,25 @@ class _TrainerAppBranchFieldState extends State<TrainerAppBranchField> {
           dropDown: true,
           defaultItem: widget.clearInitial
               ? null
-              : branchCubit.initialBranch(
-                  widget.initialBranch ?? branchCubit.firstBranch?.id,
-                ),
+              : widget.initialBranch != null && widget.initialBranch == -1
+                  ? const DropDownItem(
+                      id: -1,
+                      title: "All",
+                    )
+                  : (branchCubit.initialBranch(
+                      widget.initialBranch ?? branchCubit.firstBranch?.id,
+                    )),
           contentPaddingField: widget.contentPaddingField,
           disabled: widget.isDisable,
-          dropDownItems: branchCubit.dropDownBranches(),
+          dropDownItems: widget.addAllItem
+              ? (branchCubit.dropDownBranches()
+                ..insert(
+                    0,
+                    const DropDownItem(
+                      id: -1,
+                      title: "All",
+                    )))
+              : branchCubit.dropDownBranches(),
           onChange: (value) {
             if (widget.isDisable == false) {
               widget.onSelect(value.id);

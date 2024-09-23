@@ -110,10 +110,8 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                                     maxLines: 2,
                                     softWrap: true,
                                     overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
                                   ),
                                 ),
                               ],
@@ -141,10 +139,8 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                                 if (widget.student.feeType == "class")
                                   Text(
                                     "Class Attended: ${widget.student.cycleAttendancePresentCount}/${widget.student.totalNoOfClasses}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
                                   ),
                               ],
                             ),
@@ -158,127 +154,122 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(
-                                  width: 150.w,
-                                  child: Text(
-                                    '${widget.student.batchName}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(),
-                                  ),
-                                ),
-                                if (widget.student.writtenOffStatus != 1 &&
-                                    widget.student.paymentStatus != 'paid')
-                                  if (widget.student.feeType == "monthly")
-                                    Text(
-                                      'Payment Due Date:',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: 150.w,
-                                  child: Text(
-                                    '${widget.student.branchName}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                  ),
-                                ),
-                                if (widget.student.writtenOffStatus != 1 &&
-                                    widget.student.paymentStatus != 'paid')
-                                  if (widget.student.feeType == "monthly")
-                                    Text(
-                                      "${widget.student.paymentDueDate?.toDDMMMYYY()}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontSize: 13,
-                                            color: widget.student
-                                                        .writtenOffStatus !=
-                                                    1
-                                                ? widget.student
-                                                            .paymentStatus ==
-                                                        'paid'
-                                                    ? AppColors.green
-                                                    : widget.student
-                                                                .paymentStatus ==
-                                                            'partial'
-                                                        ? AppColors.yellow
-                                                        : AppColors.primaryColor
-                                                : AppColors.green,
-                                          ),
-                                    ),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
                                 Expanded(
-                                  child: Text(
-                                    '${widget.student.courseName}, ${widget.student.subjectName}',
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${widget.student.batchName}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                      Text(
+                                        '${widget.student.branchName}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                      Text(
+                                        '${widget.student.courseName}, ${widget.student.subjectName}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "Payment Status :",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
-                                    Text(
-                                      widget.student.writtenOffStatus != 1
-                                          ? widget.student.paymentStatus ==
-                                                  'paid'
-                                              ? "Completely Paid"
-                                              : widget.student.paymentStatus ==
-                                                      'partial'
-                                                  ? "Partially Paid"
-                                                  : "Not Paid"
-                                          : "Written Off",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 15,
-                                            color: widget.student
-                                                        .writtenOffStatus !=
-                                                    1
-                                                ? widget.student
-                                                            .paymentStatus ==
-                                                        'paid'
-                                                    ? AppColors.green
-                                                    : widget.student
+                                Expanded(
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        if (widget.student.writtenOffStatus !=
+                                                1 &&
+                                            widget.student.paymentStatus !=
+                                                'paid')
+                                          if (widget.student.feeType ==
+                                              "monthly")
+                                            Text(
+                                              'Payment Due Date:',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge,
+                                            ),
+                                        if (widget.student.writtenOffStatus !=
+                                                1 &&
+                                            widget.student.paymentStatus !=
+                                                'paid')
+                                          if (widget.student.feeType ==
+                                              "monthly")
+                                            Text(
+                                              "${widget.student.paymentDueDate?.toDDMMMYYY()}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge
+                                                  ?.copyWith(
+                                                    fontSize: 13,
+                                                    color: widget.student
+                                                                .writtenOffStatus !=
+                                                            1
+                                                        ? widget.student
+                                                                    .paymentStatus ==
+                                                                'paid'
+                                                            ? AppColors.green
+                                                            : widget.student
+                                                                        .paymentStatus ==
+                                                                    'partial'
+                                                                ? AppColors
+                                                                    .yellow
+                                                                : AppColors
+                                                                    .primaryColor
+                                                        : AppColors.green,
+                                                  ),
+                                            ),
+                                        Text(
+                                          "Payment Status :",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge,
+                                        ),
+                                        Text(
+                                          widget.student.writtenOffStatus != 1
+                                              ? widget.student.paymentStatus ==
+                                                      'paid'
+                                                  ? "Completely Paid"
+                                                  : widget.student
+                                                              .paymentStatus ==
+                                                          'partial'
+                                                      ? "Partially Paid"
+                                                      : "Not Paid"
+                                              : "Written Off",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 15,
+                                                color: widget.student
+                                                            .writtenOffStatus !=
+                                                        1
+                                                    ? widget.student
                                                                 .paymentStatus ==
-                                                            'partial'
-                                                        ? AppColors.yellow
-                                                        : AppColors.primaryColor
-                                                : AppColors.green,
-                                          ),
-                                    ),
-                                  ],
+                                                            'paid'
+                                                        ? AppColors.green
+                                                        : widget.student
+                                                                    .paymentStatus ==
+                                                                'partial'
+                                                            ? AppColors.yellow
+                                                            : AppColors
+                                                                .primaryColor
+                                                    : AppColors.green,
+                                              ),
+                                        ),
+                                      ]),
                                 ),
                               ],
                             ),
@@ -288,10 +279,7 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                             Text(
                               'Fees :  ₹${widget.student.payableAmount}',
                               textAlign: TextAlign.right,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(),
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             SizedBox(
                               height: 10.h,
@@ -530,8 +518,7 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                                                   'Total Amount Paid : ',
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .bodyLarge
-                                                      ?.copyWith(),
+                                                      .bodyLarge,
                                                 ),
                                                 Text(
                                                   (widget.student.paymentsTotal ??
@@ -590,8 +577,7 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                                                   'Amount Payable : ',
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .bodyLarge
-                                                      ?.copyWith(),
+                                                      .bodyLarge,
                                                 ),
                                                 Text(
                                                   '₹ ${widget.student.pendingAmount}',
@@ -843,10 +829,8 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                                       maxLines: 2,
                                       softWrap: true,
                                       overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
                                     ),
                                   ),
                                 ],
