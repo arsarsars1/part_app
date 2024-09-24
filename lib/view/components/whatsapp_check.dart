@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:part_app/constants/constant.dart';
+import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/view/components/components.dart';
 
 class WhatsappCheckButton extends StatefulWidget {
@@ -87,6 +88,9 @@ class _WhatsappCheckButtonState extends State<WhatsappCheckButton> {
                           return 'Please enter Whatsapp number.';
                         } else if (value.toString().length < 10) {
                           return 'Invalid Whatsapp number.';
+                        } else if (value.toString().allowIndianNumberOnly() ==
+                            false) {
+                          return "Whatsapp Number restricted to 10 digits";
                         }
                         return null;
                       }

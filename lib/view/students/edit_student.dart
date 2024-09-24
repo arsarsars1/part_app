@@ -196,6 +196,9 @@ class _EditStudentState extends State<EditStudent> {
                     return 'Please enter number.';
                   } else if (value.toString().length < 10) {
                     return 'Invalid phone number.';
+                  } else if (value.toString().allowIndianNumberOnly() ==
+                      false) {
+                    return "Phone Number restricted to 10 digits";
                   }
 
                   return null;
@@ -320,10 +323,8 @@ class _EditStudentState extends State<EditStudent> {
 
                         StudentRequest request = StudentRequest(
                           name: name,
-                          mobileNo: phone?.removeCountryCode(),
-                          whatsappNo: whatsappSelected
-                              ? phone?.removeCountryCode()
-                              : whatsappNo?.removeCountryCode(),
+                          mobileNo: phone,
+                          whatsappNo: whatsappSelected ? phone : whatsappNo,
                           dob: dob,
                           gender: gender,
                           email: email,

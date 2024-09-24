@@ -10,8 +10,7 @@ enum PhoneNumberCharacter {
 
 extension PhoneNumberCleaner on String {
   String cleanPhoneNumber() {
-    return this
-        .replaceAll(PhoneNumberCharacter.plus.char, '')
+    return replaceAll(PhoneNumberCharacter.plus.char, '')
         .replaceAll(PhoneNumberCharacter.space.char, '')
         .replaceAll(PhoneNumberCharacter.dash.char, '')
         .replaceAll(PhoneNumberCharacter.openParen.char, '')
@@ -37,6 +36,12 @@ extension PhoneNumberCleaner on String {
     }
 
     return cleanedPhone;
+  }
+
+  bool allowIndianNumberOnly() {
+    return cleanPhoneNumber().length < 10 ||
+        cleanPhoneNumber().toString() == "+91" ||
+        cleanPhoneNumber().toString() == "91";
   }
 }
 

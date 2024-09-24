@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/constants/constant.dart';
+import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/extensions.dart';
@@ -196,6 +197,9 @@ class _TrainerAppEditStudentState extends State<TrainerAppEditStudent> {
                     return 'Please enter number.';
                   } else if (value.toString().length < 10) {
                     return 'Invalid phone number.';
+                  } else if (value.toString().allowIndianNumberOnly() ==
+                      false) {
+                    return "Phone Number restricted to 10 digits";
                   }
 
                   return null;

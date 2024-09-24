@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:part_app/constants/constant.dart';
+import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
@@ -199,6 +200,9 @@ class _AddStudentState extends State<AddStudent> {
                     return 'Please enter number.';
                   } else if (value.toString().length < 10) {
                     return 'Invalid phone number.';
+                  } else if (value.toString().allowIndianNumberOnly() ==
+                      false) {
+                    return "Phone Number restricted to 10 digits";
                   }
 
                   return null;
@@ -209,9 +213,15 @@ class _AddStudentState extends State<AddStudent> {
               ),
               WhatsappCheckButton(
                 initialValue: whatsappNo,
-                selected: true,
+                selected: whatsappSelected,
                 onChange: (bool value) {
-                  whatsappNo = null;
+                  whatsappSelected = value;
+                  if (value) {
+                    whatsappNo = phone;
+                  } else {
+                    whatsappNo = null;
+                  }
+                  setState(() {});
                 },
                 onNumberChange: (String value) {
                   whatsappNo = value;
@@ -312,8 +322,11 @@ class _AddStudentState extends State<AddStudent> {
 
                         StudentRequest request = cubit.studentRequest.copyWith(
                           name: name,
-                          mobileNo: phone,
-                          whatsappNo: whatsappNo ?? phone,
+                          mobileNo: phone?.removeCountryCode(),
+                          countryCode: phone?.getCountryCode(),
+                          whatsappNo: whatsappSelected
+                              ? phone?.removeCountryCode()
+                              : whatsappNo?.removeCountryCode(),
                           dob: dob,
                           gender: gender,
                           email: email,

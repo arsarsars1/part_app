@@ -58,7 +58,7 @@ class ApiClient {
           },
         ),
       );
-      debugResponse(response);
+      debugResponse(response, baseUrl);
       return _handleResponse(response);
     } catch (e) {
       return e;
@@ -123,7 +123,7 @@ class ApiClient {
               },
         ),
       );
-      debugResponse(response);
+      debugResponse(response, basePath);
       return _handleResponse(response);
     } catch (e) {
       log(e.toString());
@@ -177,12 +177,15 @@ class ApiClient {
     return response.data;
   }
 
-  void debugResponse(Response<dynamic> response) {
+  void debugResponse(Response<dynamic> response, String? basePath) {
     if (kDebugMode) {
       debugPrint('********** API END ***********');
       debugPrint(
         'STATUS -> Code : ${response.statusCode}, Status : ${response.statusMessage}',
       );
+      if (basePath != null) {
+        debugPrint("Base Url => $basePath");
+      }
       debugPrint(response.statusMessage);
       debugPrint(json.encode(response.data));
 
