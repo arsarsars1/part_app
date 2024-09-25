@@ -67,6 +67,7 @@ class _TrainerAppAttendanceBatchListPageState
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AttendanceCubit>();
+    var branchCubit = context.read<BranchCubit>();
 
     return Scaffold(
       appBar: const CommonBar(title: 'Class Attendance'),
@@ -126,8 +127,11 @@ class _TrainerAppAttendanceBatchListPageState
                   ),
                   BlocBuilder<BranchCubit, BranchState>(
                       builder: (context, state) {
-                    if (state is BranchesLoading) {
-                      return const LoadingView(hideColor: true);
+                    if (state is BranchesLoading &&
+                        branchCubit.branches.isEmpty) {
+                      if (query == null) {
+                        return const LoadingView(hideColor: true);
+                      }
                     }
                     return branchId != null
                         ? Column(
@@ -144,14 +148,17 @@ class _TrainerAppAttendanceBatchListPageState
                                   if (state is BatchNetworkError) {
                                     AlertBox.showErrorAlert(context);
                                   }
-                                  if (state is FetchingBatches ||
-                                      state is FetchingAttendanceBatches) {
-                                    return const Padding(
-                                      padding: EdgeInsets.only(top: 32),
-                                      child: LoadingView(
-                                        hideColor: true,
-                                      ),
-                                    );
+                                  if ((state is FetchingBatches ||
+                                          state is FetchingAttendanceBatches) &&
+                                      cubit.batches.isEmpty) {
+                                    if (query == null) {
+                                      return const Padding(
+                                        padding: EdgeInsets.only(top: 32),
+                                        child: LoadingView(
+                                          hideColor: true,
+                                        ),
+                                      );
+                                    }
                                   }
                                   if (cubit.batches.isEmpty) {
                                     return Center(
