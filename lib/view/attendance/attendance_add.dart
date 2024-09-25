@@ -34,16 +34,30 @@ class _AttendanceAddState extends State<AttendanceAdd> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      scrollController.position.isScrollingNotifier.addListener(() async {
-        if (!scrollController.position.isScrollingNotifier.value) {
-          await context.read<StudentCubit>().getStudents(
-                batchId: context.read<AttendanceCubit>().id,
-                clean: false,
-              );
-          setState(() {});
-        }
-      });
+      doSearch(true);
     });
+
+    // scrollController.position.isScrollingNotifier.addListener(() async {
+    //   if (!scrollController.position.isScrollingNotifier.value) {
+    //     doSearch(false);
+    //     setState(() {});
+    //   }
+    // });
+
+    scrollController.addListener(() async {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        await doSearch(false);
+      }
+    });
+  }
+
+  Future<void> doSearch(bool clean) async {
+    await context.read<StudentCubit>().getStudents(
+          batchId: context.read<AttendanceCubit>().id,
+          clean: clean,
+        );
+    setState(() {});
   }
 
   @override
@@ -164,66 +178,70 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                         ),
                         SizedBox(height: 5.h),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "${batch?.courseName}, ${batch?.subjectName}",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        fontSize: 12.sp,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${batch?.courseName}, ${batch?.subjectName}",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              fontSize: 12.sp,
+                                            ),
                                       ),
-                                ),
-                                SizedBox(height: 10.h),
-                                SizedBox(
-                                  width: 180.w,
-                                  child: Text(
-                                    "Trainer - ${batch?.trainersString}",
-                                    maxLines: 5,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                            fontSize: 12.sp,
-                                            color: AppColors.primaryColor),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${cubit.conductedDate?.toDay()}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        color: AppColors.textColor,
-                                        fontSize: 16,
+                                      SizedBox(height: 10.h),
+                                      SizedBox(
+                                        width: 180.w,
+                                        child: Text(
+                                          "Trainer - ${batch?.trainersString}",
+                                          maxLines: 5,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                  fontSize: 12.sp,
+                                                  color:
+                                                      AppColors.primaryColor),
+                                        ),
                                       ),
-                                ),
-                                Text(
-                                  '${cubit.conductedDate?.toDDMMMYYY()}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        color: AppColors.textColor,
-                                        fontSize: 16,
+                                    ]),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        '${cubit.conductedDate?.toDay()}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: AppColors.textColor,
+                                              fontSize: 16,
+                                            ),
                                       ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
+                                      Text(
+                                        '${cubit.conductedDate?.toDDMMMYYY()}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: AppColors.textColor,
+                                              fontSize: 16,
+                                            ),
+                                      ),
+                                    ]),
+                              )
+                            ]),
                         SizedBox(height: 25.h),
                         BlocBuilder<AttendanceCubit, AttendanceState>(
                             builder: (context, state) {
@@ -335,12 +353,12 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                                       in studentCubit.students ?? []) {
                                     if (!cubit.selectedStudents
                                         .contains(student.detailId)) {
-                                      Attendance studentAttendence = Attendance(
+                                      Attendance studentAttendance = Attendance(
                                         studentDetailId: student.detailId,
                                         isPresent: 0,
                                       );
                                       cubit.addAttendenceofStudent(
-                                          studentAttendence);
+                                          studentAttendance);
                                     }
                                   }
                                 }
