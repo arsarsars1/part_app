@@ -42,12 +42,14 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
     });
   }
 
-  fetchLead() {
+  Future<void> fetchLead({bool getStatus = true}) async {
     AuthCubit? authCubit = context.read<AuthCubit>();
     trainerId = authCubit.user?.trainerDetail?[authCubit.trainerIndex].id ?? 0;
     var lead = context.read<LeadsCubit>();
-    lead.getTrainerLeadsLists(trainerId: trainerId, clean: true);
-    lead.getLeadStatuses(trainerId: trainerId);
+    await lead.getTrainerLeadsLists(trainerId: trainerId, clean: true);
+    if (getStatus) {
+      await lead.getLeadStatuses(trainerId: trainerId);
+    }
   }
 
   @override
@@ -107,23 +109,23 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                                     ),
                               ),
                             ),
-                            // IconButton(
-                            //     onPressed: () {
-                            //       setState(() {
-                            //         leadStatus = null;
-                            //         branchId = null;
-                            //         batchController.clear();
-                            //         date = null;
-                            //         query = null;
-                            //       });
-                            //       fetchLead(getStatus: false);
-                            //
-                            //       scaffoldKey.currentState?.closeDrawer();
-                            //     },
-                            //     icon: const Icon(
-                            //       Icons.filter_alt_off,
-                            //       color: Colors.white,
-                            //     ))
+                            IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    leadStatus = null;
+                                    branchId = null;
+                                    batchController.clear();
+                                    date = null;
+                                    query = null;
+                                  });
+                                  fetchLead(getStatus: false);
+
+                                  scaffoldKey.currentState?.closeDrawer();
+                                },
+                                icon: const Icon(
+                                  Icons.filter_alt_off,
+                                  color: Colors.white,
+                                ))
                           ],
                         ),
                       ),
@@ -172,6 +174,7 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                               clean: true,
                             );
                         cubit.leads.clear();
+                        doSearch(true);
                       },
                     ),
                     const SizedBox(

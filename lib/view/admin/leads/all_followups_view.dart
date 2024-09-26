@@ -42,11 +42,11 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
     });
   }
 
-  void fetchLead({bool getStatus = true}) {
+  Future<void> fetchLead({bool getStatus = true}) async {
     var lead = context.read<LeadsCubit>();
-    lead.getLeadsLists(clean: true);
+    await lead.getLeadsLists(clean: true);
     if (getStatus) {
-      lead.getLeadStatuses();
+      await lead.getLeadStatuses();
     }
   }
 
@@ -107,22 +107,22 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                                     ),
                               ),
                             ),
-                            // IconButton(
-                            //     onPressed: () {
-                            //       setState(() {
-                            //         leadStatus = null;
-                            //         branchId = null;
-                            //         batchController.clear();
-                            //         date = null;
-                            //         query = null;
-                            //       });
-                            //       fetchLead(getStatus: false);
-                            //       scaffoldKey.currentState?.closeDrawer();
-                            //     },
-                            //     icon: const Icon(
-                            //       Icons.filter_alt_off,
-                            //       color: Colors.white,
-                            //     ))
+                            IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    leadStatus = null;
+                                    branchId = null;
+                                    batchController.clear();
+                                    date = null;
+                                    query = null;
+                                  });
+                                  fetchLead(getStatus: false);
+                                  scaffoldKey.currentState?.closeDrawer();
+                                },
+                                icon: const Icon(
+                                  Icons.filter_alt_off,
+                                  color: Colors.white,
+                                ))
                           ],
                         ),
                       ),
@@ -170,6 +170,7 @@ class _TodayFollowViewState extends State<AllFollowUpView> {
                               clean: true,
                             );
                         cubit.leads.clear();
+                        doSearch(true);
                       },
                     ),
                     const SizedBox(
