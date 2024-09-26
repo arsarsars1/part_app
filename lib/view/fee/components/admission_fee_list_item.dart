@@ -670,7 +670,7 @@ class _AdmissionFeeListItemState extends State<AdmissionFeeListItem> {
                                         },
                                         color: AppColors.lavender,
                                         margin: 0,
-                                      ),
+                                      ).expanded(shouldExpand: true),
                                       const SizedBox(
                                         width: 8,
                                       ),
