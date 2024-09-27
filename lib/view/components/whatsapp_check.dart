@@ -83,17 +83,8 @@ class _WhatsappCheckButtonState extends State<WhatsappCheckButton> {
                 phoneField: true,
                 initialValue: widget.initialValue,
                 validator: widget.isMandatory
-                    ? (value) {
-                        if (value == null || value.toString().isEmpty) {
-                          return 'Please enter Whatsapp number.';
-                        } else if (value.toString().length < 10) {
-                          return 'Invalid Whatsapp number.';
-                        } else if (value.toString().allowIndianNumberOnly() ==
-                            false) {
-                          return "Whatsapp Number restricted to 10 digits";
-                        }
-                        return null;
-                      }
+                    ? (value) => PhoneNumberValidator.validateIndianPhoneNumber(
+                        value as String?)
                     : null,
                 inputType: TextInputType.phone,
                 title: 'Whatsapp Phone Number ${widget.isMandatory ? '*' : ""}',

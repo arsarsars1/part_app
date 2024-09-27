@@ -195,18 +195,9 @@ class _AddStudentState extends State<AddStudent> {
                     FocusManager.instance.primaryFocus?.unfocus();
                   }
                 },
-                validator: (value) {
-                  if (value == null || value.toString().isEmpty) {
-                    return 'Please enter number.';
-                  } else if (value.toString().length < 10) {
-                    return 'Invalid phone number.';
-                  } else if (value.toString().allowIndianNumberOnly() ==
-                      false) {
-                    return "Phone Number restricted to 10 digits";
-                  }
-
-                  return null;
-                },
+                validator: (value) =>
+                    PhoneNumberValidator.validateIndianPhoneNumber(
+                        value as String?),
               ),
               const SizedBox(
                 height: 20,

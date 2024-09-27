@@ -37,12 +37,6 @@ extension PhoneNumberCleaner on String {
 
     return cleanedPhone;
   }
-
-  bool allowIndianNumberOnly() {
-    return cleanPhoneNumber().length < 10 ||
-        cleanPhoneNumber().toString() == "+91" ||
-        cleanPhoneNumber().toString() == "91";
-  }
 }
 
 extension PhoneNumberCharacterExtension on PhoneNumberCharacter {
@@ -59,5 +53,26 @@ extension PhoneNumberCharacterExtension on PhoneNumberCharacter {
       case PhoneNumberCharacter.closeParen:
         return ')';
     }
+  }
+}
+
+class PhoneNumberValidator {
+  static String? validateIndianPhoneNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a phone number.';
+    }
+
+    String cleanedPhone = value.cleanPhoneNumber();
+
+    if (cleanedPhone.length != 10) {
+      return "Phone Number restricted to 10 digits";
+    }
+
+    if (value.getCountryCode() != 91) {
+      return "Phone Number restricted to 10 digits";
+      // return 'Phone number must be an Indian number (91).';
+    }
+
+    return null;
   }
 }
