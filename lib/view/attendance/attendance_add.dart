@@ -124,6 +124,7 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                     padding: EdgeInsets.all(20.h),
                     child: ListView(
                       controller: scrollController,
+                      physics: const ClampingScrollPhysics(),
                       children: [
                         Text(
                           "${batch?.name}",
@@ -320,65 +321,75 @@ class _AttendanceAddState extends State<AttendanceAdd> {
                         }),
                         BlocBuilder<StudentCubit, StudentState>(
                           builder: (context, state) {
-                            return AnimatedContainer(
-                              height:
-                                  state is FetchingStudents && state.pagination
-                                      ? 30
-                                      : 0,
-                              color: Colors.black,
-                              duration: const Duration(
-                                milliseconds: 250,
-                              ),
-                              child: const Center(
-                                  child: Text('Fetching more items ..')),
-                            );
+                            if (state is FetchingStudents && state.pagination) {
+                              return AnimatedContainer(
+                                height: state.pagination ? 30 : 0,
+                                color: Colors.black,
+                                duration: const Duration(
+                                  milliseconds: 250,
+                                ),
+                                child: const Center(
+                                    child: Text('Fetching more items ..')),
+                              );
+                            } else {
+                              return Column(
+                                children: [
+                                  SizedBox(height: 20.h),
+                                  Center(
+                                    child: SafeArea(
+                                      child: Button(
+                                        onTap: () {
+                                          for (int i
+                                              in cubit.selectedStudents) {
+                                            Attendance studentAttendence =
+                                                Attendance(
+                                              studentDetailId: i,
+                                              isPresent: 1,
+                                            );
+                                            cubit.addAttendenceofStudent(
+                                                studentAttendence);
+                                          }
+                                          if (studentCubit.students?.length !=
+                                              cubit.selectedStudents.length) {
+                                            for (StudentModel student
+                                                in studentCubit.students ??
+                                                    []) {
+                                              if (!cubit.selectedStudents
+                                                  .contains(student.detailId)) {
+                                                Attendance studentAttendance =
+                                                    Attendance(
+                                                  studentDetailId:
+                                                      student.detailId,
+                                                  isPresent: 0,
+                                                );
+                                                cubit.addAttendenceofStudent(
+                                                    studentAttendance);
+                                              }
+                                            }
+                                          }
+                                          AttendenceAddRequest request =
+                                              AttendenceAddRequest(
+                                            conductedOn: (cubit.conductedDate ??
+                                                    DateTime.now())
+                                                .toServerYMD(),
+                                            startTime: startTime ?? "",
+                                            endTime: endTime ?? "",
+                                            attendance:
+                                                cubit.buildAttendanceList(),
+                                          );
+                                          cubit.addAttendence(request,
+                                              batchId: batch?.id);
+                                        },
+                                        height: UIConstants.buttonHeight,
+                                        title: 'Save Attendance',
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              );
+                            }
                           },
                         ),
-                        SizedBox(height: 20.h),
-                        Center(
-                          child: SafeArea(
-                            child: Button(
-                              onTap: () {
-                                for (int i in cubit.selectedStudents) {
-                                  Attendance studentAttendence = Attendance(
-                                    studentDetailId: i,
-                                    isPresent: 1,
-                                  );
-                                  cubit.addAttendenceofStudent(
-                                      studentAttendence);
-                                }
-                                if (studentCubit.students?.length !=
-                                    cubit.selectedStudents.length) {
-                                  for (StudentModel student
-                                      in studentCubit.students ?? []) {
-                                    if (!cubit.selectedStudents
-                                        .contains(student.detailId)) {
-                                      Attendance studentAttendance = Attendance(
-                                        studentDetailId: student.detailId,
-                                        isPresent: 0,
-                                      );
-                                      cubit.addAttendenceofStudent(
-                                          studentAttendance);
-                                    }
-                                  }
-                                }
-                                AttendenceAddRequest request =
-                                    AttendenceAddRequest(
-                                  conductedOn:
-                                      (cubit.conductedDate ?? DateTime.now())
-                                          .toServerYMD(),
-                                  startTime: startTime ?? "",
-                                  endTime: endTime ?? "",
-                                  attendance: cubit.buildAttendanceList(),
-                                );
-                                cubit.addAttendence(request,
-                                    batchId: batch?.id);
-                              },
-                              height: UIConstants.buttonHeight,
-                              title: 'Save Attendance',
-                            ),
-                          ),
-                        )
                       ],
                     ),
                   );

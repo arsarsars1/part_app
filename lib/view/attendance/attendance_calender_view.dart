@@ -32,19 +32,19 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
       EventList<EventModel>(events: {});
   int currentYear = DateTime.now().year;
   int currentMonth = DateTime.now().month;
-  StudentCubit? studentCubit;
+  // StudentCubit? studentCubit;
   int noOfWeeks = 0;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       AttendanceCubit cubit = context.read<AttendanceCubit>();
-      studentCubit = context.read<StudentCubit>();
+      // studentCubit = context.read<StudentCubit>();
       await cubit.getClassesOfMonth(
           batchId: cubit.id, date: DateTime(currentYear, currentMonth));
       await cubit.getConductedClassesOfMonth(
           batchId: cubit.id, date: DateTime(currentYear, currentMonth));
-      await studentCubit?.getStudents(batchId: cubit.id, clean: true);
+      // await studentCubit?.getStudents(batchId: cubit.id, clean: true);
       _markedDateMap.clear();
       setState(() {
         noOfWeeks = getWeeksInMonth(DateTime(currentYear, currentMonth));
@@ -230,7 +230,8 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                   message:
                                       'This batch does not have class on this day.');
                             } else {
-                              if ((studentCubit?.students?.length ?? 0) == 0) {
+                              if ((batch?.studentCount ?? 0) == 0) {
+                                // if ((studentCubit?.students?.length ?? 0) == 0) {
                                 Alert(context).show(
                                     message: 'No students Added to Batch');
                               } else {

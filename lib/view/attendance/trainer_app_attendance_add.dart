@@ -126,6 +126,7 @@ class _TrainerAppAttendanceAddState extends State<TrainerAppAttendanceAdd> {
                     padding: EdgeInsets.all(20.h),
                     child: ListView(
                       controller: scrollController,
+                      physics: const ClampingScrollPhysics(),
                       children: [
                         Text(
                           "${batch?.name}",

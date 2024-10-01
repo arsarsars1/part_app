@@ -11,6 +11,7 @@ import 'package:part_app/model/data_model/student_model.dart';
 import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/data_model/student_request_for_student.dart';
 import 'package:part_app/model/data_model/students_response.dart';
+import 'package:part_app/model/extensions.dart';
 import 'package:part_app/model/service/admin/student.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/utils.dart';
@@ -284,6 +285,9 @@ class StudentCubit extends Cubit<StudentState> {
     String? activeStatus,
     bool clean = false,
   }) async {
+    if (state is FetchingStudents) {
+      return;
+    }
     if (clean) {
       page = 1;
       nextPageUrl = '';
@@ -310,8 +314,10 @@ class StudentCubit extends Cubit<StudentState> {
 
     if (response?.status == 1) {
       nextPageUrl = response?.students?.nextPageUrl;
-      if (nextPageUrl != null) {
+      if (nextPageUrl != null && nextPageUrl.isNotNullOrEmpty()) {
         page++;
+      } else {
+        nextPageUrl = null;
       }
 
       var items = response?.students?.data ?? [];
@@ -417,6 +423,9 @@ class StudentCubit extends Cubit<StudentState> {
     int? branchId,
     bool clean = false,
   }) async {
+    if (state is FetchingStudents) {
+      return;
+    }
     if (clean) {
       page = 1;
       nextPageUrl = '';
@@ -444,8 +453,10 @@ class StudentCubit extends Cubit<StudentState> {
 
     if (response?.status == 1) {
       nextPageUrl = response?.students?.nextPageUrl;
-      if (nextPageUrl != null) {
+      if (nextPageUrl != null && nextPageUrl.isNotNullOrEmpty()) {
         page++;
+      } else {
+        nextPageUrl = null;
       }
 
       var items = response?.students?.data ?? [];
