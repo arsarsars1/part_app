@@ -60,7 +60,7 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
       date = dateController.text;
       commentController.text =
           selectedLead.followUpComment.toString().isNotEmpty
-              ? selectedLead.followUpComment
+              ? selectedLead.followUpComment ?? ""
               : null;
       comments = commentController.text;
       status = selectedLead.followUpStatus.toString().isNotEmpty
