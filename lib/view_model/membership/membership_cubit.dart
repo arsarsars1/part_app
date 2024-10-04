@@ -99,29 +99,32 @@ class MembershipCubit extends Cubit<MembershipState> {
     var userStr = await Database().getUser();
     emit(CreatingMembership());
     if (userStr != null) {
-      try {
-        var userResp = userResponseFromJson(userStr);
-        Membership membership =
+      // try {
+      var userResp = userResponseFromJson(userStr);
+      Membership? membership;
+      if (memberships.any((element) => element.paymentType == 'free')) {
+        membership =
             memberships.firstWhere((element) => element.paymentType == 'free');
-        Common value = await _membershipService.addMembership(
-          academyId: userResp.user?.adminDetail?.academy?.id,
-          membershipID: _selectedMembership?.id ?? membership.id,
-          paymentMethod: paymentMethod,
-          salesManOtp: paymentCode,
-          orderId: orderId,
-          paymentId: paymentId,
-        );
-
-        if (value.status == 1) {
-          await authCubit.getUser();
-          emit(MembershipSuccess());
-        } else {
-          emit(MembershipFailed(value.message));
-        }
-      } catch (e) {
-        debugPrint(e.toString());
-        emit(MembershipFailed(e.toString()));
       }
+      Common value = await _membershipService.addMembership(
+        academyId: userResp.user?.adminDetail?.academy?.id,
+        membershipID: _selectedMembership?.id ?? membership?.id,
+        paymentMethod: paymentMethod,
+        salesManOtp: paymentCode,
+        orderId: orderId,
+        paymentId: paymentId,
+      );
+
+      if (value.status == 1) {
+        await authCubit.getUser();
+        emit(MembershipSuccess());
+      } else {
+        emit(MembershipFailed(value.message));
+      }
+      // } catch (e) {
+      //   debugPrint(e.toString());
+      //   emit(MembershipFailed(e.toString()));
+      // }
     } else {
       emit(MembershipFailed('Failed to process the request!'));
     }
