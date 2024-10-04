@@ -79,8 +79,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(
-                                  width: 200.w,
+                                Expanded(
                                   child: Text(
                                     branch?.branchName ?? '',
                                     maxLines: 10,
@@ -122,6 +121,7 @@ class _BranchDetailsState extends State<BranchDetails> {
                                   width: 2,
                                 ),
                               ),
+                              margin: const EdgeInsets.only(left: 4),
                               padding: const EdgeInsets.all(6),
                               child: const Icon(
                                 Icons.edit_outlined,
