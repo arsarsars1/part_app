@@ -162,7 +162,7 @@ class _StudentAppNotificationScreenState
                                         Text(
                                           '${notification?.data?.message}',
                                           style: TextStyle(
-                                            color: AppColors.primaryColor,
+                                            color: AppColors.textColor,
                                           ),
                                         ),
                                       ],

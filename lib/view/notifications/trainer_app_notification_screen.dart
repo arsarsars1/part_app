@@ -171,7 +171,7 @@ class _TrainerAppNotificationScreenState
                                       Text(
                                         '${notification?.data?.message}',
                                         style: TextStyle(
-                                          color: AppColors.primaryColor,
+                                          color: AppColors.textColor,
                                         ),
                                       ),
                                     ],

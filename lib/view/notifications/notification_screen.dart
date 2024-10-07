@@ -137,7 +137,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       Text(
                                         '${notification?.data?.message}',
                                         style: TextStyle(
-                                          color: AppColors.primaryColor,
+                                          color: AppColors.textColor,
                                         ),
                                       ),
                                     ],
