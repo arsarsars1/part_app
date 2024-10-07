@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/membership.dart';
 import 'package:part_app/model/service/api_client.dart';
@@ -30,9 +29,9 @@ class MembershipService {
         'salesman_mobile_no': phoneNo,
       };
 
-      if (F.defaultOTP) {
-        data.putIfAbsent('bypass_otp', () => '123456');
-      }
+      // if (F.defaultOTP) {
+      //   data.putIfAbsent('bypass_otp', () => '123456');
+      // }
       var str = await _apiClient.post(
         postPath: '/offline-otp-generate',
         data: data,

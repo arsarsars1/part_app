@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/otp.dart';
 import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
@@ -30,9 +29,9 @@ class AuthService {
         'mobile_no': phoneNo,
       };
 
-      if (F.defaultOTP) {
-        data.putIfAbsent('bypass_otp', () => '123456');
-      }
+      // if (F.defaultOTP) {
+      //   data.putIfAbsent('bypass_otp', () => '123456');
+      // }
       var response = await _apiClient.post(
         postPath: login ? '/login-otp' : '/register-otp',
         data: data,
@@ -62,7 +61,21 @@ class AuthService {
     try {
       String? fcmToken;
       try {
-        FirebaseMessaging.instance.requestPermission();
+        await FirebaseMessaging.instance.requestPermission(
+          alert: true,
+          announcement: false,
+          badge: true,
+          carPlay: false,
+          criticalAlert: false,
+          provisional: false,
+          sound: true,
+        );
+        await FirebaseMessaging.instance
+            .setForegroundNotificationPresentationOptions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
         await FirebaseMessaging.instance.deleteToken();
         fcmToken = await FirebaseMessaging.instance.getToken();
       } on FirebaseException catch (e) {
