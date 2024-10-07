@@ -30,127 +30,105 @@ class StudentAppHomeBar extends StatelessWidget {
           clean: true);
       notificationCubit.emitNotificationBadge(list);
     });
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'part',
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Expanded(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 2,
+              ),
+              BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  return Text(
+                    cubit.user?.studentDetail?[cubit.studentIndex].academy
+                            ?.academyName ??
+                        'N/A',
+                    maxLines: 2,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 48.sp,
+                          color: AppColors.textColor,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
+                          fontSize: 16.sp,
                         ),
-                  ),
-                  TextSpan(
-                    text: 'app.in',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 24.sp,
-                        ),
-                  ),
-                ],
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 2,
+              ),
+              Text(
+                DateTime.now().toEEMMDD(),
+                maxLines: 1,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: AppColors.violet,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+              ),
+            ]),
+      ),
+      const StudentProfileButton(),
+      SizedBox(
+        width: 8.w,
+      ),
+      GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, StudentAppNotificationScreen.route);
+        },
+        child: Stack(children: [
+          Container(
+            height: 36.r,
+            width: 36.r,
+            padding: const EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.primaryColor,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100.r),
+              child: Container(
+                color: const Color(0xFFECECEC),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        Assets.notification,
+                        semanticsLabel: 'Notification Logo',
+                        height: 18.h,
+                        width: 18.w,
+                      ),
+                    ]),
               ),
             ),
-            const Spacer(),
-            const StudentProfileButton(),
-            SizedBox(
-              width: 16.w,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(
-                    context, StudentAppNotificationScreen.route);
-              },
-              child: Stack(
-                children: [
-                  Container(
-                    height: 36.r,
-                    width: 36.r,
+          ),
+          BlocBuilder<NotificationCubit, NotificationState>(
+            builder: (context, state) {
+              if (state is NotificationInitial) {
+                return const SizedBox();
+              }
+              return Positioned.fill(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    height: 12.r,
+                    width: 12.r,
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColors.primaryColor,
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100.r),
-                      child: Container(
-                        color: const Color(0xFFECECEC),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              Assets.notification,
-                              semanticsLabel: 'Notification Logo',
-                              height: 18.h,
-                              width: 18.w,
-                            ),
-                          ],
-                        ),
-                      ),
+                      borderRadius: BorderRadius.circular(100),
+                      child: Container(),
                     ),
                   ),
-                  BlocBuilder<NotificationCubit, NotificationState>(
-                    builder: (context, state) {
-                      if (state is NotificationInitial) {
-                        return const SizedBox();
-                      }
-                      return Positioned.fill(
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            height: 12.r,
-                            width: 12.r,
-                            padding: const EdgeInsets.all(2),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.primaryColor,
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: Container(),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 16.w,
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        BlocBuilder<AuthCubit, AuthState>(
-          builder: (context, state) {
-            return Padding(
-              padding: EdgeInsets.only(right: 32.w),
-              child: Text(
-                cubit.user?.studentDetail?[cubit.studentIndex].academy
-                        ?.academyName ??
-                    'N/A',
-                maxLines: 2,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.primaryColor,
-                      fontSize: 16.sp,
-                    ),
-              ),
-            );
-          },
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        Text(
-          DateTime.now().toEEMMDD(),
-        ),
-      ],
-    );
+                ),
+              );
+            },
+          ),
+        ]),
+      ),
+    ]);
   }
 }
