@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/view/home/components/home_banner.dart';
+import 'package:part_app/view/home/components/madeByLove.dart';
 import 'package:part_app/view/home/components/trainer_app_dashboard_icons.dart';
 import 'package:part_app/view/home/components/trainer_app_home_bar.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -60,9 +61,8 @@ class _TrainerAppDashboardState extends State<TrainerAppDashboard> {
                         height: 10,
                       ),
                       TrainerAppDashboardIcons(),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      SizedBox(height: 8),
+                      MadeByLove(),
                     ],
                   ),
                 );

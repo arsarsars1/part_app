@@ -6,6 +6,7 @@ import 'package:part_app/view/home/components/dashboard_summary.dart';
 import 'package:part_app/view/home/components/finance_dashboard.dart';
 import 'package:part_app/view/home/components/home_banner.dart';
 import 'package:part_app/view/home/components/home_bar.dart';
+import 'package:part_app/view/home/components/madeByLove.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:showcaseview/showcaseview.dart';
 
@@ -58,9 +59,8 @@ class _DashboardState extends State<Dashboard> {
                       DashboardIcons(),
                       SummaryDashboard(),
                       FinanceDashboard(),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      SizedBox(height: 27),
+                      MadeByLove(),
                     ],
                   ),
                 );

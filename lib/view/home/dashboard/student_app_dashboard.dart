@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/view/home/components/home_banner.dart';
+import 'package:part_app/view/home/components/madeByLove.dart';
 import 'package:part_app/view/home/components/student_app_dashboard_icons.dart';
 import 'package:part_app/view/home/components/student_app_home_bar.dart';
 import 'package:part_app/view/home/components/whats_happening_today.dart';
@@ -63,7 +64,8 @@ class _StudentAppDashboardState extends State<StudentAppDashboard> {
                       SizedBox(
                         height: 10,
                       ),
-                      WhatsHappeningToday()
+                      WhatsHappeningToday(),
+                      MadeByLove(),
                     ],
                   ),
                 );
