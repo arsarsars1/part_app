@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_app/constants/app_colors.dart';
 import 'package:part_app/view/components/components.dart';
 
 class MadeByLove extends StatelessWidget {
@@ -13,10 +14,10 @@ class MadeByLove extends StatelessWidget {
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: Theme.of(context)
-            .textTheme
-            .bodyLarge
-            ?.copyWith(fontSize: 12.sp, color: Colors.white),
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              fontSize: 12.sp,
+              color: AppColors.textColor,
+            ),
       ),
     );
   }
