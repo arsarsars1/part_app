@@ -5,6 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:part_app/core/service/local_notification.dart';
+import 'package:part_app/firebase_options.dart';
 import 'package:part_app/model/data_model/otp.dart';
 import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
@@ -266,6 +268,13 @@ class AuthService {
           }
         }
       }
+      if (message.notification!.android?.channelId != null) {
+        LocalNotificationService.display(message);
+      }
     });
   }
+}
+
+Future<void> backgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }
