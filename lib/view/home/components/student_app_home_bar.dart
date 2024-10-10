@@ -50,7 +50,7 @@ class StudentAppHomeBar extends StatelessWidget {
                           color: AppColors.textColor,
                           fontWeight: FontWeight.w600,
                           overflow: TextOverflow.ellipsis,
-                          fontSize: 16.sp,
+                          fontSize: 18.sp,
                         ),
                   );
                 },
