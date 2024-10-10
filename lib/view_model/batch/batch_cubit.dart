@@ -406,6 +406,8 @@ class BatchCubit extends Cubit<BatchState> {
 
       _batches.addAll(items);
       emit(BatchesFetched(moreItems: nextPageUrl != null));
+    } else {
+      emit(FetchBatchFailed(response.message ?? ""));
     }
   }
 
