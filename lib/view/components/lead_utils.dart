@@ -7,15 +7,23 @@ import 'package:part_app/view/components/assignable_picker.dart';
 
 class LeadUtils {
   getAssignable(GlobalKey<ScaffoldState> scaffoldKey,
-      {ValueChanged<AssignableTrainer?>? onSelect, int? trainerId}) async {
+      {List<int?>? selectedTrainers,
+      ValueChanged<AssignableTrainer?>? onSelect,
+      int? trainerId}) async {
     scaffoldKey.currentState?.showBottomSheet(
       elevation: 10,
       backgroundColor: Colors.transparent,
       (context) => AssignablePicker(
         trainerId: trainerId,
-        multiPicker: false,
-        selectedTrainers: const [],
-        onSave: (List<AssignableTrainer?> value) {},
+        multiPicker: true,
+        selectedTrainers: selectedTrainers ?? [],
+        onSave: (List<AssignableTrainer?> value) {
+          if (value.isNotEmpty) {
+            if (onSelect != null) {
+              onSelect(value.first);
+            }
+          }
+        },
         onSelect: onSelect,
       ),
     );

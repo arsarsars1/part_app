@@ -50,6 +50,12 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
       followUp = selectedLead;
       leadStatusController.text = selectedLead.followUpStatus ?? "";
       trainerController.text = selectedLead.assignedTo?.name ?? "";
+      if (selectedLead.assignedTo != null) {
+        assignableTrainer = AssignableTrainer(
+          id: selectedLead.assignedTo!.id!,
+          name: selectedLead.assignedTo!.name!,
+        );
+      }
       timeController.text = selectedLead.followUpTime!.isNotEmpty
           ? selectedLead.followUpTime?.toAmPM() ?? ""
           : "";
@@ -115,6 +121,9 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
                       onTap: () {
                         LeadUtils().getAssignable(
                           scaffoldKey,
+                          selectedTrainers: assignableTrainer != null
+                              ? [assignableTrainer!.id]
+                              : null,
                           onSelect: (AssignableTrainer? trainer) {
                             assignableTrainer = trainer;
                             trainerController.text = trainer?.name ?? '';
@@ -211,6 +220,9 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
                     Center(
                       child: Button(
                         onTap: () {
+                          if (assignableTrainer?.morphClass == null) {
+                            assignableTrainer = null;
+                          }
                           if (formKey.currentState!.validate()) {
                             LeadRequest request = LeadRequest(
                               batchId: batchId?.id,

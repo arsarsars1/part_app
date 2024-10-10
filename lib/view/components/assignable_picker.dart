@@ -7,10 +7,8 @@ import 'package:part_app/view_model/cubits.dart';
 class AssignablePicker extends StatefulWidget {
   final int? trainerId;
   final List<int?> selectedTrainers;
-
   final ValueChanged<List<AssignableTrainer?>> onSave;
   final ValueChanged<AssignableTrainer?>? onSelect;
-
   final bool multiPicker;
 
   const AssignablePicker({
@@ -81,7 +79,7 @@ class _AssignablePickerState extends State<AssignablePicker> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Select Assignable',
+                        'Select Assignee',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -157,8 +155,7 @@ class _AssignablePickerState extends State<AssignablePicker> {
                                                   .textTheme
                                                   .bodyLarge
                                                   ?.copyWith(
-                                                    color:
-                                                        AppColors.primaryColor,
+                                                    color: AppColors.textColor,
                                                   ),
                                             ),
                                       // leading: trainer.profilePic != null &&

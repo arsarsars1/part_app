@@ -35,12 +35,12 @@ class AssignableModel {
 class AssignableTrainer {
   int id;
   String name;
-  String morphClass;
+  String? morphClass;
 
   AssignableTrainer({
     required this.id,
     required this.name,
-    required this.morphClass,
+    this.morphClass,
   });
 
   factory AssignableTrainer.fromJson(Map<String, dynamic> json) =>
