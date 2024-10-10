@@ -30,6 +30,7 @@ class SummaryDashboard extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: AppColors.summaryBlue,
+                  border: Border.all(color: AppColors.textColor, width: 2),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Row(
