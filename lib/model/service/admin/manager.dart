@@ -8,12 +8,11 @@ class ManagerService {
   final _client = ApiClient();
 
   Future<Common?> createManager({required Map<String, dynamic> request}) async {
-    request.removeWhere((key, value) => value == null);
     try {
       var map = await _client.post(
         postPath: '/admin/managers',
         data: request,
-        formData: true,
+        // formData: true,
       );
       return commonFromJson(jsonEncode(map));
     } catch (e) {

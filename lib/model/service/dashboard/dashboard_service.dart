@@ -84,6 +84,18 @@ class DashboardService {
     }
   }
 
+  Future<CalenderEventsList?> getCalenderEventsForManager(
+      {required int managerId, required String date}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/managers/$managerId/calendar/$date',
+      );
+      return calenderEventsListFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentAppCalenderEvents?> getStudentAppCalenderEvents(
       {required String date, required int studentId}) async {
     try {
@@ -148,6 +160,19 @@ class DashboardService {
     try {
       var response = await _apiClient.post(
         postPath: '/trainers/$trainerId/support',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> sendSupportRequestForManager(
+      int managerId, Map<String, dynamic> data) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/managers/$managerId/support',
         data: data,
       );
       return commonFromJson(jsonEncode(response));

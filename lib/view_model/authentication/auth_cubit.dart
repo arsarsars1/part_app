@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:part_app/model/data_base/data_base.dart';
+import 'package:part_app/model/data_model/branch_manager_response.dart';
 import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/otp.dart';
 import 'package:part_app/model/data_model/profile_update_request.dart';
@@ -43,6 +44,7 @@ class AuthCubit extends Cubit<AuthState> {
   String? _token;
   int studentIndex = 0;
   int trainerIndex = 0;
+  int managerIndex = 0;
 
   String get phoneNumber => '+$_countryCode $_phoneNo';
 
@@ -484,8 +486,12 @@ class AuthCubit extends Cubit<AuthState> {
     emit(UserNotAvailable());
   }
 
-  Future<void> navigateToDashboard(Academy? academy, List<Trainer>? trainerList,
-      List<StudentDetail>? studentsList, BuildContext context) async {
+  Future<void> navigateToDashboard(
+      Academy? academy,
+      List<Trainer>? trainerList,
+      List<StudentDetail>? studentsList,
+      List<BranchManagerResponse>? managerList,
+      BuildContext context) async {
     var homeCubit = context.read<HomeCubit>();
     var cubit = context.read<AuthCubit>();
     int numberOfItems = 0;
@@ -506,11 +512,17 @@ class AuthCubit extends Cubit<AuthState> {
         numberOfItems += studentsList.length;
         accountType = AccountType.student;
       }
+      if (managerList != null && managerList.isNotEmpty) {
+        numberOfItems += managerList.length;
+        accountType = AccountType.branchManager;
+      }
     } else {
       if (userType == 'admin') {
         accountType = AccountType.admin;
       } else if (userType == 'trainer') {
         accountType = AccountType.trainer;
+      } else if (userType == 'manager') {
+        accountType = AccountType.branchManager;
       } else {
         accountType = AccountType.student;
       }
@@ -532,6 +544,20 @@ class AuthCubit extends Cubit<AuthState> {
       } else if (accountType == AccountType.trainer) {
         trainerIndex = cubit.trainerIndex;
         homeCubit.trainerInit();
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          TrainerAppHome.route,
+          (route) => false,
+        );
+      } else if (accountType == AccountType.branchManager) {
+        managerIndex = 0;
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          TrainerAppHome.route,
+          (route) => false,
+        );
+      } else if (accountType == AccountType.branchManager) {
+        managerIndex = 0;
         Navigator.pushNamedAndRemoveUntil(
           context,
           TrainerAppHome.route,

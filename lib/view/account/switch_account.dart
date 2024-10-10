@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:part_app/constants/constant.dart';
+import 'package:part_app/model/data_model/branch_manager_response.dart';
 import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
@@ -132,6 +133,31 @@ class SwitchAccount extends StatelessWidget {
                         },
                         accountType: '${student.name}, Student',
                         academyName: student.academy?.academyName ?? '',
+                      );
+                    },
+                  ),
+                if (cubit.user?.managerDetail != null &&
+                    cubit.user!.managerDetail!.isNotEmpty)
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: cubit.user?.managerDetail?.length,
+                    itemBuilder: (context, index) {
+                      BranchManagerResponse manager =
+                          cubit.user!.managerDetail![index];
+                      return AccountCard(
+                        onTap: () {
+                          cubit.managerIndex = index;
+                          cubit.accountType = AccountType.branchManager;
+                          database.setUserType('manager');
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            StudentAppHome.route,
+                            (route) => false,
+                          );
+                        },
+                        accountType: '${manager.name}, Manager',
+                        academyName: manager.academy?.academyName ?? '',
                       );
                     },
                   ),

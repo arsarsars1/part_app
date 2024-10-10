@@ -222,6 +222,44 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  Future getCalenderEventsForManager({
+    required int managerId,
+    required String date,
+    bool clean = true,
+  }) async {
+    if (clean) {
+      feePayments = null;
+      trainerSalaryPayments?.clear();
+      scheduledClasses?.clear();
+      rescheduledClasses?.clear();
+      studentsJoined?.clear();
+      trainersJoined?.clear();
+      followUpLeads?.clear();
+      newLeads?.clear();
+      emit(GettingCalenderEvents());
+    } else {
+      emit(GettingCalenderEvents(pagination: true));
+    }
+
+    CalenderEventsList? temp = await _service.getCalenderEventsForManager(
+      managerId: managerId,
+      date: date,
+    );
+    if (temp?.status == 1) {
+      feePayments = temp?.data?.feePayments;
+      trainerSalaryPayments = temp?.data?.trainerSalaryPayments;
+      scheduledClasses = temp?.data?.scheduledClasses;
+      rescheduledClasses = temp?.data?.rescheduledClasses;
+      studentsJoined = temp?.data?.studentsJoined;
+      trainersJoined = temp?.data?.trainersJoined;
+      followUpLeads = temp?.data?.followUpLeads;
+      newLeads = temp?.data?.newLeads;
+      emit(GotCalenderEvents());
+    } else {
+      emit(GetCalenderEventsFailed('Failed to get the calender events list'));
+    }
+  }
+
   Future getStudentAppCalenderEvents({
     required String date,
     required int studentId,
@@ -685,6 +723,22 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       Common? response =
           await _service.sendSupportRequestForTrainer(trainerId, data);
+
+      if (response?.status == 1) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  Future<int> sendSupportRequestForManager(
+      int managerId, Map<String, dynamic> data) async {
+    try {
+      Common? response =
+          await _service.sendSupportRequestForManager(managerId, data);
 
       if (response?.status == 1) {
         return 1;

@@ -131,36 +131,42 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "${batch?.courseName}, ${batch?.subjectName}",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        fontSize: 12.sp,
-                                      ),
+                                SizedBox(
+                                  width: 180.w,
+                                  child: Text(
+                                    "${batch?.courseName}, ${batch?.subjectName}",
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          fontSize: 12.sp,
+                                        ),
+                                  ),
                                 ),
                                 SizedBox(height: 10.h),
-                                Text(
-                                  "Trainer - ${batch?.trainersString}",
-                                  maxLines: 5,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                          fontSize: 12.sp,
-                                          color: AppColors.primaryColor),
+                                SizedBox(
+                                  width: 180.w,
+                                  child: Text(
+                                    "Trainer - ${batch?.trainersString}",
+                                    maxLines: 5,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                            fontSize: 12.sp,
+                                            color: AppColors.primaryColor),
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                          Expanded(
+                          SizedBox(
+                            width: 130.w,
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   '${cubit.conductedDate?.toDay()}',
