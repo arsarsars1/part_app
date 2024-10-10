@@ -26,8 +26,12 @@ mixin _$StudentAppBatchResponse {
       throw _privateConstructorUsedError;
   int? get status => throw _privateConstructorUsedError;
 
+  /// Serializes this StudentAppBatchResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of StudentAppBatchResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StudentAppBatchResponseCopyWith<StudentAppBatchResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -53,6 +57,8 @@ class _$StudentAppBatchResponseCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of StudentAppBatchResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -100,6 +106,8 @@ class __$$StudentAppBatchResponseImplCopyWithImpl<$Res>
       $Res Function(_$StudentAppBatchResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of StudentAppBatchResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -168,12 +176,14 @@ class _$StudentAppBatchResponseImpl implements _StudentAppBatchResponse {
             (identical(other.status, status) || other.status == status));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, branchName,
       const DeepCollectionEquality().hash(_batches), status);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of StudentAppBatchResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StudentAppBatchResponseImplCopyWith<_$StudentAppBatchResponseImpl>
@@ -203,8 +213,11 @@ abstract class _StudentAppBatchResponse implements StudentAppBatchResponse {
   List<StudentAppBatchDetail>? get batches;
   @override
   int? get status;
+
+  /// Create a copy of StudentAppBatchResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StudentAppBatchResponseImplCopyWith<_$StudentAppBatchResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -235,8 +248,12 @@ mixin _$StudentAppBatchDetail {
   Branch? get branch => throw _privateConstructorUsedError;
   List<StudentDetail>? get students => throw _privateConstructorUsedError;
 
+  /// Serializes this StudentAppBatchDetail to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of StudentAppBatchDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StudentAppBatchDetailCopyWith<StudentAppBatchDetail> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -283,6 +300,8 @@ class _$StudentAppBatchDetailCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of StudentAppBatchDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -376,6 +395,8 @@ class _$StudentAppBatchDetailCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of StudentAppBatchDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AdminDetailCopyWith<$Res>? get adminDetail {
@@ -388,6 +409,8 @@ class _$StudentAppBatchDetailCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of StudentAppBatchDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CourseDetailCopyWith<$Res>? get course {
@@ -400,6 +423,8 @@ class _$StudentAppBatchDetailCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of StudentAppBatchDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $SubjectCopyWith<$Res>? get subject {
@@ -412,6 +437,8 @@ class _$StudentAppBatchDetailCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of StudentAppBatchDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $BranchCopyWith<$Res>? get branch {
@@ -472,6 +499,8 @@ class __$$StudentAppBatchDetailImplCopyWithImpl<$Res>
       $Res Function(_$StudentAppBatchDetailImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of StudentAppBatchDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -693,7 +722,7 @@ class _$StudentAppBatchDetailImpl implements _StudentAppBatchDetail {
             const DeepCollectionEquality().equals(other._students, _students));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -715,7 +744,9 @@ class _$StudentAppBatchDetailImpl implements _StudentAppBatchDetail {
       branch,
       const DeepCollectionEquality().hash(_students));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of StudentAppBatchDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StudentAppBatchDetailImplCopyWith<_$StudentAppBatchDetailImpl>
@@ -787,8 +818,11 @@ abstract class _StudentAppBatchDetail implements StudentAppBatchDetail {
   Branch? get branch;
   @override
   List<StudentDetail>? get students;
+
+  /// Create a copy of StudentAppBatchDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StudentAppBatchDetailImplCopyWith<_$StudentAppBatchDetailImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -810,8 +844,12 @@ mixin _$AdminDetail {
   DateTime? get doj => throw _privateConstructorUsedError;
   int? get isActive => throw _privateConstructorUsedError;
 
+  /// Serializes this AdminDetail to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AdminDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AdminDetailCopyWith<AdminDetail> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -845,6 +883,8 @@ class _$AdminDetailCopyWithImpl<$Res, $Val extends AdminDetail>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AdminDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -933,6 +973,8 @@ class __$$AdminDetailImplCopyWithImpl<$Res>
       _$AdminDetailImpl _value, $Res Function(_$AdminDetailImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AdminDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1057,12 +1099,14 @@ class _$AdminDetailImpl implements _AdminDetail {
                 other.isActive == isActive));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, userId, profilePic,
       whatsappNo, email, gender, dob, doj, isActive);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AdminDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AdminDetailImplCopyWith<_$AdminDetailImpl> get copyWith =>
@@ -1112,8 +1156,11 @@ abstract class _AdminDetail implements AdminDetail {
   DateTime? get doj;
   @override
   int? get isActive;
+
+  /// Create a copy of AdminDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AdminDetailImplCopyWith<_$AdminDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1131,8 +1178,12 @@ mixin _$StudentAppBatchInDetail {
   String? get startTime => throw _privateConstructorUsedError;
   String? get endTime => throw _privateConstructorUsedError;
 
+  /// Serializes this StudentAppBatchInDetail to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of StudentAppBatchInDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StudentAppBatchInDetailCopyWith<StudentAppBatchInDetail> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1158,6 +1209,8 @@ class _$StudentAppBatchInDetailCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of StudentAppBatchInDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1215,6 +1268,8 @@ class __$$StudentAppBatchInDetailImplCopyWithImpl<$Res>
       $Res Function(_$StudentAppBatchInDetailImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of StudentAppBatchInDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1288,12 +1343,14 @@ class _$StudentAppBatchInDetailImpl implements _StudentAppBatchInDetail {
             (identical(other.endTime, endTime) || other.endTime == endTime));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, batchId, day, startTime, endTime);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of StudentAppBatchInDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StudentAppBatchInDetailImplCopyWith<_$StudentAppBatchInDetailImpl>
@@ -1329,8 +1386,11 @@ abstract class _StudentAppBatchInDetail implements StudentAppBatchInDetail {
   String? get startTime;
   @override
   String? get endTime;
+
+  /// Create a copy of StudentAppBatchInDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StudentAppBatchInDetailImplCopyWith<_$StudentAppBatchInDetailImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1345,8 +1405,12 @@ mixin _$Branch {
   String? get branchName => throw _privateConstructorUsedError;
   int? get academyId => throw _privateConstructorUsedError;
 
+  /// Serializes this Branch to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BranchCopyWith<Branch> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -1368,6 +1432,8 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1410,6 +1476,8 @@ class __$$BranchImplCopyWithImpl<$Res>
       _$BranchImpl _value, $Res Function(_$BranchImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1467,11 +1535,13 @@ class _$BranchImpl implements _Branch {
                 other.academyId == academyId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, branchName, academyId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BranchImplCopyWith<_$BranchImpl> get copyWith =>
@@ -1499,8 +1569,11 @@ abstract class _Branch implements Branch {
   String? get branchName;
   @override
   int? get academyId;
+
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BranchImplCopyWith<_$BranchImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1514,8 +1587,12 @@ mixin _$CourseDetail {
   int? get id => throw _privateConstructorUsedError;
   String? get courseName => throw _privateConstructorUsedError;
 
+  /// Serializes this CourseDetail to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CourseDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CourseDetailCopyWith<CourseDetail> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1539,6 +1616,8 @@ class _$CourseDetailCopyWithImpl<$Res, $Val extends CourseDetail>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CourseDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1577,6 +1656,8 @@ class __$$CourseDetailImplCopyWithImpl<$Res>
       _$CourseDetailImpl _value, $Res Function(_$CourseDetailImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CourseDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1625,11 +1706,13 @@ class _$CourseDetailImpl implements _CourseDetail {
                 other.courseName == courseName));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, courseName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CourseDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CourseDetailImplCopyWith<_$CourseDetailImpl> get copyWith =>
@@ -1654,8 +1737,11 @@ abstract class _CourseDetail implements CourseDetail {
   int? get id;
   @override
   String? get courseName;
+
+  /// Create a copy of CourseDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CourseDetailImplCopyWith<_$CourseDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1674,8 +1760,12 @@ mixin _$StudentDetail {
   int? get cycle => throw _privateConstructorUsedError;
   int? get paymentDueDate => throw _privateConstructorUsedError;
 
+  /// Serializes this StudentDetail to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of StudentDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StudentDetailCopyWith<StudentDetail> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1706,6 +1796,8 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of StudentDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1776,6 +1868,8 @@ class __$$StudentDetailImplCopyWithImpl<$Res>
       _$StudentDetailImpl _value, $Res Function(_$StudentDetailImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of StudentDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1874,12 +1968,14 @@ class _$StudentDetailImpl implements _StudentDetail {
                 other.paymentDueDate == paymentDueDate));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, feeAmount, feeType,
       admissionFees, noOfClasses, cycle, paymentDueDate);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of StudentDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StudentDetailImplCopyWith<_$StudentDetailImpl> get copyWith =>
@@ -1920,8 +2016,11 @@ abstract class _StudentDetail implements StudentDetail {
   int? get cycle;
   @override
   int? get paymentDueDate;
+
+  /// Create a copy of StudentDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StudentDetailImplCopyWith<_$StudentDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1935,8 +2034,12 @@ mixin _$Subject {
   int? get id => throw _privateConstructorUsedError;
   String? get subjectName => throw _privateConstructorUsedError;
 
+  /// Serializes this Subject to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Subject
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SubjectCopyWith<Subject> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -1958,6 +2061,8 @@ class _$SubjectCopyWithImpl<$Res, $Val extends Subject>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Subject
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1995,6 +2100,8 @@ class __$$SubjectImplCopyWithImpl<$Res>
       _$SubjectImpl _value, $Res Function(_$SubjectImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Subject
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2043,11 +2150,13 @@ class _$SubjectImpl implements _Subject {
                 other.subjectName == subjectName));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, subjectName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Subject
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SubjectImplCopyWith<_$SubjectImpl> get copyWith =>
@@ -2071,8 +2180,11 @@ abstract class _Subject implements Subject {
   int? get id;
   @override
   String? get subjectName;
+
+  /// Create a copy of Subject
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SubjectImplCopyWith<_$SubjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2086,8 +2198,12 @@ mixin _$Trainer {
   String? get name => throw _privateConstructorUsedError;
   String? get profilePic => throw _privateConstructorUsedError;
 
+  /// Serializes this Trainer to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Trainer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TrainerCopyWith<Trainer> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -2109,6 +2225,8 @@ class _$TrainerCopyWithImpl<$Res, $Val extends Trainer>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Trainer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2146,6 +2264,8 @@ class __$$TrainerImplCopyWithImpl<$Res>
       _$TrainerImpl _value, $Res Function(_$TrainerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Trainer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2194,11 +2314,13 @@ class _$TrainerImpl implements _Trainer {
                 other.profilePic == profilePic));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, profilePic);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Trainer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TrainerImplCopyWith<_$TrainerImpl> get copyWith =>
@@ -2222,8 +2344,11 @@ abstract class _Trainer implements Trainer {
   String? get name;
   @override
   String? get profilePic;
+
+  /// Create a copy of Trainer
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TrainerImplCopyWith<_$TrainerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

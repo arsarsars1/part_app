@@ -30,8 +30,12 @@ mixin _$ProfileUpdateRequest {
   String? get dob => throw _privateConstructorUsedError;
   String? get profilePic => throw _privateConstructorUsedError;
 
+  /// Serializes this ProfileUpdateRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ProfileUpdateRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ProfileUpdateRequestCopyWith<ProfileUpdateRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -65,6 +69,8 @@ class _$ProfileUpdateRequestCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ProfileUpdateRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -147,6 +153,8 @@ class __$$ProfileUpdateRequestImplCopyWithImpl<$Res>
       $Res Function(_$ProfileUpdateRequestImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ProfileUpdateRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -264,12 +272,14 @@ class _$ProfileUpdateRequestImpl implements _ProfileUpdateRequest {
                 other.profilePic == profilePic));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, mobileNo, countryCode,
       email, gender, whatsappNo, academyName, dob, profilePic);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ProfileUpdateRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ProfileUpdateRequestImplCopyWith<_$ProfileUpdateRequestImpl>
@@ -318,8 +328,11 @@ abstract class _ProfileUpdateRequest implements ProfileUpdateRequest {
   String? get dob;
   @override
   String? get profilePic;
+
+  /// Create a copy of ProfileUpdateRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProfileUpdateRequestImplCopyWith<_$ProfileUpdateRequestImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -25,8 +25,12 @@ mixin _$District {
   String? get districtName => throw _privateConstructorUsedError;
   String? get stateName => throw _privateConstructorUsedError;
 
+  /// Serializes this District to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of District
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DistrictCopyWith<District> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$DistrictCopyWithImpl<$Res, $Val extends District>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of District
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -97,6 +103,8 @@ class __$$DistrictImplCopyWithImpl<$Res>
       _$DistrictImpl _value, $Res Function(_$DistrictImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of District
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -163,12 +171,14 @@ class _$DistrictImpl implements _District {
                 other.stateName == stateName));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, message, id, districtName, stateName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of District
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DistrictImplCopyWith<_$DistrictImpl> get copyWith =>
@@ -200,8 +210,11 @@ abstract class _District implements District {
   String? get districtName;
   @override
   String? get stateName;
+
+  /// Create a copy of District
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DistrictImplCopyWith<_$DistrictImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

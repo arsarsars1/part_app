@@ -24,8 +24,12 @@ mixin _$BranchTrainerResponse {
   int get status => throw _privateConstructorUsedError;
   List<Trainer>? get trainers => throw _privateConstructorUsedError;
 
+  /// Serializes this BranchTrainerResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of BranchTrainerResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BranchTrainerResponseCopyWith<BranchTrainerResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +54,8 @@ class _$BranchTrainerResponseCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BranchTrainerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -90,6 +96,8 @@ class __$$BranchTrainerResponseImplCopyWithImpl<$Res>
       $Res Function(_$BranchTrainerResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BranchTrainerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -146,12 +154,14 @@ class _$BranchTrainerResponseImpl implements _BranchTrainerResponse {
             const DeepCollectionEquality().equals(other._trainers, _trainers));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, status, const DeepCollectionEquality().hash(_trainers));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BranchTrainerResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BranchTrainerResponseImplCopyWith<_$BranchTrainerResponseImpl>
@@ -178,8 +188,11 @@ abstract class _BranchTrainerResponse implements BranchTrainerResponse {
   int get status;
   @override
   List<Trainer>? get trainers;
+
+  /// Create a copy of BranchTrainerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BranchTrainerResponseImplCopyWith<_$BranchTrainerResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

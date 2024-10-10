@@ -24,8 +24,12 @@ mixin _$TrainerResponse {
   Datum? get trainers => throw _privateConstructorUsedError;
   Trainer? get trainer => throw _privateConstructorUsedError;
 
+  /// Serializes this TrainerResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TrainerResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TrainerResponseCopyWith<TrainerResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -52,6 +56,8 @@ class _$TrainerResponseCopyWithImpl<$Res, $Val extends TrainerResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TrainerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -75,6 +81,8 @@ class _$TrainerResponseCopyWithImpl<$Res, $Val extends TrainerResponse>
     ) as $Val);
   }
 
+  /// Create a copy of TrainerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DatumCopyWith<$Res>? get trainers {
@@ -87,6 +95,8 @@ class _$TrainerResponseCopyWithImpl<$Res, $Val extends TrainerResponse>
     });
   }
 
+  /// Create a copy of TrainerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TrainerCopyWith<$Res>? get trainer {
@@ -124,6 +134,8 @@ class __$$TrainerResponseImplCopyWithImpl<$Res>
       _$TrainerResponseImpl _value, $Res Function(_$TrainerResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TrainerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -181,11 +193,13 @@ class _$TrainerResponseImpl implements _TrainerResponse {
             (identical(other.trainer, trainer) || other.trainer == trainer));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, status, trainers, trainer);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TrainerResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TrainerResponseImplCopyWith<_$TrainerResponseImpl> get copyWith =>
@@ -215,8 +229,11 @@ abstract class _TrainerResponse implements TrainerResponse {
   Datum? get trainers;
   @override
   Trainer? get trainer;
+
+  /// Create a copy of TrainerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TrainerResponseImplCopyWith<_$TrainerResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -234,8 +251,12 @@ mixin _$Datum {
   int? get to => throw _privateConstructorUsedError;
   String? get nextPageUrl => throw _privateConstructorUsedError;
 
+  /// Serializes this Datum to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Datum
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DatumCopyWith<Datum> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -263,6 +284,8 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Datum
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -326,6 +349,8 @@ class __$$DatumImplCopyWithImpl<$Res>
       _$DatumImpl _value, $Res Function(_$DatumImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Datum
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -420,7 +445,7 @@ class _$DatumImpl implements _Datum {
                 other.nextPageUrl == nextPageUrl));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -431,7 +456,9 @@ class _$DatumImpl implements _Datum {
       to,
       nextPageUrl);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Datum
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DatumImplCopyWith<_$DatumImpl> get copyWith =>
@@ -468,8 +495,11 @@ abstract class _Datum implements Datum {
   int? get to;
   @override
   String? get nextPageUrl;
+
+  /// Create a copy of Datum
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DatumImplCopyWith<_$DatumImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -510,8 +540,12 @@ mixin _$Trainer {
   String? get document2 => throw _privateConstructorUsedError;
   List<Trainer>? get trainerDetail => throw _privateConstructorUsedError;
 
+  /// Serializes this Trainer to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Trainer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TrainerCopyWith<Trainer> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -563,6 +597,8 @@ class _$TrainerCopyWithImpl<$Res, $Val extends Trainer>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Trainer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -706,6 +742,8 @@ class _$TrainerCopyWithImpl<$Res, $Val extends Trainer>
     ) as $Val);
   }
 
+  /// Create a copy of Trainer
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserCopyWith<$Res>? get user {
@@ -718,6 +756,8 @@ class _$TrainerCopyWithImpl<$Res, $Val extends Trainer>
     });
   }
 
+  /// Create a copy of Trainer
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AcademyCopyWith<$Res>? get academy {
@@ -781,6 +821,8 @@ class __$$TrainerImplCopyWithImpl<$Res>
       _$TrainerImpl _value, $Res Function(_$TrainerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Trainer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1089,7 +1131,7 @@ class _$TrainerImpl implements _Trainer {
                 .equals(other._trainerDetail, _trainerDetail));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -1122,7 +1164,9 @@ class _$TrainerImpl implements _Trainer {
         const DeepCollectionEquality().hash(_trainerDetail)
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Trainer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TrainerImplCopyWith<_$TrainerImpl> get copyWith =>
@@ -1224,8 +1268,11 @@ abstract class _Trainer implements Trainer {
   String? get document2;
   @override
   List<Trainer>? get trainerDetail;
+
+  /// Create a copy of Trainer
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TrainerImplCopyWith<_$TrainerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1243,8 +1290,12 @@ mixin _$Document {
   int? get ofId => throw _privateConstructorUsedError;
   int? get isAvailable => throw _privateConstructorUsedError;
 
+  /// Serializes this Document to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Document
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DocumentCopyWith<Document> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1273,6 +1324,8 @@ class _$DocumentCopyWithImpl<$Res, $Val extends Document>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Document
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1337,6 +1390,8 @@ class __$$DocumentImplCopyWithImpl<$Res>
       _$DocumentImpl _value, $Res Function(_$DocumentImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Document
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1423,12 +1478,14 @@ class _$DocumentImpl implements _Document {
                 other.isAvailable == isAvailable));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, documentIndex, image, ofType, ofId, isAvailable);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Document
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DocumentImplCopyWith<_$DocumentImpl> get copyWith =>
@@ -1466,8 +1523,11 @@ abstract class _Document implements Document {
   int? get ofId;
   @override
   int? get isAvailable;
+
+  /// Create a copy of Document
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DocumentImplCopyWith<_$DocumentImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

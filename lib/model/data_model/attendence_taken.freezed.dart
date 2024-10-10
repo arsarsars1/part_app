@@ -24,8 +24,12 @@ mixin _$AttendenceTaken {
       throw _privateConstructorUsedError;
   int? get status => throw _privateConstructorUsedError;
 
+  /// Serializes this AttendenceTaken to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AttendenceTaken
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AttendenceTakenCopyWith<AttendenceTaken> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,6 +55,8 @@ class _$AttendenceTakenCopyWithImpl<$Res, $Val extends AttendenceTaken>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AttendenceTaken
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -69,6 +75,8 @@ class _$AttendenceTakenCopyWithImpl<$Res, $Val extends AttendenceTaken>
     ) as $Val);
   }
 
+  /// Create a copy of AttendenceTaken
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ConductedClassDetailsCopyWith<$Res>? get conductedClass {
@@ -105,6 +113,8 @@ class __$$AttendenceTakenImplCopyWithImpl<$Res>
       _$AttendenceTakenImpl _value, $Res Function(_$AttendenceTakenImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AttendenceTaken
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -153,11 +163,13 @@ class _$AttendenceTakenImpl implements _AttendenceTaken {
             (identical(other.status, status) || other.status == status));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, conductedClass, status);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AttendenceTaken
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AttendenceTakenImplCopyWith<_$AttendenceTakenImpl> get copyWith =>
@@ -184,8 +196,11 @@ abstract class _AttendenceTaken implements AttendenceTaken {
   ConductedClassDetails? get conductedClass;
   @override
   int? get status;
+
+  /// Create a copy of AttendenceTaken
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AttendenceTakenImplCopyWith<_$AttendenceTakenImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -213,8 +228,12 @@ mixin _$ConductedClassDetails {
   List<AttendanceDetails>? get attendances =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this ConductedClassDetails to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ConductedClassDetails
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ConductedClassDetailsCopyWith<ConductedClassDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -255,6 +274,8 @@ class _$ConductedClassDetailsCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ConductedClassDetails
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -333,6 +354,8 @@ class _$ConductedClassDetailsCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of ConductedClassDetails
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TakenByCopyWith<$Res>? get takenBy {
@@ -384,6 +407,8 @@ class __$$ConductedClassDetailsImplCopyWithImpl<$Res>
       $Res Function(_$ConductedClassDetailsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ConductedClassDetails
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -558,7 +583,7 @@ class _$ConductedClassDetailsImpl implements _ConductedClassDetails {
                 .equals(other._attendances, _attendances));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -577,7 +602,9 @@ class _$ConductedClassDetailsImpl implements _ConductedClassDetails {
       const DeepCollectionEquality().hash(updatedBy),
       const DeepCollectionEquality().hash(_attendances));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ConductedClassDetails
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ConductedClassDetailsImplCopyWith<_$ConductedClassDetailsImpl>
@@ -641,8 +668,11 @@ abstract class _ConductedClassDetails implements ConductedClassDetails {
   dynamic get updatedBy;
   @override
   List<AttendanceDetails>? get attendances;
+
+  /// Create a copy of ConductedClassDetails
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ConductedClassDetailsImplCopyWith<_$ConductedClassDetailsImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -661,8 +691,12 @@ mixin _$AttendanceDetails {
   int? get isPresent => throw _privateConstructorUsedError;
   StudentDetail? get studentDetail => throw _privateConstructorUsedError;
 
+  /// Serializes this AttendanceDetails to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AttendanceDetails
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AttendanceDetailsCopyWith<AttendanceDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -695,6 +729,8 @@ class _$AttendanceDetailsCopyWithImpl<$Res, $Val extends AttendanceDetails>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AttendanceDetails
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -738,6 +774,8 @@ class _$AttendanceDetailsCopyWithImpl<$Res, $Val extends AttendanceDetails>
     ) as $Val);
   }
 
+  /// Create a copy of AttendanceDetails
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $StudentDetailCopyWith<$Res>? get studentDetail {
@@ -780,6 +818,8 @@ class __$$AttendanceDetailsImplCopyWithImpl<$Res>
       $Res Function(_$AttendanceDetailsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AttendanceDetails
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -878,12 +918,14 @@ class _$AttendanceDetailsImpl implements _AttendanceDetails {
                 other.studentDetail == studentDetail));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, conductedClassId,
       studentDetailId, feeType, cycle, isPresent, studentDetail);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AttendanceDetails
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AttendanceDetailsImplCopyWith<_$AttendanceDetailsImpl> get copyWith =>
@@ -925,8 +967,11 @@ abstract class _AttendanceDetails implements AttendanceDetails {
   int? get isPresent;
   @override
   StudentDetail? get studentDetail;
+
+  /// Create a copy of AttendanceDetails
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AttendanceDetailsImplCopyWith<_$AttendanceDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -951,8 +996,12 @@ mixin _$StudentDetail {
   String? get profilePic => throw _privateConstructorUsedError;
   int? get isActive => throw _privateConstructorUsedError;
 
+  /// Serializes this StudentDetail to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of StudentDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StudentDetailCopyWith<StudentDetail> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -989,6 +1038,8 @@ class _$StudentDetailCopyWithImpl<$Res, $Val extends StudentDetail>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of StudentDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1095,6 +1146,8 @@ class __$$StudentDetailImplCopyWithImpl<$Res>
       _$StudentDetailImpl _value, $Res Function(_$StudentDetailImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of StudentDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1248,7 +1301,7 @@ class _$StudentDetailImpl implements _StudentDetail {
                 other.isActive == isActive));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -1266,7 +1319,9 @@ class _$StudentDetailImpl implements _StudentDetail {
       profilePic,
       isActive);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of StudentDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StudentDetailImplCopyWith<_$StudentDetailImpl> get copyWith =>
@@ -1325,8 +1380,11 @@ abstract class _StudentDetail implements StudentDetail {
   String? get profilePic;
   @override
   int? get isActive;
+
+  /// Create a copy of StudentDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StudentDetailImplCopyWith<_$StudentDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1340,8 +1398,12 @@ mixin _$TakenBy {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
 
+  /// Serializes this TakenBy to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TakenBy
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TakenByCopyWith<TakenBy> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -1363,6 +1425,8 @@ class _$TakenByCopyWithImpl<$Res, $Val extends TakenBy>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TakenBy
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1400,6 +1464,8 @@ class __$$TakenByImplCopyWithImpl<$Res>
       _$TakenByImpl _value, $Res Function(_$TakenByImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TakenBy
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1447,11 +1513,13 @@ class _$TakenByImpl implements _TakenBy {
             (identical(other.name, name) || other.name == name));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TakenBy
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TakenByImplCopyWith<_$TakenByImpl> get copyWith =>
@@ -1474,8 +1542,11 @@ abstract class _TakenBy implements TakenBy {
   int? get id;
   @override
   String? get name;
+
+  /// Create a copy of TakenBy
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TakenByImplCopyWith<_$TakenByImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

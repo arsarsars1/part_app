@@ -28,6 +28,7 @@ abstract class BatchResponse with _$BatchResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory BatchResponse({
     int? status,
+    String? message,
     Datum? batches,
     Batch? batch,
   }) = _BatchResponse;

@@ -12,16 +12,19 @@ String batchFeeInvoiceListToJson(BatchFeeInvoiceList data) =>
 
 class BatchFeeInvoiceList {
   int? status;
+  String? message;
   BatchFeeInvoices? batchFeeInvoices;
 
   BatchFeeInvoiceList({
     this.status,
+    this.message,
     this.batchFeeInvoices,
   });
 
   factory BatchFeeInvoiceList.fromJson(Map<String, dynamic> json) =>
       BatchFeeInvoiceList(
         status: json["status"],
+        message: json["message"],
         batchFeeInvoices: json["batch_fee_invoices"] == null
             ? null
             : BatchFeeInvoices.fromJson(json["batch_fee_invoices"]),
@@ -29,6 +32,7 @@ class BatchFeeInvoiceList {
 
   Map<String, dynamic> toJson() => {
         "status": status,
+        "message": message,
         "batch_fee_invoices": batchFeeInvoices?.toJson(),
       };
 }

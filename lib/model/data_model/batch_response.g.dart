@@ -9,6 +9,7 @@ part of 'batch_response.dart';
 _$BatchResponseImpl _$$BatchResponseImplFromJson(Map<String, dynamic> json) =>
     _$BatchResponseImpl(
       status: (json['status'] as num?)?.toInt(),
+      message: json['message'] as String?,
       batches: json['batches'] == null
           ? null
           : Datum.fromJson(json['batches'] as Map<String, dynamic>),
@@ -20,6 +21,7 @@ _$BatchResponseImpl _$$BatchResponseImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$BatchResponseImplToJson(_$BatchResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
+      'message': instance.message,
       'batches': instance.batches,
       'batch': instance.batch,
     };

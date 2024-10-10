@@ -23,8 +23,12 @@ mixin _$ClassLinkResponse {
   int? get status => throw _privateConstructorUsedError;
   List<ClassLink>? get classLinks => throw _privateConstructorUsedError;
 
+  /// Serializes this ClassLinkResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ClassLinkResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ClassLinkResponseCopyWith<ClassLinkResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$ClassLinkResponseCopyWithImpl<$Res, $Val extends ClassLinkResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ClassLinkResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -86,6 +92,8 @@ class __$$ClassLinkResponseImplCopyWithImpl<$Res>
       $Res Function(_$ClassLinkResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ClassLinkResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -143,12 +151,14 @@ class _$ClassLinkResponseImpl implements _ClassLinkResponse {
                 .equals(other._classLinks, _classLinks));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, status, const DeepCollectionEquality().hash(_classLinks));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ClassLinkResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ClassLinkResponseImplCopyWith<_$ClassLinkResponseImpl> get copyWith =>
@@ -175,8 +185,11 @@ abstract class _ClassLinkResponse implements ClassLinkResponse {
   int? get status;
   @override
   List<ClassLink>? get classLinks;
+
+  /// Create a copy of ClassLinkResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ClassLinkResponseImplCopyWith<_$ClassLinkResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -201,8 +214,12 @@ mixin _$ClassLink {
   String? get courseName => throw _privateConstructorUsedError;
   String? get subjectName => throw _privateConstructorUsedError;
 
+  /// Serializes this ClassLink to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ClassLink
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ClassLinkCopyWith<ClassLink> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -238,6 +255,8 @@ class _$ClassLinkCopyWithImpl<$Res, $Val extends ClassLink>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ClassLink
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -344,6 +363,8 @@ class __$$ClassLinkImplCopyWithImpl<$Res>
       _$ClassLinkImpl _value, $Res Function(_$ClassLinkImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ClassLink
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -500,7 +521,7 @@ class _$ClassLinkImpl implements _ClassLink {
                 other.subjectName == subjectName));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -518,7 +539,9 @@ class _$ClassLinkImpl implements _ClassLink {
       courseName,
       subjectName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ClassLink
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ClassLinkImplCopyWith<_$ClassLinkImpl> get copyWith =>
@@ -577,8 +600,11 @@ abstract class _ClassLink implements ClassLink {
   String? get courseName;
   @override
   String? get subjectName;
+
+  /// Create a copy of ClassLink
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ClassLinkImplCopyWith<_$ClassLinkImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

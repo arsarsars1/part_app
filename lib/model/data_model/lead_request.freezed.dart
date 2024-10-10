@@ -35,8 +35,12 @@ mixin _$LeadRequest {
   String? get assignedToType => throw _privateConstructorUsedError;
   String? get followUpComment => throw _privateConstructorUsedError;
 
+  /// Serializes this LeadRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of LeadRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $LeadRequestCopyWith<LeadRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -74,6 +78,8 @@ class _$LeadRequestCopyWithImpl<$Res, $Val extends LeadRequest>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of LeadRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -186,6 +192,8 @@ class __$$LeadRequestImplCopyWithImpl<$Res>
       _$LeadRequestImpl _value, $Res Function(_$LeadRequestImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of LeadRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -352,7 +360,7 @@ class _$LeadRequestImpl implements _LeadRequest {
                 other.followUpComment == followUpComment));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -371,7 +379,9 @@ class _$LeadRequestImpl implements _LeadRequest {
       assignedToType,
       followUpComment);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LeadRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LeadRequestImplCopyWith<_$LeadRequestImpl> get copyWith =>
@@ -433,8 +443,11 @@ abstract class _LeadRequest implements LeadRequest {
   String? get assignedToType;
   @override
   String? get followUpComment;
+
+  /// Create a copy of LeadRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LeadRequestImplCopyWith<_$LeadRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

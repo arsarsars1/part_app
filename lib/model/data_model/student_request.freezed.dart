@@ -40,8 +40,12 @@ mixin _$StudentRequest {
   String? get address => throw _privateConstructorUsedError;
   String? get parentName => throw _privateConstructorUsedError;
 
+  /// Serializes this StudentRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of StudentRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StudentRequestCopyWith<StudentRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -84,6 +88,8 @@ class _$StudentRequestCopyWithImpl<$Res, $Val extends StudentRequest>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of StudentRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -226,6 +232,8 @@ class __$$StudentRequestImplCopyWithImpl<$Res>
       _$StudentRequestImpl _value, $Res Function(_$StudentRequestImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of StudentRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -438,7 +446,7 @@ class _$StudentRequestImpl implements _StudentRequest {
                 other.parentName == parentName));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -463,7 +471,9 @@ class _$StudentRequestImpl implements _StudentRequest {
         parentName
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of StudentRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StudentRequestImplCopyWith<_$StudentRequestImpl> get copyWith =>
@@ -541,8 +551,11 @@ abstract class _StudentRequest implements StudentRequest {
   String? get address;
   @override
   String? get parentName;
+
+  /// Create a copy of StudentRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StudentRequestImplCopyWith<_$StudentRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

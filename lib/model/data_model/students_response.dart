@@ -24,6 +24,7 @@ abstract class StudentsResponse with _$StudentsResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory StudentsResponse({
     int? status,
+    String? message,
     int? activeStudentsCount,
     int? inactiveStudentsCount,
     Students? students,

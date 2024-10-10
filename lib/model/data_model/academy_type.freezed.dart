@@ -23,8 +23,12 @@ mixin _$AcademyType {
   int get id => throw _privateConstructorUsedError;
   String get academyType => throw _privateConstructorUsedError;
 
+  /// Serializes this AcademyType to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AcademyType
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AcademyTypeCopyWith<AcademyType> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$AcademyTypeCopyWithImpl<$Res, $Val extends AcademyType>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AcademyType
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -86,6 +92,8 @@ class __$$AcademyTypeImplCopyWithImpl<$Res>
       _$AcademyTypeImpl _value, $Res Function(_$AcademyTypeImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AcademyType
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -134,11 +142,13 @@ class _$AcademyTypeImpl implements _AcademyType {
                 other.academyType == academyType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, academyType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AcademyType
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AcademyTypeImplCopyWith<_$AcademyTypeImpl> get copyWith =>
@@ -164,8 +174,11 @@ abstract class _AcademyType implements AcademyType {
   int get id;
   @override
   String get academyType;
+
+  /// Create a copy of AcademyType
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AcademyTypeImplCopyWith<_$AcademyTypeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

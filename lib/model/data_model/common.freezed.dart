@@ -23,8 +23,12 @@ mixin _$Common {
   String? get message => throw _privateConstructorUsedError;
   int? get status => throw _privateConstructorUsedError;
 
+  /// Serializes this Common to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Common
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CommonCopyWith<Common> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -46,6 +50,8 @@ class _$CommonCopyWithImpl<$Res, $Val extends Common>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Common
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -83,6 +89,8 @@ class __$$CommonImplCopyWithImpl<$Res>
       _$CommonImpl _value, $Res Function(_$CommonImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Common
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -129,11 +137,13 @@ class _$CommonImpl implements _Common {
             (identical(other.status, status) || other.status == status));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, message, status);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Common
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CommonImplCopyWith<_$CommonImpl> get copyWith =>
@@ -157,8 +167,11 @@ abstract class _Common implements Common {
   String? get message;
   @override
   int? get status;
+
+  /// Create a copy of Common
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CommonImplCopyWith<_$CommonImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

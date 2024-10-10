@@ -24,8 +24,12 @@ mixin _$CancelResponse {
   List<CancelledClass>? get cancelledClasses =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this CancelResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CancelResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CancelResponseCopyWith<CancelResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$CancelResponseCopyWithImpl<$Res, $Val extends CancelResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CancelResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +93,8 @@ class __$$CancelResponseImplCopyWithImpl<$Res>
       _$CancelResponseImpl _value, $Res Function(_$CancelResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CancelResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -145,12 +153,14 @@ class _$CancelResponseImpl implements _CancelResponse {
                 .equals(other._cancelledClasses, _cancelledClasses));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, status,
       const DeepCollectionEquality().hash(_cancelledClasses));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CancelResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CancelResponseImplCopyWith<_$CancelResponseImpl> get copyWith =>
@@ -177,8 +187,11 @@ abstract class _CancelResponse implements CancelResponse {
   int? get status;
   @override
   List<CancelledClass>? get cancelledClasses;
+
+  /// Create a copy of CancelResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CancelResponseImplCopyWith<_$CancelResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -201,8 +214,12 @@ mixin _$CancelledClass {
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   CancelledBy? get cancelledBy => throw _privateConstructorUsedError;
 
+  /// Serializes this CancelledClass to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CancelledClass
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CancelledClassCopyWith<CancelledClass> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -239,6 +256,8 @@ class _$CancelledClassCopyWithImpl<$Res, $Val extends CancelledClass>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CancelledClass
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -302,6 +321,8 @@ class _$CancelledClassCopyWithImpl<$Res, $Val extends CancelledClass>
     ) as $Val);
   }
 
+  /// Create a copy of CancelledClass
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CancelledByCopyWith<$Res>? get cancelledBy {
@@ -348,6 +369,8 @@ class __$$CancelledClassImplCopyWithImpl<$Res>
       _$CancelledClassImpl _value, $Res Function(_$CancelledClassImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CancelledClass
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -485,7 +508,7 @@ class _$CancelledClassImpl implements _CancelledClass {
                 other.cancelledBy == cancelledBy));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -501,7 +524,9 @@ class _$CancelledClassImpl implements _CancelledClass {
       updatedAt,
       cancelledBy);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CancelledClass
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CancelledClassImplCopyWith<_$CancelledClassImpl> get copyWith =>
@@ -555,8 +580,11 @@ abstract class _CancelledClass implements CancelledClass {
   DateTime? get updatedAt;
   @override
   CancelledBy? get cancelledBy;
+
+  /// Create a copy of CancelledClass
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CancelledClassImplCopyWith<_$CancelledClassImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -578,8 +606,12 @@ mixin _$CancelledBy {
   String? get profilePic => throw _privateConstructorUsedError;
   int? get isActive => throw _privateConstructorUsedError;
 
+  /// Serializes this CancelledBy to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CancelledBy
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CancelledByCopyWith<CancelledBy> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -613,6 +645,8 @@ class _$CancelledByCopyWithImpl<$Res, $Val extends CancelledBy>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CancelledBy
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -701,6 +735,8 @@ class __$$CancelledByImplCopyWithImpl<$Res>
       _$CancelledByImpl _value, $Res Function(_$CancelledByImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CancelledBy
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -825,12 +861,14 @@ class _$CancelledByImpl implements _CancelledBy {
                 other.isActive == isActive));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, userId, whatsappNo,
       email, gender, dob, doj, profilePic, isActive);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CancelledBy
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CancelledByImplCopyWith<_$CancelledByImpl> get copyWith =>
@@ -880,8 +918,11 @@ abstract class _CancelledBy implements CancelledBy {
   String? get profilePic;
   @override
   int? get isActive;
+
+  /// Create a copy of CancelledBy
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CancelledByImplCopyWith<_$CancelledByImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

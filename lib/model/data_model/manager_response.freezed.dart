@@ -24,8 +24,12 @@ mixin _$ManagerResponse {
   Datum? get managers => throw _privateConstructorUsedError;
   Manager? get manager => throw _privateConstructorUsedError;
 
+  /// Serializes this ManagerResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ManagerResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ManagerResponseCopyWith<ManagerResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -52,6 +56,8 @@ class _$ManagerResponseCopyWithImpl<$Res, $Val extends ManagerResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ManagerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -75,6 +81,8 @@ class _$ManagerResponseCopyWithImpl<$Res, $Val extends ManagerResponse>
     ) as $Val);
   }
 
+  /// Create a copy of ManagerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DatumCopyWith<$Res>? get managers {
@@ -87,6 +95,8 @@ class _$ManagerResponseCopyWithImpl<$Res, $Val extends ManagerResponse>
     });
   }
 
+  /// Create a copy of ManagerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ManagerCopyWith<$Res>? get manager {
@@ -124,6 +134,8 @@ class __$$ManagerResponseImplCopyWithImpl<$Res>
       _$ManagerResponseImpl _value, $Res Function(_$ManagerResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ManagerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -180,11 +192,13 @@ class _$ManagerResponseImpl implements _ManagerResponse {
             (identical(other.manager, manager) || other.manager == manager));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, status, managers, manager);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ManagerResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ManagerResponseImplCopyWith<_$ManagerResponseImpl> get copyWith =>
@@ -214,8 +228,11 @@ abstract class _ManagerResponse implements ManagerResponse {
   Datum? get managers;
   @override
   Manager? get manager;
+
+  /// Create a copy of ManagerResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ManagerResponseImplCopyWith<_$ManagerResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -232,8 +249,12 @@ mixin _$Datum {
   int? get perPage => throw _privateConstructorUsedError;
   int? get to => throw _privateConstructorUsedError;
 
+  /// Serializes this Datum to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Datum
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DatumCopyWith<Datum> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -256,6 +277,8 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Datum
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -309,6 +332,8 @@ class __$$DatumImplCopyWithImpl<$Res>
       _$DatumImpl _value, $Res Function(_$DatumImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Datum
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -393,12 +418,14 @@ class _$DatumImpl implements _Datum {
             (identical(other.to, to) || other.to == to));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, currentPage,
       const DeepCollectionEquality().hash(_data), from, perPage, to);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Datum
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DatumImplCopyWith<_$DatumImpl> get copyWith =>
@@ -432,8 +459,11 @@ abstract class _Datum implements Datum {
   int? get perPage;
   @override
   int? get to;
+
+  /// Create a copy of Datum
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DatumImplCopyWith<_$DatumImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -468,8 +498,12 @@ mixin _$Manager {
   List<Manager>? get managerDetail => throw _privateConstructorUsedError;
   List<Branch>? get branches => throw _privateConstructorUsedError;
 
+  /// Serializes this Manager to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Manager
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ManagerCopyWith<Manager> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -514,6 +548,8 @@ class _$ManagerCopyWithImpl<$Res, $Val extends Manager>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Manager
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -679,6 +715,8 @@ class __$$ManagerImplCopyWithImpl<$Res>
       _$ManagerImpl _value, $Res Function(_$ManagerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Manager
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -947,7 +985,7 @@ class _$ManagerImpl implements _Manager {
             const DeepCollectionEquality().equals(other._branches, _branches));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -976,7 +1014,9 @@ class _$ManagerImpl implements _Manager {
         const DeepCollectionEquality().hash(_branches)
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Manager
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ManagerImplCopyWith<_$ManagerImpl> get copyWith =>
@@ -1064,8 +1104,11 @@ abstract class _Manager implements Manager {
   List<Manager>? get managerDetail;
   @override
   List<Branch>? get branches;
+
+  /// Create a copy of Manager
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ManagerImplCopyWith<_$ManagerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

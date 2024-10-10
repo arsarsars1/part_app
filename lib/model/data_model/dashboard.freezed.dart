@@ -26,8 +26,12 @@ mixin _$Dashboard {
   String? get totalPaymentsMonthly => throw _privateConstructorUsedError;
   List<Banner>? get banners => throw _privateConstructorUsedError;
 
+  /// Serializes this Dashboard to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Dashboard
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DashboardCopyWith<Dashboard> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -55,6 +59,8 @@ class _$DashboardCopyWithImpl<$Res, $Val extends Dashboard>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Dashboard
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -113,6 +119,8 @@ class __$$DashboardImplCopyWithImpl<$Res>
       _$DashboardImpl _value, $Res Function(_$DashboardImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Dashboard
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -200,7 +208,7 @@ class _$DashboardImpl implements _Dashboard {
             const DeepCollectionEquality().equals(other._banners, _banners));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -210,7 +218,9 @@ class _$DashboardImpl implements _Dashboard {
       totalPaymentsMonthly,
       const DeepCollectionEquality().hash(_banners));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Dashboard
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DashboardImplCopyWith<_$DashboardImpl> get copyWith =>
@@ -245,8 +255,11 @@ abstract class _Dashboard implements Dashboard {
   String? get totalPaymentsMonthly;
   @override
   List<Banner>? get banners;
+
+  /// Create a copy of Dashboard
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DashboardImplCopyWith<_$DashboardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -270,8 +283,12 @@ mixin _$Banner {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
+  /// Serializes this Banner to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Banner
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BannerCopyWith<Banner> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -305,6 +322,8 @@ class _$BannerCopyWithImpl<$Res, $Val extends Banner>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Banner
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -404,6 +423,8 @@ class __$$BannerImplCopyWithImpl<$Res>
       _$BannerImpl _value, $Res Function(_$BannerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Banner
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -551,7 +572,7 @@ class _$BannerImpl implements _Banner {
                 other.updatedAt == updatedAt));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -568,7 +589,9 @@ class _$BannerImpl implements _Banner {
       createdAt,
       updatedAt);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Banner
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BannerImplCopyWith<_$BannerImpl> get copyWith =>
@@ -623,8 +646,11 @@ abstract class _Banner implements Banner {
   DateTime? get createdAt;
   @override
   DateTime? get updatedAt;
+
+  /// Create a copy of Banner
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BannerImplCopyWith<_$BannerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

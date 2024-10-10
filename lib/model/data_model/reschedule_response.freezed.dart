@@ -24,8 +24,12 @@ mixin _$RescheduleResponse {
   List<RescheduledClass>? get rescheduledClasses =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this RescheduleResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RescheduleResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RescheduleResponseCopyWith<RescheduleResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$RescheduleResponseCopyWithImpl<$Res, $Val extends RescheduleResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RescheduleResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +93,8 @@ class __$$RescheduleResponseImplCopyWithImpl<$Res>
       $Res Function(_$RescheduleResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RescheduleResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -145,12 +153,14 @@ class _$RescheduleResponseImpl implements _RescheduleResponse {
                 .equals(other._rescheduledClasses, _rescheduledClasses));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, status,
       const DeepCollectionEquality().hash(_rescheduledClasses));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RescheduleResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RescheduleResponseImplCopyWith<_$RescheduleResponseImpl> get copyWith =>
@@ -178,8 +188,11 @@ abstract class _RescheduleResponse implements RescheduleResponse {
   int? get status;
   @override
   List<RescheduledClass>? get rescheduledClasses;
+
+  /// Create a copy of RescheduleResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RescheduleResponseImplCopyWith<_$RescheduleResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -199,8 +212,12 @@ mixin _$RescheduledClasses {
   int? get perPage => throw _privateConstructorUsedError;
   int? get to => throw _privateConstructorUsedError;
 
+  /// Serializes this RescheduledClasses to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RescheduledClasses
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RescheduledClassesCopyWith<RescheduledClasses> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -232,6 +249,8 @@ class _$RescheduledClassesCopyWithImpl<$Res, $Val extends RescheduledClasses>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RescheduledClasses
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -308,6 +327,8 @@ class __$$RescheduledClassesImplCopyWithImpl<$Res>
       $Res Function(_$RescheduledClassesImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RescheduledClasses
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -423,7 +444,7 @@ class _$RescheduledClassesImpl implements _RescheduledClasses {
             (identical(other.to, to) || other.to == to));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -436,7 +457,9 @@ class _$RescheduledClassesImpl implements _RescheduledClasses {
       perPage,
       to);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RescheduledClasses
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RescheduledClassesImplCopyWith<_$RescheduledClassesImpl> get copyWith =>
@@ -481,8 +504,11 @@ abstract class _RescheduledClasses implements RescheduledClasses {
   int? get perPage;
   @override
   int? get to;
+
+  /// Create a copy of RescheduledClasses
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RescheduledClassesImplCopyWith<_$RescheduledClassesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -507,8 +533,12 @@ mixin _$RescheduledClass {
   dynamic get cancelledStartTime => throw _privateConstructorUsedError;
   dynamic get cancelledEndTime => throw _privateConstructorUsedError;
 
+  /// Serializes this RescheduledClass to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RescheduledClass
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RescheduledClassCopyWith<RescheduledClass> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -545,6 +575,8 @@ class _$RescheduledClassCopyWithImpl<$Res, $Val extends RescheduledClass>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RescheduledClass
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -651,6 +683,8 @@ class __$$RescheduledClassImplCopyWithImpl<$Res>
       $Res Function(_$RescheduledClassImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RescheduledClass
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -808,7 +842,7 @@ class _$RescheduledClassImpl implements _RescheduledClass {
                 .equals(other.cancelledEndTime, cancelledEndTime));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -826,7 +860,9 @@ class _$RescheduledClassImpl implements _RescheduledClass {
       const DeepCollectionEquality().hash(cancelledStartTime),
       const DeepCollectionEquality().hash(cancelledEndTime));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RescheduledClass
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RescheduledClassImplCopyWith<_$RescheduledClassImpl> get copyWith =>
@@ -886,8 +922,11 @@ abstract class _RescheduledClass implements RescheduledClass {
   dynamic get cancelledStartTime;
   @override
   dynamic get cancelledEndTime;
+
+  /// Create a copy of RescheduledClass
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RescheduledClassImplCopyWith<_$RescheduledClassImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

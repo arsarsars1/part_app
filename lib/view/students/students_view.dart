@@ -56,7 +56,9 @@ class _StudentsViewState extends State<StudentsView> {
           }
 
           if (state is FetchingStudents && cubit.students == null ||
-              state is! StudentsFetched && cubit.students!.isEmpty) {
+              state is! StudentDetailsFailed &&
+                  state is! StudentsFetched &&
+                  cubit.students!.isEmpty) {
             if (query == null) {
               return const LoadingView(hideColor: true);
             }

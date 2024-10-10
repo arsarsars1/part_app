@@ -346,7 +346,7 @@ class StudentCubit extends Cubit<StudentState> {
 
       emit(StudentsFetched(moreItems: nextPageUrl != null));
     } else {
-      emit(StudentDetailsFailed(''));
+      emit(StudentDetailsFailed(response?.message ?? ""));
     }
   }
 

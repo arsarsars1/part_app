@@ -24,8 +24,12 @@ mixin _$BranchResponse {
   List<Branch>? get branches => throw _privateConstructorUsedError;
   Branch? get branch => throw _privateConstructorUsedError;
 
+  /// Serializes this BranchResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of BranchResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BranchResponseCopyWith<BranchResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,6 +55,8 @@ class _$BranchResponseCopyWithImpl<$Res, $Val extends BranchResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BranchResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -74,6 +80,8 @@ class _$BranchResponseCopyWithImpl<$Res, $Val extends BranchResponse>
     ) as $Val);
   }
 
+  /// Create a copy of BranchResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $BranchCopyWith<$Res>? get branch {
@@ -109,6 +117,8 @@ class __$$BranchResponseImplCopyWithImpl<$Res>
       _$BranchResponseImpl _value, $Res Function(_$BranchResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BranchResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -174,12 +184,14 @@ class _$BranchResponseImpl implements _BranchResponse {
             (identical(other.branch, branch) || other.branch == branch));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, status,
       const DeepCollectionEquality().hash(_branches), branch);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BranchResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BranchResponseImplCopyWith<_$BranchResponseImpl> get copyWith =>
@@ -209,8 +221,11 @@ abstract class _BranchResponse implements BranchResponse {
   List<Branch>? get branches;
   @override
   Branch? get branch;
+
+  /// Create a copy of BranchResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BranchResponseImplCopyWith<_$BranchResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -238,8 +253,12 @@ mixin _$Branch {
   District? get district => throw _privateConstructorUsedError;
   Manager? get managerDetail => throw _privateConstructorUsedError;
 
+  /// Serializes this Branch to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BranchCopyWith<Branch> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -282,6 +301,8 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -370,6 +391,8 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
     ) as $Val);
   }
 
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CountryCopyWith<$Res>? get country {
@@ -382,6 +405,8 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
     });
   }
 
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DistrictCopyWith<$Res>? get state {
@@ -394,6 +419,8 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
     });
   }
 
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DistrictCopyWith<$Res>? get district {
@@ -406,6 +433,8 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
     });
   }
 
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ManagerCopyWith<$Res>? get managerDetail {
@@ -462,6 +491,8 @@ class __$$BranchImplCopyWithImpl<$Res>
       _$BranchImpl _value, $Res Function(_$BranchImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -647,7 +678,7 @@ class _$BranchImpl implements _Branch {
                 other.managerDetail == managerDetail));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -668,7 +699,9 @@ class _$BranchImpl implements _Branch {
       district,
       managerDetail);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BranchImplCopyWith<_$BranchImpl> get copyWith =>
@@ -735,8 +768,11 @@ abstract class _Branch implements Branch {
   District? get district;
   @override
   Manager? get managerDetail;
+
+  /// Create a copy of Branch
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BranchImplCopyWith<_$BranchImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

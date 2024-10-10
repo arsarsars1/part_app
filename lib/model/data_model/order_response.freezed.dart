@@ -32,8 +32,12 @@ mixin _$OrderResponse {
   int? get attempts => throw _privateConstructorUsedError;
   int? get createdAt => throw _privateConstructorUsedError;
 
+  /// Serializes this OrderResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OrderResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OrderResponseCopyWith<OrderResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -68,6 +72,8 @@ class _$OrderResponseCopyWithImpl<$Res, $Val extends OrderResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of OrderResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -162,6 +168,8 @@ class __$$OrderResponseImplCopyWithImpl<$Res>
       _$OrderResponseImpl _value, $Res Function(_$OrderResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OrderResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -296,7 +304,7 @@ class _$OrderResponseImpl implements _OrderResponse {
                 other.createdAt == createdAt));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -312,7 +320,9 @@ class _$OrderResponseImpl implements _OrderResponse {
       attempts,
       createdAt);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OrderResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OrderResponseImplCopyWith<_$OrderResponseImpl> get copyWith =>
@@ -365,8 +375,11 @@ abstract class _OrderResponse implements OrderResponse {
   int? get attempts;
   @override
   int? get createdAt;
+
+  /// Create a copy of OrderResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OrderResponseImplCopyWith<_$OrderResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -380,8 +393,12 @@ mixin _$Notes {
   String? get notesKey1 => throw _privateConstructorUsedError;
   String? get notesKey2 => throw _privateConstructorUsedError;
 
+  /// Serializes this Notes to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Notes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $NotesCopyWith<Notes> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -403,6 +420,8 @@ class _$NotesCopyWithImpl<$Res, $Val extends Notes>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Notes
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -440,6 +459,8 @@ class __$$NotesImplCopyWithImpl<$Res>
       _$NotesImpl _value, $Res Function(_$NotesImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Notes
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -488,11 +509,13 @@ class _$NotesImpl implements _Notes {
                 other.notesKey2 == notesKey2));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, notesKey1, notesKey2);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Notes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NotesImplCopyWith<_$NotesImpl> get copyWith =>
@@ -516,8 +539,11 @@ abstract class _Notes implements Notes {
   String? get notesKey1;
   @override
   String? get notesKey2;
+
+  /// Create a copy of Notes
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NotesImplCopyWith<_$NotesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

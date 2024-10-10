@@ -40,8 +40,12 @@ mixin _$RegisterRequest {
   int? get stateId => throw _privateConstructorUsedError;
   int? get districtId => throw _privateConstructorUsedError;
 
+  /// Serializes this RegisterRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RegisterRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RegisterRequestCopyWith<RegisterRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -84,6 +88,8 @@ class _$RegisterRequestCopyWithImpl<$Res, $Val extends RegisterRequest>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RegisterRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -226,6 +232,8 @@ class __$$RegisterRequestImplCopyWithImpl<$Res>
       _$RegisterRequestImpl _value, $Res Function(_$RegisterRequestImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RegisterRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -442,7 +450,7 @@ class _$RegisterRequestImpl implements _RegisterRequest {
                 other.districtId == districtId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -467,7 +475,9 @@ class _$RegisterRequestImpl implements _RegisterRequest {
         districtId
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RegisterRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RegisterRequestImplCopyWith<_$RegisterRequestImpl> get copyWith =>
@@ -545,8 +555,11 @@ abstract class _RegisterRequest implements RegisterRequest {
   int? get stateId;
   @override
   int? get districtId;
+
+  /// Create a copy of RegisterRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RegisterRequestImplCopyWith<_$RegisterRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

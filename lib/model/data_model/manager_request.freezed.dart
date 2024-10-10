@@ -35,8 +35,12 @@ mixin _$ManagerRequest {
   String? get upiId => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
 
+  /// Serializes this ManagerRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ManagerRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ManagerRequestCopyWith<ManagerRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -74,6 +78,8 @@ class _$ManagerRequestCopyWithImpl<$Res, $Val extends ManagerRequest>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ManagerRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -186,6 +192,8 @@ class __$$ManagerRequestImplCopyWithImpl<$Res>
       _$ManagerRequestImpl _value, $Res Function(_$ManagerRequestImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ManagerRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -350,7 +358,7 @@ class _$ManagerRequestImpl implements _ManagerRequest {
             (identical(other.address, address) || other.address == address));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -369,7 +377,9 @@ class _$ManagerRequestImpl implements _ManagerRequest {
       upiId,
       address);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ManagerRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ManagerRequestImplCopyWith<_$ManagerRequestImpl> get copyWith =>
@@ -432,8 +442,11 @@ abstract class _ManagerRequest implements ManagerRequest {
   String? get upiId;
   @override
   String? get address;
+
+  /// Create a copy of ManagerRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ManagerRequestImplCopyWith<_$ManagerRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

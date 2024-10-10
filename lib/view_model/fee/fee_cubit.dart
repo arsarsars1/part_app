@@ -223,6 +223,8 @@ class FeeCubit extends Cubit<FeeState> {
         }
         batchInvoice.addAll(response?.batchFeeInvoices?.data ?? []);
         emit(FeeFetched(moreItems: nextPageUrl != null));
+      } else {
+        emit(FeeDetailsFailed(response?.message ?? ""));
       }
     } catch (e) {
       log(e.toString());
