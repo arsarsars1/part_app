@@ -84,7 +84,7 @@ class _AddManagerState extends State<AddManager> {
                       title: 'Branch *',
                       hint: 'Select Branch',
                       dropDown: true,
-                      dropDownItems: branchCubit.branchesWithoutManager(),
+                      dropDownItems: branchCubit.dropDownBranches(),
                       onChange: (value) {
                         branchId = value?.id;
                       },
@@ -253,7 +253,9 @@ class _AddManagerState extends State<AddManager> {
                           ManagerRequest request =
                               managerCubit.managerRequest.copyWith(
                             name: name,
-                            branchId: branchId,
+                            branchId: [
+                              branchId.toString(),
+                            ].toList(),
                             gender: gender,
                             email: email,
                             mobileNo: phone,

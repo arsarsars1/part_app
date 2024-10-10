@@ -42,8 +42,12 @@ class _SplashScreenState extends State<SplashScreen> {
               Membership.route,
             );
           } else if (state.member) {
-            cubit.navigateToDashboard(cubit.user?.adminDetail?.academy,
-                cubit.user?.trainerDetail, cubit.user?.studentDetail, context);
+            cubit.navigateToDashboard(
+                cubit.user?.adminDetail?.academy,
+                cubit.user?.trainerDetail,
+                cubit.user?.studentDetail,
+                cubit.user?.managerDetail,
+                context);
           } else {
             Navigator.pushNamedAndRemoveUntil(
               context,

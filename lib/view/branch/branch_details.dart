@@ -5,6 +5,7 @@ import 'package:part_app/model/data_model/branch_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/manager/manager_page.dart';
 import 'package:part_app/view/trainer/add_trainer.dart';
 import 'package:part_app/view/trainer/components/trainer_list.dart';
 import 'package:part_app/view/trainer/trainer_details.dart';
@@ -162,6 +163,16 @@ class _BranchDetailsState extends State<BranchDetails> {
                     ],
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(16.w, 0.w, 16.w, 16.w),
+                  child: Button(
+                    height: UIConstants.buttonHeight,
+                    onTap: () async {
+                      await Navigator.pushNamed(context, ManagerPage.route);
+                    },
+                    title: 'Branch Managers',
+                  ),
+                ),
                 Container(
                   decoration: BoxDecoration(
                     color: AppColors.liteDark,
@@ -192,12 +203,32 @@ class _BranchDetailsState extends State<BranchDetails> {
                 SizedBox(
                   height: 16.h,
                 ),
-                Center(
-                  child: Text(
-                    trainers != null && trainers.isNotEmpty
-                        ? 'Assigned Trainers List'
-                        : 'No Trainers Allocated',
-                  ),
+                Row(
+                  mainAxisAlignment: trainers != null && trainers.isNotEmpty
+                      ? MainAxisAlignment.spaceAround
+                      : MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      trainers != null && trainers.isNotEmpty
+                          ? 'Assigned Trainers List'
+                          : 'No Trainers Allocated',
+                    ),
+                    Button(
+                      height: UIConstants.buttonHeight,
+                      width: 100,
+                      onTap: () {
+                        /// to handle the new trainer addition flow
+                        context.read<TrainerCubit>().fromBranch = true;
+                        context.read<TrainerCubit>().selectedBranches = [
+                          branch!.id
+                        ];
+
+                        /// opens the add trainer view
+                        Navigator.pushNamed(context, AddTrainer.route);
+                      },
+                      title: 'Add Trainer',
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 8.h,
