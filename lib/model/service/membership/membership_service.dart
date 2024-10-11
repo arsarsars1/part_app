@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/membership.dart';
@@ -53,8 +54,11 @@ class MembershipService {
     try {
       var data = {
         'academy_id': academyId?.toString(),
-        'membership_id': membershipID?.toString(),
       };
+
+      if (Platform.isAndroid) {
+        data.putIfAbsent('membership_id', () => membershipID?.toString());
+      }
       if (paymentMethod != null) {
         data.putIfAbsent('payment_type', () => paymentMethod);
       }
