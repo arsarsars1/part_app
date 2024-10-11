@@ -33,6 +33,7 @@ class _HomeBannerState extends State<HomeBanner> {
 
   @override
   void dispose() {
+    activeBanners.clear();
     bannerPageController.dispose();
     super.dispose();
   }
@@ -41,26 +42,17 @@ class _HomeBannerState extends State<HomeBanner> {
   Widget build(BuildContext context) {
     var authCubit = context.read<AuthCubit>();
     var cubit = context.read<HomeCubit>();
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocConsumer<HomeCubit, HomeState>(
+      listener: (context, state) {},
+      buildWhen: (previous, current) => current is DashboardLoaded,
       builder: (context, state) {
-        if (cubit.banner != null && cubit.banner!.isNotEmpty && !_initialized) {
-          if (authCubit.user?.adminDetail?.academy != null) {
-            adminAcademyTypeId =
-                authCubit.user?.adminDetail?.academy!.academyTypeId;
-          }
-          for (int i = 0; i < cubit.banner!.length; i++) {
-            if (cubit.banner![i].isActive == 1) {
-              activeBanners.add(cubit.banner![i]);
-            }
-          }
-          if (activeBanners.isNotEmpty) {
-            fromTime = activeBanners[0].startTime;
-            toTime = activeBanners[0].endTime;
-            formattedString = toTime.formattedString();
-            scrollLimit = activeBanners.length - 1;
-          }
-          _initialized = true;
-          startTimer();
+        if (state is DashboardLoaded && !_initialized) {
+          // Fetch banners only if not already initialized
+          _initializeBanners(
+              state, authCubit, cubit); // Extracted logic to a method
+        } else if (state is DashboardLoaded) {
+          // Update banners when the state changes
+          _updateBanners(state, cubit);
         }
         return activeBanners.isNotEmpty
             ? GestureDetector(
@@ -218,6 +210,54 @@ class _HomeBannerState extends State<HomeBanner> {
             : const Offstage();
       },
     );
+  }
+
+  void _initializeBanners(
+      DashboardLoaded state, AuthCubit authCubit, HomeCubit cubit) {
+    if (cubit.banner != null && cubit.banner!.isNotEmpty) {
+      if (authCubit.user?.adminDetail?.academy != null) {
+        adminAcademyTypeId =
+            authCubit.user?.adminDetail?.academy!.academyTypeId;
+      }
+
+      activeBanners =
+          cubit.banner!.where((banner) => banner.isActive == 1).toList();
+
+      if (activeBanners.isNotEmpty) {
+        fromTime = activeBanners[0].startTime;
+        toTime = activeBanners[0].endTime;
+        formattedString = toTime.formattedString();
+        scrollLimit = activeBanners.length - 1;
+      }
+      _initialized = true;
+      startTimer();
+    }
+  }
+
+  void _updateBanners(DashboardLoaded state, HomeCubit cubit) {
+    var updatedBanners =
+        cubit.banner!.where((banner) => banner.isActive == 1).toList();
+
+    if (updatedBanners.length != activeBanners.length ||
+        !_listEquals(updatedBanners, activeBanners)) {
+      setState(() {
+        activeBanners = updatedBanners;
+        if (activeBanners.isNotEmpty) {
+          fromTime = activeBanners[0].startTime;
+          toTime = activeBanners[0].endTime;
+          formattedString = toTime.formattedString();
+          scrollLimit = activeBanners.length - 1;
+        }
+      });
+    }
+  }
+
+  bool _listEquals(List<dynamic> list1, List<dynamic> list2) {
+    if (list1.length != list2.length) return false;
+    for (int i = 0; i < list1.length; i++) {
+      if (list1[i] != list2[i]) return false;
+    }
+    return true;
   }
 
   void startTimer() {

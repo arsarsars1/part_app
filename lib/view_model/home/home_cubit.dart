@@ -74,9 +74,15 @@ class HomeCubit extends Cubit<HomeState> {
       _totalStudents = tempDash?.totalStudents;
       _dailyCollection = tempDash?.totalPaymentsDaily;
       _monthlyCollection = tempDash?.totalPaymentsMonthly;
+      clearValue();
       _banner = tempDash?.banners;
       emit(DashboardLoaded());
     }
+  }
+
+  clearValue() {
+    _banner = [];
+    banner?.clear();
   }
 
   Future getDashboardForTrainerApp({required int trainerId}) async {
@@ -87,6 +93,7 @@ class HomeCubit extends Cubit<HomeState> {
       _totalStudents = tempDash?.totalStudents;
       _dailyCollection = tempDash?.totalPaymentsDaily;
       _monthlyCollection = tempDash?.totalPaymentsMonthly;
+      clearValue();
       _banner = tempDash?.banners;
       emit(DashboardLoaded());
     }
