@@ -99,6 +99,20 @@ extension DateExtension on DateTime {
 
 extension StringExtensions on String? {
   bool isNotNullOrEmpty() => this != null && this!.isNotEmpty;
+
+  String toDateServerString() {
+    List<String> parts = this!.split('/');
+
+    if (parts.length == 3) {
+      int day = int.parse(parts[0]);
+      int month = int.parse(parts[1]);
+      int year = int.parse(parts[2]);
+
+      return DateTime(year, month, day).toServerString();
+    } else {
+      throw const FormatException('Invalid date format');
+    }
+  }
 }
 
 extension StringExtension on String {

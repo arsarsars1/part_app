@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/admission_fee_invoice.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/fee/components/edit_fees.dart';
@@ -19,15 +20,20 @@ class AddOrEditAdmissionFees extends StatefulWidget {
 class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController dateController = TextEditingController();
+  TextEditingController feesController = TextEditingController();
   DateTime? date;
   var formKey = GlobalKey<FormState>();
-  String? amount;
+  DropDownItem? paymentMethodValue;
   late FeeCubit feeCubit;
+
   @override
   void initState() {
     feeCubit = context.read<FeeCubit>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await feeCubit.getAdmissionInvoice(feeCubit.student.id);
+      feesController.text = feeCubit.admissionFeeInvoice?.pendingAmount ?? "";
+      dateController.text = DateTime.now().toDateString() ?? "";
+      await feeCubit.getPaymentMethod();
     });
     super.initState();
   }
@@ -769,6 +775,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                     CommonField(
                       inputType: const TextInputType.numberWithOptions(),
                       length: 50,
+                      controller: feesController,
                       title: 'Admission Fees *',
                       hint: 'Enter admission Fees',
                       validator: (value) {
@@ -777,9 +784,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                         }
                         return null;
                       },
-                      onChange: (value) {
-                        amount = value;
-                      },
+                      onChange: (value) {},
                     ),
                     SizedBox(
                       height: 15.h,
@@ -830,7 +835,30 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                               fillColor: AppColors.liteDark,
                             ),
                           ),
-                        )
+                        ),
+                        SizedBox(
+                          height: 15.h,
+                        ),
+                        CommonField(
+                          title: 'Payment Mode',
+                          hint: 'Select payment mode',
+                          length: 50,
+                          maxLines: 1,
+                          dropDown: true,
+                          defaultItem: paymentMethodValue,
+                          dropDownItems: feeCubit
+                              .paymentMethodModel?.paymentMethods
+                              .map(
+                                  (e) => DropDownItem(id: e, title: e, item: e))
+                              .toList(),
+                          textInputAction: TextInputAction.next,
+                          onChange: (value) {
+                            paymentMethodValue = value;
+                          },
+                        ),
+                        SizedBox(
+                          height: 8.h,
+                        ),
                       ],
                     ),
                     Center(
@@ -838,13 +866,14 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                         child: Padding(
                           padding: EdgeInsets.only(top: 16.h),
                           child: Button(
-                            onTap: () {
+                            onTap: () async {
                               if (formKey.currentState!.validate()) {
-                                feeCubit.addFeesForAdmission(
+                                await feeCubit.addFeesForAdmission(
                                     feeCubit.admissionFeeInvoice?.id, {
-                                  'amount': amount,
-                                  'payment_method': 'cash',
-                                  'payment_date': date?.toServerString()
+                                  'amount': feesController.text,
+                                  'payment_method': paymentMethodValue?.title,
+                                  'payment_date':
+                                      dateController.text.toDateServerString()
                                 });
                               }
                             },

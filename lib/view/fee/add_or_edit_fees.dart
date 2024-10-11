@@ -20,9 +20,9 @@ class AddOrEditFees extends StatefulWidget {
 class _AddOrEditFeesState extends State<AddOrEditFees> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController dateController = TextEditingController();
+  TextEditingController feesController = TextEditingController();
   DateTime? date;
   var formKey = GlobalKey<FormState>();
-  String? amount;
   DropDownItem? paymentMethodValue;
   late FeeCubit feeCubit;
   @override
@@ -30,6 +30,8 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
     feeCubit = context.read<FeeCubit>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await feeCubit.getBatchInvoice(feeCubit.student.id);
+      feesController.text = feeCubit.batchFeeInvoice?.pendingAmount ?? "";
+      dateController.text = DateTime.now().toDateString() ?? "";
       await feeCubit.getPaymentMethod();
     });
     super.initState();
@@ -816,6 +818,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                     CommonField(
                       inputType: const TextInputType.numberWithOptions(),
                       length: 50,
+                      controller: feesController,
                       title: 'Fees *',
                       hint: 'Enter Fees',
                       validator: (value) {
@@ -824,9 +827,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                         }
                         return null;
                       },
-                      onChange: (value) {
-                        amount = value;
-                      },
+                      onChange: (value) {},
                     ),
                     SizedBox(
                       height: 15.h,
@@ -912,12 +913,13 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                               if (formKey.currentState!.validate()) {
                                 await feeCubit
                                     .addFees(feeCubit.batchFeeInvoice?.id, {
-                                  'amount': amount,
+                                  'amount': feesController.text,
                                   'payment_method': paymentMethodValue?.title,
-                                  'payment_date': date?.toServerString()
+                                  'payment_date':
+                                      dateController.text.toDateServerString()
                                 });
                                 if (context.mounted) {
-                                  Navigator.pop(context);
+                                  // Navigator.pop(context);
                                 }
                               }
                             },
