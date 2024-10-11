@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/students_response.dart';
@@ -35,7 +36,8 @@ class SwitchAccount extends StatelessWidget {
               children: [
                 if (cubit.user?.adminDetail?.academy != null)
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
+                      await DefaultCacheManager().emptyCache();
                       cubit.accountType = AccountType.admin;
                       database.setUserType('admin');
                       Navigator.pushNamedAndRemoveUntil(
@@ -87,7 +89,8 @@ class SwitchAccount extends StatelessWidget {
                     itemBuilder: (context, index) {
                       Trainer trainer = cubit.user!.trainerDetail![index];
                       return AccountCard(
-                        onTap: () {
+                        onTap: () async {
+                          await DefaultCacheManager().emptyCache();
                           cubit.accountType = AccountType.trainer;
                           database.setUserType('trainer');
                           Navigator.pushNamedAndRemoveUntil(
@@ -110,7 +113,8 @@ class SwitchAccount extends StatelessWidget {
                     itemBuilder: (context, index) {
                       StudentDetail student = cubit.user!.studentDetail![index];
                       return AccountCard(
-                        onTap: () {
+                        onTap: () async {
+                          await DefaultCacheManager().emptyCache();
                           cubit.studentIndex = index;
                           cubit.accountType = AccountType.student;
                           database.setUserType('student');
