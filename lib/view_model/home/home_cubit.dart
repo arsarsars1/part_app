@@ -107,6 +107,7 @@ class HomeCubit extends Cubit<HomeState> {
     if (tempDash?.status == 1) {
       studentBatches = tempDash?.batchFeeInvoices ?? [];
       studentClasses = tempDash?.classes ?? [];
+      clearValue();
       emit(DashboardLoaded());
     } else {
       emit(DashboardLoadingFailed('Unable to load dashboard API'));
