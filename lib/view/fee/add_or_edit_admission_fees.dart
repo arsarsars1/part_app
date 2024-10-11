@@ -32,7 +32,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await feeCubit.getAdmissionInvoice(feeCubit.student.id);
       feesController.text = feeCubit.admissionFeeInvoice?.pendingAmount ?? "";
-      dateController.text = DateTime.now().toDateString() ?? "";
+      dateController.text = DateTime.now().toDateString();
       await feeCubit.getPaymentMethod();
     });
     super.initState();
