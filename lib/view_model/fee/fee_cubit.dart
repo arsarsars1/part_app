@@ -6,6 +6,7 @@ import 'package:part_app/model/data_model/batch_fee_invoice.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/fee_detail_history.dart';
+import 'package:part_app/model/data_model/payment_method.dart';
 import 'package:part_app/model/data_model/student_app_fee_detail_history.dart';
 import 'package:part_app/model/service/admin/fee_details_service.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -21,6 +22,7 @@ class FeeCubit extends Cubit<FeeState> {
   List<Invoice> invoices = [];
   late Invoice invoice;
   late Datum student;
+  PaymentMethodModel? paymentMethodModel;
   late Datum? batchFeeInvoice = Datum();
   late AdmissionFeeInvoiceClass? admissionFeeInvoice =
       AdmissionFeeInvoiceClass();
@@ -32,7 +34,7 @@ class FeeCubit extends Cubit<FeeState> {
     emit(FeeInitial());
   }
 
-  Future addFees(int? batchInvoiceId, Map<String, dynamic> data) async {
+  Future<void> addFees(int? batchInvoiceId, Map<String, dynamic> data) async {
     try {
       emit(AddingFees());
       Common? response = await _feeService.addFees(batchInvoiceId, data);
@@ -139,6 +141,17 @@ class FeeCubit extends Cubit<FeeState> {
       emit(GotBatchInvoice());
     } else {
       emit(AddFeesFailed('Failed to add link.'));
+    }
+  }
+
+  Future getPaymentMethod() async {
+    emit(GettingPaymentMethod());
+    PaymentMethodModel? response = await _feeService.getPaymentMethod();
+    if (response?.status == 1) {
+      paymentMethodModel = response;
+      emit(GotPaymentMethod());
+    } else {
+      emit(GetPaymentMethodFailed('Failed to fetch payment method.'));
     }
   }
 

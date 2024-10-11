@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/fee/components/edit_fees.dart';
@@ -22,12 +23,14 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
   DateTime? date;
   var formKey = GlobalKey<FormState>();
   String? amount;
+  DropDownItem? paymentMethodValue;
   late FeeCubit feeCubit;
   @override
   void initState() {
     feeCubit = context.read<FeeCubit>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await feeCubit.getBatchInvoice(feeCubit.student.id);
+      await feeCubit.getPaymentMethod();
     });
     super.initState();
   }
@@ -63,6 +66,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
         builder: (context, state) {
           if (state is AddingFees ||
               state is GettingBatchInvoice ||
+              state is GettingPaymentMethod ||
               state is DeletingFees ||
               state is EditingFee) {
             return const Center(
@@ -873,7 +877,30 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                               fillColor: AppColors.liteDark,
                             ),
                           ),
-                        )
+                        ),
+                        SizedBox(
+                          height: 15.h,
+                        ),
+                        CommonField(
+                          title: 'Payment Mode',
+                          hint: 'Select payment mode',
+                          length: 50,
+                          maxLines: 1,
+                          dropDown: true,
+                          defaultItem: paymentMethodValue,
+                          dropDownItems: feeCubit
+                              .paymentMethodModel?.paymentMethods
+                              .map(
+                                  (e) => DropDownItem(id: e, title: e, item: e))
+                              .toList(),
+                          textInputAction: TextInputAction.next,
+                          onChange: (value) {
+                            paymentMethodValue = value;
+                          },
+                        ),
+                        SizedBox(
+                          height: 8.h,
+                        ),
                       ],
                     ),
                     Center(
@@ -881,13 +908,17 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                         child: Padding(
                           padding: EdgeInsets.only(top: 16.h),
                           child: Button(
-                            onTap: () {
+                            onTap: () async {
                               if (formKey.currentState!.validate()) {
-                                feeCubit.addFees(feeCubit.batchFeeInvoice?.id, {
+                                await feeCubit
+                                    .addFees(feeCubit.batchFeeInvoice?.id, {
                                   'amount': amount,
-                                  'payment_method': 'cash',
+                                  'payment_method': paymentMethodValue?.title,
                                   'payment_date': date?.toServerString()
                                 });
+                                if (context.mounted) {
+                                  Navigator.pop(context);
+                                }
                               }
                             },
                             title: 'Submit',

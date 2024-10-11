@@ -6,6 +6,7 @@ import 'package:part_app/model/data_model/batch_fee_invoice.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/data_model/common.dart';
 import 'package:part_app/model/data_model/fee_detail_history.dart';
+import 'package:part_app/model/data_model/payment_method.dart';
 import 'package:part_app/model/data_model/student_app_fee_detail_history.dart';
 import 'package:part_app/model/service/api_client.dart';
 
@@ -620,6 +621,15 @@ class FeeDetailsService {
           queryPath:
               '/admin/fee-details/batch-fee-invoices/$batchFeeInvoiceId');
       return batchFeeInvoiceFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<PaymentMethodModel?> getPaymentMethod() async {
+    try {
+      var response = await _client.get(queryPath: '/payment-methods');
+      return paymentMethodModelFromJson(jsonEncode(response));
     } catch (e) {
       return null;
     }

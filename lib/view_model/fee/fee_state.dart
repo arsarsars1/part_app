@@ -88,3 +88,12 @@ class GetBatchInvoiceFailed extends FeeState {
   final String message;
   GetBatchInvoiceFailed(this.message);
 }
+
+class GettingPaymentMethod extends FeeState {}
+
+class GotPaymentMethod extends FeeState {}
+
+class GetPaymentMethodFailed extends FeeState {
+  final String message;
+  GetPaymentMethodFailed(this.message);
+}
