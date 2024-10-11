@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
-
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -33,8 +31,10 @@ class _HomeBannerState extends State<HomeBanner> {
 
   @override
   void dispose() {
+    _initialized = false;
     activeBanners.clear();
     bannerPageController.dispose();
+    timer?.cancel();
     super.dispose();
   }
 
@@ -43,17 +43,15 @@ class _HomeBannerState extends State<HomeBanner> {
     var authCubit = context.read<AuthCubit>();
     var cubit = context.read<HomeCubit>();
     return BlocConsumer<HomeCubit, HomeState>(
-      listener: (context, state) {},
-      buildWhen: (previous, current) => current is DashboardLoaded,
-      builder: (context, state) {
+      listener: (context, state) {
         if (state is DashboardLoaded && !_initialized) {
-          // Fetch banners only if not already initialized
-          _initializeBanners(
-              state, authCubit, cubit); // Extracted logic to a method
+          _initializeBanners(state, authCubit, cubit);
         } else if (state is DashboardLoaded) {
-          // Update banners when the state changes
           _updateBanners(state, cubit);
         }
+      },
+      buildWhen: (previous, current) => current is DashboardLoaded,
+      builder: (context, state) {
         return activeBanners.isNotEmpty
             ? GestureDetector(
                 onLongPressStart: (_) {
@@ -88,9 +86,7 @@ class _HomeBannerState extends State<HomeBanner> {
                                 borderRadius: BorderRadius.circular(4),
                                 color: selected
                                     ? Colors.white
-                                    : const Color(
-                                        0xFF8B8B8B,
-                                      ),
+                                    : const Color(0xFF8B8B8B),
                               ),
                             );
                           },
@@ -99,7 +95,7 @@ class _HomeBannerState extends State<HomeBanner> {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      height: 165.h,
+                      height: 165,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: PageView.builder(
@@ -108,12 +104,12 @@ class _HomeBannerState extends State<HomeBanner> {
                             setState(() {
                               currentPage = pageIndex;
                               isButtonVisible =
-                                  (activeBanners[pageIndex]?.extUrl?.isEmpty ??
-                                          true)
+                                  activeBanners[pageIndex]?.extUrl?.isEmpty ??
+                                          true
                                       ? false
                                       : true;
-                              fromTime = activeBanners[pageIndex]!.startTime;
-                              toTime = activeBanners[pageIndex]!.endTime;
+                              fromTime = activeBanners[pageIndex].startTime;
+                              toTime = activeBanners[pageIndex].endTime;
                               formattedString = toTime.formattedString();
                             });
                           },
@@ -139,32 +135,17 @@ class _HomeBannerState extends State<HomeBanner> {
                                         Container(
                                           padding: const EdgeInsets.all(4),
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              5,
-                                            ),
-                                            color: Colors.black.withOpacity(
-                                              0.44,
-                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color:
+                                                Colors.black.withOpacity(0.44),
                                           ),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              Text(
-                                                banner.description ?? '',
-                                              ),
-                                              // Text(
-                                              //   '${fromTime.toTime()} '
-                                              //   'To ${toTime.toTime()}, '
-                                              //   '$formattedString',
-                                              //   style: Theme.of(context)
-                                              //       .textTheme
-                                              //       .bodyLarge
-                                              //       ?.copyWith(
-                                              //         fontSize: 10,
-                                              //       ),
-                                              // ),
+                                              Text(banner.description ?? ''),
                                             ],
                                           ),
                                         ),
@@ -172,9 +153,9 @@ class _HomeBannerState extends State<HomeBanner> {
                                           Button(
                                             backgroundColor:
                                                 AppColors.defaultBlue,
-                                            height: 22.h,
-                                            width: 97.w,
-                                            fontSize: 10.sp,
+                                            height: 22,
+                                            width: 97,
+                                            fontSize: 10,
                                             onTap: () async {
                                               var url =
                                                   (banner.extUrl?.isEmpty ??
@@ -240,15 +221,17 @@ class _HomeBannerState extends State<HomeBanner> {
 
     if (updatedBanners.length != activeBanners.length ||
         !_listEquals(updatedBanners, activeBanners)) {
-      setState(() {
-        activeBanners = updatedBanners;
-        if (activeBanners.isNotEmpty) {
-          fromTime = activeBanners[0].startTime;
-          toTime = activeBanners[0].endTime;
-          formattedString = toTime.formattedString();
-          scrollLimit = activeBanners.length - 1;
-        }
-      });
+      if (mounted) {
+        setState(() {
+          activeBanners = updatedBanners;
+          if (activeBanners.isNotEmpty) {
+            fromTime = activeBanners[0].startTime;
+            toTime = activeBanners[0].endTime;
+            formattedString = toTime.formattedString();
+            scrollLimit = activeBanners.length - 1;
+          }
+        });
+      }
     }
   }
 
