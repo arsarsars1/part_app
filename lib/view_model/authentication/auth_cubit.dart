@@ -18,6 +18,7 @@ import 'package:part_app/model/data_model/profile_update_request.dart';
 import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api.dart';
+import 'package:part_app/view/home/manager_app_home.dart';
 import 'package:part_app/view/home/trainer_app_home.dart';
 
 import '../../flavors.dart';
@@ -548,7 +549,7 @@ class AuthCubit extends Cubit<AuthState> {
         managerIndex = 0;
         Navigator.pushNamedAndRemoveUntil(
           context,
-          TrainerAppHome.route,
+          ManagerAppHome.route,
           (route) => false,
         );
       } else {

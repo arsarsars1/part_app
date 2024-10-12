@@ -69,6 +69,7 @@ import 'package:part_app/view/home/components/account.dart';
 import 'package:part_app/view/home/components/delete_account.dart';
 import 'package:part_app/view/home/components/student_account.dart';
 import 'package:part_app/view/home/home.dart';
+import 'package:part_app/view/home/manager_app_home.dart';
 import 'package:part_app/view/home/student_app_home.dart';
 import 'package:part_app/view/home/trainer_app_home.dart';
 import 'package:part_app/view/manager/add_manager.dart';
@@ -83,6 +84,7 @@ import 'package:part_app/view/membership/membership_home.dart';
 import 'package:part_app/view/membership/membership_home_ios.dart';
 import 'package:part_app/view/membership/salesman_otp.dart';
 import 'package:part_app/view/membership/salesman_phone.dart';
+import 'package:part_app/view/notifications/manager_app_notification_screen.dart';
 import 'package:part_app/view/notifications/notification_screen.dart';
 import 'package:part_app/view/notifications/student_app_notification_screen.dart';
 import 'package:part_app/view/notifications/trainer_app_notification_screen.dart';
@@ -163,6 +165,11 @@ class RouteGenerator {
       case TrainerAppHome.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppHome(),
+          settings: settings,
+        );
+      case ManagerAppHome.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppHome(),
           settings: settings,
         );
       case SplashScreen.route:
@@ -844,6 +851,11 @@ class RouteGenerator {
       case TrainerAppNotificationScreen.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppNotificationScreen(),
+          settings: settings,
+        );
+      case ManagerAppNotificationScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppNotificationScreen(),
           settings: settings,
         );
       case StudentAppNotificationScreen.route:

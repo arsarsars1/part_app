@@ -254,6 +254,63 @@ class DefaultValues {
     ),
   ];
 
+  static const managerDashboardItems = [
+    DashboardItem(
+      title: 'Students',
+      route: '/students',
+      asset: Assets.students,
+      color: Color(0xFFFC6767),
+    ),
+    DashboardItem(
+      title: 'Attendance',
+      route: '/attendance-batch-list',
+      asset: Assets.attendance,
+      color: Color(0xFF2B32B2),
+    ),
+    DashboardItem(
+      title: 'Fees',
+      route: '/fees',
+      asset: Assets.fee,
+      color: Color(0xFF1D976C),
+    ),
+    DashboardItem(
+      title: 'Trainers',
+      route: TrainerPage.route,
+      asset: Assets.trainers,
+      color: Color(0xFF8F94FB),
+    ),
+    DashboardItem(
+      title: 'Today\'s Classes',
+      route: TodaysClasses.route,
+      asset: Assets.todays,
+      color: Color(0xFFE100FF),
+    ),
+    DashboardItem(
+      title: 'Class Link',
+      route: ClassLinkView.route,
+      asset: Assets.classLink,
+      color: Color.fromARGB(255, 228, 50, 80),
+    ),
+    DashboardItem(
+      title: 'Leads',
+      route: '/leads',
+      asset: Assets.leads,
+      color: Color(0xFF6100FF),
+    ),
+    DashboardItem(
+      title: 'Branches',
+      route: '/branches',
+      asset: Assets.branches,
+      color: Color(0xFFFF8F00),
+    ),
+    DashboardItem(
+      title: 'Batches',
+      route: '/batches',
+      asset: Assets.batches,
+      color: Color(0xFFF7B733),
+    ),
+  ];
+
   static const studentDashboardItems = [
     DashboardItem(
       title: 'Batches',

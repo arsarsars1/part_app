@@ -24,6 +24,17 @@ class DashboardService {
     }
   }
 
+  Future<Dashboard?> getDashboardForManagerApp({int? managerId}) async {
+    try {
+      var response =
+          await _apiClient.get(queryPath: '/managers/$managerId/dashboard');
+      // Dashboard dashboard = dashboardFromJson(jsonEncode(response));
+      return dashboardFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Dashboard?> getDashboardForTrainerApp({int? trainerId}) async {
     try {
       var response =
@@ -124,6 +135,18 @@ class DashboardService {
     try {
       var response = await _apiClient.get(
         queryPath: '/students/$studentId/notifications?page=$page',
+      );
+      return notificationListFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<NotificationList?> getManagerAppNotifications(
+      {int? managerId, String? page}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/managers/$managerId/notifications?page=$page',
       );
       return notificationListFromJson(jsonEncode(response));
     } catch (e) {
