@@ -21,6 +21,7 @@ Dashboard _$DashboardFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Dashboard {
   int? get status => throw _privateConstructorUsedError;
+  int? get unreadNotificationsCount => throw _privateConstructorUsedError;
   int? get totalStudents => throw _privateConstructorUsedError;
   String? get totalPaymentsDaily => throw _privateConstructorUsedError;
   String? get totalPaymentsMonthly => throw _privateConstructorUsedError;
@@ -43,6 +44,7 @@ abstract class $DashboardCopyWith<$Res> {
   @useResult
   $Res call(
       {int? status,
+      int? unreadNotificationsCount,
       int? totalStudents,
       String? totalPaymentsDaily,
       String? totalPaymentsMonthly,
@@ -65,6 +67,7 @@ class _$DashboardCopyWithImpl<$Res, $Val extends Dashboard>
   @override
   $Res call({
     Object? status = freezed,
+    Object? unreadNotificationsCount = freezed,
     Object? totalStudents = freezed,
     Object? totalPaymentsDaily = freezed,
     Object? totalPaymentsMonthly = freezed,
@@ -74,6 +77,10 @@ class _$DashboardCopyWithImpl<$Res, $Val extends Dashboard>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      unreadNotificationsCount: freezed == unreadNotificationsCount
+          ? _value.unreadNotificationsCount
+          : unreadNotificationsCount // ignore: cast_nullable_to_non_nullable
               as int?,
       totalStudents: freezed == totalStudents
           ? _value.totalStudents
@@ -105,6 +112,7 @@ abstract class _$$DashboardImplCopyWith<$Res>
   @useResult
   $Res call(
       {int? status,
+      int? unreadNotificationsCount,
       int? totalStudents,
       String? totalPaymentsDaily,
       String? totalPaymentsMonthly,
@@ -125,6 +133,7 @@ class __$$DashboardImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = freezed,
+    Object? unreadNotificationsCount = freezed,
     Object? totalStudents = freezed,
     Object? totalPaymentsDaily = freezed,
     Object? totalPaymentsMonthly = freezed,
@@ -134,6 +143,10 @@ class __$$DashboardImplCopyWithImpl<$Res>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      unreadNotificationsCount: freezed == unreadNotificationsCount
+          ? _value.unreadNotificationsCount
+          : unreadNotificationsCount // ignore: cast_nullable_to_non_nullable
               as int?,
       totalStudents: freezed == totalStudents
           ? _value.totalStudents
@@ -161,6 +174,7 @@ class __$$DashboardImplCopyWithImpl<$Res>
 class _$DashboardImpl implements _Dashboard {
   const _$DashboardImpl(
       {this.status,
+      this.unreadNotificationsCount,
       this.totalStudents,
       this.totalPaymentsDaily,
       this.totalPaymentsMonthly,
@@ -172,6 +186,8 @@ class _$DashboardImpl implements _Dashboard {
 
   @override
   final int? status;
+  @override
+  final int? unreadNotificationsCount;
   @override
   final int? totalStudents;
   @override
@@ -190,7 +206,7 @@ class _$DashboardImpl implements _Dashboard {
 
   @override
   String toString() {
-    return 'Dashboard(status: $status, totalStudents: $totalStudents, totalPaymentsDaily: $totalPaymentsDaily, totalPaymentsMonthly: $totalPaymentsMonthly, banners: $banners)';
+    return 'Dashboard(status: $status, unreadNotificationsCount: $unreadNotificationsCount, totalStudents: $totalStudents, totalPaymentsDaily: $totalPaymentsDaily, totalPaymentsMonthly: $totalPaymentsMonthly, banners: $banners)';
   }
 
   @override
@@ -199,6 +215,9 @@ class _$DashboardImpl implements _Dashboard {
         (other.runtimeType == runtimeType &&
             other is _$DashboardImpl &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(
+                    other.unreadNotificationsCount, unreadNotificationsCount) ||
+                other.unreadNotificationsCount == unreadNotificationsCount) &&
             (identical(other.totalStudents, totalStudents) ||
                 other.totalStudents == totalStudents) &&
             (identical(other.totalPaymentsDaily, totalPaymentsDaily) ||
@@ -213,6 +232,7 @@ class _$DashboardImpl implements _Dashboard {
   int get hashCode => Object.hash(
       runtimeType,
       status,
+      unreadNotificationsCount,
       totalStudents,
       totalPaymentsDaily,
       totalPaymentsMonthly,
@@ -237,6 +257,7 @@ class _$DashboardImpl implements _Dashboard {
 abstract class _Dashboard implements Dashboard {
   const factory _Dashboard(
       {final int? status,
+      final int? unreadNotificationsCount,
       final int? totalStudents,
       final String? totalPaymentsDaily,
       final String? totalPaymentsMonthly,
@@ -247,6 +268,8 @@ abstract class _Dashboard implements Dashboard {
 
   @override
   int? get status;
+  @override
+  int? get unreadNotificationsCount;
   @override
   int? get totalStudents;
   @override

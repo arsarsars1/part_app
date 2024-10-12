@@ -9,6 +9,8 @@ part of 'dashboard.dart';
 _$DashboardImpl _$$DashboardImplFromJson(Map<String, dynamic> json) =>
     _$DashboardImpl(
       status: (json['status'] as num?)?.toInt(),
+      unreadNotificationsCount:
+          (json['unread_notifications_count'] as num?)?.toInt(),
       totalStudents: (json['total_students'] as num?)?.toInt(),
       totalPaymentsDaily: json['total_payments_daily'] as String?,
       totalPaymentsMonthly: json['total_payments_monthly'] as String?,
@@ -20,6 +22,7 @@ _$DashboardImpl _$$DashboardImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$DashboardImplToJson(_$DashboardImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
+      'unread_notifications_count': instance.unreadNotificationsCount,
       'total_students': instance.totalStudents,
       'total_payments_daily': instance.totalPaymentsDaily,
       'total_payments_monthly': instance.totalPaymentsMonthly,

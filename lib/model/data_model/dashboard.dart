@@ -20,6 +20,7 @@ abstract class Dashboard with _$Dashboard {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Dashboard({
     int? status,
+    int? unreadNotificationsCount,
     int? totalStudents,
     String? totalPaymentsDaily,
     String? totalPaymentsMonthly,
