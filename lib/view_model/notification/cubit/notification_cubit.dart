@@ -55,6 +55,10 @@ class NotificationCubit extends Cubit<NotificationState> {
     }
   }
 
+  emitNotificationBadges(int badge) {
+    badge >= 1 ? emit(NotificationBadge()) : emit(NotificationInitial());
+  }
+
   emitNotificationNew() {
     emit(NotificationBadge());
   }

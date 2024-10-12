@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:part_app/constants/constant.dart';
+import 'package:part_app/model/data_model/notification_list.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/home/components/profile_button.dart';
 import 'package:part_app/view/notifications/notification_screen.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/home/home_cubit.dart';
 
-import '../../../model/data_model/notification_list.dart';
 import '../../../view_model/notification/cubit/notification_cubit.dart';
 
 class HomeBar extends StatelessWidget {
@@ -23,6 +23,7 @@ class HomeBar extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       NotificationList? list = await homeCubit.getNotificationList(clean: true);
       notificationCubit.emitNotificationBadge(list);
+      // notificationCubit.emitNotificationBadges(homeCubit.notificationCount);
     });
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Expanded(
