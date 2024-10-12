@@ -6,7 +6,7 @@ import 'package:part_app/constants/constant.dart';
 import 'package:part_app/view/calender/manager_app_calender_view.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/session_alert.dart';
-import 'package:part_app/view/home/dashboard/dashboard.dart';
+import 'package:part_app/view/home/dashboard/manager_app_dashboard.dart';
 import 'package:part_app/view/splash.dart';
 import 'package:part_app/view/support/manager_app_support_screen.dart';
 import 'package:part_app/view/website/website_view.dart';
@@ -18,10 +18,10 @@ class ManagerAppHome extends StatefulWidget {
   const ManagerAppHome({super.key});
 
   @override
-  State<ManagerAppHome> createState() => _HomeState();
+  State<ManagerAppHome> createState() => _ManagerAppHomeState();
 }
 
-class _HomeState extends State<ManagerAppHome> {
+class _ManagerAppHomeState extends State<ManagerAppHome> {
   int currentIndex = 0;
 
   @override
@@ -108,7 +108,7 @@ class _HomeState extends State<ManagerAppHome> {
 
   Widget getBody() {
     if (currentIndex == 0) {
-      return const Dashboard();
+      return const ManagerAppDashboard();
     } else if (currentIndex == 1) {
       return const ManagerAppCalenderView();
     } else if (currentIndex == 2) {

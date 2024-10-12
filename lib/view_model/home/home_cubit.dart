@@ -104,6 +104,19 @@ class HomeCubit extends Cubit<HomeState> {
     banner?.clear();
   }
 
+  Future getDashboardForManagerApp({required int managerId}) async {
+    emit(DashboardLoading());
+    var tempDash =
+        await _service.getDashboardForManagerApp(managerId: managerId);
+    if (tempDash?.status == 1) {
+      _totalStudents = tempDash?.totalStudents;
+      _dailyCollection = tempDash?.totalPaymentsDaily;
+      _monthlyCollection = tempDash?.totalPaymentsMonthly;
+      _banner = tempDash?.banners;
+      emit(DashboardLoaded());
+    }
+  }
+
   Future getDashboardForTrainerApp({required int trainerId}) async {
     emit(DashboardLoading());
     var tempDash =
@@ -358,6 +371,54 @@ class HomeCubit extends Cubit<HomeState> {
 
     NotificationList? temp = await _service.getStudentAppNotifications(
         studentId: studentId, page: (page).toString());
+    if (temp?.status == 1) {
+      nextPageUrl = temp?.notifications?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      var items = temp?.notifications?.data ?? [];
+
+      List<NotificationData>? tempNotifications = [];
+
+      for (var notification in items) {
+        tempNotifications.add(notification);
+      }
+      for (var notification in tempNotifications) {
+        _notifications = [..._notifications ?? [], notification];
+      }
+      _notifications?.forEach((element) {
+        if (element.readAt == null) {
+          flag = true;
+        }
+      });
+      emit(GotNotifications());
+    } else {
+      emit(GetNotificationsFailed('Failed to get the notification list'));
+    }
+    return temp;
+  }
+
+  Future getManagerAppNotificationList({
+    required int managerId,
+    bool clean = true,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      notifications?.clear();
+      emit(GettingNotifications());
+    } else {
+      emit(GettingNotifications(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(GotNotifications());
+      return;
+    }
+
+    NotificationList? temp = await _service.getManagerAppNotifications(
+        managerId: managerId, page: (page).toString());
     if (temp?.status == 1) {
       nextPageUrl = temp?.notifications?.nextPageUrl;
       if (nextPageUrl != null) {
