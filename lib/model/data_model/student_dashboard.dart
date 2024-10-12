@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:part_app/model/data_model/dashboard.dart';
+
 StudentDashboard studentDashboardFromJson(String str) =>
     StudentDashboard.fromJson(json.decode(str));
 
@@ -14,13 +16,17 @@ class StudentDashboard {
   List<ClassDetails>? classes;
   List<BatchFeeInvoice>? batchFeeInvoices;
   List<AdmissionFeeInvoice>? admissionFeeInvoices;
+  List<Banner>? banners;
   int? status;
+  int? unreadNotificationsCount;
 
   StudentDashboard({
     this.classes,
     this.batchFeeInvoices,
     this.admissionFeeInvoices,
     this.status,
+    this.banners,
+    this.unreadNotificationsCount,
   });
 
   factory StudentDashboard.fromJson(Map<String, dynamic> json) =>
@@ -37,6 +43,11 @@ class StudentDashboard {
             ? []
             : List<AdmissionFeeInvoice>.from(json["admission_fee_invoices"]!
                 .map((x) => AdmissionFeeInvoice.fromJson(x))),
+        banners: json["banners"] == null
+            ? []
+            : List<Banner>.from(
+                json["banners"]!.map((x) => Banner.fromJson(x))),
+        unreadNotificationsCount: json["unread_notifications_count"],
         status: json["status"],
       );
 
@@ -50,7 +61,11 @@ class StudentDashboard {
         "admission_fee_invoices": admissionFeeInvoices == null
             ? []
             : List<dynamic>.from(admissionFeeInvoices!.map((x) => x.toJson())),
+        "banners": banners == null
+            ? []
+            : List<dynamic>.from(banners!.map((x) => x.toJson())),
         "status": status,
+        "unread_notifications_count": unreadNotificationsCount,
       };
 }
 
