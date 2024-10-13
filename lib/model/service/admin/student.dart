@@ -256,6 +256,40 @@ class StudentService {
     }
   }
 
+  Future<StudentsResponse?> getStudentsForManager(
+      {int? managerId,
+      String? searchQuery,
+      String? activeStatus,
+      int? batchId,
+      int? branchId,
+      int? pageNo}) async {
+    try {
+      String path = '';
+
+      if (branchId != null && activeStatus != null && batchId == null) {
+        path =
+            '/managers/$managerId/branches/$branchId/students/batch-status/$activeStatus';
+      } else if (branchId != null && batchId == null) {
+        path = '/managers/$managerId/branches/$branchId/students';
+      } else if (batchId != null) {
+        path = '/managers/$managerId/batches/$batchId/students';
+      } else {
+        path = '/managers/$managerId/students';
+      }
+
+      if (searchQuery != null) {
+        path += '/search/$searchQuery';
+      }
+
+      path += '?page=$pageNo';
+
+      var response = await _client.get(queryPath: path);
+      return studentsResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentResponse?> studentDetails(int? studentId) async {
     try {
       var response = await _client.get(queryPath: '/admin/students/$studentId');

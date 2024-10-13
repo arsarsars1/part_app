@@ -226,6 +226,16 @@ class BatchCubit extends Cubit<BatchState> {
     emit(CoursesUpdated());
   }
 
+  Future getCoursesForManager({required int acadamyId}) async {
+    _courses = await _batchService.getCoursesForManager(acadamyId: acadamyId);
+    if (_courses == null) {
+      emit(BatchNetworkError());
+    }
+    _defaultCourse = null;
+    _defaultSubject = null;
+    emit(CoursesUpdated());
+  }
+
   Future getSubjects({required int? courseId}) async {
     emit(GettingCourses());
     _defaultSubject = null;
@@ -331,6 +341,27 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future updateBatchForManager(int managerId, BatchRequest request) async {
+    emit(UpdatingBatch());
+    try {
+      Common? response = await _batchService.updateBatchForManager(
+        managerId,
+        request,
+        _batchModel?.id,
+      );
+      if (response?.status == 1) {
+        await getBatchesForManager(managerId);
+        await getBatchForManagerDetail(
+            managerId: managerId, batchId: '${_batchModel?.id}');
+        emit(UpdatedBatch());
+      } else {
+        emit(UpdateBatchFailed(response?.message ?? 'Failed to update batch.'));
+      }
+    } catch (e) {
+      emit(UpdateBatchFailed('Failed to update batch.'));
+    }
+  }
+
   Future getBatches({bool doEmit = true}) async {
     _batches.clear();
     if (doEmit) {
@@ -354,6 +385,21 @@ class BatchCubit extends Cubit<BatchState> {
     emit(FetchingBatches(pagination: false));
     BatchResponse? response =
         await _batchService.getBatchesForTrainer(trainerId);
+    if (response?.status == 1) {
+      _batches = response?.batches?.data
+              .where((element) => element.branch?.isActive == 1)
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
+      emit(BatchesFetched());
+    }
+  }
+
+  Future getBatchesForManager(int managerId) async {
+    _batches.clear();
+    emit(FetchingBatches(pagination: false));
+    BatchResponse? response =
+        await _batchService.getBatchesForManager(managerId);
     if (response?.status == 1) {
       _batches = response?.batches?.data
               .where((element) => element.branch?.isActive == 1)
@@ -408,6 +454,54 @@ class BatchCubit extends Cubit<BatchState> {
       emit(BatchesFetched(moreItems: nextPageUrl != null));
     } else {
       emit(FetchBatchFailed(response.message ?? ""));
+    }
+  }
+
+  Future getBatchesByStatusForManager({
+    required int? managerId,
+    int? branchId,
+    String status = 'ongoing',
+    String? search,
+    bool clean = false,
+    bool branchSearch = false,
+  }) async {
+    if (clean) {
+      reset();
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(FetchingBatches());
+    } else {
+      emit(FetchingBatches(pagination: true));
+    }
+    if (nextPageUrl == null) {
+      emit(BatchesFetched());
+      return;
+    }
+    BatchResponse? response = await _batchService.getBatchesByStatusForManager(
+      managerId: managerId,
+      branchId: branchId,
+      status: status,
+      search: search,
+      page: page,
+      branchSearch: branchSearch,
+    );
+
+    if (response == null) {
+      emit(BatchNetworkError());
+    } else if (response.status == 1) {
+      nextPageUrl = response.batches?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      var items = response.batches?.data
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
+
+      _batches.addAll(items);
+      emit(BatchesFetched(moreItems: nextPageUrl != null));
     }
   }
 
@@ -768,10 +862,94 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
-  Future getBatchForTrainer(
-      {required int trainerId,
-      required String batchId,
-      required int acadamyId}) async {
+  Future getBatchForManagerDetail(
+      {required int managerId, required String batchId}) async {
+    emit(FetchingBatch());
+    BatchResponse? response = await _batchService.getBatchForManagerDetail(
+        managerId: managerId, id: batchId);
+    if (response?.status == 1 && response?.batch != null) {
+      _batch = response?.batch;
+      _batchModel = BatchModel.fromEntity(response!.batch!);
+
+      // fetch the students
+      // getStudentsByBatch(_batch?.id);
+
+      // fetch the courses list
+      if (_courses == null || _courses!.isEmpty) {
+        await getCourses();
+      }
+
+      await getSubjects(courseId: _batch?.course?.id);
+      _defaultCourse = getCourseMenuItem(_batch?.course?.id);
+      _defaultSubject = getSubjectMenuItem(_batch?.subject?.id);
+
+      _days = _batch?.batchDetail
+              ?.map((e) => Days(
+                    day: e.day,
+                    endTime: e.endTime,
+                    startTime: e.startTime,
+                  ))
+              .toList() ??
+          [];
+
+      var items = _batch?.trainers?.map((e) => e.id).toList();
+      if (items != null) {
+        _selectedTrainers.addAll(items);
+      }
+      emit(FetchedBatch());
+    } else {
+      emit(FetchBatchFailed('Failed to fetch batch details.'));
+    }
+  }
+
+  Future getBatchForManager({
+    required int managerId,
+    required String batchId,
+    required int acadamyId,
+  }) async {
+    emit(FetchingBatch());
+    BatchResponse? response = await _batchService.getBatchForManager(
+        managerId: managerId, id: batchId);
+    if (response?.status == 1 && response?.batch != null) {
+      _batch = response?.batch;
+      _batchModel = BatchModel.fromEntity(response!.batch!);
+
+      // fetch the students
+      // getStudentsByBatch(_batch?.id);
+
+      // fetch the courses list
+      if (_courses == null || _courses!.isEmpty) {
+        await getCoursesForTrainer(acadamyId: acadamyId);
+      }
+
+      await getSubjects(courseId: _batch?.course?.id);
+      _defaultCourse = getCourseMenuItem(_batch?.course?.id);
+      _defaultSubject = getSubjectMenuItem(_batch?.subject?.id);
+
+      _days = _batch?.batchDetail
+              ?.map((e) => Days(
+                    day: e.day,
+                    endTime: e.endTime,
+                    startTime: e.startTime,
+                  ))
+              .toList() ??
+          [];
+
+      var items = _batch?.trainers?.map((e) => e.id).toList();
+      if (items != null) {
+        _selectedTrainers.addAll(items);
+      }
+      emit(FetchedBatch());
+    } else {
+      emit(FetchBatchFailed('Failed to fetch batch details.'));
+    }
+  }
+
+  Future getBatchForTrainer({
+    required int trainerId,
+    required String batchId,
+    required int acadamyId,
+  }) async {
     emit(FetchingBatch());
     BatchResponse? response = await _batchService.getBatchForTrainer(
         trainerId: trainerId, id: batchId);
@@ -840,6 +1018,22 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future rescheduleForManager(
+      Map<String, dynamic> request, int managerId) async {
+    emit(ReschedulingBatch());
+    Common? response = await _batchService.rescheduleClassForManager(
+      request,
+      managerId,
+      batchModel?.id,
+    );
+    if (response?.status == 1) {
+      await getRescheduledBatchesForManager(managerId: managerId);
+      emit(RescheduledBatch());
+    } else {
+      emit(RescheduleFailed(response?.message ?? 'Failed to reschedule'));
+    }
+  }
+
   Future cancelClass(Map<String, dynamic> request) async {
     emit(CancellingClassBatch());
     Common? response = await _batchService.cancelClass(
@@ -861,6 +1055,23 @@ class BatchCubit extends Cubit<BatchState> {
     Common? response = await _batchService.cancelClassForTrainer(
       request,
       trainerId,
+      batchModel?.id,
+    );
+    log((response?.status).toString());
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(CancelledClassBatch());
+    } else {
+      emit(CancelClassFailed(response?.message ?? 'Failed to reschedule'));
+    }
+  }
+
+  Future cancelClassForManager(
+      Map<String, dynamic> request, int managerId) async {
+    emit(CancellingClassBatch());
+    Common? response = await _batchService.cancelClassForManager(
+      request,
+      managerId,
       batchModel?.id,
     );
     log((response?.status).toString());
@@ -904,6 +1115,23 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future deleteClassCancellationForManager(
+      int? batchDetailId, int managerId) async {
+    emit(DeleteCancelledClass());
+    Common? response = await _batchService.deleteClassCancellationForManager(
+      managerId: managerId,
+      classId: batchDetailId,
+      batchId: _batch?.id,
+    );
+    if (response?.status == 1) {
+      await getCancelledBatchesForManager(managerId: managerId);
+      emit(DeletedCancelledClass());
+    } else {
+      emit(CancelledClassDeletionFailed(
+          response?.message ?? 'Failed to delete class'));
+    }
+  }
+
   Future deactivateClass(int? batchDetailId) async {
     emit(ReschedulingBatch());
     Common? response = await _batchService.deactivateClass(
@@ -922,6 +1150,21 @@ class BatchCubit extends Cubit<BatchState> {
     emit(ReschedulingBatch());
     Common? response = await _batchService.deactivateClassForTrainer(
       trainerId: trainerId,
+      classId: batchDetailId,
+      batchId: _batch?.id,
+    );
+    if (response?.status == 1) {
+      await getRescheduledBatches();
+      emit(RescheduledBatch());
+    } else {
+      emit(RescheduleFailed(response?.message ?? 'Failed to reschedule'));
+    }
+  }
+
+  Future deactivateClassForManager(int? batchDetailId, int managerId) async {
+    emit(ReschedulingBatch());
+    Common? response = await _batchService.deactivateClassForManager(
+      managerId: managerId,
       classId: batchDetailId,
       batchId: _batch?.id,
     );
@@ -968,6 +1211,25 @@ class BatchCubit extends Cubit<BatchState> {
     emit(RescheduledListFetched());
   }
 
+  Future getRescheduledBatchesForManager(
+      {required int managerId, int? year, int? month}) async {
+    emit(RescheduledListFetching());
+    RescheduleResponse? response =
+        await _batchService.rescheduledClassesForManager(
+      batchModel?.id,
+      year: year,
+      month: month,
+      managerId: managerId,
+    );
+
+    if (response?.status == 1) {
+      _rescheduledList = response?.rescheduledClasses ?? [];
+    } else {
+      _rescheduledList = [];
+    }
+    emit(RescheduledListFetched());
+  }
+
   Future getCancelledBatches({int? year, int? month}) async {
     emit(CancelledListFetching());
     CancelResponse? response = await _batchService.cancelledClasses(
@@ -990,6 +1252,24 @@ class BatchCubit extends Cubit<BatchState> {
     CancelResponse? response = await _batchService.cancelledClassesForTrainer(
       batchModel?.id,
       trainerId,
+      year: year,
+      month: month,
+    );
+
+    if (response?.status == 1) {
+      _cancelledList = response?.cancelledClasses ?? [];
+    } else {
+      _cancelledList = [];
+    }
+    emit(CancelledListFetched());
+  }
+
+  Future getCancelledBatchesForManager(
+      {required int managerId, int? year, int? month}) async {
+    emit(CancelledListFetching());
+    CancelResponse? response = await _batchService.cancelledClassesForManager(
+      batchModel?.id,
+      managerId,
       year: year,
       month: month,
     );
