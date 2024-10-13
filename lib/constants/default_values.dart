@@ -257,19 +257,19 @@ class DefaultValues {
   static const managerDashboardItems = [
     DashboardItem(
       title: 'Students',
-      route: '/students',
+      route: '/manager-app-students',
       asset: Assets.students,
       color: Color(0xFFFC6767),
     ),
     DashboardItem(
       title: 'Attendance',
-      route: '/attendance-batch-list',
+      route: '/manager-app-attendance-batch-list',
       asset: Assets.attendance,
       color: Color(0xFF2B32B2),
     ),
     DashboardItem(
       title: 'Fees',
-      route: '/fees',
+      route: '/manager-app-fees',
       asset: Assets.fee,
       color: Color(0xFF1D976C),
     ),
@@ -293,19 +293,19 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Leads',
-      route: '/leads',
+      route: '/manager-app-leads',
       asset: Assets.leads,
       color: Color(0xFF6100FF),
     ),
     DashboardItem(
       title: 'Branches',
-      route: '/branches',
+      route: '/manager-app-branches',
       asset: Assets.branches,
       color: Color(0xFFFF8F00),
     ),
     DashboardItem(
       title: 'Batches',
-      route: '/batches',
+      route: '/manager-app-batches',
       asset: Assets.batches,
       color: Color(0xFFF7B733),
     ),

@@ -29,6 +29,13 @@ import 'package:part_app/view/batch/batch_list.dart';
 import 'package:part_app/view/batch/cancel_batch_class.dart';
 import 'package:part_app/view/batch/cancelled_batch_class.dart';
 import 'package:part_app/view/batch/edit_batch_details.dart';
+import 'package:part_app/view/batch/manager_app_batch_details.dart';
+import 'package:part_app/view/batch/manager_app_batch_list.dart';
+import 'package:part_app/view/batch/manager_app_cancel_batch_class.dart';
+import 'package:part_app/view/batch/manager_app_cancelled_batch_class.dart';
+import 'package:part_app/view/batch/manager_app_edit_batch_details.dart';
+import 'package:part_app/view/batch/manager_app_reschedule_class.dart';
+import 'package:part_app/view/batch/manager_app_rescheduled_classes.dart';
 import 'package:part_app/view/batch/reschedule_class.dart';
 import 'package:part_app/view/batch/rescheduled_classes.dart';
 import 'package:part_app/view/batch/student_app_batch_list.dart';
@@ -390,6 +397,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppBatchesPage(),
           settings: settings,
         );
+      case ManagerAppBatchesPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppBatchesPage(),
+          settings: settings,
+        );
       case StudentAppBatchesPage.route:
         return MaterialPageRoute(
           builder: (_) => const StudentAppBatchesPage(),
@@ -420,6 +432,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppBatchDetails(),
           settings: settings,
         );
+      case ManagerAppBatchDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppBatchDetails(),
+          settings: settings,
+        );
       case AssignedBatches.route:
         return MaterialPageRoute(
           builder: (_) => const AssignedBatches(),
@@ -435,6 +452,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppEditBatchDetails(),
           settings: settings,
         );
+      case ManagerAppEditBatchDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppEditBatchDetails(),
+          settings: settings,
+        );
       case RescheduledClasses.route:
         return MaterialPageRoute(
           builder: (_) => const RescheduledClasses(),
@@ -443,6 +465,11 @@ class RouteGenerator {
       case TrainerAppRescheduledClasses.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppRescheduledClasses(),
+          settings: settings,
+        );
+      case ManagerAppRescheduledClasses.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppRescheduledClasses(),
           settings: settings,
         );
       case RescheduleClass.route:
@@ -455,6 +482,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppRescheduleClass(),
           settings: settings,
         );
+      case ManagerAppRescheduleClass.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppRescheduleClass(),
+          settings: settings,
+        );
       case CancelClass.route:
         return MaterialPageRoute(
           builder: (_) => const CancelClass(),
@@ -465,6 +497,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppCancelClass(),
           settings: settings,
         );
+      case ManagerAppCancelClass.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppCancelClass(),
+          settings: settings,
+        );
       case CancelledClasses.route:
         return MaterialPageRoute(
           builder: (_) => const CancelledClasses(),
@@ -473,6 +510,11 @@ class RouteGenerator {
       case TrainerAppCancelledClasses.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppCancelledClasses(),
+          settings: settings,
+        );
+      case ManagerAppCancelledClasses.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppCancelledClasses(),
           settings: settings,
         );
       case ManagerDetails.route:
