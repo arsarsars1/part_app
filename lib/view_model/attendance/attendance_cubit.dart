@@ -25,6 +25,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   final List<Days> _days = [];
   final List<BatchModel> _batches = [];
   final List<AttendanceDetails> _attendenceTaken = [];
+  ConductedClassDetails? _conductedClassDetails;
 
   Set<int> selectedStudents = {};
   Set<int> updatedStudents = {};
@@ -37,6 +38,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   List<Days> get days => _days;
   List<BatchModel> get batches => _batches;
   List<AttendanceDetails> get attendenceTaken => _attendenceTaken;
+  ConductedClassDetails? get conductedClassDetails => _conductedClassDetails;
   int id = 0;
 
   List<StudentAttendance>? studentAttendanceDetails;
@@ -456,13 +458,15 @@ class AttendanceCubit extends Cubit<AttendanceState> {
   Future getAttendenceTaken({int? batchId, int? conductedClassId}) async {
     selectedStudents.clear();
     _attendenceTaken.clear();
+    updatedStudents.clear();
+    _conductedClassDetails = null;
     emit(UpdatingAttendence());
     try {
       AttendenceTaken? response = await _attendanceService.getAttendenceTaken(
           batchId: batchId ?? 0, conductedClassId: conductedClassId ?? 0);
       if (response?.status == 1) {
         var items = response?.conductedClass?.attendances ?? [];
-
+        _conductedClassDetails = response?.conductedClass;
         _attendenceTaken.addAll(items);
 
         updatedStudents.clear();
@@ -484,6 +488,8 @@ class AttendanceCubit extends Cubit<AttendanceState> {
       {required int trainerId, int? batchId, int? conductedClassId}) async {
     selectedStudents.clear();
     _attendenceTaken.clear();
+    updatedStudents.clear();
+    _conductedClassDetails = null;
     emit(UpdatingAttendence());
     try {
       AttendenceTaken? response =
@@ -493,7 +499,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
               conductedClassId: conductedClassId ?? 0);
       if (response?.status == 1) {
         var items = response?.conductedClass?.attendances ?? [];
-
+        _conductedClassDetails = response?.conductedClass;
         _attendenceTaken.addAll(items);
 
         updatedStudents.clear();
