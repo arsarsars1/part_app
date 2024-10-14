@@ -137,7 +137,8 @@ class LeadsCubit extends Cubit<LeadsState> {
           emit(CreatedFollowUpLead());
         }
       } else {
-        emit(FetchingLeadsFailed('Failed to fetch followup status.'));
+        emit(FetchingLeadsFailed(
+            response?.message ?? 'Failed to update the follow up'));
       }
     } on Exception catch (e) {
       emit(FetchingLeadsFailed(e.toString()));
@@ -161,7 +162,8 @@ class LeadsCubit extends Cubit<LeadsState> {
           emit(CreatedFollowUpLead());
         }
       } else {
-        emit(FetchingLeadsFailed('Failed to fetch followup status.'));
+        emit(FetchingLeadsFailed(
+            response?.message ?? 'Failed to update the follow up'));
       }
     } on Exception catch (e) {
       emit(FetchingLeadsFailed(e.toString()));
