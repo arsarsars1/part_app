@@ -10,6 +10,11 @@ import 'package:part_app/view/admin/leads/todays_followup_view.dart';
 import 'package:part_app/view/attendance/attendance_add.dart';
 import 'package:part_app/view/attendance/attendance_calender_view.dart';
 import 'package:part_app/view/attendance/attendance_update.dart';
+import 'package:part_app/view/attendance/manager_app_attendance_add.dart';
+import 'package:part_app/view/attendance/manager_app_attendance_batch_list.dart';
+import 'package:part_app/view/attendance/manager_app_attendance_calender_view.dart';
+import 'package:part_app/view/attendance/manager_app_attendance_update.dart';
+import 'package:part_app/view/attendance/manager_app_monthly_attendance_view.dart';
 import 'package:part_app/view/attendance/student_app_attendence_view.dart';
 import 'package:part_app/view/attendance/trainer_app_attendance_add.dart';
 import 'package:part_app/view/attendance/trainer_app_attendance_batch_list.dart';
@@ -121,6 +126,7 @@ import 'package:part_app/view/students/trainer_app_edit_student_batches.dart';
 import 'package:part_app/view/students/trainer_app_student_attendence.dart';
 import 'package:part_app/view/students/trainer_app_student_details.dart';
 import 'package:part_app/view/students/trainer_app_students_view.dart';
+import 'package:part_app/view/todays_classes/manager_app_todays_classes.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/add_advance_salary.dart';
 import 'package:part_app/view/trainer/add_or_edit_salary.dart';
@@ -738,6 +744,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppAttendanceBatchListPage(),
           settings: settings,
         );
+      case ManagerAppAttendanceBatchListPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAttendanceBatchListPage(),
+          settings: settings,
+        );
       case AttendanceCalenderView.route:
         return MaterialPageRoute(
           builder: (_) => const AttendanceCalenderView(),
@@ -746,6 +757,11 @@ class RouteGenerator {
       case TrainerAppAttendanceCalenderView.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppAttendanceCalenderView(),
+          settings: settings,
+        );
+      case ManagerAppAttendanceCalenderView.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAttendanceCalenderView(),
           settings: settings,
         );
       case AddAdvanceFeePage.route:
@@ -788,6 +804,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppMonthlyAttendanceView(),
           settings: settings,
         );
+      case ManagerAppMonthlyAttendanceView.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppMonthlyAttendanceView(),
+          settings: settings,
+        );
       case AttendanceUpdate.route:
         return MaterialPageRoute(
           builder: (_) => const AttendanceUpdate(),
@@ -798,6 +819,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppAttendanceUpdate(),
           settings: settings,
         );
+      case ManagerAppAttendanceUpdate.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAttendanceUpdate(),
+          settings: settings,
+        );
       case AttendanceAdd.route:
         return MaterialPageRoute(
           builder: (_) => const AttendanceAdd(),
@@ -806,6 +832,11 @@ class RouteGenerator {
       case TrainerAppAttendanceAdd.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppAttendanceAdd(),
+          settings: settings,
+        );
+      case ManagerAppAttendanceAdd.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAttendanceAdd(),
           settings: settings,
         );
       case AddOrEditFees.route:
@@ -831,6 +862,11 @@ class RouteGenerator {
       case TodaysClasses.route:
         return MaterialPageRoute(
           builder: (_) => const TodaysClasses(),
+          settings: settings,
+        );
+      case ManagerAppTodaysClasses.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppTodaysClasses(),
           settings: settings,
         );
       case FeesDetailsView.route:

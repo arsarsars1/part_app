@@ -30,7 +30,7 @@ class _ManagerAppDashboardState extends State<ManagerAppDashboard> {
                     ?.user?.managerDetail?[authCubit?.managerIndex ?? 0].id ??
                 0,
           );
-      context.read<HomeCubit>().getFAQ();
+      context.read<HomeCubit>().getFAQForManager();
     });
   }
 

@@ -250,6 +250,17 @@ class DashboardService {
     }
   }
 
+  Future<List<FaqList?>?> getFAQListForManager({String? page}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/faqs/manager',
+      );
+      return faqListFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> readNotification(String? notificationId) async {
     try {
       var response = await _apiClient.get(
