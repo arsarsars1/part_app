@@ -6,6 +6,7 @@ import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/class_link/manager_app_class_link_view.dart';
 import 'package:part_app/view/class_link/trainer_app_class_link_view.dart';
+import 'package:part_app/view/todays_classes/manager_app_todays_classes.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/trainer_app_trainer_salary_slips.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
@@ -282,7 +283,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Today\'s Classes',
-      route: TodaysClasses.route,
+      route: ManagerAppTodaysClasses.route,
       asset: Assets.todays,
       color: Color(0xFFE100FF),
     ),
