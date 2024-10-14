@@ -63,12 +63,8 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
               builder: (context, state) {
                 batch = context.read<BatchCubit>().batchModel;
                 if (!cubit.isFromRescheduledClass) {
-                  batch?.batchDetail?.forEach((element) {
-                    if (element.day == cubit.conductedDate!.weekday) {
-                      startTime = element.startTime;
-                      endTime = element.endTime;
-                    }
-                  });
+                  startTime = cubit.conductedClassDetails?.startTime;
+                  endTime = cubit.conductedClassDetails?.endTime;
                 } else {
                   startTime = cubit.selectedClass?.startTime;
                   endTime = cubit.selectedClass?.endTime;
@@ -192,7 +188,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                       ),
                       SizedBox(height: 5.h),
                       Text(
-                        "Attendance: ${cubit.updatedStudents.length} / ${studentCubit.students?.length ?? 0}",
+                        "Attendance: ${cubit.updatedStudents.length} / ${cubit.attendenceTaken.length}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(

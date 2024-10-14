@@ -94,7 +94,9 @@ class _LeadTrainerFollowUpDetailsState
             Alert(context).show(message: 'Lead Created');
             Navigator.pop(context);
           } else if (state is CreateLeadFailed) {
-            Alert(context).show(message: "Failed to create lead");
+            Alert(context).show(message: state.message);
+          } else if (state is FetchingLeadsFailed) {
+            Alert(context).show(message: state.message);
           }
         },
         child: BlocBuilder<LeadsCubit, LeadsState>(
