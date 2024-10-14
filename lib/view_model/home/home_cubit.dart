@@ -587,6 +587,26 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  Future<bool> readNotificationForManager(
+      int? managerId, String? notificationId) async {
+    try {
+      emit(ReadingNotification());
+      Common? response =
+          await _service.readNotificationForManager(managerId, notificationId);
+
+      if (response?.status == 1) {
+        emit(ReadNotification(response?.message ?? 'Notification Read'));
+        return true;
+      } else {
+        emit(ReadNotificationFailed(
+            response?.message ?? 'Failed to read notification'));
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
   String createTrainerString(List<String>? trainers) {
     String trainer = '';
     if (trainers != null && trainers.isNotEmpty) {
@@ -643,6 +663,24 @@ class HomeCubit extends Cubit<HomeState> {
       emit(DeletingNotification());
       Common? response = await _service.deleteNotificationForTrainer(
           trainerId, notificationId);
+
+      if (response?.status == 1) {
+        emit(DeletedNotification(response?.message ?? 'Notification Deleted'));
+      } else {
+        emit(DeleteNotificationFailed(
+            response?.message ?? 'Failed to delete notification'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future deleteNotificationForManager(
+      int? managerId, String? notificationId) async {
+    try {
+      emit(DeletingNotification());
+      Common? response = await _service.deleteNotificationForManager(
+          managerId, notificationId);
 
       if (response?.status == 1) {
         emit(DeletedNotification(response?.message ?? 'Notification Deleted'));

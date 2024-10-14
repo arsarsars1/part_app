@@ -107,11 +107,11 @@ class _ManagerAppNotificationScreenState
                               onTap: () async {
                                 //if notification is read, bagde is refreshed
                                 final isSuccess =
-                                    await cubit.readNotificationForTrainer(
+                                    await cubit.readNotificationForManager(
                                         authCubit
                                                 ?.user
-                                                ?.trainerDetail?[
-                                                    authCubit?.trainerIndex ??
+                                                ?.managerDetail?[
+                                                    authCubit?.managerIndex ??
                                                         0]
                                                 .id ??
                                             0,
@@ -127,11 +127,11 @@ class _ManagerAppNotificationScreenState
                                   children: [
                                     SlidableAction(
                                       onPressed: (context) {
-                                        cubit.deleteNotificationForTrainer(
+                                        cubit.deleteNotificationForManager(
                                             authCubit
                                                     ?.user
-                                                    ?.trainerDetail?[authCubit
-                                                            ?.trainerIndex ??
+                                                    ?.managerDetail?[authCubit
+                                                            ?.managerIndex ??
                                                         0]
                                                     .id ??
                                                 0,

@@ -56,6 +56,9 @@ import 'package:part_app/view/calender/trainer_app_calender_events.dart';
 import 'package:part_app/view/class_link/class_link_list.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
 import 'package:part_app/view/class_link/edit_class_link.dart';
+import 'package:part_app/view/class_link/manager_app_class_link_list.dart';
+import 'package:part_app/view/class_link/manager_app_class_link_view.dart';
+import 'package:part_app/view/class_link/manager_app_edit_class_link.dart';
 import 'package:part_app/view/class_link/trainer_app_class_link_list.dart';
 import 'package:part_app/view/class_link/trainer_app_class_link_view.dart';
 import 'package:part_app/view/class_link/trainer_app_edit_class_link.dart';
@@ -616,6 +619,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppClassLinkView(),
           settings: settings,
         );
+      case ManagerAppClassLinkView.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppClassLinkView(),
+          settings: settings,
+        );
       case EditClassLink.route:
         return MaterialPageRoute(
           builder: (_) => const EditClassLink(),
@@ -624,6 +632,11 @@ class RouteGenerator {
       case TrainerAppEditClassLink.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppEditClassLink(),
+          settings: settings,
+        );
+      case ManagerAppEditClassLink.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppEditClassLink(),
           settings: settings,
         );
       case EditAssignedBatch.route:
@@ -648,6 +661,11 @@ class RouteGenerator {
       case TrainerAppClassLinkList.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppClassLinkList(),
+          settings: settings,
+        );
+      case ManagerAppClassLinkList.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppClassLinkList(),
           settings: settings,
         );
       case AddLead.route:

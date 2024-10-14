@@ -3,8 +3,8 @@ import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/batch_item.dart';
+import 'package:part_app/view/batch/components/manager_app_class_picker.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
-import 'package:part_app/view/batch/components/trainer_app_class_picker.dart';
 import 'package:part_app/view/batch/trainer_app_rescheduled_classes.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -115,7 +115,7 @@ class _ManagerAppRescheduleClassState extends State<ManagerAppRescheduleClass> {
                             enableDrag: false,
                             elevation: 10,
                             backgroundColor: Colors.transparent,
-                            (context) => TrainerAppClassPicker(
+                            (context) => ManagerAppClassPicker(
                               branchId: cubit.batchModel?.branchId,
                               batchId: cubit.batchModel?.id,
                               date: startDate,

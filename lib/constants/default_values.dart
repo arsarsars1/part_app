@@ -4,6 +4,7 @@ import 'package:part_app/constants/assets.dart';
 import 'package:part_app/model/data_model/dashboard_item.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
+import 'package:part_app/view/class_link/manager_app_class_link_view.dart';
 import 'package:part_app/view/class_link/trainer_app_class_link_view.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/trainer_app_trainer_salary_slips.dart';
@@ -287,7 +288,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Class Link',
-      route: ClassLinkView.route,
+      route: ManagerAppClassLinkView.route,
       asset: Assets.classLink,
       color: Color.fromARGB(255, 228, 50, 80),
     ),

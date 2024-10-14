@@ -856,6 +856,19 @@ class BatchService {
     }
   }
 
+  Future<Common?> addClassLinkForManager(
+      int managerId, int? batchId, Map<String, dynamic> data) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/managers/$managerId/batches/$batchId/class-link',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> updateClassLink(
       int? batchId, int? classId, Map<String, dynamic> data) async {
     try {
@@ -874,6 +887,19 @@ class BatchService {
     try {
       var response = await _apiClient.post(
         postPath: '/trainers/$trainerId/batches/class-link/$classId',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> updateClassLinkForManagerId(int managerId, int? batchId,
+      int? classId, Map<String, dynamic> data) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/managers/$managerId/batches/class-link/$classId',
         data: data,
       );
       return commonFromJson(jsonEncode(response));
@@ -904,6 +930,18 @@ class BatchService {
     }
   }
 
+  Future<Common?> removeClassLinkForManager(
+      int managerId, int? batchId, int? linkId) async {
+    try {
+      var response = await _apiClient.delete(
+          queryPath:
+              '/managers/$managerId/batches/$batchId/class-link/$linkId/');
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<ClassLinkResponse?> getClassLink(
       int? batchId, DateTime? dateTime) async {
     try {
@@ -926,6 +964,22 @@ class BatchService {
       var response = await _apiClient.get(
         queryPath:
             '/trainers/$trainerId/batches/$batchId/class-link/date/${dateTime?.year}-${dateTime?.month}-${dateTime?.day}',
+      );
+      // log(response.toString());
+      return classLinkResponseFromJson(json.encode(response));
+      // return ClassLinkResponse.fromJson(response);
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  Future<ClassLinkResponse?> getClassLinkForManager(
+      int managerId, int? batchId, DateTime? dateTime) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/managers/$managerId/batches/$batchId/class-link/date/${dateTime?.year}-${dateTime?.month}-${dateTime?.day}',
       );
       // log(response.toString());
       return classLinkResponseFromJson(json.encode(response));
