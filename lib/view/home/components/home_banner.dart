@@ -15,7 +15,8 @@ class HomeBanner extends StatefulWidget {
   State<HomeBanner> createState() => _HomeBannerState();
 }
 
-class _HomeBannerState extends State<HomeBanner> {
+class _HomeBannerState extends State<HomeBanner>
+    with AutomaticKeepAliveClientMixin {
   PageController bannerPageController = PageController();
   bool _isUserHoldingPage = false;
   int currentPage = 0;
@@ -39,7 +40,11 @@ class _HomeBannerState extends State<HomeBanner> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     var authCubit = context.read<AuthCubit>();
     var cubit = context.read<HomeCubit>();
     return BlocConsumer<HomeCubit, HomeState>(
