@@ -755,6 +755,29 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     }
   }
 
+  /// this method is used to get the attendance of a student in a batch in a particular month
+  Future getAttendenceOfStudentOfMonthForManager({
+    required int managerId,
+    int? batchId,
+    int? studentDetailId,
+    DateTime? date,
+  }) async {
+    _batches.clear();
+    emit(FetchingAttendanceBatches(pagination: false));
+    StudentAttendenceOfMonth? response =
+        await _attendanceService.getAttendenceOfStudentOfMonthForManager(
+            managerId: managerId,
+            batchId: batchId,
+            studentDetailId: studentDetailId,
+            date: date);
+    if (response?.status == 1) {
+      studentClasses = response?.studentAttendance ?? [];
+      pre = response?.presentCount ?? 0;
+      abs = response?.absentCount ?? 0;
+      emit(AttendanceBatchesFetched());
+    }
+  }
+
   Future getStudentAppAttendenceOfStudentOfMonth({
     int? batchId,
     int? studentDetailId,

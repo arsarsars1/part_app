@@ -5,6 +5,7 @@ import 'package:part_app/model/data_model/class_link_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/class_link/manager_app_edit_class_link.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/manager_app_branch_field.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -79,7 +80,7 @@ class _ManagerAppClassLinkListState extends State<ManagerAppClassLinkList> {
           key: formKey,
           child: ListView(
             children: [
-              TrainerAppBranchField(
+              ManagerAppBranchField(
                 onSelect: (value) {
                   setState(() {
                     branchId = value;

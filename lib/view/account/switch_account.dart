@@ -9,6 +9,7 @@ import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/account/account_card.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/home/home.dart';
+import 'package:part_app/view/home/manager_app_home.dart';
 import 'package:part_app/view/home/student_app_home.dart';
 import 'package:part_app/view/home/trainer_app_home.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
@@ -140,13 +141,14 @@ class SwitchAccount extends StatelessWidget {
                       BranchManagerResponse manager =
                           cubit.user!.managerDetail![index];
                       return AccountCard(
-                        onTap: () {
+                        onTap: () async {
+                          await DefaultCacheManager().emptyCache();
                           cubit.managerIndex = index;
                           cubit.accountType = AccountType.branchManager;
                           database.setUserType('manager');
                           Navigator.pushNamedAndRemoveUntil(
                             context,
-                            StudentAppHome.route,
+                            ManagerAppHome.route,
                             (route) => false,
                           );
                         },

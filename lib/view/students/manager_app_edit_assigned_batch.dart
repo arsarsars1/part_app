@@ -5,22 +5,22 @@ import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/students/trainer_app_assign_batch.dart';
-import 'package:part_app/view/students/trainer_app_students_view.dart';
+import 'package:part_app/view/students/manager_app_assign_batch.dart';
+import 'package:part_app/view/students/manager_app_students_view.dart';
 import 'package:part_app/view_model/cubits.dart';
 
-class TrainerAppEditAssignedBatch extends StatefulWidget {
-  static const route = '/students/add/trainer-app-edit-assign-batch';
+class ManagerAppEditAssignedBatch extends StatefulWidget {
+  static const route = '/students/add/manager-app-edit-assign-batch';
   final bool editStudent;
-  const TrainerAppEditAssignedBatch({super.key, required this.editStudent});
+  const ManagerAppEditAssignedBatch({super.key, required this.editStudent});
 
   @override
-  State<TrainerAppEditAssignedBatch> createState() =>
-      _TrainerAppEditAssignedBatchState();
+  State<ManagerAppEditAssignedBatch> createState() =>
+      _ManagerAppEditAssignedBatchState();
 }
 
-class _TrainerAppEditAssignedBatchState
-    extends State<TrainerAppEditAssignedBatch> {
+class _ManagerAppEditAssignedBatchState
+    extends State<ManagerAppEditAssignedBatch> {
   TextEditingController joiningDateController = TextEditingController();
 
   String? fee;
@@ -75,12 +75,12 @@ class _TrainerAppEditAssignedBatchState
 
               Navigator.popUntil(
                 context,
-                ModalRoute.withName(TrainerAppAssignBatch.route),
+                ModalRoute.withName(ManagerAppAssignBatch.route),
               );
             } else {
               Navigator.popUntil(
                 context,
-                ModalRoute.withName(TrainerAppStudentsView.route),
+                ModalRoute.withName(ManagerAppStudentsView.route),
               );
             }
           } else if (state is CreateStudentFailed) {
@@ -331,11 +331,11 @@ class _TrainerAppEditAssignedBatchState
                                 isCourseFeesPaid: feePaid ? 1 : 0,
                               ));
 
-                              cubit.enrollToBatchForTrainer(
-                                trainerId: authCubit
+                              cubit.enrollToBatchForManager(
+                                managerId: authCubit
                                         ?.user
-                                        ?.trainerDetail?[
-                                            authCubit?.trainerIndex ?? 0]
+                                        ?.managerDetail?[
+                                            authCubit?.managerIndex ?? 0]
                                         .id ??
                                     0,
                               );
@@ -356,11 +356,11 @@ class _TrainerAppEditAssignedBatchState
                                 isAdmissionFeesPaid: admissionFeePaid ? 1 : 0,
                                 isCourseFeesPaid: feePaid ? 1 : 0,
                               ));
-                              cubit.createStudentForTrainer(
-                                trainerId: authCubit
+                              cubit.createStudentForManager(
+                                managerId: authCubit
                                         ?.user
-                                        ?.trainerDetail?[
-                                            authCubit?.trainerIndex ?? 0]
+                                        ?.managerDetail?[
+                                            authCubit?.managerIndex ?? 0]
                                         .id ??
                                     0,
                               );

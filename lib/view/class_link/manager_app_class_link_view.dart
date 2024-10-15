@@ -9,6 +9,7 @@ import 'package:part_app/view/batch/components/manager_app_class_picker.dart';
 import 'package:part_app/view/class_link/manager_app_class_link_list.dart';
 import 'package:part_app/view/class_link/manager_app_edit_class_link.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/manager_app_branch_field.dart';
 import 'package:part_app/view/components/round_button.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -177,7 +178,7 @@ class _ManagerAppClassLinkViewState extends State<ManagerAppClassLinkView> {
                 SizedBox(
                   height: 20.h,
                 ),
-                TrainerAppBranchField(
+                ManagerAppBranchField(
                   onSelect: (value) {
                     // if (branchId != null) {
                     //   AlertBox.showConfirmation(

@@ -89,7 +89,7 @@ class _ManagerAppDashboardIconsState extends State<ManagerAppDashboardIcons> {
         itemBuilder: (context, index) {
           DashboardItem item = DefaultValues.managerDashboardItems[index];
           return Showcase(
-            key: context.read<HomeCubit>().keyCap[index],
+            key: context.read<HomeCubit>().managerskeyCap[index],
             title: titles[index],
             description: descriptions[index],
             child: InkWell(
