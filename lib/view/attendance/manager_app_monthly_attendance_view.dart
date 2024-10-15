@@ -5,6 +5,7 @@ import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/attendance/components/attendance_student_item.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/manager_app_branch_field.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
 import 'package:part_app/view_model/attendance/attendance_cubit.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -98,7 +99,7 @@ class _ManagerAppMonthlyAttendanceViewState
                     SizedBox(
                       height: 20.h,
                     ),
-                    TrainerAppBranchField(
+                    ManagerAppBranchField(
                       onSelect: (value) {
                         setState(() {
                           branchId = value;

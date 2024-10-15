@@ -41,6 +41,20 @@ class FeeDetailsService {
     }
   }
 
+  Future<Common?> addFeesForManager(
+      int managerId, int? batchInvoiceId, Map<String, dynamic> data) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/managers/$managerId/fee-details/batch-fee-invoices/$batchInvoiceId/payments',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> addAdvanceFees(Map<String, dynamic> data) async {
     try {
       var response = await _client.post(
@@ -59,6 +73,20 @@ class FeeDetailsService {
       var response = await _client.post(
         postPath:
             '/trainers/$trainerId/fee-details/batch-fee-invoices/advance-payment',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> addAdvanceFeesForManager(
+      Map<String, dynamic> data, int? managerId) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/managers/$managerId/fee-details/batch-fee-invoices/advance-payment',
         data: data,
       );
       return commonFromJson(jsonEncode(response));
@@ -87,6 +115,20 @@ class FeeDetailsService {
       var response = await _client.post(
         postPath:
             '/trainers/$trainerId/fee-details/admission-fee-invoices/$batchInvoiceId/payments',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> addFeesForAdmissionForManager(
+      int managerId, int? batchInvoiceId, Map<String, dynamic> data) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/managers/$managerId/fee-details/admission-fee-invoices/$batchInvoiceId/payments',
         data: data,
       );
       return commonFromJson(jsonEncode(response));
@@ -248,6 +290,79 @@ class FeeDetailsService {
     }
   }
 
+  Future<BatchFeeInvoiceList?> feeDetailsForManager({
+    int? managerId,
+    int? branchId,
+    int? batchId,
+    int? month,
+    int? year,
+    String? feeType,
+    String? searchQuery,
+    required int pageNo,
+  }) async {
+    try {
+      String queryPath = '/managers/$managerId/fee-details/batch-fee-invoices?';
+      if (branchId != null) {
+        queryPath += 'branch_id=$branchId';
+        if (batchId != null) {
+          queryPath += '&batch_id=$batchId';
+        }
+        if ((feeType != null || feeType != 'all') &&
+            (feeType == 'class' || feeType == 'monthly')) {
+          queryPath += '&fee_type=$feeType';
+          if (month != null) {
+            queryPath += '&month=$month';
+          }
+          if (year != null) {
+            queryPath += '&year=$year';
+          }
+          if (searchQuery == '' || searchQuery == null) {
+            queryPath += '&page=$pageNo';
+          } else {
+            queryPath += '&search=$searchQuery';
+            queryPath += '&page=$pageNo';
+          }
+        } else {
+          if (searchQuery == '' || searchQuery == null) {
+            queryPath += '&page=$pageNo';
+          } else {
+            queryPath += '&search=$searchQuery';
+            queryPath += '&page=$pageNo';
+          }
+        }
+      } else {
+        if ((feeType != null || feeType != 'all') &&
+            (feeType == 'class' || feeType == 'monthly')) {
+          queryPath += 'fee_type=$feeType';
+          if (month != null) {
+            queryPath += '&month=$month';
+          }
+          if (year != null) {
+            queryPath += '&year=$year';
+          }
+          if (searchQuery == '' || searchQuery == null) {
+            queryPath += '&page=$pageNo';
+          } else {
+            queryPath += '&search=$searchQuery';
+            queryPath += '&page=$pageNo';
+          }
+        } else {
+          if (searchQuery == '' || searchQuery == null) {
+            queryPath += 'page=$pageNo';
+          } else {
+            queryPath += 'search=$searchQuery';
+            queryPath += '&page=$pageNo';
+          }
+        }
+      }
+      var response = await _client.get(queryPath: queryPath);
+      return batchFeeInvoiceListFromJson(jsonEncode(response));
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
   Future<FeeDetailHistory?> studentFeeDetails({
     int? month,
     int? year,
@@ -303,6 +418,35 @@ class FeeDetailsService {
               : paymentStatus != 'all'
                   ? '/trainers/$trainerId/students/$studentId/fee-details?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
                   : '/trainers/$trainerId/students/$studentId/fee-details?fee_type=$feeType&page=$pageNo');
+      return feeDetailHistoryFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<FeeDetailHistory?> studentFeeDetailsForManager({
+    int? managerId,
+    int? month,
+    int? year,
+    String? feeType,
+    String? searchQuery,
+    int? studentId,
+    String? paymentStatus,
+    required int pageNo,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath: feeType == 'monthly'
+              ? month != null
+                  ? paymentStatus != 'all'
+                      ? '/managers/$managerId/students/$studentId/fee-details/$year/$month?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                      : '/managers/$managerId/students/$studentId/fee-details/$year/$month?fee_type=$feeType&page=$pageNo'
+                  : paymentStatus != 'all'
+                      ? '/managers/$managerId/students/$studentId/fee-details/$year?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                      : '/managers/$managerId/students/$studentId/fee-details/$year?fee_type=$feeType&page=$pageNo'
+              : paymentStatus != 'all'
+                  ? '/managers/$managerId/students/$studentId/fee-details?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+                  : '/managers/$managerId/students/$studentId/fee-details?fee_type=$feeType&page=$pageNo');
       return feeDetailHistoryFromJson(jsonEncode(response));
     } catch (e) {
       return null;
@@ -382,6 +526,29 @@ class FeeDetailsService {
     }
   }
 
+  Future<FeeDetailHistory?> admissionFeeDetailsForManagerApp({
+    required int managerId,
+    String? feeType,
+    String? searchQuery,
+    int? studentId,
+    String? paymentStatus,
+    required int pageNo,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath: paymentStatus != 'all'
+              ? feeType == null || feeType == 'all'
+                  ? '/managers/$managerId/students/$studentId/admission-fee-details?payment_status=$paymentStatus&page=$pageNo'
+                  : '/managers/$managerId/students/$studentId/admission-fee-details?fee_type=$feeType&payment_status=$paymentStatus&page=$pageNo'
+              : feeType == null || feeType == 'all'
+                  ? '/managers/$managerId/students/$studentId/admission-fee-details?page=$pageNo'
+                  : '/managers/$managerId/students/$studentId/admission-fee-details?fee_type=$feeType&page=$pageNo');
+      return feeDetailHistoryFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> sendReminder({
     required int? batchFeeInvoiceId,
   }) async {
@@ -409,6 +576,20 @@ class FeeDetailsService {
     }
   }
 
+  Future<Common?> sendReminderForManager({
+    required int? batchFeeInvoiceId,
+    required int managerId,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath:
+              '/managers/$managerId/fee-details/batch-fee-invoices/$batchFeeInvoiceId/send-reminder');
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> sendReminderForAdmission({
     required int? batchFeeInvoiceId,
   }) async {
@@ -430,6 +611,20 @@ class FeeDetailsService {
       var response = await _client.get(
           queryPath:
               '/trainers/$trainerId/fee-details/admission-fee-invoices/$batchFeeInvoiceId/send-reminder');
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> sendReminderForAdmissionForManager({
+    required int? batchFeeInvoiceId,
+    required int managerId,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath:
+              '/managers/$managerId/fee-details/admission-fee-invoices/$batchFeeInvoiceId/send-reminder');
       return commonFromJson(jsonEncode(response));
     } catch (e) {
       return null;
@@ -498,6 +693,23 @@ class FeeDetailsService {
     }
   }
 
+  Future<Common?> writeOffFeesForAdmissionForManager(
+      Map<String, dynamic> request,
+      [int? batchFeesInvoiceId,
+      int? managerId]) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/managers/$managerId/fee-details/admission-fee-invoices/$batchFeesInvoiceId/write-off',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> editFees(Map<String, dynamic> request,
       int? batchFeesInvoiceId, int? paymentId) async {
     try {
@@ -523,6 +735,25 @@ class FeeDetailsService {
       var response = await _client.post(
         postPath:
             '/trainers/$trainerId/fee-details/batch-fee-invoices/$batchFeesInvoiceId/payments/$paymentId',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> editFeesForManager(
+    Map<String, dynamic> request,
+    int? batchFeesInvoiceId,
+    int? paymentId,
+    int? managerId,
+  ) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/managers/$managerId/fee-details/batch-fee-invoices/$batchFeesInvoiceId/payments/$paymentId',
         data: request,
       );
 
@@ -565,6 +796,24 @@ class FeeDetailsService {
     }
   }
 
+  Future<Common?> editAdmissionFeesForManagerId(
+      int managerId,
+      Map<String, dynamic> request,
+      int? admissionFeeInvoiceId,
+      int? paymentId) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/managers/$managerId/fee-details/admission-fee-invoices/$admissionFeeInvoiceId/payments/$paymentId',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> deleteFees(int? batchFeesInvoiceId, int? paymentId) async {
     try {
       var response = await _client.delete(
@@ -584,6 +833,20 @@ class FeeDetailsService {
       var response = await _client.delete(
         queryPath:
             '/trainers/$trainerId/fee-details/batch-fee-invoices/$batchFeesInvoiceId/payments/$paymentId',
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> deleteFeesForManager(
+      int? batchFeesInvoiceId, int? paymentId, int? managerId) async {
+    try {
+      var response = await _client.delete(
+        queryPath:
+            '/managers/$managerId/fee-details/batch-fee-invoices/$batchFeesInvoiceId/payments/$paymentId',
       );
 
       return commonFromJson(jsonEncode(response));
@@ -612,6 +875,20 @@ class FeeDetailsService {
       var response = await _client.delete(
         queryPath:
             '/trainers/$trainerId/fee-details/admission-fee-invoices/$admissionFeeInvoiceId/payments/$paymentId',
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> deleteAdmissionFeesForManager(
+      int managerId, int? admissionFeeInvoiceId, int? paymentId) async {
+    try {
+      var response = await _client.delete(
+        queryPath:
+            '/managers/$managerId/fee-details/admission-fee-invoices/$admissionFeeInvoiceId/payments/$paymentId',
       );
 
       return commonFromJson(jsonEncode(response));
@@ -656,6 +933,20 @@ class FeeDetailsService {
     }
   }
 
+  Future<BatchFeeInvoice?> batchFeeInvoiceDetailsForManager({
+    required int? batchFeeInvoiceId,
+    required int managerId,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath:
+              '/managers/$managerId/fee-details/batch-fee-invoices/$batchFeeInvoiceId');
+      return batchFeeInvoiceFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<AdmissionFeeInvoice?> admissionFeeInvoiceDetails({
     required int? batchFeeInvoiceId,
   }) async {
@@ -677,6 +968,20 @@ class FeeDetailsService {
       var response = await _client.get(
           queryPath:
               '/trainers/$trainerId/fee-details/admission-fee-invoices/$batchFeeInvoiceId');
+      return admissionFeeInvoiceFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AdmissionFeeInvoice?> admissionFeeInvoiceDetailForManager({
+    required int managerId,
+    required int? batchFeeInvoiceId,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath:
+              '/managers/$managerId/fee-details/admission-fee-invoices/$batchFeeInvoiceId');
       return admissionFeeInvoiceFromJson(jsonEncode(response));
     } catch (e) {
       return null;

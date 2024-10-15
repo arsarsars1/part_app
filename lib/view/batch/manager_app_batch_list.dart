@@ -4,6 +4,7 @@ import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/batch/manager_app_batch_details.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/manager_app_branch_field.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class ManagerAppBatchesPage extends StatefulWidget {
@@ -93,7 +94,7 @@ class _ManagerAppBatchesPageState extends State<ManagerAppBatchesPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  TrainerAppBranchField(
+                  ManagerAppBranchField(
                     initialBranch: branchId,
                     title: 'Select A Branch To List Batches',
                     onSelect: (value) {

@@ -309,6 +309,23 @@ class AttendanceService {
     }
   }
 
+  Future<StudentAttendenceOfMonth?> getAttendenceOfStudentOfMonthForManager(
+      {required int managerId,
+      required int? batchId,
+      required int? studentDetailId,
+      required DateTime? date}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/managers/$managerId/students/$studentDetailId/batch/$batchId/attendance/${date?.year}/${date?.month}',
+      );
+
+      return studentAttendenceOfMonthFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentAttendenceOfMonth?> getStudentAppAttendenceOfStudentOfMonth(
       {required int? batchId,
       required int? studentDetailId,

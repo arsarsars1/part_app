@@ -6,6 +6,7 @@ import 'package:part_app/view/attendance/manager_app_monthly_attendance_view.dar
 import 'package:part_app/view/batch/components/batch_item.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view/components/manager_app_branch_field.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 import '../../view_model/attendance/attendance_cubit.dart';
@@ -97,7 +98,7 @@ class _ManagerAppAttendanceBatchListPageState
                       ),
                     ),
                   ),
-                  TrainerAppBranchField(
+                  ManagerAppBranchField(
                     title: 'Select A Branch To List Batches',
                     onSelect: (value) {
                       branchId = value;

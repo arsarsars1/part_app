@@ -71,6 +71,12 @@ import 'package:part_app/view/fee/add_advance_fee.dart';
 import 'package:part_app/view/fee/add_or_edit_admission_fees.dart';
 import 'package:part_app/view/fee/add_or_edit_fees.dart';
 import 'package:part_app/view/fee/fees_details_view.dart';
+import 'package:part_app/view/fee/manager_app_add_advance_fee.dart';
+import 'package:part_app/view/fee/manager_app_add_or_edit_admission_fees.dart';
+import 'package:part_app/view/fee/manager_app_add_or_edit_fees.dart';
+import 'package:part_app/view/fee/manager_app_fees_details_view.dart';
+import 'package:part_app/view/fee/manager_app_student_admission_fee_details.dart';
+import 'package:part_app/view/fee/manager_app_student_fee_details.dart';
 import 'package:part_app/view/fee/student_admission_fee_details.dart';
 import 'package:part_app/view/fee/student_app_fee_details.dart';
 import 'package:part_app/view/fee/student_fee_details.dart';
@@ -114,6 +120,15 @@ import 'package:part_app/view/students/assign_student_batch.dart';
 import 'package:part_app/view/students/edit_assigned_batch.dart';
 import 'package:part_app/view/students/edit_student.dart';
 import 'package:part_app/view/students/edit_student_batches.dart';
+import 'package:part_app/view/students/manager_app_add_student.dart';
+import 'package:part_app/view/students/manager_app_assign_batch.dart';
+import 'package:part_app/view/students/manager_app_assign_student_batch.dart';
+import 'package:part_app/view/students/manager_app_edit_assigned_batch.dart';
+import 'package:part_app/view/students/manager_app_edit_student.dart';
+import 'package:part_app/view/students/manager_app_edit_student_batches.dart';
+import 'package:part_app/view/students/manager_app_student_attendence.dart';
+import 'package:part_app/view/students/manager_app_student_details.dart';
+import 'package:part_app/view/students/manager_app_students_view.dart';
 import 'package:part_app/view/students/student_attendence.dart';
 import 'package:part_app/view/students/student_details.dart';
 import 'package:part_app/view/students/students_view.dart';
@@ -543,6 +558,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppStudentsView(),
           settings: settings,
         );
+      case ManagerAppStudentsView.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppStudentsView(),
+          settings: settings,
+        );
       case AddStudent.route:
         return MaterialPageRoute(
           builder: (_) => const AddStudent(),
@@ -551,6 +571,11 @@ class RouteGenerator {
       case TrainerAppAddStudent.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppAddStudent(),
+          settings: settings,
+        );
+      case ManagerAppAddStudent.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAddStudent(),
           settings: settings,
         );
       case AssignBatch.route:
@@ -563,6 +588,13 @@ class RouteGenerator {
       case TrainerAppAssignBatch.route:
         return MaterialPageRoute(
           builder: (_) => TrainerAppAssignBatch(
+            editStudent: settings.arguments as bool,
+          ),
+          settings: settings,
+        );
+      case ManagerAppAssignBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => ManagerAppAssignBatch(
             editStudent: settings.arguments as bool,
           ),
           settings: settings,
@@ -581,6 +613,13 @@ class RouteGenerator {
           ),
           settings: settings,
         );
+      case ManagerAppAssignStudentBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => ManagerAppAssignStudentBatch(
+            editStudent: settings.arguments as bool,
+          ),
+          settings: settings,
+        );
       case StudentDetails.route:
         return MaterialPageRoute(
           builder: (_) => const StudentDetails(),
@@ -589,6 +628,11 @@ class RouteGenerator {
       case TrainerAppStudentDetails.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppStudentDetails(),
+          settings: settings,
+        );
+      case ManagerAppStudentDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppStudentDetails(),
           settings: settings,
         );
       case EditStudent.route:
@@ -601,6 +645,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppEditStudent(),
           settings: settings,
         );
+      case ManagerAppEditStudent.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppEditStudent(),
+          settings: settings,
+        );
       case EditStudentBatches.route:
         return MaterialPageRoute(
           builder: (_) => EditStudentBatches(
@@ -611,6 +660,13 @@ class RouteGenerator {
       case TrainerAppEditStudentBatches.route:
         return MaterialPageRoute(
           builder: (_) => TrainerAppEditStudentBatches(
+            editStudent: settings.arguments as bool,
+          ),
+          settings: settings,
+        );
+      case ManagerAppEditStudentBatches.route:
+        return MaterialPageRoute(
+          builder: (_) => ManagerAppEditStudentBatches(
             editStudent: settings.arguments as bool,
           ),
           settings: settings,
@@ -655,6 +711,13 @@ class RouteGenerator {
       case TrainerAppEditAssignedBatch.route:
         return MaterialPageRoute(
           builder: (_) => TrainerAppEditAssignedBatch(
+            editStudent: settings.arguments as bool,
+          ),
+          settings: settings,
+        );
+      case ManagerAppEditAssignedBatch.route:
+        return MaterialPageRoute(
+          builder: (_) => ManagerAppEditAssignedBatch(
             editStudent: settings.arguments as bool,
           ),
           settings: settings,
@@ -774,6 +837,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppAddAdvanceFeePage(),
           settings: settings,
         );
+      case ManagerAppAddAdvanceFeePage.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAddAdvanceFeePage(),
+          settings: settings,
+        );
       case AddAdvanceSalaryPage.route:
         return MaterialPageRoute(
           builder: (_) => const AddAdvanceSalaryPage(),
@@ -787,6 +855,11 @@ class RouteGenerator {
       case TrainerAppStudentAttendanceCalenderView.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppStudentAttendanceCalenderView(),
+          settings: settings,
+        );
+      case ManagerAppStudentAttendanceCalenderView.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppStudentAttendanceCalenderView(),
           settings: settings,
         );
       case StudentAppAttendanceCalenderView.route:
@@ -849,6 +922,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppAddOrEditFees(),
           settings: settings,
         );
+      case ManagerAppAddOrEditFees.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAddOrEditFees(),
+          settings: settings,
+        );
       case AddOrEditAdmissionFees.route:
         return MaterialPageRoute(
           builder: (_) => const AddOrEditAdmissionFees(),
@@ -857,6 +935,11 @@ class RouteGenerator {
       case TrainerAppAddOrEditAdmissionFees.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppAddOrEditAdmissionFees(),
+          settings: settings,
+        );
+      case ManagerAppAddOrEditAdmissionFees.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAddOrEditAdmissionFees(),
           settings: settings,
         );
       case TodaysClasses.route:
@@ -879,6 +962,11 @@ class RouteGenerator {
           builder: (_) => const TrainerAppFeesDetailsView(),
           settings: settings,
         );
+      case ManagerAppFeesDetailsView.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppFeesDetailsView(),
+          settings: settings,
+        );
       case StudentFeeDetails.route:
         return MaterialPageRoute(
           builder: (_) => const StudentFeeDetails(),
@@ -887,6 +975,11 @@ class RouteGenerator {
       case TrainerAppStudentFeeDetails.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppStudentFeeDetails(),
+          settings: settings,
+        );
+      case ManagerAppStudentFeeDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppStudentFeeDetails(),
           settings: settings,
         );
       case StudentAppFeeDetails.route:
@@ -902,6 +995,11 @@ class RouteGenerator {
       case TrainerAppStudentAdmissionFeeDetails.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerAppStudentAdmissionFeeDetails(),
+          settings: settings,
+        );
+      case ManagerAppStudentAdmissionFeeDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppStudentAdmissionFeeDetails(),
           settings: settings,
         );
       case TrainerSalarySlips.route:
