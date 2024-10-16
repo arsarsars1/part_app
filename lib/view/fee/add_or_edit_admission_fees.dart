@@ -46,22 +46,31 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
         title: 'Edit Admission Fee Details',
       ),
       body: BlocConsumer<FeeCubit, FeeState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AddedFees) {
             date = null;
             dateController.text = "";
             Alert(context).show(message: state.message);
-            feeCubit.getAdmissionInvoice(feeCubit.student.id);
+            await feeCubit.getAdmissionInvoice(feeCubit.student.id);
+            feesController.text =
+                feeCubit.admissionFeeInvoice?.pendingAmount ?? "";
+            dateController.text = DateTime.now().toDateString();
           } else if (state is AddFeesFailed) {
             Alert(context).show(message: state.message);
           } else if (state is FeesDeleted) {
             Alert(context).show(message: state.message);
-            feeCubit.getAdmissionInvoice(feeCubit.student.id);
+            await feeCubit.getAdmissionInvoice(feeCubit.student.id);
+            feesController.text =
+                feeCubit.admissionFeeInvoice?.pendingAmount ?? "";
+            dateController.text = DateTime.now().toDateString();
           } else if (state is DeleteFeesFailed) {
             Alert(context).show(message: state.message);
           } else if (state is EdittedFee) {
             Alert(context).show(message: state.message);
-            feeCubit.getAdmissionInvoice(feeCubit.student.id);
+            await feeCubit.getAdmissionInvoice(feeCubit.student.id);
+            feesController.text =
+                feeCubit.admissionFeeInvoice?.pendingAmount ?? "";
+            dateController.text = DateTime.now().toDateString();
           } else if (state is EditFeesFailed) {
             Alert(context).show(message: state.message);
           }
@@ -312,6 +321,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                   } else {
                                     var formKey1 = GlobalKey<FormState>();
                                     String? reason, date, amount;
+                                    DropDownItem? paymentValue;
                                     CommonDialog(
                                       context: context,
                                       message:
@@ -321,6 +331,8 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                         reason: (value) => reason = value,
                                         amount: (value) => amount = value,
                                         date: (value) => date = value,
+                                        payment: (value) =>
+                                            paymentValue = value,
                                       ),
                                       onTap: () {
                                         formKey1.currentState!.save();
@@ -329,6 +341,8 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                           feeCubit.editAdmissionFees({
                                             'new_date': date,
                                             'new_amount': amount,
+                                            'payment_method':
+                                                paymentValue?.item,
                                             'reason': reason
                                           },
                                               admissionFeeInvoiceId: feeCubit

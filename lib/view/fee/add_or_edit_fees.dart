@@ -45,22 +45,25 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
         title: 'Edit Fee Details',
       ),
       body: BlocConsumer<FeeCubit, FeeState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AddedFees) {
             date = null;
             dateController.text = "";
             Alert(context).show(message: state.message);
-            feeCubit.getBatchInvoice(feeCubit.student.id);
+            await feeCubit.getBatchInvoice(feeCubit.student.id);
+            feesController.text = feeCubit.batchFeeInvoice?.pendingAmount ?? "";
           } else if (state is AddFeesFailed) {
             Alert(context).show(message: state.message);
           } else if (state is FeesDeleted) {
             Alert(context).show(message: state.message);
-            feeCubit.getBatchInvoice(feeCubit.student.id);
+            await feeCubit.getBatchInvoice(feeCubit.student.id);
+            feesController.text = feeCubit.batchFeeInvoice?.pendingAmount ?? "";
           } else if (state is DeleteFeesFailed) {
             Alert(context).show(message: state.message);
           } else if (state is EdittedFee) {
             Alert(context).show(message: state.message);
-            feeCubit.getBatchInvoice(feeCubit.student.id);
+            await feeCubit.getBatchInvoice(feeCubit.student.id);
+            feesController.text = feeCubit.batchFeeInvoice?.pendingAmount ?? "";
           } else if (state is EditFeesFailed) {
             Alert(context).show(message: state.message);
           }
@@ -356,6 +359,7 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                   } else {
                                     var formKey1 = GlobalKey<FormState>();
                                     String? reason, date, amount;
+                                    DropDownItem? paymentValue;
                                     CommonDialog(
                                       context: context,
                                       message:
@@ -365,14 +369,18 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                         reason: (value) => reason = value,
                                         amount: (value) => amount = value,
                                         date: (value) => date = value,
+                                        payment: (value) =>
+                                            paymentValue = value,
                                       ),
-                                      onTap: () {
+                                      onTap: () async {
                                         formKey1.currentState!.save();
                                         if (formKey1.currentState!.validate()) {
                                           Navigator.pop(context);
-                                          feeCubit.editFees({
+                                          await feeCubit.editFees({
                                             'new_date': date,
                                             'new_amount': amount,
+                                            'payment_method':
+                                                paymentValue?.item,
                                             'reason': reason
                                           },
                                               batchFeeInvoiceId:
@@ -918,9 +926,6 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                   'payment_date':
                                       dateController.text.toDateServerString()
                                 });
-                                if (context.mounted) {
-                                  // Navigator.pop(context);
-                                }
                               }
                             },
                             title: 'Submit',
