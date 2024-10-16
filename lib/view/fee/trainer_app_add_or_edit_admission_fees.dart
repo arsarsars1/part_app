@@ -43,7 +43,7 @@ class _AddOrEditFeesState extends State<TrainerAppAddOrEditAdmissionFees> {
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
-        title: 'Edit Admission Fee Details1',
+        title: 'Edit Admission Fee Details',
       ),
       body: BlocConsumer<FeeCubit, FeeState>(
         listener: (context, state) {
