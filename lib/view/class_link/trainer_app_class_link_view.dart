@@ -108,12 +108,12 @@ class _TrainerAppClassLinkViewState extends State<TrainerAppClassLinkView> {
             } else if (state is RemovedLink) {
               Navigator.pop(context);
               Alert(context).show(message: 'Online Class Deleted');
-              batchCubit.getClassLinkForTrainer(
-                  authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0]
-                          .id ??
-                      0,
-                  batch?.id,
-                  DateTime.now());
+              // batchCubit.getClassLinkForTrainer(
+              //     authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0]
+              //             .id ??
+              //         0,
+              //     batch?.id,
+              //     DateTime.now());
             } else if (state is RemoveLinkFailed) {
               Alert(context).show(message: state.message);
             } else if (state is FetchedLinks) {
