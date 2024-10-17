@@ -708,6 +708,27 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                 ),
                               ),
                             ),
+                          if (payment?.paymentMethod != null)
+                            SizedBox(
+                              width:
+                                  (3 * MediaQuery.of(context).size.width) / 3.5,
+                              child: CustomPaint(
+                                painter: DottedBorderPainter(),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 5.w, vertical: 5.h),
+                                  child: Text(
+                                    "Payment mode: ${payment?.paymentMethod}",
+                                    maxLines: 5,
+                                    softWrap: true,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
+                                  ),
+                                ),
+                              ),
+                            ),
                           if (payment?.isDeleted == 1)
                             SizedBox(
                               width:
