@@ -23,7 +23,8 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
   TextEditingController feesController = TextEditingController();
   DateTime? date;
   var formKey = GlobalKey<FormState>();
-  DropDownItem? paymentMethodValue;
+  DropDownItem paymentMethodValue =
+      const DropDownItem(id: "Cash", item: "Cash", title: "Cash");
   late FeeCubit feeCubit;
 
   @override
@@ -321,7 +322,11 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                   } else {
                                     var formKey1 = GlobalKey<FormState>();
                                     String? reason, date, amount;
-                                    DropDownItem? paymentValue;
+                                    DropDownItem paymentValue =
+                                        const DropDownItem(
+                                            id: "Cash",
+                                            item: "Cash",
+                                            title: "Cash");
                                     CommonDialog(
                                       context: context,
                                       message:

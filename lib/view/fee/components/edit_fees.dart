@@ -27,7 +27,8 @@ class EditFees extends StatefulWidget {
 }
 
 class EditFeesState extends State<EditFees> {
-  DropDownItem? paymentValue;
+  DropDownItem paymentValue =
+      const DropDownItem(id: "Cash", item: "Cash", title: "Cash");
   DateTime? date;
   TextEditingController dateController = TextEditingController();
   late FeeCubit feeCubit;
@@ -121,7 +122,7 @@ class EditFeesState extends State<EditFees> {
                   onChange: (value) {
                     paymentValue = value;
                     if (widget.payment != null) {
-                      widget.payment!(paymentValue ?? value);
+                      widget.payment!(paymentValue);
                     }
                   },
                 ),

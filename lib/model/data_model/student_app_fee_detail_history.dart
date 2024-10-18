@@ -121,6 +121,7 @@ class Invoice {
   dynamic writtenOffBy;
   StudentDetail? studentDetail;
   List<Payment>? payments;
+  List<PaymentsTotal>? paymentsTotal;
 
   Invoice({
     this.id,
@@ -157,6 +158,7 @@ class Invoice {
     this.writtenOffBy,
     this.studentDetail,
     this.payments,
+    this.paymentsTotal,
   });
 
   factory Invoice.fromJson(Map<String, dynamic> json) => Invoice(
@@ -201,6 +203,10 @@ class Invoice {
             ? []
             : List<Payment>.from(
                 json["payments"]!.map((x) => Payment.fromJson(x))),
+        paymentsTotal: json["payments_total"] == null
+            ? []
+            : List<PaymentsTotal>.from(
+                json["payments_total"]!.map((x) => PaymentsTotal.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -414,5 +420,39 @@ class StudentDetail {
         "address": address,
         "profile_pic": profilePic,
         "is_active": isActive,
+      };
+}
+
+class PaymentsTotal {
+  int? batchFeeInvoiceId;
+  String? total;
+  dynamic collectedBy;
+  dynamic deletedBy;
+  List<dynamic>? edits;
+
+  PaymentsTotal({
+    this.batchFeeInvoiceId,
+    this.total,
+    this.collectedBy,
+    this.deletedBy,
+    this.edits,
+  });
+
+  factory PaymentsTotal.fromJson(Map<String, dynamic> json) => PaymentsTotal(
+        batchFeeInvoiceId: json["batch_fee_invoice_id"],
+        total: json["total"],
+        collectedBy: json["collected_by"],
+        deletedBy: json["deleted_by"],
+        edits: json["edits"] == null
+            ? []
+            : List<dynamic>.from(json["edits"]!.map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "batch_fee_invoice_id": batchFeeInvoiceId,
+        "total": total,
+        "collected_by": collectedBy,
+        "deleted_by": deletedBy,
+        "edits": edits == null ? [] : List<dynamic>.from(edits!.map((x) => x)),
       };
 }

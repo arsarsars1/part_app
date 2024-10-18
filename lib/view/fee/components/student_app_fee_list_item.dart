@@ -498,33 +498,16 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                       .textTheme
                                                       .bodyLarge,
                                                 ),
-                                                // Text(
-                                                //   (widget.invoice.paymentsTotal ??
-                                                //               [])
-                                                //           .isNotEmpty
-                                                //       ? "₹ ${widget.invoice.paymentsTotal?[0].total}"
-                                                //       : "₹ 0.00",
-                                                //   style:
-                                                //       Theme.of(context)
-                                                //           .textTheme
-                                                //           .bodyLarge
-                                                //           ?.copyWith(
-                                                //             color: (widget.invoice
-                                                //                             .paymentsTotal ??
-                                                //                         [])
-                                                //                     .isNotEmpty
-                                                //                 ? (widget.invoice.paymentsTotal?[0].total ==
-                                                //                         widget
-                                                //                             .student
-                                                //                             .payableAmount)
-                                                //                     ? AppColors
-                                                //                         .green
-                                                //                     : AppColors
-                                                //                         .primaryColor
-                                                //                 : AppColors
-                                                //                     .primaryColor,
-                                                //           ),
-                                                // ),
+                                                Text(
+                                                  (widget.invoice.paymentsTotal ??
+                                                              [])
+                                                          .isNotEmpty
+                                                      ? "₹ ${widget.invoice.paymentsTotal?[0].total}"
+                                                      : "₹ 0.00",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge,
+                                                ),
                                               ],
                                             ),
                                           ),
