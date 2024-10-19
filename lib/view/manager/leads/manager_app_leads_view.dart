@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_app/constants/constant.dart';
-import 'package:part_app/view/admin/leads/manager_app_add_lead.dart';
-import 'package:part_app/view/admin/leads/manager_app_all_followups_view.dart';
-import 'package:part_app/view/admin/leads/manager_app_todays_followup_view.dart';
+import 'package:part_app/view/manager/leads/manager_app_add_lead.dart';
+import 'package:part_app/view/manager/leads/manager_app_all_followups_view.dart';
+import 'package:part_app/view/manager/leads/manager_app_todays_followup_view.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/leads/leads_cubit.dart';
