@@ -243,8 +243,8 @@ class DefaultValues {
       color: Color(0xFF6100FF),
     ),
     DashboardItem(
-      title: 'Branches',
-      route: '/branches',
+      title: 'Branches &\nManagers',
+      route: '/branches_or_manager',
       asset: Assets.branches,
       color: Color(0xFFFF8F00),
     ),

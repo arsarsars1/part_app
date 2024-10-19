@@ -6,6 +6,13 @@ import 'package:part_app/view/admin/leads/edit_lead.dart';
 import 'package:part_app/view/admin/leads/lead_details.dart';
 import 'package:part_app/view/admin/leads/lead_follow_up_details.dart';
 import 'package:part_app/view/admin/leads/leads_view.dart';
+import 'package:part_app/view/admin/leads/manager_app_add_lead.dart';
+import 'package:part_app/view/admin/leads/manager_app_all_followups_view.dart';
+import 'package:part_app/view/admin/leads/manager_app_edit_lead.dart';
+import 'package:part_app/view/admin/leads/manager_app_lead_details.dart';
+import 'package:part_app/view/admin/leads/manager_app_lead_follow_up_details.dart';
+import 'package:part_app/view/admin/leads/manager_app_leads_view.dart';
+import 'package:part_app/view/admin/leads/manager_app_todays_followup_view.dart';
 import 'package:part_app/view/admin/leads/todays_followup_view.dart';
 import 'package:part_app/view/attendance/attendance_add.dart';
 import 'package:part_app/view/attendance/attendance_calender_view.dart';
@@ -55,6 +62,7 @@ import 'package:part_app/view/batch/trainer_app_rescheduled_classes.dart';
 import 'package:part_app/view/branch/add_branch.dart';
 import 'package:part_app/view/branch/branch_details.dart';
 import 'package:part_app/view/branch/branch_list.dart';
+import 'package:part_app/view/branch/branch_or_manager.dart';
 import 'package:part_app/view/calender/calender_events.dart';
 import 'package:part_app/view/calender/student_app_calender_events.dart';
 import 'package:part_app/view/calender/trainer_app_calender_events.dart';
@@ -325,6 +333,11 @@ class RouteGenerator {
           builder: (_) => const BranchList(),
           settings: settings,
         );
+      case BranchOrManager.route:
+        return MaterialPageRoute(
+          builder: (_) => const BranchOrManager(),
+          settings: settings,
+        );
       case BranchDetails.route:
         return MaterialPageRoute(
           builder: (_) => BranchDetails(
@@ -379,6 +392,11 @@ class RouteGenerator {
       case Leads.route:
         return MaterialPageRoute(
           builder: (_) => const Leads(),
+          settings: settings,
+        );
+      case ManagerAppLeads.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppLeads(),
           settings: settings,
         );
       case LeadsViewTrainer.route:
@@ -742,9 +760,19 @@ class RouteGenerator {
           builder: (_) => const AddLead(),
           settings: settings,
         );
+      case ManagerAppAddLead.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAddLead(),
+          settings: settings,
+        );
       case EditLead.route:
         return MaterialPageRoute(
           builder: (_) => const EditLead(),
+          settings: settings,
+        );
+      case ManagerAppEditLead.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppEditLead(),
           settings: settings,
         );
       case TodayFollowView.route:
@@ -752,9 +780,19 @@ class RouteGenerator {
           builder: (_) => const TodayFollowView(),
           settings: settings,
         );
+      case ManagerAppTodayFollowView.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppTodayFollowView(),
+          settings: settings,
+        );
       case AllFollowUpView.route:
         return MaterialPageRoute(
           builder: (_) => const AllFollowUpView(),
+          settings: settings,
+        );
+      case ManagerAppAllFollowUpView.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAllFollowUpView(),
           settings: settings,
         );
       case LeadDetails.route:
@@ -762,9 +800,19 @@ class RouteGenerator {
           builder: (_) => const LeadDetails(),
           settings: settings,
         );
+      case ManagerAppLeadDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppLeadDetails(),
+          settings: settings,
+        );
       case LeadFollowUpDetails.route:
         return MaterialPageRoute(
           builder: (_) => const LeadFollowUpDetails(),
+          settings: settings,
+        );
+      case ManagerAppLeadFollowUpDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppLeadFollowUpDetails(),
           settings: settings,
         );
       case AddTrainerLead.route:
