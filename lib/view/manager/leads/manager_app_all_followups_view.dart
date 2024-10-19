@@ -5,7 +5,7 @@ import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/data_model/lead_statuses.dart';
 import 'package:part_app/model/data_model/leads_response.dart';
 import 'package:part_app/model/extensions.dart';
-import 'package:part_app/view/admin/leads/manager_app_lead_details.dart';
+import 'package:part_app/view/manager/leads/manager_app_lead_details.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/components/lead_utils.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
