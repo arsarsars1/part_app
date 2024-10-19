@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:part_app/model/data_base/data_base.dart';
-import 'package:part_app/view/home/components/dashboard_summary.dart';
-import 'package:part_app/view/home/components/finance_dashboard.dart';
 import 'package:part_app/view/home/components/home_banner.dart';
 import 'package:part_app/view/home/components/madeByLove.dart';
 import 'package:part_app/view/home/components/manager_app_dashboard_icons.dart';
@@ -59,8 +57,8 @@ class _ManagerAppDashboardState extends State<ManagerAppDashboard> {
                       HomeBanner(),
                       SizedBox(height: 10),
                       ManagerAppDashboardIcons(),
-                      SummaryDashboard(),
-                      FinanceDashboard(),
+                      // SummaryDashboard(),
+                      // FinanceDashboard(),
                       SizedBox(height: 27),
                       MadeByLove(),
                     ],

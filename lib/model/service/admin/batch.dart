@@ -461,6 +461,21 @@ class BatchService {
     }
   }
 
+  Future<BatchResponse?> getBatchesByBranchForManager(
+      {required int page,
+      required int? branchId,
+      required int managerId}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/managers/$managerId/branches/$branchId/batches?page=$page',
+      );
+
+      return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<BatchResponse?> getBatch({required String id}) async {
     try {
       var response = await _apiClient.get(

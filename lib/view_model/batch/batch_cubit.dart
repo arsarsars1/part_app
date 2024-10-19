@@ -788,6 +788,36 @@ class BatchCubit extends Cubit<BatchState> {
     }
   }
 
+  Future getBatchesByBranchForManager(
+      {required int managerId, int? branchId, bool clean = false}) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(FetchingBatches());
+    } else {
+      emit(FetchingBatches(pagination: true));
+    }
+    BatchResponse? response = await _batchService.getBatchesByBranchForManager(
+      managerId: managerId,
+      page: page,
+      branchId: branchId,
+    );
+    if (response?.status == 1) {
+      nextPageUrl = response?.batches?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+      var items = response?.batches?.data
+              .map((e) => BatchModel.fromEntity(e))
+              .toList() ??
+          [];
+
+      _batches.addAll(items);
+      emit(BatchesFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
   Future getOngoigBatchesForTrainer(int? trainerId) async {
     _batches.clear();
     var items = await _batchService.getTrainerBatches(trainerId);
