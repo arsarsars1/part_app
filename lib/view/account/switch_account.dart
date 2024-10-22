@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:part_app/constants/constant.dart';
-import 'package:part_app/model/data_model/branch_manager_response.dart';
 import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/account/account_card.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/home/home.dart';
-import 'package:part_app/view/home/manager_app_home.dart';
 import 'package:part_app/view/home/student_app_home.dart';
 import 'package:part_app/view/home/trainer_app_home.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
-import 'package:part_app/view_model/home/home_cubit.dart';
 
 import '../../model/data_base/data_base.dart';
 
@@ -25,7 +22,6 @@ class SwitchAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AuthCubit>();
-    var homeCubit = context.read<HomeCubit>();
     Database database = Database();
     return Scaffold(
       appBar: const CommonBar(
@@ -44,7 +40,6 @@ class SwitchAccount extends StatelessWidget {
                       await DefaultCacheManager().emptyCache();
                       cubit.accountType = AccountType.admin;
                       database.setUserType('admin');
-                      homeCubit.adminInit();
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         Home.route,
@@ -96,10 +91,8 @@ class SwitchAccount extends StatelessWidget {
                       return AccountCard(
                         onTap: () async {
                           await DefaultCacheManager().emptyCache();
-                          cubit.trainerIndex = index;
                           cubit.accountType = AccountType.trainer;
                           database.setUserType('trainer');
-                          homeCubit.trainerInit();
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             TrainerAppHome.route,
@@ -125,7 +118,6 @@ class SwitchAccount extends StatelessWidget {
                           cubit.studentIndex = index;
                           cubit.accountType = AccountType.student;
                           database.setUserType('student');
-                          homeCubit.studentInit();
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             StudentAppHome.route,
@@ -134,33 +126,6 @@ class SwitchAccount extends StatelessWidget {
                         },
                         accountType: '${student.name}, Student',
                         academyName: student.academy?.academyName ?? '',
-                      );
-                    },
-                  ),
-                if (cubit.user?.managerDetail != null &&
-                    cubit.user!.managerDetail!.isNotEmpty)
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: cubit.user?.managerDetail?.length,
-                    itemBuilder: (context, index) {
-                      BranchManagerResponse manager =
-                          cubit.user!.managerDetail![index];
-                      return AccountCard(
-                        onTap: () async {
-                          await DefaultCacheManager().emptyCache();
-                          cubit.managerIndex = index;
-                          cubit.accountType = AccountType.branchManager;
-                          database.setUserType('manager');
-                          homeCubit.managerInit();
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            ManagerAppHome.route,
-                            (route) => false,
-                          );
-                        },
-                        accountType: '${manager.name}, Manager',
-                        academyName: manager.academy?.academyName ?? '',
                       );
                     },
                   ),

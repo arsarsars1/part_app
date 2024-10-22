@@ -7,7 +7,6 @@
 import 'dart:convert';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:part_app/model/data_model/branch_manager_response.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 
@@ -48,7 +47,7 @@ abstract class User with _$User {
     Admin? adminDetail,
     List<Trainer>? trainerDetail,
     List<StudentDetail>? studentDetail,
-    List<BranchManagerResponse>? managerDetail,
+    List<dynamic>? managerDetail,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

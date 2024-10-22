@@ -7,19 +7,7 @@ class ClassesTodayService {
 
   Future<ClassesToday?> getClassesToday({required String date}) async {
     try {
-      var response =
-          await _client.get(queryPath: '/admin/batches/daily-classes/$date');
-      return classesTodayFromJson(jsonEncode(response));
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future<ClassesToday?> getClassesTodayForManager(
-      {required String date, required int managerId}) async {
-    try {
-      var response = await _client.get(
-          queryPath: '/managers/$managerId/batches/daily-classes/$date');
+      var response = await _client.get(queryPath: '/admin/batches/daily-classes/$date');
       return classesTodayFromJson(jsonEncode(response));
     } catch (e) {
       return null;

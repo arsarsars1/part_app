@@ -162,37 +162,29 @@ class _BranchDetailsState extends State<BranchDetails> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.liteDark,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 16.h),
+                  padding: EdgeInsets.all(16.r),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Assigned Branch Managers',
-                          ),
-                          Button(
-                            height: UIConstants.buttonHeight,
-                            width: 120,
-                            onTap: () {},
-                            title: 'Add Manager',
-                          ),
-                        ],
+                      Text(
+                        'Assigned Branch Manager:',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: AppColors.primaryColor,
+                            ),
                       ),
                       const SizedBox(
                         height: 4,
                         width: double.infinity,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 25.h),
-                        child: Center(
-                          child: Text(
-                            branch?.managerDetail?.name ??
-                                'No Branch Manager Allocated',
-                          ),
-                        ),
+                      Text(
+                        branch?.managerDetail?.name ??
+                            'No Branch Manager Allocated',
                       ),
                     ],
                   ),
@@ -200,52 +192,47 @@ class _BranchDetailsState extends State<BranchDetails> {
                 SizedBox(
                   height: 16.h,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Assigned Trainers',
-                      ),
-                      Button(
-                        height: UIConstants.buttonHeight,
-                        width: 100,
-                        onTap: () {
-                          /// to handle the new trainer addition flow
-                          context.read<TrainerCubit>().fromBranch = true;
-                          context.read<TrainerCubit>().selectedBranches = [
-                            branch!.id
-                          ];
-
-                          /// opens the add trainer view
-                          Navigator.pushNamed(context, AddTrainer.route);
-                        },
-                        title: 'Add Trainer',
-                      ),
-                    ],
+                Center(
+                  child: Text(
+                    trainers != null && trainers.isNotEmpty
+                        ? 'Assigned Trainers List'
+                        : 'No Trainers Allocated',
                   ),
                 ),
                 SizedBox(
                   height: 8.h,
                 ),
-                (trainers ?? []).isEmpty
-                    ? Padding(
-                        padding: EdgeInsets.only(top: 25.h),
-                        child: const Center(
-                          child: Text(
-                            'No Trainers Allocated',
-                          ),
-                        ),
-                      )
-                    : TrainerList(
-                        trainers: trainers ?? [],
+                trainers != null && trainers.isNotEmpty
+                    ? TrainerList(
+                        trainers: trainers,
                         onSelect: (Trainer value) {
                           context.read<TrainerCubit>().getTrainerDetails(
                                 trainerId: value.id,
                               );
                           Navigator.pushNamed(context, TrainerDetails.route);
                         },
+                      )
+                    : Padding(
+                        padding: EdgeInsets.only(
+                          left: 125.w,
+                          right: 125.w,
+                          top: 16.h,
+                        ),
+                        child: Button(
+                          height: UIConstants.buttonHeight,
+                          width: 100,
+                          onTap: () {
+                            /// to handle the new trainer addition flow
+                            context.read<TrainerCubit>().fromBranch = true;
+                            context.read<TrainerCubit>().selectedBranches = [
+                              branch!.id
+                            ];
+
+                            /// opens the add trainer view
+                            Navigator.pushNamed(context, AddTrainer.route);
+                          },
+                          title: 'Add Trainer',
+                        ),
                       ),
               ],
             );

@@ -46,10 +46,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       studentDetail: (json['student_detail'] as List<dynamic>?)
           ?.map((e) => StudentDetail.fromJson(e as Map<String, dynamic>))
           .toList(),
-      managerDetail: (json['manager_detail'] as List<dynamic>?)
-          ?.map(
-              (e) => BranchManagerResponse.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      managerDetail: json['manager_detail'] as List<dynamic>?,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>

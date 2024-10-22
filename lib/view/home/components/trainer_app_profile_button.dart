@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/flavors.dart';
+import 'package:part_app/model/data_base/data_base.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/components/cached_image.dart';
@@ -24,6 +25,7 @@ class TrainerProfileButton extends StatefulWidget {
 class _TrainerProfileButtonState extends State<TrainerProfileButton> {
   @override
   Widget build(BuildContext context) {
+    var token = 'Bearer ${Database().getToken()}';
     User? user = context.read<AuthCubit>().user;
     var authCubit = context.read<AuthCubit>();
     return PopupMenuButton<MenuItems>(

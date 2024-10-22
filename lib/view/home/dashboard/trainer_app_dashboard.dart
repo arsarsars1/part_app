@@ -53,9 +53,13 @@ class _TrainerAppDashboardState extends State<TrainerAppDashboard> {
                 return Expanded(
                   child: ListView(
                     children: const [
-                      SizedBox(height: 10),
+                      SizedBox(
+                        height: 10,
+                      ),
                       HomeBanner(),
-                      SizedBox(height: 10),
+                      SizedBox(
+                        height: 10,
+                      ),
                       TrainerAppDashboardIcons(),
                       SizedBox(height: 8),
                       MadeByLove(),

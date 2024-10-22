@@ -41,24 +41,6 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  Future<void> createForManager(
-    LeadRequest request, {
-    required int managerId,
-  }) async {
-    emit(CreatingLead());
-    try {
-      Common? common =
-          await _api.createForManager(request: request, managerId: managerId);
-      if (common?.status == 1) {
-        emit(CreatedLead());
-      } else {
-        emit(CreateLeadFailed(common?.message ?? 'Failed to create Lead.'));
-      }
-    } on Exception catch (e) {
-      emit(CreateLeadFailed(e.toString()));
-    }
-  }
-
   Future<void> createTrainerLead(LeadRequest request, {int? idTrainer}) async {
     emit(CreatingLead());
     try {
@@ -78,23 +60,6 @@ class LeadsCubit extends Cubit<LeadsState> {
     emit(CreatingLead());
     try {
       Common? common = await _api.update(request: request, id: id);
-      if (common?.status == 1) {
-        await getLeadById(id: "${selectedLead?.id}");
-        emit(UpdatedLead());
-      } else {
-        emit(CreateLeadFailed('Failed to update Lead.'));
-      }
-    } on Exception catch (e) {
-      emit(CreateLeadFailed(e.toString()));
-    }
-  }
-
-  Future<void> updateForManager(LeadRequest request, int? id,
-      {required int managerId}) async {
-    emit(CreatingLead());
-    try {
-      Common? common = await _api.updateForManager(
-          request: request, id: id, managerId: managerId);
       if (common?.status == 1) {
         await getLeadById(id: "${selectedLead?.id}");
         emit(UpdatedLead());
@@ -140,23 +105,6 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  Future<void> todayLeadsListForManager({required int managerId}) async {
-    emit(FetchingLeads());
-    try {
-      _leads.clear();
-      LeadsResponse? response =
-          await _api.todayLeadsListForManager(managerId: managerId);
-      if (response?.status == 1) {
-        _leads.addAll(response?.leads?.data ?? []);
-        emit(FetchedLeads());
-      } else {
-        emit(FetchingLeadsFailed('Failed to fetch Leads.'));
-      }
-    } on Exception catch (e) {
-      emit(FetchingLeadsFailed(e.toString()));
-    }
-  }
-
   Future<void> todayTrainerLeadsList(int? trainerId) async {
     emit(FetchingLeads());
     try {
@@ -182,32 +130,6 @@ class LeadsCubit extends Cubit<LeadsState> {
       if (response != null && response.status == 1) {
         if (selectedLead != null) {
           await getLeadById(id: "${selectedLead?.id}");
-        }
-        if (id != null) {
-          emit(UpdateFollowUpLead());
-        } else {
-          emit(CreatedFollowUpLead());
-        }
-      } else {
-        emit(FetchingLeadsFailed(
-            response?.message ?? 'Failed to update the follow up'));
-      }
-    } on Exception catch (e) {
-      emit(FetchingLeadsFailed(e.toString()));
-    }
-  }
-
-  Future<void> addUpdateLeadFollowUpListForManager(
-      LeadRequest request, int? leadId, int? id,
-      {required int managerId}) async {
-    emit(FetchingLeads());
-    try {
-      Common? response = await _api.updateFollowUpForManager(
-          request: request, leadId: leadId, id: id, managerId: managerId);
-      if (response != null && response.status == 1) {
-        if (selectedLead != null) {
-          await getLeadByIdForManager(
-              id: "${selectedLead?.id}", managerId: managerId);
         }
         if (id != null) {
           emit(UpdateFollowUpLead());
@@ -272,54 +194,6 @@ class LeadsCubit extends Cubit<LeadsState> {
 
     try {
       LeadsResponse? response = await _api.getLeadList(
-        branchId: branchId,
-        batchId: batchId,
-        date: date,
-        leadStatus: leadStatus,
-        searchQuery: searchQuery,
-        pageNo: page,
-      );
-
-      if (response?.status == 1) {
-        nextPageUrl = response?.leads?.nextPageUrl;
-        if (nextPageUrl != null) {
-          page++;
-        }
-        _leads.addAll(response?.leads?.data ?? []);
-        emit(FetchedLeads(moreItems: nextPageUrl != null));
-      }
-    } catch (e) {
-      log(e.toString());
-      emit(FetchedLeads(moreItems: nextPageUrl != null));
-    }
-  }
-
-  Future<void> getLeadsListForManager({
-    String? searchQuery,
-    int? branchId,
-    int? batchId,
-    String? date,
-    String? leadStatus,
-    bool clean = false,
-    required int managerId,
-  }) async {
-    if (clean) {
-      page = 1;
-      nextPageUrl = '';
-      _leads.clear();
-      emit(FetchingLeads());
-    } else {
-      emit(FetchingLeads(pagination: true));
-    }
-
-    if (nextPageUrl == null) {
-      emit(FetchedLeads());
-      return;
-    }
-
-    try {
-      LeadsResponse? response = await _api.getLeadListForManager(
-        managerId: managerId,
         branchId: branchId,
         batchId: batchId,
         date: date,
@@ -422,40 +296,6 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  Future getLeadsListsForManager(
-      {bool clean = false, required int managerId}) async {
-    if (clean) {
-      page = 1;
-      nextPageUrl = '';
-      _leads.clear();
-      emit(FetchingLeads());
-    } else {
-      emit(FetchingLeads(pagination: true));
-    }
-
-    if (nextPageUrl == null) {
-      emit(FetchedLeads());
-      return;
-    }
-
-    try {
-      LeadsResponse? response =
-          await _api.getLeadListsForManager(pageNo: page, managerId: managerId);
-
-      if (response?.status == 1) {
-        nextPageUrl = response?.leads?.nextPageUrl;
-        if (nextPageUrl != null) {
-          page++;
-        }
-        _leads.addAll(response?.leads?.data ?? []);
-        emit(FetchedLeads(moreItems: nextPageUrl != null));
-      }
-    } catch (e) {
-      log(e.toString());
-      emit(FetchedLeads(moreItems: nextPageUrl != null));
-    }
-  }
-
   Future getTrainerLeadsLists(
       {bool clean = false, required int trainerId}) async {
     if (clean) {
@@ -507,39 +347,9 @@ class LeadsCubit extends Cubit<LeadsState> {
     }
   }
 
-  Future<void> getLeadStatusesForManager({required int managerId}) async {
-    emit(FetchingLeadStatuses());
-    try {
-      _statuses?.clear();
-      LeadsStatuses? response =
-          await _api.getLeadStatusesForManager(managerId: managerId);
-      if (response?.status == 1) {
-        _statuses = response?.leadStatuses ?? [];
-        emit(FetchedLeadStatuses());
-      } else {
-        emit(FetchingLeadStatusesFailed('Failed to fetch Leads.'));
-      }
-    } on Exception catch (e) {
-      emit(FetchingLeadStatusesFailed(e.toString()));
-    }
-  }
-
   Future getLeadById({required String id}) async {
     emit(FetchingLead());
     Lead? temp = await _api.getLeadById(id: id);
-
-    if (temp != null) {
-      lead = temp;
-      emit(FetchedLead());
-    } else {
-      emit(FetchingLeadFailed("Error Fetching the lead"));
-    }
-  }
-
-  Future getLeadByIdForManager(
-      {required String id, required int managerId}) async {
-    emit(FetchingLead());
-    Lead? temp = await _api.getLeadByIdForManager(id: id, managerId: managerId);
 
     if (temp != null) {
       lead = temp;
@@ -553,21 +363,6 @@ class LeadsCubit extends Cubit<LeadsState> {
     chartDataModel = null;
     emit(FetchingLead());
     ChartDataModel? response = await _api.getChartData(trainerId: trainerId);
-
-    if (response?.status == 1) {
-      chartDataModel = response;
-      emit(FetchedLead());
-    } else {
-      chartDataModel = null;
-      emit(FetchingLeadFailed("Error Fetching the lead"));
-    }
-  }
-
-  Future getChartDataForManager({int? managerId}) async {
-    chartDataModel = null;
-    emit(FetchingLead());
-    ChartDataModel? response =
-        await _api.getChartDataForManager(managerId: managerId);
 
     if (response?.status == 1) {
       chartDataModel = response;
