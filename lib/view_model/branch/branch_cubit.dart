@@ -101,15 +101,6 @@ class BranchCubit extends Cubit<BranchState> {
     emit(BranchesLoaded());
   }
 
-  Future getBranchesForManager({required int managerId}) async {
-    emit(BranchesLoading());
-    List<Branch>? list =
-        await _branchService.getBranchesForManager(managerId: managerId);
-    firstBranch = list?.last;
-    branches = list ?? [];
-    emit(BranchesLoaded());
-  }
-
   Future getStudentAppBranches({int? studentId}) async {
     emit(BranchesLoading());
     List<Branch>? list =
@@ -190,44 +181,6 @@ class BranchCubit extends Cubit<BranchState> {
 
     var temp = await _branchService.getTrainersForTrainer(
       trainerId: trainerId,
-      branchId: branchId,
-      pageNo: page,
-    );
-    if (temp?.status == 1) {
-      nextPageUrl = temp?.trainers?.nextPageUrl;
-      if (nextPageUrl != null) {
-        page++;
-      }
-      _trainers.addAll(temp!.trainers!.data);
-      emit(TrainersLoaded());
-    } else {
-      emit(TrainersFailed('Failed to get the trainers list'));
-    }
-  }
-
-  /// Method to get thr trainers list for the specific branch
-  /// [ branchId ] is the branch Id and is required
-  Future getBranchTrainersForManager({
-    required int managerId,
-    required String branchId,
-    bool clean = false,
-  }) async {
-    if (clean) {
-      page = 1;
-      nextPageUrl = '';
-      _trainers.clear();
-      emit(TrainersLoading());
-    } else {
-      emit(TrainersLoading(pagination: true));
-    }
-
-    if (nextPageUrl == null) {
-      emit(TrainersLoaded());
-      return;
-    }
-
-    var temp = await _branchService.getTrainersForManager(
-      managerId: managerId,
       branchId: branchId,
       pageNo: page,
     );
@@ -406,49 +359,6 @@ class BranchCubit extends Cubit<BranchState> {
     }
   }
 
-  Future getBatchClassesOfDateForManager({
-    required int managerId,
-    required String batchId,
-    required String branchId,
-    required String date,
-    bool clean = false,
-  }) async {
-    // if (clean) {
-    //   page = 1;
-    //   nextPageUrl = '';
-    //   _classes.clear();
-    //   // emit(ClassesLoading());
-    // }
-
-    // if (nextPageUrl == null) {
-    //   emit(ClassesLoaded());
-    //   return;
-    // }
-    emit(ClassesLoading());
-    _classes.clear();
-
-    ClassResponse? temp = await _branchService.getBatchClassesForManager(
-      managerId: managerId,
-      batchId: batchId,
-      brabchId: branchId,
-      date: date,
-      pageNo: page,
-    );
-    if (temp?.status == 1) {
-      // nextPageUrl = temp?.trainers?.nextPageUrl;
-      // if (nextPageUrl != null) {
-      //   page++;
-      // }
-      var items =
-          temp?.classes?.map((e) => ClassModel.fromEntity(e)).toList() ?? [];
-      _classes = items;
-      // _classes.addAll(temp!.classes);
-      emit(ClassesLoaded());
-    } else {
-      emit(ClassesFailed('Failed to get the class list'));
-    }
-  }
-
   Future getBranchClassesOfDate({
     required String branchId,
     required String date,
@@ -486,35 +396,6 @@ class BranchCubit extends Cubit<BranchState> {
 
     ClassResponse? temp = await _branchService.getBranchClassesForTrainer(
       trainerId: trainerId,
-      branchId: branchId,
-      date: date,
-      pageNo: page,
-    );
-    if (temp?.status == 1) {
-      // nextPageUrl = temp?.trainers?.nextPageUrl;
-      // if (nextPageUrl != null) {
-      //   page++;
-      // }
-      var items =
-          temp?.classes?.map((e) => ClassModel.fromEntity(e)).toList() ?? [];
-      _newClasses = items;
-      // _classes.addAll(temp!.classes);
-      emit(ClassesLoaded());
-    } else {
-      emit(ClassesFailed('Failed to get the class list'));
-    }
-  }
-
-  Future getBranchClassesOfDateForManager({
-    required int managerId,
-    required String branchId,
-    required String date,
-    bool clean = false,
-  }) async {
-    _newClasses.clear();
-
-    ClassResponse? temp = await _branchService.getBranchClassesForManager(
-      managerId: managerId,
       branchId: branchId,
       date: date,
       pageNo: page,

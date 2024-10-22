@@ -19,28 +19,10 @@ class ClassesTodayCubit extends Cubit<ClassesTodayState> {
 
   Future getClassesToday({required String date}) async {
     emit(FetchingClassesToday());
-    ClassesToday? response = await _classesTodayService.getClassesToday(
-      date: date,
-    );
+    ClassesToday? response = await _classesTodayService.getClassesToday(date: date,);
 
     if (response?.classes != null) {
-      _classes = response?.classes ?? [];
-      emit(FetchedTodaysClasses());
-    } else {
-      emit(ClassesTodayLoadingFailed('Failed to fetch the trainers'));
-    }
-  }
-
-  Future getClassesTodayForManager({required String date, required int managerId}) async {
-    emit(FetchingClassesToday());
-    ClassesToday? response =
-        await _classesTodayService.getClassesTodayForManager(
-      date: date,
-      managerId: managerId,
-    );
-
-    if (response?.classes != null) {
-      _classes = response?.classes ?? [];
+      _classes = response?.classes?? [];
       emit(FetchedTodaysClasses());
     } else {
       emit(ClassesTodayLoadingFailed('Failed to fetch the trainers'));

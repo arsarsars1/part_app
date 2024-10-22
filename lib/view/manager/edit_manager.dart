@@ -258,9 +258,7 @@ class _EditManagerState extends State<EditManager> {
                             ManagerRequest request =
                                 managerCubit.managerRequest.copyWith(
                               name: name,
-                              branchId: [
-                                branchId.toString(),
-                              ].toList(),
+                              branchId: branchId,
                               gender: gender,
                               email: email,
                               mobileNo: phone,

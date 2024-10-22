@@ -8,9 +8,7 @@ part of 'manager_request.dart';
 
 _$ManagerRequestImpl _$$ManagerRequestImplFromJson(Map<String, dynamic> json) =>
     _$ManagerRequestImpl(
-      branchId: (json['branch_id'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      branchId: (json['branch_id'] as num?)?.toInt(),
       name: json['name'] as String?,
       mobileNo: json['mobile_no'] as String?,
       countryCode: (json['country_code'] as num?)?.toInt(),

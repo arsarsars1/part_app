@@ -38,38 +38,19 @@ class HomeCubit extends Cubit<HomeState> {
   DateTime selectedDate = DateTime.now();
   late DateTime selectedStudentDate = DateTime.now();
 
-  List<GlobalKey> keyCap = [];
-  List<GlobalKey> managerskeyCap = [];
-  List<GlobalKey> studentkKeyCap = [];
-  List<GlobalKey> trainerkKeyCap = [];
+  List<GlobalKey> keyCap = List<GlobalKey>.generate(
+      10, (index) => GlobalKey(debugLabel: 'key_$index'),
+      growable: false);
+  List<GlobalKey> studentkKeyCap = List<GlobalKey>.generate(
+      4, (index) => GlobalKey(debugLabel: 'student_key_$index'),
+      growable: false);
+  List<GlobalKey> trainerkKeyCap = List<GlobalKey>.generate(
+      7, (index) => GlobalKey(debugLabel: 'trainer_key_$index'),
+      growable: false);
 
   // pagination
   int page = 1;
   String? nextPageUrl = '';
-
-  void trainerInit() {
-    trainerkKeyCap = List<GlobalKey>.generate(
-        8, (index) => GlobalKey(debugLabel: 'trainer_key_$index'),
-        growable: false);
-  }
-
-  void managerInit() {
-    managerskeyCap = List<GlobalKey>.generate(
-        10, (index) => GlobalKey(debugLabel: 'manager_key_$index'),
-        growable: false);
-  }
-
-  void studentInit() {
-    studentkKeyCap = List<GlobalKey>.generate(
-        4, (index) => GlobalKey(debugLabel: 'student_key_$index'),
-        growable: false);
-  }
-
-  void adminInit() {
-    keyCap = List<GlobalKey>.generate(
-        10, (index) => GlobalKey(debugLabel: 'key_$index'),
-        growable: false);
-  }
 
   String? feePayments;
   List<TrainerSalaryPayment?>? trainerSalaryPayments;
@@ -102,19 +83,6 @@ class HomeCubit extends Cubit<HomeState> {
   clearValue() {
     _banner = [];
     banner?.clear();
-  }
-
-  Future getDashboardForManagerApp({required int managerId}) async {
-    emit(DashboardLoading());
-    var tempDash =
-        await _service.getDashboardForManagerApp(managerId: managerId);
-    if (tempDash?.status == 1) {
-      _totalStudents = tempDash?.totalStudents;
-      _dailyCollection = tempDash?.totalPaymentsDaily;
-      _monthlyCollection = tempDash?.totalPaymentsMonthly;
-      _banner = tempDash?.banners;
-      emit(DashboardLoaded());
-    }
   }
 
   Future getDashboardForTrainerApp({required int trainerId}) async {
@@ -234,44 +202,6 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future getCalenderEventsForManager({
-    required int managerId,
-    required String date,
-    bool clean = true,
-  }) async {
-    if (clean) {
-      feePayments = null;
-      trainerSalaryPayments?.clear();
-      scheduledClasses?.clear();
-      rescheduledClasses?.clear();
-      studentsJoined?.clear();
-      trainersJoined?.clear();
-      followUpLeads?.clear();
-      newLeads?.clear();
-      emit(GettingCalenderEvents());
-    } else {
-      emit(GettingCalenderEvents(pagination: true));
-    }
-
-    CalenderEventsList? temp = await _service.getCalenderEventsForManager(
-      managerId: managerId,
-      date: date,
-    );
-    if (temp?.status == 1) {
-      feePayments = temp?.data?.feePayments;
-      trainerSalaryPayments = temp?.data?.trainerSalaryPayments;
-      scheduledClasses = temp?.data?.scheduledClasses;
-      rescheduledClasses = temp?.data?.rescheduledClasses;
-      studentsJoined = temp?.data?.studentsJoined;
-      trainersJoined = temp?.data?.trainersJoined;
-      followUpLeads = temp?.data?.followUpLeads;
-      newLeads = temp?.data?.newLeads;
-      emit(GotCalenderEvents());
-    } else {
-      emit(GetCalenderEventsFailed('Failed to get the calender events list'));
-    }
-  }
-
   Future getStudentAppCalenderEvents({
     required String date,
     required int studentId,
@@ -370,54 +300,6 @@ class HomeCubit extends Cubit<HomeState> {
 
     NotificationList? temp = await _service.getStudentAppNotifications(
         studentId: studentId, page: (page).toString());
-    if (temp?.status == 1) {
-      nextPageUrl = temp?.notifications?.nextPageUrl;
-      if (nextPageUrl != null) {
-        page++;
-      }
-
-      var items = temp?.notifications?.data ?? [];
-
-      List<NotificationData>? tempNotifications = [];
-
-      for (var notification in items) {
-        tempNotifications.add(notification);
-      }
-      for (var notification in tempNotifications) {
-        _notifications = [..._notifications ?? [], notification];
-      }
-      _notifications?.forEach((element) {
-        if (element.readAt == null) {
-          flag = true;
-        }
-      });
-      emit(GotNotifications());
-    } else {
-      emit(GetNotificationsFailed('Failed to get the notification list'));
-    }
-    return temp;
-  }
-
-  Future getManagerAppNotificationList({
-    required int managerId,
-    bool clean = true,
-  }) async {
-    if (clean) {
-      page = 1;
-      nextPageUrl = '';
-      notifications?.clear();
-      emit(GettingNotifications());
-    } else {
-      emit(GettingNotifications(pagination: true));
-    }
-
-    if (nextPageUrl == null) {
-      emit(GotNotifications());
-      return;
-    }
-
-    NotificationList? temp = await _service.getManagerAppNotifications(
-        managerId: managerId, page: (page).toString());
     if (temp?.status == 1) {
       nextPageUrl = temp?.notifications?.nextPageUrl;
       if (nextPageUrl != null) {
@@ -586,26 +468,6 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<bool> readNotificationForManager(
-      int? managerId, String? notificationId) async {
-    try {
-      emit(ReadingNotification());
-      Common? response =
-          await _service.readNotificationForManager(managerId, notificationId);
-
-      if (response?.status == 1) {
-        emit(ReadNotification(response?.message ?? 'Notification Read'));
-        return true;
-      } else {
-        emit(ReadNotificationFailed(
-            response?.message ?? 'Failed to read notification'));
-        return false;
-      }
-    } catch (e) {
-      return false;
-    }
-  }
-
   String createTrainerString(List<String>? trainers) {
     String trainer = '';
     if (trainers != null && trainers.isNotEmpty) {
@@ -662,24 +524,6 @@ class HomeCubit extends Cubit<HomeState> {
       emit(DeletingNotification());
       Common? response = await _service.deleteNotificationForTrainer(
           trainerId, notificationId);
-
-      if (response?.status == 1) {
-        emit(DeletedNotification(response?.message ?? 'Notification Deleted'));
-      } else {
-        emit(DeleteNotificationFailed(
-            response?.message ?? 'Failed to delete notification'));
-      }
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future deleteNotificationForManager(
-      int? managerId, String? notificationId) async {
-    try {
-      emit(DeletingNotification());
-      Common? response = await _service.deleteNotificationForManager(
-          managerId, notificationId);
 
       if (response?.status == 1) {
         emit(DeletedNotification(response?.message ?? 'Notification Deleted'));
@@ -777,19 +621,6 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   /// this method is used to get the classes of a batch in a particular month
-  Future getFAQForManager() async {
-    _faqList?.clear();
-    emit(FetchingFAQ());
-    List<FaqList?>? response = await _service.getFAQListForManager();
-    if ((response ?? []).isNotEmpty) {
-      _faqList = response;
-      emit(FetchedFAQ());
-    } else {
-      emit(FetchFAQFailed("Error fetching the FAQ List"));
-    }
-  }
-
-  /// this method is used to get the classes of a batch in a particular month
   Future getFAQForTrainer() async {
     _faqList?.clear();
     emit(FetchingFAQ());
@@ -834,22 +665,6 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       Common? response =
           await _service.sendSupportRequestForTrainer(trainerId, data);
-
-      if (response?.status == 1) {
-        return 1;
-      } else {
-        return 0;
-      }
-    } catch (e) {
-      return 0;
-    }
-  }
-
-  Future<int> sendSupportRequestForManager(
-      int managerId, Map<String, dynamic> data) async {
-    try {
-      Common? response =
-          await _service.sendSupportRequestForManager(managerId, data);
 
       if (response?.status == 1) {
         return 1;

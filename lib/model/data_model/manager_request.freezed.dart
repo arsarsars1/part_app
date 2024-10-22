@@ -20,7 +20,7 @@ ManagerRequest _$ManagerRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ManagerRequest {
-  List<String>? get branchId => throw _privateConstructorUsedError;
+  int? get branchId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get mobileNo => throw _privateConstructorUsedError;
   int? get countryCode => throw _privateConstructorUsedError;
@@ -52,7 +52,7 @@ abstract class $ManagerRequestCopyWith<$Res> {
       _$ManagerRequestCopyWithImpl<$Res, ManagerRequest>;
   @useResult
   $Res call(
-      {List<String>? branchId,
+      {int? branchId,
       String? name,
       String? mobileNo,
       int? countryCode,
@@ -102,7 +102,7 @@ class _$ManagerRequestCopyWithImpl<$Res, $Val extends ManagerRequest>
       branchId: freezed == branchId
           ? _value.branchId
           : branchId // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as int?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -168,7 +168,7 @@ abstract class _$$ManagerRequestImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<String>? branchId,
+      {int? branchId,
       String? name,
       String? mobileNo,
       int? countryCode,
@@ -214,9 +214,9 @@ class __$$ManagerRequestImplCopyWithImpl<$Res>
   }) {
     return _then(_$ManagerRequestImpl(
       branchId: freezed == branchId
-          ? _value._branchId
+          ? _value.branchId
           : branchId // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as int?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -278,7 +278,7 @@ class __$$ManagerRequestImplCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$ManagerRequestImpl implements _ManagerRequest {
   const _$ManagerRequestImpl(
-      {final List<String>? branchId,
+      {this.branchId,
       this.name,
       this.mobileNo,
       this.countryCode,
@@ -291,22 +291,13 @@ class _$ManagerRequestImpl implements _ManagerRequest {
       this.salaryDate,
       this.salaryAmount,
       this.upiId,
-      this.address})
-      : _branchId = branchId;
+      this.address});
 
   factory _$ManagerRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$ManagerRequestImplFromJson(json);
 
-  final List<String>? _branchId;
   @override
-  List<String>? get branchId {
-    final value = _branchId;
-    if (value == null) return null;
-    if (_branchId is EqualUnmodifiableListView) return _branchId;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final int? branchId;
   @override
   final String? name;
   @override
@@ -344,7 +335,8 @@ class _$ManagerRequestImpl implements _ManagerRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ManagerRequestImpl &&
-            const DeepCollectionEquality().equals(other._branchId, _branchId) &&
+            (identical(other.branchId, branchId) ||
+                other.branchId == branchId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.mobileNo, mobileNo) ||
                 other.mobileNo == mobileNo) &&
@@ -370,7 +362,7 @@ class _$ManagerRequestImpl implements _ManagerRequest {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_branchId),
+      branchId,
       name,
       mobileNo,
       countryCode,
@@ -404,7 +396,7 @@ class _$ManagerRequestImpl implements _ManagerRequest {
 
 abstract class _ManagerRequest implements ManagerRequest {
   const factory _ManagerRequest(
-      {final List<String>? branchId,
+      {final int? branchId,
       final String? name,
       final String? mobileNo,
       final int? countryCode,
@@ -423,7 +415,7 @@ abstract class _ManagerRequest implements ManagerRequest {
       _$ManagerRequestImpl.fromJson;
 
   @override
-  List<String>? get branchId;
+  int? get branchId;
   @override
   String? get name;
   @override

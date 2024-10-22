@@ -58,6 +58,7 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
 
   @override
   Widget build(BuildContext context) {
+    var batchCubit = context.read<BatchCubit>();
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
