@@ -55,7 +55,8 @@ class _ManagerAppDashboardIconsState extends State<ManagerAppDashboardIcons> {
       for (int i = 0; i < 9; i++) {
         tempkey.add(context.read<HomeCubit>().managerskeyCap[i]);
       }
-      bool temp = Hive.box(Database.userBox).get("Showcase") ?? false;
+      bool temp =
+          Hive.box(Database.userBox).get("Manager App Showcase") ?? false;
       if (temp == false) {
         CommonDialog(
           context: context,
@@ -67,7 +68,7 @@ class _ManagerAppDashboardIconsState extends State<ManagerAppDashboardIcons> {
             ShowCaseWidget.of(context).startShowCase(tempkey);
           },
           onCancelTap: () {
-            Hive.box(Database.userBox).put("Showcase", true);
+            Hive.box(Database.userBox).put("Manager App Showcase", true);
             Navigator.pop(context);
           },
         ).show();
@@ -78,80 +79,80 @@ class _ManagerAppDashboardIconsState extends State<ManagerAppDashboardIcons> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GridView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: 0.9),
-        itemCount: DefaultValues.managerDashboardItems.length,
-        itemBuilder: (context, index) {
-          DashboardItem item = DefaultValues.managerDashboardItems[index];
-          return Showcase(
-            key: context.read<HomeCubit>().managerskeyCap[index],
-            title: titles[index],
-            description: descriptions[index],
-            child: InkWell(
-              onTap: () async {
-                if (item.title == 'Branch Manager') {
-                  Alert(context).show(message: "Coming soon !!");
-                } else {
-                  await Navigator.pushNamed(context, item.route);
-                  context.read<HomeCubit>().getDashboardForManagerApp(
-                        managerId: authCubit
-                                ?.user
-                                ?.managerDetail?[authCubit?.managerIndex ?? 0]
-                                .id ??
-                            0,
-                      );
-                }
-              },
-              child: Container(
-                margin: EdgeInsets.all(8.h),
-                padding: EdgeInsets.all(12.w),
-                decoration: BoxDecoration(
-                  color: AppColors.liteDark,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: item.color,
-                        shape: BoxShape.circle,
-                      ),
-                      width: 32.w,
-                      height: 32.h,
-                      child: Center(
-                        child: SvgPicture.asset(
-                          item.asset,
-                          width: 16.h,
-                          height: 16.h,
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, childAspectRatio: 0.9),
+          itemCount: DefaultValues.managerDashboardItems.length,
+          itemBuilder: (context, index) {
+            DashboardItem item = DefaultValues.managerDashboardItems[index];
+            return Showcase(
+              key: context.read<HomeCubit>().managerskeyCap[index],
+              title: titles[index],
+              description: descriptions[index],
+              child: InkWell(
+                onTap: () async {
+                  if (item.title == 'Branch Manager') {
+                    Alert(context).show(message: "Coming soon !!");
+                  } else {
+                    await Navigator.pushNamed(context, item.route);
+                    context.read<HomeCubit>().getDashboardForManagerApp(
+                          managerId: authCubit
+                                  ?.user
+                                  ?.managerDetail?[authCubit?.managerIndex ?? 0]
+                                  .id ??
+                              0,
+                        );
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.all(8.h),
+                  padding: EdgeInsets.all(12.w),
+                  decoration: BoxDecoration(
+                    color: AppColors.liteDark,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: item.color,
+                          shape: BoxShape.circle,
+                        ),
+                        width: 32.w,
+                        height: 32.h,
+                        child: Center(
+                          child: SvgPicture.asset(
+                            item.asset,
+                            width: 16.h,
+                            height: 16.h,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 4.h,
-                    ),
-                    Text(
-                      "${item.title}\n",
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontSize: 12.sp,
-                          ),
-                    ),
-                  ],
+                      SizedBox(
+                        height: 4.h,
+                      ),
+                      Text(
+                        "${item.title}\n",
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: 12.sp,
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
-      ),
+            );
+          },
+        ),
     );
   }
 }

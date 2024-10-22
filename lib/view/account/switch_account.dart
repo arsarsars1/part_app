@@ -13,6 +13,7 @@ import 'package:part_app/view/home/manager_app_home.dart';
 import 'package:part_app/view/home/student_app_home.dart';
 import 'package:part_app/view/home/trainer_app_home.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
+import 'package:part_app/view_model/home/home_cubit.dart';
 
 import '../../model/data_base/data_base.dart';
 
@@ -24,6 +25,7 @@ class SwitchAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AuthCubit>();
+    var homeCubit = context.read<HomeCubit>();
     Database database = Database();
     return Scaffold(
       appBar: const CommonBar(
@@ -42,6 +44,7 @@ class SwitchAccount extends StatelessWidget {
                       await DefaultCacheManager().emptyCache();
                       cubit.accountType = AccountType.admin;
                       database.setUserType('admin');
+                      homeCubit.adminInit();
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         Home.route,
@@ -93,8 +96,10 @@ class SwitchAccount extends StatelessWidget {
                       return AccountCard(
                         onTap: () async {
                           await DefaultCacheManager().emptyCache();
+                          cubit.trainerIndex = index;
                           cubit.accountType = AccountType.trainer;
                           database.setUserType('trainer');
+                          homeCubit.trainerInit();
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             TrainerAppHome.route,
@@ -120,6 +125,7 @@ class SwitchAccount extends StatelessWidget {
                           cubit.studentIndex = index;
                           cubit.accountType = AccountType.student;
                           database.setUserType('student');
+                          homeCubit.studentInit();
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             StudentAppHome.route,
@@ -146,6 +152,7 @@ class SwitchAccount extends StatelessWidget {
                           cubit.managerIndex = index;
                           cubit.accountType = AccountType.branchManager;
                           database.setUserType('manager');
+                          homeCubit.managerInit();
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             ManagerAppHome.route,

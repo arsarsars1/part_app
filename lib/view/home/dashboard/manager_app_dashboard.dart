@@ -47,7 +47,7 @@ class _ManagerAppDashboardState extends State<ManagerAppDashboard> {
             ShowCaseWidget(
               enableAutoScroll: true,
               onFinish: () {
-                Hive.box(Database.userBox).put("Showcase", true);
+                Hive.box(Database.userBox).put("Manager App Showcase", true);
               },
               builder: (context) {
                 return Expanded(

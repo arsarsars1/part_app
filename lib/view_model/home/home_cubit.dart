@@ -38,22 +38,38 @@ class HomeCubit extends Cubit<HomeState> {
   DateTime selectedDate = DateTime.now();
   late DateTime selectedStudentDate = DateTime.now();
 
-  List<GlobalKey> keyCap = List<GlobalKey>.generate(
-      10, (index) => GlobalKey(debugLabel: 'key_$index'),
-      growable: false);
-  List<GlobalKey> managerskeyCap = List<GlobalKey>.generate(
-      10, (index) => GlobalKey(debugLabel: 'manager_key_$index'),
-      growable: false);
-  List<GlobalKey> studentkKeyCap = List<GlobalKey>.generate(
-      4, (index) => GlobalKey(debugLabel: 'student_key_$index'),
-      growable: false);
-  List<GlobalKey> trainerkKeyCap = List<GlobalKey>.generate(
-      7, (index) => GlobalKey(debugLabel: 'trainer_key_$index'),
-      growable: false);
+  List<GlobalKey> keyCap = [];
+  List<GlobalKey> managerskeyCap = [];
+  List<GlobalKey> studentkKeyCap = [];
+  List<GlobalKey> trainerkKeyCap = [];
 
   // pagination
   int page = 1;
   String? nextPageUrl = '';
+
+  void trainerInit() {
+    trainerkKeyCap = List<GlobalKey>.generate(
+        8, (index) => GlobalKey(debugLabel: 'trainer_key_$index'),
+        growable: false);
+  }
+
+  void managerInit() {
+    managerskeyCap = List<GlobalKey>.generate(
+        10, (index) => GlobalKey(debugLabel: 'manager_key_$index'),
+        growable: false);
+  }
+
+  void studentInit() {
+    studentkKeyCap = List<GlobalKey>.generate(
+        4, (index) => GlobalKey(debugLabel: 'student_key_$index'),
+        growable: false);
+  }
+
+  void adminInit() {
+    keyCap = List<GlobalKey>.generate(
+        10, (index) => GlobalKey(debugLabel: 'key_$index'),
+        growable: false);
+  }
 
   String? feePayments;
   List<TrainerSalaryPayment?>? trainerSalaryPayments;
@@ -760,7 +776,7 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-   /// this method is used to get the classes of a batch in a particular month
+  /// this method is used to get the classes of a batch in a particular month
   Future getFAQForManager() async {
     _faqList?.clear();
     emit(FetchingFAQ());
