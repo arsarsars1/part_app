@@ -62,6 +62,25 @@ class AttendanceService {
     }
   }
 
+  Future<Common?> updateAttendenceForManager(
+      {int? managerId,
+      Map<String, dynamic>? request,
+      int? batchId,
+      int? conductedClassId,
+      int? conductedClassStudentId}) async {
+    try {
+      var response = await _apiClient.post(
+        postPath:
+            '/managers/$managerId/batches/$batchId/attendance/$conductedClassId/$conductedClassStudentId',
+        data: request ?? {"": ""},
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<AttendenceTaken?> getAttendenceTaken(
       {required int batchId, required int conductedClassId}) async {
     try {
@@ -83,6 +102,22 @@ class AttendanceService {
       var response = await _apiClient.get(
         queryPath:
             '/trainers/$trainerId/batches/$batchId/attendance/$conductedClassId',
+      );
+
+      return attendenceTakenFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AttendenceTaken?> getAttendenceTakenForManager(
+      {required int? managerId,
+      required int batchId,
+      required int conductedClassId}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/managers/$managerId/batches/$batchId/attendance/$conductedClassId',
       );
 
       return attendenceTakenFromJson(jsonEncode(response));
@@ -119,6 +154,20 @@ class AttendanceService {
     }
   }
 
+  Future<Common?> createAttendenceForManager(AttendenceAddRequest request,
+      {int? batchId, required int managerId}) async {
+    try {
+      var response = await _apiClient.post(
+        postPath: '/managers/$managerId/batches/$batchId/attendance',
+        data: request.toJson(),
+        formData: true,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<AttendenceClassDetailsesOfMonth?> getAttendeceClassesOfMonth(
       {required int? batchId, required DateTime? date}) async {
     try {
@@ -141,6 +190,22 @@ class AttendanceService {
       var response = await _apiClient.get(
         queryPath:
             '/trainers/$trainerId/batches/$batchId/monthly-classes/${date?.year}/${date?.month}',
+      );
+
+      return attendenceClassDetailsesOfMonthFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AttendenceClassDetailsesOfMonth?> getAttendeceClassesOfMonthForManager(
+      {required int managerId,
+      required int? batchId,
+      required DateTime? date}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/managers/$managerId/batches/$batchId/monthly-classes/${date?.year}/${date?.month}',
       );
 
       return attendenceClassDetailsesOfMonthFromJson(jsonEncode(response));
@@ -194,6 +259,23 @@ class AttendanceService {
     }
   }
 
+  Future<AttendenceConductedClass?>
+      getConductedAttendeceClassesOfMonthForManager(
+          {required int? managerId,
+          required int? batchId,
+          required DateTime? date}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/managers/$managerId/batches/$batchId/attendance/list/${date?.year}/${date?.month}',
+      );
+
+      return attendenceConductedClassFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentAttendenceOfMonth?> getAttendenceOfStudentOfMonth(
       {required int? batchId,
       required int? studentDetailId,
@@ -218,7 +300,24 @@ class AttendanceService {
     try {
       var response = await _apiClient.get(
         queryPath:
-            '/trainer/$trainerId/students/$studentDetailId/batch/$batchId/attendance/${date?.year}/${date?.month}',
+            '/trainers/$trainerId/students/$studentDetailId/batch/$batchId/attendance/${date?.year}/${date?.month}',
+      );
+
+      return studentAttendenceOfMonthFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<StudentAttendenceOfMonth?> getAttendenceOfStudentOfMonthForManager(
+      {required int managerId,
+      required int? batchId,
+      required int? studentDetailId,
+      required DateTime? date}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/managers/$managerId/students/$studentDetailId/batch/$batchId/attendance/${date?.year}/${date?.month}',
       );
 
       return studentAttendenceOfMonthFromJson(jsonEncode(response));
@@ -312,6 +411,40 @@ class AttendanceService {
     }
   }
 
+  Future<BatchResponse?> getBatchesByStatusForManager({
+    int? managerId,
+    int? branchId,
+    String status = 'ongoing',
+    String? search,
+    required int page,
+    bool branchSearch = false,
+  }) async {
+    try {
+      String path = branchId == null
+          ? '/managers/$managerId/batches/batch-status/$status'
+          : '/managers/$managerId/branches/$branchId/batches/batch-status/$status';
+
+      if (branchSearch) {
+        path = '/managers/$managerId/branches/$branchId/batches';
+      }
+
+      /// append the search text if search query is not null
+      if (search != null) {
+        path += '/search/$search';
+      }
+
+      path += '?page=$page';
+
+      var response = await _apiClient.get(
+        queryPath: path,
+      );
+
+      return batchResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<AttendanceMonthlyRecord?> getStudents({
     String? searchQuery,
     String? activeStatus,
@@ -347,6 +480,29 @@ class AttendanceService {
       if (batchId != null) {
         path =
             '/trainers/$trainerId/batches/$batchId/attendance/record/$year/$month';
+      }
+      path += '?page=$pageNo';
+      var response = await _apiClient.get(queryPath: path);
+      return attendanceMonthlyRecordFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<AttendanceMonthlyRecord?> getStudentsForManager({
+    required int managerId,
+    String? searchQuery,
+    String? activeStatus,
+    int? batchId,
+    int? pageNo,
+    int? month,
+    int? year,
+  }) async {
+    try {
+      String path = '';
+      if (batchId != null) {
+        path =
+            '/managers/$managerId/batches/$batchId/attendance/record/$year/$month';
       }
       path += '?page=$pageNo';
       var response = await _apiClient.get(queryPath: path);

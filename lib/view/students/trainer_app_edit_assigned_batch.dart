@@ -5,8 +5,8 @@ import 'package:part_app/model/data_model/student_request.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/students/assign_batch.dart';
-import 'package:part_app/view/students/students_view.dart';
+import 'package:part_app/view/students/trainer_app_assign_batch.dart';
+import 'package:part_app/view/students/trainer_app_students_view.dart';
 import 'package:part_app/view_model/cubits.dart';
 
 class TrainerAppEditAssignedBatch extends StatefulWidget {
@@ -75,12 +75,12 @@ class _TrainerAppEditAssignedBatchState
 
               Navigator.popUntil(
                 context,
-                ModalRoute.withName(AssignBatch.route),
+                ModalRoute.withName(TrainerAppAssignBatch.route),
               );
             } else {
               Navigator.popUntil(
                 context,
-                ModalRoute.withName(StudentsView.route),
+                ModalRoute.withName(TrainerAppStudentsView.route),
               );
             }
           } else if (state is CreateStudentFailed) {

@@ -53,17 +53,11 @@ class _StudentAppDashboardState extends State<StudentAppDashboard> {
                 return Expanded(
                   child: ListView(
                     children: const [
-                      SizedBox(
-                        height: 10,
-                      ),
+                      SizedBox(height: 10),
                       HomeBanner(),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      SizedBox(height: 10),
                       StudentAppDashboardIcons(),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      SizedBox(height: 10),
                       WhatsHappeningToday(),
                       MadeByLove(),
                     ],

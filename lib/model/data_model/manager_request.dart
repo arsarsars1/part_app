@@ -9,7 +9,7 @@ part 'manager_request.g.dart';
 abstract class ManagerRequest with _$ManagerRequest {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory ManagerRequest({
-    int? branchId,
+    List<String>? branchId,
     String? name,
     String? mobileNo,
     int? countryCode,

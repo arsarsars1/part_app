@@ -252,7 +252,8 @@ mixin _$User {
   Admin? get adminDetail => throw _privateConstructorUsedError;
   List<Trainer>? get trainerDetail => throw _privateConstructorUsedError;
   List<StudentDetail>? get studentDetail => throw _privateConstructorUsedError;
-  List<dynamic>? get managerDetail => throw _privateConstructorUsedError;
+  List<BranchManagerResponse>? get managerDetail =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -280,7 +281,7 @@ abstract class $UserCopyWith<$Res> {
       Admin? adminDetail,
       List<Trainer>? trainerDetail,
       List<StudentDetail>? studentDetail,
-      List<dynamic>? managerDetail});
+      List<BranchManagerResponse>? managerDetail});
 
   $AdminCopyWith<$Res>? get adminDetail;
 }
@@ -361,7 +362,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       managerDetail: freezed == managerDetail
           ? _value.managerDetail
           : managerDetail // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<BranchManagerResponse>?,
     ) as $Val);
   }
 
@@ -399,7 +400,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       Admin? adminDetail,
       List<Trainer>? trainerDetail,
       List<StudentDetail>? studentDetail,
-      List<dynamic>? managerDetail});
+      List<BranchManagerResponse>? managerDetail});
 
   @override
   $AdminCopyWith<$Res>? get adminDetail;
@@ -478,7 +479,7 @@ class __$$UserImplCopyWithImpl<$Res>
       managerDetail: freezed == managerDetail
           ? _value._managerDetail
           : managerDetail // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<BranchManagerResponse>?,
     ));
   }
 }
@@ -499,7 +500,7 @@ class _$UserImpl implements _User {
       this.adminDetail,
       final List<Trainer>? trainerDetail,
       final List<StudentDetail>? studentDetail,
-      final List<dynamic>? managerDetail})
+      final List<BranchManagerResponse>? managerDetail})
       : _trainerDetail = trainerDetail,
         _studentDetail = studentDetail,
         _managerDetail = managerDetail;
@@ -545,9 +546,9 @@ class _$UserImpl implements _User {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<dynamic>? _managerDetail;
+  final List<BranchManagerResponse>? _managerDetail;
   @override
-  List<dynamic>? get managerDetail {
+  List<BranchManagerResponse>? get managerDetail {
     final value = _managerDetail;
     if (value == null) return null;
     if (_managerDetail is EqualUnmodifiableListView) return _managerDetail;
@@ -635,7 +636,7 @@ abstract class _User implements User {
       final Admin? adminDetail,
       final List<Trainer>? trainerDetail,
       final List<StudentDetail>? studentDetail,
-      final List<dynamic>? managerDetail}) = _$UserImpl;
+      final List<BranchManagerResponse>? managerDetail}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -662,7 +663,7 @@ abstract class _User implements User {
   @override
   List<StudentDetail>? get studentDetail;
   @override
-  List<dynamic>? get managerDetail;
+  List<BranchManagerResponse>? get managerDetail;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.

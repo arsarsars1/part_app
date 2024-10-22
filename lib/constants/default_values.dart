@@ -4,7 +4,9 @@ import 'package:part_app/constants/assets.dart';
 import 'package:part_app/model/data_model/dashboard_item.dart';
 import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/class_link/class_link_view.dart';
+import 'package:part_app/view/class_link/manager_app_class_link_view.dart';
 import 'package:part_app/view/class_link/trainer_app_class_link_view.dart';
+import 'package:part_app/view/todays_classes/manager_app_todays_classes.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
 import 'package:part_app/view/trainer/trainer_app_trainer_salary_slips.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
@@ -241,14 +243,71 @@ class DefaultValues {
       color: Color(0xFF6100FF),
     ),
     DashboardItem(
-      title: 'Branches',
-      route: '/branches',
+      title: 'Branches &\nManagers',
+      route: '/branches_or_manager',
       asset: Assets.branches,
       color: Color(0xFFFF8F00),
     ),
     DashboardItem(
       title: 'Batches',
       route: '/batches',
+      asset: Assets.batches,
+      color: Color(0xFFF7B733),
+    ),
+  ];
+
+  static const managerDashboardItems = [
+    DashboardItem(
+      title: 'Students',
+      route: '/manager-app-students',
+      asset: Assets.students,
+      color: Color(0xFFFC6767),
+    ),
+    DashboardItem(
+      title: 'Attendance',
+      route: '/manager-app-attendance-batch-list',
+      asset: Assets.attendance,
+      color: Color(0xFF2B32B2),
+    ),
+    DashboardItem(
+      title: 'Fees',
+      route: '/manager-app-fees',
+      asset: Assets.fee,
+      color: Color(0xFF1D976C),
+    ),
+    DashboardItem(
+      title: 'Trainers',
+      route: TrainerPage.route,
+      asset: Assets.trainers,
+      color: Color(0xFF8F94FB),
+    ),
+    DashboardItem(
+      title: 'Today\'s Classes',
+      route: ManagerAppTodaysClasses.route,
+      asset: Assets.todays,
+      color: Color(0xFFE100FF),
+    ),
+    DashboardItem(
+      title: 'Class Link',
+      route: ManagerAppClassLinkView.route,
+      asset: Assets.classLink,
+      color: Color.fromARGB(255, 228, 50, 80),
+    ),
+    DashboardItem(
+      title: 'Leads',
+      route: '/manager-app-leads',
+      asset: Assets.leads,
+      color: Color(0xFF6100FF),
+    ),
+    DashboardItem(
+      title: 'Branches',
+      route: '/manager-app-branches',
+      asset: Assets.branches,
+      color: Color(0xFFFF8F00),
+    ),
+    DashboardItem(
+      title: 'Batches',
+      route: '/manager-app-batches',
       asset: Assets.batches,
       color: Color(0xFFF7B733),
     ),
