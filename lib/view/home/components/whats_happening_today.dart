@@ -165,18 +165,20 @@ class WhatsHappeningToday extends StatelessWidget {
                 SizedBox(
                   height: 15.h,
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: batchInvoice.length,
-                  itemBuilder: (context, index) {
-                    BatchFeeInvoice? feeDetails = batchInvoice[index];
-                    return StudentAppHomeFeeListItem(
-                      fee: feeDetails,
-                      onTap: () {},
-                    );
-                  },
-                ),
+                batchInvoice.isNotEmpty
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: batchInvoice.length,
+                        itemBuilder: (context, index) {
+                          BatchFeeInvoice? feeDetails = batchInvoice[index];
+                          return StudentAppHomeFeeListItem(
+                            fee: feeDetails,
+                            onTap: () {},
+                          );
+                        },
+                      )
+                    : const Center(child: Text('No Fees Pending')),
               ],
             ),
           ],

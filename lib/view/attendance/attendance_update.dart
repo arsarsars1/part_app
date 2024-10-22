@@ -128,24 +128,23 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${batch?.courseName}, ${batch?.subjectName}",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      fontSize: 12.sp,
-                                    ),
-                              ),
-                              SizedBox(height: 10.h),
-                              SizedBox(
-                                width: 180.w,
-                                child: Text(
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${batch?.courseName}, ${batch?.subjectName}",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        fontSize: 12.sp,
+                                      ),
+                                ),
+                                SizedBox(height: 10.h),
+                                Text(
                                   "Trainer - ${batch?.trainersString}",
                                   maxLines: 5,
                                   overflow: TextOverflow.ellipsis,
@@ -156,33 +155,36 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                           fontSize: 12.sp,
                                           color: AppColors.primaryColor),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${cubit.conductedDate?.toDay()}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: AppColors.textColor,
-                                      fontSize: 16,
-                                    ),
-                              ),
-                              Text(
-                                '${cubit.conductedDate?.toDDMMMYYY()}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: AppColors.textColor,
-                                      fontSize: 16,
-                                    ),
-                              ),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '${cubit.conductedDate?.toDay()}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: AppColors.textColor,
+                                        fontSize: 16,
+                                      ),
+                                ),
+                                Text(
+                                  '${cubit.conductedDate?.toDDMMMYYY()}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: AppColors.textColor,
+                                        fontSize: 16,
+                                      ),
+                                ),
+                              ],
+                            ),
                           )
                         ],
                       ),

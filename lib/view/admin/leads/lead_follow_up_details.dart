@@ -197,6 +197,7 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
                       length: 50,
                       maxLines: 1,
                       dropDown: true,
+                      controller: leadStatusController,
                       defaultItem: cubit.selectedFollowUp != null &&
                               cubit.selectedFollowUp!.followUpStatus
                                   .isNotNullOrEmpty()
@@ -226,22 +227,60 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
                             assignableTrainer = null;
                           }
                           if (formKey.currentState!.validate()) {
-                            LeadRequest request = LeadRequest(
-                              batchId: batchId?.id,
-                              leadStatus: status,
-                              followUpDate:
-                                  LeadUtils().convertDateString(date ?? ""),
-                              followUpTime:
-                                  LeadUtils().convertTo24HourFormat(time ?? ""),
-                              followUpComment: comments,
-                              assignedToId: assignableTrainer?.id,
-                              assignedToType: assignableTrainer?.morphClass,
-                            );
-
                             if (followUp != null) {
+                              if (!isStatusUpdated() &&
+                                  !isTrainerUpdated() &&
+                                  !isDateUpdated() &&
+                                  !isTimeUpdated() &&
+                                  !isCommentUpdated()) {
+                                Alert(context).show(
+                                    message: "No changes detected to update.");
+                                return;
+                              }
+
+                              LeadRequest request =
+                                  LeadRequest(batchId: batchId?.id);
+                              if (isStatusUpdated()) {
+                                request = request.copyWith(leadStatus: status);
+                              }
+                              if (isTrainerUpdated()) {
+                                request = request.copyWith(
+                                  assignedToId: assignableTrainer?.id,
+                                  assignedToType: assignableTrainer?.morphClass,
+                                );
+                              }
+                              if (isDateUpdated()) {
+                                request = request.copyWith(
+                                  followUpDate:
+                                      LeadUtils().convertDateString(date ?? ""),
+                                );
+                              }
+                              if (isTimeUpdated()) {
+                                request = request.copyWith(
+                                  followUpTime: LeadUtils()
+                                      .convertTo24HourFormat(time ?? ""),
+                                );
+                              }
+                              if (isCommentUpdated()) {
+                                request =
+                                    request.copyWith(followUpComment: comments);
+                              }
+
                               cubit.addUpdateLeadFollowUpList(
                                   request, followUp!.leadId, followUp!.id);
                             } else {
+                              LeadRequest request = LeadRequest(
+                                batchId: batchId?.id,
+                                leadStatus: status,
+                                followUpDate:
+                                    LeadUtils().convertDateString(date ?? ""),
+                                followUpTime: LeadUtils()
+                                    .convertTo24HourFormat(time ?? ""),
+                                followUpComment: comments,
+                                assignedToId: assignableTrainer?.id,
+                                assignedToType: assignableTrainer?.morphClass,
+                              );
+
                               cubit.addUpdateLeadFollowUpList(
                                   request, cubit.selectedLead?.id, null);
                             }
@@ -261,6 +300,34 @@ class _LeadFollowUpDetailsState extends State<LeadFollowUpDetails> {
         ),
       ),
     );
+  }
+
+  bool isStatusUpdated() {
+    return status != (followUp?.followUpStatus ?? "");
+  }
+
+  bool isTrainerUpdated() {
+    return trainerController.text != (followUp?.assignedTo?.name ?? "");
+  }
+
+  bool isDateUpdated() {
+    return dateController.text != (followUp?.followUpDate?.toDDMMMYYY() ?? "");
+  }
+
+  bool isTimeUpdated() {
+    return timeController.text != (followUp?.followUpTime?.toAmPM() ?? "");
+  }
+
+  bool isCommentUpdated() {
+    return commentController.text != (followUp?.followUpComment ?? "");
+  }
+
+  bool hasUpdates() {
+    return !(leadStatusController.text == (followUp?.followUpStatus ?? "") &&
+        trainerController.text == (followUp?.assignedTo?.name ?? "") &&
+        dateController.text == (followUp?.followUpDate?.toDDMMMYYY() ?? "") &&
+        timeController.text == (followUp?.followUpTime?.toAmPM() ?? "") &&
+        commentController.text == (followUp?.followUpComment ?? ""));
   }
 
   // method to get the date for [ followup date ]
