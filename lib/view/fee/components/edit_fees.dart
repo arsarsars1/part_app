@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:part_app/constants/constant.dart';
+import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
+import 'package:part_app/view_model/cubits.dart';
+import 'package:part_app/view_model/fee/fee_cubit.dart';
 
 class EditFees extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final ValueChanged<String> reason;
   final ValueChanged<String> date;
   final ValueChanged<String> amount;
+  final ValueChanged<DropDownItem>? payment;
 
   const EditFees({
     super.key,
+    this.payment,
     required this.formKey,
     required this.reason,
     required this.date,
@@ -22,8 +27,18 @@ class EditFees extends StatefulWidget {
 }
 
 class EditFeesState extends State<EditFees> {
+  DropDownItem paymentValue =
+      const DropDownItem(id: "Cash", item: "Cash", title: "Cash");
   DateTime? date;
   TextEditingController dateController = TextEditingController();
+  late FeeCubit feeCubit;
+
+  @override
+  void initState() {
+    feeCubit = context.read<FeeCubit>();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -89,6 +104,29 @@ class EditFeesState extends State<EditFees> {
                 )
               ],
             ),
+            if (widget.payment != null)
+              Column(children: [
+                SizedBox(height: 10.h),
+                CommonField(
+                  title: 'Payment Mode',
+                  hint: 'Select payment mode',
+                  length: 50,
+                  maxLines: 1,
+                  dropDown: true,
+                  padding: EdgeInsets.zero,
+                  defaultItem: paymentValue,
+                  dropDownItems: feeCubit.paymentMethodModel?.paymentMethods
+                      .map((e) => DropDownItem(id: e, title: e, item: e))
+                      .toList(),
+                  textInputAction: TextInputAction.next,
+                  onChange: (value) {
+                    paymentValue = value;
+                    if (widget.payment != null) {
+                      widget.payment!(paymentValue);
+                    }
+                  },
+                ),
+              ]),
             SizedBox(height: 10.h),
             CommonField(
               title: 'Remark/Reason For Editing *',

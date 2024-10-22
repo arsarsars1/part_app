@@ -91,12 +91,17 @@ class _BatchStudentsState extends State<BatchStudents>
                     StudentModel student = studentCubit.students![index];
 
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         studentCubit.studentDetails(student.detailId);
-                        Navigator.pushNamed(
+                        await Navigator.pushNamed(
                           context,
                           StudentDetails.route,
                         );
+                        if (studentText == 'Active Students') {
+                          widget.onChange(true);
+                        } else {
+                          widget.onChange(false);
+                        }
                       },
                       child: Container(
                         margin: const EdgeInsets.all(16),

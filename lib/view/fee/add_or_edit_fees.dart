@@ -23,7 +23,8 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
   TextEditingController feesController = TextEditingController();
   DateTime? date;
   var formKey = GlobalKey<FormState>();
-  DropDownItem? paymentMethodValue;
+  DropDownItem paymentMethodValue =
+      const DropDownItem(id: "Cash", item: "Cash", title: "Cash");
   late FeeCubit feeCubit;
   @override
   void initState() {
@@ -45,22 +46,25 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
         title: 'Edit Fee Details',
       ),
       body: BlocConsumer<FeeCubit, FeeState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AddedFees) {
             date = null;
             dateController.text = "";
             Alert(context).show(message: state.message);
-            feeCubit.getBatchInvoice(feeCubit.student.id);
+            await feeCubit.getBatchInvoice(feeCubit.student.id);
+            feesController.text = feeCubit.batchFeeInvoice?.pendingAmount ?? "";
           } else if (state is AddFeesFailed) {
             Alert(context).show(message: state.message);
           } else if (state is FeesDeleted) {
             Alert(context).show(message: state.message);
-            feeCubit.getBatchInvoice(feeCubit.student.id);
+            await feeCubit.getBatchInvoice(feeCubit.student.id);
+            feesController.text = feeCubit.batchFeeInvoice?.pendingAmount ?? "";
           } else if (state is DeleteFeesFailed) {
             Alert(context).show(message: state.message);
           } else if (state is EdittedFee) {
             Alert(context).show(message: state.message);
-            feeCubit.getBatchInvoice(feeCubit.student.id);
+            await feeCubit.getBatchInvoice(feeCubit.student.id);
+            feesController.text = feeCubit.batchFeeInvoice?.pendingAmount ?? "";
           } else if (state is EditFeesFailed) {
             Alert(context).show(message: state.message);
           }
@@ -356,6 +360,11 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                   } else {
                                     var formKey1 = GlobalKey<FormState>();
                                     String? reason, date, amount;
+                                    DropDownItem paymentValue =
+                                        const DropDownItem(
+                                            id: "Cash",
+                                            item: "Cash",
+                                            title: "Cash");
                                     CommonDialog(
                                       context: context,
                                       message:
@@ -365,14 +374,18 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                         reason: (value) => reason = value,
                                         amount: (value) => amount = value,
                                         date: (value) => date = value,
+                                        payment: (value) =>
+                                            paymentValue = value,
                                       ),
-                                      onTap: () {
+                                      onTap: () async {
                                         formKey1.currentState!.save();
                                         if (formKey1.currentState!.validate()) {
                                           Navigator.pop(context);
-                                          feeCubit.editFees({
+                                          await feeCubit.editFees({
                                             'new_date': date,
                                             'new_amount': amount,
+                                            'payment_method':
+                                                paymentValue?.item,
                                             'reason': reason
                                           },
                                               batchFeeInvoiceId:
@@ -738,6 +751,27 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                 ),
                               ),
                             ),
+                          if (payment?.paymentMethod != null)
+                            SizedBox(
+                              width:
+                                  (3 * MediaQuery.of(context).size.width) / 3.5,
+                              child: CustomPaint(
+                                painter: DottedBorderPainter(),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 5.w, vertical: 5.h),
+                                  child: Text(
+                                    "Payment mode: ${payment?.paymentMethod}",
+                                    maxLines: 5,
+                                    softWrap: true,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
+                                  ),
+                                ),
+                              ),
+                            ),
                           if (payment?.isDeleted == 1)
                             SizedBox(
                               width:
@@ -918,9 +952,6 @@ class _AddOrEditFeesState extends State<AddOrEditFees> {
                                   'payment_date':
                                       dateController.text.toDateServerString()
                                 });
-                                if (context.mounted) {
-                                  // Navigator.pop(context);
-                                }
                               }
                             },
                             title: 'Submit',

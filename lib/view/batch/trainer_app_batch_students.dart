@@ -86,7 +86,7 @@ class _TrainerAppBatchStudentsState extends State<TrainerAppBatchStudents> {
                     StudentModel student = studentCubit.students![index];
 
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         studentCubit.studentDetailsForTrainer(
                             trainerId: authCubit
                                     ?.user
@@ -95,10 +95,15 @@ class _TrainerAppBatchStudentsState extends State<TrainerAppBatchStudents> {
                                     .id ??
                                 0,
                             studentId: student.detailId);
-                        Navigator.pushNamed(
+                        await Navigator.pushNamed(
                           context,
                           TrainerAppStudentDetails.route,
                         );
+                        if (studentText == 'Active Students') {
+                          widget.onChange(true);
+                        } else {
+                          widget.onChange(false);
+                        }
                       },
                       child: Container(
                         margin: const EdgeInsets.all(16),

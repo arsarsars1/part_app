@@ -58,18 +58,19 @@ class _TrainerAppClassLinkListState extends State<TrainerAppClassLinkList> {
       key: scaffoldKey,
       appBar: const CommonBar(title: 'List Online Class Link'),
       body: BlocListener<BatchCubit, BatchState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is RemovingLink) {
             Loader(context).show();
           } else if (state is RemovedLink) {
             Navigator.pop(context);
             Alert(context).show(message: 'Class Link Removed');
-            batchCubit?.getClassLinkForTrainer(
-                authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0]
-                        .id ??
-                    0,
-                batch?.id,
-                date!);
+            Navigator.pop(context);
+            // await batchCubit?.getClassLinkForTrainer(
+            //     authCubit?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0]
+            //             .id ??
+            //         0,
+            //     batch?.id,
+            //     date!);
           } else if (state is RemoveLinkFailed) {
             Navigator.pop(context);
             Alert(context).show(message: 'Failed to remove the link.');
@@ -364,8 +365,9 @@ class _TrainerAppClassLinkListState extends State<TrainerAppClassLinkList> {
                                           ),
                                         ],
                                       ),
-                                      onTap: () {
-                                        batchCubit?.removeClassLinkForTrainer(
+                                      onTap: () async {
+                                        await batchCubit
+                                            ?.removeClassLinkForTrainer(
                                           authCubit
                                                   ?.user
                                                   ?.trainerDetail?[

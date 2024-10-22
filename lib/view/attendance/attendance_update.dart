@@ -42,6 +42,7 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AttendanceCubit>();
+    var studentCubit = context.read<StudentCubit>();
     return Scaffold(
       appBar: const CommonBar(
         title: 'Class Attendance',
@@ -127,12 +128,11 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 180.w,
-                                child: Text(
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
                                   "${batch?.courseName}, ${batch?.subjectName}",
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -143,11 +143,8 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                         fontSize: 12.sp,
                                       ),
                                 ),
-                              ),
-                              SizedBox(height: 10.h),
-                              SizedBox(
-                                width: 180.w,
-                                child: Text(
+                                SizedBox(height: 10.h),
+                                Text(
                                   "Trainer - ${batch?.trainersString}",
                                   maxLines: 5,
                                   overflow: TextOverflow.ellipsis,
@@ -158,13 +155,13 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
                                           fontSize: 12.sp,
                                           color: AppColors.primaryColor),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          SizedBox(
-                            width: 130.w,
+                          Expanded(
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
                                   '${cubit.conductedDate?.toDay()}',

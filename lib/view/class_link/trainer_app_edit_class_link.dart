@@ -6,6 +6,7 @@ import 'package:part_app/model/data_model/class_model.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/class_picker.dart';
 import 'package:part_app/view/batch/components/schedule_field.dart';
+import 'package:part_app/view/batch/components/trainer_app_class_picker.dart';
 import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/students/widgets/batch_picker.dart';
@@ -67,6 +68,13 @@ class _TrainerAppEditClassLinkState extends State<TrainerAppEditClassLink> {
             if (state is UpdatingLink) {
               Loader(context).show();
             } else if (state is UpdatedLink) {
+              formKey.currentState?.reset();
+              branchId = null;
+              dateController.clear();
+              date = null;
+              setState(() {});
+              Navigator.pop(context);
+              Navigator.pop(context);
               Navigator.pop(context);
               Navigator.pop(context);
               batchCubit.getClassLinkForTrainer(
@@ -76,11 +84,6 @@ class _TrainerAppEditClassLinkState extends State<TrainerAppEditClassLink> {
                   batchCubit.tempClass?.batchId,
                   tempClass?.classDate ?? DateTime.now());
               Alert(context).show(message: 'Class link updated');
-              formKey.currentState?.reset();
-              branchId = null;
-              dateController.clear();
-              date = null;
-              setState(() {});
             } else if (state is UpdateLinkFailed) {
               Navigator.pop(context);
               Alert(context).show(message: state.message);
@@ -185,7 +188,7 @@ class _TrainerAppEditClassLinkState extends State<TrainerAppEditClassLink> {
                           ),
                         ],
                       )
-                    : BranchField(
+                    : TrainerAppBranchField(
                         initialBranch: branchId,
                         onSelect: (value) {
                           if (branchId != null) {
@@ -321,6 +324,12 @@ class _TrainerAppEditClassLinkState extends State<TrainerAppEditClassLink> {
                               branchId: branchId!,
                               status: 'ongoing',
                               branchSearch: true,
+                              trainerId: authCubit
+                                      ?.user
+                                      ?.trainerDetail?[
+                                          authCubit?.trainerIndex ?? 0]
+                                      .id ??
+                                  0,
                               onSelect: (value) {
                                 batch = value;
                                 batchController.text = value.name;
@@ -474,7 +483,7 @@ class _TrainerAppEditClassLinkState extends State<TrainerAppEditClassLink> {
                             enableDrag: false,
                             elevation: 10,
                             backgroundColor: Colors.transparent,
-                            (context) => ClassPicker(
+                            (context) => TrainerAppClassPicker(
                               branchId: batch?.branchId,
                               batchId:
                                   batch?.id ?? tempClass?.batchId ?? batchId,

@@ -23,7 +23,8 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
   TextEditingController feesController = TextEditingController();
   DateTime? date;
   var formKey = GlobalKey<FormState>();
-  DropDownItem? paymentMethodValue;
+  DropDownItem paymentMethodValue =
+      const DropDownItem(id: "Cash", item: "Cash", title: "Cash");
   late FeeCubit feeCubit;
 
   @override
@@ -46,22 +47,31 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
         title: 'Edit Admission Fee Details',
       ),
       body: BlocConsumer<FeeCubit, FeeState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AddedFees) {
             date = null;
             dateController.text = "";
             Alert(context).show(message: state.message);
-            feeCubit.getAdmissionInvoice(feeCubit.student.id);
+            await feeCubit.getAdmissionInvoice(feeCubit.student.id);
+            feesController.text =
+                feeCubit.admissionFeeInvoice?.pendingAmount ?? "";
+            dateController.text = DateTime.now().toDateString();
           } else if (state is AddFeesFailed) {
             Alert(context).show(message: state.message);
           } else if (state is FeesDeleted) {
             Alert(context).show(message: state.message);
-            feeCubit.getAdmissionInvoice(feeCubit.student.id);
+            await feeCubit.getAdmissionInvoice(feeCubit.student.id);
+            feesController.text =
+                feeCubit.admissionFeeInvoice?.pendingAmount ?? "";
+            dateController.text = DateTime.now().toDateString();
           } else if (state is DeleteFeesFailed) {
             Alert(context).show(message: state.message);
           } else if (state is EdittedFee) {
             Alert(context).show(message: state.message);
-            feeCubit.getAdmissionInvoice(feeCubit.student.id);
+            await feeCubit.getAdmissionInvoice(feeCubit.student.id);
+            feesController.text =
+                feeCubit.admissionFeeInvoice?.pendingAmount ?? "";
+            dateController.text = DateTime.now().toDateString();
           } else if (state is EditFeesFailed) {
             Alert(context).show(message: state.message);
           }
@@ -312,6 +322,11 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                   } else {
                                     var formKey1 = GlobalKey<FormState>();
                                     String? reason, date, amount;
+                                    DropDownItem paymentValue =
+                                        const DropDownItem(
+                                            id: "Cash",
+                                            item: "Cash",
+                                            title: "Cash");
                                     CommonDialog(
                                       context: context,
                                       message:
@@ -321,6 +336,8 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                         reason: (value) => reason = value,
                                         amount: (value) => amount = value,
                                         date: (value) => date = value,
+                                        payment: (value) =>
+                                            paymentValue = value,
                                       ),
                                       onTap: () {
                                         formKey1.currentState!.save();
@@ -329,6 +346,8 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                           feeCubit.editAdmissionFees({
                                             'new_date': date,
                                             'new_amount': amount,
+                                            'payment_method':
+                                                paymentValue?.item,
                                             'reason': reason
                                           },
                                               admissionFeeInvoiceId: feeCubit
@@ -690,6 +709,27 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                             decoration: payment?.isDeleted == 1
                                                 ? TextDecoration.lineThrough
                                                 : null),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          if (payment?.paymentMethod != null)
+                            SizedBox(
+                              width:
+                                  (3 * MediaQuery.of(context).size.width) / 3.5,
+                              child: CustomPaint(
+                                painter: DottedBorderPainter(),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 5.w, vertical: 5.h),
+                                  child: Text(
+                                    "Payment mode: ${payment?.paymentMethod}",
+                                    maxLines: 5,
+                                    softWrap: true,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
                                   ),
                                 ),
                               ),

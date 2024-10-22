@@ -96,7 +96,9 @@ class CommonField extends StatelessWidget {
         }
       },
       child: Padding(
-        padding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 16),
+        padding: contentPadding ??
+            padding ??
+            const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: crossAxisAlignment,
           children: [
