@@ -49,25 +49,25 @@ class HomeCubit extends Cubit<HomeState> {
 
   void trainerInit() {
     trainerkKeyCap = List<GlobalKey>.generate(
-        8, (index) => GlobalKey(debugLabel: 'trainer_key_$index'),
+        7, (index) => GlobalKey(debugLabel: 'trainer_key_$index'),
         growable: false);
   }
 
   void managerInit() {
     managerskeyCap = List<GlobalKey>.generate(
-        10, (index) => GlobalKey(debugLabel: 'manager_key_$index'),
+        9, (index) => GlobalKey(debugLabel: 'manager_key_$index'),
         growable: false);
   }
 
   void studentInit() {
     studentkKeyCap = List<GlobalKey>.generate(
-        4, (index) => GlobalKey(debugLabel: 'student_key_$index'),
+        3, (index) => GlobalKey(debugLabel: 'student_key_$index'),
         growable: false);
   }
 
   void adminInit() {
     keyCap = List<GlobalKey>.generate(
-        10, (index) => GlobalKey(debugLabel: 'key_$index'),
+        9, (index) => GlobalKey(debugLabel: 'key_$index'),
         growable: false);
   }
 
