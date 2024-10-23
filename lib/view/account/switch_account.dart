@@ -42,7 +42,6 @@ class SwitchAccount extends StatelessWidget {
                       await DefaultCacheManager().emptyCache();
                       cubit.accountType = AccountType.admin;
                       database.setUserType('admin');
-                      homeCubit.adminInit();
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         Home.route,
@@ -97,7 +96,6 @@ class SwitchAccount extends StatelessWidget {
                           cubit.accountType = AccountType.trainer;
                           cubit.trainerIndex = index;
                           database.setUserType('trainer');
-                          homeCubit.trainerInit();
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             TrainerAppHome.route,
@@ -123,7 +121,6 @@ class SwitchAccount extends StatelessWidget {
                           cubit.studentIndex = index;
                           cubit.accountType = AccountType.student;
                           database.setUserType('student');
-                          homeCubit.studentInit();
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             StudentAppHome.route,
