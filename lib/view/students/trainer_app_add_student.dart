@@ -174,9 +174,8 @@ class _TrainerAppAddStudentState extends State<TrainerAppAddStudent> {
                     setState(() {
                       phone =
                           contact?.phoneNumbers?.first.replaceAll('+91', '');
-                      phoneController.text =
-                          (contact?.phoneNumbers?.first ?? '')
-                              .replaceAll('+91', '');
+                      phone = phone?.cleanPhoneNumber();
+                      phoneController.text = phone ?? "";
                     });
                   },
                   child: Icon(
