@@ -391,10 +391,25 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                             row.isDeleted != 1
                                                                 ? Text(
                                                                     "${row.paymentDate?.toDateString()}",
+                                                                    maxLines: 1,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      fontSize:
+                                                                          12.5,
+                                                                    ),
                                                                   )
                                                                 : Text(
                                                                     "${row.paymentDate?.toDateString()}",
+                                                                    maxLines: 1,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
                                                                     style: TextStyle(
+                                                                        fontSize:
+                                                                            12.5,
                                                                         color: AppColors
                                                                             .grey700,
                                                                         decorationThickness:
