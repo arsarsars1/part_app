@@ -18,6 +18,7 @@ import 'package:part_app/model/data_model/register_request.dart';
 import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/model/service/api.dart';
 import 'package:part_app/view/home/trainer_app_home.dart';
+import 'package:part_app/view_model/home/home_cubit.dart';
 
 import '../../flavors.dart';
 import '../../model/data_model/students_response.dart';
@@ -485,6 +486,8 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> navigateToDashboard(Academy? academy, List<Trainer>? trainerList,
       List<StudentDetail>? studentsList, BuildContext context) async {
+    var homeCubit = context.read<HomeCubit>();
+    var cubit = context.read<AuthCubit>();
     int numberOfItems = 0;
     Database database = Database();
     String? userType = await database.getUserType();
@@ -520,20 +523,23 @@ class AuthCubit extends Cubit<AuthState> {
       );
     } else {
       if (accountType == AccountType.admin) {
+        homeCubit.adminInit();
         Navigator.pushNamedAndRemoveUntil(
           context,
           Home.route,
           (route) => false,
         );
       } else if (accountType == AccountType.trainer) {
-        trainerIndex = 0;
+        trainerIndex = cubit.trainerIndex;
+        homeCubit.trainerInit();
         Navigator.pushNamedAndRemoveUntil(
           context,
           TrainerAppHome.route,
           (route) => false,
         );
       } else {
-        studentIndex = 0;
+        studentIndex = cubit.studentIndex;
+        homeCubit.studentInit();
         Navigator.pushNamedAndRemoveUntil(
           context,
           StudentAppHome.route,
