@@ -232,9 +232,8 @@ class StudentService {
     try {
       String path = '';
 
-      if (branchId != null && activeStatus != null && batchId == null) {
-        path =
-            '/trainers/$trainerId/branches/$branchId/students/batch-status/$activeStatus';
+      if (trainerId != null && activeStatus != null && batchId != null) {
+        path = "/trainers/$trainerId/batches/$batchId/$activeStatus";
       } else if (branchId != null && batchId == null) {
         path = '/trainers/$trainerId/branches/$branchId/students';
       } else if (batchId != null) {
