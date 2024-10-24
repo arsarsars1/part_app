@@ -114,26 +114,32 @@ class WhatsHappeningToday extends StatelessWidget {
                                   children: [
                                     SizedBox(height: 10.h),
                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Click to join  :  ',
                                           style: TextStyle(fontSize: 11.sp),
                                         ),
                                         classDetails?.classLink != null
-                                            ? InkWell(
-                                                child: Text(
-                                                  '${classDetails?.classLink}',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge
-                                                      ?.copyWith(
-                                                        color: AppColors
-                                                            .defaultBlue,
-                                                      ),
-                                                ),
-                                                onTap: () => launchUrl(
-                                                  Uri.parse(
-                                                      '${classDetails?.classLink}'),
+                                            ? Expanded(
+                                                child: InkWell(
+                                                  child: Text(
+                                                    '${classDetails?.classLink}',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge
+                                                        ?.copyWith(
+                                                          color: AppColors
+                                                              .defaultBlue,
+                                                        ),
+                                                  ),
+                                                  onTap: () => launchUrl(
+                                                    Uri.parse(
+                                                        '${classDetails?.classLink}'),
+                                                  ),
                                                 ),
                                               )
                                             : const Text('No Class link added'),
