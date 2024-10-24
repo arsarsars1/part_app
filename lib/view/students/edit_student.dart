@@ -55,6 +55,7 @@ class _EditStudentState extends State<EditStudent> {
   Widget build(BuildContext context) {
     student = context.read<StudentCubit>().student;
     details = student?.studentDetail![0];
+    whatsappSelected = student?.mobileNo == details?.whatsappNo;
 
     selected ??= details?.parentName != null && details!.parentName!.isNotEmpty
         ? 'parent'
@@ -204,7 +205,7 @@ class _EditStudentState extends State<EditStudent> {
                 onChange: (bool value) {
                   whatsappSelected = value;
                   if (value) {
-                    whatsappNo = phone;
+                    whatsappNo = phone ?? student?.mobileNo;
                   } else {
                     whatsappNo = null;
                   }
@@ -315,7 +316,7 @@ class _EditStudentState extends State<EditStudent> {
                         StudentRequest request = StudentRequest(
                           name: name,
                           mobileNo: phone,
-                          whatsappNo: whatsappSelected ? phone : whatsappNo,
+                          whatsappNo: whatsappNo,
                           dob: dob,
                           gender: gender,
                           email: email,
