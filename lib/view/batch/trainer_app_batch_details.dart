@@ -404,6 +404,7 @@ class _TrainerAppBatchDetailsState extends State<TrainerAppBatchDetails> {
                                   branchId: batch?.branchId,
                                   scaffoldKey: scaffoldKey,
                                   trainers: batch?.trainers,
+                                  showAddButton: false,
                                   selectedTrainers: (List<Trainer?> value) {
                                     var trainerList =
                                         value.map((e) => e?.id).toList();
