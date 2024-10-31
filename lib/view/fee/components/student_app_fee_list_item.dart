@@ -286,7 +286,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  5,
+                                                  4.w,
                                               child: CustomPaint(
                                                   painter:
                                                       DottedBorderPainter(),
@@ -340,7 +340,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  5,
+                                                  4.w,
                                               child: CustomPaint(
                                                   painter:
                                                       DottedBorderPainter(),
@@ -375,7 +375,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    5,
+                                                    4.w,
                                                 child: CustomPaint(
                                                     painter:
                                                         DottedBorderPainter(),
@@ -455,7 +455,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    5,
+                                                    4.w,
                                                 child: CustomPaint(
                                                     painter:
                                                         DottedBorderPainter(),
@@ -495,7 +495,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                 (MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    5)) +
+                                                    4.w)) +
                                             (MediaQuery.of(context).size.width /
                                                 3),
                                         child: CustomPaint(
@@ -534,7 +534,7 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                                                 (MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    5)) +
+                                                    4.w)) +
                                             (MediaQuery.of(context).size.width /
                                                 3),
                                         child: CustomPaint(
