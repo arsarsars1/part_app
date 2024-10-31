@@ -3,6 +3,7 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/extensions.dart';
+import 'package:part_app/view/attendance/components/trainer_app_attendance_class_pick.dart';
 import 'package:part_app/view/attendance/trainer_app_attendance_add.dart';
 import 'package:part_app/view/attendance/trainer_app_attendance_update.dart';
 import 'package:part_app/view/components/components.dart';
@@ -12,7 +13,6 @@ import 'package:part_app/view_model/cubits.dart';
 import '../../model/data_model/attendence_classes_conducted.dart';
 import '../../model/data_model/attendence_classes_of_month.dart' as attendance;
 import '../../model/data_model/event_model.dart';
-import 'components/attendance_class_pick.dart';
 
 class TrainerAppAttendanceCalenderView extends StatefulWidget {
   static const route = '/trainer-app-batch-calender-view';
@@ -275,7 +275,7 @@ class _TrainerAppAttendanceCalenderViewState
                                     scaffoldKey.currentState?.showBottomSheet(
                                         elevation: 10,
                                         backgroundColor: Colors.transparent,
-                                        (context) => AttendanceClassPicker(
+                                        (context) => TrainerAppAttendanceClassPicker(
                                               date: date,
                                               eventList: events,
                                             ));
