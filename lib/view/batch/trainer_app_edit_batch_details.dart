@@ -9,6 +9,7 @@ import 'package:part_app/model/data_model/drop_down_item.dart';
 import 'package:part_app/view/batch/components/retain_student_check.dart';
 import 'package:part_app/view/batch/components/training_days.dart';
 import 'package:part_app/view/batch/trainer_app_batch_details.dart';
+import 'package:part_app/view/components/alert_box.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view_model/cubits.dart';
 
@@ -131,61 +132,73 @@ class _TrainerAppEditBatchDetailsState
                             );
                           }).toList(),
                           onChanged: (value) {
-                            if (value?.title == batchModel?.branchName) {
-                              return;
-                            }
-                            String branchName = '';
-                            for (var item
-                                in context.read<BranchCubit>().branches) {
-                              if (item.id == value?.id) {
-                                branchName = item.branchName ?? "";
-                                break;
-                              }
-                            }
-                            CommonDialog(
-                              context: context,
+                            AlertBox.showErrorAlert(
+                              context,
                               message:
-                                  'You are switching ${batchModel?.name} from ${batchModel?.branchName} to $branchName.',
-                              buttonText: 'Yes',
-                              subColor: AppColors.primaryColor,
-                              subContent: Column(
-                                children: [
-                                  Text(
-                                    'Do you want to retain the students assigned in the batch?',
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: AppColors.primaryColor,
-                                        ),
-                                  ),
-                                  SizedBox(
-                                    height: 20.h,
-                                  )
-                                ],
-                              ),
-                              onCancelTap: () {
+                                  'You don\'t have authorisation to edit the branch.',
+                              onTap: () {
                                 _dropDownKey.currentState?.reset();
                                 Navigator.pop(context);
-                              },
-                              hasClose: true,
-                              onClose: () {
-                                selectedItem = value;
-                                branchId = value?.id;
-                                retainStudent = 0;
                                 Navigator.pop(context);
-                                setState(() {});
                               },
-                              onTap: () {
-                                selectedItem = value;
-                                branchId = value?.id;
-                                retainStudent = 1;
-                                Navigator.pop(context);
-                                setState(() {});
-                              },
-                            ).show();
+                            );
                           },
+                          // onChanged: (value) {
+                          //   if (value?.title == batchModel?.branchName) {
+                          //     return;
+                          //   }
+                          //   String branchName = '';
+                          //   for (var item
+                          //       in context.read<BranchCubit>().branches) {
+                          //     if (item.id == value?.id) {
+                          //       branchName = item.branchName ?? "";
+                          //       break;
+                          //     }
+                          //   }
+                          //   CommonDialog(
+                          //     context: context,
+                          //     message:
+                          //         'You are switching ${batchModel?.name} from ${batchModel?.branchName} to $branchName.',
+                          //     buttonText: 'Yes',
+                          //     subColor: AppColors.primaryColor,
+                          //     subContent: Column(
+                          //       children: [
+                          //         Text(
+                          //           'Do you want to retain the students assigned in the batch?',
+                          //           textAlign: TextAlign.center,
+                          //           style: Theme.of(context)
+                          //               .textTheme
+                          //               .bodyLarge
+                          //               ?.copyWith(
+                          //                 color: AppColors.primaryColor,
+                          //               ),
+                          //         ),
+                          //         SizedBox(
+                          //           height: 20.h,
+                          //         )
+                          //       ],
+                          //     ),
+                          //     onCancelTap: () {
+                          //       _dropDownKey.currentState?.reset();
+                          //       Navigator.pop(context);
+                          //     },
+                          //     hasClose: true,
+                          //     onClose: () {
+                          //       selectedItem = value;
+                          //       branchId = value?.id;
+                          //       retainStudent = 0;
+                          //       Navigator.pop(context);
+                          //       setState(() {});
+                          //     },
+                          //     onTap: () {
+                          //       selectedItem = value;
+                          //       branchId = value?.id;
+                          //       retainStudent = 1;
+                          //       Navigator.pop(context);
+                          //       setState(() {});
+                          //     },
+                          //   ).show();
+                          // },
                         ),
                       ),
                       if (branchId != null)
