@@ -102,6 +102,7 @@ class FeeDetailsService {
     int? year,
     String? feeType,
     String? searchQuery,
+    String? paymentStatus,
     required int pageNo,
   }) async {
     try {
@@ -110,6 +111,9 @@ class FeeDetailsService {
         queryPath += 'branch_id=$branchId';
         if (batchId != null) {
           queryPath += '&batch_id=$batchId';
+        }
+        if (paymentStatus != null) {
+          queryPath += '&payment_status=$paymentStatus';
         }
         if ((feeType != null || feeType != 'all') &&
             (feeType == 'class' || feeType == 'monthly')) {
@@ -135,9 +139,12 @@ class FeeDetailsService {
           }
         }
       } else {
+        if (paymentStatus != null) {
+          queryPath += 'payment_status=$paymentStatus';
+        }
         if ((feeType != null || feeType != 'all') &&
             (feeType == 'class' || feeType == 'monthly')) {
-          queryPath += 'fee_type=$feeType';
+          queryPath += '&fee_type=$feeType';
           if (month != null) {
             queryPath += '&month=$month';
           }
@@ -152,9 +159,9 @@ class FeeDetailsService {
           }
         } else {
           if (searchQuery == '' || searchQuery == null) {
-            queryPath += 'page=$pageNo';
+            queryPath += '&page=$pageNo';
           } else {
-            queryPath += 'search=$searchQuery';
+            queryPath += '&search=$searchQuery';
             queryPath += '&page=$pageNo';
           }
         }

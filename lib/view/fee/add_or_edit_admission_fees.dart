@@ -346,8 +346,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                           feeCubit.editAdmissionFees({
                                             'new_date': date,
                                             'new_amount': amount,
-                                            'payment_method':
-                                                paymentValue?.item,
+                                            'payment_method': paymentValue.item,
                                             'reason': reason
                                           },
                                               admissionFeeInvoiceId: feeCubit
@@ -391,7 +390,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                               DataColumn(
                                 label: SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width / 3.5,
+                                      MediaQuery.of(context).size.width / 3.6.w,
                                   child: CustomPaint(
                                       painter: DottedBorderPainter(),
                                       child: Align(
@@ -414,8 +413,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                               ),
                               DataColumn(
                                 label: SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 3.5,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   child: CustomPaint(
                                     painter: DottedBorderPainter(),
                                     child: Center(
@@ -435,7 +433,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                               DataColumn(
                                 label: SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width / 3.5,
+                                      MediaQuery.of(context).size.width / 3.6.w,
                                   child: CustomPaint(
                                       painter: DottedBorderPainter(),
                                       child: Align(
@@ -461,8 +459,8 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                               return DataRow(cells: [
                                 DataCell(
                                   SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
+                                    width: MediaQuery.of(context).size.width /
+                                        3.6.w,
                                     child: CustomPaint(
                                         painter: DottedBorderPainter(),
                                         child: Align(
@@ -485,7 +483,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                 DataCell(
                                   SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width / 3.5,
+                                        MediaQuery.of(context).size.width / 3,
                                     child: CustomPaint(
                                       painter: DottedBorderPainter(),
                                       child: Center(
@@ -503,8 +501,8 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                 ),
                                 DataCell(
                                   SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
+                                    width: MediaQuery.of(context).size.width /
+                                        3.6.w,
                                     child: CustomPaint(
                                         painter: DottedBorderPainter(),
                                         child: Align(
@@ -535,7 +533,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3.5,
+                                                  3.6.w,
                                               child: CustomPaint(
                                                   painter:
                                                       DottedBorderPainter(),
@@ -566,7 +564,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3.5,
+                                                  3,
                                               child: CustomPaint(
                                                 painter: DottedBorderPainter(),
                                                 child: Center(
@@ -590,7 +588,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3.5,
+                                                  3.6.w,
                                               child: CustomPaint(
                                                   painter:
                                                       DottedBorderPainter(),
@@ -625,7 +623,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3.5,
+                                                  3.6.w,
                                               child: CustomPaint(
                                                   painter:
                                                       DottedBorderPainter(),
@@ -648,7 +646,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3.5,
+                                                  3,
                                               child: CustomPaint(
                                                 painter: DottedBorderPainter(),
                                                 child: Center(
@@ -664,7 +662,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3.5,
+                                                  3.6.w,
                                               child: CustomPaint(
                                                   painter:
                                                       DottedBorderPainter(),
@@ -688,8 +686,10 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                           ),
                           if (payment?.isEdited == 1)
                             SizedBox(
-                              width:
-                                  (3 * MediaQuery.of(context).size.width) / 3.5,
+                              width: (2 *
+                                      (MediaQuery.of(context).size.width /
+                                          3.6.w)) +
+                                  (MediaQuery.of(context).size.width / 3),
                               child: CustomPaint(
                                 painter: DottedBorderPainter(),
                                 child: Padding(
@@ -715,8 +715,10 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                             ),
                           if (payment?.paymentMethod != null)
                             SizedBox(
-                              width:
-                                  (3 * MediaQuery.of(context).size.width) / 3.5,
+                              width: (2 *
+                                      (MediaQuery.of(context).size.width /
+                                          3.6.w)) +
+                                  (MediaQuery.of(context).size.width / 3),
                               child: CustomPaint(
                                 painter: DottedBorderPainter(),
                                 child: Padding(
@@ -736,8 +738,10 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                             ),
                           if (payment?.isDeleted == 1)
                             SizedBox(
-                              width:
-                                  (3 * MediaQuery.of(context).size.width) / 3.5,
+                              width: (2 *
+                                      (MediaQuery.of(context).size.width /
+                                          3.6.w)) +
+                                  (MediaQuery.of(context).size.width / 3),
                               child: CustomPaint(
                                 painter: DottedBorderPainter(),
                                 child: Padding(
@@ -911,7 +915,7 @@ class _AddOrEditFeesState extends State<AddOrEditAdmissionFees> {
                                 await feeCubit.addFeesForAdmission(
                                     feeCubit.admissionFeeInvoice?.id, {
                                   'amount': feesController.text,
-                                  'payment_method': paymentMethodValue?.title,
+                                  'payment_method': paymentMethodValue.title,
                                   'payment_date':
                                       dateController.text.toDateServerString()
                                 });

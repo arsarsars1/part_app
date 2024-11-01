@@ -301,7 +301,7 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  5,
+                                                  4.w,
                                               child: CustomPaint(
                                                   painter:
                                                       DottedBorderPainter(),
@@ -355,7 +355,7 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  5,
+                                                  4.w,
                                               child: CustomPaint(
                                                   painter:
                                                       DottedBorderPainter(),
@@ -390,7 +390,7 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    5,
+                                                    4.w,
                                                 child: CustomPaint(
                                                     painter:
                                                         DottedBorderPainter(),
@@ -462,7 +462,7 @@ class _TrainerAppFeeListItemState extends State<TrainerAppFeeListItem> {
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    5,
+                                                    4.w,
                                                 child: CustomPaint(
                                                     painter:
                                                         DottedBorderPainter(),

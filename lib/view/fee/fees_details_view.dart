@@ -414,6 +414,28 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
                         doSearch(true);
                       },
                     ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CommonField(
+                      title: 'Payment Status',
+                      hint: 'Select a status',
+                      dropDown: true,
+                      dropDownItems: DefaultValues().paymentStatuses,
+                      defaultItem: status != null
+                          ? DefaultValues().paymentStatuses.firstWhere(
+                                (element) =>
+                                    element.id?.toLowerCase() == status,
+                              )
+                          : DefaultValues().paymentStatuses.firstWhere(
+                                (element) =>
+                                    element.title?.toLowerCase() == 'all',
+                              ),
+                      onChange: (value) {
+                        status = value?.id;
+                        doSearch(true);
+                      },
+                    ),
                     if (feeType == "monthly")
                       Column(
                         children: [
@@ -529,6 +551,7 @@ class _FeesDetailsViewState extends State<FeesDetailsView> {
           year: year,
           feeType: feeType,
           searchQuery: query,
+          paymentStatus: status,
           clean: clean,
         );
   }
