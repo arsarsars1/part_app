@@ -101,105 +101,114 @@ class _TrainerAppEditBatchDetailsState
                       const SizedBox(
                         height: 20,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: DropdownButtonFormField<DropDownItem>(
-                          key: _dropDownKey,
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please select branch.';
-                            }
-                            return null;
-                          },
-                          dropdownColor:
-                              Theme.of(context).inputDecorationTheme.fillColor,
-                          value: selectedItem ??
-                              branchCubit.initialBranch(
-                                batchModel?.branchId,
-                              ),
-                          items: branchCubit.dropDownBranches().map((e) {
-                            return DropdownMenuItem(
-                              value: e,
-                              child: Text(
-                                e.title ?? '',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: Colors.white,
-                                    ),
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            AlertBox.showErrorAlert(
-                              context,
-                              message:
-                                  'You don\'t have authorisation to edit the branch.',
-                              onTap: () {
-                                _dropDownKey.currentState?.reset();
-                                Navigator.pop(context);
-                                Navigator.pop(context);
+                      Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: DropdownButtonFormField<DropDownItem>(
+                              key: _dropDownKey,
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please select branch.';
+                                }
+                                return null;
                               },
-                            );
-                          },
-                          // onChanged: (value) {
-                          //   if (value?.title == batchModel?.branchName) {
-                          //     return;
-                          //   }
-                          //   String branchName = '';
-                          //   for (var item
-                          //       in context.read<BranchCubit>().branches) {
-                          //     if (item.id == value?.id) {
-                          //       branchName = item.branchName ?? "";
-                          //       break;
-                          //     }
-                          //   }
-                          //   CommonDialog(
-                          //     context: context,
-                          //     message:
-                          //         'You are switching ${batchModel?.name} from ${batchModel?.branchName} to $branchName.',
-                          //     buttonText: 'Yes',
-                          //     subColor: AppColors.primaryColor,
-                          //     subContent: Column(
-                          //       children: [
-                          //         Text(
-                          //           'Do you want to retain the students assigned in the batch?',
-                          //           textAlign: TextAlign.center,
-                          //           style: Theme.of(context)
-                          //               .textTheme
-                          //               .bodyLarge
-                          //               ?.copyWith(
-                          //                 color: AppColors.primaryColor,
-                          //               ),
-                          //         ),
-                          //         SizedBox(
-                          //           height: 20.h,
-                          //         )
-                          //       ],
-                          //     ),
-                          //     onCancelTap: () {
-                          //       _dropDownKey.currentState?.reset();
-                          //       Navigator.pop(context);
-                          //     },
-                          //     hasClose: true,
-                          //     onClose: () {
-                          //       selectedItem = value;
-                          //       branchId = value?.id;
-                          //       retainStudent = 0;
-                          //       Navigator.pop(context);
-                          //       setState(() {});
-                          //     },
-                          //     onTap: () {
-                          //       selectedItem = value;
-                          //       branchId = value?.id;
-                          //       retainStudent = 1;
-                          //       Navigator.pop(context);
-                          //       setState(() {});
-                          //     },
-                          //   ).show();
-                          // },
-                        ),
+                              dropdownColor: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .fillColor,
+                              value: selectedItem ??
+                                  branchCubit.initialBranch(
+                                    batchModel?.branchId,
+                                  ),
+                              items: branchCubit.dropDownBranches().map((e) {
+                                return DropdownMenuItem(
+                                  value: e,
+                                  child: Text(
+                                    e.title ?? '',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: Colors.white,
+                                        ),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                if (value?.title == batchModel?.branchName) {
+                                  return;
+                                }
+                                String branchName = '';
+                                for (var item
+                                    in context.read<BranchCubit>().branches) {
+                                  if (item.id == value?.id) {
+                                    branchName = item.branchName ?? "";
+                                    break;
+                                  }
+                                }
+                                CommonDialog(
+                                  context: context,
+                                  message:
+                                      'You are switching ${batchModel?.name} from ${batchModel?.branchName} to $branchName.',
+                                  buttonText: 'Yes',
+                                  subColor: AppColors.primaryColor,
+                                  subContent: Column(
+                                    children: [
+                                      Text(
+                                        'Do you want to retain the students assigned in the batch?',
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: AppColors.primaryColor,
+                                            ),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      )
+                                    ],
+                                  ),
+                                  onCancelTap: () {
+                                    _dropDownKey.currentState?.reset();
+                                    Navigator.pop(context);
+                                  },
+                                  hasClose: true,
+                                  onClose: () {
+                                    selectedItem = value;
+                                    branchId = value?.id;
+                                    retainStudent = 0;
+                                    Navigator.pop(context);
+                                    setState(() {});
+                                  },
+                                  onTap: () {
+                                    selectedItem = value;
+                                    branchId = value?.id;
+                                    retainStudent = 1;
+                                    Navigator.pop(context);
+                                    setState(() {});
+                                  },
+                                ).show();
+                              },
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              AlertBox.showErrorAlert(
+                                context,
+                                message:
+                                    'You don\'t have authorisation to edit the branch.',
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              );
+                            },
+                            child: Container(
+                              color: Colors.transparent,
+                              height: 55.h,
+                            ),
+                          ),
+                        ],
                       ),
                       if (branchId != null)
                         Column(
@@ -240,40 +249,82 @@ class _TrainerAppEditBatchDetailsState
                       const SizedBox(
                         height: 20,
                       ),
-                      CommonField(
-                        title: 'Course *',
-                        hint: 'Select Course',
-                        dropDown: true,
-                        defaultItem: cubit.defaultCourse,
-                        dropDownItems: cubit.getCoursesDropDown(),
-                        onChange: (value) {
-                          courseId = value?.id;
-                          cubit.getSubjects(courseId: courseId);
-                        },
-                        validator: (value) {
-                          return value == null ? 'Please select course.' : null;
-                        },
+                      Stack(
+                        children: [
+                          CommonField(
+                            title: 'Course *',
+                            hint: 'Select Course',
+                            dropDown: true,
+                            defaultItem: cubit.defaultCourse,
+                            dropDownItems: cubit.getCoursesDropDown(),
+                            onChange: (value) {
+                              courseId = value?.id;
+                              cubit.getSubjects(courseId: courseId);
+                            },
+                            validator: (value) {
+                              return value == null
+                                  ? 'Please select course.'
+                                  : null;
+                            },
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              AlertBox.showErrorAlert(
+                                context,
+                                message:
+                                    'You don\'t have authorisation to edit the course.',
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              );
+                            },
+                            child: Container(
+                              color: Colors.transparent,
+                              height: 75.h,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      state is GettingCourses
-                          ? const Offstage()
-                          : CommonField(
-                              title: 'Subject *',
-                              hint: 'Select Subject',
-                              dropDown: true,
-                              defaultItem: cubit.defaultSubject,
-                              dropDownItems: cubit.getSubjectsDropDown(),
-                              onChange: (value) {
-                                subjectId = value?.id;
-                              },
-                              validator: (value) {
-                                return value == null
-                                    ? 'Please select subject.'
-                                    : null;
-                              },
+                      Stack(
+                        children: [
+                          state is GettingCourses
+                              ? const Offstage()
+                              : CommonField(
+                                  title: 'Subject *',
+                                  hint: 'Select Subject',
+                                  dropDown: true,
+                                  defaultItem: cubit.defaultSubject,
+                                  dropDownItems: cubit.getSubjectsDropDown(),
+                                  onChange: (value) {
+                                    subjectId = value?.id;
+                                  },
+                                  validator: (value) {
+                                    return value == null
+                                        ? 'Please select subject.'
+                                        : null;
+                                  },
+                                ),
+                          GestureDetector(
+                            onTap: () {
+                              AlertBox.showErrorAlert(
+                                context,
+                                message:
+                                    'You don\'t have authorisation to edit the subject.',
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              );
+                            },
+                            child: Container(
+                              color: Colors.transparent,
+                              height: 75.h,
                             ),
+                          ),
+                        ],
+                      ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -285,6 +336,7 @@ class _TrainerAppEditBatchDetailsState
                         onChange: (value) {
                           admissionFee = value;
                         },
+                        disabled: true,
                         validator: (value) {
                           if (value == null || value.toString().isEmpty) {
                             return 'Please enter admission fees.';
@@ -301,6 +353,7 @@ class _TrainerAppEditBatchDetailsState
                         title: 'Fees *',
                         initialValue: '${batchModel?.fee}',
                         hint: 'Enter Fees',
+                        disabled: true,
                         validator: (value) {
                           if (value == null || value.toString().isEmpty) {
                             return 'Please enter fees';
