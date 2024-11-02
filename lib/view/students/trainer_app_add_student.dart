@@ -44,6 +44,7 @@ class _TrainerAppAddStudentState extends State<TrainerAppAddStudent> {
   @override
   Widget build(BuildContext context) {
     final FlutterContactPicker contactPicker = FlutterContactPicker();
+    var cubit = context.read<StudentCubit>();
     return Scaffold(
       appBar: CommonBar(title: 'Add New Student', result: isValueChanged),
       body: Form(
@@ -171,12 +172,22 @@ class _TrainerAppAddStudentState extends State<TrainerAppAddStudent> {
                 suffixIcon: InkWell(
                   onTap: () async {
                     Contact? contact = await contactPicker.selectContact();
-                    setState(() {
-                      phone =
-                          contact?.phoneNumbers?.first.replaceAll('+91', '');
-                      phone = phone?.cleanPhoneNumber();
-                      phoneController.text = phone ?? "";
-                    });
+                    if (contact != null) {
+                      if (cubit.checkPhoneNumber(contact)) {
+                        setState(() {
+                          String phoneNumber =
+                              cubit.get10DigitsPhoneNumber(contact);
+                          if (phoneNumber.isNotEmpty) {
+                            phoneNumber = phoneNumber.cleanPhoneNumber();
+                            phoneController.text = phoneNumber;
+                            phone = phoneNumber;
+                            whatsappNo = phone;
+                          }
+                        });
+                      } else {
+                        Alert(context).show(message: 'Invalid phone number');
+                      }
+                    }
                   },
                   child: Icon(
                     Icons.contact_page,

@@ -45,6 +45,7 @@ class _AddStudentState extends State<AddStudent> {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = context.read<StudentCubit>();
     final FlutterContactPicker contactPicker = FlutterContactPicker();
     return Scaffold(
       appBar: CommonBar(title: 'Add New Student', result: isValueChanged),
@@ -174,15 +175,22 @@ class _AddStudentState extends State<AddStudent> {
                 suffixIcon: InkWell(
                   onTap: () async {
                     Contact? contact = await contactPicker.selectContact();
-                    setState(() {
-                      phone = contact?.phoneNumbers?.first
-                          .replaceAll('+91', '')
-                          .replaceAll(' ', '');
-                      phoneController.text =
-                          (contact?.phoneNumbers?.first ?? '')
-                              .replaceAll('+91', '')
-                              .replaceAll(' ', '');
-                    });
+                    if (contact != null) {
+                      if (cubit.checkPhoneNumber(contact)) {
+                        setState(() {
+                          String phoneNumber =
+                              cubit.get10DigitsPhoneNumber(contact);
+                          if (phoneNumber.isNotEmpty) {
+                            phoneNumber = phoneNumber.cleanPhoneNumber();
+                            phoneController.text = phoneNumber;
+                            phone = phoneNumber;
+                            whatsappNo = phone;
+                          }
+                        });
+                      } else {
+                        Alert(context).show(message: 'Invalid phone number');
+                      }
+                    }
                   },
                   child: Icon(
                     Icons.contact_page,
@@ -309,8 +317,6 @@ class _AddStudentState extends State<AddStudent> {
                       formKey.currentState?.save();
 
                       if (formKey.currentState!.validate()) {
-                        var cubit = context.read<StudentCubit>();
-
                         StudentRequest request = cubit.studentRequest.copyWith(
                           name: name,
                           mobileNo: phone?.removeCountryCode(),

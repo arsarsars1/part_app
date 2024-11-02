@@ -81,7 +81,8 @@ class _WhatsappCheckButtonState extends State<WhatsappCheckButton> {
             ? const Offstage()
             : CommonField(
                 phoneField: true,
-                initialValue: widget.initialValue,
+                initialValue:
+                    widget.initialValue == '0' ? '' : widget.initialValue,
                 validator: widget.isMandatory
                     ? (value) => PhoneNumberValidator.validateIndianPhoneNumber(
                         value as String?)

@@ -93,29 +93,45 @@ class _TrainerListState extends State<TrainerList> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          if (trainer.whatsappNo != null) {
-                            openWhatsapp(
-                              context: context,
-                              text: '',
-                              number:
-                                  '+${widget.trainers[index].countryCode}${trainer.whatsappNo}',
-                            );
-                          }
-                        },
-                        child: Container(
-                          width: 25.w,
-                          height: 25.h,
-                          padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF00F260),
+                      Stack(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              if (trainer.whatsappNo != null) {
+                                openWhatsapp(
+                                  context: context,
+                                  text: '',
+                                  number:
+                                      '+${widget.trainers[index].countryCode}${trainer.whatsappNo}',
+                                );
+                              }
+                            },
+                            child: Container(
+                              width: 25.w,
+                              height: 25.h,
+                              padding: const EdgeInsets.all(4),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF00F260),
+                              ),
+                              child: SvgPicture.asset(
+                                Assets.whatsApp,
+                              ),
+                            ),
                           ),
-                          child: SvgPicture.asset(
-                            Assets.whatsApp,
-                          ),
-                        ),
+                          if (trainer.whatsappNo == null ||
+                              trainer.whatsappNo == '' ||
+                              trainer.whatsappNo == '0')
+                            Container(
+                              width: 25.w,
+                              height: 25.h,
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black.withOpacity(.6),
+                              ),
+                            )
+                        ],
                       ),
                       SizedBox(width: 10.w),
                       InkWell(

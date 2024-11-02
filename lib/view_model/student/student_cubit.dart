@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:part_app/flavors.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/model/data_model/batch_response.dart';
@@ -672,5 +673,27 @@ class StudentCubit extends Cubit<StudentState> {
     } else {
       emit(RemoveStudentFailed(common?.message ?? 'Failed to remove student'));
     }
+  }
+
+  bool checkPhoneNumber(Contact contact) {
+    String temp = (contact.phoneNumbers?.first ?? '').replaceAll(' ', '');
+    if (RegExp(r'^\d+$').hasMatch(temp) ||
+        (temp.startsWith('+') && RegExp(r'^\+\d+$').hasMatch(temp)) ||
+        temp.length >= 10) {
+      String prefix = temp.substring(0, temp.length - 10);
+      if (prefix == "" || prefix == "0" || prefix == "+91" || prefix == "91") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  String get10DigitsPhoneNumber(Contact contact) {
+    String temp = (contact.phoneNumbers?.first ?? '').replaceAll(' ', '');
+    String? lastTenDigits = temp.substring(temp.length - 10);
+    return lastTenDigits;
   }
 }

@@ -105,15 +105,41 @@ class BatchCubit extends Cubit<BatchState> {
     emit(DaysUpdated());
   }
 
+  bool checkPhoneNumber(Contact contact, BuildContext context) {
+    String temp = contact.phones.first.number.replaceAll(' ', '');
+    if (RegExp(r'^\d+$').hasMatch(temp) ||
+        (temp.startsWith('+') && RegExp(r'^\+\d+$').hasMatch(temp)) ||
+        temp.length >= 10) {
+      String prefix = temp.substring(0, temp.length - 10);
+      if (prefix == "" || prefix == "0" || prefix == "+91" || prefix == "91") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  String get10DigitsPhoneNumber(Contact contact) {
+    String temp = contact.phones.first.number.replaceAll(' ', '');
+    String? lastTenDigits = temp.substring(temp.length - 10);
+    return lastTenDigits;
+  }
+
   void addContact(Contact contact) {
     _selectedContactList.add(contact);
-    if (!_studentData.contains(StudentsData(
+    if (!_studentData.contains(
+      StudentsData(
         name: contact.displayName,
-        mobileNo: contact.phones.first.number.replaceAll('+91', '')))) {
+        mobileNo: get10DigitsPhoneNumber(contact),
+      ),
+    )) {
       _studentData.add(
         StudentsData(
-            name: contact.displayName,
-            mobileNo: contact.phones.first.number.replaceAll('+91', '')),
+          name: contact.displayName,
+          mobileNo: get10DigitsPhoneNumber(contact),
+        ),
       );
     }
 
@@ -121,11 +147,13 @@ class BatchCubit extends Cubit<BatchState> {
   }
 
   void removeContact(Contact contact) {
-    _selectedContactList.removeWhere((element) =>
-        element.phones.first.number ==
-        contact.phones.first.number.replaceAll('+91', ''));
-    _studentData.removeWhere((element) =>
-        element.mobileNo == contact.phones.first.number.replaceAll('+91', ''));
+    _selectedContactList.removeWhere(
+      (element) =>
+          get10DigitsPhoneNumber(element) == get10DigitsPhoneNumber(contact),
+    );
+    _studentData.removeWhere(
+      (element) => element.mobileNo == get10DigitsPhoneNumber(contact),
+    );
     emit(ContactRemoved());
   }
 
@@ -137,8 +165,7 @@ class BatchCubit extends Cubit<BatchState> {
   bool checkContactSelected(Contact contact) {
     bool flag = false;
     for (var element in selectedContactList) {
-      if (element.phones.first.normalizedNumber.replaceAll('+91', '') ==
-          contact.phones.first.normalizedNumber.replaceAll('+91', '')) {
+      if (get10DigitsPhoneNumber(element) == get10DigitsPhoneNumber(contact)) {
         flag = true;
       }
     }

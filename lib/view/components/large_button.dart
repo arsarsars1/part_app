@@ -8,6 +8,7 @@ class LargeButton extends StatelessWidget {
   final double? margin;
   final double? height;
   final EdgeInsets? marginPadding;
+  final bool noHeight;
 
   const LargeButton({
     super.key,
@@ -17,6 +18,7 @@ class LargeButton extends StatelessWidget {
     this.height,
     this.margin,
     this.marginPadding,
+    this.noHeight = false,
   });
 
   @override
@@ -24,7 +26,7 @@ class LargeButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: height ?? UIConstants.buttonHeight,
+        height: noHeight ? null : height ?? UIConstants.buttonHeight,
         decoration: BoxDecoration(
           color: color ?? AppColors.primaryColor,
           borderRadius: BorderRadius.circular(45),

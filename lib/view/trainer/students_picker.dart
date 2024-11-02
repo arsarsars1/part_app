@@ -244,7 +244,16 @@ class _StudentPickerState extends State<StudentPicker> {
                                           if (checkContactSelected(contact)) {
                                             selectedContacts?.remove(contact);
                                           } else {
-                                            selectedContacts?.add(contact);
+                                            if (context
+                                                .read<BatchCubit>()
+                                                .checkPhoneNumber(
+                                                    contact, context)) {
+                                              selectedContacts?.add(contact);
+                                            } else {
+                                              Alert(context).show(
+                                                  message:
+                                                      'Invalid Phone Number');
+                                            }
                                           }
                                           setState(() {});
                                         }

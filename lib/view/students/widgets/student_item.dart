@@ -63,29 +63,45 @@ class StudentItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      if (student.whatsappNo != null) {
-                        Launcher.openWhatsapp(
-                          context: context,
-                          text: '',
-                          number:
-                              '+${student.countryCode}${student.whatsappNo}',
-                        );
-                      }
-                    },
-                    child: Container(
-                      width: 25.w,
-                      height: 25.h,
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFF00F260),
+                  Stack(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          if (student.whatsappNo != null) {
+                            Launcher.openWhatsapp(
+                              context: context,
+                              text: '',
+                              number:
+                                  '+${student.countryCode}${student.whatsappNo}',
+                            );
+                          }
+                        },
+                        child: Container(
+                          width: 25.w,
+                          height: 25.h,
+                          padding: const EdgeInsets.all(4),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFF00F260),
+                          ),
+                          child: SvgPicture.asset(
+                            Assets.whatsApp,
+                          ),
+                        ),
                       ),
-                      child: SvgPicture.asset(
-                        Assets.whatsApp,
-                      ),
-                    ),
+                      if (student.whatsappNo == null ||
+                          student.whatsappNo == '' ||
+                          student.whatsappNo == '0')
+                        Container(
+                          width: 25.w,
+                          height: 25.h,
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.black.withOpacity(.6),
+                          ),
+                        )
+                    ],
                   ),
                   SizedBox(width: 10.w),
                   InkWell(

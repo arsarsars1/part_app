@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/assignable_model.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
+import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
@@ -41,6 +43,7 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
   TextEditingController batchController = TextEditingController();
   TextEditingController trainerController = TextEditingController();
   TextEditingController commentController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -58,7 +61,8 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
 
   @override
   Widget build(BuildContext context) {
-    var batchCubit = context.read<BatchCubit>();
+    final FlutterContactPicker contactPicker = FlutterContactPicker();
+    var studentCubit = context.read<StudentCubit>();
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
@@ -169,21 +173,47 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
                     title: 'Mobile Number *',
                     hint: 'Please enter number',
                     length: 10,
+                    phoneField: true,
                     maxLines: 1,
                     inputType: TextInputType.phone,
                     textInputAction: TextInputAction.next,
+                    controller: phoneController,
                     onChange: (value) {
                       mobileNumber = value;
                       if (value.length >= 10) {
                         FocusManager.instance.primaryFocus?.unfocus();
                       }
                     },
-                    validator: (value) {
-                      return value == null || value.toString().isEmpty
-                          ? 'Please enter the phone number.'
-                          : null;
-                    },
+                    validator: (value) =>
+                        PhoneNumberValidator.validateIndianPhoneNumber(
+                            value as String?),
+                    suffixIcon: InkWell(
+                      onTap: () async {
+                        Contact? contact = await contactPicker.selectContact();
+                        if (contact != null) {
+                          if (studentCubit.checkPhoneNumber(contact)) {
+                            setState(() {
+                              String phoneNumber =
+                                  studentCubit.get10DigitsPhoneNumber(contact);
+                              if (phoneNumber.isNotEmpty) {
+                                phoneNumber = phoneNumber.cleanPhoneNumber();
+                                phoneController.text = phoneNumber;
+                                mobileNumber = phoneNumber;
+                              }
+                            });
+                          } else {
+                            Alert(context)
+                                .show(message: 'Invalid phone number');
+                          }
+                        }
+                      },
+                      child: Icon(
+                        Icons.contact_page,
+                        color: AppColors.grey81,
+                      ),
+                    ),
                   ),
+                  SizedBox(height: 20.h),
                   WhatsappCheckButton(
                     isMandatory: false,
                     selected: sameWhatsapp,
@@ -200,9 +230,7 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
                       whatsappNumber = value;
                     },
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   // CommonField(
                   //   initialValue: email,
                   //   inputType: TextInputType.emailAddress,

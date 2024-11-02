@@ -139,15 +139,22 @@ class _AddTrainerState extends State<AddTrainer> {
                   suffixIcon: InkWell(
                     onTap: () async {
                       Contact? contact = await contactPicker.selectContact();
-                      setState(() {
-                        String phoneNumber = contact?.phoneNumbers?.first ?? "";
-                        if (phoneNumber.isNotEmpty) {
-                          phoneNumber = phoneNumber.cleanPhoneNumber();
-                          phoneController.text = phoneNumber;
-                          phone = phoneNumber;
-                          whatsappNo = phone;
+                      if (contact != null) {
+                        if (trainerCubit.checkPhoneNumber(contact)) {
+                          setState(() {
+                            String phoneNumber =
+                                trainerCubit.get10DigitsPhoneNumber(contact);
+                            if (phoneNumber.isNotEmpty) {
+                              phoneNumber = phoneNumber.cleanPhoneNumber();
+                              phoneController.text = phoneNumber;
+                              phone = phoneNumber;
+                              whatsappNo = phone;
+                            }
+                          });
+                        } else {
+                          Alert(context).show(message: 'Invalid phone number');
                         }
-                      });
+                      }
                     },
                     child: Icon(
                       Icons.contact_page,

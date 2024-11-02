@@ -665,6 +665,7 @@ class _AdmissionFeeListItemState extends State<AdmissionFeeListItem> {
                                   ],
                                 LargeButton(
                                   title: 'Other Payments',
+                                  noHeight: true,
                                   onTap: () {
                                     Alert(context)
                                         .show(message: "Coming soon !!");
