@@ -607,157 +607,154 @@ class _StudentAppHomeFeeListItemState extends State<StudentAppHomeFeeListItem> {
                 ],
               ),
             )
-          : Padding(
-              padding: EdgeInsets.all(16.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 120.w,
-                    height: 20.h,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20.h),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: widget.fee?.writtenOffStatus != 1
-                              ? widget.fee?.paymentStatus == 'paid'
-                                  ? AppColors.green
-                                  : widget.fee?.paymentStatus == 'partial'
-                                      ? AppColors.yellow
-                                      : AppColors.red
-                              : AppColors.green,
-                        ),
-                      ),
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 120.w,
+                  height: 20.h,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20.h),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isShrunk = !isShrunk;
-                      });
-                    },
                     child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 16.h,
-                      ),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: AppColors.liteDark,
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  UserImage(
-                                    profilePic: widget.fee?.studentDetail!
-                                                .profilePic !=
-                                            ""
-                                        ? '${F.baseUrl}'
-                                            '/admin/images/student/'
-                                            '${widget.fee?.studentDetail!.id}/${widget.fee?.studentDetail?.profilePic}'
-                                        : '',
-                                  ),
-                                  SizedBox(width: 16.w),
-                                  SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      '${widget.fee?.studentDetail?.name}',
-                                      maxLines: 2,
-                                      softWrap: true,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              widget.fee?.writtenOffStatus != 1 &&
-                                      widget.fee?.paymentStatus != 'paid'
-                                  ? widget.fee?.feeType == "monthly"
-                                      ? Text(
-                                          'Due Date: ${widget.fee?.paymentDueDate?.toDateString()}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                color: AppColors.textColor,
-                                              ),
-                                        )
-                                      : Text(
-                                          'Due in: ${10 - (widget.fee?.monthClassesConductedCount ?? 0)}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                color: AppColors.textColor,
-                                              ),
-                                        )
-                                  : Text(
-                                      '',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color: AppColors.textColor,
-                                          ),
-                                    ),
-                              Text(
-                                widget.fee?.writtenOffStatus != 1
-                                    ? widget.fee?.paymentStatus == 'paid'
-                                        ? "Completely Paid"
-                                        : widget.fee?.paymentStatus == 'partial'
-                                            ? "Partially Paid"
-                                            : "Not Paid"
-                                    : "Written Off",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15,
-                                      color: widget.fee?.writtenOffStatus != 1
-                                          ? widget.fee?.paymentStatus == 'paid'
-                                              ? AppColors.green
-                                              : widget.fee?.paymentStatus ==
-                                                      'partial'
-                                                  ? AppColors.yellow
-                                                  : AppColors.primaryColor
-                                          : AppColors.green,
-                                    ),
-                              ),
-                            ],
-                          ),
-                          isShrunk
-                              ? Icon(
-                                  Icons.expand_less,
-                                  color: AppColors.textColor,
-                                )
-                              : Icon(
-                                  Icons.expand_more,
-                                  color: AppColors.textColor,
-                                ),
-                        ],
+                        color: widget.fee?.writtenOffStatus != 1
+                            ? widget.fee?.paymentStatus == 'paid'
+                                ? AppColors.green
+                                : widget.fee?.paymentStatus == 'partial'
+                                    ? AppColors.yellow
+                                    : AppColors.red
+                            : AppColors.green,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isShrunk = !isShrunk;
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 16.h,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColors.liteDark,
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                UserImage(
+                                  profilePic: widget
+                                              .fee?.studentDetail!.profilePic !=
+                                          ""
+                                      ? '${F.baseUrl}'
+                                          '/admin/images/student/'
+                                          '${widget.fee?.studentDetail!.id}/${widget.fee?.studentDetail?.profilePic}'
+                                      : '',
+                                ),
+                                SizedBox(width: 16.w),
+                                SizedBox(
+                                  width: 100,
+                                  child: Text(
+                                    '${widget.fee?.studentDetail?.name}',
+                                    maxLines: 2,
+                                    softWrap: true,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            widget.fee?.writtenOffStatus != 1 &&
+                                    widget.fee?.paymentStatus != 'paid'
+                                ? widget.fee?.feeType == "monthly"
+                                    ? Text(
+                                        'Due Date: ${widget.fee?.paymentDueDate?.toDateString()}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: AppColors.textColor,
+                                            ),
+                                      )
+                                    : Text(
+                                        'Due in: ${10 - (widget.fee?.monthClassesConductedCount ?? 0)}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: AppColors.textColor,
+                                            ),
+                                      )
+                                : Text(
+                                    '',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: AppColors.textColor,
+                                        ),
+                                  ),
+                            Text(
+                              widget.fee?.writtenOffStatus != 1
+                                  ? widget.fee?.paymentStatus == 'paid'
+                                      ? "Completely Paid"
+                                      : widget.fee?.paymentStatus == 'partial'
+                                          ? "Partially Paid"
+                                          : "Not Paid"
+                                  : "Written Off",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                    color: widget.fee?.writtenOffStatus != 1
+                                        ? widget.fee?.paymentStatus == 'paid'
+                                            ? AppColors.green
+                                            : widget.fee?.paymentStatus ==
+                                                    'partial'
+                                                ? AppColors.yellow
+                                                : AppColors.primaryColor
+                                        : AppColors.green,
+                                  ),
+                            ),
+                          ],
+                        ),
+                        isShrunk
+                            ? Icon(
+                                Icons.expand_less,
+                                color: AppColors.textColor,
+                              )
+                            : Icon(
+                                Icons.expand_more,
+                                color: AppColors.textColor,
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
     );
   }

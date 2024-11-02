@@ -174,7 +174,7 @@ class _ScheduleFieldState extends State<ScheduleField> {
       },
       controller: widget.controller,
       padding: widget.month || widget.year
-          ? const EdgeInsets.symmetric(horizontal: 30)
+          ? const EdgeInsets.symmetric(horizontal: 16)
           : const EdgeInsets.only(left: 10),
       // padding: const EdgeInsets.only(left: 10),
       title: widget.title,

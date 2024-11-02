@@ -599,158 +599,153 @@ class _StudentAppFeeListItemState extends State<StudentAppFeeListItem> {
                 ],
               ),
             )
-          : Padding(
-              padding: EdgeInsets.all(16.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 120.w,
-                    height: 20.h,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20.h),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: widget.invoice.writtenOffStatus != 1
-                              ? widget.invoice.paymentStatus == 'paid'
-                                  ? AppColors.green
-                                  : widget.invoice.paymentStatus == 'partial'
-                                      ? AppColors.yellow
-                                      : AppColors.red
-                              : AppColors.green,
-                        ),
-                      ),
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 120.w,
+                  height: 20.h,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20.h),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isShrunk = !isShrunk;
-                      });
-                    },
                     child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 16.h,
-                      ),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: AppColors.liteDark,
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  UserImage(
-                                    profilePic: widget.invoice.studentDetail!
-                                                .profilePic !=
-                                            ""
-                                        ? '${F.baseUrl}'
-                                            '/admin/images/student/'
-                                            '${widget.invoice.studentDetail!.id}/${widget.invoice.studentDetail?.profilePic}'
-                                        : '',
-                                  ),
-                                  SizedBox(width: 16.w),
-                                  SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      '${widget.invoice.studentDetail?.name}',
-                                      maxLines: 2,
-                                      softWrap: true,
-                                      overflow: TextOverflow.ellipsis,
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              widget.invoice.writtenOffStatus != 1 &&
-                                      widget.invoice.paymentStatus != 'paid'
-                                  ? widget.invoice.feeType == "monthly"
-                                      ? Text(
-                                          'Due Date: ${widget.invoice.paymentDueDate?.toDateString()}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                color: AppColors.textColor,
-                                              ),
-                                        )
-                                      : Text(
-                                          'Due in: ${10 - (widget.invoice.monthClassesConductedCount ?? 0)}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                color: AppColors.textColor,
-                                              ),
-                                        )
-                                  : Text(
-                                      '',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color: AppColors.textColor,
-                                          ),
-                                    ),
-                              Text(
-                                widget.invoice.writtenOffStatus != 1
-                                    ? widget.invoice.paymentStatus == 'paid'
-                                        ? "Completely Paid"
-                                        : widget.invoice.paymentStatus ==
-                                                'partial'
-                                            ? "Partially Paid"
-                                            : "Not Paid"
-                                    : "Written Off",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15,
-                                      color: widget.invoice.writtenOffStatus !=
-                                              1
-                                          ? widget.invoice.paymentStatus ==
-                                                  'paid'
-                                              ? AppColors.green
-                                              : widget.invoice.paymentStatus ==
-                                                      'partial'
-                                                  ? AppColors.yellow
-                                                  : AppColors.primaryColor
-                                          : AppColors.green,
-                                    ),
-                              ),
-                            ],
-                          ),
-                          isShrunk
-                              ? Icon(
-                                  Icons.expand_less,
-                                  color: AppColors.textColor,
-                                )
-                              : Icon(
-                                  Icons.expand_more,
-                                  color: AppColors.textColor,
-                                ),
-                        ],
+                        color: widget.invoice.writtenOffStatus != 1
+                            ? widget.invoice.paymentStatus == 'paid'
+                                ? AppColors.green
+                                : widget.invoice.paymentStatus == 'partial'
+                                    ? AppColors.yellow
+                                    : AppColors.red
+                            : AppColors.green,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isShrunk = !isShrunk;
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 16.h,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColors.liteDark,
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                UserImage(
+                                  profilePic: widget.invoice.studentDetail!
+                                              .profilePic !=
+                                          ""
+                                      ? '${F.baseUrl}'
+                                          '/admin/images/student/'
+                                          '${widget.invoice.studentDetail!.id}/${widget.invoice.studentDetail?.profilePic}'
+                                      : '',
+                                ),
+                                SizedBox(width: 16.w),
+                                SizedBox(
+                                  width: 100,
+                                  child: Text(
+                                    '${widget.invoice.studentDetail?.name}',
+                                    maxLines: 2,
+                                    softWrap: true,
+                                    overflow: TextOverflow.ellipsis,
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            widget.invoice.writtenOffStatus != 1 &&
+                                    widget.invoice.paymentStatus != 'paid'
+                                ? widget.invoice.feeType == "monthly"
+                                    ? Text(
+                                        'Due Date: ${widget.invoice.paymentDueDate?.toDateString()}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: AppColors.textColor,
+                                            ),
+                                      )
+                                    : Text(
+                                        'Due in: ${10 - (widget.invoice.monthClassesConductedCount ?? 0)}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: AppColors.textColor,
+                                            ),
+                                      )
+                                : Text(
+                                    '',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: AppColors.textColor,
+                                        ),
+                                  ),
+                            Text(
+                              widget.invoice.writtenOffStatus != 1
+                                  ? widget.invoice.paymentStatus == 'paid'
+                                      ? "Completely Paid"
+                                      : widget.invoice.paymentStatus ==
+                                              'partial'
+                                          ? "Partially Paid"
+                                          : "Not Paid"
+                                  : "Written Off",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                    color: widget.invoice.writtenOffStatus != 1
+                                        ? widget.invoice.paymentStatus == 'paid'
+                                            ? AppColors.green
+                                            : widget.invoice.paymentStatus ==
+                                                    'partial'
+                                                ? AppColors.yellow
+                                                : AppColors.primaryColor
+                                        : AppColors.green,
+                                  ),
+                            ),
+                          ],
+                        ),
+                        isShrunk
+                            ? Icon(
+                                Icons.expand_less,
+                                color: AppColors.textColor,
+                              )
+                            : Icon(
+                                Icons.expand_more,
+                                color: AppColors.textColor,
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
     );
   }
