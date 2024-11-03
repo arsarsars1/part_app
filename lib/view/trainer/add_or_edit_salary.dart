@@ -361,7 +361,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                               DataColumn(
                                 label: SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width / 3.5,
+                                      MediaQuery.of(context).size.width / 3.6.w,
                                   child: CustomPaint(
                                       painter: DottedBorderPainter(),
                                       child: Align(
@@ -384,8 +384,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                               ),
                               DataColumn(
                                 label: SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 3.5,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   child: CustomPaint(
                                     painter: DottedBorderPainter(),
                                     child: Center(
@@ -405,7 +404,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                               DataColumn(
                                 label: SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width / 3.5,
+                                      MediaQuery.of(context).size.width / 3.6.w,
                                   child: CustomPaint(
                                       painter: DottedBorderPainter(),
                                       child: Align(
@@ -433,7 +432,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                   DataCell(
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width /
-                                          3.5,
+                                          3.6.w,
                                       child: CustomPaint(
                                           painter: DottedBorderPainter(),
                                           child: Align(
@@ -455,8 +454,8 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                   ),
                                   DataCell(
                                     SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          3.5,
+                                      width:
+                                          MediaQuery.of(context).size.width / 3,
                                       child: CustomPaint(
                                         painter: DottedBorderPainter(),
                                         child: Center(
@@ -475,7 +474,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                   DataCell(
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width /
-                                          3.5,
+                                          3.6.w,
                                       child: CustomPaint(
                                           painter: DottedBorderPainter(),
                                           child: Align(
@@ -507,7 +506,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3.5,
+                                                  3.6.w,
                                               child: CustomPaint(
                                                   painter:
                                                       DottedBorderPainter(),
@@ -538,7 +537,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3.5,
+                                                  3,
                                               child: CustomPaint(
                                                 painter: DottedBorderPainter(),
                                                 child: Center(
@@ -562,7 +561,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3.5,
+                                                  3.6.w,
                                               child: CustomPaint(
                                                   painter:
                                                       DottedBorderPainter(),
@@ -597,7 +596,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3.5,
+                                                  3.6.w,
                                               child: CustomPaint(
                                                   painter:
                                                       DottedBorderPainter(),
@@ -620,7 +619,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3.5,
+                                                  3,
                                               child: CustomPaint(
                                                 painter: DottedBorderPainter(),
                                                 child: Center(
@@ -636,7 +635,7 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3.5,
+                                                  3.6.w,
                                               child: CustomPaint(
                                                   painter:
                                                       DottedBorderPainter(),
@@ -660,8 +659,10 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                           ),
                           if (payment?.isEdited == 1)
                             SizedBox(
-                              width:
-                                  (3 * MediaQuery.of(context).size.width) / 3.5,
+                              width: (2 *
+                                      (MediaQuery.of(context).size.width /
+                                          3.6.w)) +
+                                  (MediaQuery.of(context).size.width / 3),
                               child: CustomPaint(
                                 painter: DottedBorderPainter(),
                                 child: Padding(
@@ -687,8 +688,10 @@ class _AddOrEditSalaryState extends State<AddOrEditSalary> {
                             ),
                           if (payment?.isDeleted == 1)
                             SizedBox(
-                              width:
-                                  (3 * MediaQuery.of(context).size.width) / 3.5,
+                              width: (2 *
+                                      (MediaQuery.of(context).size.width /
+                                          3.6.w)) +
+                                  (MediaQuery.of(context).size.width / 3),
                               child: CustomPaint(
                                 painter: DottedBorderPainter(),
                                 child: Padding(

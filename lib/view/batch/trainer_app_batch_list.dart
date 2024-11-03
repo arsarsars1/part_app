@@ -21,8 +21,6 @@ class _TrainerAppBatchesPageState extends State<TrainerAppBatchesPage> {
   String status = 'ongoing';
   AuthCubit? authCubit;
   ScrollController scrollController = ScrollController();
-  double _height = 0;
-  final GlobalKey _widgetKey = GlobalKey();
 
   @override
   void initState() {

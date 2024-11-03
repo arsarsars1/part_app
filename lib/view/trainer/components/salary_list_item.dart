@@ -199,7 +199,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                                 DataColumn(
                                   label: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width / 5,
+                                        MediaQuery.of(context).size.width / 4.w,
                                     child: CustomPaint(
                                         painter: DottedBorderPainter(),
                                         child: Align(
@@ -243,7 +243,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                                 DataColumn(
                                   label: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width / 5,
+                                        MediaQuery.of(context).size.width / 4.w,
                                     child: CustomPaint(
                                         painter: DottedBorderPainter(),
                                         child: Align(
@@ -274,7 +274,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width /
-                                              5,
+                                              4.w,
                                           child: CustomPaint(
                                               painter: DottedBorderPainter(),
                                               child: Align(
@@ -344,7 +344,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width /
-                                              5,
+                                              4.w,
                                           child: CustomPaint(
                                               painter: DottedBorderPainter(),
                                               child: Align(
@@ -383,7 +383,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                         if ((widget.salary.payments ?? []).isNotEmpty)
                           SizedBox(
                             width: (MediaQuery.of(context).size.width) / 3 +
-                                (2 * (MediaQuery.of(context).size.width) / 5),
+                                (2 * (MediaQuery.of(context).size.width) / 4.w),
                             child: CustomPaint(
                               painter: DottedBorderPainter(),
                               child: Padding(
@@ -431,7 +431,7 @@ class _FeeListItemState extends State<SalaryListItem> {
                         if ((widget.salary.payments ?? []).isNotEmpty)
                           SizedBox(
                             width: (MediaQuery.of(context).size.width) / 3 +
-                                (2 * (MediaQuery.of(context).size.width) / 5),
+                                (2 * (MediaQuery.of(context).size.width) / 4.w),
                             child: CustomPaint(
                               painter: DottedBorderPainter(),
                               child: Padding(
@@ -617,154 +617,147 @@ class _FeeListItemState extends State<SalaryListItem> {
                   isShrunk = !isShrunk;
                 });
               },
-              child: Padding(
-                padding: EdgeInsets.all(16.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 120.w,
-                      height: 20.h,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20.h),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: widget.salary.writtenOffStatus != 1
-                                ? widget.salary.paymentStatus == 'paid'
-                                    ? AppColors.green
-                                    : widget.salary.paymentStatus == 'partial'
-                                        ? AppColors.yellow
-                                        : AppColors.red
-                                : AppColors.green,
-                          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 120.w,
+                    height: 20.h,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(20.h),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: widget.salary.writtenOffStatus != 1
+                              ? widget.salary.paymentStatus == 'paid'
+                                  ? AppColors.green
+                                  : widget.salary.paymentStatus == 'partial'
+                                      ? AppColors.yellow
+                                      : AppColors.red
+                              : AppColors.green,
                         ),
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 12.w,
-                        vertical: 16.h,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: AppColors.liteDark,
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              UserImage(
-                                profilePic: widget
-                                            .salary.trainerDetail?.profilePic !=
-                                        ""
-                                    ? '${F.baseUrl}'
-                                        '/admin/images/trainer/'
-                                        '${widget.salary.trainerDetail?.id}/${widget.salary.trainerDetail?.profilePic}'
-                                    : '',
-                              ),
-                              SizedBox(width: 16.w),
-                              SizedBox(
-                                width: 100,
-                                child: Text(
-                                  '${widget.salary.trainerDetail?.name}',
-                                  maxLines: 2,
-                                  softWrap: true,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Payment Due Date: ",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: AppColors.textColor,
-                                        ),
-                                  ),
-                                  Text(
-                                    "${widget.salary.salaryDueDate?.toDDMMMYYY()}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: widget.salary
-                                                      .writtenOffStatus !=
-                                                  1
-                                              ? widget.salary.paymentStatus ==
-                                                      'paid'
-                                                  ? AppColors.green
-                                                  : widget.salary
-                                                              .paymentStatus ==
-                                                          'partial'
-                                                      ? AppColors.yellow
-                                                      : AppColors.primaryColor
-                                              : AppColors.green,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Text(
-                                widget.salary.writtenOffStatus != 1
-                                    ? widget.salary.paymentStatus == 'paid'
-                                        ? "Completely Paid"
-                                        : widget.salary.paymentStatus ==
-                                                'partial'
-                                            ? "Partially Paid"
-                                            : "Not Paid"
-                                    : "Written Off",
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 16.h,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColors.liteDark,
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            UserImage(
+                              profilePic: widget
+                                          .salary.trainerDetail?.profilePic !=
+                                      ""
+                                  ? '${F.baseUrl}'
+                                      '/admin/images/trainer/'
+                                      '${widget.salary.trainerDetail?.id}/${widget.salary.trainerDetail?.profilePic}'
+                                  : '',
+                            ),
+                            SizedBox(width: 16.w),
+                            SizedBox(
+                              width: 100,
+                              child: Text(
+                                '${widget.salary.trainerDetail?.name}',
+                                maxLines: 2,
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15,
-                                      color: widget.salary.writtenOffStatus != 1
-                                          ? widget.salary.paymentStatus ==
-                                                  'paid'
-                                              ? AppColors.green
-                                              : widget.salary.paymentStatus ==
-                                                      'partial'
-                                                  ? AppColors.yellow
-                                                  : AppColors.primaryColor
-                                          : AppColors.green,
-                                    ),
+                                    ?.copyWith(),
                               ),
-                            ],
-                          ),
-                          isShrunk
-                              ? Icon(
-                                  Icons.expand_less,
-                                  color: AppColors.textColor,
-                                )
-                              : Icon(
-                                  Icons.expand_more,
-                                  color: AppColors.textColor,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Payment Due Date: ",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: AppColors.textColor,
+                                      ),
                                 ),
-                        ],
-                      ),
+                                Text(
+                                  "${widget.salary.salaryDueDate?.toDDMMMYYY()}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: widget.salary.writtenOffStatus !=
+                                                1
+                                            ? widget.salary.paymentStatus ==
+                                                    'paid'
+                                                ? AppColors.green
+                                                : widget.salary.paymentStatus ==
+                                                        'partial'
+                                                    ? AppColors.yellow
+                                                    : AppColors.primaryColor
+                                            : AppColors.green,
+                                      ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Text(
+                              widget.salary.writtenOffStatus != 1
+                                  ? widget.salary.paymentStatus == 'paid'
+                                      ? "Completely Paid"
+                                      : widget.salary.paymentStatus == 'partial'
+                                          ? "Partially Paid"
+                                          : "Not Paid"
+                                  : "Written Off",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                    color: widget.salary.writtenOffStatus != 1
+                                        ? widget.salary.paymentStatus == 'paid'
+                                            ? AppColors.green
+                                            : widget.salary.paymentStatus ==
+                                                    'partial'
+                                                ? AppColors.yellow
+                                                : AppColors.primaryColor
+                                        : AppColors.green,
+                                  ),
+                            ),
+                          ],
+                        ),
+                        isShrunk
+                            ? Icon(
+                                Icons.expand_less,
+                                color: AppColors.textColor,
+                              )
+                            : Icon(
+                                Icons.expand_more,
+                                color: AppColors.textColor,
+                              ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
     );

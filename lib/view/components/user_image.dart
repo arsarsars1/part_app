@@ -26,7 +26,7 @@ class UserImage extends StatelessWidget {
         ),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(5),
         child: profilePic != ""
             ? CachedImage(profilePic ?? "").userImage()
             : Padding(

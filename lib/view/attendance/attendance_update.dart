@@ -42,7 +42,6 @@ class _AttendanceUpdateState extends State<AttendanceUpdate> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AttendanceCubit>();
-    var studentCubit = context.read<StudentCubit>();
     return Scaffold(
       appBar: const CommonBar(
         title: 'Class Attendance',
