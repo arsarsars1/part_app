@@ -676,19 +676,15 @@ class StudentCubit extends Cubit<StudentState> {
   }
 
   bool checkPhoneNumber(Contact contact) {
-    String temp = (contact.phoneNumbers?.first ?? '').replaceAll(' ', '');
-    if (RegExp(r'^\d+$').hasMatch(temp) ||
-        (temp.startsWith('+') && RegExp(r'^\+\d+$').hasMatch(temp)) ||
-        temp.length >= 10) {
+    String temp =
+        (contact.phoneNumbers?.first ?? '').replaceAll(RegExp(r'[ +]'), '');
+    if (RegExp(r'^\d+$').hasMatch(temp) && temp.length >= 10) {
       String prefix = temp.substring(0, temp.length - 10);
-      if (prefix == "" || prefix == "0" || prefix == "+91" || prefix == "91") {
+      if (prefix == "" || prefix == "0" || prefix == "91") {
         return true;
-      } else {
-        return false;
       }
-    } else {
-      return false;
     }
+    return false;
   }
 
   String get10DigitsPhoneNumber(Contact contact) {
