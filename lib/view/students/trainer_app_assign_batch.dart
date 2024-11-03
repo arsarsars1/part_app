@@ -42,8 +42,7 @@ class _TrainerAppAssignBatchState extends State<TrainerAppAssignBatch> {
     });
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         context.read<BatchCubit>().getBatchesByStatusForTrainer(
               trainerId: authCubit
                       ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??

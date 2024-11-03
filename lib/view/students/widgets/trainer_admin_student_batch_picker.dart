@@ -35,8 +35,7 @@ class _TrainerStudentBatchPickerState extends State<TrainerStudentBatchPicker> {
     super.initState();
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         doSearch(null);
       }
     });

@@ -40,8 +40,7 @@ class _TrainerAppBatchesPageState extends State<TrainerAppBatchesPage> {
 
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         doSearch(false);
       }
     });

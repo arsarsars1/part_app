@@ -23,8 +23,7 @@ class _TodaysClassListState extends State<TodaysClassList> {
   void initState() {
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         context.read<TrainerCubit>().getRestOfTheTrainers(nextPage: true);
       }
     });

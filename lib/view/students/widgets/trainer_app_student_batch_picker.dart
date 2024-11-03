@@ -35,8 +35,7 @@ class _TrainerAppStudentBatchPickerState
     authCubit = context.read<AuthCubit>();
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         context.read<BatchCubit>().getStudentBatchesByStatusForTrainer(
               trainerId: authCubit
                       ?.user?.trainerDetail?[authCubit?.trainerIndex ?? 0].id ??

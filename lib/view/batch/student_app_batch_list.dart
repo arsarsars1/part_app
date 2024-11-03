@@ -45,8 +45,7 @@ class _StudentAppBatchesPageState extends State<StudentAppBatchesPage> {
 
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         // context.read<BatchCubit>().getStudentAppBatchesByStatus(
         //       studentId: context.read<AuthCubit>().user?.studentDetail?[0].id,
         //       status: status,

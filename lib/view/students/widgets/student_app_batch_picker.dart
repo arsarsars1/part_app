@@ -34,8 +34,7 @@ class _StudentAppBatchPickerState extends State<StudentAppBatchPicker> {
     super.initState();
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         context.read<BatchCubit>().getStudentBatchesByStatus(
               status: widget.status,
               studentId: widget.studentId,

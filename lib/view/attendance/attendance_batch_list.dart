@@ -45,8 +45,7 @@ class _AttendanceBatchListPageState extends State<AttendanceBatchListPage> {
 
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         context.read<AttendanceCubit>().getBatchesByStatus(
               branchId: branchId,
               search: query,

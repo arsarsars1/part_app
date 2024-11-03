@@ -44,8 +44,7 @@ class _StudentAppFeeDetailsState extends State<StudentAppFeeDetails> {
     });
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         doSearch(false);
       }
     });

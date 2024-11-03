@@ -46,8 +46,7 @@ class _TrainerPickerState extends State<TrainerPicker> {
     trainers.addAll(widget.selectedTrainers);
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         if (widget.isBatch) {
           context.read<BranchCubit>().getBatchTrainers(
                 batchId: '${widget.batchId}',

@@ -36,8 +36,7 @@ class _BatchPickerState extends State<BatchPicker> {
     super.initState();
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         doSearch(null, false);
       }
     });

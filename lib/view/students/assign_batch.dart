@@ -38,8 +38,7 @@ class _AssignBatchState extends State<AssignBatch> {
     });
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         context.read<BatchCubit>().getBatchesByStatus(
               branchId: branchId,
               search: search,

@@ -72,8 +72,7 @@ class _TrainerAppFeesDetailsViewState extends State<TrainerAppFeesDetailsView> {
     });
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         doSearch(false);
       }
     });

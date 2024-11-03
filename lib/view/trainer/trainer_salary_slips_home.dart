@@ -53,8 +53,7 @@ class _FeesDetailsViewState extends State<TrainerSalarySlipsHome> {
     });
     // Pagination listener
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.atEdge) {
         doSearch(false);
       }
     });
