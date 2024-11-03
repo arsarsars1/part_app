@@ -677,7 +677,7 @@ class StudentCubit extends Cubit<StudentState> {
 
   bool checkPhoneNumber(Contact contact) {
     String temp =
-        (contact.phoneNumbers?.first ?? '').replaceAll(RegExp(r'[ +]'), '');
+        (contact.phoneNumbers?.first ?? '').replaceAll(RegExp(r'[ +\-]'), '');
     if (RegExp(r'^\d+$').hasMatch(temp) && temp.length >= 10) {
       String prefix = temp.substring(0, temp.length - 10);
       if (prefix == "" || prefix == "0" || prefix == "91") {
@@ -688,7 +688,8 @@ class StudentCubit extends Cubit<StudentState> {
   }
 
   String get10DigitsPhoneNumber(Contact contact) {
-    String temp = (contact.phoneNumbers?.first ?? '').replaceAll(' ', '');
+    String temp =
+        (contact.phoneNumbers?.first ?? '').replaceAll(RegExp(r'[ +\-]'), '');
     String? lastTenDigits = temp.substring(temp.length - 10);
     return lastTenDigits;
   }

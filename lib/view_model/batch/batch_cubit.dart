@@ -106,7 +106,8 @@ class BatchCubit extends Cubit<BatchState> {
   }
 
   bool checkPhoneNumber(Contact contact, BuildContext context) {
-    String temp = (contact.phones.first.number).replaceAll(RegExp(r'[ +]'), '');
+    String temp =
+        (contact.phones.first.number).replaceAll(RegExp(r'[ +\-]'), '');
     if (RegExp(r'^\d+$').hasMatch(temp) && temp.length >= 10) {
       String prefix = temp.substring(0, temp.length - 10);
       if (prefix == "" || prefix == "0" || prefix == "91") {
@@ -117,7 +118,8 @@ class BatchCubit extends Cubit<BatchState> {
   }
 
   String get10DigitsPhoneNumber(Contact contact) {
-    String temp = contact.phones.first.number.replaceAll(' ', '');
+    String temp =
+        (contact.phones.first.number).replaceAll(RegExp(r'[ +\-]'), '');
     String? lastTenDigits = temp.substring(temp.length - 10);
     return lastTenDigits;
   }

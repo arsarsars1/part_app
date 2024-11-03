@@ -213,6 +213,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                     ),
                     LargeButton(
                       title: 'Admission Fee Details',
+                      noHeight: true,
                       marginPadding: UIConstants.largeRightButtonMargin,
                       onTap: () {
                         Navigator.pushNamed(
