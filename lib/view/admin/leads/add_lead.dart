@@ -355,6 +355,7 @@ class _AddLeadState extends State<AddLead> {
                     onTap: () {
                       LeadUtils().getAssignable(
                         scaffoldKey,
+                        selectedTrainers: [assignableTrainer?.id],
                         onSelect: (AssignableTrainer? trainer) {
                           assignableTrainer = trainer;
                           trainerController.text = trainer?.name ?? '';

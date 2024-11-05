@@ -368,6 +368,7 @@ class _AddTrainerLeadState extends State<AddTrainerLead> {
                           0;
                       LeadUtils().getAssignable(
                         scaffoldKey,
+                        selectedTrainers: [assignableTrainer?.id],
                         trainerId: trainerId,
                         onSelect: (AssignableTrainer? trainer) {
                           assignableTrainer = trainer;

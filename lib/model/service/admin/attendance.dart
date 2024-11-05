@@ -218,7 +218,7 @@ class AttendanceService {
     try {
       var response = await _apiClient.get(
         queryPath:
-            '/trainer/$trainerId/students/$studentDetailId/batch/$batchId/attendance/${date?.year}/${date?.month}',
+            '/trainers/$trainerId/students/$studentDetailId/batch/$batchId/attendance/${date?.year}/${date?.month}',
       );
 
       return studentAttendenceOfMonthFromJson(jsonEncode(response));
