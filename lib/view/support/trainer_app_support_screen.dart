@@ -47,7 +47,7 @@ class _TrainerAppSupportScreenState extends State<TrainerAppSupportScreen> {
                 length: 50,
                 controller: emailController,
                 title: 'Email ID *',
-                hint: 'Eg: contact@polestar.com',
+                hint: 'Eg: email@example.com',
                 capitalization: TextCapitalization.none,
                 validator: (value) {
                   if (value == null || value.toString().isEmpty) {
