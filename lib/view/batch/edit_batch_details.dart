@@ -95,90 +95,101 @@ class _EditBatchDetailsState extends State<EditBatchDetails> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: DropdownButtonFormField<DropDownItem>(
-                          key: _dropDownKey,
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please select branch.';
-                            }
-                            return null;
-                          },
-                          dropdownColor:
-                              Theme.of(context).inputDecorationTheme.fillColor,
-                          value: selectedItem ??
-                              branchCubit.initialBranch(
-                                batchModel?.branchId,
-                              ),
-                          items: branchCubit.dropDownBranches().map((e) {
-                            return DropdownMenuItem(
-                              value: e,
-                              child: Text(
-                                e.title ?? '',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: Colors.white,
-                                    ),
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            if (value?.title == batchModel?.branchName) {
-                              return;
-                            }
-                            String branchName = '';
-                            for (var item
-                                in context.read<BranchCubit>().branches) {
-                              if (item.id == value?.id) {
-                                branchName = item.branchName ?? "";
-                                break;
-                              }
-                            }
-                            CommonDialog(
-                              context: context,
-                              message:
-                                  'You are switching ${batchModel?.name} from ${batchModel?.branchName} to $branchName.',
-                              buttonText: 'Yes',
-                              subColor: AppColors.primaryColor,
-                              subContent: Column(
-                                children: [
-                                  Text(
-                                    'Do you want to retain the students assigned in the batch?',
-                                    textAlign: TextAlign.center,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Branch Name *',
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            SizedBox(height: 8.w),
+                            DropdownButtonFormField<DropDownItem>(
+                              key: _dropDownKey,
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please select branch.';
+                                }
+                                return null;
+                              },
+                              dropdownColor: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .fillColor,
+                              value: selectedItem ??
+                                  branchCubit.initialBranch(
+                                    batchModel?.branchId,
+                                  ),
+                              items: branchCubit.dropDownBranches().map((e) {
+                                return DropdownMenuItem(
+                                  value: e,
+                                  child: Text(
+                                    e.title ?? '',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge
                                         ?.copyWith(
-                                          color: AppColors.primaryColor,
+                                          color: Colors.white,
                                         ),
                                   ),
-                                  SizedBox(
-                                    height: 20.h,
-                                  )
-                                ],
-                              ),
-                              onCancelTap: () {
-                                _dropDownKey.currentState?.reset();
-                                Navigator.pop(context);
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                if (value?.title == batchModel?.branchName) {
+                                  return;
+                                }
+                                String branchName = '';
+                                for (var item
+                                    in context.read<BranchCubit>().branches) {
+                                  if (item.id == value?.id) {
+                                    branchName = item.branchName ?? "";
+                                    break;
+                                  }
+                                }
+                                CommonDialog(
+                                  context: context,
+                                  message:
+                                      'You are switching ${batchModel?.name} from ${batchModel?.branchName} to $branchName.',
+                                  buttonText: 'Yes',
+                                  subColor: AppColors.primaryColor,
+                                  subContent: Column(
+                                    children: [
+                                      Text(
+                                        'Do you want to retain the students assigned in the batch?',
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: AppColors.primaryColor,
+                                            ),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      )
+                                    ],
+                                  ),
+                                  onCancelTap: () {
+                                    _dropDownKey.currentState?.reset();
+                                    Navigator.pop(context);
+                                  },
+                                  hasClose: true,
+                                  onClose: () {
+                                    selectedItem = value;
+                                    branchId = value?.id;
+                                    retainStudent = 0;
+                                    Navigator.pop(context);
+                                    setState(() {});
+                                  },
+                                  onTap: () {
+                                    selectedItem = value;
+                                    branchId = value?.id;
+                                    retainStudent = 1;
+                                    Navigator.pop(context);
+                                    setState(() {});
+                                  },
+                                ).show();
                               },
-                              hasClose: true,
-                              onClose: () {
-                                selectedItem = value;
-                                branchId = value?.id;
-                                retainStudent = 0;
-                                Navigator.pop(context);
-                                setState(() {});
-                              },
-                              onTap: () {
-                                selectedItem = value;
-                                branchId = value?.id;
-                                retainStudent = 1;
-                                Navigator.pop(context);
-                                setState(() {});
-                              },
-                            ).show();
-                          },
+                            ),
+                          ],
                         ),
                       ),
                       if (branchId != null)
