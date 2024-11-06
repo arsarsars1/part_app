@@ -73,14 +73,10 @@ class BatchModel {
 
     if ((days ?? []).length >= 2) {
       days?.sort((a, b) {
-        // Extract the day part
         String dayA = a.split(' ')[0];
         String dayB = b.split(' ')[0];
-
-        // Get the day order, using a default value if not found
         int orderA = dayOrder[dayA] ?? 0;
         int orderB = dayOrder[dayB] ?? 0;
-
         return orderA.compareTo(orderB);
       });
     }
