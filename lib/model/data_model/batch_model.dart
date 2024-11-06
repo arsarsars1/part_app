@@ -56,10 +56,34 @@ class BatchModel {
       trainer = 'No Trainer Allocated';
     }
 
+    Map<String, int> dayOrder = {
+      'Mon': 1,
+      'Tue': 2,
+      'Wed': 3,
+      'Thu': 4,
+      'Fri': 5,
+      'Sat': 6,
+      'Sun': 7,
+    };
+
     days = batch.batchDetail?.map((e) {
       String day = DefaultValues.defaultTrainingDays[e.day];
       return '${day.substring(0, 3)} ${e.startTime?.toAmPM()} - ${e.endTime?.toAmPM()}';
     }).toList();
+
+    if ((days ?? []).length >= 2) {
+      days?.sort((a, b) {
+        // Extract the day part
+        String dayA = a.split(' ')[0];
+        String dayB = b.split(' ')[0];
+
+        // Get the day order, using a default value if not found
+        int orderA = dayOrder[dayA] ?? 0;
+        int orderB = dayOrder[dayB] ?? 0;
+
+        return orderA.compareTo(orderB);
+      });
+    }
 
     return BatchModel(
       branchId: batch.branchId,
