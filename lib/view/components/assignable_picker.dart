@@ -136,18 +136,25 @@ class _AssignablePickerState extends State<AssignablePicker> {
                                       title: widget.multiPicker
                                           ? TextSwitchButton(
                                               onChange: (bool value) {
-                                                if (trainers.isEmpty) {
-                                                  trainers.add(trainer.id);
-                                                } else {
-                                                  Alert(context).show(
-                                                      message:
-                                                          'Unable to add 2 assignee simultaneously');
-                                                }
-                                                // if (value) {
+                                                // if (trainers.isEmpty) {
                                                 //   trainers.add(trainer.id);
                                                 // } else {
-                                                //   trainers.remove(trainer.id);
+                                                //   Alert(context).show(
+                                                //       message:
+                                                //           'Unable to add 2 assignee simultaneously');
                                                 // }
+                                                if (value) {
+                                                  if (trainers.isEmpty) {
+                                                    trainers.add(trainer.id);
+                                                  } else {
+                                                    Alert(context).show(
+                                                        message:
+                                                            'Unable to add 2 assignee simultaneously');
+                                                  }
+                                                  // trainers.add(trainer.id);
+                                                } else {
+                                                  trainers.remove(trainer.id);
+                                                }
                                                 setState(() {});
                                               },
                                               title: trainer.name,

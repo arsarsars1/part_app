@@ -211,11 +211,7 @@ class _AddLeadState extends State<AddLead> {
                     selected: sameWhatsapp,
                     onChange: (value) {
                       sameWhatsapp = value;
-                      if (value) {
-                        whatsappNumber = mobileNumber;
-                      } else {
-                        whatsappNumber = null;
-                      }
+
                       setState(() {});
                     },
                     onNumberChange: (value) {
@@ -355,10 +351,17 @@ class _AddLeadState extends State<AddLead> {
                     onTap: () {
                       LeadUtils().getAssignable(
                         scaffoldKey,
-                        selectedTrainers: [assignableTrainer?.id],
+                        selectedTrainers: assignableTrainer?.id != null
+                            ? [assignableTrainer?.id]
+                            : [],
                         onSelect: (AssignableTrainer? trainer) {
-                          assignableTrainer = trainer;
-                          trainerController.text = trainer?.name ?? '';
+                          if (trainer != null) {
+                            assignableTrainer = trainer;
+                            trainerController.text = trainer.name;
+                          } else {
+                            assignableTrainer = trainer;
+                            trainerController.text = '';
+                          }
                         },
                       );
                     },

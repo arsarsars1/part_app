@@ -22,6 +22,8 @@ class LeadUtils {
             if (onSelect != null) {
               onSelect(value.first);
             }
+          } else {
+            onSelect!(null);
           }
         },
         onSelect: onSelect,
