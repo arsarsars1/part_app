@@ -12,10 +12,12 @@ import '../attendance_update.dart';
 class AttendanceClassPicker extends StatefulWidget {
   final DateTime date;
   final List<EventModel>? eventList;
+  final ValueChanged<bool> onSelect;
 
   const AttendanceClassPicker({
     super.key,
     required this.date,
+    required this.onSelect,
     this.eventList,
   });
 
@@ -137,20 +139,22 @@ class _AttendanceClassPickerState extends State<AttendanceClassPicker> {
                     itemCount: widget.eventList?.length ?? 0),
               ),
               Button(
-                  onTap: () {
+                  onTap: () async {
                     cubit.selectedClass =
                         classList?[cubit.dropdownSelectedIndex];
                     if (widget.eventList == null) {
                       Navigator.pop(context);
-                      Navigator.pushNamed(context, AttendanceAdd.route);
+                      await Navigator.pushNamed(context, AttendanceAdd.route);
+                      widget.onSelect(true);
                     } else {
                       Navigator.pop(context);
-                      Navigator.pushNamed(
+                      await Navigator.pushNamed(
                         context,
                         widget.eventList![cubit.dropdownSelectedIndex].flag == 0
                             ? AttendanceAdd.route
                             : AttendanceUpdate.route,
                       );
+                      widget.onSelect(true);
                     }
                   },
                   height: UIConstants.buttonHeight,

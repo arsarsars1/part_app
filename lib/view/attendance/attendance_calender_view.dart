@@ -40,6 +40,7 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       AttendanceCubit cubit = context.read<AttendanceCubit>();
       // studentCubit = context.read<StudentCubit>();
+      cubit.conductedClasses?.clear();
       await cubit.getClassesOfMonth(
           batchId: cubit.id, date: DateTime(currentYear, currentMonth));
       await cubit.getConductedClassesOfMonth(
@@ -257,58 +258,76 @@ class _AttendanceCalenderViewState extends State<AttendanceCalenderView> {
                                         (context) => AttendanceClassPicker(
                                               date: date,
                                               eventList: events,
+                                              onSelect: (value) async {
+                                                if (value) {
+                                                  await cubit.getClassesOfMonth(
+                                                      batchId: cubit.id,
+                                                      date: DateTime(
+                                                          currentYear,
+                                                          currentMonth));
+                                                  await cubit
+                                                      .getConductedClassesOfMonth(
+                                                          batchId: cubit.id,
+                                                          date: DateTime(
+                                                              currentYear,
+                                                              currentMonth));
+                                                  _markedDateMap.clear();
+                                                  setState(() {
+                                                    noOfWeeks = getWeeksInMonth(
+                                                        DateTime(currentYear,
+                                                            currentMonth));
+                                                    for (var element in cubit
+                                                            .attendenceClasses ??
+                                                        []) {
+                                                      int flag = 0;
+                                                      int conductedClassId = 0;
+                                                      for (var element1 in cubit
+                                                              .conductedClasses ??
+                                                          []) {
+                                                        if (element.date ==
+                                                                element1
+                                                                    .conductedOn &&
+                                                            element.startTime ==
+                                                                element1
+                                                                    .startTime
+                                                                    .substring(
+                                                                        0, 5)) {
+                                                          flag = 1;
+                                                          conductedClassId =
+                                                              element1.id;
+                                                          break;
+                                                        }
+                                                      }
+                                                      _markedDateMap.add(
+                                                        element.date ??
+                                                            DateTime.now(),
+                                                        EventModel(
+                                                          date: element.date ??
+                                                              DateTime.now(),
+                                                          title: conductedClassId ==
+                                                                  0
+                                                              ? 'Event 1'
+                                                              : '$conductedClassId',
+                                                          dot: Container(
+                                                            margin:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        1.0),
+                                                            color: flag == 1
+                                                                ? Colors.green
+                                                                : Colors.red,
+                                                            height: 5.0,
+                                                            width: 5.0,
+                                                          ),
+                                                          flag: flag,
+                                                        ),
+                                                      );
+                                                    }
+                                                  });
+                                                }
+                                              },
                                             ));
-                                    await cubit.getClassesOfMonth(
-                                        batchId: cubit.id,
-                                        date: DateTime(
-                                            currentYear, currentMonth));
-                                    await cubit.getConductedClassesOfMonth(
-                                        batchId: cubit.id,
-                                        date: DateTime(
-                                            currentYear, currentMonth));
-                                    _markedDateMap.clear();
-                                    setState(() {
-                                      noOfWeeks = getWeeksInMonth(
-                                          DateTime(currentYear, currentMonth));
-                                      for (var element
-                                          in cubit.attendenceClasses ?? []) {
-                                        int flag = 0;
-                                        int conductedClassId = 0;
-                                        for (var element1
-                                            in cubit.conductedClasses ?? []) {
-                                          if (element.date ==
-                                                  element1.conductedOn &&
-                                              element.startTime ==
-                                                  element1.startTime
-                                                      .substring(0, 5)) {
-                                            flag = 1;
-                                            conductedClassId = element1.id;
-                                            break;
-                                          }
-                                        }
-                                        _markedDateMap.add(
-                                          element.date ?? DateTime.now(),
-                                          EventModel(
-                                            date:
-                                                element.date ?? DateTime.now(),
-                                            title: conductedClassId == 0
-                                                ? 'Event 1'
-                                                : '$conductedClassId',
-                                            dot: Container(
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 1.0),
-                                              color: flag == 1
-                                                  ? Colors.green
-                                                  : Colors.red,
-                                              height: 5.0,
-                                              width: 5.0,
-                                            ),
-                                            flag: flag,
-                                          ),
-                                        );
-                                      }
-                                    });
                                   } else {
                                     cubit.isFromRescheduledClass = false;
                                     if (cubit.conductedClassIdList[0] == 0) {
