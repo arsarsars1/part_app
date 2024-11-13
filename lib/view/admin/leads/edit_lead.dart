@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/assignable_model.dart';
+import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/lead_request.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/components/components.dart';
@@ -42,6 +44,7 @@ class _EditLeadState extends State<EditLead> {
   TextEditingController batchController = TextEditingController();
   TextEditingController trainerController = TextEditingController();
   TextEditingController leadStatusController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -65,7 +68,7 @@ class _EditLeadState extends State<EditLead> {
           ? selectedLead.followUps![0].followUpDate?.toDDMMMYYY() ?? ""
           : "";
       batchController.text = selectedLead.batch?.batchName ?? "";
-      name = selectedLead.name;
+      phoneController.text = cubit.selectedLead?.mobileNo ?? "";
       age = selectedLead.age;
       gender = selectedLead.gender;
       mobileNumber = selectedLead.mobileNo;
@@ -81,6 +84,8 @@ class _EditLeadState extends State<EditLead> {
 
   @override
   Widget build(BuildContext context) {
+    final FlutterContactPicker contactPicker = FlutterContactPicker();
+    var studentCubit = context.read<StudentCubit>();
     return Scaffold(
       key: scaffoldKey,
       appBar: const CommonBar(
@@ -206,10 +211,11 @@ class _EditLeadState extends State<EditLead> {
                       title: 'Mobile Number *',
                       hint: 'Please enter number',
                       length: 10,
+                      phoneField: true,
                       maxLines: 1,
-                      initialValue: cubit.selectedLead?.mobileNo,
                       inputType: TextInputType.phone,
                       textInputAction: TextInputAction.next,
+                      controller: phoneController,
                       onChange: (value) {
                         mobileNumber = value;
                         if (value.length >= 10) {
@@ -221,7 +227,34 @@ class _EditLeadState extends State<EditLead> {
                             ? 'Please enter the phone number.'
                             : null;
                       },
+                      suffixIcon: InkWell(
+                        onTap: () async {
+                          Contact? contact =
+                              await contactPicker.selectContact();
+                          if (contact != null) {
+                            if (studentCubit.checkPhoneNumber(contact)) {
+                              setState(() {
+                                String phoneNumber = studentCubit
+                                    .get10DigitsPhoneNumber(contact);
+                                if (phoneNumber.isNotEmpty) {
+                                  phoneNumber = phoneNumber.cleanPhoneNumber();
+                                  phoneController.text = phoneNumber;
+                                  mobileNumber = phoneNumber;
+                                }
+                              });
+                            } else {
+                              Alert(context)
+                                  .show(message: 'Invalid phone number');
+                            }
+                          }
+                        },
+                        child: Icon(
+                          Icons.contact_page,
+                          color: AppColors.grey81,
+                        ),
+                      ),
                     ),
+                    const SizedBox(height: 20),
                     WhatsappCheckButton(
                       isMandatory: false,
                       initialValue: whatsappNumber,
