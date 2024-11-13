@@ -242,6 +242,7 @@ class _TrainerAppStudentDetailsState extends State<TrainerAppStudentDetails> {
                     ),
                     LargeButton(
                       title: 'Admission Fee Details',
+                      noHeight: true,
                       marginPadding: UIConstants.largeRightButtonMargin,
                       onTap: () {
                         Navigator.pushNamed(

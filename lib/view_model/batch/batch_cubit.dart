@@ -193,7 +193,6 @@ class BatchCubit extends Cubit<BatchState> {
     );
 
     return item ?? const DropDownItem(id: 0, title: '0', item: '');
-    ;
   }
 
   DropDownItem? getBatchStatusItem(String? title) {

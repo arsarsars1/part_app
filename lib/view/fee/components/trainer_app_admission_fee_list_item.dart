@@ -690,6 +690,7 @@ class _TrainerAppAdmissionFeeListItemState
                                   ],
                                 LargeButton(
                                   title: 'Other Payments',
+                                  noHeight: true,
                                   onTap: () {
                                     Alert(context)
                                         .show(message: "Coming soon !!");
