@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
@@ -188,11 +188,12 @@ class BatchCubit extends Cubit<BatchState> {
   }
 
   DropDownItem? getCourseMenuItem(int? courseId) {
-    var item = getCoursesDropDown()?.firstWhere(
+    var item = getCoursesDropDown()?.firstWhereOrNull(
       (element) => element.id == courseId,
     );
 
-    return item;
+    return item ?? const DropDownItem(id: 0, title: '0', item: '');
+    ;
   }
 
   DropDownItem? getBatchStatusItem(String? title) {
