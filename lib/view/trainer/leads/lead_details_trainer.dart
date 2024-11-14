@@ -372,6 +372,12 @@ class _LeadTrainerDetailsState extends State<LeadTrainerDetails> {
                                         ),
                                         SizedBox(height: 15.h),
                                         TitledText(
+                                          title: 'Assigned to',
+                                          subText: followup?.assignedTo?.name ??
+                                              'No Comment Added',
+                                        ),
+                                        SizedBox(height: 15.h),
+                                        TitledText(
                                           title: 'Comments',
                                           subText:
                                               '${followup?.followUpComment ?? 'No Comment Added'}',
