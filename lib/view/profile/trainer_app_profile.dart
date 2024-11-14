@@ -167,6 +167,7 @@ class _TrainerAppProfileState extends State<TrainerAppProfile> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         'Is The Above Number Your Whatsapp Number?',
+                        maxLines: 2,
                         style: Theme.of(context).textTheme.bodyLarge,
                         overflow: TextOverflow.ellipsis,
                       ),
