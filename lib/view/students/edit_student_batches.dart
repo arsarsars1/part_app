@@ -73,7 +73,7 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
         ),
         bottomNavigationBar: SafeArea(
           child: SizedBox(
-            height: 132.h,
+            height: 50.h,
             child: BottomAppBar(
               color: Colors.black,
               child: Center(
@@ -106,7 +106,7 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
           },
           child: BlocBuilder<StudentCubit, StudentState>(
             builder: (context, state) {
-              return ListView(
+              return Column(
                 children: [
                   Center(
                     child: Text(
@@ -140,6 +140,7 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 15.w),
                   studentCubit.batches.isEmpty
                       ? Center(
                           child: Padding(
@@ -157,60 +158,61 @@ class _EditStudentBatchesState extends State<EditStudentBatches> {
                             ),
                           ),
                         )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: studentCubit.batches.length,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            BatchModel batch = studentCubit.batches[index];
-                            return BatchItem(
-                              edit: true,
-                              batch: batch,
-                              onTap: () {},
-                              onRemove: () {
-                                var formKey = GlobalKey<FormState>();
-                                String? rejoining;
-                                String? remark;
-                                CommonDialog(
-                                  context: context,
-                                  message:
-                                      'Do You Want To Deactivate ${studentCubit.student?.studentDetail?[0].name}\n From ${batch.name} ?'
-                                      '\n\nSelect Date Of Leaving And Confirm',
-                                  subContent: RemoveStudent(
-                                    formKey: formKey,
-                                    rejoiningDate: (value) {
-                                      rejoining = value;
+                      : Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: studentCubit.batches.length,
+                            itemBuilder: (context, index) {
+                              BatchModel batch = studentCubit.batches[index];
+                              return BatchItem(
+                                edit: true,
+                                batch: batch,
+                                onTap: () {},
+                                onRemove: () {
+                                  var formKey = GlobalKey<FormState>();
+                                  String? rejoining;
+                                  String? remark;
+                                  CommonDialog(
+                                    context: context,
+                                    message:
+                                        'Do You Want To Deactivate ${studentCubit.student?.studentDetail?[0].name}\n From ${batch.name} ?'
+                                        '\n\nSelect Date Of Leaving And Confirm',
+                                    subContent: RemoveStudent(
+                                      formKey: formKey,
+                                      rejoiningDate: (value) {
+                                        rejoining = value;
+                                      },
+                                      remark: (value) {
+                                        remark = value;
+                                      },
+                                    ),
+                                    onTap: () {
+                                      formKey.currentState!.save();
+                                      // if (formKey.currentState!.validate()) {
+                                      Navigator.pop(context);
+                                      studentCubit.removeStudentBatch(
+                                        batch.id,
+                                        // date: rejoining!,
+                                        date: rejoining ?? "",
+                                        reason: remark == "" ? "Nil" : remark,
+                                      );
+                                      // }
                                     },
-                                    remark: (value) {
-                                      remark = value;
-                                    },
-                                  ),
-                                  onTap: () {
-                                    formKey.currentState!.save();
-                                    // if (formKey.currentState!.validate()) {
-                                    Navigator.pop(context);
-                                    studentCubit.removeStudentBatch(
-                                      batch.id,
-                                      // date: rejoining!,
-                                      date: rejoining ?? "",
-                                      reason: remark == "" ? "Nil" : remark,
-                                    );
-                                    // }
-                                  },
-                                ).show();
-                              },
-                              onEdit: () {
-                                context
-                                    .read<BatchCubit>()
-                                    .getBatch(batchId: '${batch.id}');
-                                Navigator.pushNamed(
-                                  context,
-                                  EditAssignedBatch.route,
-                                  arguments: true,
-                                );
-                              },
-                            );
-                          },
+                                  ).show();
+                                },
+                                onEdit: () {
+                                  context
+                                      .read<BatchCubit>()
+                                      .getBatch(batchId: '${batch.id}');
+                                  Navigator.pushNamed(
+                                    context,
+                                    EditAssignedBatch.route,
+                                    arguments: true,
+                                  );
+                                },
+                              );
+                            },
+                          ),
                         ),
                 ],
               );

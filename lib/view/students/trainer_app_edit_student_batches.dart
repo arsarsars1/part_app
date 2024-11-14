@@ -83,7 +83,7 @@ class _TrainerAppEditStudentBatchesState
         ),
         bottomNavigationBar: SafeArea(
           child: SizedBox(
-            height: 132.h,
+            height: 50.h,
             child: BottomAppBar(
               color: Colors.black,
               child: Center(
@@ -116,7 +116,7 @@ class _TrainerAppEditStudentBatchesState
           },
           child: BlocBuilder<StudentCubit, StudentState>(
             builder: (context, state) {
-              return ListView(
+              return Column(
                 children: [
                   Center(
                     child: Text(
@@ -150,6 +150,7 @@ class _TrainerAppEditStudentBatchesState
                       ),
                     ),
                   ),
+                  SizedBox(height: 15.w),
                   studentCubit.batches.isEmpty
                       ? Center(
                           child: Padding(
@@ -167,59 +168,40 @@ class _TrainerAppEditStudentBatchesState
                             ),
                           ),
                         )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: studentCubit.batches.length,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            BatchModel batch = studentCubit.batches[index];
+                      : Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: studentCubit.batches.length,
+                            itemBuilder: (context, index) {
+                              BatchModel batch = studentCubit.batches[index];
 
-                            return BatchItem(
-                              edit: true,
-                              batch: batch,
-                              onTap: () {},
-                              onRemove: () {
-                                var formKey = GlobalKey<FormState>();
-                                String? rejoining;
-                                String? remark;
-                                CommonDialog(
-                                  context: context,
-                                  message:
-                                      'Do You Want To Deactivate ${studentCubit.student?.studentDetail?[0].name}\n From ${batch.name} ?'
-                                      '\n\nSelect Date Of Leaving And Confirm',
-                                  subContent: RemoveStudent(
-                                    formKey: formKey,
-                                    rejoiningDate: (value) {
-                                      rejoining = value;
-                                    },
-                                    remark: (value) {
-                                      remark = value;
-                                    },
-                                  ),
-                                  onTap: () {
-                                    formKey.currentState!.save();
-                                    // if (formKey.currentState!.validate()) {
-                                    Navigator.pop(context);
-                                    studentCubit.removeStudentBatchForTrainer(
-                                      trainerId: authCubit
-                                              ?.user
-                                              ?.trainerDetail?[
-                                                  authCubit?.trainerIndex ?? 0]
-                                              .id ??
-                                          0,
-                                      batch.id,
-                                      // date: rejoining!,
-                                      date: rejoining ?? "",
-                                      reason: remark == "" ? "Nil" : remark,
-                                    );
-                                    // }
-                                  },
-                                ).show();
-                              },
-                              onEdit: () {
-                                context
-                                    .read<BatchCubit>()
-                                    .getBatchForTrainerDetail(
+                              return BatchItem(
+                                edit: true,
+                                batch: batch,
+                                onTap: () {},
+                                onRemove: () {
+                                  var formKey = GlobalKey<FormState>();
+                                  String? rejoining;
+                                  String? remark;
+                                  CommonDialog(
+                                    context: context,
+                                    message:
+                                        'Do You Want To Deactivate ${studentCubit.student?.studentDetail?[0].name}\n From ${batch.name} ?'
+                                        '\n\nSelect Date Of Leaving And Confirm',
+                                    subContent: RemoveStudent(
+                                      formKey: formKey,
+                                      rejoiningDate: (value) {
+                                        rejoining = value;
+                                      },
+                                      remark: (value) {
+                                        remark = value;
+                                      },
+                                    ),
+                                    onTap: () {
+                                      formKey.currentState!.save();
+                                      // if (formKey.currentState!.validate()) {
+                                      Navigator.pop(context);
+                                      studentCubit.removeStudentBatchForTrainer(
                                         trainerId: authCubit
                                                 ?.user
                                                 ?.trainerDetail?[
@@ -227,15 +209,36 @@ class _TrainerAppEditStudentBatchesState
                                                         0]
                                                 .id ??
                                             0,
-                                        batchId: '${batch.id}');
-                                Navigator.pushNamed(
-                                  context,
-                                  TrainerAppEditAssignedBatch.route,
-                                  arguments: true,
-                                );
-                              },
-                            );
-                          },
+                                        batch.id,
+                                        // date: rejoining!,
+                                        date: rejoining ?? "",
+                                        reason: remark == "" ? "Nil" : remark,
+                                      );
+                                      // }
+                                    },
+                                  ).show();
+                                },
+                                onEdit: () {
+                                  context
+                                      .read<BatchCubit>()
+                                      .getBatchForTrainerDetail(
+                                          trainerId: authCubit
+                                                  ?.user
+                                                  ?.trainerDetail?[
+                                                      authCubit?.trainerIndex ??
+                                                          0]
+                                                  .id ??
+                                              0,
+                                          batchId: '${batch.id}');
+                                  Navigator.pushNamed(
+                                    context,
+                                    TrainerAppEditAssignedBatch.route,
+                                    arguments: true,
+                                  );
+                                },
+                              );
+                            },
+                          ),
                         ),
                 ],
               );
