@@ -43,7 +43,7 @@ class _SupportScreenState extends State<SupportScreen> {
                 inputType: TextInputType.emailAddress,
                 length: 50,
                 controller: emailController,
-                title: 'Email ID *',
+                title: 'Your Email Id *',
                 hint: 'Eg: email@example.com',
                 capitalization: TextCapitalization.none,
                 validator: (value) {
