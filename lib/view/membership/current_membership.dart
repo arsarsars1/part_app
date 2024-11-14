@@ -108,6 +108,7 @@ class CurrentMembership extends StatelessWidget {
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       fontSize: 16,
                                       decoration: TextDecoration.lineThrough,
+                                      decorationColor: Colors.white,
                                     ),
                           ),
                         Text(
