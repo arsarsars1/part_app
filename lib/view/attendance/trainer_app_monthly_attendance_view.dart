@@ -165,7 +165,14 @@ class _TrainerAppMonthlyAttendanceViewState
                             elevation: 10,
                             backgroundColor: Colors.transparent,
                             (context) => BatchPicker(
+                              isTrainer: true,
                               branchId: branchId!,
+                              trainerId: authCubit
+                                      ?.user
+                                      ?.trainerDetail?[
+                                          authCubit?.trainerIndex ?? 0]
+                                      .id ??
+                                  0,
                               status: status!,
                               onSelect: (value) {
                                 setState(() {
