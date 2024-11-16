@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:part_app/constants/constant.dart';
+import 'package:part_app/model/data_model/branch_manager_response.dart';
 import 'package:part_app/model/data_model/enums.dart';
 import 'package:part_app/model/data_model/students_response.dart';
 import 'package:part_app/model/data_model/trainer_response.dart';
 import 'package:part_app/view/account/account_card.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/home/home.dart';
+import 'package:part_app/view/home/manager_app_home.dart';
 import 'package:part_app/view/home/student_app_home.dart';
 import 'package:part_app/view/home/trainer_app_home.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
@@ -132,6 +134,32 @@ class SwitchAccount extends StatelessWidget {
                         },
                         accountType: '${student.name}, Student',
                         academyName: student.academy?.academyName ?? '',
+                      );
+                    },
+                  ),
+                if (cubit.user?.managerDetail != null &&
+                    cubit.user!.managerDetail!.isNotEmpty)
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: cubit.user?.managerDetail?.length,
+                    itemBuilder: (context, index) {
+                      BranchManagerResponse manager =
+                          cubit.user!.managerDetail![index];
+                      return AccountCard(
+                        onTap: () async {
+                          await DefaultCacheManager().emptyCache();
+                          cubit.managerIndex = index;
+                          cubit.accountType = AccountType.branchManager;
+                          database.setUserType('manager');
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            ManagerAppHome.route,
+                            (route) => false,
+                          );
+                        },
+                        accountType: '${manager.name}, Manager',
+                        academyName: manager.academy?.academyName ?? '',
                       );
                     },
                   ),

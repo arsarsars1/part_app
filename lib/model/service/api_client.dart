@@ -184,10 +184,10 @@ class ApiClient {
         'STATUS -> Code : ${response.statusCode}, Status : ${response.statusMessage}',
       );
       if (basePath != null) {
-        debugPrint("Base Url => $basePath");
+        log("Base Url => $basePath");
       }
-      debugPrint(response.statusMessage);
-      debugPrint(json.encode(response.data));
+      log(response.statusMessage ?? '');
+      log(json.encode(response.data));
 
       debugPrint('**********         ***********');
     }

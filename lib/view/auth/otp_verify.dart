@@ -91,6 +91,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                       cubit.user?.adminDetail?.academy,
                       cubit.user?.trainerDetail,
                       cubit.user?.studentDetail,
+                      cubit.user?.managerDetail,
                       context);
                 } else {
                   /// The Platform condition check which is added below is added to remove the membership for ios
@@ -106,6 +107,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                         cubit.user?.adminDetail?.academy,
                         cubit.user?.trainerDetail,
                         cubit.user?.studentDetail,
+                        cubit.user?.managerDetail,
                         context);
                   }
                 }
@@ -114,6 +116,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                     cubit.user?.adminDetail?.academy,
                     cubit.user?.trainerDetail,
                     cubit.user?.studentDetail,
+                    cubit.user?.managerDetail,
                     context);
               }
             }

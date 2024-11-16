@@ -131,6 +131,35 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
+  Future createStudentForManager({
+    required int managerId,
+  }) async {
+    emit(CreatingStudent());
+    _student = null;
+    var request = _studentRequest.toJson();
+
+    if (_profilePic != null) {
+      MultipartFile? picFile =
+          await Utils().generateMultiPartFile(_profilePic!);
+      request.putIfAbsent('profile_pic', () => picFile);
+    }
+    StudentResponse? response = await _studentService.createStudentForManager(
+        request: request, managerId: managerId);
+
+    if (response?.status == 1) {
+      _student = response?.student;
+      tempStudent = response?.student;
+      // updateStudentsList();
+      emit(CreatedStudent());
+      _profilePic = null;
+      _studentRequest = const StudentRequest();
+    } else {
+      emit(
+        CreateStudentFailed(response?.message ?? 'Failed to create student'),
+      );
+    }
+  }
+
   Future enrollToBatch() async {
     emit(CreatingStudent());
 
@@ -184,6 +213,26 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
+  Future enrollToBatchForManager({
+    required int managerId,
+  }) async {
+    emit(CreatingStudent());
+
+    StudentResponse? response = await _studentService.enrollToBatchForManager(
+        request: _studentRequest.toJson(),
+        studentId: _student?.studentDetail?[0].id,
+        managerId: managerId);
+
+    if (response?.status == 1) {
+      await getStudentBatches();
+      emit(CreatedStudent());
+    } else {
+      emit(
+        CreateStudentFailed(response?.message ?? 'Failed to add batch.'),
+      );
+    }
+  }
+
   Future updateStudent(StudentRequest request) async {
     emit(UpdatingStudent());
     StudentResponse? response = await _studentService.updateStudent(
@@ -221,6 +270,25 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
+  Future updateStudentForManager(int managerId, StudentRequest request) async {
+    emit(UpdatingStudent());
+    StudentResponse? response = await _studentService.updateStudentForManager(
+      request.toJson(),
+      _student?.studentDetail?[0].id,
+      managerId,
+    );
+
+    if (response?.status == 1) {
+      _student = response?.student;
+      updateStudentsList();
+      emit(UpdatedStudent());
+    } else {
+      emit(
+        UpdateStudentFailed(response?.message ?? 'Failed to update student'),
+      );
+    }
+  }
+
   Future updateProfilePic({required File profilePic, int? trainerId}) async {
     emit(UpdatingStudent());
     MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
@@ -238,6 +306,38 @@ class StudentCubit extends Cubit<StudentState> {
       _student = response?.student;
       String url = trainerId != null
           ? '${F.baseUrl}/trainers/$trainerId/images/student/'
+              '${_student?.studentDetail?[0].id}/${_student?.studentDetail?[0].profilePic}'
+          : '${F.baseUrl}/admin/images/student/${_student?.studentDetail?[0].id}'
+              '/${_student?.studentDetail?[0].profilePic}';
+      await CachedNetworkImage.evictFromCache(url);
+      updateStudentsList();
+      emit(UpdatedStudent());
+    } else {
+      emit(
+        UpdateStudentFailed(
+            response?.message ?? 'Failed to update profile pic'),
+      );
+    }
+  }
+
+  Future updateProfilePicForManager(
+      {required File profilePic, int? managerId}) async {
+    emit(UpdatingStudent());
+    MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
+    Map<String, dynamic> data = {
+      'profile_pic': picFile,
+      'is_parent': _student?.studentDetail?[0].parentName == null ? 0 : 1,
+      'parent_name': _student?.studentDetail?[0].parentName,
+    };
+    StudentResponse? response = await _studentService.updateStudentForManager(
+      data,
+      _student?.studentDetail?[0].id,
+      managerId ?? 0,
+    );
+    if (response?.status == 1) {
+      _student = response?.student;
+      String url = managerId != null
+          ? '${F.baseUrl}/managers/$managerId/images/student/'
               '${_student?.studentDetail?[0].id}/${_student?.studentDetail?[0].profilePic}'
           : '${F.baseUrl}/admin/images/student/${_student?.studentDetail?[0].id}'
               '/${_student?.studentDetail?[0].profilePic}';
@@ -488,6 +588,78 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
+  Future getStudentsForManager({
+    required int managerId,
+    String? searchQuery,
+    String? activeStatus,
+    int? batchId,
+    int? branchId,
+    bool clean = false,
+  }) async {
+    if (state is FetchingStudents) {
+      return;
+    }
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _studentsMap.clear();
+      activeStudentsCount = null;
+      inactiveStudentsCount = null;
+      emit(FetchingStudents());
+    } else {
+      emit(FetchingStudents(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(StudentsFetched());
+      return;
+    }
+
+    StudentsResponse? response = await _studentService.getStudentsForManager(
+      managerId: managerId,
+      batchId: batchId,
+      branchId: branchId,
+      searchQuery: searchQuery,
+      activeStatus: activeStatus,
+      pageNo: page,
+    );
+
+    if (response?.status == 1) {
+      nextPageUrl = response?.students?.nextPageUrl;
+      if (nextPageUrl != null && nextPageUrl.isNotNullOrEmpty()) {
+        page++;
+      } else {
+        nextPageUrl = null;
+      }
+
+      var items = response?.students?.data ?? [];
+      activeStudentsCount = response?.activeStudentsCount;
+      inactiveStudentsCount = response?.inactiveStudentsCount;
+      List<StudentModel> tempStudents = [];
+
+      for (var student in items) {
+        var details = student.studentDetail;
+        if (details != null) {
+          for (var details in details) {
+            StudentModel newStudent;
+            if (activeStatus == null) {
+              newStudent = StudentModel.fromEntity(student, details);
+            } else {
+              newStudent =
+                  StudentModel.fromEntity1(student, details, batchId ?? 0);
+            }
+
+            tempStudents.add(newStudent);
+          }
+        }
+      }
+
+      _studentsMap.addEntries(tempStudents.map((e) => MapEntry(e.detailId, e)));
+
+      emit(StudentsFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
   Future studentDetails(int? studentId) async {
     _student = null;
     emit(StudentDetailsFetching());
@@ -509,6 +681,23 @@ class StudentCubit extends Cubit<StudentState> {
     emit(StudentDetailsFetching());
     StudentResponse? response =
         await _studentService.studentDetailsForTrainer(trainerId, studentId);
+    if (response?.status == 1) {
+      _student = response?.student;
+      emit(StudentDetailsFetched());
+    } else {
+      emit(
+        StudentDetailsFailed(
+            response?.message ?? 'Failed to fetch student details,'),
+      );
+    }
+  }
+
+  Future studentDetailsForManager(
+      {required int managerId, int? studentId}) async {
+    _student = null;
+    emit(StudentDetailsFetching());
+    StudentResponse? response =
+        await _studentService.studentDetailsForManager(managerId, studentId);
     if (response?.status == 1) {
       _student = response?.student;
       emit(StudentDetailsFetched());
@@ -607,6 +796,24 @@ class StudentCubit extends Cubit<StudentState> {
     }
   }
 
+  Future getStudentBatchesForManager({required int managerId}) async {
+    emit(StudentBatchesFetching());
+    StudentsBatchResponse? response =
+        await _studentService.getStudentBatchesForManager(
+            _student?.studentDetail?[0].id ?? tempStudent?.studentDetail?[0].id,
+            managerId);
+
+    if (response?.status == 1) {
+      var items =
+          response?.batches?.map((e) => BatchModel.fromEntity(e)).toList() ??
+              [];
+      _batches = items;
+      emit(StudentBatchesFetched());
+    } else {
+      emit(StudentBatchesFailed('Failed to fetch batches.'));
+    }
+  }
+
   Future getStudentBatchesForTrainers({
     required int trainerId,
     String? status,
@@ -627,6 +834,38 @@ class StudentCubit extends Cubit<StudentState> {
         await _studentService.getStudentBatchesForTrainer(
             _student?.studentDetail?[0].id ?? tempStudent?.studentDetail?[0].id,
             trainerId);
+
+    if (response?.status == 1) {
+      var items =
+          response?.batches?.map((e) => BatchModel.fromEntity(e)).toList() ??
+              [];
+      _batches = items;
+      emit(StudentBatchesFetched());
+    } else {
+      emit(StudentBatchesFailed('Failed to fetch batches.'));
+    }
+  }
+
+  Future getStudentBatchesForManagers({
+    required int managerId,
+    String? status,
+    int? batchId,
+    bool clean = false,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      _batches.clear();
+      emit(StudentBatchesFetched());
+    } else {
+      emit(StudentBatchesFetched());
+    }
+
+    emit(StudentBatchesFetching());
+    StudentsBatchResponse? response =
+        await _studentService.getStudentBatchesForTrainer(
+            _student?.studentDetail?[0].id ?? tempStudent?.studentDetail?[0].id,
+            managerId);
 
     if (response?.status == 1) {
       var items =
@@ -669,6 +908,25 @@ class StudentCubit extends Cubit<StudentState> {
 
     if (common?.status == 1) {
       getStudentBatchesForTrainer(trainerId: trainerId);
+      emit(RemovedStudent());
+    } else {
+      emit(RemoveStudentFailed(common?.message ?? 'Failed to remove student'));
+    }
+  }
+
+  Future removeStudentBatchForManager(int? batchId,
+      {String? date, reason, required int managerId}) async {
+    emit(RemovingStudent());
+    Common? common = await _studentService.removeStudentBatchforManager(
+      managerId: managerId,
+      batchId,
+      _student?.studentDetail?[0].id,
+      date: date,
+      reason: reason,
+    );
+
+    if (common?.status == 1) {
+      getStudentBatchesForManager(managerId: managerId);
       emit(RemovedStudent());
     } else {
       emit(RemoveStudentFailed(common?.message ?? 'Failed to remove student'));

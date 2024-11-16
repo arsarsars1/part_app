@@ -42,6 +42,23 @@ class StudentService {
     }
   }
 
+  Future<StudentResponse?> createStudentForManager({
+    Map<String, dynamic>? request,
+    int? managerId,
+  }) async {
+    try {
+      request?.removeWhere((key, value) => value == null);
+      var response = await _client.post(
+        postPath: '/managers/$managerId/students',
+        data: request!,
+        formData: true,
+      );
+      return studentResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentResponse?> enrollToBatch(
       Map<String, dynamic> request, int? studentId) async {
     try {
@@ -85,6 +102,23 @@ class StudentService {
     }
   }
 
+  Future<StudentResponse?> enrollToBatchForManager({
+    Map<String, dynamic>? request,
+    int? studentId,
+    int? managerId,
+  }) async {
+    try {
+      request?.removeWhere((key, value) => value == null);
+      var response = await _client.post(
+          postPath: '/managers/$managerId/students/$studentId/enroll',
+          data: request!);
+      return studentResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
   Future<StudentResponse?> updateStudent(Map<String, dynamic> request, int? id,
       {int? trainerId}) async {
     try {
@@ -108,6 +142,21 @@ class StudentService {
       request.removeWhere((key, value) => value == null);
       var response = await _client.post(
         postPath: '/trainers/$trainerId/students/$id',
+        data: request,
+        formData: true,
+      );
+      return studentResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<StudentResponse?> updateStudentForManager(
+      Map<String, dynamic> request, int? id, int managerId) async {
+    try {
+      request.removeWhere((key, value) => value == null);
+      var response = await _client.post(
+        postPath: '/managers/$managerId/students/$id',
         data: request,
         formData: true,
       );
@@ -255,6 +304,40 @@ class StudentService {
     }
   }
 
+  Future<StudentsResponse?> getStudentsForManager(
+      {int? managerId,
+      String? searchQuery,
+      String? activeStatus,
+      int? batchId,
+      int? branchId,
+      int? pageNo}) async {
+    try {
+      String path = '';
+
+      if (branchId != null && activeStatus != null && batchId == null) {
+        path =
+            '/managers/$managerId/branches/$branchId/students/batch-status/$activeStatus';
+      } else if (branchId != null && batchId == null) {
+        path = '/managers/$managerId/branches/$branchId/students';
+      } else if (batchId != null) {
+        path = '/managers/$managerId/batches/$batchId/students';
+      } else {
+        path = '/managers/$managerId/students';
+      }
+
+      if (searchQuery != null) {
+        path += '/search/$searchQuery';
+      }
+
+      path += '?page=$pageNo';
+
+      var response = await _client.get(queryPath: path);
+      return studentsResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentResponse?> studentDetails(int? studentId) async {
     try {
       var response = await _client.get(queryPath: '/admin/students/$studentId');
@@ -275,6 +358,17 @@ class StudentService {
     }
   }
 
+  Future<StudentResponse?> studentDetailsForManager(
+      int managerId, int? studentId) async {
+    try {
+      var response = await _client.get(
+          queryPath: '/managers/$managerId/students/$studentId');
+      return studentResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<StudentsBatchResponse?> getStudentBatches(int? studentId) async {
     var response =
         await _client.get(queryPath: '/admin/students/$studentId/batches');
@@ -286,6 +380,14 @@ class StudentService {
       int? studentId, int? trainerId) async {
     var response = await _client.get(
         queryPath: '/trainers/$trainerId/students/$studentId/batches');
+
+    return studentBatchResponseFromJson(jsonEncode(response));
+  }
+
+  Future<StudentsBatchResponse?> getStudentBatchesForManager(
+      int? studentId, int? managerId) async {
+    var response = await _client.get(
+        queryPath: '/managers/$managerId/students/$studentId/batches');
 
     return studentBatchResponseFromJson(jsonEncode(response));
   }
@@ -319,6 +421,24 @@ class StudentService {
     } else {
       response = await _client.post(
         postPath: '/trainers/$trainerId/batches/$batchId/remove/$studentId',
+        data: {'rejoining_date': date, 'reason': reason},
+      );
+    }
+
+    return commonFromJson(jsonEncode(response));
+  }
+
+  Future<Common?> removeStudentBatchforManager(int? batchId, int? studentId,
+      {String? date, String? reason, int? managerId}) async {
+    var response;
+    if (date == "") {
+      response = await _client.post(
+        postPath: '/managers/$managerId/batches/$batchId/remove/$studentId',
+        data: {'reason': reason},
+      );
+    } else {
+      response = await _client.post(
+        postPath: '/managers/$managerId/batches/$batchId/remove/$studentId',
         data: {'rejoining_date': date, 'reason': reason},
       );
     }

@@ -102,6 +102,22 @@ class BranchService {
     return null;
   }
 
+  Future<List<Branch>?> getBranchesForManager({int? managerId}) async {
+    try {
+      var response =
+          await _apiClient.get(queryPath: '/managers/$managerId/branches');
+      BranchResponse branchResponse =
+          branchResponseFromJson(jsonEncode(response));
+      if (branchResponse.status == 1 && branchResponse.branches != null) {
+        var list = branchResponse.branches;
+        return list;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return null;
+  }
+
   Future<List<Branch>?> getStudentAppBranches({int? studentId}) async {
     try {
       var response =
@@ -167,6 +183,21 @@ class BranchService {
     }
   }
 
+  Future<TrainerResponse?> getTrainersForManager(
+      {required int managerId,
+      required String branchId,
+      int pageNo = 1}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/managers/$managerId/branches/$branchId/trainers?page=$pageNo',
+      );
+      return trainerResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<TrainerResponse?> getBatchTrainers(
       {required String batchId, int pageNo = 1}) async {
     try {
@@ -210,6 +241,22 @@ class BranchService {
     }
   }
 
+  Future<ClassResponse?> getBatchClassesForManager(
+      {required int managerId,
+      required String batchId,
+      required String brabchId,
+      required String date,
+      int pageNo = 1}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/managers/$managerId/batches/$batchId/daily-classes/$date',
+      );
+      return classResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<ClassResponse?> getBranchClasses(
       {required String branchId, required String date, int pageNo = 1}) async {
     try {
@@ -231,6 +278,22 @@ class BranchService {
       var response = await _apiClient.get(
         queryPath:
             '/trainers/$trainerId/branches/$branchId/daily-classes/$date',
+      );
+      return classResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<ClassResponse?> getBranchClassesForManager(
+      {required int managerId,
+      required String branchId,
+      required String date,
+      int pageNo = 1}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath:
+            '/managers/$managerId/branches/$branchId/daily-classes/$date',
       );
       return classResponseFromJson(jsonEncode(response));
     } catch (e) {
