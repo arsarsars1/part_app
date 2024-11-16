@@ -33,12 +33,13 @@ class _TrainerAppBranchFieldState extends State<TrainerAppBranchField> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       AuthCubit? authCubit = context.read<AuthCubit>();
-      context.read<BranchCubit>().getBranchesForTrainer(
+      await context.read<BranchCubit>().getBranchesForTrainer(
             trainerId:
                 authCubit.user?.trainerDetail?[authCubit.trainerIndex].id ?? 0,
           );
+      setState(() {});
     });
   }
 
@@ -47,48 +48,49 @@ class _TrainerAppBranchFieldState extends State<TrainerAppBranchField> {
     return BlocBuilder<BranchCubit, BranchState>(
       builder: (context, state) {
         var branchCubit = context.read<BranchCubit>();
-        if (state is BranchLoadingFailed) {
+        if (state is BranchLoadingFailed || state is BranchesLoading) {
           return const SizedBox();
-        }
-        return CommonField(
-          title: widget.title ?? 'Branch${widget.isMandatory ? " *" : ""}',
-          hint: 'Select Branch',
-          dropDown: true,
-          defaultItem: widget.clearInitial
-              ? null
-              : widget.initialBranch != null && widget.initialBranch == -1
-                  ? const DropDownItem(
-                      id: -1,
-                      title: "All",
-                    )
-                  : (branchCubit.initialBranch(
-                      widget.initialBranch ?? branchCubit.firstBranch?.id,
-                    )),
-          contentPaddingField: widget.contentPaddingField,
-          disabled: widget.isDisable,
-          dropDownItems: widget.addAllItem
-              ? (branchCubit.dropDownBranches()
-                ..insert(
-                    0,
-                    const DropDownItem(
-                      id: -1,
-                      title: "All",
-                    )))
-              : branchCubit.dropDownBranches(),
-          onChange: (value) {
-            if (widget.isDisable == false) {
-              widget.onSelect(value.id);
-            }
-          },
-          validator: widget.isMandatory
-              ? (value) {
-                  if (value == null) {
-                    return 'Please select branch.';
+        } else {
+          return CommonField(
+            title: widget.title ?? 'Branch${widget.isMandatory ? " *" : ""}',
+            hint: 'Select Branch',
+            dropDown: true,
+            defaultItem: widget.clearInitial
+                ? null
+                : widget.initialBranch != null && widget.initialBranch == -1
+                    ? const DropDownItem(
+                        id: -1,
+                        title: "All",
+                      )
+                    : (branchCubit.initialBranch(
+                        widget.initialBranch ?? branchCubit.firstBranch?.id,
+                      )),
+            contentPaddingField: widget.contentPaddingField,
+            disabled: widget.isDisable,
+            dropDownItems: widget.addAllItem
+                ? (branchCubit.dropDownBranches()
+                  ..insert(
+                      0,
+                      const DropDownItem(
+                        id: -1,
+                        title: "All",
+                      )))
+                : branchCubit.dropDownBranches(),
+            onChange: (value) {
+              if (widget.isDisable == false) {
+                widget.onSelect(value.id);
+              }
+            },
+            validator: widget.isMandatory
+                ? (value) {
+                    if (value == null) {
+                      return 'Please select branch.';
+                    }
+                    return null;
                   }
-                  return null;
-                }
-              : null,
-        );
+                : null,
+          );
+        }
       },
     );
   }

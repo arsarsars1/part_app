@@ -79,6 +79,11 @@ class _EditLeadState extends State<EditLead> {
       comments = selectedLead.followUps.isNotNullAndNotEmpty
           ? selectedLead.followUps![0].followUpComment
           : null;
+      context.read<BatchCubit>().getBatchesByStatus(
+            branchId: branchId,
+            clean: true,
+            branchSearch: true,
+          );
     }
   }
 

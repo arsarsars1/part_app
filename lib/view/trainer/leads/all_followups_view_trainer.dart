@@ -351,10 +351,13 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                             itemBuilder: (context, index) {
                               Lead? singleLead = cubit.leads[index];
                               return GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   cubit.selectedLead = singleLead;
-                                  Navigator.pushNamed(
-                                      context, LeadTrainerDetails.route);
+                                  await Navigator.pushNamed(
+                                          context, LeadTrainerDetails.route)
+                                      .then((onValue) {
+                                    fetchLead(getStatus: false);
+                                  });
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.symmetric(
@@ -392,21 +395,46 @@ class _AllTrainerFollowUpViewState extends State<AllTrainerFollowUpView> {
                                             height: 8,
                                           ),
                                           Text(
-                                            'Next Followup on: ${cubit.checkTime(singleLead?.followUps ?? [])?.followUpDate?.toDateString() != null ? '${cubit.checkTime(singleLead?.followUps ?? [])?.followUpDate?.toDateString() == DateTime.now().toDateString() ? "Today" : cubit.checkTime(singleLead?.followUps ?? [])?.followUpDate?.toDateString()} @ ${cubit.checkTime(singleLead?.followUps ?? [])?.followUpTime?.toAmPM()}' : "Not available"}',
+                                            (singleLead?.followUps ?? [])
+                                                    .isNotEmpty
+                                                ? cubit.checkTimeForColor(
+                                                            singleLead
+                                                                    ?.followUps ??
+                                                                []) ==
+                                                        'Today'
+                                                    ? 'Followup on: Today @ ${singleLead?.followUps?.first.followUpTime?.toAmPM()}'
+                                                    : cubit.checkTimeForColor(
+                                                                singleLead
+                                                                        ?.followUps ??
+                                                                    []) ==
+                                                            'Upcoming'
+                                                        ? 'Followup on: ${singleLead?.followUps?.first.followUpDate?.toDateString()} @ ${singleLead?.followUps?.first.followUpTime?.toAmPM()}'
+                                                        : 'Followup on: ${singleLead?.followUps?.first.followUpDate?.toDateString()} @ ${singleLead?.followUps?.first.followUpTime?.toAmPM()}'
+                                                : 'Followup : Not Available',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge
                                                 ?.copyWith(
-                                                  color: cubit
-                                                              .checkTime(singleLead
+                                                  color: cubit.checkTimeForColor(
+                                                              singleLead
                                                                       ?.followUps ??
-                                                                  [])
-                                                              ?.followUpDate
-                                                              ?.toDateString() ==
-                                                          DateTime.now()
-                                                              .toDateString()
-                                                      ? AppColors.yellow
-                                                      : AppColors.textColor,
+                                                                  []) ==
+                                                          'Today'
+                                                      ? AppColors.green
+                                                      : cubit.checkTimeForColor(
+                                                                  singleLead
+                                                                          ?.followUps ??
+                                                                      []) ==
+                                                              'Upcoming'
+                                                          ? AppColors.yellow
+                                                          : cubit.checkTimeForColor(
+                                                                      singleLead
+                                                                              ?.followUps ??
+                                                                          []) ==
+                                                                  'Past'
+                                                              ? AppColors.red
+                                                              : AppColors
+                                                                  .textColor,
                                                 ),
                                           ),
                                         ],

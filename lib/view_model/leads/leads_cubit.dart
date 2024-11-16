@@ -396,7 +396,34 @@ class LeadsCubit extends Cubit<LeadsState> {
       if (temp < balance.inMinutes) {
         finalFollowUp = i;
       }
+      if (temp > balance.inMinutes) {
+        finalFollowUp = i;
+      }
     }
     return finalFollowUp;
+  }
+
+  String checkTimeForColor(List<FollowUp> test) {
+    FollowUp i;
+    var today =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    DateTime testDay;
+    String status = '';
+    for (i in test) {
+      testDay = DateTime(
+          (i.followUpDate ?? DateTime.now()).year,
+          (i.followUpDate ?? DateTime.now()).month,
+          (i.followUpDate ?? DateTime.now()).day);
+      if (today.isAtSameMomentAs(testDay)) {
+        status = 'Today';
+      }
+      if (today.isBefore(testDay)) {
+        status = 'Upcoming';
+      }
+      if (today.isAfter(testDay)) {
+        status = 'Past';
+      }
+    }
+    return status;
   }
 }
