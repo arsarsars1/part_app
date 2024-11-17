@@ -7,7 +7,7 @@ import 'package:part_app/model/data_model/user_response.dart';
 import 'package:part_app/view/account/switch_account.dart';
 import 'package:part_app/view/components/cached_image.dart';
 import 'package:part_app/view/home/components/logout.dart';
-import 'package:part_app/view/profile/trainer_app_profile.dart';
+import 'package:part_app/view/profile/manager_app_profile.dart';
 import 'package:part_app/view_model/authentication/auth_cubit.dart';
 import 'package:part_app/view_model/profile_pic/cubit/profile_cubit.dart';
 
@@ -30,7 +30,7 @@ class _ManagerProfileButtonState extends State<ManagerProfileButton> {
       onSelected: (MenuItems item) {
         switch (item) {
           case MenuItems.profile:
-            Navigator.pushNamed(context, TrainerAppProfile.route);
+            Navigator.pushNamed(context, ManagerAppProfile.route);
             break;
           // case MenuItems.account:
           //   Navigator.pushNamed(context, TrainerAccount.route);

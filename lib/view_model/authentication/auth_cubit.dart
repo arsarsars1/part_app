@@ -345,8 +345,12 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future updateProfileForTrainer(ProfileUpdateRequest request, int trainerId,
-      [String? otp, bool isToOtpPage = false]) async {
+  Future updateProfileForTrainer(
+    ProfileUpdateRequest request,
+    int trainerId, [
+    String? otp,
+    bool isToOtpPage = false,
+  ]) async {
     if (!isToOtpPage) {
       emit(UpdatingUser());
     }
@@ -379,6 +383,54 @@ class AuthCubit extends Cubit<AuthState> {
             user: user!.copyWith(
                 mobileNo: request.mobileNo ?? user!.mobileNo,
                 trainerDetail: trainerList),
+          ),
+        );
+      } else {
+        emit(UpdateOTPSuccess());
+      }
+    } else {
+      emit(UpdateUserFailed(response?.message ?? 'Failed to update'));
+    }
+  }
+
+  Future updateProfileForManager(
+    ProfileUpdateRequest request,
+    int managerId, [
+    String? otp,
+    bool isToOtpPage = false,
+  ]) async {
+    if (!isToOtpPage) {
+      emit(UpdatingUser());
+    }
+    UserResponse? response = await _authService.updateManagerProfile(
+        request.toJson()..putIfAbsent('otp', () => otp), managerId);
+    if (response?.status == 1) {
+      if (!isToOtpPage) {
+        validateLocalUser();
+
+        final managerList = user!.managerDetail!.toList();
+        final manager =
+            managerList.firstWhere((element) => element.id == managerId);
+        final newStudent = manager.copyWith(
+          name: request.name ?? manager.name,
+          email: request.email ?? manager.email,
+          gender: request.gender ?? manager.gender,
+          whatsappNo: request.whatsappNo ?? manager.whatsappNo,
+          dob: (request.dob != null
+              ? DateTime.parse(request.dob!)
+              : manager.dob),
+          academy: manager.academy!.copyWith(
+            academyName: request.academyName ?? manager.academy!.academyName,
+          ),
+        );
+        managerList.insert(managerList.indexOf(manager), newStudent);
+        managerList.remove(manager);
+
+        emit(
+          UpdateUserSuccess(
+            user: user!.copyWith(
+                mobileNo: request.mobileNo ?? user!.mobileNo,
+                managerDetail: managerList),
           ),
         );
       } else {
@@ -431,12 +483,12 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future updateProfilePicForTrainer(
-      {BuildContext? context,
-      required File profilePic,
-      required int trainerId,
-      required String url}) async {
-    // emit(UpdatingUser());
+  Future updateProfilePicForTrainer({
+    BuildContext? context,
+    required File profilePic,
+    required int trainerId,
+    required String url,
+  }) async {
     await clearCache(url);
     MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
     Map<String, dynamic> request = {
@@ -444,6 +496,31 @@ class AuthCubit extends Cubit<AuthState> {
     };
     UserResponse? response =
         await _authService.updateTrainerProfile(request, trainerId);
+
+    if (response != null &&
+        response.status == 1 &&
+        context != null &&
+        context.mounted) {
+      await clearCache(url);
+      Alert(context).show(message: 'User Profile Updated');
+    } else {
+      emit(UpdateUserFailed(response?.message ?? 'Failed to update'));
+    }
+  }
+
+  Future updateProfilePicForManager({
+    BuildContext? context,
+    required File profilePic,
+    required int managerId,
+    required String url,
+  }) async {
+    await clearCache(url);
+    MultipartFile? picFile = await Utils().generateMultiPartFile(profilePic);
+    Map<String, dynamic> request = {
+      'profile_pic': picFile,
+    };
+    UserResponse? response =
+        await _authService.updateTrainerManager(request, managerId);
 
     if (response != null &&
         response.status == 1 &&
@@ -551,14 +628,8 @@ class AuthCubit extends Cubit<AuthState> {
           (route) => false,
         );
       } else if (accountType == AccountType.branchManager) {
-        managerIndex = 0;
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          TrainerAppHome.route,
-          (route) => false,
-        );
-      } else if (accountType == AccountType.branchManager) {
-        managerIndex = 0;
+        managerIndex = cubit.managerIndex;
+        homeCubit.managerInit();
         Navigator.pushNamedAndRemoveUntil(
           context,
           ManagerAppHome.route,
@@ -602,6 +673,16 @@ class AuthCubit extends Cubit<AuthState> {
         url =
             '${F.baseUrl}/trainers/${user?.trainerDetail?[trainerIndex].id}/images/profile-pic'
             '/${user?.trainerDetail?[trainerIndex].profilePic}';
+      } else if (user?.adminDetail?.gender == "male") {
+        url = "https://v1.partapp.in/images/avatars/avatar-5.png";
+      } else {
+        url = "https://v1.partapp.in/images/avatars/avatar-1.png";
+      }
+    } else if (accountType == AccountType.branchManager) {
+      if (user?.managerDetail?[managerIndex].profilePic?.isNotEmpty ?? false) {
+        url =
+            '${F.baseUrl}/managers/${user?.managerDetail?[managerIndex].id}/images/profile-pic'
+            '/${user?.managerDetail?[managerIndex].profilePic}';
       } else if (user?.adminDetail?.gender == "male") {
         url = "https://v1.partapp.in/images/avatars/avatar-5.png";
       } else {

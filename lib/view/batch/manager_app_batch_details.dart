@@ -5,10 +5,10 @@ import 'package:part_app/model/data_model/batch_request.dart';
 import 'package:part_app/model/data_model/models.dart';
 import 'package:part_app/model/extensions.dart';
 import 'package:part_app/view/batch/components/selected_trainers.dart';
+import 'package:part_app/view/batch/manager_app_batch_students.dart';
 import 'package:part_app/view/batch/manager_app_cancel_batch_class.dart';
 import 'package:part_app/view/batch/manager_app_edit_batch_details.dart';
 import 'package:part_app/view/batch/manager_app_reschedule_class.dart';
-import 'package:part_app/view/batch/trainer_app_batch_students.dart';
 import 'package:part_app/view/components/components.dart';
 import 'package:part_app/view/trainer/students_picker.dart';
 import 'package:part_app/view_model/cubits.dart';
@@ -451,7 +451,7 @@ class _ManagerAppBatchDetailsState extends State<ManagerAppBatchDetails> {
                               ],
                             ),
                           ),
-                          TrainerAppBatchStudents(
+                          ManagerAppBatchStudents(
                             onChange: (bool value) async {
                               isActive = value;
                               await doSearch(clean: true);

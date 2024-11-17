@@ -232,6 +232,38 @@ class AuthService {
     }
   }
 
+  Future<UserResponse?> updateManagerProfile(
+      Map<String, dynamic> request, int managerId) async {
+    try {
+      request.removeWhere((key, value) => value == null);
+      var response = await _apiClient.post(
+        postPath: '/managers/$managerId/update-profile',
+        data: request,
+        formData: true,
+      );
+
+      return userResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<UserResponse?> updateTrainerManager(
+      Map<String, dynamic> request, int managerId) async {
+    try {
+      request.removeWhere((key, value) => value == null);
+      var response = await _apiClient.post(
+        postPath: '/managers/$managerId/update-profile',
+        data: request,
+        formData: true,
+      );
+
+      return userResponseFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<void> addFirebaseListener(BuildContext context) async {
     try {
       await FirebaseMessaging.instance.getToken();

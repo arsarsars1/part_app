@@ -152,6 +152,7 @@ class SwitchAccount extends StatelessWidget {
                           cubit.managerIndex = index;
                           cubit.accountType = AccountType.branchManager;
                           database.setUserType('manager');
+                          homeCubit.managerInit();
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             ManagerAppHome.route,
