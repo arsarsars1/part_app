@@ -96,6 +96,21 @@ class TrainerCubit extends Cubit<TrainerState> {
     emit(TrainerDetailsFailed('Failed to load the trainer details'));
   }
 
+  Future getTrainerDetailsForManager(
+      {required int trainerId, required int managerId}) async {
+    emit(TrainerDetailsLoading());
+    Trainer? temp = await _trainerService.getTrainerByIdForManager(
+        trainerId: trainerId, managerId: managerId);
+    if (temp != null && temp.trainerDetail != null) {
+      trainer = temp;
+      _selectedBranches =
+          trainer!.trainerDetail![0].branches?.map((e) => e.id).toList() ?? [];
+      emit(TrainerDetailsLoaded());
+      return;
+    }
+    emit(TrainerDetailsFailed('Failed to load the trainer details'));
+  }
+
   void clearTrainers() {
     _trainers?.clear();
   }
@@ -122,6 +137,21 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
   }
 
+  Future getTrainersForManager(
+      {bool nextPage = false, required int managerId}) async {
+    emit(FetchingTrainers());
+    TrainerResponse? response =
+        await _trainerService.getTrainersForManager(managerId);
+    tempResponse = response;
+
+    if (response?.trainers != null) {
+      _trainers = response?.trainers?.data ?? [];
+      // filterTrainers(active: _isActive);
+    } else {
+      emit(FailedToFetchTrainers('Failed to fetch the trainers'));
+    }
+  }
+
   /// reset
   void reset() {
     _trainers?.clear();
@@ -138,6 +168,29 @@ class TrainerCubit extends Cubit<TrainerState> {
         ? await _trainerService.getActiveTrainers(
             branchId: branchId, active: active)
         : await _trainerService.getActiveTrainers(branchId: branchId);
+    tempResponse = response;
+
+    if (response?.trainers?.data != null) {
+      _trainers = response?.trainers?.data ?? [];
+      emit(TrainersFetched());
+      // filterTrainers(active: _isActive);
+    } else {
+      emit(FailedToFetchTrainers('Failed to fetch the trainers'));
+    }
+  }
+
+  Future getActiveInactiveTrainersForManager(
+      {int? branchId,
+      bool nextPage = false,
+      active = false,
+      clean = false,
+      required int managerId}) async {
+    emit(FetchingTrainers());
+    TrainerResponse? response = active
+        ? await _trainerService.getActiveTrainersForManager(
+            branchId: branchId, active: active, managerId: managerId)
+        : await _trainerService.getActiveTrainersForManager(
+            branchId: branchId, managerId: managerId);
     tempResponse = response;
 
     if (response?.trainers?.data != null) {
@@ -214,6 +267,30 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
   }
 
+  Future searchTrainersForManager(int? branchID,
+      {String? query, required int managerId}) async {
+    _trainers = [];
+    emit(FetchingTrainers());
+
+    if (branchID != null && query == null) {
+      var response = await _branchService.getTrainersForManager(
+          branchId: branchID.toString(), managerId: managerId);
+      _trainers = response?.trainers?.data;
+    }
+
+    if (query != null) {
+      _trainers = await _trainerService.searchTrainerForManager(branchID,
+          query: query, managerId: managerId);
+    }
+
+    if (_trainers != null) {
+      // filterTrainers(active: _isActive);
+      emit(SearchedTrainers());
+    } else {
+      emit(FailedToFetchTrainers('Failed to fetch the trainers'));
+    }
+  }
+
   void updateRequest(
     TrainerRequest trainerRequest, {
     File? image,
@@ -268,6 +345,40 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
   }
 
+  Future createTrainerForManager({required int managerId}) async {
+    emit(CreatingTrainer());
+    Map<String, dynamic> map = _request.toJson();
+
+    /// prepare files for upload
+    if (image != null) {
+      MultipartFile? imageFile = await Utils().generateMultiPartFile(image!);
+      map.putIfAbsent('profile_pic', () => imageFile);
+    }
+
+    if (doc1 != null) {
+      MultipartFile? doc1File = await Utils().generateMultiPartFile(doc1!);
+      map.putIfAbsent('document_1', () => doc1File);
+    }
+
+    if (doc2 != null) {
+      MultipartFile? doc2File = await Utils().generateMultiPartFile(doc2!);
+
+      map.putIfAbsent('document_2', () => doc2File);
+    }
+    Common? response =
+        await _trainerService.createTrainerForManager(map, managerId);
+
+    if (response != null && response.status == 1) {
+      emit(TrainerCreated(fromBranch));
+    } else {
+      emit(
+        CreatingTrainerFailed(
+          response?.message ?? 'Failed to create the trainer',
+        ),
+      );
+    }
+  }
+
   Future trainerStatus({required int id, required int status}) async {
     emit(UpdatingTrainer());
     Common? response = await _trainerService.updateTrainerStatus(
@@ -279,6 +390,21 @@ class TrainerCubit extends Cubit<TrainerState> {
       emit(TrainerStatusUpdated(status == 1));
       await getTrainers();
       await getTrainerDetails(trainerId: id);
+    } else {
+      emit(UpdatingTrainerFailed('Fetching manager details failed.'));
+    }
+  }
+
+  Future trainerStatusForManager(
+      {required int id, required int status, required int managerId}) async {
+    emit(UpdatingTrainer());
+    Common? response = await _trainerService.updateTrainerStatusForManager(
+        trainerId: id, status: status, managerId: managerId);
+
+    if (response?.status == 1) {
+      emit(TrainerStatusUpdated(status == 1));
+      await getTrainersForManager(managerId: managerId);
+      await getTrainerDetailsForManager(trainerId: id, managerId: managerId);
     } else {
       emit(UpdatingTrainerFailed('Fetching manager details failed.'));
     }
@@ -312,6 +438,43 @@ class TrainerCubit extends Cubit<TrainerState> {
         trainerId: trainer!.trainerDetail![0].id,
       );
       await getTrainers();
+      emit(TrainerUpdated());
+    } else {
+      emit(
+        UpdatingTrainerFailed(common?.message ?? 'Failed to update trainer'),
+      );
+    }
+  }
+
+  Future updateTrainerForManager(TrainerRequest request,
+      {File? doc1, File? doc2, required int managerId}) async {
+    emit(UpdatingTrainer());
+    Map<String, dynamic> data = request.toJson();
+
+    data.removeWhere((key, value) => value == null);
+
+    if (doc1 != null) {
+      MultipartFile? doc1File = await Utils().generateMultiPartFile(doc1);
+      data.putIfAbsent('document_1', () => doc1File);
+    }
+
+    if (doc2 != null) {
+      MultipartFile? doc2File = await Utils().generateMultiPartFile(doc2);
+
+      data.putIfAbsent('document_2', () => doc2File);
+    }
+
+    Common? common = await _trainerService.updateTrainerForManager(
+        data, trainer!.trainerDetail![0].id,
+        managerId: managerId);
+
+    if (common?.status == 1) {
+      await clearImageCache();
+      await getTrainerDetailsForManager(
+        managerId: managerId,
+        trainerId: trainer!.trainerDetail![0].id,
+      );
+      await getTrainersForManager(managerId: managerId);
       emit(TrainerUpdated());
     } else {
       emit(
@@ -416,6 +579,54 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
   }
 
+  Future getSalaryDetailsForManager({
+    int? trainerId,
+    int? month,
+    int? year,
+    bool clean = false,
+    String? searchQuery = '',
+    int? branchId,
+    required int managerId,
+  }) async {
+    if (clean) {
+      page = 1;
+      nextPageUrl = '';
+      salaryInvoice.clear();
+      emit(FetchingTrainerSalary());
+    } else {
+      emit(FetchingTrainerSalary(pagination: true));
+    }
+
+    if (nextPageUrl == null) {
+      emit(TrainerSalaryFetched());
+      return;
+    }
+
+    TrainerSalarySlip? response = await _trainerService.salaryDetailsForManager(
+      month: month,
+      year: year,
+      trainerId: trainerId,
+      pageNo: page,
+      branchId: branchId,
+      searchQuery: searchQuery,
+      managerId: managerId,
+    );
+
+    if (response?.status == 1) {
+      nextPageUrl = response?.salarySlips?.nextPageUrl;
+      if (nextPageUrl != null) {
+        page++;
+      }
+
+      salaryInvoice.addAll(response?.salarySlips?.data ?? []);
+      if (branchId == null) {
+        salaryInvoice.removeWhere((element) =>
+            element.trainerDetail?.name != trainer?.trainerDetail?[0].name);
+      }
+      emit(TrainerSalaryFetched(moreItems: nextPageUrl != null));
+    }
+  }
+
   Future getSalaryDetailsForTrainer({
     int? trainerId,
     int? month,
@@ -475,10 +686,40 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
   }
 
+  Future getSalaryInvoiceForManager(int? trainerSlipId,
+      {required int managerId}) async {
+    emit(FetchingSalaryDetails());
+    SalarySlip? response = await _trainerService.salaryPaymentsForManager(
+        trainerSlipId: trainerSlipId, managerId: managerId);
+    if (response?.status == 1) {
+      trainerSlipDetails = response?.salarySlip;
+      emit(SalaryDetailsFetched());
+    } else {
+      emit(SalaryDetailsFetchFailed('Failed to add link.'));
+    }
+  }
+
   Future addSalary(int? slipId, Map<String, dynamic> data) async {
     try {
       emit(AddingSalary());
       Common? response = await _trainerService.addSalary(slipId, data);
+
+      if (response?.status == 1) {
+        emit(AddedSalary(response?.message ?? 'Salary Added'));
+      } else {
+        emit(AddSalaryFailed(response?.message ?? 'Failed to add.'));
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future addSalaryForManager(int? slipId, Map<String, dynamic> data,
+      {required int managerId}) async {
+    try {
+      emit(AddingSalary());
+      Common? response = await _trainerService.addSalaryForManager(slipId, data,
+          managerId: managerId);
 
       if (response?.status == 1) {
         emit(AddedSalary(response?.message ?? 'Salary Added'));
@@ -534,6 +775,21 @@ class TrainerCubit extends Cubit<TrainerState> {
     }
   }
 
+  Future deleteSalaryForManager(
+      {required int? slipId,
+      required int? paymentId,
+      required int managerId}) async {
+    emit(DeletingSalary());
+    Common? response = await _trainerService
+        .deleteSalaryForManager(slipId, paymentId, managerId: managerId);
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(DeletedSalary(response?.message ?? 'Salary Deleted'));
+    } else {
+      emit(DeleteSalaryFailed(response?.message ?? 'Salary Deletion Failed'));
+    }
+  }
+
   Future editSalary(Map<String, dynamic> request,
       {required int? slipId, required int? paymentId}) async {
     emit(EditingSalary());
@@ -541,6 +797,25 @@ class TrainerCubit extends Cubit<TrainerState> {
       request,
       slipId,
       paymentId,
+    );
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(EditedSalary(response?.message ?? 'Salary Editted'));
+    } else {
+      emit(EditSalaryFailed(response?.message ?? 'Failed to edit'));
+    }
+  }
+
+  Future editSalaryForManager(Map<String, dynamic> request,
+      {required int? slipId,
+      required int? paymentId,
+      required int managerId}) async {
+    emit(EditingSalary());
+    Common? response = await _trainerService.editSalaryForManager(
+      request,
+      slipId,
+      paymentId,
+      managerId: managerId,
     );
     if (response?.status == 1) {
       // await getRescheduledBatches();

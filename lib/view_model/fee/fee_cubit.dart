@@ -849,6 +849,20 @@ class FeeCubit extends Cubit<FeeState> {
     }
   }
 
+  Future writeOffFeesForManager(Map<String, dynamic> request,
+      {required int? batchFeeInvoiceId, required int managerId}) async {
+    emit(WritingOff());
+    Common? response = await _feeService.writeOffFeesForManager(
+        request, batchFeeInvoiceId,
+        managerId: managerId);
+    if (response?.status == 1) {
+      // await getRescheduledBatches();
+      emit(WrittenOff(response?.message ?? 'Fees written off'));
+    } else {
+      emit(WriteOffFailed(response?.message ?? 'Failed to write off'));
+    }
+  }
+
   Future writeOffFeesForTrainer(Map<String, dynamic> request,
       {required int? batchFeeInvoiceId, required int trainerId}) async {
     emit(WritingOff());

@@ -3,7 +3,7 @@ import 'package:part_app/constants/constant.dart';
 import 'package:part_app/model/data_model/batch_fee_invoice_list.dart';
 import 'package:part_app/model/data_model/batch_model.dart';
 import 'package:part_app/view/components/components.dart';
-import 'package:part_app/view/fee/components/admission_fee_list_item.dart';
+import 'package:part_app/view/fee/components/manager_app_admission_fee_list_item.dart';
 import 'package:part_app/view/fee/manager_app_add_or_edit_admission_fees.dart';
 import 'package:part_app/view_model/cubits.dart';
 import 'package:part_app/view_model/fee/fee_cubit.dart';
@@ -224,7 +224,7 @@ class _ManagerAppStudentAdmissionFeeDetailsState
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               Datum studentInvoice = cubit.batchInvoice[index];
-                              return AdmissionFeeListItem(
+                              return ManagerAppAdmissionFeeListItem(
                                 isFromAdmission: true,
                                 student: studentInvoice,
                                 onTap: () async {

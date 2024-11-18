@@ -109,6 +109,7 @@ class CurrentMembership extends StatelessWidget {
                                       fontSize: 16,
                                       decoration: TextDecoration.lineThrough,
                                       decorationColor: Colors.white,
+                                      decorationThickness: 3.0,
                                     ),
                           ),
                         Text(

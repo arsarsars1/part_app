@@ -646,6 +646,22 @@ class FeeDetailsService {
     }
   }
 
+  Future<Common?> writeOffFeesForManager(
+      Map<String, dynamic> request, int? batchFeesInvoiceId,
+      {required int managerId}) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/managers/$managerId/fee-details/batch-fee-invoices/$batchFeesInvoiceId/write-off',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> writeOffFeesForTrainer(Map<String, dynamic> request,
       [int? batchFeesInvoiceId, int? trainerId]) async {
     try {

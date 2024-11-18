@@ -834,11 +834,75 @@ class BatchCubit extends Cubit<BatchState> {
     emit(BatchesFetched());
   }
 
+  Future getOngoigBatchesForTrainerForManager(int? trainerId,
+      {required int managerId}) async {
+    _batches.clear();
+    var items = await _batchService.getTrainerBatchesForManager(trainerId,
+        managerId: managerId);
+    if (items != null && items.isNotEmpty) {
+      for (var element in items) {
+        if (element.batchStatus == "ongoing") {
+          _batches.add(BatchModel.fromEntity(element));
+        }
+      }
+      // _batches = items.map((e) => BatchModel.fromEntity(e)).toList();
+    } else {
+      _batches.clear();
+    }
+    emit(BatchesFetched());
+  }
+
   Future getBatch({required String batchId, bool doEmit = true}) async {
     if (doEmit) {
       emit(FetchingBatch());
     }
     BatchResponse? response = await _batchService.getBatch(id: batchId);
+    if (response?.status == 1 && response?.batch != null) {
+      _batch = response?.batch;
+      _batchModel = BatchModel.fromEntity(response!.batch!);
+
+      // fetch the students
+      // getStudentsByBatch(_batch?.id);
+
+      // fetch the courses list
+      if (_courses == null || _courses!.isEmpty) {
+        await getCourses();
+      }
+
+      await getSubjects(courseId: _batch?.course?.id);
+      _defaultCourse = getCourseMenuItem(_batch?.course?.id);
+      _defaultSubject = getSubjectMenuItem(_batch?.subject?.id);
+
+      _days = _batch?.batchDetail
+              ?.map((e) => Days(
+                    day: e.day,
+                    endTime: e.endTime,
+                    startTime: e.startTime,
+                  ))
+              .toList() ??
+          [];
+
+      var items = _batch?.trainers?.map((e) => e.id).toList();
+      if (items != null) {
+        _selectedTrainers.addAll(items);
+      }
+      if (doEmit) {
+        emit(FetchedBatch());
+      }
+    } else {
+      emit(FetchBatchFailed('Failed to fetch batch details.'));
+    }
+  }
+
+  Future getBatchForManagerApp(
+      {required String batchId,
+      bool doEmit = true,
+      required int managerId}) async {
+    if (doEmit) {
+      emit(FetchingBatch());
+    }
+    BatchResponse? response = await _batchService.getBatchForManager(
+        id: batchId, managerId: managerId);
     if (response?.status == 1 && response?.batch != null) {
       _batch = response?.batch;
       _batchModel = BatchModel.fromEntity(response!.batch!);

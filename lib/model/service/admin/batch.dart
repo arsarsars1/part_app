@@ -555,6 +555,22 @@ class BatchService {
     }
   }
 
+  Future<List<Batch>?> getTrainerBatchesForManager(int? trainerId,
+      {required int managerId}) async {
+    try {
+      var response = await _apiClient.get(
+        queryPath: '/managers/$managerId/trainers/$trainerId/batches',
+      );
+
+      var map = response['batches'] as List;
+
+      var items = map.map((e) => Batch.fromJson(e));
+      return items.toList();
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> rescheduleClass(Map<String, dynamic> request,
       [int? batchId]) async {
     try {

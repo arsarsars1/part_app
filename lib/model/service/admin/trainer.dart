@@ -26,6 +26,20 @@ class TrainerService {
     }
   }
 
+  Future<TrainerResponse?> getTrainersForManager(int managerId) async {
+    var response =
+        await _client.get(queryPath: '/managers/$managerId/trainers/');
+
+    try {
+      TrainerResponse trainerResponse = trainerResponseFromJson(
+        jsonEncode(response),
+      );
+      return trainerResponse;
+    } on Exception {
+      return null;
+    }
+  }
+
   Future<TrainerResponse?> getTrainersPagination({int pageNo = 1}) async {
     var response = await _client.get(queryPath: '/admin/trainers?page=$pageNo');
 
@@ -59,6 +73,19 @@ class TrainerService {
     try {
       var response = await _client.post(
         postPath: '/admin/salary/trainers/$slipId/payments',
+        data: data,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> addSalaryForManager(int? slipId, Map<String, dynamic> data,
+      {required int managerId}) async {
+    try {
+      var response = await _client.post(
+        postPath: '/managers/$managerId/salary/trainers/$slipId/payments',
         data: data,
       );
       return commonFromJson(jsonEncode(response));
@@ -105,11 +132,41 @@ class TrainerService {
     }
   }
 
+  Future<Common?> deleteSalaryForManager(int? slipId, int? paymentId,
+      {required int managerId}) async {
+    try {
+      var response = await _client.delete(
+        queryPath:
+            '/managers/$managerId/salary/trainers/$slipId/payments/$paymentId',
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> editSalary(
       Map<String, dynamic> request, int? slipId, int? paymentId) async {
     try {
       var response = await _client.post(
         postPath: '/admin/salary/trainers/$slipId/payments/$paymentId',
+        data: request,
+      );
+
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Common?> editSalaryForManager(
+      Map<String, dynamic> request, int? slipId, int? paymentId,
+      {required int managerId}) async {
+    try {
+      var response = await _client.post(
+        postPath:
+            '/managers/$managerId/salary/trainers/$slipId/payments/$paymentId',
         data: request,
       );
 
@@ -130,6 +187,27 @@ class TrainerService {
             queryPath: branchId == null
                 ? '/admin/trainers/?active=0'
                 : '/admin/branches/$branchId/trainers/?active=0');
+
+    try {
+      TrainerResponse trainerResponse =
+          trainerResponseFromJson(jsonEncode(response));
+      return trainerResponse;
+    } on Exception {
+      return null;
+    }
+  }
+
+  Future<TrainerResponse?> getActiveTrainersForManager(
+      {int? branchId, active = false, required int managerId}) async {
+    var response = active
+        ? await _client.get(
+            queryPath: branchId == null
+                ? '/managers/$managerId/trainers/?active=1'
+                : '/managers/$managerId/branches/$branchId/trainers/?active=1')
+        : await _client.get(
+            queryPath: branchId == null
+                ? '/managers/$managerId/trainers/?active=0'
+                : '/managers/$managerId/branches/$branchId/trainers/?active=0');
 
     try {
       TrainerResponse trainerResponse =
@@ -174,11 +252,60 @@ class TrainerService {
     }
   }
 
+  Future<List<Trainer>?> searchTrainerForManager(int? branchId,
+      {required String query, required int managerId}) async {
+    Map<String, dynamic> response;
+    if (branchId == null) {
+      response = await _client.get(
+          queryPath: '/managers/$managerId/trainers/search/$query');
+    } else {
+      response = await _client.get(
+        queryPath: '/managers/$managerId/trainers/$branchId/search/$query',
+      );
+    }
+
+    try {
+      BranchTrainerResponse trainerResponse = branchTrainerResponseFromJson(
+        jsonEncode(response),
+      );
+      return trainerResponse.trainers;
+    } on Exception {
+      return null;
+    }
+  }
+
   /// Method to get the trainer details by [ trainerId ]
   /// for the logged in admin user
   Future<Trainer?> getTrainerById({required int trainerId}) async {
     try {
       var response = await _client.get(queryPath: '/admin/trainers/$trainerId');
+      TrainerResponse trainerResponse = trainerResponseFromJson(
+        jsonEncode(response),
+      );
+
+      if (trainerResponse.status == 1) {
+        return trainerResponse.trainer;
+      }
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        debugPrint(e.toString());
+      }
+    } on Exception catch (e) {
+      if (kDebugMode) {
+        debugPrint(e.toString());
+      }
+    }
+
+    return null;
+  }
+
+  /// Method to get the trainer details by [ trainerId ]
+  /// for the logged in admin user
+  Future<Trainer?> getTrainerByIdForManager(
+      {required int trainerId, required int managerId}) async {
+    try {
+      var response = await _client.get(
+          queryPath: '/managers/$managerId/trainers/$trainerId');
       TrainerResponse trainerResponse = trainerResponseFromJson(
         jsonEncode(response),
       );
@@ -212,6 +339,20 @@ class TrainerService {
     }
   }
 
+  Future<Common?> createTrainerForManager(
+      Map<String, dynamic> data, int managerId) async {
+    try {
+      var response = await _client.post(
+        postPath: '/managers/$managerId/trainers',
+        data: data,
+        formData: true,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> updateTrainer(
     Map<String, dynamic> data,
     int trainerId,
@@ -228,11 +369,42 @@ class TrainerService {
     }
   }
 
+  Future<Common?> updateTrainerForManager(
+      Map<String, dynamic> data, int trainerId,
+      {required int managerId}) async {
+    try {
+      var response = await _client.post(
+        postPath: '/managers/$managerId/trainers/$trainerId',
+        data: data,
+        formData: true,
+      );
+      return commonFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Common?> updateTrainerStatus(
       {required int trainerId, required int status}) async {
     try {
       var map = await _client.get(
         queryPath: '/admin/trainers/$trainerId/activation/$status',
+      );
+
+      return commonFromJson(jsonEncode(map));
+    } on Exception {
+      return null;
+    }
+  }
+
+  Future<Common?> updateTrainerStatusForManager(
+      {required int trainerId,
+      required int status,
+      required int managerId}) async {
+    try {
+      var map = await _client.get(
+        queryPath:
+            '/managers/$managerId/trainers/$trainerId/activation/$status',
       );
 
       return commonFromJson(jsonEncode(map));
@@ -275,19 +447,48 @@ class TrainerService {
         queryPath += '&search=$searchQuery';
       }
       queryPath += '&page=$pageNo';
-      // if (branchId == null) {
-      //   var response = await _client.get(
-      //       queryPath: month != null
-      //           ? '/admin/trainers/$trainerId/salary-history/$year/$month&page=$pageNo'
-      //           : '/admin/trainers/$trainerId/salary-history/$year&page=$pageNo');
-      //   return trainerSalarySlipFromJson(jsonEncode(response));
-      // } else {
-      //   var response = await _client.get(
-      //       queryPath: month != null
-      //           ? '/admin/salary/trainers?branch_id=$branchId&year=$year&month=$month&page=$pageNo&search=${searchQuery ?? ''}'
-      //           : '/admin/salary/trainers?branch_id=$branchId&year=$year&page=$pageNo&search=${searchQuery ?? ''}');
-      //   return trainerSalarySlipFromJson(jsonEncode(response));
-      // }
+      var response = await _client.get(queryPath: queryPath);
+      return trainerSalarySlipFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<TrainerSalarySlip?> salaryDetailsForManager({
+    int? trainerId,
+    int? month,
+    int? year,
+    int? branchId,
+    String? searchQuery = '',
+    required int pageNo,
+    required int managerId,
+  }) async {
+    try {
+      String queryPath;
+      if (branchId == null) {
+        queryPath = '/managers/$managerId';
+        if (trainerId != null) {
+          queryPath += '/trainers/$trainerId';
+        }
+        if (year != null) {
+          queryPath += '/salary-history/$year';
+          if (month != null) {
+            queryPath += '/$month';
+          }
+        }
+      } else {
+        queryPath = '/managers/$managerId/salary/trainers?branch_id=$branchId';
+        if (year != null) {
+          queryPath += '&year=$year';
+          if (month != null) {
+            queryPath += '&month=$month';
+          }
+        }
+      }
+      if (searchQuery != null && searchQuery != '') {
+        queryPath += '&search=$searchQuery';
+      }
+      queryPath += '&page=$pageNo';
       var response = await _client.get(queryPath: queryPath);
       return trainerSalarySlipFromJson(jsonEncode(response));
     } catch (e) {
@@ -328,6 +529,19 @@ class TrainerService {
     try {
       var response =
           await _client.get(queryPath: '/admin/salary/trainers/$trainerSlipId');
+      return salarySlipFromJson(jsonEncode(response));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<SalarySlip?> salaryPaymentsForManager({
+    required int? trainerSlipId,
+    required int managerId,
+  }) async {
+    try {
+      var response = await _client.get(
+          queryPath: '/managers/$managerId/salary/trainers/$trainerSlipId');
       return salarySlipFromJson(jsonEncode(response));
     } catch (e) {
       return null;

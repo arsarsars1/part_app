@@ -166,6 +166,15 @@ import 'package:part_app/view/trainer/leads/lead_details_trainer.dart';
 import 'package:part_app/view/trainer/leads/lead_follow_up_details_trainer.dart';
 import 'package:part_app/view/trainer/leads/leads_view_trainer.dart';
 import 'package:part_app/view/trainer/leads/todays_followup_view_trainer.dart';
+import 'package:part_app/view/trainer/manager_app_add_advance_salary.dart';
+import 'package:part_app/view/trainer/manager_app_add_trainer.dart';
+import 'package:part_app/view/trainer/manager_app_add_trainer_branches.dart';
+import 'package:part_app/view/trainer/manager_app_assigned_batches.dart';
+import 'package:part_app/view/trainer/manager_app_salary_details.dart';
+import 'package:part_app/view/trainer/manager_app_trainer_branches.dart';
+import 'package:part_app/view/trainer/manager_app_trainer_details.dart';
+import 'package:part_app/view/trainer/manager_app_trainer_salary_slips.dart';
+import 'package:part_app/view/trainer/manager_app_trainer_view.dart';
 import 'package:part_app/view/trainer/salary_details.dart';
 import 'package:part_app/view/trainer/students_picker.dart';
 import 'package:part_app/view/trainer/trainer_app_trainer_salary_slips.dart';
@@ -334,6 +343,11 @@ class RouteGenerator {
           builder: (_) => const TrainerPage(),
           settings: settings,
         );
+      case ManagerAppTrainerPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppTrainerPage(),
+          settings: settings,
+        );
       case BranchList.route:
         return MaterialPageRoute(
           builder: (_) => const BranchList(),
@@ -363,6 +377,11 @@ class RouteGenerator {
           builder: (_) => const TrainerDetails(),
           settings: settings,
         );
+      case ManagerAppTrainerDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppTrainerDetails(),
+          settings: settings,
+        );
       case StudentPicker.route:
         return MaterialPageRoute(
           builder: (_) => const StudentPicker(),
@@ -373,6 +392,11 @@ class RouteGenerator {
           builder: (_) => const AddTrainer(),
           settings: settings,
         );
+      case ManagerAppAddTrainer.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAddTrainer(),
+          settings: settings,
+        );
       case SalaryDetails.route:
         return MaterialPageRoute(
           builder: (_) => SalaryDetails(
@@ -380,9 +404,21 @@ class RouteGenerator {
           ),
           settings: settings,
         );
+      case ManagerAppSalaryDetails.route:
+        return MaterialPageRoute(
+          builder: (_) => ManagerAppSalaryDetails(
+            trainer: settings.arguments as bool,
+          ),
+          settings: settings,
+        );
       case AddTrainerBranches.route:
         return MaterialPageRoute(
           builder: (_) => const AddTrainerBranches(),
+          settings: settings,
+        );
+      case ManagerAppAddTrainerBranches.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAddTrainerBranches(),
           settings: settings,
         );
       case AddManager.route:
@@ -470,6 +506,11 @@ class RouteGenerator {
           builder: (_) => const TrainerBranches(),
           settings: settings,
         );
+      case ManagerAppTrainerBranches.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppTrainerBranches(),
+          settings: settings,
+        );
       case BatchDetails.route:
         return MaterialPageRoute(
           builder: (_) => const BatchDetails(),
@@ -488,6 +529,11 @@ class RouteGenerator {
       case AssignedBatches.route:
         return MaterialPageRoute(
           builder: (_) => const AssignedBatches(),
+          settings: settings,
+        );
+      case ManagerAppAssignedBatches.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAssignedBatches(),
           settings: settings,
         );
       case EditBatchDetails.route:
@@ -901,6 +947,11 @@ class RouteGenerator {
           builder: (_) => const AddAdvanceSalaryPage(),
           settings: settings,
         );
+      case ManagerAppAddAdvanceSalaryPage.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppAddAdvanceSalaryPage(),
+          settings: settings,
+        );
       case StudentAttendanceCalenderView.route:
         return MaterialPageRoute(
           builder: (_) => const StudentAttendanceCalenderView(),
@@ -1059,6 +1110,11 @@ class RouteGenerator {
       case TrainerSalarySlips.route:
         return MaterialPageRoute(
           builder: (_) => const TrainerSalarySlips(),
+          settings: settings,
+        );
+      case ManagerAppTrainerSalarySlips.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManagerAppTrainerSalarySlips(),
           settings: settings,
         );
       case TrainerAppTrainerSalarySlips.route:

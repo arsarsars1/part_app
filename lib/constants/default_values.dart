@@ -8,6 +8,7 @@ import 'package:part_app/view/class_link/manager_app_class_link_view.dart';
 import 'package:part_app/view/class_link/trainer_app_class_link_view.dart';
 import 'package:part_app/view/todays_classes/manager_app_todays_classes.dart';
 import 'package:part_app/view/todays_classes/todays_classes.dart';
+import 'package:part_app/view/trainer/manager_app_trainer_view.dart';
 import 'package:part_app/view/trainer/trainer_app_trainer_salary_slips.dart';
 import 'package:part_app/view/trainer/trainer_view.dart';
 
@@ -277,7 +278,7 @@ class DefaultValues {
     ),
     DashboardItem(
       title: 'Trainers',
-      route: TrainerPage.route,
+      route: ManagerAppTrainerPage.route,
       asset: Assets.trainers,
       color: Color(0xFF8F94FB),
     ),
