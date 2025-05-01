@@ -16,7 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await initialize();
-  F.appFlavor = Flavor.dev;
+  F.appFlavor = Flavor.prod;
   runApp(const App());
 }
 
